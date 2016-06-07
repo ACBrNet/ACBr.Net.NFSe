@@ -1,0 +1,1182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0EF298CA-A045-47E2-91AD-5C211E793C3B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ACBr.Net.NFSe</RootNamespace>
+    <AssemblyName>ACBr.Net.NFSe</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug\NFSe\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\bin\Debug\NFSe\ACBr.Net.NFSe.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\Release\NFSe\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\bin\Release\NFSe\ACBr.Net.NFSe.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'COM Interop|AnyCPU'">
+    <OutputPath>..\..\bin\COM Interop\NFSe\</OutputPath>
+    <DefineConstants>TRACE;COM_INTEROP</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>..\..\bin\COM Interop\NFSe\ACBr.Net.NFSe.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ACBr.Net.Core, Version=0.9.3.0, Culture=neutral, PublicKeyToken=d3bb9130f8b775a6, processorArchitecture=MSIL">
+      <HintPath>..\packages\ACBr.Net.Core.0.9.3.0-rc1\lib\net40\ACBr.Net.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ACBr.Net.DFe.Core, Version=0.9.4.2, Culture=neutral, PublicKeyToken=d3bb9130f8b775a6, processorArchitecture=MSIL">
+      <HintPath>..\packages\ACBr.Net.DFe.Core.0.9.4.2-rc1\lib\net40\ACBr.Net.DFe.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ACBrNFSe.cs">
+      <SubType>ACBr.Net</SubType>
+    </Compile>
+    <Compile Include="Configuracao\CfgArquivos.cs" />
+    <Compile Include="Configuracao\CfgCertificados.cs" />
+    <Compile Include="Configuracao\CfgGeral.cs" />
+    <Compile Include="Configuracao\CfgWebServices.cs" />
+    <Compile Include="Configuracao\Configuracoes.cs" />
+    <Compile Include="TipoAmbiente.cs" />
+    <Compile Include="TipoCertificado.cs" />
+    <Compile Include="Eventos\OnErrorEventArgs.cs" />
+    <Compile Include="Nota\IdeRpsSubtituida.cs" />
+    <Compile Include="Util\EnumExtensions.cs" />
+    <Compile Include="Providers\ProviderBase.cs" />
+    <Compile Include="Providers\ProviderDSF.cs" />
+    <Compile Include="Interfaces\IDANFSe.cs" />
+    <Compile Include="Interfaces\IProvider.cs" />
+    <Compile Include="Nota\CondicaoPagamento.cs" />
+    <Compile Include="Nota\CondPagamento.cs" />
+    <Compile Include="Nota\ConfirmacaoCancelamento.cs" />
+    <Compile Include="Nota\Contato.cs" />
+    <Compile Include="Nota\DadosConstrucaoCivil.cs" />
+    <Compile Include="Nota\DadosPrestador.cs" />
+    <Compile Include="Nota\DadosServico.cs" />
+    <Compile Include="Nota\DadosTransportadora.cs" />
+    <Compile Include="Nota\Deducao.cs" />
+    <Compile Include="Nota\DeducaoPor.cs" />
+    <Compile Include="Nota\DeducoesCollection.cs" />
+    <Compile Include="Nota\EmailCollection.cs" />
+    <Compile Include="Nota\EmailItem.cs" />
+    <Compile Include="Nota\Endereco.cs" />
+    <Compile Include="Nota\ExigibilidadeIss.cs" />
+    <Compile Include="Nota\IdeIntermediarioServico.cs" />
+    <Compile Include="Nota\IdentificacaoNfse.cs" />
+    <Compile Include="Nota\IdentificacaoRps.cs" />
+    <Compile Include="Nota\IdeOrgaoGerador.cs" />
+    <Compile Include="Nota\InfID.cs" />
+    <Compile Include="Nota\LocalPrestacaoServico.cs" />
+    <Compile Include="Nota\NaturezaOperacao.cs" />
+    <Compile Include="Nota\NFSe.cs" />
+    <Compile Include="Nota\NfseFrete.cs" />
+    <Compile Include="Nota\NFSeSimNao.cs" />
+    <Compile Include="Nota\NotaFiscal.cs" />
+    <Compile Include="Nota\NotaFiscalCollection.cs" />
+    <Compile Include="Nota\Parcelas.cs" />
+    <Compile Include="Nota\ParcelasCollection.cs" />
+    <Compile Include="Nota\PedidoCancelamento.cs" />
+    <Compile Include="Nota\RegimeEspecialTributacao.cs" />
+    <Compile Include="Nota\ResponsavelRetencao.cs" />
+    <Compile Include="Nota\Servico.cs" />
+    <Compile Include="Nota\ServicosCollection.cs" />
+    <Compile Include="Nota\SituacaoTributaria.cs" />
+    <Compile Include="Nota\StatusRPS.cs" />
+    <Compile Include="Nota\TipoDeducao.cs" />
+    <Compile Include="Nota\TipoEmissao.cs" />
+    <Compile Include="Nota\TipoEmpreitadaGlobal.cs" />
+    <Compile Include="Nota\TipoRps.cs" />
+    <Compile Include="Nota\DadosTomador.cs" />
+    <Compile Include="Nota\TipoTributacao.cs" />
+    <Compile Include="Nota\ValoresServico.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\ProviderHelper.cs" />
+    <Compile Include="Webservices\DSF\DsfServiceClient.cs" />
+    <Compile Include="Webservices\DSF\IDsfService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Schemas\4R\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\4R\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Abaco\nfse_v2010.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Abaco\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\ABase\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\ABase\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\ABRASFv1\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\ABRASFv1\xmldsig-core-schema_v01.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\ABRASFv2\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\ABRASFv2\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Actcon\Hom_nfse_v01.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Actcon\Hom_nfse_v201.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Actcon\prod_nfse_v01.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Actcon\Prod_nfse_v201.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Agili\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\AMTEC\nfse_gyn_v02.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\AMTEC\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Betha\nfse_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Betha\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Betim\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\BHISS\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\BHISS\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\BH\nfse.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\BH\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Blumenau\PedidoCancelamentoLote_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Blumenau\PedidoCancelamentoNFe_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Blumenau\PedidoConsultaCNPJ_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Blumenau\PedidoConsultaLote_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Blumenau\PedidoConsultaNFePeriodo_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Blumenau\PedidoConsultaNFe_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Blumenau\PedidoEnvioLoteRPS_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Blumenau\PedidoEnvioRPS_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Blumenau\PedidoInformacoesLote_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Blumenau\RetornoCancelamentoNFe_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Blumenau\RetornoConsultaCNPJ_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Blumenau\RetornoConsulta_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Blumenau\RetornoEnvioLoteRPS_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Blumenau\RetornoEnvioRPS_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Blumenau\RetornoInformacoesLote_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Blumenau\TiposNFe_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Blumenau\xmldsig-core-schema_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Coplan\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Coplan\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Curitiba\nfse.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Curitiba\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\DBSeller\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\DBSeller\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\DigiFred\nfse_v02.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\DigiFred\xmldsig-core-schema_v02.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\DSF\ConsultaSeqRps.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\DSF\ReqCancelamentoNFSe.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\DSF\ReqConsultaLote.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\DSF\ReqConsultaNFSeRPS.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\DSF\ReqConsultaNotas.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\DSF\ReqEnvioLoteRPS.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\DSF\RetornoCancelamentoNFSe.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\DSF\RetornoConsultaLote.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\DSF\RetornoConsultaNFSeRPS.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\DSF\RetornoConsultaNotas.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\DSF\RetornoConsultaSeqRps.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\DSF\RetornoEnvioLoteRPS.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\DSF\Tipos.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\DSF\xmldsig-core-schema_v1.01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\EL\el-nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\EL\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Equiplano\esCancelarNfseEnvio_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Equiplano\esCancelarNfseResposta_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Equiplano\esConsultarLoteRpsEnvio_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Equiplano\esConsultarLoteRpsResposta_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Equiplano\esConsultarNfseEnvio_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Equiplano\esConsultarNfsePorRpsEnvio_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Equiplano\esConsultarNfsePorRpsResposta_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Equiplano\esConsultarNfseResposta_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Equiplano\esConsultarSituacaoLoteRpsEnvio_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Equiplano\esConsultarSituacaoLoteRpsResposta_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Equiplano\esRecepcionarLoteRpsEnvio_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Equiplano\esRecepcionarLoteRpsResposta_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Equiplano\TiposEsnfs_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Equiplano\xmldsig-core-schema_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\EReceita\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\EReceita\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\fintelISS\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\fintelISS\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Fiorilli\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Fiorilli\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\FISSLEX\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\FISSLEX\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\GINFES\cabecalho_v03.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\GINFES\servico_cancelar_nfse_envio_v03.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\GINFES\servico_cancelar_nfse_resposta_v03.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\GINFES\servico_consultar_lote_rps_envio_v03.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\GINFES\servico_consultar_lote_rps_resposta_v03.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\GINFES\servico_consultar_nfse_envio_v03.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\GINFES\servico_consultar_nfse_resposta_v03.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\GINFES\servico_consultar_nfse_rps_envio_v03.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\GINFES\servico_consultar_nfse_rps_resposta_v03.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\GINFES\servico_consultar_situacao_lote_rps_envio_v03.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\GINFES\servico_consultar_situacao_lote_rps_resposta_v03.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\GINFES\servico_enviar_lote_rps_envio_v03.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\GINFES\servico_enviar_lote_rps_resposta_v03.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\GINFES\tipos_v03.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\GINFES\xmldsig-core-schema20020212_v03.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Goiania\nfse_gyn_v02.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Goiania\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\GovBR\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\GovBR\servico_cancelar_nfse_envio.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\GovBR\servico_cancelar_nfse_resposta.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\GovBR\servico_consultar_lote_rps_envio.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\GovBR\servico_consultar_lote_rps_resposta.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\GovBR\servico_consultar_nfse_envio.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\GovBR\servico_consultar_nfse_resposta.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\GovBR\servico_consultar_nfse_rps_envio.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\GovBR\servico_consultar_nfse_rps_resposta.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\GovBR\servico_consultar_situacao_lote_rps_envio.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\GovBR\servico_consultar_situacao_lote_rps_resposta.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\GovBR\servico_enviar_lote_rps_envio.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\GovBR\servico_enviar_lote_rps_resposta.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\GovBR\tipos_complexos.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\GovBR\tipos_simples.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\GovBR\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\GovDigital\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\GovDigital\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Infisc\nfse-v11.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Infisc\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Infisc\xmldsig-core-schema_v1.01.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\ISSCuritiba\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\ISSCuritiba\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\ISSDigital\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\ISSDigital\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\IssDSF\ConsultaSeqRps.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\IssDSF\ReqCancelamentoNFSe.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\IssDSF\ReqConsultaLote.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\IssDSF\ReqConsultaNFSeRPS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\IssDSF\ReqConsultaNotas.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\IssDSF\ReqEnvioLoteRPS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\IssDSF\RetornoCancelamentoNFSe.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\IssDSF\RetornoConsultaLote.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\IssDSF\RetornoConsultaNFSeRPS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\IssDSF\RetornoConsultaNotas.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\IssDSF\RetornoConsultaSeqRps.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\IssDSF\RetornoEnvioLoteRPS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\IssDSF\Tipos.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\IssDSF\xmldsig-core-schema_v1.01.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\ISSe\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\ISSe\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\ISSIntel\nfse.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\ISSIntel\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\ISSNET\servico_cancelar_nfse_envio.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\ISSNET\servico_cancelar_nfse_resposta.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\ISSNET\servico_consultar_lote_rps_envio.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\ISSNET\servico_consultar_lote_rps_resposta.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\ISSNET\servico_consultar_nfse_envio.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\ISSNET\servico_consultar_nfse_resposta.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\ISSNET\servico_consultar_nfse_rps_envio.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\ISSNET\servico_consultar_nfse_rps_resposta.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\ISSNET\servico_consultar_situacao_lote_rps_envio.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\ISSNET\servico_consultar_situacao_lote_rps_resposta.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\ISSNET\servico_enviar_lote_rps_envio.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\ISSNET\servico_enviar_lote_rps_resposta.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\ISSNET\tipos_complexos.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\ISSNET\tipos_simples.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\ISSNET\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Lexsom\nfse.XSD">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Lexsom\xmldsig-core-schema20020212.XSD">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Link3\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Link3\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Mitra\rps_importacao_manual.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Mitra\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Natal\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Natal\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\NEAInformatica\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\NEAInformatica\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\NotaInteligente\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\NotaInteligente\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\PontaGrossa_v2\nfse.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\PontaGrossa_v2\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Prodata\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Prodata\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Prodemge\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Prodemge\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Pronimv2\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Pronimv2\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Pronim\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Pronim\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Publica\schema_nfse_v03.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Publica\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\PVH\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\PVH\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Recife\tipos_nfse_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Recife\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\RJ\tipos_nfse_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\RJ\tipos_nfse_v01_old.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\RJ\xmldsig-core-schema_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Saatri\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Saatri\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Salvador\DadosComplementares.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Salvador\nfse.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Salvador\ServicosComplementares.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Salvador\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SimpliSS\nfse_1.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SimpliSS\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SisPMJP\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SisPMJP\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Sistemas4R\nfse_v2.0.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Sistemas4R\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SJP\cabecalho_v03.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SJP\servico_cancelar_nfse_envio_v03.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SJP\servico_cancelar_nfse_resposta_v03.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SJP\servico_consultar_lote_rps_envio_v03.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SJP\servico_consultar_lote_rps_resposta_v03.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SJP\servico_consultar_nfse_envio_v03.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SJP\servico_consultar_nfse_resposta_v03.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SJP\servico_consultar_nfse_rps_envio_v03.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SJP\servico_consultar_nfse_rps_resposta_v03.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SJP\servico_consultar_situacao_lote_rps_envio_v03.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SJP\servico_consultar_situacao_lote_rps_resposta_v03.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SJP\servico_enviar_lote_rps_envio_v03.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SJP\servico_enviar_lote_rps_resposta_v03.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SJP\tipos_v03.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SJP\xmldsig-core-schema20020212_v03.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SolBR\nfse.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SolBR\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SpeedGov\cabecalho_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SpeedGov\cancelar_nfse_envio_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SpeedGov\cancelar_nfse_resposta_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SpeedGov\consultar_lote_rps_envio_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SpeedGov\consultar_lote_rps_resposta_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SpeedGov\consultar_nfse_envio_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SpeedGov\consultar_nfse_resposta_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SpeedGov\consultar_nfse_rps_envio_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SpeedGov\consultar_nfse_rps_resposta_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SpeedGov\consultar_situacao_lote_rps_envio_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SpeedGov\consultar_situacao_lote_rps_resposta_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SpeedGov\enviar_lote_rps_envio_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SpeedGov\enviar_lote_rps_resposta_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SpeedGov\tipos_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SpeedGov\xmldsig-core-schema20020212_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SP\PedidoCancelamentoNFe_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SP\PedidoConsultaCNPJ_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SP\PedidoConsultaLote_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SP\PedidoConsultaNFePeriodo_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SP\PedidoConsultaNFe_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SP\PedidoEnvioLoteRPS_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SP\PedidoEnvioRPS_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SP\PedidoInformacoesLote_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SP\RetornoCancelamentoNFe_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SP\RetornoConsultaCNPJ_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SP\RetornoConsulta_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SP\RetornoEnvioLoteRPS_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SP\RetornoEnvioRPS_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SP\RetornoInformacoesLote_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SP\TiposNFe_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SP\xmldsig-core-schema_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SystemPro\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\SystemPro\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Tecnos\CancelarNfseEnvio.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Tecnos\CancelarNfseResposta.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Tecnos\ConsultarLoteRpsEnvio.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Tecnos\ConsultarLoteRpsResposta.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Tecnos\ConsultarNfseFaixaEnvio.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Tecnos\ConsultarNfseFaixaResposta.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Tecnos\ConsultarNfseRpsEnvio.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Tecnos\ConsultarNfseRpsResposta.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Tecnos\ConsultarNfseServicoPrestadoEnvio.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Tecnos\ConsultarNfseServicoPrestadoResposta.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Tecnos\ConsultarSequenciaLoteNotaRPSEnvio.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Tecnos\ConsultarSequenciaLoteNotaRPSResposta.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Tecnos\EnviarLoteRpsSincronoResposta.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Tecnos\EnvioLoteRpsSincronoEnvio.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Tecnos\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Thema\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Thema\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Tinus\nfsetinus.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Tinus\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Tiplan\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Tiplan\nfse_municipal_v01.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Tiplan\xmldsig-core-schema_v01.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Virtual\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Virtual\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Vitoria\nfse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\Vitoria\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\WebISS\servico_cancelar_nfse_envio.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\WebISS\servico_cancelar_nfse_resposta.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\WebISS\servico_consultar_lote_rps_envio.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\WebISS\servico_consultar_lote_rps_resposta.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\WebISS\servico_consultar_nfse_envio.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\WebISS\servico_consultar_nfse_resposta.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\WebISS\servico_consultar_nfse_rps_envio.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\WebISS\servico_consultar_nfse_rps_resposta.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\WebISS\servico_consultar_situacao_lote_rps_envio.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\WebISS\servico_consultar_situacao_lote_rps_resposta.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\WebISS\servico_enviar_lote_rps_envio.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\WebISS\servico_enviar_lote_rps_resposta.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\WebISS\servico_gerar_nfse_envio.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\WebISS\servico_gerar_nfse_resposta.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\WebISS\tipos_complexos.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\WebISS\tipos_simples.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\WebISS\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ico.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Schemas\Actcon\Atencao.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
