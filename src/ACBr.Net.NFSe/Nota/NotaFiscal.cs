@@ -29,29 +29,127 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
+using ACBr.Net.Core.Generics;
+using ACBr.Net.DFe.Core.Document;
+
 namespace ACBr.Net.NFSe.Nota
 {
     /// <summary>
     /// Classe NFSe. Está classe não pode ser herdada.
     /// </summary>
-    public sealed class NotaFiscal
+    public sealed class NotaFiscal : GenericClone<NotaFiscal>
     {
-        #region Constructor
+		#region Constructor
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NotaFiscal"/> class.
-        /// </summary>
-        public NotaFiscal()
-        {
-			NFSe = new NFSe();
-        }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="NotaFiscal"/> class.
+		/// </summary>
+		internal NotaFiscal()
+		{
+			InfId = new InfID();
+			IdentificacaoRps = new IdentificacaoRps();
+			RpsSubstituido = new IdeRpsSubtituida();
+			Servico = new DadosServico();
+			Prestador = new DadosPrestador();
+			IntermediarioServico = new IdeIntermediarioServico();
+			ConstrucaoCivil = new DadosConstrucaoCivil();
+			CondicaoPagamento = new CondPagamento();
+			OrgaoGerador = new IdeOrgaoGerador();
+			Signature = new Signature();
+			NfseCancelamento = new ConfirmacaoCancelamento();
+			Transportadora = new DadosTransportadora();
+			Emails = new EmailCollection();
+		}
 
-        #endregion Constructor
+		#endregion Constructor
 
-        #region Propriedades
+		#region Propriedades
 
-	    public NFSe NFSe { get; }
+		public InfID InfId { get; }
 
-        #endregion Propriedades
-    }
+		public IdentificacaoRps IdentificacaoRps { get; }
+
+		public DadosPrestador Prestador { get; internal set; }
+
+		public DadosTomador Tomador { get; set; }
+
+		public DadosServico Servico { get; }
+
+		public NaturezaOperacao NaturezaOperacao { get; set; }
+
+		public RegimeEspecialTributacao RegimeEspecialTributacao { get; set; }
+
+		public DateTime DataOptanteSimplesNacional { get; set; }
+
+		public LocalPrestacaoServico LogradouLocalPrestacaoServico { get; set; }
+
+		public NFSeSimNao IncentivadorCultural { get; set; }
+
+		public NFSeSimNao Producao { get; set; }
+
+		public StatusRps Status { get; set; }
+
+		public IdeRpsSubtituida RpsSubstituido { get; }
+
+		public IdeIntermediarioServico IntermediarioServico { get; }
+
+		public DadosConstrucaoCivil ConstrucaoCivil { get; }
+
+		public NFSeSimNao DeducaoMateriais { get; set; }
+
+		public CondPagamento CondicaoPagamento { get; }
+
+		public string Numero { get; set; }
+
+		public string CodigoVerificacao { get; set; }
+
+		public string Competencia { get; set; }
+
+		public string OutrasInformacoes { get; set; }
+
+		public decimal ValorCredito { get; set; }
+
+		public IdeOrgaoGerador OrgaoGerador { get; }
+
+		public Signature Signature { get; set; }
+
+		public string NumeroLote { get; set; }
+
+		public string Protocolo { get; set; }
+
+		public DateTime DhRecebimento { get; set; }
+
+		public string Situacao { get; set; }
+
+		public string XML { get; set; }
+
+		public ConfirmacaoCancelamento NfseCancelamento { get; }
+
+		public string NfseSubstituidora { get; set; }
+
+		public string MotivoCancelamto { get; set; }
+
+		public string ChaveNfse { get; set; }
+
+		public TipoEmissao TipoEmissao { get; set; }
+
+		public TipoEmpreitadaGlobal EmpreitadaGlobal { get; set; }
+
+		public string ModeloNfse { get; set; }
+
+		public NFSeSimNao Cancelada { get; set; }
+
+		public DadosTransportadora Transportadora { get; }
+
+		public string TipoRecolhimento { get; set; }
+
+		public EmailCollection Emails { get; }
+
+		public TipoTributacao TipoTributacao { get; set; }
+
+		public string Assinatura { get; set; }
+
+		#endregion Propriedades
+	}
 }

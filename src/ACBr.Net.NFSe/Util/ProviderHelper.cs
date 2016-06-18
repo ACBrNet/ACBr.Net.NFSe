@@ -29,8 +29,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
-using System.Security.Cryptography.X509Certificates;
 using ACBr.Net.Core;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Interfaces;

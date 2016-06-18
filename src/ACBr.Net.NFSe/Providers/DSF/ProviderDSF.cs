@@ -34,7 +34,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Xml;
 using ACBr.Net.Core.Extensions;
@@ -91,88 +90,87 @@ namespace ACBr.Net.NFSe.Providers.DSF
             var dec = Xmldoc.CreateXmlDeclaration("1.0", "UTF-8", null);
             Xmldoc.AppendChild(dec);
 
-			GerarCampo(nota);
-			var nfse = nota.NFSe;
+			GerarCampos(nota);
 
 			var rpsTag = Xmldoc.CreateElement("RPS");
-            rpsTag.SetAttribute("Id", $"rps:{nfse.InfId.Id}");
+            rpsTag.SetAttribute("Id", $"rps:{nota.InfId.Id}");
 
 			
 
 			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "Assinatura", 1, 2000, 1, assinatura));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalPrestador", 01, 11,  1, nfse.Prestador.InscricaoMunicipal.OnlyNumbers()));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "RazaoSocialPrestador", 1, 120, 1, RetirarAcentos ? nfse.Prestador.RazaoSocial.RemoveAccent() : nfse.Prestador.RazaoSocial));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalPrestador", 01, 11,  1, nota.Prestador.InscricaoMunicipal.OnlyNumbers()));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "RazaoSocialPrestador", 1, 120, 1, RetirarAcentos ? nota.Prestador.RazaoSocial.RemoveAccent() : nota.Prestador.RazaoSocial));
             rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoRPS", 1, 20,  1, "RPS"));
             
             rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "SerieRPS", 01, 2, 1,
-				nfse.IdentificacaoRps.Serie.IsEmpty() ? "NF" : nfse.IdentificacaoRps.Serie));
+				nota.IdentificacaoRps.Serie.IsEmpty() ? "NF" : nota.IdentificacaoRps.Serie));
 
-			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "NumeroRPS", 1, 12, 1, nfse.IdentificacaoRps.Numero));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.DatHor, "", "DataEmissaoRPS", 1, 21,  1, nfse.IdentificacaoRps.DataEmissaoRps));
+			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "NumeroRPS", 1, 12, 1, nota.IdentificacaoRps.Numero));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.DatHor, "", "DataEmissaoRPS", 1, 21,  1, nota.IdentificacaoRps.DataEmissaoRps));
             rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "SituacaoRPS", 1, 1, 1, situacao));
-            if (!nfse.RpsSubstituido.NumeroRps.IsEmpty())
+            if (!nota.RpsSubstituido.NumeroRps.IsEmpty())
             {
                 rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "SerieRPSSubstituido", 0, 2, 1, "NF"));
-                rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "NumeroRPSSubstituido", 0, 2, 1, nfse.RpsSubstituido.NumeroRps));
-                rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "NumeroNFSeSubstituida", 0, 2, 1, nfse.RpsSubstituido.NumeroNfse));
-                rpsTag.AddTag(AdicionarTag(TipoCampo.Dat, "", "DataEmissaoNFSeSubstituida", 0, 2, 1, nfse.RpsSubstituido.DataEmissaoNfseSubstituida));
+                rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "NumeroRPSSubstituido", 0, 2, 1, nota.RpsSubstituido.NumeroRps));
+                rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "NumeroNFSeSubstituida", 0, 2, 1, nota.RpsSubstituido.NumeroNfse));
+                rpsTag.AddTag(AdicionarTag(TipoCampo.Dat, "", "DataEmissaoNFSeSubstituida", 0, 2, 1, nota.RpsSubstituido.DataEmissaoNfseSubstituida));
             }
 
             rpsTag.AddTag(AdicionarTag(TipoCampo.Int, "", "SeriePrestacao", 01, 02, 1, 
-                nfse.IdentificacaoRps.SeriePrestacao.IsEmpty() ? "99" : nfse.IdentificacaoRps.SeriePrestacao.OnlyNumbers()));
+                nota.IdentificacaoRps.SeriePrestacao.IsEmpty() ? "99" : nota.IdentificacaoRps.SeriePrestacao.OnlyNumbers()));
 
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalTomador", 1, 11,  1, nfse.Tomador.InscricaoMunicipal.OnlyNumbers()));
-            rpsTag.AddTag(AdicionarTagCNPJCPF("CPFCNPJTomador", "CPFCNPJTomador", nfse.Tomador.CpfCnpj));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "RazaoSocialTomador", 1, 120, 1, RetirarAcentos ? nfse.Tomador.RazaoSocial.RemoveAccent() : nfse.Tomador.RazaoSocial));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "DocTomadorEstrangeiro", 0, 20,  1, nfse.Tomador.DocTomadorEstrangeiro));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoLogradouroTomador", 0, 10,  1, nfse.Tomador.Endereco.TipoLogradouro));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "LogradouroTomador", 1, 50, 1, RetirarAcentos ? nfse.Tomador.Endereco.Logradouro.RemoveAccent() : nfse.Tomador.Endereco.Logradouro));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "NumeroEnderecoTomador", 1, 9,  1, nfse.Tomador.Endereco.Numero));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "ComplementoEnderecoTomador", 1, 30, 0, RetirarAcentos ? nfse.Tomador.Endereco.Complemento.RemoveAccent() : nfse.Tomador.Endereco.Complemento));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoBairroTomador", 0, 10,  1, nfse.Tomador.Endereco.TipoBairro));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "BairroTomador", 1, 50, 1, RetirarAcentos ? nfse.Tomador.Endereco.Bairro.RemoveAccent() : nfse.Tomador.Endereco.Bairro));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CidadeTomador", 1, 10,  1, nfse.Tomador.Endereco.CodigoMunicipio));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CidadeTomadorDescricao", 1, 50, 1, RetirarAcentos ? nfse.Tomador.Endereco.Municipio.RemoveAccent() : nfse.Tomador.Endereco.Municipio));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CEPTomador", 1, 8,  1, nfse.Tomador.Endereco.CEP.OnlyNumbers()));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "EmailTomador", 1, 60,  1, nfse.Tomador.Contato.Email));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CodigoAtividade", 1, 9,  1, nfse.Servico.CodigoCnae));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.De2, "", "AliquotaAtividade", 1, 11,  1, nfse.Servico.Valores.Aliquota));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalTomador", 1, 11,  1, nota.Tomador.InscricaoMunicipal.OnlyNumbers()));
+            rpsTag.AddTag(AdicionarTagCNPJCPF("CPFCNPJTomador", "CPFCNPJTomador", nota.Tomador.CpfCnpj));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "RazaoSocialTomador", 1, 120, 1, RetirarAcentos ? nota.Tomador.RazaoSocial.RemoveAccent() : nota.Tomador.RazaoSocial));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "DocTomadorEstrangeiro", 0, 20,  1, nota.Tomador.DocTomadorEstrangeiro));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoLogradouroTomador", 0, 10,  1, nota.Tomador.Endereco.TipoLogradouro));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "LogradouroTomador", 1, 50, 1, RetirarAcentos ? nota.Tomador.Endereco.Logradouro.RemoveAccent() : nota.Tomador.Endereco.Logradouro));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "NumeroEnderecoTomador", 1, 9,  1, nota.Tomador.Endereco.Numero));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "ComplementoEnderecoTomador", 1, 30, 0, RetirarAcentos ? nota.Tomador.Endereco.Complemento.RemoveAccent() : nota.Tomador.Endereco.Complemento));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoBairroTomador", 0, 10,  1, nota.Tomador.Endereco.TipoBairro));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "BairroTomador", 1, 50, 1, RetirarAcentos ? nota.Tomador.Endereco.Bairro.RemoveAccent() : nota.Tomador.Endereco.Bairro));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CidadeTomador", 1, 10,  1, nota.Tomador.Endereco.CodigoMunicipio));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CidadeTomadorDescricao", 1, 50, 1, RetirarAcentos ? nota.Tomador.Endereco.Municipio.RemoveAccent() : nota.Tomador.Endereco.Municipio));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CEPTomador", 1, 8,  1, nota.Tomador.Endereco.CEP.OnlyNumbers()));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "EmailTomador", 1, 60,  1, nota.Tomador.Contato.Email));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CodigoAtividade", 1, 9,  1, nota.Servico.CodigoCnae));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.De2, "", "AliquotaAtividade", 1, 11,  1, nota.Servico.Valores.Aliquota));
 
 			//valores serviço
             rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoRecolhimento", 01, 01,  1, recolhimento)); 
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "MunicipioPrestacao", 1, 10,  1, nfse.Servico.CodigoMunicipio.ZeroFill(7)));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "MunicipioPrestacaoDescricao", 01, 30, 1, RetirarAcentos ? nfse.Servico.Municipio.RemoveAccent() : nfse.Servico.Municipio));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "MunicipioPrestacao", 1, 10,  1, nota.Servico.CodigoMunicipio.ZeroFill(7)));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "MunicipioPrestacaoDescricao", 01, 30, 1, RetirarAcentos ? nota.Servico.Municipio.RemoveAccent() : nota.Servico.Municipio));
 			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "Operacao", 01, 01, 1, operacao));
             rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "Tributacao",01, 01,  1, tributacao));      
             
             //Valores
-            rpsTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorPIS", 1, 2, 1, nfse.Servico.Valores.ValorPis));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorCOFINS", 1, 2, 1, nfse.Servico.Valores.ValorCofins));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorINSS", 1, 2, 1, nfse.Servico.Valores.ValorInss));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorIR", 1, 2, 1, nfse.Servico.Valores.ValorIR));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorCSLL", 1, 2, 1, nfse.Servico.Valores.ValorCsll));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorPIS", 1, 2, 1, nota.Servico.Valores.ValorPis));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorCOFINS", 1, 2, 1, nota.Servico.Valores.ValorCofins));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorINSS", 1, 2, 1, nota.Servico.Valores.ValorInss));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorIR", 1, 2, 1, nota.Servico.Valores.ValorIR));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorCSLL", 1, 2, 1, nota.Servico.Valores.ValorCsll));
 
             //Aliquotas
-            rpsTag.AddTag(AdicionarTag(TipoCampo.De4, "", "AliquotaPIS", 1, 2, 1, nfse.Servico.Valores.AliquotaPis));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.De4, "", "AliquotaCOFINS", 1, 2, 1, nfse.Servico.Valores.AliquotaCofins));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.De4, "", "AliquotaINSS", 1, 2, 1, nfse.Servico.Valores.AliquotaInss));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.De4, "", "AliquotaIR", 1, 2, 1, nfse.Servico.Valores.AliquotaIR));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.De4, "", "AliquotaCSLL", 1, 2, 1, nfse.Servico.Valores.AliquotaCsll));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.De4, "", "AliquotaPIS", 1, 2, 1, nota.Servico.Valores.AliquotaPis));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.De4, "", "AliquotaCOFINS", 1, 2, 1, nota.Servico.Valores.AliquotaCofins));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.De4, "", "AliquotaINSS", 1, 2, 1, nota.Servico.Valores.AliquotaInss));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.De4, "", "AliquotaIR", 1, 2, 1, nota.Servico.Valores.AliquotaIR));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.De4, "", "AliquotaCSLL", 1, 2, 1, nota.Servico.Valores.AliquotaCsll));
 
-			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "DescricaoRPS", 1, 1500, 1, RetirarAcentos ? nfse.Servico.Descricao.RemoveAccent() : nfse.Servico.Descricao));
+			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "DescricaoRPS", 1, 1500, 1, RetirarAcentos ? nota.Servico.Descricao.RemoveAccent() : nota.Servico.Descricao));
 
-			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "DDDPrestador", 0, 3, 1, nfse.Prestador.Contato.DDD.OnlyNumbers()));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TelefonePrestador", 0, 8, 1, nfse.Prestador.Contato.Telefone.OnlyNumbers()));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "DDDTomador", 0, 03, 1, nfse.Tomador.Contato.DDD.OnlyNumbers()));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TelefoneTomador", 0, 8, 1, nfse.Tomador.Contato.Telefone.OnlyNumbers()));
+			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "DDDPrestador", 0, 3, 1, nota.Prestador.Contato.DDD.OnlyNumbers()));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TelefonePrestador", 0, 8, 1, nota.Prestador.Contato.Telefone.OnlyNumbers()));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "DDDTomador", 0, 03, 1, nota.Tomador.Contato.DDD.OnlyNumbers()));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TelefoneTomador", 0, 8, 1, nota.Tomador.Contato.Telefone.OnlyNumbers()));
 
-			if (!nfse.IntermediarioServico.CpfCnpj.IsEmpty())
-                rpsTag.AddTag(AdicionarTagCNPJCPF("CPFCNPJIntermediario", "CPFCNPJIntermediario", nfse.IntermediarioServico.CpfCnpj));
+			if (!nota.IntermediarioServico.CpfCnpj.IsEmpty())
+                rpsTag.AddTag(AdicionarTagCNPJCPF("CPFCNPJIntermediario", "CPFCNPJIntermediario", nota.IntermediarioServico.CpfCnpj));
 
 
-			rpsTag.AddTag(GerarServicos(nfse.Servico.ItensServico));
-            if (nfse.Servico.Deducoes.Count > 0)
-                rpsTag.AddTag(GerarDeducoes(nfse.Servico.Deducoes));
+			rpsTag.AddTag(GerarServicos(nota.Servico.ItensServico));
+            if (nota.Servico.Deducoes.Count > 0)
+                rpsTag.AddTag(GerarDeducoes(nota.Servico.Deducoes));
 
             Xmldoc.AddTag(rpsTag);
             return Xmldoc.AsString(identado, showDeclaration);
@@ -191,88 +189,87 @@ namespace ACBr.Net.NFSe.Providers.DSF
             var dec = Xmldoc.CreateXmlDeclaration("1.0", "UTF-8", null);
             Xmldoc.AppendChild(dec);
 
-			GerarCampo(nota);
-			var nfse = nota.NFSe;
+			GerarCampos(nota);
 
 			var notaTag = Xmldoc.CreateElement("Nota");
-            notaTag.AddTag(AdicionarTag(TipoCampo.Int, "", "NumeroNota", 1, 11, 1, nfse.Numero));
-            notaTag.AddTag(AdicionarTag(TipoCampo.DatHor, "", "DataProcessamento", 1, 21, 1, nfse.DhRecebimento));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Int, "", "NumeroLote", 1, 11, 1, nfse.NumeroLote));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CodigoVerificacao", 1, 200, 1, nfse.CodigoVerificacao));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "Assinatura", 1, 2000, 1, nfse.Assinatura));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalPrestador", 01, 11,  1, nfse.Prestador.InscricaoMunicipal.OnlyNumbers()));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "RazaoSocialPrestador", 1, 120, 1, RetirarAcentos ? nfse.Prestador.RazaoSocial.RemoveAccent() : nfse.Prestador.RazaoSocial));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Int, "", "NumeroNota", 1, 11, 1, nota.Numero));
+            notaTag.AddTag(AdicionarTag(TipoCampo.DatHor, "", "DataProcessamento", 1, 21, 1, nota.DhRecebimento));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Int, "", "NumeroLote", 1, 11, 1, nota.NumeroLote));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CodigoVerificacao", 1, 200, 1, nota.CodigoVerificacao));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "Assinatura", 1, 2000, 1, nota.Assinatura));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalPrestador", 01, 11,  1, nota.Prestador.InscricaoMunicipal.OnlyNumbers()));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "RazaoSocialPrestador", 1, 120, 1, RetirarAcentos ? nota.Prestador.RazaoSocial.RemoveAccent() : nota.Prestador.RazaoSocial));
             notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoRPS", 1, 20,  1, "RPS"));
             
             notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "SerieRPS", 01, 02, 1,
-				nfse.IdentificacaoRps.Serie.IsEmpty() ? "NF" : nfse.IdentificacaoRps.Serie));
+				nota.IdentificacaoRps.Serie.IsEmpty() ? "NF" : nota.IdentificacaoRps.Serie));
 
-			notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "NumeroRPS", 1, 12, 1, nfse.IdentificacaoRps.Serie));
-            notaTag.AddTag(AdicionarTag(TipoCampo.DatHor, "", "DataEmissaoRPS", 1, 21,  1, nfse.IdentificacaoRps.DataEmissaoRps));
+			notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "NumeroRPS", 1, 12, 1, nota.IdentificacaoRps.Serie));
+            notaTag.AddTag(AdicionarTag(TipoCampo.DatHor, "", "DataEmissaoRPS", 1, 21,  1, nota.IdentificacaoRps.DataEmissaoRps));
             notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "SituacaoRPS", 1, 1, 1, situacao));
-            if (!nfse.RpsSubstituido.NumeroRps.IsEmpty())
+            if (!nota.RpsSubstituido.NumeroRps.IsEmpty())
             {
                 notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "SerieRPSSubstituido", 0, 2, 1, "NF"));
-                notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "NumeroRPSSubstituido", 0, 2, 1, nfse.RpsSubstituido.NumeroRps));
-                notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "NumeroNFSeSubstituida", 0, 2, 1, nfse.RpsSubstituido.NumeroNfse));
-                notaTag.AddTag(AdicionarTag(TipoCampo.Dat, "", "DataEmissaoNFSeSubstituida", 0, 2, 1, nfse.RpsSubstituido.DataEmissaoNfseSubstituida));
+                notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "NumeroRPSSubstituido", 0, 2, 1, nota.RpsSubstituido.NumeroRps));
+                notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "NumeroNFSeSubstituida", 0, 2, 1, nota.RpsSubstituido.NumeroNfse));
+                notaTag.AddTag(AdicionarTag(TipoCampo.Dat, "", "DataEmissaoNFSeSubstituida", 0, 2, 1, nota.RpsSubstituido.DataEmissaoNfseSubstituida));
             }
 
             notaTag.AddTag(AdicionarTag(TipoCampo.Int, "", "SeriePrestacao", 1, 2, 1,
-				nfse.IdentificacaoRps.SeriePrestacao.IsEmpty() ? "99" : nfse.IdentificacaoRps.SeriePrestacao));
+				nota.IdentificacaoRps.SeriePrestacao.IsEmpty() ? "99" : nota.IdentificacaoRps.SeriePrestacao));
 
-			notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalTomador", 1, 11, 1, nfse.Tomador.InscricaoMunicipal.OnlyNumbers()));
-            notaTag.AddTag(AdicionarTagCNPJCPF("CPFCNPJTomador", "CPFCNPJTomador", nfse.Tomador.CpfCnpj));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "RazaoSocialTomador", 1, 120, 1, RetirarAcentos ? nfse.Tomador.RazaoSocial.RemoveAccent() : nfse.Tomador.RazaoSocial));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "DocTomadorEstrangeiro", 0, 20,  1, nfse.Tomador.DocTomadorEstrangeiro));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoLogradouroTomador", 0, 10,  1, nfse.Tomador.Endereco.TipoLogradouro));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "LogradouroTomador", 1, 50, 1, RetirarAcentos ? nfse.Tomador.Endereco.Logradouro.RemoveAccent() : nfse.Tomador.Endereco.Logradouro));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "NumeroEnderecoTomador", 1, 9,  1, nfse.Tomador.Endereco.Numero));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "ComplementoEnderecoTomador", 1, 30, 0, RetirarAcentos ? nfse.Tomador.Endereco.Complemento.RemoveAccent() : nfse.Tomador.Endereco.Complemento));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoBairroTomador", 0, 10,  1, nfse.Tomador.Endereco.TipoBairro));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "BairroTomador", 1, 50,  1, RetirarAcentos ? nfse.Tomador.Endereco.Bairro.RemoveAccent() : nfse.Tomador.Endereco.Bairro));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CidadeTomador", 1, 10,  1, nfse.Tomador.Endereco.CodigoMunicipio));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CidadeTomadorDescricao", 1, 50, 1, RetirarAcentos ? nfse.Tomador.Endereco.Municipio.RemoveAccent() : nfse.Tomador.Endereco.Municipio));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CEPTomador", 1, 8,  1, nfse.Tomador.Endereco.CEP.OnlyNumbers()));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "EmailTomador", 1, 60,  1, nfse.Tomador.Contato.Email));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CodigoAtividade", 1, 9,  1, nfse.Servico.CodigoCnae));
-            notaTag.AddTag(AdicionarTag(TipoCampo.De2, "", "AliquotaAtividade", 1, 11,  1, nfse.Servico.Valores.Aliquota));
+			notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalTomador", 1, 11, 1, nota.Tomador.InscricaoMunicipal.OnlyNumbers()));
+            notaTag.AddTag(AdicionarTagCNPJCPF("CPFCNPJTomador", "CPFCNPJTomador", nota.Tomador.CpfCnpj));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "RazaoSocialTomador", 1, 120, 1, RetirarAcentos ? nota.Tomador.RazaoSocial.RemoveAccent() : nota.Tomador.RazaoSocial));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "DocTomadorEstrangeiro", 0, 20,  1, nota.Tomador.DocTomadorEstrangeiro));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoLogradouroTomador", 0, 10,  1, nota.Tomador.Endereco.TipoLogradouro));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "LogradouroTomador", 1, 50, 1, RetirarAcentos ? nota.Tomador.Endereco.Logradouro.RemoveAccent() : nota.Tomador.Endereco.Logradouro));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "NumeroEnderecoTomador", 1, 9,  1, nota.Tomador.Endereco.Numero));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "ComplementoEnderecoTomador", 1, 30, 0, RetirarAcentos ? nota.Tomador.Endereco.Complemento.RemoveAccent() : nota.Tomador.Endereco.Complemento));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoBairroTomador", 0, 10,  1, nota.Tomador.Endereco.TipoBairro));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "BairroTomador", 1, 50,  1, RetirarAcentos ? nota.Tomador.Endereco.Bairro.RemoveAccent() : nota.Tomador.Endereco.Bairro));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CidadeTomador", 1, 10,  1, nota.Tomador.Endereco.CodigoMunicipio));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CidadeTomadorDescricao", 1, 50, 1, RetirarAcentos ? nota.Tomador.Endereco.Municipio.RemoveAccent() : nota.Tomador.Endereco.Municipio));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CEPTomador", 1, 8,  1, nota.Tomador.Endereco.CEP.OnlyNumbers()));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "EmailTomador", 1, 60,  1, nota.Tomador.Contato.Email));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CodigoAtividade", 1, 9,  1, nota.Servico.CodigoCnae));
+            notaTag.AddTag(AdicionarTag(TipoCampo.De2, "", "AliquotaAtividade", 1, 11,  1, nota.Servico.Valores.Aliquota));
             notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoRecolhimento",01, 01,  1, recolhimento)); 
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "MunicipioPrestacao",          01, 10,  1, nfse.Servico.CodigoMunicipio.ZeroFill(7)));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "MunicipioPrestacaoDescricao", 01, 30, 1, RetirarAcentos ? nfse.Servico.Municipio.RemoveAccent() : nfse.Servico.Municipio));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "MunicipioPrestacao",          01, 10,  1, nota.Servico.CodigoMunicipio.ZeroFill(7)));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "MunicipioPrestacaoDescricao", 01, 30, 1, RetirarAcentos ? nota.Servico.Municipio.RemoveAccent() : nota.Servico.Municipio));
             notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "Operacao", 01, 01,  1, operacao));
             notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "Tributacao",01, 01,  1, tributacao));      
             
             //Valores
-            notaTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorPIS", 1, 2, 1, nfse.Servico.Valores.ValorPis));
-            notaTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorCOFINS", 1, 2, 1, nfse.Servico.Valores.ValorCofins));
-            notaTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorINSS", 1, 2, 1, nfse.Servico.Valores.ValorInss));
-            notaTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorIR", 1, 2, 1, nfse.Servico.Valores.ValorIR));
-            notaTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorCSLL", 1, 2, 1, nfse.Servico.Valores.ValorCsll));
+            notaTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorPIS", 1, 2, 1, nota.Servico.Valores.ValorPis));
+            notaTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorCOFINS", 1, 2, 1, nota.Servico.Valores.ValorCofins));
+            notaTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorINSS", 1, 2, 1, nota.Servico.Valores.ValorInss));
+            notaTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorIR", 1, 2, 1, nota.Servico.Valores.ValorIR));
+            notaTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorCSLL", 1, 2, 1, nota.Servico.Valores.ValorCsll));
 
             //Aliquotas criar propriedades
-            notaTag.AddTag(AdicionarTag(TipoCampo.De4, "", "AliquotaPIS", 1, 2, 1, nfse.Servico.Valores.AliquotaPis));
-            notaTag.AddTag(AdicionarTag(TipoCampo.De4, "", "AliquotaCOFINS", 1, 2, 1, nfse.Servico.Valores.AliquotaCofins));
-            notaTag.AddTag(AdicionarTag(TipoCampo.De4, "", "AliquotaINSS", 1, 2, 1, nfse.Servico.Valores.AliquotaInss));
-            notaTag.AddTag(AdicionarTag(TipoCampo.De4, "", "AliquotaIR", 1, 2, 1, nfse.Servico.Valores.AliquotaIR));
-            notaTag.AddTag(AdicionarTag(TipoCampo.De4, "", "AliquotaCSLL", 1, 2, 1, nfse.Servico.Valores.AliquotaCsll));
+            notaTag.AddTag(AdicionarTag(TipoCampo.De4, "", "AliquotaPIS", 1, 2, 1, nota.Servico.Valores.AliquotaPis));
+            notaTag.AddTag(AdicionarTag(TipoCampo.De4, "", "AliquotaCOFINS", 1, 2, 1, nota.Servico.Valores.AliquotaCofins));
+            notaTag.AddTag(AdicionarTag(TipoCampo.De4, "", "AliquotaINSS", 1, 2, 1, nota.Servico.Valores.AliquotaInss));
+            notaTag.AddTag(AdicionarTag(TipoCampo.De4, "", "AliquotaIR", 1, 2, 1, nota.Servico.Valores.AliquotaIR));
+            notaTag.AddTag(AdicionarTag(TipoCampo.De4, "", "AliquotaCSLL", 1, 2, 1, nota.Servico.Valores.AliquotaCsll));
 
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "DescricaoRPS", 1, 1500, 1, RetirarAcentos ? nfse.Servico.Descricao.RemoveAccent() : nfse.Servico.Descricao));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "DescricaoRPS", 1, 1500, 1, RetirarAcentos ? nota.Servico.Descricao.RemoveAccent() : nota.Servico.Descricao));
 
-			notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "DDDPrestador", 0, 3, 1, nfse.Prestador.Contato.DDD.OnlyNumbers()));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TelefonePrestador", 0, 8, 1, nfse.Prestador.Contato.Telefone.OnlyNumbers()));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "DDDTomador", 0, 03, 1, nfse.Tomador.Contato.DDD.OnlyNumbers()));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TelefoneTomador", 0, 8, 1, nfse.Tomador.Contato.Telefone.OnlyNumbers()));
+			notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "DDDPrestador", 0, 3, 1, nota.Prestador.Contato.DDD.OnlyNumbers()));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TelefonePrestador", 0, 8, 1, nota.Prestador.Contato.Telefone.OnlyNumbers()));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "DDDTomador", 0, 03, 1, nota.Tomador.Contato.DDD.OnlyNumbers()));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TelefoneTomador", 0, 8, 1, nota.Tomador.Contato.Telefone.OnlyNumbers()));
 
-			if (nfse.Status == StatusRps.Cancelado)
-                notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "MotCancelamento", 1, 80, 1, RetirarAcentos ? nfse.MotivoCancelamto.RemoveAccent() : nfse.MotivoCancelamto));
+			if (nota.Status == StatusRps.Cancelado)
+                notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "MotCancelamento", 1, 80, 1, RetirarAcentos ? nota.MotivoCancelamto.RemoveAccent() : nota.MotivoCancelamto));
 
-			if (!nfse.IntermediarioServico.CpfCnpj.IsEmpty())
-                notaTag.AddTag(AdicionarTagCNPJCPF("CPFCNPJIntermediario", "CPFCNPJIntermediario", nfse.IntermediarioServico.CpfCnpj));
+			if (!nota.IntermediarioServico.CpfCnpj.IsEmpty())
+                notaTag.AddTag(AdicionarTagCNPJCPF("CPFCNPJIntermediario", "CPFCNPJIntermediario", nota.IntermediarioServico.CpfCnpj));
 
-			notaTag.AddTag(GerarServicos(nfse.Servico.ItensServico));
-            if (nfse.Servico.Deducoes.Count > 0)
-                notaTag.AddTag(GerarDeducoes(nfse.Servico.Deducoes));
+			notaTag.AddTag(GerarServicos(nota.Servico.ItensServico));
+            if (nota.Servico.Deducoes.Count > 0)
+                notaTag.AddTag(GerarDeducoes(nota.Servico.Deducoes));
 
             Xmldoc.AddTag(notaTag);
             return Xmldoc.AsString(identado, showDeclaration);
@@ -284,35 +281,35 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			xmlLote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			xmlLote.Append("<ns1:ReqEnvioLoteRPS xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqEnvioLoteRPS.xsd\">");
 			xmlLote.Append("<Cabecalho>");
-			xmlLote.AppendFormat("<CodCidade>{0}</CodCidade>", Config.WebServices.CodMunicipio);
-			xmlLote.AppendFormat("<CPFCNPJRemetente>{0}</CPFCNPJRemetente>", Config.PrestadoPadrao.CPFCNPJ.OnlyNumbers().ZeroFill(14));
-			xmlLote.AppendFormat("<RazaoSocialRemetente>{0}</RazaoSocialRemetente>", Config.PrestadoPadrao.RazaoSocial);
+			xmlLote.Append($"<CodCidade>{Config.WebServices.CodMunicipio}</CodCidade>");
+			xmlLote.Append($"<CPFCNPJRemetente>{Config.PrestadoPadrao.CPFCNPJ.ZeroFill(14)}</CPFCNPJRemetente>");
+			xmlLote.Append($"<RazaoSocialRemetente>{Config.PrestadoPadrao.RazaoSocial}</RazaoSocialRemetente>");
 			xmlLote.Append("<transacao/>");
 
-			var rpsOrg = notas.OrderBy(x => x.NFSe.IdentificacaoRps.DataEmissaoRps);
-			xmlLote.AppendFormat("<dtInicio>{0:yyyy-MM-dd}</dtInicio>", rpsOrg.First().NFSe.IdentificacaoRps.DataEmissaoRps);
-			xmlLote.AppendFormat("<dtFim>{0:yyyy-MM-dd}</dtFim>", rpsOrg.Last().NFSe.IdentificacaoRps.DataEmissaoRps);
-			xmlLote.AppendFormat("<QtdRPS>{0}</QtdRPS>", notas.Count);
+			var rpsOrg = notas.OrderBy(x => x.IdentificacaoRps.DataEmissaoRps);
+			xmlLote.Append($"<dtInicio>{rpsOrg.First().IdentificacaoRps.DataEmissaoRps:yyyy-MM-dd}</dtInicio>");
+			xmlLote.Append($"<dtFim>{rpsOrg.Last().IdentificacaoRps.DataEmissaoRps:yyyy-MM-dd}</dtFim>");
+			xmlLote.Append($"<QtdRPS>{notas.Count}</QtdRPS>");
 
-			var valorTotal = notas.Sum(nota => nota.NFSe.Servico.Valores.ValorServicos);
-			xmlLote.AppendFormat(CultureInfo.InvariantCulture, "<ValorTotalServicos>{0:0.00}</ValorTotalServicos>", valorTotal);
+			var valorTotal = notas.Sum(nota => nota.Servico.Valores.ValorServicos);
+			xmlLote.AppendFormat(Extensions.ToInvariant($"<ValorTotalServicos>{valorTotal:0.00}</ValorTotalServicos>"));
 
-			var deducaoTotal = notas.Sum(nota => nota.NFSe.Servico.Valores.ValorDeducoes);
-			xmlLote.AppendFormat(CultureInfo.InvariantCulture, "<ValorTotalDeducoes>{0:0.00}</ValorTotalDeducoes>", deducaoTotal);
+			var deducaoTotal = notas.Sum(nota => nota.Servico.Valores.ValorDeducoes);
+			xmlLote.Append(Extensions.ToInvariant($"<ValorTotalDeducoes>{deducaoTotal:0.00}</ValorTotalDeducoes>"));
 
 			xmlLote.Append("<Versao>1</Versao>");
 			xmlLote.Append("<MetodoEnvio>WS</MetodoEnvio>");
 			xmlLote.Append("</Cabecalho>");
 
-			xmlLote.AppendFormat("<Lote Id=\"lote:{0}\">", lote);
+			xmlLote.Append($"<Lote Id=\"lote:{lote}\">");
 			foreach (var nota in notas)
 			{
 				xmlLote.Append(GetXmlRPS(nota, false, false));
 				if (!Config.Geral.Salvar)
 					continue;
 
-				var rpsFile = Path.Combine(Config.Arquivos.GetPathRps(nota.NFSe.IdentificacaoRps.DataEmissaoRps),
-					$"Rps-{nota.NFSe.IdentificacaoRps.DataEmissaoRps:yyyyMMdd}-{nota.NFSe.IdentificacaoRps.Numero}.xml");
+				var rpsFile = Path.Combine(Config.Arquivos.GetPathRps(nota.IdentificacaoRps.DataEmissaoRps),
+					$"Rps-{nota.IdentificacaoRps.DataEmissaoRps:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml");
 				var xml = GetXmlRPS(nota);
 				File.WriteAllText(rpsFile, xml, Encoding.UTF8);
 			}
@@ -382,13 +379,18 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var xmlRet = new XmlDocument();
 			xmlRet.LoadXml(retorno);
 
+			ret.Sucesso = xmlRet["Cabecalho"]?["Sucesso"].GetValue<bool>() ?? false;
+			ret.CodCidade = xmlRet["Cabecalho"]?["CodCidade"].GetValue<int>() ?? 0;
+			ret.NumeroLote = xmlRet["Cabecalho"]?["NumeroLote"].GetValue<string>() ?? "";
+			ret.CPFCNPJRemetente = xmlRet["Cabecalho"]?["CPFCNPJRemetente"].GetValue<string>() ?? "";
+			ret.DataEnvioLote = xmlRet["Cabecalho"]?["DataEnvioLote"].GetValue<DateTime>() ?? DateTime.MinValue;
 
 			
 			if (!ret.Sucesso)
 				return ret;
 			
 			foreach (var nota in notas)
-				nota.NFSe.NumeroLote = ret.NumeroLote;
+				nota.NumeroLote = ret.NumeroLote;
 
 			return ret;
 		}
@@ -402,14 +404,12 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 		#region Private Methods
 
-		private void GerarCampo(NotaFiscal nota)
+		private void GerarCampos(NotaFiscal nota)
 	    {
-		    var nfse = nota.NFSe;
+			recolhimento = nota.Servico.Valores.IssRetido == SituacaoTributaria.Normal ? "A" : "R";
+			situacao = nota.Status == StatusRps.Normal ? "N" : "C";
 			
-			recolhimento = nfse.Servico.Valores.IssRetido == SituacaoTributaria.Normal ? "A" : "R";
-			situacao = nfse.Status == StatusRps.Normal ? "N" : "C";
-			
-			switch (nfse.NaturezaOperacao)
+			switch (nota.NaturezaOperacao)
 			{
 				case NaturezaOperacao.NO3:
 				case NaturezaOperacao.NO4:
@@ -421,11 +421,11 @@ namespace ACBr.Net.NFSe.Providers.DSF
 					break;
 
 				default:
-					operacao = nfse.DeducaoMateriais == NFSeSimNao.Sim ? "B" : "A";
+					operacao = nota.DeducaoMateriais == NFSeSimNao.Sim ? "B" : "A";
 					break;
 			}
 
-			switch (nfse.TipoTributacao)
+			switch (nota.TipoTributacao)
 			{
 				case TipoTributacao.Isenta:
 					tributacao = "C";
@@ -457,19 +457,19 @@ namespace ACBr.Net.NFSe.Providers.DSF
 					break;
 			}
 
-			if(nfse.RegimeEspecialTributacao == RegimeEspecialTributacao.SimplesNacional)
+			if(nota.RegimeEspecialTributacao == RegimeEspecialTributacao.SimplesNacional)
 				tributacao = "H";
 
-			if(nfse.RegimeEspecialTributacao == RegimeEspecialTributacao.MicroEmpresarioIndividual)
+			if(nota.RegimeEspecialTributacao == RegimeEspecialTributacao.MicroEmpresarioIndividual)
 				tributacao = "M";
 
-			var valor = nfse.Servico.Valores.ValorServicos - nfse.Servico.Valores.ValorDeducoes;
-			var rec = nfse.Servico.Valores.IssRetido == SituacaoTributaria.Normal ? "N" : "S";
-			var assinatura = $"{nfse.Prestador.InscricaoMunicipal.ZeroFill(11)}{nfse.IdentificacaoRps.Serie.FillLeft(5)}" +
-							 $"{nfse.IdentificacaoRps.Numero.ZeroFill(12)}{nfse.IdentificacaoRps.DataEmissaoRps:yyyyMMdd}{tributacao} " +
+			var valor = nota.Servico.Valores.ValorServicos - nota.Servico.Valores.ValorDeducoes;
+			var rec = nota.Servico.Valores.IssRetido == SituacaoTributaria.Normal ? "N" : "S";
+			var assinatura = $"{nota.Prestador.InscricaoMunicipal.ZeroFill(11)}{nota.IdentificacaoRps.Serie.FillLeft(5)}" +
+							 $"{nota.IdentificacaoRps.Numero.ZeroFill(12)}{nota.IdentificacaoRps.DataEmissaoRps:yyyyMMdd}{tributacao} " +
 							 $"{situacao}{rec}{Math.Round(valor * 100).ToString().ZeroFill(15)}" +
-							 $"{Math.Round(nfse.Servico.Valores.ValorDeducoes * 100).ToString().ZeroFill(15)}" +
-							 $"{nfse.Servico.CodigoCnae.ZeroFill(10)}{nfse.Tomador.CpfCnpj.ZeroFill(14)}";
+							 $"{Math.Round(nota.Servico.Valores.ValorDeducoes * 100).ToString().ZeroFill(15)}" +
+							 $"{nota.Servico.CodigoCnae.ZeroFill(10)}{nota.Tomador.CpfCnpj.ZeroFill(14)}";
 
 			this.assinatura = assinatura.ToSha1Hash().ToLowerInvariant();
 		}

@@ -148,6 +148,11 @@ namespace ACBr.Net.NFSe
 
 		#region Methods
 
+		/// <summary>
+		/// Envia as notas ficais para o provedor da cidade.
+		/// </summary>
+		/// <param name="lote">Numero do lote.</param>
+		/// <returns>RetornoWebService.</returns>
 		public RetornoWebService Enviar(int lote)
 		{
 			Guard.Against<ArgumentException>(NotasFiscais.Count < 1, "ERRO: Nenhum RPS adicionado ao Lote");

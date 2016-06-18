@@ -29,7 +29,9 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.ComponentModel;
+using System.IO;
 using ACBr.Net.NFSe.Nota;
 
 namespace ACBr.Net.NFSe.Configuracao
@@ -94,69 +96,6 @@ namespace ACBr.Net.NFSe.Configuracao
 		#endregion Properties
 
 		#region Methods
-
-		/// <summary>
-		/// Gets the path n fe.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		/// <returns>System.String.</returns>
-		public string GetPathNFSe(DateTime? data = null)
-		{
-			var dir = string.IsNullOrEmpty(PathNFSe.Trim()) ? Parent.Geral.PathSalvar : PathNFSe;
-
-			if (PastaMensal)
-				dir = Path.Combine(dir, data.HasValue ? data.Value.ToString("yyyyMM") : DateTime.Now.ToString("yyyyMM"));
-
-			if (AdicionarLiteral && !dir.EndsWith("NFSe"))
-				dir = Path.Combine(dir, "NFSe");
-
-			if (!Directory.Exists(dir))
-				Directory.CreateDirectory(dir);
-
-			return dir;
-		}
-
-		/// <summary>
-		/// Gets the path m de.
-		/// </summary>
-		/// <returns>System.String.</returns>
-		public string GetPathLote()
-		{
-			var dir = string.IsNullOrEmpty(PathLote.Trim()) ? Parent.Geral.PathSalvar : PathLote;
-
-			if (PastaMensal)
-				dir = Path.Combine(dir, DateTime.Now.ToString("yyyyMM"));
-
-			if (AdicionarLiteral && !dir.EndsWith("Lote"))
-				dir = Path.Combine(dir, "Lote");
-
-			if (!Directory.Exists(dir))
-				Directory.CreateDirectory(dir);
-
-			return dir;
-		}
-
-		/// <summary>
-		/// Gets the path RPS.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		/// <returns>System.String.</returns>
-		public string GetPathRPS(DateTime? data = null)
-		{
-			var dir = string.IsNullOrEmpty(PathRPS.Trim()) ? Parent.Geral.PathSalvar : PathRPS;
-
-			if (PastaMensal)
-				dir = Path.Combine(dir, data.HasValue ? data.Value.ToString("yyyyMM") : DateTime.Now.ToString("yyyyMM"));
-
-			if (AdicionarLiteral && !dir.EndsWith("RPS"))
-				dir = Path.Combine(dir, "RPS");
-
-			if (!Directory.Exists(dir))
-				Directory.CreateDirectory(dir);
-
-			return dir;
-		}
-
 		#endregion Methods
 	}
 }

@@ -103,7 +103,6 @@
     <Compile Include="Nota\InfID.cs" />
     <Compile Include="Nota\LocalPrestacaoServico.cs" />
     <Compile Include="Nota\NaturezaOperacao.cs" />
-    <Compile Include="Nota\NFSe.cs" />
     <Compile Include="Nota\NfseFrete.cs" />
     <Compile Include="Nota\NFSeSimNao.cs" />
     <Compile Include="Nota\NotaFiscal.cs" />
@@ -125,6 +124,7 @@
     <Compile Include="Nota\TipoTributacao.cs" />
     <Compile Include="Nota\ValoresServico.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\Extensions.cs" />
     <Compile Include="Util\ProviderHelper.cs" />
     <Compile Include="Providers\DSF\DsfServiceClient.cs" />
     <Compile Include="Providers\DSF\IDsfService.cs" />

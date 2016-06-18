@@ -29,6 +29,7 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System.IO;
 using ACBr.Net.DFe.Core.Collection;
 using ACBr.Net.NFSe.Util;
 
@@ -42,7 +43,7 @@ namespace ACBr.Net.NFSe.Nota
         #region Constructor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NotaFiscalCollection"/> class.
+        /// Inicializa uma nova instacia da classe <see cref="NotaFiscalCollection"/>.
         /// </summary>
         /// <param name="parent">The parent.</param>
         internal NotaFiscalCollection(ACBrNFSe parent)
@@ -65,27 +66,43 @@ namespace ACBr.Net.NFSe.Nota
         #region Methods
 
         /// <summary>
-        /// Adds the new.
+        /// Adiciona uma nova nota fiscal na coleção.
         /// </summary>
         /// <returns>T.</returns>
         public override NotaFiscal AddNew()
         {
             var nota = new NotaFiscal();
+	        nota.Prestador = Parent.Configuracoes.PrestadoPadrao;
 			Add(nota);
             return nota;
         }
 
-        /// <summary>
-        /// Loads from file.
-        /// </summary>
-        /// <param name="xml">The XML.</param>
-        public void LoadFromFile(string xml)
+		/// <summary>
+		/// Carrega a NFSe/RPS do arquivo.
+		/// </summary>
+		/// <param name="xml">caminho do arquivo XML.</param>
+		/// <returns>NotaFiscal carregada.</returns>
+		public NotaFiscal Load(string xml)
         {
-            var provider = ProviderHelper.GetProvider(Parent.Configuracoes.WebServices.CodMunicipio);
+            var provider = ProviderHelper.GetProvider(Parent.Configuracoes);
             var nota = provider.LoadXml(xml);
             Add(nota);
-        }
+			return nota;
+		}
 
-        #endregion Methods
-    }
+		/// <summary>
+		/// Carrega a NFSe/RPS do stream.
+		/// </summary>
+		/// <param name="stream">Stream do XML.</param>
+		/// <returns>NotaFiscal carregada.</returns>
+		public NotaFiscal Load(Stream stream)
+		{
+			var provider = ProviderHelper.GetProvider(Parent.Configuracoes);
+			var nota = provider.LoadXml(stream);
+			Add(nota);
+			return nota;
+		}
+
+		#endregion Methods
+	}
 }
