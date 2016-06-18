@@ -34,11 +34,14 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Xml;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core.Attributes;
 using ACBr.Net.DFe.Core.Serializer;
+using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Interfaces;
+using ACBr.Net.NFSe.Nota;
 
 namespace ACBr.Net.NFSe.Providers
 {
@@ -113,12 +116,12 @@ namespace ACBr.Net.NFSe.Providers
         /// <summary>
         /// Initializes a new instance of the <see cref="ProviderBase"/> class.
         /// </summary>
-		internal ProviderBase()
+		internal ProviderBase(Configuracoes config)
 		{
 			ListaDeAlertas = new List<string>();
 			FormatoAlerta = "TAG:%TAG% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.";
 			Xmldoc = new XmlDocument();
-		}
+	        Config = config;}
 
 		#endregion Constructor
 
@@ -142,42 +145,81 @@ namespace ACBr.Net.NFSe.Providers
 		/// <value><c>true</c> if [retirar acentos]; otherwise, <c>false</c>.</value>
 		public bool RetirarAcentos { get; set; }
 
-		#endregion Propriedades
+		public Configuracoes Config { get; }
+
+	    public TimeSpan? TimeOut
+	    {
+		    get
+		    {
+				TimeSpan? timeOut = null;
+				if (Config.WebServices.AjustaAguardaConsultaRet)
+					timeOut = TimeSpan.FromSeconds((int)Config.WebServices.AguardarConsultaRet);
+
+			    return timeOut;
+		    }
+	    }
+
+	    public X509Certificate2 Certificado => Config.Certificados.ObterCertificado();
+
+	    #endregion Propriedades
 
 		#region Methods
 
-		public virtual string GetXmlRPS(Nota.NotaFiscal nota, bool identado = true, bool showDeclaration = true)
+		#region Public
+
+		public virtual string GetXmlRPS(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
 		{
             throw new NotImplementedException("GetXmlRPS");
 		}
 
-        public virtual string GetXmlNFSe(Nota.NotaFiscal nota, bool identado = true, bool showDeclaration = true)
+        public virtual string GetXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
         {
             throw new NotImplementedException("GetXmlNFSe");
         }
 
-        public virtual Nota.NotaFiscal LoadXml(string xml)
+        public virtual NotaFiscal LoadXml(string xml)
         {
             throw new NotImplementedException("LoadXml");
         }
 
-        public virtual Nota.NotaFiscal LoadXml(XmlDocument xml)
+        public virtual NotaFiscal LoadXml(XmlDocument xml)
         {
             throw new NotImplementedException("LoadXml");
         }
 
-        public virtual Nota.NotaFiscal LoadXml(Stream xmlStream)
+        public virtual NotaFiscal LoadXml(Stream xmlStream)
         {
             throw new NotImplementedException("LoadXml");
         }
 
-        /// <summary>
-        /// Adicionars the tag CNPJCPF.
-        /// </summary>
-        /// <param name="tagCPF">The i d1.</param>
-        /// <param name="tagCNPJ">The i d2.</param>
-        /// <param name="cnpjcpf">The CNPJCPF.</param>
-        /// <returns>XmlElement.</returns>
+		public virtual RetornoWebService Enviar(int lote, NotaFiscalCollection notas)
+	    {
+		    throw new NotImplementedException("Função não implementada neste Provedor !");
+	    }
+
+		#endregion Public
+
+		#region Protected
+
+	    protected string GetUrl(TipoUrl url)
+	    {
+			switch (Config.WebServices.Ambiente)
+		    {
+				case TipoAmbiente.Producao:
+				    return GetUrlProd(Config.WebServices.CodMunicipio, url);
+
+				default:
+					return GetUrlHom(Config.WebServices.CodMunicipio, url);
+		    }
+	    }
+		
+		/// <summary>
+		/// Adicionars the tag CNPJCPF.
+		/// </summary>
+		/// <param name="tagCPF">The i d1.</param>
+		/// <param name="tagCNPJ">The i d2.</param>
+		/// <param name="cnpjcpf">The CNPJCPF.</param>
+		/// <returns>XmlElement.</returns>
 		protected XmlElement AdicionarTagCNPJCPF(string tagCPF, string tagCNPJ, string cnpjcpf)
 		{
 			cnpjcpf = cnpjcpf.Trim().OnlyNumbers();
@@ -405,6 +447,22 @@ namespace ACBr.Net.NFSe.Providers
 			
 			ListaDeAlertas.Add(s);
         }
+
+		#endregion Protected
+
+		#region Private
+
+		private static string GetUrlHom(int codCidade, TipoUrl url)
+		{
+			return "";
+		}
+
+		private static string GetUrlProd(int codCidade, TipoUrl url)
+		{
+			return "";
+		}
+
+		#endregion Private
 
 		#endregion Methods
 	}

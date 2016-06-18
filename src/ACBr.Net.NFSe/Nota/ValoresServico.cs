@@ -88,7 +88,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		public string JustificativaDeducao { get; set; }
 
-		public decimal valorOutrasRetencoes { get; set; }
+		public decimal ValorOutrasRetencoes { get; set; }
 
 		public string DescricaoOutrasRetencoes { get; set; }
 		

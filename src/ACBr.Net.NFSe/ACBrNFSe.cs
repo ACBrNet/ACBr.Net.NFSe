@@ -29,11 +29,16 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
+using System.Linq;
 using ACBr.Net.Core;
+using ACBr.Net.Core.Exceptions;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Interfaces;
 using ACBr.Net.NFSe.Nota;
-using System.Drawing;
+using ACBr.Net.NFSe.Providers;
+using ACBr.Net.NFSe.Util;
+
 #region COM Interop Attributes
 
 #if COM_INTEROP
@@ -44,9 +49,9 @@ using System.Runtime.InteropServices;
 
 namespace ACBr.Net.NFSe
 {
-    #region COM Interop
+	#region COM Interop
 
-    /* NOTAS para COM INTEROP
+	/* NOTAS para COM INTEROP
 	 * Há um modo de compilação com a diretiva COM_INTEROP que inseri atributos e código específico
 	 * para a DLL ser exportada para COM (ActiveX)
 	 *
@@ -77,34 +82,34 @@ namespace ACBr.Net.NFSe
 
 #if COM_INTEROP
 
-    #region IDispatch Interface
+	#region IDispatch Interface
 
-    #region Documentation
+	#region Documentation
 
 	/// <summary>
 	/// Interface contendo os eventos publicados pelo componente COM
 	/// </summary>
 
-    #endregion Documentation
+	#endregion Documentation
 
-    #endregion IDispatch Interface
+	#endregion IDispatch Interface
 
-    #region Delegates
+	#region Delegates
 
-    #region Comments
+	#region Comments
 
 	///os componentes COM não suportam Generics
 	///Estas são implementações específicas de delegates que no .Net são representados como EventHandler<T>
 
-    #endregion Comments
+	#endregion Comments
 
-    #endregion Delegates
+	#endregion Delegates
 
 #endif
 
-    #endregion COM Interop
+	#endregion COM Interop
 
-    #region COM Interop Attributes
+	#region COM Interop Attributes
 
 #if COM_INTEROP
 
@@ -114,8 +119,11 @@ namespace ACBr.Net.NFSe
 
 #endif
 
-    #endregion COM Interop Attributes
-    [ToolboxBitmap(typeof(ACBrNFSe), @"ACBr.Net.NFSe.ico.bmp")]
+	#endregion COM Interop Attributes
+	/// <summary>
+	/// Class ACBrNFSe.
+	/// </summary>
+	/// <seealso cref="ACBr.Net.Core.ACBrComponent" />
     // ReSharper disable once InconsistentNaming
     public class ACBrNFSe : ACBrComponent
     {
@@ -134,22 +142,32 @@ namespace ACBr.Net.NFSe
         /// <summary>
         /// Coleção de NFSe para processar e/ou processadas
         /// </summary>
-        public NotaFiscalCollection NotasFicais { get; private set; }
+        public NotaFiscalCollection NotasFiscais { get; private set; }
 
-        #endregion Propriedades
+		#endregion Propriedades
 
-        #region Methods
-        #endregion Methods
+		#region Methods
 
-        #region Override Methods
+		public RetornoWebService Enviar(int lote)
+		{
+			Guard.Against<ArgumentException>(NotasFiscais.Count < 1, "ERRO: Nenhum RPS adicionado ao Lote");
+			Guard.Against<ArgumentException>(NotasFiscais.Count > 50, $"ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS) excedido.{Environment.NewLine}" + 
+																     $"Quantidade atual: {NotasFiscais.Count}");
+			var provider = ProviderHelper.GetProvider(Configuracoes);
+			return provider.Enviar(lote, NotasFiscais);
+		}
 
-        /// <summary>
-        /// Função executada na inicialização do componente
-        /// </summary>
-        protected override void OnInitialize()
+		#endregion Methods
+
+		#region Override Methods
+
+		/// <summary>
+		/// Função executada na inicialização do componente
+		/// </summary>
+		protected override void OnInitialize()
         {
             Configuracoes = new Configuracoes();
-            NotasFicais = new NotaFiscalCollection(this);
+            NotasFiscais = new NotaFiscalCollection(this);
         }
 
         /// <summary>

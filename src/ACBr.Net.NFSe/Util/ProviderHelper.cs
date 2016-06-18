@@ -29,21 +29,24 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
+using System.Security.Cryptography.X509Certificates;
 using ACBr.Net.Core;
+using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Interfaces;
-using ACBr.Net.NFSe.Providers;
+using ACBr.Net.NFSe.Providers.DSF;
 
 namespace ACBr.Net.NFSe.Util
 {
     internal static class ProviderHelper
     {
-        public static IProvider GetProvider(int codCidade)
+		public static IProvider GetProvider(Configuracoes config)
         {
-            switch (codCidade)
+            switch (config.WebServices.CodMunicipio)
             {
                 case 3509502:
                 case 5002704: 
-                    return new ProviderDSF();
+                    return new ProviderDSF(config);
 
                 default: 
                     throw new ACBrException("Não tem provedor implementado para esta cidade");

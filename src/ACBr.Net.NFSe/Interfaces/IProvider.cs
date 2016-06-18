@@ -33,6 +33,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using ACBr.Net.NFSe.Nota;
+using ACBr.Net.NFSe.Providers;
 
 namespace ACBr.Net.NFSe.Interfaces
 {
@@ -98,6 +99,8 @@ namespace ACBr.Net.NFSe.Interfaces
         /// <returns></returns>
         NotaFiscal LoadXml(Stream xmlStream);
 
-        #endregion Methods
+	    RetornoWebService Enviar(int lote, NotaFiscalCollection notas);
+
+	    #endregion Methods
     }
 }

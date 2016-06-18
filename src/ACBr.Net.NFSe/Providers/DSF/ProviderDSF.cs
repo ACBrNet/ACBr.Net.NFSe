@@ -32,35 +32,51 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Xml;
 using ACBr.Net.Core.Extensions;
+using ACBr.Net.DFe.Core;
 using ACBr.Net.DFe.Core.Serializer;
+using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
 using ACBr.Net.NFSe.Util;
 
-namespace ACBr.Net.NFSe.Providers
+namespace ACBr.Net.NFSe.Providers.DSF
 {
     /// <summary>
     /// Class ProviderDSF. This class cannot be inherited.
     /// </summary>
     internal sealed class ProviderDSF : ProviderBase
     {
-		#region Propriedades
+		#region Fields
 
-	    public string Situacao { get; set; }
+	    private string situacao;
 
-	    public string Recolhimento { get; set; }
+	    private string recolhimento;
 
-		public string Tributacao { get; set; }
+	    private string tributacao;
 
-	    public string Operacao { get; set; }
+	    private string operacao;
 
-	    public string Assinatura { get; set; }
+	    private string assinatura;
 
-		#endregion Propriedades
+		#endregion Fields
+
+		#region Constructors
+
+		public ProviderDSF(Configuracoes config) : base(config)
+	    {
+		    
+	    }
+
+		#endregion Constructors
 
 		#region Methods
+
+		#region Public
 
 		/// <summary>
 		/// Gets the XML.
@@ -83,7 +99,7 @@ namespace ACBr.Net.NFSe.Providers
 
 			
 
-			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "Assinatura", 1, 2000, 1, Assinatura));
+			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "Assinatura", 1, 2000, 1, assinatura));
             rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalPrestador", 01, 11,  1, nfse.Prestador.InscricaoMunicipal.OnlyNumbers()));
             rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "RazaoSocialPrestador", 1, 120, 1, RetirarAcentos ? nfse.Prestador.RazaoSocial.RemoveAccent() : nfse.Prestador.RazaoSocial));
             rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoRPS", 1, 20,  1, "RPS"));
@@ -93,7 +109,7 @@ namespace ACBr.Net.NFSe.Providers
 
 			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "NumeroRPS", 1, 12, 1, nfse.IdentificacaoRps.Numero));
             rpsTag.AddTag(AdicionarTag(TipoCampo.DatHor, "", "DataEmissaoRPS", 1, 21,  1, nfse.IdentificacaoRps.DataEmissaoRps));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "SituacaoRPS", 1, 1, 1, Situacao));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "SituacaoRPS", 1, 1, 1, situacao));
             if (!nfse.RpsSubstituido.NumeroRps.IsEmpty())
             {
                 rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "SerieRPSSubstituido", 0, 2, 1, "NF"));
@@ -123,11 +139,11 @@ namespace ACBr.Net.NFSe.Providers
             rpsTag.AddTag(AdicionarTag(TipoCampo.De2, "", "AliquotaAtividade", 1, 11,  1, nfse.Servico.Valores.Aliquota));
 
 			//valores serviço
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoRecolhimento", 01, 01,  1, Recolhimento)); 
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoRecolhimento", 01, 01,  1, recolhimento)); 
             rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "MunicipioPrestacao", 1, 10,  1, nfse.Servico.CodigoMunicipio.ZeroFill(7)));
             rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "MunicipioPrestacaoDescricao", 01, 30, 1, RetirarAcentos ? nfse.Servico.Municipio.RemoveAccent() : nfse.Servico.Municipio));
-			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "Operacao", 01, 01, 1, Operacao));
-            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "Tributacao",01, 01,  1, Tributacao));      
+			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "Operacao", 01, 01, 1, operacao));
+            rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "Tributacao",01, 01,  1, tributacao));      
             
             //Valores
             rpsTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorPIS", 1, 2, 1, nfse.Servico.Valores.ValorPis));
@@ -193,7 +209,7 @@ namespace ACBr.Net.NFSe.Providers
 
 			notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "NumeroRPS", 1, 12, 1, nfse.IdentificacaoRps.Serie));
             notaTag.AddTag(AdicionarTag(TipoCampo.DatHor, "", "DataEmissaoRPS", 1, 21,  1, nfse.IdentificacaoRps.DataEmissaoRps));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "SituacaoRPS", 1, 1, 1, Situacao));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "SituacaoRPS", 1, 1, 1, situacao));
             if (!nfse.RpsSubstituido.NumeroRps.IsEmpty())
             {
                 notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "SerieRPSSubstituido", 0, 2, 1, "NF"));
@@ -221,11 +237,11 @@ namespace ACBr.Net.NFSe.Providers
             notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "EmailTomador", 1, 60,  1, nfse.Tomador.Contato.Email));
             notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CodigoAtividade", 1, 9,  1, nfse.Servico.CodigoCnae));
             notaTag.AddTag(AdicionarTag(TipoCampo.De2, "", "AliquotaAtividade", 1, 11,  1, nfse.Servico.Valores.Aliquota));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoRecolhimento",01, 01,  1, Recolhimento)); 
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoRecolhimento",01, 01,  1, recolhimento)); 
             notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "MunicipioPrestacao",          01, 10,  1, nfse.Servico.CodigoMunicipio.ZeroFill(7)));
             notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "MunicipioPrestacaoDescricao", 01, 30, 1, RetirarAcentos ? nfse.Servico.Municipio.RemoveAccent() : nfse.Servico.Municipio));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "Operacao", 01, 01,  1, Operacao));
-            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "Tributacao",01, 01,  1, Tributacao));      
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "Operacao", 01, 01,  1, operacao));
+            notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "Tributacao",01, 01,  1, tributacao));      
             
             //Valores
             notaTag.AddTag(AdicionarTag(TipoCampo.De2, "", "ValorPIS", 1, 2, 1, nfse.Servico.Valores.ValorPis));
@@ -262,80 +278,200 @@ namespace ACBr.Net.NFSe.Providers
             return Xmldoc.AsString(identado, showDeclaration);
         }
 
-        #endregion Methods
+		public override RetornoWebService Enviar(int lote, NotaFiscalCollection notas)
+		{
+			var xmlLote = new StringBuilder();
+			xmlLote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+			xmlLote.Append("<ns1:ReqEnvioLoteRPS xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqEnvioLoteRPS.xsd\">");
+			xmlLote.Append("<Cabecalho>");
+			xmlLote.AppendFormat("<CodCidade>{0}</CodCidade>", Config.WebServices.CodMunicipio);
+			xmlLote.AppendFormat("<CPFCNPJRemetente>{0}</CPFCNPJRemetente>", Config.PrestadoPadrao.CPFCNPJ.OnlyNumbers().ZeroFill(14));
+			xmlLote.AppendFormat("<RazaoSocialRemetente>{0}</RazaoSocialRemetente>", Config.PrestadoPadrao.RazaoSocial);
+			xmlLote.Append("<transacao/>");
 
-        #region Private Methods
+			var rpsOrg = notas.OrderBy(x => x.NFSe.IdentificacaoRps.DataEmissaoRps);
+			xmlLote.AppendFormat("<dtInicio>{0:yyyy-MM-dd}</dtInicio>", rpsOrg.First().NFSe.IdentificacaoRps.DataEmissaoRps);
+			xmlLote.AppendFormat("<dtFim>{0:yyyy-MM-dd}</dtFim>", rpsOrg.Last().NFSe.IdentificacaoRps.DataEmissaoRps);
+			xmlLote.AppendFormat("<QtdRPS>{0}</QtdRPS>", notas.Count);
 
-	    private void GerarCampo(NotaFiscal nota)
+			var valorTotal = notas.Sum(nota => nota.NFSe.Servico.Valores.ValorServicos);
+			xmlLote.AppendFormat(CultureInfo.InvariantCulture, "<ValorTotalServicos>{0:0.00}</ValorTotalServicos>", valorTotal);
+
+			var deducaoTotal = notas.Sum(nota => nota.NFSe.Servico.Valores.ValorDeducoes);
+			xmlLote.AppendFormat(CultureInfo.InvariantCulture, "<ValorTotalDeducoes>{0:0.00}</ValorTotalDeducoes>", deducaoTotal);
+
+			xmlLote.Append("<Versao>1</Versao>");
+			xmlLote.Append("<MetodoEnvio>WS</MetodoEnvio>");
+			xmlLote.Append("</Cabecalho>");
+
+			xmlLote.AppendFormat("<Lote Id=\"lote:{0}\">", lote);
+			foreach (var nota in notas)
+			{
+				xmlLote.Append(GetXmlRPS(nota, false, false));
+				if (!Config.Geral.Salvar)
+					continue;
+
+				var rpsFile = Path.Combine(Config.Arquivos.GetPathRps(nota.NFSe.IdentificacaoRps.DataEmissaoRps),
+					$"Rps-{nota.NFSe.IdentificacaoRps.DataEmissaoRps:yyyyMMdd}-{nota.NFSe.IdentificacaoRps.Numero}.xml");
+				var xml = GetXmlRPS(nota);
+				File.WriteAllText(rpsFile, xml, Encoding.UTF8);
+			}
+
+			xmlLote.Append("</Lote>");
+			xmlLote.Append("</ns1:ReqEnvioLoteRPS>");
+			var loteRps = xmlLote.ToString();
+			loteRps = CertificadoDigital.SignXml(loteRps, "Lote", Certificado);
+
+			if (Config.Geral.Salvar)
+			{
+				var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"lote-{lote}-env.xml");
+				File.WriteAllText(loteFile, loteRps, Encoding.UTF8);
+			}
+
+			string[] erros;
+			var schema = Path.Combine(Config.Geral.PathSchemas, "DSF/ReqEnvioLoteRPS.xsd");
+			if (!CertificadoDigital.ValidarXml(loteRps, schema, out erros))
+			{
+				var retLote = new RetornoWebService
+				{
+					Sucesso = false,
+					CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
+					CodCidade = Config.WebServices.CodMunicipio,
+					DataEnvioLote = DateTime.Now,
+					NumeroLote = "0",
+					Assincrono = true
+				};
+
+				foreach (var loteErro in erros.Select(erro => new Evento { Codigo = 0, Descricao = erro }))
+					retLote.Erros.Add(loteErro);
+
+				return retLote;
+			}
+
+			var url = GetUrl(TipoUrl.RecepcaoLoteRPS);
+			var cliente = new DsfServiceClient(url, Certificado, TimeOut);
+
+			string retorno;
+			try
+			{
+				retorno = cliente.Enviar(loteRps);
+			}
+			catch (Exception ex)
+			{
+				var retLote = new RetornoWebService
+				{
+					Sucesso = false,
+					CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
+					CodCidade = Config.WebServices.CodMunicipio,
+					DataEnvioLote = DateTime.Now,
+					NumeroLote = "0",
+					Assincrono = true
+				};
+
+				retLote.Erros.Add(new Evento { Codigo = 0, Descricao = ex.Message });
+				return retLote;
+			}
+
+			if (Config.Geral.Salvar)
+			{
+				var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"lote-{lote}-ret.xml");
+				File.WriteAllText(loteFile, retorno, Encoding.UTF8);
+			}
+
+			var ret = new RetornoWebService();
+			var xmlRet = new XmlDocument();
+			xmlRet.LoadXml(retorno);
+
+
+			
+			if (!ret.Sucesso)
+				return ret;
+			
+			foreach (var nota in notas)
+				nota.NFSe.NumeroLote = ret.NumeroLote;
+
+			return ret;
+		}
+
+		#endregion Public
+
+		#region Private
+		#endregion Private
+
+		#endregion Methods
+
+		#region Private Methods
+
+		private void GerarCampo(NotaFiscal nota)
 	    {
 		    var nfse = nota.NFSe;
 			
-			Recolhimento = nfse.Servico.Valores.IssRetido == SituacaoTributaria.Normal ? "A" : "R";
-			Situacao = nfse.Status == StatusRps.Normal ? "N" : "C";
+			recolhimento = nfse.Servico.Valores.IssRetido == SituacaoTributaria.Normal ? "A" : "R";
+			situacao = nfse.Status == StatusRps.Normal ? "N" : "C";
 			
 			switch (nfse.NaturezaOperacao)
 			{
 				case NaturezaOperacao.NO3:
 				case NaturezaOperacao.NO4:
-					Operacao = "C";
+					operacao = "C";
 					break;
 
 				case NaturezaOperacao.NO7:
-					Operacao = "A";
+					operacao = "A";
 					break;
 
 				default:
-					Operacao = nfse.DeducaoMateriais == NFSeSimNao.Sim ? "B" : "A";
+					operacao = nfse.DeducaoMateriais == NFSeSimNao.Sim ? "B" : "A";
 					break;
 			}
 
 			switch (nfse.TipoTributacao)
 			{
 				case TipoTributacao.Isenta:
-					Tributacao = "C";
+					tributacao = "C";
 					break;
 
 				case TipoTributacao.Imune:
-					Tributacao = "F";
+					tributacao = "F";
 					break;
 
 				case TipoTributacao.DepositoEmJuizo:
-					Tributacao = "K";
+					tributacao = "K";
 					break;
 
 				case TipoTributacao.NaoIncide:
-					Tributacao = "E";
+					tributacao = "E";
 					break;
 					
 				case TipoTributacao.NaoTributavel:
-					Tributacao = "N";
+					tributacao = "N";
 					break;
 
 				case TipoTributacao.TributavelFixo:
-					Tributacao = "G";
+					tributacao = "G";
 					break;
 
 				//Tributavel
 				default:
-					Tributacao = "T";
+					tributacao = "T";
 					break;
 			}
 
 			if(nfse.RegimeEspecialTributacao == RegimeEspecialTributacao.SimplesNacional)
-				Tributacao = "H";
+				tributacao = "H";
 
 			if(nfse.RegimeEspecialTributacao == RegimeEspecialTributacao.MicroEmpresarioIndividual)
-				Tributacao = "M";
+				tributacao = "M";
 
 			var valor = nfse.Servico.Valores.ValorServicos - nfse.Servico.Valores.ValorDeducoes;
 			var rec = nfse.Servico.Valores.IssRetido == SituacaoTributaria.Normal ? "N" : "S";
 			var assinatura = $"{nfse.Prestador.InscricaoMunicipal.ZeroFill(11)}{nfse.IdentificacaoRps.Serie.FillLeft(5)}" +
-							 $"{nfse.IdentificacaoRps.Numero.ZeroFill(12)}{nfse.IdentificacaoRps.DataEmissaoRps:yyyyMMdd}{Tributacao} " +
-							 $"{Situacao}{rec}{Math.Round(valor * 100).ToString().ZeroFill(15)}" +
+							 $"{nfse.IdentificacaoRps.Numero.ZeroFill(12)}{nfse.IdentificacaoRps.DataEmissaoRps:yyyyMMdd}{tributacao} " +
+							 $"{situacao}{rec}{Math.Round(valor * 100).ToString().ZeroFill(15)}" +
 							 $"{Math.Round(nfse.Servico.Valores.ValorDeducoes * 100).ToString().ZeroFill(15)}" +
 							 $"{nfse.Servico.CodigoCnae.ZeroFill(10)}{nfse.Tomador.CpfCnpj.ZeroFill(14)}";
 
-			Assinatura = assinatura.ToSha1Hash().ToLowerInvariant();
+			this.assinatura = assinatura.ToSha1Hash().ToLowerInvariant();
 		}
 
         private XmlElement GerarServicos(IEnumerable<Servico> servicos)

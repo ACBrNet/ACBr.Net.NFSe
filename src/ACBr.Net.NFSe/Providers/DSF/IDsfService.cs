@@ -29,13 +29,10 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.CodeDom.Compiler;
 using System.ServiceModel;
 
-namespace ACBr.Net.NFSe.Webservices.DSF
+namespace ACBr.Net.NFSe.Providers.DSF
 {
-    [GeneratedCode("System.ServiceModel", "4.0.0.0")]
-    [ServiceContract(Namespace = "http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws", ConfigurationName = "DsfService.LoteRps")]
     internal interface IDsfService
     {
         [OperationContract(Action = "", ReplyAction = "*")]

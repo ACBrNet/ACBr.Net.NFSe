@@ -29,30 +29,35 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.CodeDom.Compiler;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
 
-namespace ACBr.Net.NFSe.Webservices.DSF
+namespace ACBr.Net.NFSe.Providers.DSF
 {
     /// <summary>
     /// Class DsfServiceClient.
     /// </summary>
-    [DebuggerStepThrough]
-    [GeneratedCode("System.ServiceModel", "4.0.0.0")]
     internal class DsfServiceClient : ClientBase<IDsfService>, IDsfService
     {
         #region Constructor
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DsfServiceClient"/> class.
-        /// </summary>
-        /// <param name="url">The URL.</param>
-        public DsfServiceClient(string url):base(new BasicHttpBinding(), new EndpointAddress(url))
+		
+        public DsfServiceClient(string url, X509Certificate2 certificado, TimeSpan? timeOut = null):base(new BasicHttpBinding(), new EndpointAddress(url))
         {
             ((BasicHttpBinding)Endpoint.Binding).UseDefaultWebProxy = true;
-        }
+			if(ClientCredentials != null)
+				ClientCredentials.ClientCertificate.Certificate = certificado;
+
+			if(!timeOut.HasValue)
+				return;
+
+			Endpoint.Binding.OpenTimeout = timeOut.Value;
+			Endpoint.Binding.ReceiveTimeout = timeOut.Value;
+			Endpoint.Binding.SendTimeout = timeOut.Value;
+		}
 
         #endregion Constructor
 
