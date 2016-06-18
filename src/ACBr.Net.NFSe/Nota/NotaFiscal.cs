@@ -102,8 +102,6 @@ namespace ACBr.Net.NFSe.Nota
 
 		public string Numero { get; set; }
 
-		public string CodigoVerificacao { get; set; }
-
 		public string Competencia { get; set; }
 
 		public string OutrasInformacoes { get; set; }
@@ -128,7 +126,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		public string NfseSubstituidora { get; set; }
 
-		public string MotivoCancelamto { get; set; }
+		public string MotivoCancelamento { get; set; }
 
 		public string ChaveNfse { get; set; }
 
@@ -141,8 +139,6 @@ namespace ACBr.Net.NFSe.Nota
 		public NFSeSimNao Cancelada { get; set; }
 
 		public DadosTransportadora Transportadora { get; }
-
-		public string TipoRecolhimento { get; set; }
 
 		public EmailCollection Emails { get; }
 

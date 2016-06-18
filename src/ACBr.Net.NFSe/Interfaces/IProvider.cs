@@ -95,9 +95,9 @@ namespace ACBr.Net.NFSe.Interfaces
         /// <summary>
         /// Carrega XML da NFSe no Componente a partir do Stream.
         /// </summary>
-        /// <param name="xmlStream"></param>
+        /// <param name="stream"></param>
         /// <returns></returns>
-        NotaFiscal LoadXml(Stream xmlStream);
+        NotaFiscal LoadXml(Stream stream);
 
 	    RetornoWebService Enviar(int lote, NotaFiscalCollection notas);
 

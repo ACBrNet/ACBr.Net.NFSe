@@ -31,51 +31,191 @@
 
 namespace ACBr.Net.NFSe.Nota
 {
+	/// <summary>
+	/// Enum NaturezaOperacao
+	/// Cada Provedor tem suas proprias naturezas ver no Help de cada uma
+	/// </summary>
 	public enum NaturezaOperacao
 	{
-		NO1,
-		NO2,
-		NO3,
-		NO4,
-		NO5,
-		NO6,
-		NO7,
-		NO9,
-		NO50,
-		NO51,
-		NO52,
-		NO53,
-		NO54,
-		NO55,
-		NO56,
-		NO57,
-		NO58,
-		NO59,
-		NO60,
-		NO61,
-		NO62,
-		NO63,
-		NO64,
-		NO65,
-		NO66,
-		NO67,
-		NO68,
-		NO69,
-		NO70,
-		NO71,
-		NO72,
-		NO78,
-		NO79,
-		NO101,
-		NO111,
-		NO121,
-		NO201,
-		NO301,
-		NO501,
-		NO511,
-		NO541,
-		NO551,
-		NO601,
-		NO701
+		/// <summary>
+		///  DSF : SemDeducao = 'A'
+		/// </summary>
+		NT01,
+		/// <summary>
+		///  DSF : ComDeducao = 'B'
+		/// </summary>
+		NT02,
+		/// <summary>
+		///  DSF : Isenta = 'C'
+		/// </summary>
+		NT03,
+		/// <summary>
+		///  DSF : Devolucao = 'D'
+		/// </summary>
+		NT04,
+		/// <summary>
+		///  DSF : Intermediacao = 'J'
+		/// </summary>
+		NT05,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT06,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT07,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT08,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT09,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT50,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT51,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT52,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT53,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT54,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT55,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT56,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT57,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT58,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT59,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT60,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT61,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT62,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT63,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT64,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT65,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT66,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT67,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT68,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT69,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT70,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT71,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT72,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT78,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT79,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT101,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT111,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT121,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT201,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT301,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT501,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT511,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT541,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT551,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT601,
+		/// <summary>
+		///  DSF : Não Utiliza
+		/// </summary>
+		NT701
 	}
 }

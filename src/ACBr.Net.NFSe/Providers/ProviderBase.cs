@@ -36,6 +36,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml;
+using ACBr.Net.Core.Exceptions;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core.Attributes;
 using ACBr.Net.DFe.Core.Serializer;
@@ -161,11 +162,32 @@ namespace ACBr.Net.NFSe.Providers
 
 	    public X509Certificate2 Certificado => Config.Certificados.ObterCertificado();
 
-	    #endregion Propriedades
+		#endregion Propriedades
 
 		#region Methods
 
 		#region Public
+
+		public NotaFiscal LoadXml(string xml)
+		{
+			Guard.Against<FileNotFoundException>(!File.Exists(xml), "Arquivo XML não encontrado !");
+			var doc = new XmlDocument();
+			doc.Load(xml);
+			return LoadXml(doc);
+		}
+
+		public NotaFiscal LoadXml(Stream stream)
+		{
+			Guard.Against<ArgumentNullException>(stream == null, "Stream não pode ser nulo !");
+			var doc = new XmlDocument();
+			doc.Load(stream);
+			return LoadXml(doc);
+		}
+
+		public virtual NotaFiscal LoadXml(XmlDocument xml)
+		{
+			throw new NotImplementedException("LoadXml");
+		}
 
 		public virtual string GetXmlRPS(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
 		{
@@ -175,21 +197,6 @@ namespace ACBr.Net.NFSe.Providers
         public virtual string GetXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
         {
             throw new NotImplementedException("GetXmlNFSe");
-        }
-
-        public virtual NotaFiscal LoadXml(string xml)
-        {
-            throw new NotImplementedException("LoadXml");
-        }
-
-        public virtual NotaFiscal LoadXml(XmlDocument xml)
-        {
-            throw new NotImplementedException("LoadXml");
-        }
-
-        public virtual NotaFiscal LoadXml(Stream xmlStream)
-        {
-            throw new NotImplementedException("LoadXml");
         }
 
 		public virtual RetornoWebService Enviar(int lote, NotaFiscalCollection notas)

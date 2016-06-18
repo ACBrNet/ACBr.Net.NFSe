@@ -2,7 +2,28 @@
 <ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>F:\Programacao\ACBr\ACBr.Net\ACBr.Net.NFSe\src\ACBr.Net.NFSe\ACBrNFSe.cs</string>
+      <string>f:\programacao\acbr\acbr.net\acbr.net.nfse\src\acbr.net.nfse\acbrnfse.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>F:\Programacao\ACBr\ACBr.Net\ACBr.Net.NFSe\src\ACBr.Net.NFSe\Providers\DSF\ProviderDSF.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>f:\programacao\acbr\acbr.net\acbr.net.nfse\src\acbr.net.nfse\interfaces\iprovider.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>f:\programacao\acbr\acbr.net\acbr.net.nfse\src\acbr.net.nfse\providers\providerbase.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>f:\programacao\acbr\acbr.net\acbr.net.nfse\src\acbr.net.nfse\providers\evento.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>f:\programacao\acbr\acbr.net\acbr.net.nfse\src\acbr.net.nfse\util\providerhelper.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>f:\programacao\acbr\acbr.net\acbr.net.nfse\src\acbr.net.nfse\util\extensions.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>f:\programacao\acbr\acbr.net\acbr.net.nfse\src\acbr.net.nfse\nota\notafiscalcollection.cs</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

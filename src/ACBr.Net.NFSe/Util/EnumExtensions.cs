@@ -35,13 +35,20 @@ using ACBr.Net.Core.Exceptions;
 
 namespace ACBr.Net.NFSe.Util
 {
-	public static class EnumExtensions
+	internal static class EnumExtensions
 	{
 		public static string GetStr<T>(this T valor, T[] valores, string[] retornos) where T : struct
 		{
 			Guard.Against<ACBrException>(valores.Length != retornos.Length, "O quantidade de valores e retornos são diferentes");
 			var idx = Array.IndexOf(valores, valor);
 			return idx < 0 ? string.Empty : retornos[idx];
+		}
+
+		public static T ToEnum<T>(this string valor, string[] valores, T[] retornos) where T : struct
+		{
+			Guard.Against<ACBrException>(valores.Length != retornos.Length, "O quantidade de valores e retornos são diferentes");
+			var idx = Array.IndexOf(valores, valor);
+			return idx < 0 ? default(T) : retornos[idx];
 		}
 	}
 }

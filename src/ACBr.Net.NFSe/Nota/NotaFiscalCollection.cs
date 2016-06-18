@@ -30,6 +30,7 @@
 // ***********************************************************************
 
 using System.IO;
+using System.Xml;
 using ACBr.Net.DFe.Core.Collection;
 using ACBr.Net.NFSe.Util;
 
@@ -91,7 +92,7 @@ namespace ACBr.Net.NFSe.Nota
 		}
 
 		/// <summary>
-		/// Carrega a NFSe/RPS do stream.
+		/// Carrega a NFSe/RPS do xml.
 		/// </summary>
 		/// <param name="stream">Stream do XML.</param>
 		/// <returns>NotaFiscal carregada.</returns>
@@ -99,6 +100,19 @@ namespace ACBr.Net.NFSe.Nota
 		{
 			var provider = ProviderHelper.GetProvider(Parent.Configuracoes);
 			var nota = provider.LoadXml(stream);
+			Add(nota);
+			return nota;
+		}
+
+		/// <summary>
+		/// Carrega a NFSe/RPS do XMLDocument.
+		/// </summary>
+		/// <param name="xml">XMLDocument da NFSe/RPS.</param>
+		/// <returns>NotaFiscal carregada.</returns>
+		public NotaFiscal Load(XmlDocument xml)
+		{
+			var provider = ProviderHelper.GetProvider(Parent.Configuracoes);
+			var nota = provider.LoadXml(xml);
 			Add(nota);
 			return nota;
 		}
