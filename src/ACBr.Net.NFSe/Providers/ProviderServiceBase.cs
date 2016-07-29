@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 06-17-2016
+// Created          : 07-28-2016
 //
 // Last Modified By : RFTD
-// Last Modified On : 06-17-2016
+// Last Modified On : 07-28-2016
 // ***********************************************************************
-// <copyright file="Evento.cs" company="ACBr.Net">
+// <copyright file="ProviderServiceBase.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,35 +29,26 @@
 // <summary></summary>
 // ***********************************************************************
 
-using ACBr.Net.NFSe.Nota;
+using System;
+using System.Security.Cryptography.X509Certificates;
+using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers
 {
-	public class Evento
+	internal abstract class ProviderServiceBase<T> : ClientBase<T> where T : class
 	{
-		#region Constructor
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Evento"/> class.
-		/// </summary>
-		public Evento()
+		protected ProviderServiceBase(string url, TimeSpan? timeOut = null, X509Certificate2 certificado = null) : base(new BasicHttpBinding(), new EndpointAddress(url))
 		{
-			IdentificacaoNfse = new IdentificacaoNfse();
-			IdentificacaoRps = new IdentificacaoRps();
+			((BasicHttpBinding)Endpoint.Binding).UseDefaultWebProxy = true;
+			if (ClientCredentials != null)
+				ClientCredentials.ClientCertificate.Certificate = certificado;
+
+			if (!timeOut.HasValue)
+				return;
+
+			Endpoint.Binding.OpenTimeout = timeOut.Value;
+			Endpoint.Binding.ReceiveTimeout = timeOut.Value;
+			Endpoint.Binding.SendTimeout = timeOut.Value;
 		}
-
-		#endregion Constructor
-
-		#region Propriedades
-
-		public short Codigo { get; set; }
-
-		public string Descricao { get; set; }
-
-		public IdentificacaoRps IdentificacaoRps { get; set; }
-
-		public IdentificacaoNfse IdentificacaoNfse { get; set; }
-
-		#endregion Propriedades
 	}
 }

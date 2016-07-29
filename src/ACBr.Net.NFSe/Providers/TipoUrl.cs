@@ -10,6 +10,5 @@ namespace ACBr.Net.NFSe.Providers
 		CancelaNFSe,
 		RecepcaoSincrono,
 		SubstituiNFSe,
-		GerarNFSe
 	}
 }

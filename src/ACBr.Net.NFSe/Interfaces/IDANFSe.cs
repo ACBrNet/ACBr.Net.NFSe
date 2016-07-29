@@ -55,9 +55,9 @@ namespace ACBr.Net.NFSe.Interfaces
         string LogoPrefeitura { get; set; }
 
         /// <summary>
-        /// Imprimirs this instance.
+        /// Imprime as NFSe/RPS.
         /// </summary>
-        void Imprimir(bool rps = false);
+        void Imprimir();
 
         /// <summary>
         /// Imprimirs the PDF.

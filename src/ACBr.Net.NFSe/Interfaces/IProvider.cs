@@ -32,6 +32,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using ACBr.Net.Core.Logging;
 using ACBr.Net.NFSe.Nota;
 using ACBr.Net.NFSe.Providers;
 
@@ -40,7 +41,7 @@ namespace ACBr.Net.NFSe.Interfaces
     /// <summary>
     /// Interface IProvider
     /// </summary>
-    public interface IProvider
+    public interface IProvider : IACBrLog
     {
         #region Propriedades
 
@@ -100,6 +101,8 @@ namespace ACBr.Net.NFSe.Interfaces
         NotaFiscal LoadXml(Stream stream);
 
 	    RetornoWebService Enviar(int lote, NotaFiscalCollection notas);
+
+		RetornoWebService EnviarSincrono(int lote, NotaFiscalCollection notas);
 
 	    #endregion Methods
     }

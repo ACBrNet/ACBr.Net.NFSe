@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 06-17-2016
+// Created          : 06-19-2016
 //
 // Last Modified By : RFTD
-// Last Modified On : 06-17-2016
+// Last Modified On : 06-28-2016
 // ***********************************************************************
-// <copyright file="Evento.cs" company="ACBr.Net">
+// <copyright file="MunicipioNFSe.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,34 +29,39 @@
 // <summary></summary>
 // ***********************************************************************
 
-using ACBr.Net.NFSe.Nota;
+using System;
+using System.Collections.Generic;
 
 namespace ACBr.Net.NFSe.Providers
 {
-	public class Evento
+	[Serializable]
+	public class MunicipioNFSe
 	{
-		#region Constructor
+		#region Constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Evento"/> class.
-		/// </summary>
-		public Evento()
+		public MunicipioNFSe()
 		{
-			IdentificacaoNfse = new IdentificacaoNfse();
-			IdentificacaoRps = new IdentificacaoRps();
+			UrlHomologacao = new Dictionary<TipoUrl, string>();
+			UrlProducao = new Dictionary<TipoUrl, string>();
 		}
 
-		#endregion Constructor
+		#endregion Constructors
 
 		#region Propriedades
 
-		public short Codigo { get; set; }
+		public int Codigo { get; set; }
 
-		public string Descricao { get; set; }
+		public int CodigoSiafi { get; set; }
 
-		public IdentificacaoRps IdentificacaoRps { get; set; }
+		public string Nome { get; set; }
 
-		public IdentificacaoNfse IdentificacaoNfse { get; set; }
+		public string UF { get; set; }
+
+		public string Provedor { get; set; }
+
+		public Dictionary<TipoUrl, string> UrlHomologacao { get; }
+
+		public Dictionary<TipoUrl, string> UrlProducao { get; }
 
 		#endregion Propriedades
 	}

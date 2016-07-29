@@ -10,25 +10,33 @@
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
-//	 Permission is hereby granted, free of charge, to any person obtaining 
-// a copy of this software and associated documentation files (the "Software"), 
-// to deal in the Software without restriction, including without limitation 
-// the rights to use, copy, modify, merge, publish, distribute, sublicense, 
-// and/or sell copies of the Software, and to permit persons to whom the 
+//	 Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the
 // Software is furnished to do so, subject to the following conditions:
-//	 The above copyright notice and this permission notice shall be 
+//	 The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-//	 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
-// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
-// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+//	 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
+using ACBr.Net.Core.Exceptions;
+using ACBr.Net.Core.Extensions;
+using ACBr.Net.Core.Logging;
+using ACBr.Net.DFe.Core.Attributes;
+using ACBr.Net.DFe.Core.Serializer;
+using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Interfaces;
+using ACBr.Net.NFSe.Nota;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -36,110 +44,117 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml;
-using ACBr.Net.Core.Exceptions;
-using ACBr.Net.Core.Extensions;
-using ACBr.Net.DFe.Core.Attributes;
-using ACBr.Net.DFe.Core.Serializer;
-using ACBr.Net.NFSe.Configuracao;
-using ACBr.Net.NFSe.Interfaces;
-using ACBr.Net.NFSe.Nota;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    /// <summary>
-    /// Class ProviderBase.
-    /// </summary>
+	/// <summary>
+	/// Class ProviderBase.
+	/// </summary>
 	public abstract class ProviderBase : IProvider
-    {
-        #region Constantes
-        /// <summary>
-        /// The er r_ ms g_ maior
-        /// </summary>
-        public const string ErrMsgMaior = "Tamanho maior que o máximo permitido";
-        /// <summary>
-        /// The er r_ ms g_ menor
-        /// </summary>
-        public const string ErrMsgMenor = "Tamanho menor que o mínimo permitido";
-        /// <summary>
-        /// The er r_ ms g_ vazio
-        /// </summary>
-        public const string ErrMsgVazio = "Nenhum valor informado";
-        /// <summary>
-        /// The er r_ ms g_ invalido
-        /// </summary>
-        public const string ErrMsgInvalido = "Conteúdo inválido";
-        /// <summary>
-        /// The er r_ ms g_ maxim o_ decimais
-        /// </summary>
-        public const string ErrMsgMaximoDecimais = "Numero máximo de casas decimais permitidas";
-        /// <summary>
-        /// The er r_ ms g_ maio r_ maximo
-        /// </summary>
-        public const string ErrMsgMaiorMaximo = "Número de ocorrências maior que o máximo permitido - Máximo ";
-        /// <summary>
-        /// The er r_ ms g_ fina l_ meno r_ inicial
-        /// </summary>
-        public const string ErrMsgFinalMenorInicial = "O numero final não pode ser menor que o inicial";
-        /// <summary>
-        /// The er r_ ms g_ arquiv o_ na o_ encontrado
-        /// </summary>
-        public const string ErrMsgArquivoNaoEncontrado = "Arquivo não encontrado";
-        /// <summary>
-        /// The er r_ ms g_ soment e_ um
-        /// </summary>
-        public const string ErrMsgSomenteUm = "Somente um campo deve ser preenchido";
-        /// <summary>
-        /// The er r_ ms g_ meno r_ minimo
-        /// </summary>
-        public const string ErrMsgMenorMinimo = "Número de ocorrências menor que o mínimo permitido - Mínimo ";
-        /// <summary>
-        /// The ds c_ CNPJ
-        /// </summary>
-        public const string DscCnpj = "CNPJ(MF)";
-        /// <summary>
-        /// The ds c_ CPF
-        /// </summary>
-        public const string DscCpf = "CPF";
+	{
+		#region Constantes
 
-        #endregion Constantes
-        
-        #region Fields
+		/// <summary>
+		/// The er r_ ms g_ maior
+		/// </summary>
+		public const string ErrMsgMaior = "Tamanho maior que o máximo permitido";
 
-        /// <summary>
-        /// The xmldoc
-        /// </summary>
+		/// <summary>
+		/// The er r_ ms g_ menor
+		/// </summary>
+		public const string ErrMsgMenor = "Tamanho menor que o mínimo permitido";
+
+		/// <summary>
+		/// The er r_ ms g_ vazio
+		/// </summary>
+		public const string ErrMsgVazio = "Nenhum valor informado";
+
+		/// <summary>
+		/// The er r_ ms g_ invalido
+		/// </summary>
+		public const string ErrMsgInvalido = "Conteúdo inválido";
+
+		/// <summary>
+		/// The er r_ ms g_ maxim o_ decimais
+		/// </summary>
+		public const string ErrMsgMaximoDecimais = "Numero máximo de casas decimais permitidas";
+
+		/// <summary>
+		/// The er r_ ms g_ maio r_ maximo
+		/// </summary>
+		public const string ErrMsgMaiorMaximo = "Número de ocorrências maior que o máximo permitido - Máximo ";
+
+		/// <summary>
+		/// The er r_ ms g_ fina l_ meno r_ inicial
+		/// </summary>
+		public const string ErrMsgFinalMenorInicial = "O numero final não pode ser menor que o inicial";
+
+		/// <summary>
+		/// The er r_ ms g_ arquiv o_ na o_ encontrado
+		/// </summary>
+		public const string ErrMsgArquivoNaoEncontrado = "Arquivo não encontrado";
+
+		/// <summary>
+		/// The er r_ ms g_ soment e_ um
+		/// </summary>
+		public const string ErrMsgSomenteUm = "Somente um campo deve ser preenchido";
+
+		/// <summary>
+		/// The er r_ ms g_ meno r_ minimo
+		/// </summary>
+		public const string ErrMsgMenorMinimo = "Número de ocorrências menor que o mínimo permitido - Mínimo ";
+
+		/// <summary>
+		/// The ds c_ CNPJ
+		/// </summary>
+		public const string DscCnpj = "CNPJ(MF)";
+
+		/// <summary>
+		/// The ds c_ CPF
+		/// </summary>
+		public const string DscCpf = "CPF";
+
+		#endregion Constantes
+
+		#region Fields
+
+		/// <summary>
+		/// The xmldoc
+		/// </summary>
 		protected readonly XmlDocument Xmldoc;
-		
+
 		#endregion Fields
 
 		#region Constructor
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ProviderBase"/> class.
-        /// </summary>
-		internal ProviderBase(Configuracoes config)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ProviderBase"/> class.
+		/// </summary>
+		internal ProviderBase(Configuracoes config, MunicipioNFSe municipio)
 		{
 			ListaDeAlertas = new List<string>();
 			FormatoAlerta = "TAG:%TAG% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.";
 			Xmldoc = new XmlDocument();
-	        Config = config;}
+			Config = config;
+			Municipio = municipio;
+		}
 
 		#endregion Constructor
 
 		#region Propriedades
 
-        /// <summary>
-        /// Gets the lista de alertas.
-        /// </summary>
-        /// <value>The lista de alertas.</value>
+		/// <summary>
+		/// Gets the lista de alertas.
+		/// </summary>
+		/// <value>The lista de alertas.</value>
 		public List<string> ListaDeAlertas { get; }
 
-        /// <summary>
-        /// Gets or sets the formato alerta.
-        /// </summary>
-        /// <value>The formato alerta.</value>
+		/// <summary>
+		/// Gets or sets the formato alerta.
+		/// </summary>
+		/// <value>The formato alerta.</value>
 		public string FormatoAlerta { get; set; }
-		
+
 		/// <summary>
 		/// Gets or sets a value indicating whether [retirar acentos].
 		/// </summary>
@@ -148,19 +163,21 @@ namespace ACBr.Net.NFSe.Providers
 
 		public Configuracoes Config { get; }
 
-	    public TimeSpan? TimeOut
-	    {
-		    get
-		    {
+		public MunicipioNFSe Municipio { get; }
+
+		public TimeSpan? TimeOut
+		{
+			get
+			{
 				TimeSpan? timeOut = null;
 				if (Config.WebServices.AjustaAguardaConsultaRet)
 					timeOut = TimeSpan.FromSeconds((int)Config.WebServices.AguardarConsultaRet);
 
-			    return timeOut;
-		    }
-	    }
+				return timeOut;
+			}
+		}
 
-	    public X509Certificate2 Certificado => Config.Certificados.ObterCertificado();
+		public X509Certificate2 Certificado => Config.Certificados.ObterCertificado();
 
 		#endregion Propriedades
 
@@ -191,35 +208,45 @@ namespace ACBr.Net.NFSe.Providers
 
 		public virtual string GetXmlRPS(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
 		{
-            throw new NotImplementedException("GetXmlRPS");
+			throw new NotImplementedException("GetXmlRPS");
 		}
 
-        public virtual string GetXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
-        {
-            throw new NotImplementedException("GetXmlNFSe");
-        }
+		public virtual string GetXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
+		{
+			throw new NotImplementedException("GetXmlNFSe");
+		}
 
 		public virtual RetornoWebService Enviar(int lote, NotaFiscalCollection notas)
-	    {
-		    throw new NotImplementedException("Função não implementada neste Provedor !");
-	    }
+		{
+			throw new NotImplementedException("Função não implementada neste Provedor !");
+		}
+
+		public virtual RetornoWebService EnviarSincrono(int lote, NotaFiscalCollection notas)
+		{
+			throw new NotImplementedException("Função não implementada neste Provedor !");
+		}
 
 		#endregion Public
 
 		#region Protected
 
-	    protected string GetUrl(TipoUrl url)
-	    {
+		/// <summary>
+		/// Retorna a URL para o tipo de serviço.
+		/// </summary>
+		/// <param name="url">The URL.</param>
+		/// <returns>System.String.</returns>
+		protected string GetUrl(TipoUrl url)
+		{
 			switch (Config.WebServices.Ambiente)
-		    {
+			{
 				case TipoAmbiente.Producao:
-				    return GetUrlProd(Config.WebServices.CodMunicipio, url);
+					return Municipio.UrlProducao[url];
 
 				default:
-					return GetUrlHom(Config.WebServices.CodMunicipio, url);
-		    }
-	    }
-		
+					return Municipio.UrlHomologacao[url];
+			}
+		}
+
 		/// <summary>
 		/// Adicionars the tag CNPJCPF.
 		/// </summary>
@@ -234,17 +261,17 @@ namespace ACBr.Net.NFSe.Providers
 			XmlElement tag = null;
 			switch (cnpjcpf.Length)
 			{
-			    case 11:
-			        tag = AdicionarTag(TipoCampo.Str, "CPF", tagCPF, 11, 11, 1, cnpjcpf);
-			        if (!cnpjcpf.IsCPF())
-			            WAlerta(tagCPF, "CPF", "CPF", ErrMsgInvalido);
-			        break;
+				case 11:
+					tag = AdicionarTag(TipoCampo.Str, "CPF", tagCPF, 11, 11, 1, cnpjcpf);
+					if (!cnpjcpf.IsCPF())
+						WAlerta(tagCPF, "CPF", "CPF", ErrMsgInvalido);
+					break;
 
-			    case 14:
-			        tag = AdicionarTag(TipoCampo.Str, "CNPJ", tagCNPJ, 14, 14, 1, cnpjcpf);
-			        if(!cnpjcpf.IsCNPJ())
-			            WAlerta(tagCNPJ, "CNPJ", "CNPJ", ErrMsgInvalido);
-			        break;
+				case 14:
+					tag = AdicionarTag(TipoCampo.Str, "CNPJ", tagCNPJ, 14, 14, 1, cnpjcpf);
+					if (!cnpjcpf.IsCNPJ())
+						WAlerta(tagCNPJ, "CNPJ", "CNPJ", ErrMsgInvalido);
+					break;
 			}
 
 			if (!cnpjcpf.Length.IsIn(11, 14))
@@ -253,19 +280,19 @@ namespace ACBr.Net.NFSe.Providers
 			return tag;
 		}
 
-        /// <summary>
-        /// Adicionars the tag.
-        /// </summary>
-        /// <param name="tipo">The tipo.</param>
-        /// <param name="id">The identifier.</param>
-        /// <param name="tag">The tag.</param>
-        /// <param name="min">The minimum.</param>
-        /// <param name="max">The maximum.</param>
-        /// <param name="ocorrencias">The ocorrencias.</param>
-        /// <param name="valor">The valor.</param>
-        /// <param name="descricao">The descricao.</param>
-        /// <returns>XmlElement.</returns>
-		protected XmlElement AdicionarTag(TipoCampo tipo, string id, string tag, int min, 
+		/// <summary>
+		/// Adicionars the tag.
+		/// </summary>
+		/// <param name="tipo">The tipo.</param>
+		/// <param name="id">The identifier.</param>
+		/// <param name="tag">The tag.</param>
+		/// <param name="min">The minimum.</param>
+		/// <param name="max">The maximum.</param>
+		/// <param name="ocorrencias">The ocorrencias.</param>
+		/// <param name="valor">The valor.</param>
+		/// <param name="descricao">The descricao.</param>
+		/// <returns>XmlElement.</returns>
+		protected XmlElement AdicionarTag(TipoCampo tipo, string id, string tag, int min,
 			int max, int ocorrencias, object valor, string descricao = "")
 		{
 			try
@@ -403,11 +430,11 @@ namespace ACBr.Net.NFSe.Providers
 				else
 					alerta = string.Empty;
 
-			    if (!string.IsNullOrEmpty(conteudoProcessado.Trim()) &&
-			        (conteudoProcessado.Length < min && string.IsNullOrEmpty(alerta) && conteudoProcessado.Length > 1))
+				if (!string.IsNullOrEmpty(conteudoProcessado.Trim()) &&
+					(conteudoProcessado.Length < min && string.IsNullOrEmpty(alerta) && conteudoProcessado.Length > 1))
 					alerta = ErrMsgMenor;
 
-				if(!string.IsNullOrEmpty(conteudoProcessado.Trim()) && conteudoProcessado.Length > max)
+				if (!string.IsNullOrEmpty(conteudoProcessado.Trim()) && conteudoProcessado.Length > max)
 					alerta = ErrMsgMaior;
 
 				if (!string.IsNullOrEmpty(alerta.Trim()) && ErrMsgVazio.Equals(alerta) && !estaVazio)
@@ -417,7 +444,7 @@ namespace ACBr.Net.NFSe.Providers
 
 				XmlElement xmlTag = null;
 				if (ocorrencias == 1 && estaVazio)
-                    xmlTag = Xmldoc.CreateElement(tag);
+					xmlTag = Xmldoc.CreateElement(tag);
 
 				if (estaVazio)
 					return xmlTag;
@@ -433,13 +460,13 @@ namespace ACBr.Net.NFSe.Providers
 			}
 		}
 
-        /// <summary>
-        /// Ws the alerta.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <param name="tag">The tag.</param>
-        /// <param name="descricao">The descricao.</param>
-        /// <param name="alerta">The alerta.</param>
+		/// <summary>
+		/// Ws the alerta.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		/// <param name="tag">The tag.</param>
+		/// <param name="descricao">The descricao.</param>
+		/// <param name="alerta">The alerta.</param>
 		protected void WAlerta(string id, string tag, string descricao, string alerta)
 		{
 			// O Formato da mensagem de erro pode ser alterado pelo usuario alterando-se a property FFormatoAlerta: onde;
@@ -451,25 +478,12 @@ namespace ACBr.Net.NFSe.Providers
 			var s = FormatoAlerta.Clone() as string;
 			s = s.Replace("%ID%", id).Replace("%TAG%", $"<{tag}>")
 				.Replace("%DESCRICAO%", descricao).Replace("%MSG%", alerta);
-			
+
 			ListaDeAlertas.Add(s);
-        }
+			this.Log().Warn(s);
+		}
 
 		#endregion Protected
-
-		#region Private
-
-		private static string GetUrlHom(int codCidade, TipoUrl url)
-		{
-			return "";
-		}
-
-		private static string GetUrlProd(int codCidade, TipoUrl url)
-		{
-			return "";
-		}
-
-		#endregion Private
 
 		#endregion Methods
 	}

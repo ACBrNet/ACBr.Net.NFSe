@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 06-17-2016
+// Created          : 07-28-2016
 //
 // Last Modified By : RFTD
-// Last Modified On : 06-17-2016
+// Last Modified On : 07-28-2016
 // ***********************************************************************
-// <copyright file="Evento.cs" company="ACBr.Net">
+// <copyright file="BethaCancelarNev01ServiceClient.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,35 +29,30 @@
 // <summary></summary>
 // ***********************************************************************
 
-using ACBr.Net.NFSe.Nota;
+using System;
+using System.ComponentModel;
+using System.Security.Cryptography.X509Certificates;
 
-namespace ACBr.Net.NFSe.Providers
+namespace ACBr.Net.NFSe.Providers.Betha
 {
-	public class Evento
+	internal sealed class BethaCancelarNev01ServiceClient : ProviderServiceBase<IBethaCancelarNEV01>, IBethaCancelarNEV01
 	{
 		#region Constructor
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Evento"/> class.
-		/// </summary>
-		public Evento()
+		public BethaCancelarNev01ServiceClient(string url, TimeSpan? timeOut = null, X509Certificate2 certificado = null) : base(url, timeOut, certificado)
 		{
-			IdentificacaoNfse = new IdentificacaoNfse();
-			IdentificacaoRps = new IdentificacaoRps();
 		}
 
 		#endregion Constructor
 
-		#region Propriedades
+		#region Methods
 
-		public short Codigo { get; set; }
+		[EditorBrowsable(EditorBrowsableState.Advanced)]
+		string IBethaCancelarNEV01.CancelarNfseEnvio(string request)
+		{
+			return Channel.CancelarNfseEnvio(request);
+		}
 
-		public string Descricao { get; set; }
-
-		public IdentificacaoRps IdentificacaoRps { get; set; }
-
-		public IdentificacaoNfse IdentificacaoNfse { get; set; }
-
-		#endregion Propriedades
+		#endregion Methods
 	}
 }

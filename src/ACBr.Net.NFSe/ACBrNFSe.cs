@@ -10,34 +10,33 @@
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
-//	 Permission is hereby granted, free of charge, to any person obtaining 
-// a copy of this software and associated documentation files (the "Software"), 
-// to deal in the Software without restriction, including without limitation 
-// the rights to use, copy, modify, merge, publish, distribute, sublicense, 
-// and/or sell copies of the Software, and to permit persons to whom the 
+//	 Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the
 // Software is furnished to do so, subject to the following conditions:
-//	 The above copyright notice and this permission notice shall be 
+//	 The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-//	 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
-// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
-// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+//	 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-using System;
-using System.Linq;
 using ACBr.Net.Core;
 using ACBr.Net.Core.Exceptions;
+using ACBr.Net.Core.Logging;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Interfaces;
 using ACBr.Net.NFSe.Nota;
 using ACBr.Net.NFSe.Providers;
-using ACBr.Net.NFSe.Util;
+using System;
 
 #region COM Interop Attributes
 
@@ -114,52 +113,171 @@ namespace ACBr.Net.NFSe
 #if COM_INTEROP
 
 	[ComVisible(true)]
-    [Guid("55B536AF-0173-4C89-A774-BD57E661EC8D")]
+    [Guid("0BE7D93A-0C14-4E14-B744-8653838197BA")]
 	[ClassInterface(ClassInterfaceType.AutoDual)]
-
 #endif
 
 	#endregion COM Interop Attributes
-	/// <summary>
-	/// Class ACBrNFSe.
-	/// </summary>
-	/// <seealso cref="ACBr.Net.Core.ACBrComponent" />
-    // ReSharper disable once InconsistentNaming
-    public class ACBrNFSe : ACBrComponent
-    {
-        #region Propriedades
 
-        /// <summary>
-        /// Configurações do Componente
-        /// </summary>
-        public Configuracoes Configuracoes { get; private set; }
+	// ReSharper disable once InconsistentNaming
+	public class ACBrNFSe : ACBrComponent, IACBrLog
+	{
+		#region Propriedades
 
-        /// <summary>
-        /// Componente de impressão
-        /// </summary>
-        public IDANFSe DaNfSe { get; set; }
+		/// <summary>
+		/// Configurações do Componente
+		/// </summary>
+		public Configuracoes Configuracoes { get; private set; }
 
-        /// <summary>
-        /// Coleção de NFSe para processar e/ou processadas
-        /// </summary>
-        public NotaFiscalCollection NotasFiscais { get; private set; }
+		/// <summary>
+		/// Componente de impressão
+		/// </summary>
+		public IDANFSe DaNfSe { get; set; }
+
+		/// <summary>
+		/// Coleção de NFSe para processar e/ou processadas
+		/// </summary>
+		public NotaFiscalCollection NotasFiscais { get; private set; }
 
 		#endregion Propriedades
 
 		#region Methods
 
 		/// <summary>
-		/// Envia as notas ficais para o provedor da cidade.
+		/// Envia as NFSe para o provedor da cidade de forma assincrona.
 		/// </summary>
 		/// <param name="lote">Numero do lote.</param>
+		/// <param name="imprimir">Se for passado <c>true</c> imprime as RPS, se o envio foi executado com sucesso.</param>
 		/// <returns>RetornoWebService.</returns>
-		public RetornoWebService Enviar(int lote)
+		public RetornoWebService Enviar(int lote, bool imprimir)
 		{
-			Guard.Against<ArgumentException>(NotasFiscais.Count < 1, "ERRO: Nenhum RPS adicionado ao Lote");
-			Guard.Against<ArgumentException>(NotasFiscais.Count > 50, $"ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS) excedido.{Environment.NewLine}" + 
-																     $"Quantidade atual: {NotasFiscais.Count}");
-			var provider = ProviderHelper.GetProvider(Configuracoes);
-			return provider.Enviar(lote, NotasFiscais);
+			Guard.Against<ArgumentException>(NotasFiscais.Count < 1, "ERRO: Nenhuma RPS adicionada ao Lote");
+			Guard.Against<ArgumentException>(NotasFiscais.Count > 50, $"ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS) excedido.{Environment.NewLine}" +
+																	  $"Quantidade atual: {NotasFiscais.Count}");
+			var provider = ProviderManager.GetProvider(Configuracoes);
+			var ret = provider.Enviar(lote, NotasFiscais);
+
+			if (ret.Sucesso && DaNfSe != null && imprimir)
+				DaNfSe.Imprimir();
+
+			return ret;
+		}
+
+		/// <summary>
+		/// Envia as NFSe para o provedor da cidade de forma sincrona.
+		/// Obs: Nem todos provedores suportar este metodo.
+		/// </summary>
+		/// <param name="lote">Numero do lote.</param>
+		/// <param name="imprimir">Se for passado <c>true</c> imprime as NFSe, se o envio foi executado com sucesso.</param>
+		/// <returns>RetornoWebService.</returns>
+		public RetornoWebService EnviarSincrono(int lote, bool imprimir)
+		{
+			Guard.Against<ArgumentException>(NotasFiscais.Count < 1, "ERRO: Nenhuma RPS adicionada ao Lote");
+			Guard.Against<ArgumentException>(NotasFiscais.Count > 50, $"ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS) excedido.{Environment.NewLine}" +
+																	  $"Quantidade atual: {NotasFiscais.Count}");
+			var provider = ProviderManager.GetProvider(Configuracoes);
+			var ret = provider.EnviarSincrono(lote, NotasFiscais);
+
+			if (ret.Sucesso && DaNfSe != null && imprimir)
+				DaNfSe.Imprimir();
+
+			return ret;
+		}
+
+		/// <summary>
+		/// Consulta a situação do lote de RPS.
+		/// Obs: Nem todos provedores suportar este metodo.
+		/// </summary>
+		/// <param name="lote">The lote.</param>
+		/// <param name="protocolo">The protocolo.</param>
+		/// <returns>RetornoWebService.</returns>
+		public RetornoWebService ConsultarSituacao(int lote, string protocolo = "")
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Consultars the lote RPS.
+		/// </summary>
+		/// <param name="protocolo">The protocolo.</param>
+		/// <param name="lote">The lote.</param>
+		/// <returns>RetornoWebService.</returns>
+		/// <exception cref="NotImplementedException"></exception>
+		public RetornoWebService ConsultarLoteRps(string protocolo, int lote)
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Consulta o numero de sequencia dos lotes de RPS.
+		/// </summary>
+		/// <param name="serie">The serie.</param>
+		/// <returns>RetornoWebService.</returns>
+		/// <exception cref="NotImplementedException"></exception>
+		public RetornoWebService ConsultarSequencialRps(string serie)
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Consulta a NFSe/RPS que atende os filtros informados.
+		/// Obs: Nem todos provedores suportar este metodo.
+		/// </summary>
+		/// <param name="numero">The numero.</param>
+		/// <param name="serie">The serie.</param>
+		/// <param name="tipo">The tipo.</param>
+		/// <returns>RetornoWebService.</returns>
+		/// <exception cref="NotImplementedException"></exception>
+		public RetornoWebService ConsultaNFSeRps(string numero, string serie, string tipo)
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Consulta as NFSe no periodo informado de acordo com os filtros.
+		/// Obs: Nem todos provedores suportar este metodo.
+		/// </summary>
+		/// <param name="inicio">The inicio.</param>
+		/// <param name="fim">The fim.</param>
+		/// <param name="numeroNfse">The numero nfse.</param>
+		/// <param name="pagina">The pagina.</param>
+		/// <param name="cnpjTomador">The CNPJ tomador.</param>
+		/// <param name="imTomador">The im tomador.</param>
+		/// <param name="nomeInter">The nome inter.</param>
+		/// <param name="cnpjInter">The CNPJ inter.</param>
+		/// <param name="imInter">The im inter.</param>
+		/// <param name="serie">The serie.</param>
+		/// <returns>RetornoWebService.</returns>
+		/// <exception cref="NotImplementedException"></exception>
+		public RetornoWebService ConsultaNFSe(DateTime inicio, DateTime fim, string numeroNfse = "", int pagina = 1,
+			string cnpjTomador = "", string imTomador = "", string nomeInter = "", string cnpjInter = "", string imInter = "",
+			string serie = "")
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Cancela uma NFSe
+		/// </summary>
+		/// <param name="codigoCancelamento">O codigo de cancelamento.</param>
+		/// <param name="numeroNFSe">O numero da NFSe.</param>
+		/// <param name="motivo">O motivo.</param>
+		/// <returns>RetornoWebService.</returns>
+		public RetornoWebService CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo)
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Substitui uma NFSe
+		/// </summary>
+		/// <param name="codigoCancelamento">O codigo de cancelamento.</param>
+		/// <param name="numeroNFSe">O numero da NFSe.</param>
+		/// <param name="motivo">O motivo.</param>
+		/// <returns>RetornoWebService.</returns>
+		public RetornoWebService SubstituirNFSe(string codigoCancelamento, string numeroNFSe, string motivo)
+		{
+			throw new NotImplementedException();
 		}
 
 		#endregion Methods
@@ -170,18 +288,18 @@ namespace ACBr.Net.NFSe
 		/// Função executada na inicialização do componente
 		/// </summary>
 		protected override void OnInitialize()
-        {
-            Configuracoes = new Configuracoes();
-            NotasFiscais = new NotaFiscalCollection(this);
-        }
+		{
+			Configuracoes = new Configuracoes();
+			NotasFiscais = new NotaFiscalCollection(this);
+		}
 
-        /// <summary>
-        /// Função executada na desinicialização do componente
-        /// </summary>
-        protected override void OnDisposing()
-        {
-        }
+		/// <summary>
+		/// Função executada na desinicialização do componente
+		/// </summary>
+		protected override void OnDisposing()
+		{
+		}
 
-        #endregion Override Methods
-    }
+		#endregion Override Methods
+	}
 }
