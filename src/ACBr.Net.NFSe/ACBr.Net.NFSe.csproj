@@ -99,7 +99,7 @@
     <Compile Include="Providers\ProviderBase.cs" />
     <Compile Include="Providers\DSF\ProviderDSF.cs" />
     <Compile Include="Interfaces\IDANFSe.cs" />
-    <Compile Include="Interfaces\IProvider.cs" />
+    <Compile Include="Interfaces\INFSeProvider.cs" />
     <Compile Include="Nota\CondicaoPagamento.cs" />
     <Compile Include="Nota\CondPagamento.cs" />
     <Compile Include="Nota\ConfirmacaoCancelamento.cs" />

@@ -31,6 +31,7 @@
 
 using System;
 using System.Globalization;
+using System.Xml.Linq;
 
 namespace ACBr.Net.NFSe.Util
 {
@@ -42,6 +43,13 @@ namespace ACBr.Net.NFSe.Util
 				throw new ArgumentNullException(nameof(formattable));
 
 			return formattable.ToString(null, CultureInfo.InvariantCulture);
+		}
+
+		public static T GetValue<T>(this XElement element) where T : IConvertible
+		{
+			if (element == null) return default(T);
+
+			return (T)Convert.ChangeType(element.Value, typeof(T));
 		}
 	}
 }

@@ -31,6 +31,7 @@
 
 using ACBr.Net.Core;
 using ACBr.Net.Core.Exceptions;
+using ACBr.Net.Core.Extensions;
 using ACBr.Net.Core.Logging;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Interfaces;
@@ -193,7 +194,8 @@ namespace ACBr.Net.NFSe
 		/// <returns>RetornoWebService.</returns>
 		public RetornoWebService ConsultarSituacao(int lote, string protocolo = "")
 		{
-			throw new NotImplementedException();
+			var provider = ProviderManager.GetProvider(Configuracoes);
+			return provider.ConsultarSituacao(lote, protocolo);
 		}
 
 		/// <summary>
@@ -205,7 +207,8 @@ namespace ACBr.Net.NFSe
 		/// <exception cref="NotImplementedException"></exception>
 		public RetornoWebService ConsultarLoteRps(string protocolo, int lote)
 		{
-			throw new NotImplementedException();
+			var provider = ProviderManager.GetProvider(Configuracoes);
+			return provider.ConsultarLoteRps(protocolo, lote, NotasFiscais);
 		}
 
 		/// <summary>
@@ -216,7 +219,8 @@ namespace ACBr.Net.NFSe
 		/// <exception cref="NotImplementedException"></exception>
 		public RetornoWebService ConsultarSequencialRps(string serie)
 		{
-			throw new NotImplementedException();
+			var provider = ProviderManager.GetProvider(Configuracoes);
+			return provider.ConsultarSequencialRps(serie);
 		}
 
 		/// <summary>
@@ -230,7 +234,8 @@ namespace ACBr.Net.NFSe
 		/// <exception cref="NotImplementedException"></exception>
 		public RetornoWebService ConsultaNFSeRps(string numero, string serie, string tipo)
 		{
-			throw new NotImplementedException();
+			var provider = ProviderManager.GetProvider(Configuracoes);
+			return provider.ConsultaNFSeRps(numero, serie, tipo);
 		}
 
 		/// <summary>
@@ -253,7 +258,10 @@ namespace ACBr.Net.NFSe
 			string cnpjTomador = "", string imTomador = "", string nomeInter = "", string cnpjInter = "", string imInter = "",
 			string serie = "")
 		{
-			throw new NotImplementedException();
+			Guard.Against<ArgumentException>(inicio.Date > fim.Date, "A data inicial não pode ser maior que a data final.");
+
+			var provider = ProviderManager.GetProvider(Configuracoes);
+			return provider.ConsultaNFSe(inicio, fim, numeroNfse, pagina, cnpjTomador, imTomador, nomeInter, cnpjInter, imInter, serie);
 		}
 
 		/// <summary>
@@ -265,7 +273,10 @@ namespace ACBr.Net.NFSe
 		/// <returns>RetornoWebService.</returns>
 		public RetornoWebService CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo)
 		{
-			throw new NotImplementedException();
+			Guard.Against<ArgumentException>(NotasFiscais.Count < 1, "ERRO: Nenhuma NFS-e carregada ao componente");
+
+			var provider = ProviderManager.GetProvider(Configuracoes);
+			return provider.CancelaNFSe(codigoCancelamento, numeroNFSe, motivo, NotasFiscais);
 		}
 
 		/// <summary>
@@ -277,7 +288,12 @@ namespace ACBr.Net.NFSe
 		/// <returns>RetornoWebService.</returns>
 		public RetornoWebService SubstituirNFSe(string codigoCancelamento, string numeroNFSe, string motivo)
 		{
-			throw new NotImplementedException();
+			Guard.Against<ArgumentException>(codigoCancelamento.IsEmpty(), "ERRO: Código de Cancelamento não informado");
+			Guard.Against<ArgumentException>(numeroNFSe.IsEmpty(), "ERRO: Numero da NFS-e não informada");
+			Guard.Against<ArgumentException>(NotasFiscais.Count < 1, "ERRO: Nenhuma RPS carregada ao componente");
+
+			var provider = ProviderManager.GetProvider(Configuracoes);
+			return provider.SubstituirNFSe(codigoCancelamento, numeroNFSe, motivo, NotasFiscais);
 		}
 
 		#endregion Methods

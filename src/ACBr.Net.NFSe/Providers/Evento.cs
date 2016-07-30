@@ -50,7 +50,7 @@ namespace ACBr.Net.NFSe.Providers
 
 		#region Propriedades
 
-		public short Codigo { get; set; }
+		public string Codigo { get; set; }
 
 		public string Descricao { get; set; }
 

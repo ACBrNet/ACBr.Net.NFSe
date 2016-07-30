@@ -2,13 +2,14 @@ namespace ACBr.Net.NFSe.Providers
 {
 	public enum TipoUrl
 	{
-		RecepcaoLoteRPS,
-		ConsultaSitLoteRPS,
-		ConsultaLoteRPS,
-		ConsultaNFSeRPS,
+		Enviar,
+		EnviarSincrono,
+		ConsultarSituacao,
+		ConsultarLoteRps,
+		ConsultarSequencialRps,
+		ConsultaNFSeRps,
 		ConsultaNFSe,
 		CancelaNFSe,
-		RecepcaoSincrono,
-		SubstituiNFSe,
+		SubstituirNFSe,
 	}
 }

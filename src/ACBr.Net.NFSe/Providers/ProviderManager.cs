@@ -103,7 +103,7 @@ namespace ACBr.Net.NFSe.Providers
 
 		#region Internal
 
-		internal static IProvider GetProvider(Configuracoes config)
+		internal static INFSeProvider GetProvider(Configuracoes config)
 		{
 			var municipio = Municipios.SingleOrDefault(x => x.Codigo == config.WebServices.CodMunicipio);
 			Guard.Against<ACBrException>(municipio == null, "Provedor para esta cidade não implementado ou não especificado ! ");

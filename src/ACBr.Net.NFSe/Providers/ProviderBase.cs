@@ -50,7 +50,7 @@ namespace ACBr.Net.NFSe.Providers
 	/// <summary>
 	/// Class ProviderBase.
 	/// </summary>
-	public abstract class ProviderBase : IProvider
+	public abstract class ProviderBase : INFSeProvider
 	{
 		#region Constantes
 
@@ -218,12 +218,48 @@ namespace ACBr.Net.NFSe.Providers
 
 		public virtual RetornoWebService Enviar(int lote, NotaFiscalCollection notas)
 		{
-			throw new NotImplementedException("Função não implementada neste Provedor !");
+			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}
 
 		public virtual RetornoWebService EnviarSincrono(int lote, NotaFiscalCollection notas)
 		{
-			throw new NotImplementedException("Função não implementada neste Provedor !");
+			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
+		}
+
+		public virtual RetornoWebService ConsultarSituacao(int lote, string protocolo)
+		{
+			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
+		}
+
+		public virtual RetornoWebService ConsultarLoteRps(string protocolo, int lote, NotaFiscalCollection notas)
+		{
+			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
+		}
+
+		public virtual RetornoWebService ConsultarSequencialRps(string serie)
+		{
+			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
+		}
+
+		public virtual RetornoWebService ConsultaNFSeRps(string numero, string serie, string tipo)
+		{
+			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
+		}
+
+		public virtual RetornoWebService ConsultaNFSe(DateTime inicio, DateTime fim, string numeroNfse, int pagina, string cnpjTomador,
+			string imTomador, string nomeInter, string cnpjInter, string imInter, string serie)
+		{
+			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
+		}
+
+		public virtual RetornoWebService CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas)
+		{
+			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
+		}
+
+		public virtual RetornoWebService SubstituirNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas)
+		{
+			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}
 
 		#endregion Public

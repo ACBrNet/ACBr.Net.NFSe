@@ -42,6 +42,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using System.Xml.Linq;
+using Extensions = ACBr.Net.NFSe.Util.Extensions;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
@@ -50,6 +52,17 @@ namespace ACBr.Net.NFSe.Providers.DSF
 	/// </summary>
 	internal sealed class ProviderDSF : ProviderBase
 	{
+		#region Internal Types
+
+		private enum TipoEvento
+		{
+			Erros,
+			Alertas,
+			ListNFSeRps
+		}
+
+		#endregion Internal Types
+
 		#region Fields
 
 		private string situacao;
@@ -482,9 +495,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 				File.WriteAllText(loteFile, loteRps, Encoding.UTF8);
 			}
 
-			string[] erros;
-			var schema = Path.Combine(Config.Geral.PathSchemas, "DSF/ReqEnvioLoteRPS.xsd");
-			if (!CertificadoDigital.ValidarXml(loteRps, schema, out erros))
+			string[] errosSchema;
+			var schema = Path.Combine(Config.Geral.PathSchemas, @"DSF\ReqEnvioLoteRPS.xsd");
+			if (!CertificadoDigital.ValidarXml(loteRps, schema, out errosSchema))
 			{
 				var retLote = new RetornoWebService
 				{
@@ -496,14 +509,14 @@ namespace ACBr.Net.NFSe.Providers.DSF
 					Assincrono = true
 				};
 
-				foreach (var loteErro in erros.Select(erro => new Evento { Codigo = 0, Descricao = erro }))
+				foreach (var loteErro in errosSchema.Select(erro => new Evento { Codigo = "0", Descricao = erro }))
 					retLote.Erros.Add(loteErro);
 
 				return retLote;
 			}
 
-			var url = GetUrl(TipoUrl.RecepcaoLoteRPS);
-			var cliente = new DsfServiceClient(url, Certificado, TimeOut);
+			var url = GetUrl(TipoUrl.Enviar);
+			var cliente = new DsfServiceClient(url, TimeOut, Certificado);
 
 			string retorno;
 			try
@@ -522,7 +535,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 					Assincrono = true
 				};
 
-				retLote.Erros.Add(new Evento { Codigo = 0, Descricao = ex.Message });
+				retLote.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
 				return retLote;
 			}
 
@@ -533,14 +546,20 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			}
 
 			var ret = new RetornoWebService();
-			var xmlRet = new XmlDocument();
-			xmlRet.LoadXml(retorno);
+			var xmlRet = XDocument.Parse(retorno);
+			var cabeçalho = xmlRet.Element("Cabecalho");
 
-			ret.Sucesso = xmlRet["Cabecalho"]?["Sucesso"].GetValue<bool>() ?? false;
-			ret.CodCidade = xmlRet["Cabecalho"]?["CodCidade"].GetValue<int>() ?? 0;
-			ret.NumeroLote = xmlRet["Cabecalho"]?["NumeroLote"].GetValue<string>() ?? "";
-			ret.CPFCNPJRemetente = xmlRet["Cabecalho"]?["CPFCNPJRemetente"].GetValue<string>() ?? "";
-			ret.DataEnvioLote = xmlRet["Cabecalho"]?["DataEnvioLote"].GetValue<DateTime>() ?? DateTime.MinValue;
+			ret.Sucesso = cabeçalho?.Element("Sucesso")?.GetValue<bool>() ?? false;
+			ret.CodCidade = cabeçalho?.Element("CodCidade")?.GetValue<int>() ?? 0;
+			ret.NumeroLote = cabeçalho?.Element("NumeroLote")?.GetValue<string>() ?? string.Empty;
+			ret.CPFCNPJRemetente = cabeçalho?.Element("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
+			ret.DataEnvioLote = cabeçalho?.Element("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
+
+			var erros = xmlRet.Element("Erros");
+			ret.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));
+
+			var alertas = xmlRet.Element("Alertas");
+			ret.Alertas.AddRange(ProcessarEventos(TipoEvento.Alertas, alertas));
 
 			if (!ret.Sucesso)
 				return ret;
@@ -588,9 +607,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 				File.WriteAllText(loteFile, loteRps, Encoding.UTF8);
 			}
 
-			string[] erros;
-			var schema = Path.Combine(Config.Geral.PathSchemas, "DSF/ReqEnvioLoteRPS.xsd");
-			if (!CertificadoDigital.ValidarXml(loteRps, schema, out erros))
+			string[] errosSchema;
+			var schema = Path.Combine(Config.Geral.PathSchemas, @"DSF\ReqEnvioLoteRPS.xsd");
+			if (!CertificadoDigital.ValidarXml(loteRps, schema, out errosSchema))
 			{
 				var retLote = new RetornoWebService
 				{
@@ -602,14 +621,14 @@ namespace ACBr.Net.NFSe.Providers.DSF
 					Assincrono = true
 				};
 
-				foreach (var loteErro in erros.Select(erro => new Evento { Codigo = 0, Descricao = erro }))
+				foreach (var loteErro in errosSchema.Select(erro => new Evento { Codigo = "0", Descricao = erro }))
 					retLote.Erros.Add(loteErro);
 
 				return retLote;
 			}
 
-			var url = GetUrl(TipoUrl.RecepcaoLoteRPS);
-			var cliente = new DsfServiceClient(url, Certificado, TimeOut);
+			var url = GetUrl(TipoUrl.Enviar);
+			var cliente = new DsfServiceClient(url, TimeOut, Certificado);
 
 			string retorno;
 			try
@@ -628,7 +647,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 					Assincrono = true
 				};
 
-				retLote.Erros.Add(new Evento { Codigo = 0, Descricao = ex.Message });
+				retLote.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
 				return retLote;
 			}
 
@@ -639,22 +658,153 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			}
 
 			var ret = new RetornoWebService();
-			var xmlRet = new XmlDocument();
-			xmlRet.LoadXml(retorno);
+			var xmlRet = XDocument.Parse(retorno);
+			var cabeçalho = xmlRet.Element("Cabecalho");
 
-			ret.Sucesso = xmlRet["Cabecalho"]?["Sucesso"].GetValue<bool>() ?? false;
-			ret.CodCidade = xmlRet["Cabecalho"]?["CodCidade"].GetValue<int>() ?? 0;
-			ret.NumeroLote = xmlRet["Cabecalho"]?["NumeroLote"].GetValue<string>() ?? "";
-			ret.CPFCNPJRemetente = xmlRet["Cabecalho"]?["CPFCNPJRemetente"].GetValue<string>() ?? "";
-			ret.DataEnvioLote = xmlRet["Cabecalho"]?["DataEnvioLote"].GetValue<DateTime>() ?? DateTime.MinValue;
+			ret.Sucesso = cabeçalho?.Element("Sucesso")?.GetValue<bool>() ?? false;
+			ret.CodCidade = cabeçalho?.Element("CodCidade")?.GetValue<int>() ?? 0;
+			ret.NumeroLote = cabeçalho?.Element("NumeroLote")?.GetValue<string>() ?? string.Empty;
+			ret.CPFCNPJRemetente = cabeçalho?.Element("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
+			ret.DataEnvioLote = cabeçalho?.Element("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
-			if (!ret.Sucesso)
-				return ret;
+			var erros = xmlRet.Element("Erros");
+			ret.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));
+
+			var alertas = xmlRet.Element("Alertas");
+			ret.Alertas.AddRange(ProcessarEventos(TipoEvento.Alertas, alertas));
+
+			if (!ret.Sucesso) return ret;
 
 			foreach (var nota in notas)
 				nota.NumeroLote = ret.NumeroLote;
 
+			var nfseRps = ProcessarEventos(TipoEvento.ListNFSeRps, xmlRet.Element("ChavesNFSeRPS"));
+			if (nfseRps == null) return ret;
+
+			foreach (var nfse in nfseRps)
+			{
+				var numeroRps = nfse.IdentificacaoRps.Numero;
+				var nota = notas.FirstOrDefault(x => x.IdentificacaoRps.Numero == numeroRps);
+				if (nota == null) continue;
+
+				nota.Numero = nfse.IdentificacaoNfse.Numero;
+				nota.ChaveNfse = nfse.IdentificacaoNfse.ChaveNFSe;
+
+				var nfseFile = Path.Combine(Config.Arquivos.GetPathNFSe(nota.DhRecebimento),
+					$"NFSe-{nota.ChaveNfse}-{nota.Numero}.xml");
+				var xml = GetXmlNFSe(nota);
+				File.WriteAllText(nfseFile, xml, Encoding.UTF8);
+			}
+
 			return ret;
+		}
+
+		public override RetornoWebService ConsultarLoteRps(string protocolo, int lote, NotaFiscalCollection notas)
+		{
+			var loteBuilder = new StringBuilder();
+			loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+			loteBuilder.Append("<ns1:ReqConsultaLote xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote  http://localhost:8080/WsNFe2/xsd/ReqConsultaLote.xsd\">");
+			loteBuilder.Append("<Cabecalho>");
+			loteBuilder.Append($"<CodCidade>{Municipio}</CodCidade>");
+			loteBuilder.Append($"<CPFCNPJRemetente>{Config.PrestadoPadrao.CPFCNPJ.ZeroFill(14)}</CPFCNPJRemetente>");
+			loteBuilder.Append("<Versao>1</Versao>");
+			loteBuilder.Append($"<NumeroLote>{lote}</NumeroLote>");
+			loteBuilder.Append("</Cabecalho>");
+			loteBuilder.Append("</ns1:ReqConsultaLote>");
+
+			var consultaLote = loteBuilder.ToString();
+			if (Config.Geral.Salvar)
+			{
+				var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"Consultalote-{DateTime.Now:yyyyMMdd}-{lote}-env.xml");
+				File.WriteAllText(loteFile, consultaLote, Encoding.UTF8);
+			}
+
+			string[] errosSchema;
+			var schema = Path.Combine(Config.Geral.PathSchemas, @"DSF\ReqEnvioLoteRPS.xsd");
+			if (!CertificadoDigital.ValidarXml(consultaLote, schema, out errosSchema))
+			{
+				var retLote = new RetornoWebService
+				{
+					Sucesso = false,
+					CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
+					CodCidade = Config.WebServices.CodMunicipio,
+					DataEnvioLote = DateTime.Now,
+					NumeroLote = "0",
+					Assincrono = true
+				};
+
+				foreach (var loteErro in errosSchema.Select(erro => new Evento { Codigo = "0", Descricao = erro }))
+					retLote.Erros.Add(loteErro);
+
+				return retLote;
+			}
+
+			string retorno;
+
+			try
+			{
+				var url = GetUrl(TipoUrl.ConsultarLoteRps);
+				var cliente = new DsfServiceClient(url, TimeOut, Certificado);
+
+				retorno = cliente.ConsultarLote(consultaLote);
+			}
+			catch (Exception ex)
+			{
+				var retLote = new RetornoWebService
+				{
+					Sucesso = false,
+					CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
+					CodCidade = Config.WebServices.CodMunicipio,
+					DataEnvioLote = DateTime.Now,
+					NumeroLote = "0",
+					Assincrono = true
+				};
+
+				retLote.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
+				return retLote;
+			}
+
+			if (Config.Geral.Salvar)
+			{
+				var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"Consultalote-{DateTime.Now:yyyyMMdd}-{lote}-ret.xml");
+				File.WriteAllText(loteFile, retorno, Encoding.UTF8);
+			}
+
+			var retConsulta = new RetornoWebService();
+			var xmlRet = XDocument.Parse(retorno);
+			var cabeçalho = xmlRet.Element("Cabecalho");
+
+			retConsulta.Sucesso = cabeçalho?.Element("Sucesso")?.GetValue<bool>() ?? false;
+			retConsulta.CodCidade = cabeçalho?.Element("CodCidade")?.GetValue<int>() ?? 0;
+			retConsulta.NumeroLote = cabeçalho?.Element("NumeroLote")?.GetValue<string>() ?? string.Empty;
+			retConsulta.CPFCNPJRemetente = cabeçalho?.Element("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
+			retConsulta.DataEnvioLote = cabeçalho?.Element("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
+
+			var erros = xmlRet.Element("Erros");
+			retConsulta.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));
+
+			var alertas = xmlRet.Element("Alertas");
+			retConsulta.Alertas.AddRange(ProcessarEventos(TipoEvento.Alertas, alertas));
+
+			var nfses = xmlRet.Element("ListaNFSe");
+			if (nfses == null) return retConsulta;
+
+			foreach (var nfse in nfses.Elements("ConsultaNFSe"))
+			{
+				var numeroRps = (nfse.Element("NumeroRPS")?.GetValue<string>() ?? string.Empty);
+				var nota = notas.FirstOrDefault(x => x.IdentificacaoRps.Numero == numeroRps);
+				if (nota == null) continue;
+
+				nota.Numero = nfse.Element("NumeroNFe")?.GetValue<string>() ?? string.Empty;
+				nota.ChaveNfse = nfse.Element("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
+
+				var nfseFile = Path.Combine(Config.Arquivos.GetPathNFSe(nota.DhRecebimento),
+					$"NFSe-{nota.ChaveNfse}-{nota.Numero}.xml");
+				var xml = GetXmlNFSe(nota);
+				File.WriteAllText(nfseFile, xml, Encoding.UTF8);
+			}
+
+			return retConsulta;
 		}
 
 		#endregion Public
@@ -685,6 +835,61 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			xmlLote.Append("</ns1:ReqEnvioLoteRPS>");
 
 			return xmlLote.ToString();
+		}
+
+		private static IEnumerable<Evento> ProcessarEventos(TipoEvento tipo, XElement eventos)
+		{
+			var ret = new List<Evento>();
+			if (eventos == null) return ret.ToArray();
+
+			string nome;
+			switch (tipo)
+			{
+				case TipoEvento.Erros:
+					nome = "Erro";
+					break;
+
+				case TipoEvento.Alertas:
+					nome = "Alerta";
+					break;
+
+				case TipoEvento.ListNFSeRps:
+					nome = "ChaveNFSeRPS";
+					break;
+
+				default:
+					throw new ArgumentOutOfRangeException(nameof(tipo), tipo, null);
+			}
+
+			foreach (var evento in eventos.Elements(nome))
+			{
+				var item = new Evento();
+				if (tipo.IsIn(TipoEvento.Erros, TipoEvento.Alertas))
+				{
+					item.Codigo = evento.Element("Codigo")?.GetValue<string>() ?? string.Empty;
+					item.Descricao = evento.Element("Descricao")?.GetValue<string>() ?? string.Empty;
+				}
+
+				var ideRps = evento.Element("ChaveRPS");
+				if (ideRps != null)
+				{
+					item.IdentificacaoRps.Numero = ideRps.Element("NumeroRPS")?.GetValue<string>() ?? string.Empty;
+					item.IdentificacaoRps.Serie = ideRps.Element("SerieRPS")?.GetValue<string>() ?? string.Empty;
+					item.IdentificacaoRps.DataEmissaoRps = ideRps.Element("DataEmissaoRPS")?.GetValue<DateTime>() ?? DateTime.MinValue;
+				}
+
+				var ideNFSe = evento.Element("ChaveNFe");
+				if (ideNFSe != null)
+				{
+					item.IdentificacaoNfse.Numero = ideNFSe.Element("NumeroNFe")?.GetValue<string>() ?? string.Empty;
+					item.IdentificacaoNfse.ChaveNFSe = ideNFSe.Element("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
+					item.IdentificacaoNfse.InscricaoMunicipal = ideNFSe.Element("InscricaoPrestador")?.GetValue<string>() ?? string.Empty;
+				}
+
+				ret.Add(item);
+			}
+
+			return ret.ToArray();
 		}
 
 		private void GerarCampos(NotaFiscal nota)
@@ -755,11 +960,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 			var valor = nota.Servico.Valores.ValorServicos - nota.Servico.Valores.ValorDeducoes;
 			var rec = nota.Servico.Valores.IssRetido == SituacaoTributaria.Normal ? "N" : "S";
-			var sign = $"{nota.Prestador.InscricaoMunicipal.ZeroFill(11)}{nota.IdentificacaoRps.Serie.FillLeft(5)}" +
-							 $"{nota.IdentificacaoRps.Numero.ZeroFill(12)}{nota.IdentificacaoRps.DataEmissaoRps:yyyyMMdd}{tributacao} " +
-							 $"{situacao}{rec}{Math.Round(valor * 100).ToString().ZeroFill(15)}" +
-							 $"{Math.Round(nota.Servico.Valores.ValorDeducoes * 100).ToString().ZeroFill(15)}" +
-							 $"{nota.Servico.CodigoCnae.ZeroFill(10)}{nota.Tomador.CpfCnpj.ZeroFill(14)}";
+			var sign = $"{nota.Prestador.InscricaoMunicipal.ZeroFill(11)}{nota.IdentificacaoRps.Serie.FillLeft(5)}" + $"{nota.IdentificacaoRps.Numero.ZeroFill(12)}{nota.IdentificacaoRps.DataEmissaoRps:yyyyMMdd}{tributacao} " + $"{situacao}{rec}{Math.Round(valor * 100).ToString().ZeroFill(15)}" + $"{Math.Round(nota.Servico.Valores.ValorDeducoes * 100).ToString().ZeroFill(15)}" + $"{nota.Servico.CodigoCnae.ZeroFill(10)}{nota.Tomador.CpfCnpj.ZeroFill(14)}";
 
 			assinatura = sign.ToSha1Hash().ToLowerInvariant();
 		}
@@ -790,14 +991,13 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			{
 				var deducaoTag = Xmldoc.CreateElement("Deducao");
 				deducaoTag.AddTag(AdicionarTag(TipoCampo.Str, "", "DeducaoPor", 1, 20, 1, deducao.DeducaoPor.ToString()));
-				deducaoTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoDeducao", 0, 255, 1, deducao.TipoDeducao.GetStr(
-					new[] { TipoDeducao.Nenhum,  TipoDeducao.Materiais, TipoDeducao.Mercadorias,
-							 TipoDeducao.SubEmpreitada, TipoDeducao.VeiculacaoeDivulgacao, TipoDeducao.MapadeConstCivil,
-							 TipoDeducao.Servicos},
-					new[]{ "", "Despesas com Materiais", "Despesas com Mercadorias",
-							"Despesas com Subempreitada", "Servicos de Veiculacao e Divulgacao", "Mapa de Const. Civil",
-							"Servicos"
-					})));
+				deducaoTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoDeducao", 0, 255, 1, deducao.TipoDeducao.GetStr(new[]
+				{
+					TipoDeducao.Nenhum, TipoDeducao.Materiais, TipoDeducao.Mercadorias, TipoDeducao.SubEmpreitada, TipoDeducao.VeiculacaoeDivulgacao, TipoDeducao.MapadeConstCivil, TipoDeducao.Servicos
+				}, new[]
+				{
+					"", "Despesas com Materiais", "Despesas com Mercadorias", "Despesas com Subempreitada", "Servicos de Veiculacao e Divulgacao", "Mapa de Const. Civil", "Servicos"
+				})));
 
 				deducaoTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CPFCNPJReferencia", 0, 14, 1, deducao.CPFCNPJReferencia.OnlyNumbers()));
 				deducaoTag.AddTag(AdicionarTag(TipoCampo.Str, "", "NumeroNFReferencia", 0, 10, 1, deducao.NumeroNFReferencia));
