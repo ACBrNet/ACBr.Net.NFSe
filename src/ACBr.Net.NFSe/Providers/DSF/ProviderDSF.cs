@@ -35,7 +35,6 @@ using ACBr.Net.DFe.Core;
 using ACBr.Net.DFe.Core.Serializer;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
-using ACBr.Net.NFSe.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -43,7 +42,6 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
-using Extensions = ACBr.Net.NFSe.Util.Extensions;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
@@ -468,8 +466,8 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			loteRps = loteRps.SafeReplace("%DTINICIO%", rpsOrg.First().IdentificacaoRps.DataEmissaoRps.ToString("yyyy-MM-dd"));
 			loteRps = loteRps.SafeReplace("%DTFIM%", rpsOrg.Last().IdentificacaoRps.DataEmissaoRps.ToString("yyyy-MM-dd"));
 			loteRps = loteRps.SafeReplace("%TOTALRPS%", notas.Count.ToString());
-			loteRps = loteRps.SafeReplace("%TOTALVALOR%", Extensions.ToInvariant($"{valorTotal:0.00}"));
-			loteRps = loteRps.SafeReplace("%TOTALDEDUCAO%", Extensions.ToInvariant($"{deducaoTotal:0.00}"));
+			loteRps = loteRps.SafeReplace("%TOTALVALOR%", $"{valorTotal:0.00}");
+			loteRps = loteRps.SafeReplace("%TOTALDEDUCAO%", $"{deducaoTotal:0.00}");
 			loteRps = loteRps.SafeReplace("%LOTE%", lote.ToString());
 
 			var xmlNotas = new StringBuilder();
@@ -580,8 +578,8 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			loteRps = loteRps.SafeReplace("%DTINICIO%", rpsOrg.First().IdentificacaoRps.DataEmissaoRps.ToString("yyyy-MM-dd"));
 			loteRps = loteRps.SafeReplace("%DTFIM%", rpsOrg.Last().IdentificacaoRps.DataEmissaoRps.ToString("yyyy-MM-dd"));
 			loteRps = loteRps.SafeReplace("%TOTALRPS%", notas.Count.ToString());
-			loteRps = loteRps.SafeReplace("%TOTALVALOR%", Extensions.ToInvariant($"{valorTotal:0.00}"));
-			loteRps = loteRps.SafeReplace("%TOTALDEDUCAO%", Extensions.ToInvariant($"{deducaoTotal:0.00}"));
+			loteRps = loteRps.SafeReplace("%TOTALVALOR%", $"{valorTotal:0.00}");
+			loteRps = loteRps.SafeReplace("%TOTALDEDUCAO%", $"{deducaoTotal:0.00}");
 			loteRps = loteRps.SafeReplace("%LOTE%", lote.ToString());
 
 			var xmlNotas = new StringBuilder();
