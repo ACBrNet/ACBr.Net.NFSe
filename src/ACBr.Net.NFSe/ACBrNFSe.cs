@@ -195,7 +195,7 @@ namespace ACBr.Net.NFSe
 		public RetornoWebService ConsultarSituacao(int lote, string protocolo = "")
 		{
 			var provider = ProviderManager.GetProvider(Configuracoes);
-			return provider.ConsultarSituacao(lote, protocolo);
+			return provider.ConsultarSituacao(lote, protocolo, NotasFiscais);
 		}
 
 		/// <summary>

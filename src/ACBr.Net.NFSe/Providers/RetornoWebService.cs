@@ -42,6 +42,7 @@ namespace ACBr.Net.NFSe.Providers
 		internal RetornoWebService()
 		{
 			DataEnvioLote = DateTime.Now;
+			NotasFiscais = new List<NotaFiscal>();
 			Erros = new List<Evento>();
 			Alertas = new List<Evento>();
 		}
@@ -55,6 +56,8 @@ namespace ACBr.Net.NFSe.Providers
 		public bool Sucesso { get; set; }
 
 		public string NumeroLote { get; set; }
+
+		public string NumeroUltimoRps { get; set; }
 
 		public string CPFCNPJRemetente { get; set; }
 

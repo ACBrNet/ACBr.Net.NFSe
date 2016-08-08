@@ -30,6 +30,7 @@
 // ***********************************************************************
 
 using ACBr.Net.DFe.Core.Common;
+using ACBr.Net.NFSe.Providers;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
@@ -41,6 +42,12 @@ namespace ACBr.Net.NFSe.Configuracao
 	/// </summary>
 	public sealed class CfgGeral : DFeGeralBase
 	{
+		#region Fields
+
+		private string arquivoMunicipios;
+
+		#endregion Fields
+
 		#region Constructor
 
 		/// <summary>
@@ -55,19 +62,29 @@ namespace ACBr.Net.NFSe.Configuracao
 			ExibirErroSchema = false;
 			RetirarAcentos = false;
 			FormatoAlerta = "TAG:%TAG% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.";
+			ArquivoMunicipios = string.Empty;
 		}
 
 		#endregion Constructor
 
 		#region Properties
 
-		/// <summary>
-		/// Gets or sets a value indicating whether [atualizar XML cancelado].
-		/// </summary>
-		/// <value><c>true</c> if [atualizar XML cancelado]; otherwise, <c>false</c>.</value>
 		[Browsable(true)]
 		[DefaultValue(false)]
 		public bool AtualizarXmlCancelado { get; set; }
+
+		public string ArquivoMunicipios
+		{
+			get
+			{
+				return arquivoMunicipios;
+			}
+			set
+			{
+				arquivoMunicipios = value;
+				ProviderManager.Deserialize(arquivoMunicipios);
+			}
+		}
 
 		#endregion Properties
 	}

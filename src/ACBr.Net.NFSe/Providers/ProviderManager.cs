@@ -34,7 +34,9 @@ using ACBr.Net.Core.Exceptions;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Interfaces;
+using ACBr.Net.NFSe.Providers.Betha;
 using ACBr.Net.NFSe.Providers.DSF;
+using ACBr.Net.NFSe.Providers.Ginfes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -54,6 +56,7 @@ namespace ACBr.Net.NFSe.Providers
 		static ProviderManager()
 		{
 			Municipios = new List<MunicipioNFSe>();
+			Deserialize();
 		}
 
 		#endregion Constructors
@@ -68,12 +71,25 @@ namespace ACBr.Net.NFSe.Providers
 
 		#region Public
 
+		public static void Serialize(string path = "Municipios.nfse")
+		{
+			Guard.Against<ArgumentNullException>(path == null, "Path invalido.");
+
+			if (File.Exists(path))
+				File.Delete(path);
+
+			using (var fileStream = new FileStream(path, FileMode.CreateNew))
+			{
+				Serialize(fileStream);
+			}
+		}
+
 		public static void Serialize(Stream stream)
 		{
 			using (var zip = new GZipStream(stream, CompressionMode.Compress))
 			{
 				var formatter = new BinaryFormatter();
-				formatter.Serialize(zip, Municipios);
+				formatter.Serialize(zip, Municipios.ToArray());
 			}
 		}
 
@@ -82,8 +98,7 @@ namespace ACBr.Net.NFSe.Providers
 			byte[] buffer = null;
 			if (path.IsEmpty())
 			{
-				//todo: colocar um resouce com as configuracoes de cidades
-				buffer = new byte[0];
+				buffer = Properties.Resources.Municipios;
 			}
 			else if (File.Exists(path))
 			{
@@ -91,16 +106,24 @@ namespace ACBr.Net.NFSe.Providers
 			}
 
 			Guard.Against<ArgumentException>(buffer == null, "Arquivo de cidades não encontrado");
+
 			using (var stream = new MemoryStream(buffer))
 			{
-				using (var zip = new GZipStream(stream, CompressionMode.Decompress))
-				{
-					var formatter = new BinaryFormatter();
-					var cidades = (MunicipioNFSe[])formatter.Deserialize(zip);
+				Deserialize(stream, clean);
+			}
+		}
 
-					if (clean) Municipios.Clear();
-					Municipios.AddRange(cidades);
-				}
+		public static void Deserialize(Stream stream, bool clean = true)
+		{
+			Guard.Against<ArgumentException>(stream == null, "Arquivo de cidades não encontrado");
+
+			using (var zip = new GZipStream(stream, CompressionMode.Decompress))
+			{
+				var formatter = new BinaryFormatter();
+				var cidades = (MunicipioNFSe[])formatter.Deserialize(zip);
+
+				if (clean) Municipios.Clear();
+				Municipios.AddRange(cidades);
 			}
 		}
 
@@ -118,6 +141,12 @@ namespace ACBr.Net.NFSe.Providers
 				case "DSF":
 				case "ISSDSF":
 					return new ProviderDSF(config, municipio);
+
+				case "GINFES":
+					return new ProviderGinfes(config, municipio);
+
+				case "BETHA":
+					return new ProviderBetha(config, municipio);
 
 				default:
 					throw new ACBrException("Provedor não encontrado");

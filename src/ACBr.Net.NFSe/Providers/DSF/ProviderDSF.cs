@@ -697,13 +697,13 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			return ret;
 		}
 
-		public override RetornoWebService ConsultarLoteRps(string protocolo, int lote, NotaFiscalCollection notas)
+		public override RetornoWebService ConsultarSituacao(int lote, string protocolo, NotaFiscalCollection notas)
 		{
 			var loteBuilder = new StringBuilder();
 			loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			loteBuilder.Append("<ns1:ReqConsultaLote xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote  http://localhost:8080/WsNFe2/xsd/ReqConsultaLote.xsd\">");
 			loteBuilder.Append("<Cabecalho>");
-			loteBuilder.Append($"<CodCidade>{Municipio}</CodCidade>");
+			loteBuilder.Append($"<CodCidade>{Municipio.CodigoSiafi}</CodCidade>");
 			loteBuilder.Append($"<CPFCNPJRemetente>{Config.PrestadoPadrao.CPFCNPJ.ZeroFill(14)}</CPFCNPJRemetente>");
 			loteBuilder.Append("<Versao>1</Versao>");
 			loteBuilder.Append($"<NumeroLote>{lote}</NumeroLote>");
@@ -801,6 +801,95 @@ namespace ACBr.Net.NFSe.Providers.DSF
 				var xml = GetXmlNFSe(nota);
 				File.WriteAllText(nfseFile, xml, Encoding.UTF8);
 			}
+
+			return retConsulta;
+		}
+
+		public override RetornoWebService ConsultarSequencialRps(string serie)
+		{
+			var lote = new StringBuilder();
+			lote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+			lote.Append("<ns1:ConsultaSeqRps xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ConsultaSeqRps.xsd\">");
+			lote.Append("<Cabecalho>");
+			lote.Append($"<CodCid>{Municipio.CodigoSiafi}</CodCid>");
+			lote.Append($"<IMPrestador>{Config.PrestadoPadrao.InscricaoMunicipal.ZeroFill(11)}</IMPrestador>");
+			lote.Append($"<CPFCNPJRemetente>{Config.PrestadoPadrao.CPFCNPJ.ZeroFill(14)}</CPFCNPJRemetente>");
+			lote.Append($"<SeriePrestacao>{serie}</SeriePrestacao>");
+			lote.Append("<Versao>1</Versao>");
+			lote.Append("</Cabecalho>");
+			lote.Append("</ns1:ConsultaSeqRps>");
+
+			var consultaSequencia = lote.ToString();
+			if (Config.Geral.Salvar)
+			{
+				var loteFile = Path.Combine(Config.Arquivos.GetPathRps(DateTime.Now), $"ConSeqRPS-{DateTime.Now:yyyyMMMMdd}-env.xml");
+				File.WriteAllText(loteFile, consultaSequencia, Encoding.UTF8);
+			}
+
+			string[] errosSchema;
+			var schema = Path.Combine(Config.Geral.PathSchemas, @"DSF\ConsultaSeqRps.xsd");
+			if (!CertificadoDigital.ValidarXml(consultaSequencia, schema, out errosSchema))
+			{
+				var retLote = new RetornoWebService
+				{
+					Sucesso = false,
+					CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
+					CodCidade = Config.WebServices.CodMunicipio,
+					DataEnvioLote = DateTime.Now,
+					NumeroLote = "0",
+					Assincrono = true
+				};
+
+				foreach (var loteErro in errosSchema.Select(erro => new Evento { Codigo = "0", Descricao = erro }))
+					retLote.Erros.Add(loteErro);
+
+				return retLote;
+			}
+
+			string retorno;
+			try
+			{
+				var url = GetUrl(TipoUrl.ConsultarLoteRps);
+				var cliente = new DsfServiceClient(url, TimeOut, Certificado);
+
+				retorno = cliente.ConsultarLote(consultaSequencia);
+			}
+			catch (Exception ex)
+			{
+				var retLote = new RetornoWebService
+				{
+					Sucesso = false,
+					CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
+					CodCidade = Config.WebServices.CodMunicipio,
+					DataEnvioLote = DateTime.Now,
+					NumeroLote = "0",
+					Assincrono = true
+				};
+
+				retLote.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
+				return retLote;
+			}
+
+			if (Config.Geral.Salvar)
+			{
+				var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"Consultalote-{DateTime.Now:yyyyMMdd}-{lote}-ret.xml");
+				File.WriteAllText(loteFile, retorno, Encoding.UTF8);
+			}
+
+			var retConsulta = new RetornoWebService();
+			var xmlRet = XDocument.Parse(retorno);
+			var cabeçalho = xmlRet.Element("Cabecalho");
+
+			retConsulta.Sucesso = true;
+			retConsulta.CodCidade = cabeçalho?.Element("CodCidade")?.GetValue<int>() ?? 0;
+			retConsulta.NumeroUltimoRps = cabeçalho?.Element("NroUltimoRps")?.GetValue<string>() ?? string.Empty;
+			retConsulta.CPFCNPJRemetente = cabeçalho?.Element("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
+
+			var erros = xmlRet.Element("Erros");
+			retConsulta.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));
+
+			var alertas = xmlRet.Element("Alertas");
+			retConsulta.Alertas.AddRange(ProcessarEventos(TipoEvento.Alertas, alertas));
 
 			return retConsulta;
 		}

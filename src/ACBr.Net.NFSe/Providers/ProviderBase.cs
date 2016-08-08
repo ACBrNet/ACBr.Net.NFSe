@@ -227,7 +227,7 @@ namespace ACBr.Net.NFSe.Providers
 			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}
 
-		public virtual RetornoWebService ConsultarSituacao(int lote, string protocolo)
+		public virtual RetornoWebService ConsultarSituacao(int lote, string protocolo, NotaFiscalCollection notas)
 		{
 			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}

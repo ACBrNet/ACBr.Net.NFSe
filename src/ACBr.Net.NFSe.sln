@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBr.Net.NFSe", "ACBr.Net.NFSe\ACBr.Net.NFSe.csproj", "{0EF298CA-A045-47E2-91AD-5C211E793C3B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBr.Net.NFSe.Demo", "ACBr.Net.NFSe.Demo\ACBr.Net.NFSe.Demo.csproj", "{507A1588-D006-445C-B729-3F1D3A5CE803}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		COM Interop|Any CPU = COM Interop|Any CPU
@@ -18,6 +20,12 @@ Global
 		{0EF298CA-A045-47E2-91AD-5C211E793C3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EF298CA-A045-47E2-91AD-5C211E793C3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EF298CA-A045-47E2-91AD-5C211E793C3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{507A1588-D006-445C-B729-3F1D3A5CE803}.COM Interop|Any CPU.ActiveCfg = Release|Any CPU
+		{507A1588-D006-445C-B729-3F1D3A5CE803}.COM Interop|Any CPU.Build.0 = Release|Any CPU
+		{507A1588-D006-445C-B729-3F1D3A5CE803}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{507A1588-D006-445C-B729-3F1D3A5CE803}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{507A1588-D006-445C-B729-3F1D3A5CE803}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{507A1588-D006-445C-B729-3F1D3A5CE803}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
