@@ -133,9 +133,9 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 		private static string GerarCabecalho()
 		{
 			var cabecalho = new StringBuilder();
-			cabecalho.Append("<cabecalho versao=\"3\">");
+			cabecalho.Append("<ns2:cabecalho versao=\"3\" xmlns:ns2=\"http://www.ginfes.com.br/cabecalho_v03.xsd\">");
 			cabecalho.Append("<versaoDados>3</versaoDados>");
-			cabecalho.Append("</cabecalho>");
+			cabecalho.Append("</ns2:cabecalho>");
 
 			return cabecalho.ToString();
 		}
