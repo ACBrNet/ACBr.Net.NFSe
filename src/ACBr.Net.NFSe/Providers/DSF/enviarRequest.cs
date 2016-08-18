@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 08-17-2016
 // ***********************************************************************
-// <copyright file="TipoUrl.cs" company="ACBr.Net">
+// <copyright file="enviarRequest.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,18 +29,37 @@
 // <summary></summary>
 // ***********************************************************************
 
-namespace ACBr.Net.NFSe.Providers
+using System.ComponentModel;
+using System.ServiceModel;
+
+namespace ACBr.Net.NFSe.Providers.DSF
 {
-	public enum TipoUrl
+	[EditorBrowsable(EditorBrowsableState.Advanced)]
+	[MessageContract(WrapperName = "enviar", WrapperNamespace = "http://proces.wsnfe2.dsfnet.com.br", IsWrapped = true)]
+	// ReSharper disable once InconsistentNaming
+	internal class enviarRequest
 	{
-		Enviar,
-		EnviarSincrono,
-		ConsultarSituacao,
-		ConsultarLoteRps,
-		ConsultarSequencialRps,
-		ConsultaNFSeRps,
-		ConsultaNFSe,
-		CancelaNFSe,
-		SubstituirNFSe,
+		/// <summary>
+		/// The mensagem XML
+		/// </summary>
+		[MessageBodyMember(Namespace = "", Order = 0)]
+		// ReSharper disable once InconsistentNaming
+		public string mensagemXml;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="enviarRequest"/> class.
+		/// </summary>
+		public enviarRequest()
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="enviarRequest"/> class.
+		/// </summary>
+		/// <param name="mensagemXml">The mensagem XML.</param>
+		public enviarRequest(string mensagemXml)
+		{
+			this.mensagemXml = mensagemXml;
+		}
 	}
 }

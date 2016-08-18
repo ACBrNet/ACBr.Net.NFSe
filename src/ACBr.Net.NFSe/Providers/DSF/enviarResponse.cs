@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 08-17-2016
 // ***********************************************************************
-// <copyright file="TipoUrl.cs" company="ACBr.Net">
+// <copyright file="enviarResponse.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,18 +29,37 @@
 // <summary></summary>
 // ***********************************************************************
 
-namespace ACBr.Net.NFSe.Providers
+using System.ComponentModel;
+using System.ServiceModel;
+
+namespace ACBr.Net.NFSe.Providers.DSF
 {
-	public enum TipoUrl
+	[EditorBrowsable(EditorBrowsableState.Advanced)]
+	[MessageContract(WrapperName = "enviarResponse", WrapperNamespace = "http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws", IsWrapped = true)]
+	// ReSharper disable once InconsistentNaming
+	internal class enviarResponse
 	{
-		Enviar,
-		EnviarSincrono,
-		ConsultarSituacao,
-		ConsultarLoteRps,
-		ConsultarSequencialRps,
-		ConsultaNFSeRps,
-		ConsultaNFSe,
-		CancelaNFSe,
-		SubstituirNFSe,
+		/// <summary>
+		/// The enviar return
+		/// </summary>
+		[MessageBodyMember(Namespace = "", Order = 0)]
+		// ReSharper disable once InconsistentNaming
+		public string enviarReturn;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="enviarResponse"/> class.
+		/// </summary>
+		public enviarResponse()
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="enviarResponse"/> class.
+		/// </summary>
+		/// <param name="enviarReturn">The enviar return.</param>
+		public enviarResponse(string enviarReturn)
+		{
+			this.enviarReturn = enviarReturn;
+		}
 	}
 }

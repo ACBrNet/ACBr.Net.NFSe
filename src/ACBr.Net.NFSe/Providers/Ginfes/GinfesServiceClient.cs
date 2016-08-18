@@ -46,19 +46,19 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 		#region Methods
 
-		public string CancelarNfse(string arg0)
+		public string CancelarNfse(string request)
 		{
-			return base.Channel.CancelarNfse(arg0);
+			return base.Channel.CancelarNfse(request);
 		}
 
-		public string ConsultarLoteRps(string arg0)
+		public string ConsultarLoteRps(string request)
 		{
-			return Channel.ConsultarLoteRps(arg0);
+			return Channel.ConsultarLoteRps(request);
 		}
 
-		public string ConsultarLoteRpsV3(string arg0, string arg1)
+		public string ConsultarLoteRpsV3(string cabecalho, string request)
 		{
-			return Channel.ConsultarLoteRpsV3(arg0, arg1);
+			return Channel.ConsultarLoteRpsV3(cabecalho, request);
 		}
 
 		public string ConsultarNfse(string arg0)
@@ -66,39 +66,39 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			return Channel.ConsultarNfse(arg0);
 		}
 
-		public string ConsultarNfsePorRps(string arg0)
+		public string ConsultarNfsePorRps(string request)
 		{
-			return Channel.ConsultarNfsePorRps(arg0);
+			return Channel.ConsultarNfsePorRps(request);
 		}
 
-		public string ConsultarNfsePorRpsV3(string arg0, string arg1)
+		public string ConsultarNfsePorRpsV3(string cabecalho, string request)
 		{
-			return Channel.ConsultarNfsePorRpsV3(arg0, arg1);
+			return Channel.ConsultarNfsePorRpsV3(cabecalho, request);
 		}
 
-		public string ConsultarNfseV3(string arg0, string arg1)
+		public string ConsultarNfseV3(string cabecalho, string request)
 		{
-			return Channel.ConsultarNfseV3(arg0, arg1);
+			return Channel.ConsultarNfseV3(cabecalho, request);
 		}
 
-		public string ConsultarSituacaoLoteRps(string arg0)
+		public string ConsultarSituacaoLoteRps(string request)
 		{
-			return Channel.ConsultarSituacaoLoteRps(arg0);
+			return Channel.ConsultarSituacaoLoteRps(request);
 		}
 
-		public string ConsultarSituacaoLoteRpsV3(string arg0, string arg1)
+		public string ConsultarSituacaoLoteRpsV3(string cabecalho, string request)
 		{
-			return Channel.ConsultarSituacaoLoteRpsV3(arg0, arg1);
+			return Channel.ConsultarSituacaoLoteRpsV3(cabecalho, request);
 		}
 
-		public string RecepcionarLoteRps(string arg0)
+		public string RecepcionarLoteRps(string request)
 		{
-			return Channel.RecepcionarLoteRps(arg0);
+			return Channel.RecepcionarLoteRps(request);
 		}
 
-		public string RecepcionarLoteRpsV3(string arg0, string arg1)
+		public string RecepcionarLoteRpsV3(string cabecalho, string request)
 		{
-			return Channel.RecepcionarLoteRpsV3(arg0, arg1);
+			return Channel.RecepcionarLoteRpsV3(cabecalho, request);
 		}
 
 		#endregion Methods

@@ -49,7 +49,7 @@ namespace ACBr.Net.NFSe.Providers
 	/// <summary>
 	/// Classe ProviderManager.
 	/// </summary>
-	public class ProviderManager
+	public static class ProviderManager
 	{
 		#region Constructors
 
@@ -131,7 +131,7 @@ namespace ACBr.Net.NFSe.Providers
 
 		#region Internal
 
-		internal static INFSeProvider GetProvider(Configuracoes config)
+		public static INFSeProvider GetProvider(Configuracoes config)
 		{
 			var municipio = Municipios.SingleOrDefault(x => x.Codigo == config.WebServices.CodMunicipio);
 			Guard.Against<ACBrException>(municipio == null, "Provedor para esta cidade não implementado ou não especificado ! ");

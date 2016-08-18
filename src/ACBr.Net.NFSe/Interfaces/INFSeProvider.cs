@@ -1,5 +1,5 @@
 // ***********************************************************************
-// Assembly         : G2i.NFSe
+// Assembly         : ACBr.Net.NFe
 // Author           : RFTD
 // Created          : 10-01-2014
 //
@@ -42,7 +42,7 @@ namespace ACBr.Net.NFSe.Interfaces
 	/// <summary>
 	/// Interface INFSeProvider
 	/// </summary>
-	internal interface INFSeProvider : IACBrLog
+	public interface INFSeProvider : IACBrLog
 	{
 		#region Propriedades
 

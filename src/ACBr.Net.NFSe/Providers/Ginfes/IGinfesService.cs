@@ -39,56 +39,56 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string CancelarNfse(string arg0);
+		string CancelarNfse(string request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string ConsultarLoteRps(string arg0);
+		string ConsultarLoteRps(string request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string ConsultarLoteRpsV3(string arg0, string arg1);
+		string ConsultarLoteRpsV3(string cabecalho, string request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string ConsultarNfse(string arg0);
+		string ConsultarNfse(string request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string ConsultarNfsePorRps(string arg0);
+		string ConsultarNfsePorRps(string request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string ConsultarNfsePorRpsV3(string arg0, string arg1);
+		string ConsultarNfsePorRpsV3(string cabecalho, string request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string ConsultarNfseV3(string arg0, string arg1);
+		string ConsultarNfseV3(string cabecalho, string request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string ConsultarSituacaoLoteRps(string arg0);
+		string ConsultarSituacaoLoteRps(string request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string ConsultarSituacaoLoteRpsV3(string arg0, string arg1);
+		string ConsultarSituacaoLoteRpsV3(string cabecalho, string request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string RecepcionarLoteRps(string arg0);
+		string RecepcionarLoteRps(string request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string RecepcionarLoteRpsV3(string arg0, string arg1);
+		string RecepcionarLoteRpsV3(string cabecalho, string request);
 	}
 }

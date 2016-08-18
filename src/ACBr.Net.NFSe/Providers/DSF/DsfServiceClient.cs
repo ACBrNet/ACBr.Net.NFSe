@@ -79,8 +79,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 		/// <returns>System.String.</returns>
 		public string Enviar(string mensagemXml)
 		{
-			var retVal = ((IDsfService)this).enviar(mensagemXml);
-			return retVal;
+			var request = new enviarRequest(mensagemXml);
+			var retVal = ((IDsfService)this).enviar(request);
+			return retVal.enviarReturn;
 		}
 
 		/// <summary>
@@ -159,7 +160,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 		/// <param name="request">The request.</param>
 		/// <returns>enviarResponse.</returns>
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
-		string IDsfService.enviar(string request)
+		enviarResponse IDsfService.enviar(enviarRequest request)
 		{
 			return Channel.enviar(request);
 		}
