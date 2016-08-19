@@ -7,6 +7,12 @@ namespace ACBr.Net.NFSe.Demo
 {
 	public partial class FormMain : Form
 	{
+		#region Fields
+
+		private ACBrNFSe acbrNFSe;
+
+		#endregion Fields
+
 		#region Constructors
 
 		public FormMain()
@@ -71,6 +77,7 @@ namespace ACBr.Net.NFSe.Demo
 		protected override void OnLoad(EventArgs e)
 		{
 			PopulateMunicipios();
+			acbrNFSe = new ACBrNFSe();
 			base.OnLoad(e);
 		}
 

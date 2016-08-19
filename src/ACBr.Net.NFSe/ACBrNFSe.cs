@@ -38,6 +38,7 @@ using ACBr.Net.NFSe.Interfaces;
 using ACBr.Net.NFSe.Nota;
 using ACBr.Net.NFSe.Providers;
 using System;
+using System.ComponentModel;
 
 #region COM Interop Attributes
 
@@ -120,6 +121,7 @@ namespace ACBr.Net.NFSe
 
 	#endregion COM Interop Attributes
 
+	[ToolboxItem(typeof(ACBrNFSe))]
 	// ReSharper disable once InconsistentNaming
 	public class ACBrNFSe : ACBrComponent, IACBrLog
 	{

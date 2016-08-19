@@ -66,6 +66,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			loteBuilder.Append("</ConsultarLoteRpsEnvio>");
 
 			var consultaLote = loteBuilder.ToString();
+			consultaLote = CertificadoDigital.Assinar(consultaLote, "", "ConsultarLoteRpsEnvio", Certificado, true);
+
 			if (Config.Geral.Salvar)
 			{
 				var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"Consultalote-{DateTime.Now:yyyyMMdd}-{lote}-env.xml");
@@ -73,8 +75,9 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			}
 
 			string[] errosSchema;
+			string[] alertasSchema;
 			var schema = Path.Combine(Config.Geral.PathSchemas, @"GINFES\servico_consultar_lote_rps_envio_v03.xsd");
-			if (!CertificadoDigital.ValidarXml(consultaLote, schema, out errosSchema))
+			if (!CertificadoDigital.ValidarXml(consultaLote, schema, out errosSchema, out alertasSchema))
 			{
 				var retLote = new RetornoWebService
 				{
@@ -86,8 +89,11 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 					Assincrono = true
 				};
 
-				foreach (var loteErro in errosSchema.Select(erro => new Evento { Codigo = "0", Descricao = erro }))
-					retLote.Erros.Add(loteErro);
+				foreach (var erro in errosSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
+					retLote.Erros.Add(erro);
+
+				foreach (var alerta in alertasSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
+					retLote.Alertas.Add(alerta);
 
 				return retLote;
 			}

@@ -61,9 +61,9 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			return Channel.ConsultarLoteRpsV3(cabecalho, request);
 		}
 
-		public string ConsultarNfse(string arg0)
+		public string ConsultarNfse(string request)
 		{
-			return Channel.ConsultarNfse(arg0);
+			return Channel.ConsultarNfse(request);
 		}
 
 		public string ConsultarNfsePorRps(string request)

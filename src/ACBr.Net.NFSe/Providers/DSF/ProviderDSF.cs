@@ -485,7 +485,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 			loteRps = loteRps.SafeReplace("%NOTAS%", xmlNotas.ToString());
 
-			loteRps = CertificadoDigital.SignXml(loteRps, "Lote", Certificado);
+			loteRps = CertificadoDigital.Assinar(loteRps, "", "Lote", Certificado, true);
 
 			if (Config.Geral.Salvar)
 			{
@@ -494,8 +494,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			}
 
 			string[] errosSchema;
+			string[] alertasSchema;
 			var schema = Path.Combine(Config.Geral.PathSchemas, @"DSF\ReqEnvioLoteRPS.xsd");
-			if (!CertificadoDigital.ValidarXml(loteRps, schema, out errosSchema))
+			if (!CertificadoDigital.ValidarXml(loteRps, schema, out errosSchema, out alertasSchema))
 			{
 				var retLote = new RetornoWebService
 				{
@@ -509,6 +510,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 				foreach (var loteErro in errosSchema.Select(erro => new Evento { Codigo = "0", Descricao = erro }))
 					retLote.Erros.Add(loteErro);
+
+				foreach (var alerta in alertasSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
+					retLote.Alertas.Add(alerta);
 
 				return retLote;
 			}
@@ -597,7 +601,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 			loteRps = loteRps.SafeReplace("%NOTAS%", xmlNotas.ToString());
 
-			loteRps = CertificadoDigital.SignXml(loteRps, "Lote", Certificado);
+			loteRps = CertificadoDigital.Assinar(loteRps, "", "Lote", Certificado, true);
 
 			if (Config.Geral.Salvar)
 			{
@@ -606,8 +610,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			}
 
 			string[] errosSchema;
+			string[] alertasSchema;
 			var schema = Path.Combine(Config.Geral.PathSchemas, @"DSF\ReqEnvioLoteRPS.xsd");
-			if (!CertificadoDigital.ValidarXml(loteRps, schema, out errosSchema))
+			if (!CertificadoDigital.ValidarXml(loteRps, schema, out errosSchema, out alertasSchema))
 			{
 				var retLote = new RetornoWebService
 				{
@@ -621,6 +626,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 				foreach (var loteErro in errosSchema.Select(erro => new Evento { Codigo = "0", Descricao = erro }))
 					retLote.Erros.Add(loteErro);
+
+				foreach (var alerta in alertasSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
+					retLote.Alertas.Add(alerta);
 
 				return retLote;
 			}
@@ -718,8 +726,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			}
 
 			string[] errosSchema;
+			string[] alertasSchema;
 			var schema = Path.Combine(Config.Geral.PathSchemas, @"DSF\ReqEnvioLoteRPS.xsd");
-			if (!CertificadoDigital.ValidarXml(consultaLote, schema, out errosSchema))
+			if (!CertificadoDigital.ValidarXml(consultaLote, schema, out errosSchema, out alertasSchema))
 			{
 				var retLote = new RetornoWebService
 				{
@@ -733,6 +742,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 				foreach (var loteErro in errosSchema.Select(erro => new Evento { Codigo = "0", Descricao = erro }))
 					retLote.Erros.Add(loteErro);
+
+				foreach (var alerta in alertasSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
+					retLote.Alertas.Add(alerta);
 
 				return retLote;
 			}
@@ -827,8 +839,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			}
 
 			string[] errosSchema;
+			string[] alertasSchema;
 			var schema = Path.Combine(Config.Geral.PathSchemas, @"DSF\ConsultaSeqRps.xsd");
-			if (!CertificadoDigital.ValidarXml(consultaSequencia, schema, out errosSchema))
+			if (!CertificadoDigital.ValidarXml(consultaSequencia, schema, out errosSchema, out alertasSchema))
 			{
 				var retLote = new RetornoWebService
 				{
@@ -842,6 +855,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 				foreach (var loteErro in errosSchema.Select(erro => new Evento { Codigo = "0", Descricao = erro }))
 					retLote.Erros.Add(loteErro);
+
+				foreach (var alerta in alertasSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
+					retLote.Alertas.Add(alerta);
 
 				return retLote;
 			}

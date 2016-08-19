@@ -29,6 +29,7 @@
 // <summary></summary>
 // ***********************************************************************
 
+using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core.Common;
 using ACBr.Net.NFSe.Providers;
 using System.ComponentModel;
@@ -57,8 +58,14 @@ namespace ACBr.Net.NFSe.Configuracao
 		{
 			Salvar = false;
 			AtualizarXmlCancelado = false;
-			PathSchemas = Path.Combine(Assembly.GetExecutingAssembly().CodeBase, "Schemas");
-			PathSalvar = Path.Combine(Assembly.GetExecutingAssembly().CodeBase, "XmlNFSe");
+
+			var path = Path.GetDirectoryName(Assembly.GetEntryAssembly().CodeBase);
+			if (!path.IsEmpty())
+			{
+				PathSchemas = Path.Combine(path, "Schemas");
+				PathSalvar = Path.Combine(path, "XmlNFSe");
+			}
+
 			ExibirErroSchema = false;
 			RetirarAcentos = false;
 			FormatoAlerta = "TAG:%TAG% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.";
