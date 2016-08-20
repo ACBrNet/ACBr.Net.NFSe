@@ -43,6 +43,9 @@ namespace ACBr.Net.NFSe.Providers
 			if (ClientCredentials != null)
 				ClientCredentials.ClientCertificate.Certificate = certificado;
 
+			var endpointInspector = new BaseInspectorBehavior();
+			Endpoint.Behaviors.Add(endpointInspector);
+
 			if (!timeOut.HasValue)
 				return;
 

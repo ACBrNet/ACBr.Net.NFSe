@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 08-17-2016
 // ***********************************************************************
-// <copyright file="IDsfService.cs" company="ACBr.Net">
+// <copyright file="IDSFService.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -33,41 +33,42 @@ using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
-	internal interface IDsfService
+	[ServiceContract(Namespace = "")]
+	internal interface IDSFService
 	{
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[XmlSerializerFormat(Style = OperationFormatStyle.Rpc, SupportFaults = true, Use = OperationFormatUse.Encoded)]
 		// ReSharper disable once InconsistentNaming
-		string consultarSequencialRps(string request);
+		ConsultarSequencialRpsResponse consultarSequencialRps(ConsultarSequencialRpsRequest request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[XmlSerializerFormat(Style = OperationFormatStyle.Rpc, SupportFaults = true, Use = OperationFormatUse.Encoded)]
 		// ReSharper disable once InconsistentNaming
-		string enviarSincrono(string request);
+		EnviarSincronoResponse enviarSincrono(EnviarSincronoRequest request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[XmlSerializerFormat(Style = OperationFormatStyle.Rpc, SupportFaults = true, Use = OperationFormatUse.Encoded)]
 		// ReSharper disable once InconsistentNaming
-		enviarResponse enviar(enviarRequest request);
+		EnviarResponse enviar(EnviarRequest request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[XmlSerializerFormat(Style = OperationFormatStyle.Rpc, SupportFaults = true, Use = OperationFormatUse.Encoded)]
 		// ReSharper disable once InconsistentNaming
-		string consultarLote(string request);
+		ConsultarLoteResponse consultarLote(ConsultarLoteRequest request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[XmlSerializerFormat(Style = OperationFormatStyle.Rpc, SupportFaults = true, Use = OperationFormatUse.Encoded)]
 		// ReSharper disable once InconsistentNaming
-		string consultarNota(string request);
+		ConsultarNotaResponse consultarNota(ConsultarNotaRequest request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[XmlSerializerFormat(Style = OperationFormatStyle.Rpc, SupportFaults = true, Use = OperationFormatUse.Encoded)]
 		// ReSharper disable once InconsistentNaming
-		string cancelar(string request);
+		CancelarResponse cancelar(CancelarRequest request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[XmlSerializerFormat(Style = OperationFormatStyle.Rpc, SupportFaults = true, Use = OperationFormatUse.Encoded)]
 		// ReSharper disable once InconsistentNaming
-		string consultarNFSeRps(string request);
+		ConsultarNFSeRpsResponse consultarNFSeRps(ConsultarNFSeRpsRequest request);
 	}
 }

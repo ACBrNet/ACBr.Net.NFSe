@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 08-17-2016
+// Created          : 19-08-2016
 //
 // Last Modified By : RFTD
-// Last Modified On : 08-17-2016
+// Last Modified On : 19-08-2016
 // ***********************************************************************
-// <copyright file="enviarResponse.cs" company="ACBr.Net">
+// <copyright file="EnviarResponse.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -36,30 +36,14 @@ namespace ACBr.Net.NFSe.Providers.DSF
 {
 	[EditorBrowsable(EditorBrowsableState.Advanced)]
 	[MessageContract(WrapperName = "enviarResponse", WrapperNamespace = "http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws", IsWrapped = true)]
-	// ReSharper disable once InconsistentNaming
-	internal class enviarResponse
+	internal class EnviarResponse
 	{
-		/// <summary>
-		/// The enviar return
-		/// </summary>
-		[MessageBodyMember(Namespace = "", Order = 0)]
-		// ReSharper disable once InconsistentNaming
-		public string enviarReturn;
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="enviarResponse"/> class.
-		/// </summary>
-		public enviarResponse()
+		public EnviarResponse(string enviarReturn)
 		{
+			this.Return = enviarReturn;
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="enviarResponse"/> class.
-		/// </summary>
-		/// <param name="enviarReturn">The enviar return.</param>
-		public enviarResponse(string enviarReturn)
-		{
-			this.enviarReturn = enviarReturn;
-		}
+		[MessageBodyMember(Name = "enviarReturn", Namespace = "", Order = 0)]
+		public string Return;
 	}
 }

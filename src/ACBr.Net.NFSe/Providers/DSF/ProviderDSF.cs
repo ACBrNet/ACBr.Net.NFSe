@@ -485,7 +485,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 			loteRps = loteRps.SafeReplace("%NOTAS%", xmlNotas.ToString());
 
-			loteRps = CertificadoDigital.Assinar(loteRps, "", "Lote", Certificado, true);
+			loteRps = CertificadoDigital.Assinar(loteRps, "", "ReqEnvioLoteRPS", Certificado, true);
 
 			if (Config.Geral.Salvar)
 			{
@@ -518,7 +518,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			}
 
 			var url = GetUrl(TipoUrl.Enviar);
-			var cliente = new DsfServiceClient(url, TimeOut, Certificado);
+			var cliente = new DSFServiceClient(url, TimeOut, Certificado);
 
 			string retorno;
 			try
@@ -601,7 +601,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 			loteRps = loteRps.SafeReplace("%NOTAS%", xmlNotas.ToString());
 
-			loteRps = CertificadoDigital.Assinar(loteRps, "", "Lote", Certificado, true);
+			loteRps = CertificadoDigital.Assinar(loteRps, "", "ReqEnvioLoteRPS", Certificado, true);
 
 			if (Config.Geral.Salvar)
 			{
@@ -634,7 +634,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			}
 
 			var url = GetUrl(TipoUrl.Enviar);
-			var cliente = new DsfServiceClient(url, TimeOut, Certificado);
+			var cliente = new DSFServiceClient(url, TimeOut, Certificado);
 
 			string retorno;
 			try
@@ -721,13 +721,13 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var consultaLote = loteBuilder.ToString();
 			if (Config.Geral.Salvar)
 			{
-				var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"Consultalote-{DateTime.Now:yyyyMMdd}-{lote}-env.xml");
+				var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"ConsultarSituacao-{DateTime.Now:yyyyMMdd}-{lote}-env.xml");
 				File.WriteAllText(loteFile, consultaLote, Encoding.UTF8);
 			}
 
 			string[] errosSchema;
 			string[] alertasSchema;
-			var schema = Path.Combine(Config.Geral.PathSchemas, @"DSF\ReqEnvioLoteRPS.xsd");
+			var schema = Path.Combine(Config.Geral.PathSchemas, @"DSF\ReqConsultaLote.xsd");
 			if (!CertificadoDigital.ValidarXml(consultaLote, schema, out errosSchema, out alertasSchema))
 			{
 				var retLote = new RetornoWebService
@@ -754,7 +754,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			try
 			{
 				var url = GetUrl(TipoUrl.ConsultarLoteRps);
-				var cliente = new DsfServiceClient(url, TimeOut, Certificado);
+				var cliente = new DSFServiceClient(url, TimeOut, Certificado);
 
 				retorno = cliente.ConsultarLote(consultaLote);
 			}
@@ -866,7 +866,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			try
 			{
 				var url = GetUrl(TipoUrl.ConsultarLoteRps);
-				var cliente = new DsfServiceClient(url, TimeOut, Certificado);
+				var cliente = new DSFServiceClient(url, TimeOut, Certificado);
 
 				retorno = cliente.ConsultarLote(consultaSequencia);
 			}

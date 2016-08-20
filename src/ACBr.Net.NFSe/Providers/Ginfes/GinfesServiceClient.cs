@@ -46,60 +46,75 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 		#region Methods
 
-		public string CancelarNfse(string request)
+		public string ConsultarSituacao(string cabecalho, string dados)
 		{
-			return base.Channel.CancelarNfse(request);
+			var request = new ConsultarSituacaoRequest(cabecalho, dados);
+			return ((IGinfesService)this).ConsultarSituacaoLoteRpsV3(request);
 		}
 
-		public string ConsultarLoteRps(string request)
+		public string ConsultarLoteRps(string cabecalho, string dados)
 		{
-			return Channel.ConsultarLoteRps(request);
+			var request = new ConsultarLoteRequest(cabecalho, dados);
+			return ((IGinfesService)this).ConsultarLoteRpsV3(request);
 		}
 
-		public string ConsultarLoteRpsV3(string cabecalho, string request)
+		public string ConsultarNfsePorRps(string cabecalho, string dados)
 		{
-			return Channel.ConsultarLoteRpsV3(cabecalho, request);
+			var request = new ConsultarNfsePorRpsRequest(cabecalho, dados);
+			return ((IGinfesService)this).ConsultarNfsePorRpsV3(request);
 		}
 
-		public string ConsultarNfse(string request)
+		public string ConsultarNfse(string cabecalho, string dados)
 		{
-			return Channel.ConsultarNfse(request);
+			var request = new ConsultarNfseRequest(cabecalho, dados);
+			return ((IGinfesService)this).ConsultarNfseV3(request);
 		}
 
-		public string ConsultarNfsePorRps(string request)
+		public string CancelarNfse(string cabecalho, string dados)
 		{
-			return Channel.ConsultarNfsePorRps(request);
+			var request = new CancelarNfseRequest(cabecalho, dados);
+			return ((IGinfesService)this).CancelarNfseV3(request);
 		}
 
-		public string ConsultarNfsePorRpsV3(string cabecalho, string request)
+		public string RecepcionarLoteRps(string cabecalho, string dados)
 		{
-			return Channel.ConsultarNfsePorRpsV3(cabecalho, request);
+			var request = new RecepcionarLoteRpsRequest(cabecalho, dados);
+			return ((IGinfesService)this).RecepcionarLoteRpsV3(request);
 		}
 
-		public string ConsultarNfseV3(string cabecalho, string request)
+		#region Interface Methods
+
+		string IGinfesService.ConsultarSituacaoLoteRpsV3(ConsultarSituacaoRequest request)
 		{
-			return Channel.ConsultarNfseV3(cabecalho, request);
+			return Channel.ConsultarSituacaoLoteRpsV3(request);
 		}
 
-		public string ConsultarSituacaoLoteRps(string request)
+		string IGinfesService.ConsultarLoteRpsV3(ConsultarLoteRequest request)
 		{
-			return Channel.ConsultarSituacaoLoteRps(request);
+			return Channel.ConsultarLoteRpsV3(request);
 		}
 
-		public string ConsultarSituacaoLoteRpsV3(string cabecalho, string request)
+		string IGinfesService.ConsultarNfsePorRpsV3(ConsultarNfsePorRpsRequest request)
 		{
-			return Channel.ConsultarSituacaoLoteRpsV3(cabecalho, request);
+			return Channel.ConsultarNfsePorRpsV3(request);
 		}
 
-		public string RecepcionarLoteRps(string request)
+		string IGinfesService.ConsultarNfseV3(ConsultarNfseRequest request)
 		{
-			return Channel.RecepcionarLoteRps(request);
+			return Channel.ConsultarNfseV3(request);
 		}
 
-		public string RecepcionarLoteRpsV3(string cabecalho, string request)
+		string IGinfesService.CancelarNfseV3(CancelarNfseRequest request)
 		{
-			return Channel.RecepcionarLoteRpsV3(cabecalho, request);
+			return Channel.CancelarNfseV3(request);
 		}
+
+		string IGinfesService.RecepcionarLoteRpsV3(RecepcionarLoteRpsRequest request)
+		{
+			return Channel.RecepcionarLoteRpsV3(request);
+		}
+
+		#endregion Interface Methods
 
 		#endregion Methods
 	}

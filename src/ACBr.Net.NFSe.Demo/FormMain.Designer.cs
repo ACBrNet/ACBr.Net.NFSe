@@ -30,14 +30,6 @@
 		{
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.tabPage3 = new System.Windows.Forms.TabPage();
-			this.tabControl2 = new System.Windows.Forms.TabControl();
-			this.tabPage2 = new System.Windows.Forms.TabPage();
-			this.tabPage4 = new System.Windows.Forms.TabPage();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.tabPage5 = new System.Windows.Forms.TabPage();
-			this.tabPage6 = new System.Windows.Forms.TabPage();
-			this.tabPage7 = new System.Windows.Forms.TabPage();
 			this.tabControl3 = new System.Windows.Forms.TabControl();
 			this.tabPage8 = new System.Windows.Forms.TabPage();
 			this.tabPage9 = new System.Windows.Forms.TabPage();
@@ -45,20 +37,29 @@
 			this.tabPage11 = new System.Windows.Forms.TabPage();
 			this.tabPage12 = new System.Windows.Forms.TabPage();
 			this.tabPage13 = new System.Windows.Forms.TabPage();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.tabControl2 = new System.Windows.Forms.TabControl();
+			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.tabPage4 = new System.Windows.Forms.TabPage();
+			this.tabPage5 = new System.Windows.Forms.TabPage();
+			this.tabPage6 = new System.Windows.Forms.TabPage();
+			this.tabPage7 = new System.Windows.Forms.TabPage();
+			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.btnSalvar = new System.Windows.Forms.Button();
+			this.btnCarregar = new System.Windows.Forms.Button();
 			this.listView1 = new System.Windows.Forms.ListView();
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.btnCarregar = new System.Windows.Forms.Button();
-			this.btnSalvar = new System.Windows.Forms.Button();
+			this.btnAdicionar = new System.Windows.Forms.Button();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
-			this.tabPage3.SuspendLayout();
-			this.tabControl2.SuspendLayout();
-			this.groupBox1.SuspendLayout();
 			this.tabControl3.SuspendLayout();
+			this.groupBox1.SuspendLayout();
+			this.tabControl2.SuspendLayout();
+			this.tabPage3.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabControl1
@@ -83,94 +84,6 @@
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "NFSe";
 			this.tabPage1.UseVisualStyleBackColor = true;
-			// 
-			// tabPage3
-			// 
-			this.tabPage3.Controls.Add(this.btnSalvar);
-			this.tabPage3.Controls.Add(this.btnCarregar);
-			this.tabPage3.Controls.Add(this.listView1);
-			this.tabPage3.Location = new System.Drawing.Point(4, 22);
-			this.tabPage3.Name = "tabPage3";
-			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage3.Size = new System.Drawing.Size(874, 485);
-			this.tabPage3.TabIndex = 2;
-			this.tabPage3.Text = "Gerenciador de Cidades";
-			this.tabPage3.UseVisualStyleBackColor = true;
-			// 
-			// tabControl2
-			// 
-			this.tabControl2.Controls.Add(this.tabPage2);
-			this.tabControl2.Controls.Add(this.tabPage4);
-			this.tabControl2.Controls.Add(this.tabPage5);
-			this.tabControl2.Controls.Add(this.tabPage6);
-			this.tabControl2.Controls.Add(this.tabPage7);
-			this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabControl2.Location = new System.Drawing.Point(3, 16);
-			this.tabControl2.Name = "tabControl2";
-			this.tabControl2.SelectedIndex = 0;
-			this.tabControl2.Size = new System.Drawing.Size(277, 460);
-			this.tabControl2.TabIndex = 0;
-			// 
-			// tabPage2
-			// 
-			this.tabPage2.Location = new System.Drawing.Point(4, 22);
-			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(269, 434);
-			this.tabPage2.TabIndex = 0;
-			this.tabPage2.Text = "Emitente";
-			this.tabPage2.UseVisualStyleBackColor = true;
-			// 
-			// tabPage4
-			// 
-			this.tabPage4.Location = new System.Drawing.Point(4, 22);
-			this.tabPage4.Name = "tabPage4";
-			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage4.Size = new System.Drawing.Size(269, 434);
-			this.tabPage4.TabIndex = 1;
-			this.tabPage4.Text = "Certificado";
-			this.tabPage4.UseVisualStyleBackColor = true;
-			// 
-			// groupBox1
-			// 
-			this.groupBox1.Controls.Add(this.tabControl2);
-			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Left;
-			this.groupBox1.Location = new System.Drawing.Point(3, 3);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(283, 479);
-			this.groupBox1.TabIndex = 1;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Configurações";
-			// 
-			// tabPage5
-			// 
-			this.tabPage5.Location = new System.Drawing.Point(4, 22);
-			this.tabPage5.Name = "tabPage5";
-			this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage5.Size = new System.Drawing.Size(269, 434);
-			this.tabPage5.TabIndex = 2;
-			this.tabPage5.Text = "Geral";
-			this.tabPage5.UseVisualStyleBackColor = true;
-			// 
-			// tabPage6
-			// 
-			this.tabPage6.Location = new System.Drawing.Point(4, 22);
-			this.tabPage6.Name = "tabPage6";
-			this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage6.Size = new System.Drawing.Size(269, 434);
-			this.tabPage6.TabIndex = 3;
-			this.tabPage6.Text = "Webservice";
-			this.tabPage6.UseVisualStyleBackColor = true;
-			// 
-			// tabPage7
-			// 
-			this.tabPage7.Location = new System.Drawing.Point(4, 22);
-			this.tabPage7.Name = "tabPage7";
-			this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage7.Size = new System.Drawing.Size(269, 434);
-			this.tabPage7.TabIndex = 4;
-			this.tabPage7.Text = "Email";
-			this.tabPage7.UseVisualStyleBackColor = true;
 			// 
 			// tabControl3
 			// 
@@ -247,6 +160,114 @@
 			this.tabPage13.Text = "Dados";
 			this.tabPage13.UseVisualStyleBackColor = true;
 			// 
+			// groupBox1
+			// 
+			this.groupBox1.Controls.Add(this.tabControl2);
+			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Left;
+			this.groupBox1.Location = new System.Drawing.Point(3, 3);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(283, 479);
+			this.groupBox1.TabIndex = 1;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Configurações";
+			// 
+			// tabControl2
+			// 
+			this.tabControl2.Controls.Add(this.tabPage2);
+			this.tabControl2.Controls.Add(this.tabPage4);
+			this.tabControl2.Controls.Add(this.tabPage5);
+			this.tabControl2.Controls.Add(this.tabPage6);
+			this.tabControl2.Controls.Add(this.tabPage7);
+			this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabControl2.Location = new System.Drawing.Point(3, 16);
+			this.tabControl2.Name = "tabControl2";
+			this.tabControl2.SelectedIndex = 0;
+			this.tabControl2.Size = new System.Drawing.Size(277, 460);
+			this.tabControl2.TabIndex = 0;
+			// 
+			// tabPage2
+			// 
+			this.tabPage2.Location = new System.Drawing.Point(4, 22);
+			this.tabPage2.Name = "tabPage2";
+			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage2.Size = new System.Drawing.Size(269, 434);
+			this.tabPage2.TabIndex = 0;
+			this.tabPage2.Text = "Emitente";
+			this.tabPage2.UseVisualStyleBackColor = true;
+			// 
+			// tabPage4
+			// 
+			this.tabPage4.Location = new System.Drawing.Point(4, 22);
+			this.tabPage4.Name = "tabPage4";
+			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage4.Size = new System.Drawing.Size(269, 434);
+			this.tabPage4.TabIndex = 1;
+			this.tabPage4.Text = "Certificado";
+			this.tabPage4.UseVisualStyleBackColor = true;
+			// 
+			// tabPage5
+			// 
+			this.tabPage5.Location = new System.Drawing.Point(4, 22);
+			this.tabPage5.Name = "tabPage5";
+			this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage5.Size = new System.Drawing.Size(269, 434);
+			this.tabPage5.TabIndex = 2;
+			this.tabPage5.Text = "Geral";
+			this.tabPage5.UseVisualStyleBackColor = true;
+			// 
+			// tabPage6
+			// 
+			this.tabPage6.Location = new System.Drawing.Point(4, 22);
+			this.tabPage6.Name = "tabPage6";
+			this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage6.Size = new System.Drawing.Size(269, 434);
+			this.tabPage6.TabIndex = 3;
+			this.tabPage6.Text = "Webservice";
+			this.tabPage6.UseVisualStyleBackColor = true;
+			// 
+			// tabPage7
+			// 
+			this.tabPage7.Location = new System.Drawing.Point(4, 22);
+			this.tabPage7.Name = "tabPage7";
+			this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage7.Size = new System.Drawing.Size(269, 434);
+			this.tabPage7.TabIndex = 4;
+			this.tabPage7.Text = "Email";
+			this.tabPage7.UseVisualStyleBackColor = true;
+			// 
+			// tabPage3
+			// 
+			this.tabPage3.Controls.Add(this.btnAdicionar);
+			this.tabPage3.Controls.Add(this.btnSalvar);
+			this.tabPage3.Controls.Add(this.btnCarregar);
+			this.tabPage3.Controls.Add(this.listView1);
+			this.tabPage3.Location = new System.Drawing.Point(4, 22);
+			this.tabPage3.Name = "tabPage3";
+			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage3.Size = new System.Drawing.Size(874, 485);
+			this.tabPage3.TabIndex = 2;
+			this.tabPage3.Text = "Gerenciador de Cidades";
+			this.tabPage3.UseVisualStyleBackColor = true;
+			// 
+			// btnSalvar
+			// 
+			this.btnSalvar.Location = new System.Drawing.Point(791, 452);
+			this.btnSalvar.Name = "btnSalvar";
+			this.btnSalvar.Size = new System.Drawing.Size(75, 23);
+			this.btnSalvar.TabIndex = 2;
+			this.btnSalvar.Text = "Salvar";
+			this.btnSalvar.UseVisualStyleBackColor = true;
+			this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
+			// 
+			// btnCarregar
+			// 
+			this.btnCarregar.Location = new System.Drawing.Point(629, 452);
+			this.btnCarregar.Name = "btnCarregar";
+			this.btnCarregar.Size = new System.Drawing.Size(75, 23);
+			this.btnCarregar.TabIndex = 1;
+			this.btnCarregar.Text = "Carregar";
+			this.btnCarregar.UseVisualStyleBackColor = true;
+			// 
 			// listView1
 			// 
 			this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -291,24 +312,14 @@
 			this.columnHeader5.Text = "Provedor";
 			this.columnHeader5.Width = 143;
 			// 
-			// btnCarregar
+			// btnAdicionar
 			// 
-			this.btnCarregar.Location = new System.Drawing.Point(710, 452);
-			this.btnCarregar.Name = "btnCarregar";
-			this.btnCarregar.Size = new System.Drawing.Size(75, 23);
-			this.btnCarregar.TabIndex = 1;
-			this.btnCarregar.Text = "Carregar";
-			this.btnCarregar.UseVisualStyleBackColor = true;
-			// 
-			// btnSalvar
-			// 
-			this.btnSalvar.Location = new System.Drawing.Point(791, 452);
-			this.btnSalvar.Name = "btnSalvar";
-			this.btnSalvar.Size = new System.Drawing.Size(75, 23);
-			this.btnSalvar.TabIndex = 2;
-			this.btnSalvar.Text = "Salvar";
-			this.btnSalvar.UseVisualStyleBackColor = true;
-			this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
+			this.btnAdicionar.Location = new System.Drawing.Point(710, 452);
+			this.btnAdicionar.Name = "btnAdicionar";
+			this.btnAdicionar.Size = new System.Drawing.Size(75, 23);
+			this.btnAdicionar.TabIndex = 3;
+			this.btnAdicionar.Text = "Adicionar";
+			this.btnAdicionar.UseVisualStyleBackColor = true;
 			// 
 			// FormMain
 			// 
@@ -321,10 +332,10 @@
 			this.Text = "ACBr.Net.NFSe Demo";
 			this.tabControl1.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
-			this.tabPage3.ResumeLayout(false);
-			this.tabControl2.ResumeLayout(false);
-			this.groupBox1.ResumeLayout(false);
 			this.tabControl3.ResumeLayout(false);
+			this.groupBox1.ResumeLayout(false);
+			this.tabControl2.ResumeLayout(false);
+			this.tabPage3.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -356,6 +367,7 @@
 		private System.Windows.Forms.ColumnHeader columnHeader5;
 		private System.Windows.Forms.Button btnSalvar;
 		private System.Windows.Forms.Button btnCarregar;
+		private System.Windows.Forms.Button btnAdicionar;
 	}
 }
 

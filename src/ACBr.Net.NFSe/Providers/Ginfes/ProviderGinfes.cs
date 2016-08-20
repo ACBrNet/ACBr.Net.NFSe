@@ -53,24 +53,125 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 		#region Methods
 
+		public override RetornoWebService ConsultarSituacao(int lote, string protocolo, NotaFiscalCollection notas)
+		{
+			var loteBuilder = new StringBuilder();
+			loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+			loteBuilder.Append("<ConsultarSituacaoLoteRpsEnvio xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\" xmlns=\"http://www.ginfes.com.br/servico_consultar_situacao_lote_rps_envio_v03.xsd\">");
+			loteBuilder.Append("<Prestador>");
+			loteBuilder.Append($"<tipos:Cnpj>{Config.PrestadoPadrao.CPFCNPJ.ZeroFill(14)}</tipos:Cnpj>");
+			loteBuilder.Append($"<tipos:InscricaoMunicipal>{Config.PrestadoPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
+			loteBuilder.Append("</Prestador>");
+			loteBuilder.Append($"<Protocolo>{protocolo}</Protocolo>");
+			loteBuilder.Append("</ConsultarSituacaoLoteRpsEnvio>");
+
+			var consultaSituacao = loteBuilder.ToString();
+			consultaSituacao = CertificadoDigital.Assinar(consultaSituacao, "", "ConsultarSituacaoLoteRpsEnvio", Certificado);
+
+			if (Config.Geral.Salvar)
+			{
+				var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"ConsultarSituacao-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
+				File.WriteAllText(loteFile, consultaSituacao, Encoding.UTF8);
+			}
+
+			string[] errosSchema;
+			string[] alertasSchema;
+			var schema = Path.Combine(Config.Geral.PathSchemas, @"GINFES\servico_consultar_situacao_lote_rps_envio_v03.xsd");
+			if (!CertificadoDigital.ValidarXml(consultaSituacao, schema, out errosSchema, out alertasSchema))
+			{
+				var retLote = new RetornoWebService
+				{
+					Sucesso = false,
+					CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
+					CodCidade = Config.WebServices.CodMunicipio,
+					DataEnvioLote = DateTime.Now,
+					NumeroLote = "0",
+					Assincrono = true
+				};
+
+				foreach (var erro in errosSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
+					retLote.Erros.Add(erro);
+
+				foreach (var alerta in alertasSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
+					retLote.Alertas.Add(alerta);
+
+				return retLote;
+			}
+
+			string retorno;
+
+			try
+			{
+				var url = GetUrl(TipoUrl.ConsultarLoteRps);
+				var cliente = new GinfesServiceClient(url, TimeOut, Certificado);
+
+				var cabecalho = GerarCabecalho();
+				retorno = cliente.ConsultarSituacao(cabecalho, consultaSituacao);
+			}
+			catch (Exception ex)
+			{
+				var retLote = new RetornoWebService
+				{
+					Sucesso = false,
+					CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
+					CodCidade = Config.WebServices.CodMunicipio,
+					DataEnvioLote = DateTime.Now,
+					NumeroLote = "0",
+					Assincrono = true
+				};
+
+				retLote.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
+				return retLote;
+			}
+
+			if (Config.Geral.Salvar)
+			{
+				var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"Consultalote-{DateTime.Now:yyyyMMdd}-{lote}-ret.xml");
+				File.WriteAllText(loteFile, retorno, Encoding.UTF8);
+			}
+
+			var retConsulta = new RetornoWebService();
+			var xmlRet = XDocument.Parse(retorno);
+
+			var situacao = xmlRet.Root?.Element("Situacao")?.GetValue<byte>() ?? 0;
+
+			retConsulta.Sucesso = situacao > 3;
+			retConsulta.NumeroLote = xmlRet.Root?.Element("NumeroLote")?.GetValue<string>() ?? string.Empty;
+
+			var mensagens = xmlRet.Element("tipos:ListaMensagemRetorno");
+			if (mensagens == null) return retConsulta;
+
+			foreach (var mensagen in mensagens.Elements("MensagemRetorno"))
+			{
+				var evento = new Evento
+				{
+					Codigo = mensagen?.Element("Codigo")?.GetValue<string>() ?? string.Empty,
+					Descricao = mensagen?.Element("Mensagem")?.GetValue<string>() ?? string.Empty
+				};
+				retConsulta.Erros.Add(evento);
+			}
+
+			return retConsulta;
+		}
+
 		public override RetornoWebService ConsultarLoteRps(string protocolo, int lote, NotaFiscalCollection notas)
 		{
 			var loteBuilder = new StringBuilder();
 			loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			loteBuilder.Append("<ConsultarLoteRpsEnvio>");
 			loteBuilder.Append("<Prestador>");
-			loteBuilder.Append($"<Cnpj>{Config.PrestadoPadrao.CPFCNPJ.ZeroFill(14)}</Cnpj>");
-			loteBuilder.Append($"<InscricaoMunicipal>{Config.PrestadoPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
+			loteBuilder.Append($"<tipos:Cnpj>{Config.PrestadoPadrao.CPFCNPJ.ZeroFill(14)}</tipos:Cnpj>");
+			loteBuilder.Append($"<tipos:InscricaoMunicipal>{Config.PrestadoPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
 			loteBuilder.Append("</Prestador>");
 			loteBuilder.Append($"<Protocolo>{protocolo}</Protocolo>");
 			loteBuilder.Append("</ConsultarLoteRpsEnvio>");
 
 			var consultaLote = loteBuilder.ToString();
-			consultaLote = CertificadoDigital.Assinar(consultaLote, "", "ConsultarLoteRpsEnvio", Certificado, true);
+			consultaLote = CertificadoDigital.Assinar(consultaLote, "", "Prestador", Certificado);
 
 			if (Config.Geral.Salvar)
 			{
-				var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"Consultalote-{DateTime.Now:yyyyMMdd}-{lote}-env.xml");
+				var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"Consultalote-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
 				File.WriteAllText(loteFile, consultaLote, Encoding.UTF8);
 			}
 
@@ -106,7 +207,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 				var cliente = new GinfesServiceClient(url, TimeOut, Certificado);
 
 				var cabecalho = GerarCabecalho();
-				retorno = cliente.ConsultarLoteRpsV3(cabecalho, consultaLote);
+				retorno = cliente.ConsultarLoteRps(cabecalho, consultaLote);
 			}
 			catch (Exception ex)
 			{
@@ -136,15 +237,20 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			return retConsulta;
 		}
 
+		#region Private Methods
+
 		private static string GerarCabecalho()
 		{
 			var cabecalho = new StringBuilder();
+			cabecalho.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			cabecalho.Append("<ns2:cabecalho versao=\"3\" xmlns:ns2=\"http://www.ginfes.com.br/cabecalho_v03.xsd\">");
 			cabecalho.Append("<versaoDados>3</versaoDados>");
 			cabecalho.Append("</ns2:cabecalho>");
 
 			return cabecalho.ToString();
 		}
+
+		#endregion Private Methods
 
 		#endregion Methods
 	}

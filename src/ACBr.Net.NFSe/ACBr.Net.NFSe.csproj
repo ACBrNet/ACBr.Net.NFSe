@@ -73,6 +73,7 @@
     <Compile Include="Configuracao\CfgGeral.cs" />
     <Compile Include="Configuracao\CfgWebServices.cs" />
     <Compile Include="Configuracao\Configuracoes.cs" />
+    <Compile Include="Providers\BaseInspectorBehavior.cs" />
     <Compile Include="Providers\Betha\BethaConsultarSituacaoLoteRpsServiceClient.cs" />
     <Compile Include="Providers\Betha\BethaCancelarNev01ServiceClient.cs" />
     <Compile Include="Providers\Betha\BethaConsultarLoteRpsServiceClient.cs" />
@@ -86,11 +87,32 @@
     <Compile Include="Providers\Betha\IBethaCancelarNEV01.cs" />
     <Compile Include="Providers\Betha\IBethaRecepcionarLoteRps.cs" />
     <Compile Include="Providers\Betha\ProviderBetha.cs" />
-    <Compile Include="Providers\DSF\enviarRequest.cs" />
-    <Compile Include="Providers\DSF\enviarResponse.cs" />
+    <Compile Include="Providers\DSF\CancelarRequest.cs" />
+    <Compile Include="Providers\DSF\CancelarResponse.cs" />
+    <Compile Include="Providers\DSF\ConsultarLoteRequest.cs" />
+    <Compile Include="Providers\DSF\ConsultarLoteResponse.cs" />
+    <Compile Include="Providers\DSF\ConsultarNFSeRpsRequest.cs" />
+    <Compile Include="Providers\DSF\ConsultarNFSeRpsResponse.cs" />
+    <Compile Include="Providers\DSF\ConsultarNotaRequest.cs" />
+    <Compile Include="Providers\DSF\ConsultarNotaResponse.cs" />
+    <Compile Include="Providers\DSF\ConsultarSequencialRpsRequest.cs" />
+    <Compile Include="Providers\DSF\ConsultarSequencialRpsResponse.cs" />
+    <Compile Include="Providers\DSF\DSFBaseRequest.cs" />
+    <Compile Include="Providers\DSF\EnviarRequest.cs" />
+    <Compile Include="Providers\DSF\EnviarResponse.cs" />
+    <Compile Include="Providers\BaseMessageInspector.cs" />
+    <Compile Include="Providers\DSF\EnviarSincronoRequest.cs" />
+    <Compile Include="Providers\DSF\EnviarSincronoResponse.cs" />
+    <Compile Include="Providers\Ginfes\CancelarNfseRequest.cs" />
+    <Compile Include="Providers\Ginfes\ConsultarLoteRequest.cs" />
+    <Compile Include="Providers\Ginfes\ConsultarNfsePorRpsRequest.cs" />
+    <Compile Include="Providers\Ginfes\ConsultarNfseRequest.cs" />
+    <Compile Include="Providers\Ginfes\ConsultarSituacaoRequest.cs" />
+    <Compile Include="Providers\Ginfes\GinfesBaseRequest.cs" />
     <Compile Include="Providers\Ginfes\IGinfesService.cs" />
     <Compile Include="Providers\Ginfes\GinfesServiceClient.cs" />
     <Compile Include="Providers\Ginfes\ProviderGinfes.cs" />
+    <Compile Include="Providers\Ginfes\RecepcionarLoteRpsRequest.cs" />
     <Compile Include="Providers\ProviderServiceBase.cs" />
     <Compile Include="Providers\MunicipioNFSe.cs" />
     <Compile Include="Providers\Evento.cs" />
@@ -146,8 +168,8 @@
     <Compile Include="Nota\ValoresServico.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ProviderManager.cs" />
-    <Compile Include="Providers\DSF\DsfServiceClient.cs" />
-    <Compile Include="Providers\DSF\IDsfService.cs" />
+    <Compile Include="Providers\DSF\DSFServiceClient.cs" />
+    <Compile Include="Providers\DSF\IDSFService.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -155,6 +177,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Resources\Municipios.nfse" />
     <None Include="Schemas\4R\nfse.xsd">

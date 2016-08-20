@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema targetNamespace="http://nfse.blumenau.sc.gov.br/tipos" 
     xmlns:tipos="http://nfse.blumenau.sc.gov.br/tipos" 
     xmlns:xs="http://www.w3.org/2001/XMLSchema">
@@ -829,7 +829,7 @@
       </xs:element>
       <xs:element name="InscricaoMunicipalTomador" type="tipos:tpInscricaoMunicipal" minOccurs="0" maxOccurs="1">
         <xs:annotation>
-          <xs:documentation>Informe a Inscrição Municipal do Tomador. ATENÇÃO: Este campo só deverá ser preenchido para tomadores estabelecidos no município de Manaus. Quando este campo for preenchido, seu conteúdo será considerado como prioritário com relação ao campo de CPF/CNPJ do Tomador, sendo utilizado para identificar o Tomador e recuperar seus dados da base de dados da Prefeitura.</xs:documentation>
+          <xs:documentation>Informe a Inscrição Municipal do Tomador. ATENÇÃO: Este campo só deverá ser preenchido para tomadores estabelecidos no município de Manaus. Quando este campo for preenchido, seu conteúdo será considerado como prioritário com relação ao campo de CPF/CNPJ do Tomador, sendo utilizado para identificar o Tomador e recuperar seus dados da base de request da Prefeitura.</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="InscricaoEstadualTomador" type="tipos:tpInscricaoEstadual" minOccurs="0" maxOccurs="1">

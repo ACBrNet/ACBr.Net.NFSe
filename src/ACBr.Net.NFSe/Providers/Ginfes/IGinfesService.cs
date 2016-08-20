@@ -33,62 +33,37 @@ using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.Ginfes
 {
-	[ServiceContract]
+	[ServiceContract(Namespace = "http://www.ginfes.com.br/")]
 	internal interface IGinfesService
 	{
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string CancelarNfse(string arg0);
+		string CancelarNfseV3(CancelarNfseRequest request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string ConsultarLoteRps(string arg0);
+		string ConsultarLoteRpsV3(ConsultarLoteRequest request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string ConsultarLoteRpsV3(string arg0, string arg1);
+		string ConsultarNfseV3(ConsultarNfseRequest request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string ConsultarNfse(string arg0);
+		string ConsultarNfsePorRpsV3(ConsultarNfsePorRpsRequest request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string ConsultarNfsePorRps(string arg0);
+		string ConsultarSituacaoLoteRpsV3(ConsultarSituacaoRequest request);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string ConsultarNfsePorRpsV3(string arg0, string arg1);
-
-		[OperationContract(Action = "", ReplyAction = "*")]
-		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
-		[return: MessageParameter(Name = "return")]
-		string ConsultarNfseV3(string arg0, string arg1);
-
-		[OperationContract(Action = "", ReplyAction = "*")]
-		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
-		[return: MessageParameter(Name = "return")]
-		string ConsultarSituacaoLoteRps(string arg0);
-
-		[OperationContract(Action = "", ReplyAction = "*")]
-		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
-		[return: MessageParameter(Name = "return")]
-		string ConsultarSituacaoLoteRpsV3(string arg0, string arg1);
-
-		[OperationContract(Action = "", ReplyAction = "*")]
-		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
-		[return: MessageParameter(Name = "return")]
-		string RecepcionarLoteRps(string arg0);
-
-		[OperationContract(Action = "", ReplyAction = "*")]
-		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
-		[return: MessageParameter(Name = "return")]
-		string RecepcionarLoteRpsV3(string arg0, string arg1);
+		string RecepcionarLoteRpsV3(RecepcionarLoteRpsRequest request);
 	}
 }

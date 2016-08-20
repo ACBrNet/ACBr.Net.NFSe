@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 08-17-2016
+// Created          : 19-08-2016
 //
 // Last Modified By : RFTD
-// Last Modified On : 08-17-2016
+// Last Modified On : 19-08-2016
 // ***********************************************************************
-// <copyright file="enviarRequest.cs" company="ACBr.Net">
+// <copyright file="EnviarRequest.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,37 +29,16 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ComponentModel;
 using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
-	[EditorBrowsable(EditorBrowsableState.Advanced)]
 	[MessageContract(WrapperName = "enviar", WrapperNamespace = "http://proces.wsnfe2.dsfnet.com.br", IsWrapped = true)]
-	// ReSharper disable once InconsistentNaming
-	internal class enviarRequest
+	internal class EnviarRequest : DSFBaseRequest
 	{
-		/// <summary>
-		/// The mensagem XML
-		/// </summary>
-		[MessageBodyMember(Namespace = "", Order = 0)]
-		// ReSharper disable once InconsistentNaming
-		public string mensagemXml;
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="enviarRequest"/> class.
-		/// </summary>
-		public enviarRequest()
+		public EnviarRequest(string mensagemXml)
 		{
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="enviarRequest"/> class.
-		/// </summary>
-		/// <param name="mensagemXml">The mensagem XML.</param>
-		public enviarRequest(string mensagemXml)
-		{
-			this.mensagemXml = mensagemXml;
+			MensagemXml = mensagemXml;
 		}
 	}
 }
