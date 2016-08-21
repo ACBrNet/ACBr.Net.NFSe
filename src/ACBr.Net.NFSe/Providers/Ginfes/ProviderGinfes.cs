@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 07-28-2016
+// Created          : 28-07-2016
 //
 // Last Modified By : RFTD
-// Last Modified On : 07-28-2016
+// Last Modified On : 19-08-2016
 // ***********************************************************************
 // <copyright file="ProviderGinfes.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -31,6 +31,7 @@
 
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core;
+using ACBr.Net.DFe.Core.Common;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
 using System;
@@ -53,7 +54,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 		#region Methods
 
-		public override RetornoWebService ConsultarSituacao(int lote, string protocolo, NotaFiscalCollection notas)
+		public override RetornoWebService ConsultarSituacao(int lote, string protocolo)
 		{
 			var loteBuilder = new StringBuilder();
 			loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -66,7 +67,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			loteBuilder.Append("</ConsultarSituacaoLoteRpsEnvio>");
 
 			var consultaSituacao = loteBuilder.ToString();
-			consultaSituacao = CertificadoDigital.Assinar(consultaSituacao, "", "ConsultarSituacaoLoteRpsEnvio", Certificado);
+			consultaSituacao = CertificadoDigital.AssinarXml(consultaSituacao, "", "ConsultarSituacaoLoteRpsEnvio", Certificado);
 
 			if (Config.Geral.Salvar)
 			{
@@ -102,8 +103,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 			try
 			{
-				var url = GetUrl(TipoUrl.ConsultarLoteRps);
-				var cliente = new GinfesServiceClient(url, TimeOut, Certificado);
+				var cliente = GetCliente(TipoUrl.ConsultarSituacao);
 
 				var cabecalho = GerarCabecalho();
 				retorno = cliente.ConsultarSituacao(cabecalho, consultaSituacao);
@@ -167,7 +167,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			loteBuilder.Append("</ConsultarLoteRpsEnvio>");
 
 			var consultaLote = loteBuilder.ToString();
-			consultaLote = CertificadoDigital.Assinar(consultaLote, "", "Prestador", Certificado);
+			consultaLote = CertificadoDigital.AssinarXml(consultaLote, "", "Prestador", Certificado);
 
 			if (Config.Geral.Salvar)
 			{
@@ -203,8 +203,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 			try
 			{
-				var url = GetUrl(TipoUrl.ConsultarLoteRps);
-				var cliente = new GinfesServiceClient(url, TimeOut, Certificado);
+				var cliente = GetCliente(TipoUrl.ConsultarLoteRps);
 
 				var cabecalho = GerarCabecalho();
 				retorno = cliente.ConsultarLoteRps(cabecalho, consultaLote);
@@ -248,6 +247,17 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			cabecalho.Append("</ns2:cabecalho>");
 
 			return cabecalho.ToString();
+		}
+
+		private IGinfesServiceClient GetCliente(TipoUrl tipo)
+		{
+			var url = GetUrl(tipo);
+			if (Config.WebServices.Ambiente == TipoAmbiente.Homologacao)
+			{
+				return new GinfesHomServiceClient(url, TimeOut, Certificado);
+			}
+
+			return new GinfesProdServiceClient(url, TimeOut, Certificado);
 		}
 
 		#endregion Private Methods

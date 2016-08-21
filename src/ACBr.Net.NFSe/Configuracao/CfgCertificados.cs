@@ -36,7 +36,7 @@ namespace ACBr.Net.NFSe.Configuracao
 	/// <summary>
 	/// Class NFECFGCertificados. This class cannot be inherited.
 	/// </summary>
-	public sealed class CfgCertificados : DFeCertificadosBase
+	public sealed class CfgCertificados : DFeCertificadosConfigBase
 	{
 		#region Constructor
 

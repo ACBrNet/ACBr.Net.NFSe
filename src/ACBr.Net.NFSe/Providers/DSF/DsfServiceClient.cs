@@ -29,13 +29,14 @@
 // <summary></summary>
 // ***********************************************************************
 
+using ACBr.Net.DFe.Core.Service;
 using System;
 using System.ComponentModel;
 using System.Security.Cryptography.X509Certificates;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
-	internal sealed class DSFServiceClient : ProviderServiceBase<IDSFService>, IDSFService
+	internal sealed class DSFServiceClient : DFeWebserviceBase<IDSFService>, IDSFService
 	{
 		#region Constructor
 

@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 07-28-2016
 // ***********************************************************************
-// <copyright file="GinfesServiceClient.cs" company="ACBr.Net">
+// <copyright file="GinfesHomServiceClient.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,16 +29,17 @@
 // <summary></summary>
 // ***********************************************************************
 
+using ACBr.Net.DFe.Core.Service;
 using System;
 using System.Security.Cryptography.X509Certificates;
 
 namespace ACBr.Net.NFSe.Providers.Ginfes
 {
-	internal sealed class GinfesServiceClient : ProviderServiceBase<IGinfesService>, IGinfesService
+	internal sealed class GinfesHomServiceClient : DFeWebserviceBase<IGinfesHomService>, IGinfesHomService, IGinfesServiceClient
 	{
 		#region Constructors
 
-		public GinfesServiceClient(string url, TimeSpan? timeOut = null, X509Certificate2 certificado = null) : base(url, timeOut, certificado)
+		public GinfesHomServiceClient(string url, TimeSpan? timeOut = null, X509Certificate2 certificado = null) : base(url, timeOut, certificado)
 		{
 		}
 
@@ -48,70 +49,64 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 		public string ConsultarSituacao(string cabecalho, string dados)
 		{
-			var request = new ConsultarSituacaoRequest(cabecalho, dados);
-			return ((IGinfesService)this).ConsultarSituacaoLoteRpsV3(request);
+			return ((IGinfesHomService)this).ConsultarSituacaoLoteRpsV3(cabecalho, dados);
 		}
 
 		public string ConsultarLoteRps(string cabecalho, string dados)
 		{
-			var request = new ConsultarLoteRequest(cabecalho, dados);
-			return ((IGinfesService)this).ConsultarLoteRpsV3(request);
+			return ((IGinfesHomService)this).ConsultarLoteRpsV3(cabecalho, dados);
 		}
 
 		public string ConsultarNfsePorRps(string cabecalho, string dados)
 		{
-			var request = new ConsultarNfsePorRpsRequest(cabecalho, dados);
-			return ((IGinfesService)this).ConsultarNfsePorRpsV3(request);
+			return ((IGinfesHomService)this).ConsultarNfsePorRpsV3(cabecalho, dados);
 		}
 
 		public string ConsultarNfse(string cabecalho, string dados)
 		{
-			var request = new ConsultarNfseRequest(cabecalho, dados);
-			return ((IGinfesService)this).ConsultarNfseV3(request);
+			return ((IGinfesHomService)this).ConsultarNfseV3(cabecalho, dados);
 		}
 
 		public string CancelarNfse(string cabecalho, string dados)
 		{
-			var request = new CancelarNfseRequest(cabecalho, dados);
-			return ((IGinfesService)this).CancelarNfseV3(request);
+			return ((IGinfesHomService)this).CancelarNfseV3(cabecalho, dados);
 		}
 
 		public string RecepcionarLoteRps(string cabecalho, string dados)
 		{
-			var request = new RecepcionarLoteRpsRequest(cabecalho, dados);
-			return ((IGinfesService)this).RecepcionarLoteRpsV3(request);
+			return ((IGinfesHomService)this).RecepcionarLoteRpsV3(cabecalho, dados);
 		}
 
 		#region Interface Methods
 
-		string IGinfesService.ConsultarSituacaoLoteRpsV3(ConsultarSituacaoRequest request)
+		string IGinfesHomService.ConsultarSituacaoLoteRpsV3(string arg0, string arg1)
 		{
-			return Channel.ConsultarSituacaoLoteRpsV3(request);
+			return Channel.ConsultarSituacaoLoteRpsV3(arg0, arg1);
 		}
 
-		string IGinfesService.ConsultarLoteRpsV3(ConsultarLoteRequest request)
+		string IGinfesHomService.ConsultarLoteRpsV3(string arg0, string arg1)
 		{
-			return Channel.ConsultarLoteRpsV3(request);
+			return Channel.ConsultarLoteRpsV3(arg0, arg1);
 		}
 
-		string IGinfesService.ConsultarNfsePorRpsV3(ConsultarNfsePorRpsRequest request)
+		string IGinfesHomService.ConsultarNfsePorRpsV3(string arg0, string arg1)
 		{
-			return Channel.ConsultarNfsePorRpsV3(request);
+			return Channel.ConsultarNfsePorRpsV3(arg0, arg1);
 		}
 
-		string IGinfesService.ConsultarNfseV3(ConsultarNfseRequest request)
+		string IGinfesHomService.ConsultarNfseV3(string arg0, string arg1)
 		{
-			return Channel.ConsultarNfseV3(request);
+			return Channel.ConsultarNfseV3(arg0, arg1);
 		}
 
-		string IGinfesService.CancelarNfseV3(CancelarNfseRequest request)
+		string IGinfesHomService.CancelarNfseV3(string arg0, string arg1)
 		{
-			return Channel.CancelarNfseV3(request);
+			return Channel.CancelarNfseV3(arg0, arg1);
 		}
 
-		string IGinfesService.RecepcionarLoteRpsV3(RecepcionarLoteRpsRequest request)
+		string IGinfesHomService.RecepcionarLoteRpsV3(string arg0, string arg1)
 		{
-			return Channel.RecepcionarLoteRpsV3(request);
+			return Channel.RecepcionarLoteRpsV3(arg0, arg1);
 		}
 
 		#endregion Interface Methods

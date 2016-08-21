@@ -33,37 +33,37 @@ using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.Ginfes
 {
-	[ServiceContract(Namespace = "http://www.ginfes.com.br/")]
-	internal interface IGinfesService
+	[ServiceContract(Namespace = "http://producao.ginfes.com.br")]
+	internal interface IGinfesProdService
 	{
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string CancelarNfseV3(CancelarNfseRequest request);
+		string CancelarNfseV3([MessageParameter(Name = "arg0")]string arg0, [MessageParameter(Name = "arg1")]string arg1);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string ConsultarLoteRpsV3(ConsultarLoteRequest request);
+		string ConsultarLoteRpsV3([MessageParameter(Name = "arg0")]string arg0, [MessageParameter(Name = "arg1")]string arg1);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string ConsultarNfseV3(ConsultarNfseRequest request);
+		string ConsultarNfseV3([MessageParameter(Name = "arg0")]string arg0, [MessageParameter(Name = "arg1")]string arg1);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string ConsultarNfsePorRpsV3(ConsultarNfsePorRpsRequest request);
+		string ConsultarNfsePorRpsV3([MessageParameter(Name = "arg0")]string arg0, [MessageParameter(Name = "arg1")]string arg1);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string ConsultarSituacaoLoteRpsV3(ConsultarSituacaoRequest request);
+		string ConsultarSituacaoLoteRpsV3([MessageParameter(Name = "arg0")]string arg0, [MessageParameter(Name = "arg1")]string arg1);
 
 		[OperationContract(Action = "", ReplyAction = "*")]
 		[DataContractFormat(Style = OperationFormatStyle.Rpc)]
 		[return: MessageParameter(Name = "return")]
-		string RecepcionarLoteRpsV3(RecepcionarLoteRpsRequest request);
+		string RecepcionarLoteRpsV3([MessageParameter(Name = "arg0")]string arg0, [MessageParameter(Name = "arg1")]string arg1);
 	}
 }

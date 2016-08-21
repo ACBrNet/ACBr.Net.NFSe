@@ -33,6 +33,7 @@ using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
+	[MessageContract]
 	internal class DSFBaseRequest
 	{
 		[MessageBodyMember(Name = "mensagemXml", Namespace = "", Order = 0)]

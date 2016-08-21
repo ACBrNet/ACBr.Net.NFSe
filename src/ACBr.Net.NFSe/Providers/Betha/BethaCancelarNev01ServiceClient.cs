@@ -29,13 +29,14 @@
 // <summary></summary>
 // ***********************************************************************
 
+using ACBr.Net.DFe.Core.Service;
 using System;
 using System.ComponentModel;
 using System.Security.Cryptography.X509Certificates;
 
 namespace ACBr.Net.NFSe.Providers.Betha
 {
-	internal sealed class BethaCancelarNev01ServiceClient : ProviderServiceBase<IBethaCancelarNEV01>, IBethaCancelarNEV01
+	internal sealed class BethaCancelarNev01ServiceClient : DFeWebserviceBase<IBethaCancelarNEV01>, IBethaCancelarNEV01
 	{
 		#region Constructor
 
