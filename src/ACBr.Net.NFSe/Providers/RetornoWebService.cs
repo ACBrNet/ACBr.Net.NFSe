@@ -55,9 +55,10 @@ namespace ACBr.Net.NFSe.Providers
 
 		public bool Sucesso { get; set; }
 
-		public string NumeroLote { get; set; }
+        public string Situacao { get; set; }
+        public string NumeroLote { get; set; }
 
-		public string NumeroUltimoRps { get; set; }
+        public string NumeroUltimoRps { get; set; }
 
 		public string CPFCNPJRemetente { get; set; }
 
@@ -72,6 +73,9 @@ namespace ACBr.Net.NFSe.Providers
 		public List<Evento> Alertas { get; }
 
 		public List<Evento> Erros { get; }
+
+        public string xmlEnvio { get; set; }
+        public string xmlRetorno { get; set; }
 
 		#endregion Propriedades
 	}

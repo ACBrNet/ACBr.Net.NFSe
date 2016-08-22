@@ -56,6 +56,17 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
         public override RetornoWebService ConsultarSituacao(int lote, string protocolo)
         {
+            var retornoWS = new RetornoWebService()
+            {
+                Sucesso = false,
+                CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
+                CodCidade = Config.WebServices.CodMunicipio,
+                DataEnvioLote = DateTime.Now,
+                NumeroLote = "0",
+                Assincrono = true
+            };
+
+            // Monta mensagem de envio
             var loteBuilder = new StringBuilder();
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             loteBuilder.Append("<ConsultarSituacaoLoteRpsEnvio xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\" xmlns=\"http://www.ginfes.com.br/servico_consultar_situacao_lote_rps_envio_v03.xsd\">");
@@ -65,76 +76,55 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             loteBuilder.Append("</Prestador>");
             loteBuilder.Append($"<Protocolo>{protocolo}</Protocolo>");
             loteBuilder.Append("</ConsultarSituacaoLoteRpsEnvio>");
+            retornoWS.xmlEnvio = CertificadoDigital.AssinarXml(loteBuilder.ToString(), "", "ConsultarSituacaoLoteRpsEnvio", Certificado);
 
-            var consultaSituacao = loteBuilder.ToString();
-            consultaSituacao = CertificadoDigital.AssinarXml(consultaSituacao, "", "ConsultarSituacaoLoteRpsEnvio", Certificado);
-
-            if (Config.Geral.Salvar)
-            {
-                var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"ConsultarSituacao-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
-                File.WriteAllText(loteFile, consultaSituacao, Encoding.UTF8);
-            }
+            GravarArquivoEmDisco(retornoWS.xmlEnvio, $"ConsultarSituacao-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
 
             // Verifica Schema
-            var retSchema = ValidarSchema(consultaSituacao, "GINFES", "servico_consultar_situacao_lote_rps_envio_v03.xsd");
+            var retSchema = ValidarSchema(retornoWS.xmlEnvio, "GINFES", "servico_consultar_situacao_lote_rps_envio_v03.xsd");
             if (retSchema != null)
                 return retSchema;
 
-            string retorno;
+            // Recebe mensagem de retorno
             try
             {
                 var cliente = GetCliente(TipoUrl.ConsultarSituacao);
                 var cabecalho = GerarCabecalho();
-                retorno = cliente.ConsultarSituacao(cabecalho, consultaSituacao);
+                retornoWS.xmlRetorno = cliente.ConsultarSituacao(cabecalho, retornoWS.xmlEnvio);
             }
             catch (Exception ex)
             {
-                var retLote = new RetornoWebService
-                {
-                    Sucesso = false,
-                    CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
-                    CodCidade = Config.WebServices.CodMunicipio,
-                    DataEnvioLote = DateTime.Now,
-                    NumeroLote = "0",
-                    Assincrono = true
-                };
-                retLote.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
-                return retLote;
+                retornoWS.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
+                return retornoWS;
             }
+            GravarArquivoEmDisco(retornoWS.xmlRetorno, $"ConsultarSituacao-{DateTime.Now:yyyyMMdd}-{lote}-ret.xml");
 
-            if (Config.Geral.Salvar)
-            {
-                var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"ConsultarSituacao-{DateTime.Now:yyyyMMdd}-{lote}-ret.xml");
-                File.WriteAllText(loteFile, retorno, Encoding.UTF8);
-            }
+            // Analisa mensagem de retorno
+            var xmlRet = XDocument.Parse(retornoWS.xmlRetorno);
+            MensagemErro(retornoWS, xmlRet);
+            if (retornoWS.Erros.Count > 0)
+                return retornoWS;
 
-            var retConsulta = new RetornoWebService();
-            var xmlRet = XDocument.Parse(retorno);
+            retornoWS.Situacao = xmlRet.Root?.ElementAnyNs("Situacao")?.GetValue<string>() ?? "0";
+            retornoWS.Sucesso = (retornoWS.Situacao == "4");
+            retornoWS.NumeroLote = xmlRet.Root?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
 
-            var situacao = xmlRet.Root?.ElementAnyNs("Situacao")?.GetValue<byte>() ?? 0;
-            retConsulta.Sucesso = situacao > 3;
-
-            retConsulta.NumeroLote = xmlRet.Root?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
-
-            var mensagens = xmlRet.Root.ElementAnyNs("ListaMensagemRetorno");
-            if (mensagens == null)
-                return retConsulta;
-
-            foreach (var mensagen in mensagens.Elements("MensagemRetorno"))
-            {
-                var evento = new Evento
-                {
-                    Codigo = mensagen?.Element("Codigo")?.GetValue<string>() ?? string.Empty,
-                    Descricao = mensagen?.Element("Mensagem")?.GetValue<string>() ?? string.Empty
-                };
-                retConsulta.Erros.Add(evento);
-            }
-
-            return retConsulta;
+            return retornoWS;
         }
+
 
         public override RetornoWebService ConsultarLoteRps(string protocolo, int lote, NotaFiscalCollection notas)
         {
+            var retornoWS = new RetornoWebService()
+            {
+                Sucesso = false,
+                CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
+                CodCidade = Config.WebServices.CodMunicipio,
+                DataEnvioLote = DateTime.Now,
+                NumeroLote = "0",
+                Assincrono = true
+            };
+
             var loteBuilder = new StringBuilder();
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             loteBuilder.Append("<ConsultarLoteRpsEnvio xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\" xmlns=\"http://www.ginfes.com.br/servico_consultar_lote_rps_envio_v03.xsd\">");
@@ -144,59 +134,104 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             loteBuilder.Append("</Prestador>");
             loteBuilder.Append($"<Protocolo>{protocolo}</Protocolo>");
             loteBuilder.Append("</ConsultarLoteRpsEnvio>");
+            retornoWS.xmlEnvio = CertificadoDigital.AssinarXml(loteBuilder.ToString(), "", "ConsultarLoteRpsEnvio", Certificado);
 
-            var consultaLote = loteBuilder.ToString();
-            consultaLote = CertificadoDigital.AssinarXml(consultaLote, "", "ConsultarLoteRpsEnvio", Certificado);
-
-            if (Config.Geral.Salvar)
-            {
-                var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
-                File.WriteAllText(loteFile, consultaLote, Encoding.UTF8);
-            }
+            GravarArquivoEmDisco(retornoWS.xmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
 
             // Verifica Schema
-            var retSchema = ValidarSchema(consultaLote, "GINFES", "servico_consultar_lote_rps_envio_v03.xsd");
+            var retSchema = ValidarSchema(retornoWS.xmlEnvio, "GINFES", "servico_consultar_lote_rps_envio_v03.xsd");
             if (retSchema != null)
                 return retSchema;
 
-            string retorno;
-
+            // Recebe mensagem de retorno
             try
             {
                 var cliente = GetCliente(TipoUrl.ConsultarLoteRps);
                 var cabecalho = GerarCabecalho();
-                retorno = cliente.ConsultarLoteRps(cabecalho, consultaLote);
+                retornoWS.xmlRetorno = cliente.ConsultarLoteRps(cabecalho, retornoWS.xmlEnvio);
             }
             catch (Exception ex)
             {
-                var retLote = new RetornoWebService
-                {
-                    Sucesso = false,
-                    CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
-                    CodCidade = Config.WebServices.CodMunicipio,
-                    DataEnvioLote = DateTime.Now,
-                    NumeroLote = "0",
-                    Assincrono = true
-                };
-
-                retLote.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
-                return retLote;
+                retornoWS.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
+                return retornoWS;
             }
+            GravarArquivoEmDisco(retornoWS.xmlRetorno, $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{lote}-ret.xml");
 
-            if (Config.Geral.Salvar)
-            {
-                var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{lote}-ret.xml");
-                File.WriteAllText(loteFile, retorno, Encoding.UTF8);
-            }
+            // Analisa mensagem de retorno
+            var xmlRet = XDocument.Parse(retornoWS.xmlRetorno);
+            MensagemErro(retornoWS, xmlRet);
+            if (retornoWS.Erros.Count > 0)
+                return retornoWS;
 
-            var retConsulta = new RetornoWebService();
-            var xmlRet = XDocument.Parse(retorno);
 
-            return retConsulta;
+            var cabeçalho = xmlRet.Element("ConsultarLoteRpsResposta");
+            
+            // Aqui precisamos analisar cada NFSe do Lote
+            // Seguindo o exemplo do DSF, as notas fiscais já estariam no parâmetro notas (terceiro parâmetro deste método) 
+
+            return retornoWS;
+
+            //retConsulta.Sucesso = cabeçalho?.Element("Sucesso")?.GetValue<bool>() ?? false;
+            //retConsulta.CodCidade = cabeçalho?.Element("CodCidade")?.GetValue<int>() ?? 0;
+            //retConsulta.NumeroLote = cabeçalho?.Element("NumeroLote")?.GetValue<string>() ?? string.Empty;
+            //retConsulta.CPFCNPJRemetente = cabeçalho?.Element("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
+            //retConsulta.DataEnvioLote = cabeçalho?.Element("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
+
+            //var erros = xmlRet.Element("Erros");
+            ////retConsulta.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));
+
+            //var alertas = xmlRet.Element("Alertas");
+            ////retConsulta.Alertas.AddRange(ProcessarEventos(TipoEvento.Alertas, alertas));
+
+            //var nfses = xmlRet.Element("ListaNFSe");
+            //if (nfses == null) return retConsulta;
+
+            //foreach (var nfse in nfses.Elements("ConsultaNFSe"))
+            //{
+            //    var numeroRps = (nfse.Element("NumeroRPS")?.GetValue<string>() ?? string.Empty);
+            //    var nota = notas.FirstOrDefault(x => x.IdentificacaoRps.Numero == numeroRps);
+            //    if (nota == null) continue;
+
+            //    nota.Numero = nfse.Element("NumeroNFe")?.GetValue<string>() ?? string.Empty;
+            //    nota.ChaveNfse = nfse.Element("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
+
+            //    var nfseFile = Path.Combine(Config.Arquivos.GetPathNFSe(nota.DhRecebimento),
+            //        $"NFSe-{nota.ChaveNfse}-{nota.Numero}.xml");
+            //    var xml = GetXmlNFSe(nota);
+            //    File.WriteAllText(nfseFile, xml, Encoding.UTF8);
+            //}
+
+            //return retConsulta;
+
         }
 
 
         #region Private Methods
+        private void GravarArquivoEmDisco(string conteudoArquivo, string nomeArquivo)
+        {
+            if (Config.Geral.Salvar == false)
+                return;
+            nomeArquivo = Path.Combine(Config.Arquivos.GetPathLote(), nomeArquivo);
+            File.WriteAllText(nomeArquivo, conteudoArquivo, Encoding.UTF8);
+        }
+
+        private static void MensagemErro(RetornoWebService retornoWS, XDocument xmlRet)
+        {
+            var mensagens = xmlRet.Root.ElementAnyNs("ListaMensagemRetorno");
+            if (mensagens != null)
+            {
+                foreach (var mensagem in mensagens.ElementsAnyNs("MensagemRetorno"))
+                {
+                    var evento = new Evento
+                    {
+                        Codigo = mensagem?.ElementAnyNs("Codigo")?.GetValue<string>() ?? string.Empty,
+                        Descricao = mensagem?.ElementAnyNs("Mensagem")?.GetValue<string>() ?? string.Empty,
+                        Correcao = mensagem?.ElementAnyNs("Correcao")?.GetValue<string>() ?? string.Empty
+                    };
+                    retornoWS.Erros.Add(evento);
+                }
+            }
+        }
 
         private static string GerarCabecalho()
         {

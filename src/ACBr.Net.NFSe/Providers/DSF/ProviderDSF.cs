@@ -666,9 +666,12 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			loteBuilder.Append("</ns1:ReqConsultaLote>");
 
 			var consultaLote = loteBuilder.ToString();
+
+            // ???? --- Não deveria assinar o XML aqui ?????
+
 			if (Config.Geral.Salvar)
 			{
-				var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"ConsultarSituacao-{DateTime.Now:yyyyMMdd}-{lote}-env.xml");
+				var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{lote}-env.xml");
 				File.WriteAllText(loteFile, consultaLote, Encoding.UTF8);
 			}
 
@@ -676,7 +679,6 @@ namespace ACBr.Net.NFSe.Providers.DSF
             var retSchema = ValidarSchema(consultaLote, "DSF", "ReqConsultaLote.xsd");
             if (retSchema != null)
                 return retSchema;
-
 
             string retorno;
 			try
@@ -710,7 +712,8 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 			var retConsulta = new RetornoWebService();
 			var xmlRet = XDocument.Parse(retorno);
-			var cabeçalho = xmlRet.Element("Cabecalho");
+
+            var cabeçalho = xmlRet.Element("Cabecalho");
 
 			retConsulta.Sucesso = cabeçalho?.Element("Sucesso")?.GetValue<bool>() ?? false;
 			retConsulta.CodCidade = cabeçalho?.Element("CodCidade")?.GetValue<int>() ?? 0;
