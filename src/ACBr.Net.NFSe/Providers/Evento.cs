@@ -52,9 +52,10 @@ namespace ACBr.Net.NFSe.Providers
 
 		public string Codigo { get; set; }
 
-		public string Descricao { get; set; }
+        public string Descricao { get; set; }
+        public string Correcao { get; set; }
 
-		public IdentificacaoRps IdentificacaoRps { get; set; }
+        public IdentificacaoRps IdentificacaoRps { get; set; }
 
 		public IdentificacaoNfse IdentificacaoNfse { get; set; }
 

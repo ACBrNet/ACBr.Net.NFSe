@@ -542,7 +542,8 @@ namespace ACBr.Net.NFSe.Providers
                     CodCidade = Config.WebServices.CodMunicipio,
                     DataEnvioLote = DateTime.Now,
                     NumeroLote = "0",
-                    Assincrono = true
+                    Assincrono = true,
+                    xmlEnvio = xml
                 };
 
                 foreach (var erro in errosSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
