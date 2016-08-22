@@ -57,10 +57,10 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 		{
 			var loteBuilder = new StringBuilder();
 			loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-			loteBuilder.Append("<ConsultarLoteRpsEnvio>");
-			loteBuilder.Append("<Prestador>");
-			loteBuilder.Append($"<Cnpj>{Config.PrestadoPadrao.CPFCNPJ.ZeroFill(14)}</Cnpj>");
-			loteBuilder.Append($"<InscricaoMunicipal>{Config.PrestadoPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
+			loteBuilder.Append("<ConsultarLoteRpsEnvio xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\" xmlns=\"http://www.ginfes.com.br/servico_consultar_lote_rps_envio_v03.xsd\">");
+            loteBuilder.Append("<Prestador>");
+			loteBuilder.Append($"<tipos:Cnpj>{Config.PrestadoPadrao.CPFCNPJ.ZeroFill(14)}</tipos:Cnpj>");
+			loteBuilder.Append($"<tipos:InscricaoMunicipal>{Config.PrestadoPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
 			loteBuilder.Append("</Prestador>");
 			loteBuilder.Append($"<Protocolo>{protocolo}</Protocolo>");
 			loteBuilder.Append("</ConsultarLoteRpsEnvio>");
@@ -76,8 +76,9 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 			string[] errosSchema;
 			string[] alertasSchema;
-			var schema = Path.Combine(Config.Geral.PathSchemas, @"GINFES\servico_consultar_lote_rps_envio_v03.xsd");
-			if (!CertificadoDigital.ValidarXml(consultaLote, schema, out errosSchema, out alertasSchema))
+            // var schema = Path.Combine(Config.Geral.PathSchemas, @"GINFES\servico_consultar_lote_rps_envio_v03.xsd");
+            var schema = "C:\\Arqs1\\GIT\\ACBr.Net.NFSe\\bin\\Debug\\NFSe\\Schemas\\GINFES\\servico_consultar_lote_rps_envio_v03.xsd";
+            if (!CertificadoDigital.ValidarXml(consultaLote, schema, out errosSchema, out alertasSchema))
 			{
 				var retLote = new RetornoWebService
 				{
@@ -103,7 +104,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			try
 			{
 				var url = GetUrl(TipoUrl.ConsultarLoteRps);
-				var cliente = new GinfesServiceClient(url, TimeOut, Certificado);
+                var cliente = new GinfesServiceClient(url, TimeOut, Certificado);
 
 				var cabecalho = GerarCabecalho();
 				retorno = cliente.ConsultarLoteRpsV3(cabecalho, consultaLote);
