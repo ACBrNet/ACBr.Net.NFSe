@@ -41,7 +41,7 @@ namespace ACBr.Net.NFSe.Configuracao
 	/// <summary>
 	/// Class CfgGeral. This class cannot be inherited.
 	/// </summary>
-	public sealed class CfgGeral : DFeGeralBase
+	public sealed class CfgGeral : DFeGeralConfigBase
 	{
 		#region Fields
 
@@ -59,7 +59,7 @@ namespace ACBr.Net.NFSe.Configuracao
 			Salvar = false;
 			AtualizarXmlCancelado = false;
 
-			var path = Path.GetDirectoryName(Assembly.GetEntryAssembly().CodeBase);
+			var path = Path.GetDirectoryName(Assembly.GetCallingAssembly().Location);
 			if (!path.IsEmpty())
 			{
 				PathSchemas = Path.Combine(path, "Schemas");

@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 01-31-2016
+// Created          : 19-08-2016
 //
 // Last Modified By : RFTD
-// Last Modified On : 06-07-2016
+// Last Modified On : 19-08-2016
 // ***********************************************************************
-// <copyright file="CfgCertificados.cs" company="ACBr.Net">
+// <copyright file="ConsultarNotaResponse.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -28,25 +28,21 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.ComponentModel;
+using System.ServiceModel;
 
-using ACBr.Net.DFe.Core.Common;
-
-namespace ACBr.Net.NFSe.Configuracao
+namespace ACBr.Net.NFSe.Providers.DSF
 {
-	/// <summary>
-	/// Class NFECFGCertificados. This class cannot be inherited.
-	/// </summary>
-	public sealed class CfgCertificados : DFeCertificadosConfigBase
+	[EditorBrowsable(EditorBrowsableState.Advanced)]
+	[MessageContract(WrapperName = "consultarNotaResponse", WrapperNamespace = "http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws", IsWrapped = true)]
+	internal class ConsultarNotaResponse
 	{
-		#region Constructor
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="CfgCertificados"/> class.
-		/// </summary>
-		internal CfgCertificados()
+		public ConsultarNotaResponse(string consultarNotaReturn)
 		{
+			Return = consultarNotaReturn;
 		}
 
-		#endregion Constructor
+		[MessageBodyMember(Name = "consultarNotaReturn", Namespace = "", Order = 0)]
+		public string Return;
 	}
 }

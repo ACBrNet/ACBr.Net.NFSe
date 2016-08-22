@@ -45,9 +45,6 @@ using System.Xml.Linq;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
-	/// <summary>
-	/// Class ProviderDSF. This class cannot be inherited.
-	/// </summary>
 	internal sealed class ProviderDSF : ProviderBase
 	{
 		#region Internal Types
@@ -261,13 +258,6 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			return ret;
 		}
 
-		/// <summary>
-		/// Gets the XML.
-		/// </summary>
-		/// <param name="nota">The nota.</param>
-		/// <param name="identado">if set to <c>true</c> [identado].</param>
-		/// <param name="showDeclaration">if set to <c>true</c> [show declaration].</param>
-		/// <returns>System.String.</returns>
 		public override string GetXmlRPS(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
 		{
 			Xmldoc.RemoveAll();
@@ -357,13 +347,6 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			return Xmldoc.AsString(identado, showDeclaration);
 		}
 
-		/// <summary>
-		/// Gets the XML.
-		/// </summary>
-		/// <param name="nota">The nota.</param>
-		/// <param name="identado">if set to <c>true</c> [identado].</param>
-		/// <param name="showDeclaration">if set to <c>true</c> [show declaration].</param>
-		/// <returns>System.String.</returns>
 		public override string GetXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
 		{
 			Xmldoc.RemoveAll();
@@ -485,7 +468,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 			loteRps = loteRps.SafeReplace("%NOTAS%", xmlNotas.ToString());
 
-			loteRps = CertificadoDigital.Assinar(loteRps, "", "Lote", Certificado, true);
+			loteRps = CertificadoDigital.AssinarXml(loteRps, "", "ReqEnvioLoteRPS", Certificado, true);
 
 			if (Config.Geral.Salvar)
 			{
@@ -518,7 +501,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			}
 
 			var url = GetUrl(TipoUrl.Enviar);
-			var cliente = new DsfServiceClient(url, TimeOut, Certificado);
+			var cliente = new DSFServiceClient(url, TimeOut, Certificado);
 
 			string retorno;
 			try
@@ -601,7 +584,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 			loteRps = loteRps.SafeReplace("%NOTAS%", xmlNotas.ToString());
 
-			loteRps = CertificadoDigital.Assinar(loteRps, "", "Lote", Certificado, true);
+			loteRps = CertificadoDigital.AssinarXml(loteRps, "", "ReqEnvioLoteRPS", Certificado, true);
 
 			if (Config.Geral.Salvar)
 			{
@@ -634,7 +617,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			}
 
 			var url = GetUrl(TipoUrl.Enviar);
-			var cliente = new DsfServiceClient(url, TimeOut, Certificado);
+			var cliente = new DSFServiceClient(url, TimeOut, Certificado);
 
 			string retorno;
 			try
@@ -705,7 +688,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			return ret;
 		}
 
-		public override RetornoWebService ConsultarSituacao(int lote, string protocolo, NotaFiscalCollection notas)
+		public override RetornoWebService ConsultarLoteRps(string protocolo, int lote, NotaFiscalCollection notas)
 		{
 			var loteBuilder = new StringBuilder();
 			loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -721,13 +704,13 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var consultaLote = loteBuilder.ToString();
 			if (Config.Geral.Salvar)
 			{
-				var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"Consultalote-{DateTime.Now:yyyyMMdd}-{lote}-env.xml");
+				var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"ConsultarSituacao-{DateTime.Now:yyyyMMdd}-{lote}-env.xml");
 				File.WriteAllText(loteFile, consultaLote, Encoding.UTF8);
 			}
 
 			string[] errosSchema;
 			string[] alertasSchema;
-			var schema = Path.Combine(Config.Geral.PathSchemas, @"DSF\ReqEnvioLoteRPS.xsd");
+			var schema = Path.Combine(Config.Geral.PathSchemas, @"DSF\ReqConsultaLote.xsd");
 			if (!CertificadoDigital.ValidarXml(consultaLote, schema, out errosSchema, out alertasSchema))
 			{
 				var retLote = new RetornoWebService
@@ -754,7 +737,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			try
 			{
 				var url = GetUrl(TipoUrl.ConsultarLoteRps);
-				var cliente = new DsfServiceClient(url, TimeOut, Certificado);
+				var cliente = new DSFServiceClient(url, TimeOut, Certificado);
 
 				retorno = cliente.ConsultarLote(consultaLote);
 			}
@@ -866,7 +849,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			try
 			{
 				var url = GetUrl(TipoUrl.ConsultarLoteRps);
-				var cliente = new DsfServiceClient(url, TimeOut, Certificado);
+				var cliente = new DSFServiceClient(url, TimeOut, Certificado);
 
 				retorno = cliente.ConsultarLote(consultaSequencia);
 			}

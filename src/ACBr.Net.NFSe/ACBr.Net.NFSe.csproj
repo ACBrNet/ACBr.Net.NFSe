@@ -17,41 +17,41 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\Debug\NFSe\</OutputPath>
+    <OutputPath>..\..\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\bin\Debug\NFSe\ACBr.Net.NFSe.XML</DocumentationFile>
+    <DocumentationFile>..\..\bin\Debug\ACBr.Net.NFSe.XML</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\Release\NFSe\</OutputPath>
+    <OutputPath>..\..\bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\bin\Release\NFSe\ACBr.Net.NFSe.XML</DocumentationFile>
+    <DocumentationFile>..\..\bin\Release\ACBr.Net.NFSe.XML</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'COM Interop|AnyCPU'">
-    <OutputPath>..\..\bin\COM Interop\NFSe\</OutputPath>
+    <OutputPath>..\..\bin\COM Interop\</OutputPath>
     <DefineConstants>TRACE;COM_INTEROP</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>..\..\bin\COM Interop\NFSe\ACBr.Net.NFSe.XML</DocumentationFile>
+    <DocumentationFile>..\..\bin\COM Interop\ACBr.Net.NFSe.XML</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ACBr.Net.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d3bb9130f8b775a6, processorArchitecture=MSIL">
-      <HintPath>..\packages\ACBr.Net.Core.1.0.1.1\lib\net40\ACBr.Net.Core.dll</HintPath>
+      <HintPath>..\packages\ACBr.Net.Core.1.0.1.2\lib\net40\ACBr.Net.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ACBr.Net.DFe.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d3bb9130f8b775a6, processorArchitecture=MSIL">
-      <HintPath>..\packages\ACBr.Net.DFe.Core.1.0.1.2\lib\net40\ACBr.Net.DFe.Core.dll</HintPath>
+      <HintPath>..\packages\ACBr.Net.DFe.Core.1.0.1.3-beta1\lib\net40\ACBr.Net.DFe.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -86,12 +86,27 @@
     <Compile Include="Providers\Betha\IBethaCancelarNEV01.cs" />
     <Compile Include="Providers\Betha\IBethaRecepcionarLoteRps.cs" />
     <Compile Include="Providers\Betha\ProviderBetha.cs" />
-    <Compile Include="Providers\DSF\enviarRequest.cs" />
-    <Compile Include="Providers\DSF\enviarResponse.cs" />
-    <Compile Include="Providers\Ginfes\IGinfesService.cs" />
-    <Compile Include="Providers\Ginfes\GinfesServiceClient.cs" />
+    <Compile Include="Providers\DSF\CancelarRequest.cs" />
+    <Compile Include="Providers\DSF\CancelarResponse.cs" />
+    <Compile Include="Providers\DSF\ConsultarLoteRequest.cs" />
+    <Compile Include="Providers\DSF\ConsultarLoteResponse.cs" />
+    <Compile Include="Providers\DSF\ConsultarNFSeRpsRequest.cs" />
+    <Compile Include="Providers\DSF\ConsultarNFSeRpsResponse.cs" />
+    <Compile Include="Providers\DSF\ConsultarNotaRequest.cs" />
+    <Compile Include="Providers\DSF\ConsultarNotaResponse.cs" />
+    <Compile Include="Providers\DSF\ConsultarSequencialRpsRequest.cs" />
+    <Compile Include="Providers\DSF\ConsultarSequencialRpsResponse.cs" />
+    <Compile Include="Providers\DSF\DSFBaseRequest.cs" />
+    <Compile Include="Providers\DSF\EnviarRequest.cs" />
+    <Compile Include="Providers\DSF\EnviarResponse.cs" />
+    <Compile Include="Providers\DSF\EnviarSincronoRequest.cs" />
+    <Compile Include="Providers\DSF\EnviarSincronoResponse.cs" />
+    <Compile Include="Providers\Ginfes\GinfesProdServiceClient.cs" />
+    <Compile Include="Providers\Ginfes\IGinfesHomService.cs" />
+    <Compile Include="Providers\Ginfes\IGinfesProdService.cs" />
+    <Compile Include="Providers\Ginfes\GinfesHomServiceClient.cs" />
+    <Compile Include="Providers\Ginfes\IGinfesServiceClient.cs" />
     <Compile Include="Providers\Ginfes\ProviderGinfes.cs" />
-    <Compile Include="Providers\ProviderServiceBase.cs" />
     <Compile Include="Providers\MunicipioNFSe.cs" />
     <Compile Include="Providers\Evento.cs" />
     <Compile Include="Providers\RetornoWebService.cs" />
@@ -146,8 +161,8 @@
     <Compile Include="Nota\ValoresServico.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ProviderManager.cs" />
-    <Compile Include="Providers\DSF\DsfServiceClient.cs" />
-    <Compile Include="Providers\DSF\IDsfService.cs" />
+    <Compile Include="Providers\DSF\DSFServiceClient.cs" />
+    <Compile Include="Providers\DSF\IDSFService.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -155,6 +170,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Resources\Municipios.nfse" />
     <None Include="Schemas\4R\nfse.xsd">
