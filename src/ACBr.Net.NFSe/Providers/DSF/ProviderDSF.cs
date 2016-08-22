@@ -476,31 +476,13 @@ namespace ACBr.Net.NFSe.Providers.DSF
 				File.WriteAllText(loteFile, loteRps, Encoding.UTF8);
 			}
 
-			string[] errosSchema;
-			string[] alertasSchema;
-			var schema = Path.Combine(Config.Geral.PathSchemas, @"DSF\ReqEnvioLoteRPS.xsd");
-			if (!CertificadoDigital.ValidarXml(loteRps, schema, out errosSchema, out alertasSchema))
-			{
-				var retLote = new RetornoWebService
-				{
-					Sucesso = false,
-					CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
-					CodCidade = Config.WebServices.CodMunicipio,
-					DataEnvioLote = DateTime.Now,
-					NumeroLote = "0",
-					Assincrono = true
-				};
+            // Verifica Schema
+            var retSchema = ValidarSchema(loteRps, "DSF", "ReqEnvioLoteRPS.xsd");
+            if (retSchema != null)
+                return retSchema;
 
-				foreach (var loteErro in errosSchema.Select(erro => new Evento { Codigo = "0", Descricao = erro }))
-					retLote.Erros.Add(loteErro);
 
-				foreach (var alerta in alertasSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
-					retLote.Alertas.Add(alerta);
-
-				return retLote;
-			}
-
-			var url = GetUrl(TipoUrl.Enviar);
+            var url = GetUrl(TipoUrl.Enviar);
 			var cliente = new DSFServiceClient(url, TimeOut, Certificado);
 
 			string retorno;
@@ -592,31 +574,13 @@ namespace ACBr.Net.NFSe.Providers.DSF
 				File.WriteAllText(loteFile, loteRps, Encoding.UTF8);
 			}
 
-			string[] errosSchema;
-			string[] alertasSchema;
-			var schema = Path.Combine(Config.Geral.PathSchemas, @"DSF\ReqEnvioLoteRPS.xsd");
-			if (!CertificadoDigital.ValidarXml(loteRps, schema, out errosSchema, out alertasSchema))
-			{
-				var retLote = new RetornoWebService
-				{
-					Sucesso = false,
-					CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
-					CodCidade = Config.WebServices.CodMunicipio,
-					DataEnvioLote = DateTime.Now,
-					NumeroLote = "0",
-					Assincrono = true
-				};
 
-				foreach (var loteErro in errosSchema.Select(erro => new Evento { Codigo = "0", Descricao = erro }))
-					retLote.Erros.Add(loteErro);
+            // Verifica Schema
+            var retSchema = ValidarSchema(loteRps, "DSF", "ReqEnvioLoteRPS.xsd");
+            if (retSchema != null)
+                return retSchema;
 
-				foreach (var alerta in alertasSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
-					retLote.Alertas.Add(alerta);
-
-				return retLote;
-			}
-
-			var url = GetUrl(TipoUrl.Enviar);
+            var url = GetUrl(TipoUrl.Enviar);
 			var cliente = new DSFServiceClient(url, TimeOut, Certificado);
 
 			string retorno;
@@ -708,32 +672,13 @@ namespace ACBr.Net.NFSe.Providers.DSF
 				File.WriteAllText(loteFile, consultaLote, Encoding.UTF8);
 			}
 
-			string[] errosSchema;
-			string[] alertasSchema;
-			var schema = Path.Combine(Config.Geral.PathSchemas, @"DSF\ReqConsultaLote.xsd");
-			if (!CertificadoDigital.ValidarXml(consultaLote, schema, out errosSchema, out alertasSchema))
-			{
-				var retLote = new RetornoWebService
-				{
-					Sucesso = false,
-					CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
-					CodCidade = Config.WebServices.CodMunicipio,
-					DataEnvioLote = DateTime.Now,
-					NumeroLote = "0",
-					Assincrono = true
-				};
+            // Verifica Schema
+            var retSchema = ValidarSchema(consultaLote, "DSF", "ReqConsultaLote.xsd");
+            if (retSchema != null)
+                return retSchema;
 
-				foreach (var loteErro in errosSchema.Select(erro => new Evento { Codigo = "0", Descricao = erro }))
-					retLote.Erros.Add(loteErro);
 
-				foreach (var alerta in alertasSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
-					retLote.Alertas.Add(alerta);
-
-				return retLote;
-			}
-
-			string retorno;
-
+            string retorno;
 			try
 			{
 				var url = GetUrl(TipoUrl.ConsultarLoteRps);
@@ -821,29 +766,11 @@ namespace ACBr.Net.NFSe.Providers.DSF
 				File.WriteAllText(loteFile, consultaSequencia, Encoding.UTF8);
 			}
 
-			string[] errosSchema;
-			string[] alertasSchema;
-			var schema = Path.Combine(Config.Geral.PathSchemas, @"DSF\ConsultaSeqRps.xsd");
-			if (!CertificadoDigital.ValidarXml(consultaSequencia, schema, out errosSchema, out alertasSchema))
-			{
-				var retLote = new RetornoWebService
-				{
-					Sucesso = false,
-					CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
-					CodCidade = Config.WebServices.CodMunicipio,
-					DataEnvioLote = DateTime.Now,
-					NumeroLote = "0",
-					Assincrono = true
-				};
+            // Verifica Schema
+            var retSchema = ValidarSchema(consultaSequencia, "DSF", "ConsultaSeqRps.xsd");
+            if (retSchema != null)
+                return retSchema;
 
-				foreach (var loteErro in errosSchema.Select(erro => new Evento { Codigo = "0", Descricao = erro }))
-					retLote.Erros.Add(loteErro);
-
-				foreach (var alerta in alertasSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
-					retLote.Alertas.Add(alerta);
-
-				return retLote;
-			}
 
 			string retorno;
 			try

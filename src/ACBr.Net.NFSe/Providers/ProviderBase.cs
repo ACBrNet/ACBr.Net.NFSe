@@ -32,6 +32,7 @@
 using ACBr.Net.Core.Exceptions;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.Core.Logging;
+using ACBr.Net.DFe.Core;
 using ACBr.Net.DFe.Core.Attributes;
 using ACBr.Net.DFe.Core.Common;
 using ACBr.Net.DFe.Core.Serializer;
@@ -520,8 +521,43 @@ namespace ACBr.Net.NFSe.Providers
 			this.Log().Warn(s);
 		}
 
-		#endregion Protected
+        /// <summary>
+        /// Valida o XML de acordo com o schema.
+        /// </summary>
+        /// <param name="xml">A mensagem XML que deve ser verificada.</param>
+        /// <param name="provedor">O provedor.</param>
+        /// <param name="schema">O schema que será usado na verificação.</param>
+		/// <returns>Se estiver tudo OK retorna null, caso contrário as mensagens de alertas e erros.</returns>
+        protected RetornoWebService ValidarSchema(string xml, string provedor, string schema)
+        {
+            schema = Path.Combine(Config.Geral.PathSchemas, provedor, schema);
+            string[] errosSchema;
+            string[] alertasSchema;
+            if (!CertificadoDigital.ValidarXml(xml, schema, out errosSchema, out alertasSchema))
+            {
+                var retLote = new RetornoWebService
+                {
+                    Sucesso = false,
+                    CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
+                    CodCidade = Config.WebServices.CodMunicipio,
+                    DataEnvioLote = DateTime.Now,
+                    NumeroLote = "0",
+                    Assincrono = true
+                };
 
-		#endregion Methods
-	}
+                foreach (var erro in errosSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
+                    retLote.Erros.Add(erro);
+
+                foreach (var alerta in alertasSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
+                    retLote.Alertas.Add(alerta);
+
+                return retLote;
+            }
+            return null;
+        }
+
+        #endregion Protected
+
+        #endregion Methods
+    }
 }
