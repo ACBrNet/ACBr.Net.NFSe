@@ -76,6 +76,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 		public ProviderDSF(Configuracoes config, MunicipioNFSe municipio) : base(config, municipio)
 		{
+			Name = "DSF";
 		}
 
 		#endregion Constructors
@@ -478,7 +479,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			GravarArquivoEmDisco(retornoWebService.XmlEnvio, $"lote-{lote}-env.xml");
 
 			// Verifica Schema
-			var retSchema = ValidarSchema(loteRps, "DSF", "ReqEnvioLoteRPS.xsd");
+			var retSchema = ValidarSchema(loteRps, "ReqEnvioLoteRPS.xsd");
 			if (retSchema != null)
 				return retSchema;
 
@@ -559,7 +560,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			GravarArquivoEmDisco(retornoWebService.XmlEnvio, $"lote-{lote}-env.xml");
 
 			// Verifica Schema
-			var retSchema = ValidarSchema(loteRps, "DSF", "ReqEnvioLoteRPS.xsd");
+			var retSchema = ValidarSchema(loteRps, "ReqEnvioLoteRPS.xsd");
 			if (retSchema != null)
 				return retSchema;
 
@@ -644,7 +645,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			GravarArquivoEmDisco(retornoWebService.XmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{lote}-env.xml");
 
 			// Verifica Schema
-			var retSchema = ValidarSchema(retornoWebService.XmlEnvio, "DSF", "ReqConsultaLote.xsd");
+			var retSchema = ValidarSchema(retornoWebService.XmlEnvio, "ReqConsultaLote.xsd");
 			if (retSchema != null)
 				return retSchema;
 
@@ -730,7 +731,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			GravarArquivoEmDisco(retornoWebService.XmlEnvio, $"ConSeqRPS-{DateTime.Now:yyyyMMMMdd}-env.xml");
 
 			// Verifica Schema
-			var retSchema = ValidarSchema(retornoWebService.XmlEnvio, "DSF", "ConsultaSeqRps.xsd");
+			var retSchema = ValidarSchema(retornoWebService.XmlEnvio, "ConsultaSeqRps.xsd");
 			if (retSchema != null)
 				return retSchema;
 

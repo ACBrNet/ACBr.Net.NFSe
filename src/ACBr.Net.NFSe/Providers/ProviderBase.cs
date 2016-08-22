@@ -146,6 +146,7 @@ namespace ACBr.Net.NFSe.Providers
 		/// </summary>
 		internal ProviderBase(Configuracoes config, MunicipioNFSe municipio)
 		{
+			Name = "Base";
 			ListaDeAlertas = new List<string>();
 			FormatoAlerta = "TAG:%TAG% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.";
 			Xmldoc = new XmlDocument();
@@ -156,6 +157,8 @@ namespace ACBr.Net.NFSe.Providers
 		#endregion Constructor
 
 		#region Propriedades
+
+		public string Name { get; protected set; }
 
 		/// <summary>
 		/// Gets the lista de alertas.
@@ -540,9 +543,9 @@ namespace ACBr.Net.NFSe.Providers
 		/// <param name="provedor">O provedor.</param>
 		/// <param name="schema">O schema que será usado na verificação.</param>
 		/// <returns>Se estiver tudo OK retorna null, caso contrário as mensagens de alertas e erros.</returns>
-		protected RetornoWebService ValidarSchema(string xml, string provedor, string schema)
+		protected RetornoWebService ValidarSchema(string xml, string schema)
 		{
-			schema = Path.Combine(Config.Geral.PathSchemas, provedor, schema);
+			schema = Path.Combine(Config.Geral.PathSchemas, Name, schema);
 			string[] errosSchema;
 			string[] alertasSchema;
 			if (!CertificadoDigital.ValidarXml(xml, schema, out errosSchema, out alertasSchema))

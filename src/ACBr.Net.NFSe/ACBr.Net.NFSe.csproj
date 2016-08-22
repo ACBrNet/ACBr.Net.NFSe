@@ -473,10 +473,10 @@
     <None Include="Schemas\EReceita\xmldsig-core-schema20020212.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Schemas\fintelISS\nfse.xsd">
+    <None Include="Schemas\FintelISS\nfse.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Schemas\fintelISS\xmldsig-core-schema20020212.xsd">
+    <None Include="Schemas\FintelISS\xmldsig-core-schema20020212.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Schemas\Fiorilli\nfse.xsd">
@@ -491,63 +491,63 @@
     <None Include="Schemas\FISSLEX\xmldsig-core-schema20020212.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Schemas\GINFES\cabecalho_v03.xsd">
+    <None Include="Schemas\Ginfes\cabecalho_v03.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Schemas\GINFES\servico_cancelar_nfse_envio_v03.xsd">
+    <None Include="Schemas\Ginfes\servico_cancelar_nfse_envio_v03.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Schemas\GINFES\servico_cancelar_nfse_resposta_v03.xsd">
+    <None Include="Schemas\Ginfes\servico_cancelar_nfse_resposta_v03.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Schemas\GINFES\servico_consultar_lote_rps_envio_v03.xsd">
+    <None Include="Schemas\Ginfes\servico_consultar_lote_rps_envio_v03.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Schemas\GINFES\servico_consultar_lote_rps_resposta_v03.xsd">
+    <None Include="Schemas\Ginfes\servico_consultar_lote_rps_resposta_v03.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Schemas\GINFES\servico_consultar_nfse_envio_v03.xsd">
+    <None Include="Schemas\Ginfes\servico_consultar_nfse_envio_v03.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Schemas\GINFES\servico_consultar_nfse_resposta_v03.xsd">
+    <None Include="Schemas\Ginfes\servico_consultar_nfse_resposta_v03.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Schemas\GINFES\servico_consultar_nfse_rps_envio_v03.xsd">
+    <None Include="Schemas\Ginfes\servico_consultar_nfse_rps_envio_v03.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Schemas\GINFES\servico_consultar_nfse_rps_resposta_v03.xsd">
+    <None Include="Schemas\Ginfes\servico_consultar_nfse_rps_resposta_v03.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Schemas\GINFES\servico_consultar_situacao_lote_rps_envio_v03.xsd">
+    <None Include="Schemas\Ginfes\servico_consultar_situacao_lote_rps_envio_v03.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Schemas\GINFES\servico_consultar_situacao_lote_rps_resposta_v03.xsd">
+    <None Include="Schemas\Ginfes\servico_consultar_situacao_lote_rps_resposta_v03.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Schemas\GINFES\servico_enviar_lote_rps_envio_v03.xsd">
+    <None Include="Schemas\Ginfes\servico_enviar_lote_rps_envio_v03.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Schemas\GINFES\servico_enviar_lote_rps_resposta_v03.xsd">
+    <None Include="Schemas\Ginfes\servico_enviar_lote_rps_resposta_v03.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Schemas\GINFES\tipos_v03.xsd">
+    <None Include="Schemas\Ginfes\tipos_v03.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Schemas\GINFES\xmldsig-core-schema20020212_v03.xsd">
+    <None Include="Schemas\Ginfes\xmldsig-core-schema20020212_v03.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -46,6 +46,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 		public ProviderGinfes(Configuracoes config, MunicipioNFSe municipio) : base(config, municipio)
 		{
+			Name = "Ginfes";
 		}
 
 		#endregion Constructors
@@ -79,7 +80,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			GravarArquivoEmDisco(retornoWS.XmlEnvio, $"ConsultarSituacao-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
 
 			// Verifica Schema
-			var retSchema = ValidarSchema(retornoWS.XmlEnvio, "GINFES", "servico_consultar_situacao_lote_rps_envio_v03.xsd");
+			var retSchema = ValidarSchema(retornoWS.XmlEnvio, "servico_consultar_situacao_lote_rps_envio_v03.xsd");
 			if (retSchema != null)
 				return retSchema;
 
@@ -137,7 +138,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			GravarArquivoEmDisco(retornoWebService.XmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
 
 			// Verifica Schema
-			var retSchema = ValidarSchema(retornoWebService.XmlEnvio, "GINFES", "servico_consultar_lote_rps_envio_v03.xsd");
+			var retSchema = ValidarSchema(retornoWebService.XmlEnvio, "servico_consultar_lote_rps_envio_v03.xsd");
 			if (retSchema != null)
 				return retSchema;
 
