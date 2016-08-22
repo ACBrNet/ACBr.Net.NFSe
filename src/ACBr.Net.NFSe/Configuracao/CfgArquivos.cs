@@ -39,7 +39,7 @@ namespace ACBr.Net.NFSe.Configuracao
 	/// <summary>
 	/// Classe de configuração de salvamento dos arquivos da NFe
 	/// </summary>
-	public sealed class CfgArquivos : DFeArquivosBase
+	public sealed class CfgArquivos : DFeArquivosConfigBase
 	{
 		#region Constructor
 

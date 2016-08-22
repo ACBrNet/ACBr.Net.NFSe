@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 01-31-2016
+// Created          : 19-08-2016
 //
 // Last Modified By : RFTD
-// Last Modified On : 06-07-2016
+// Last Modified On : 19-08-2016
 // ***********************************************************************
-// <copyright file="CfgCertificados.cs" company="ACBr.Net">
+// <copyright file="EnviarSincronoRequest.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,24 +29,18 @@
 // <summary></summary>
 // ***********************************************************************
 
-using ACBr.Net.DFe.Core.Common;
+using System.ComponentModel;
+using System.ServiceModel;
 
-namespace ACBr.Net.NFSe.Configuracao
+namespace ACBr.Net.NFSe.Providers.DSF
 {
-	/// <summary>
-	/// Class NFECFGCertificados. This class cannot be inherited.
-	/// </summary>
-	public sealed class CfgCertificados : DFeCertificadosConfigBase
+	[EditorBrowsable(EditorBrowsableState.Advanced)]
+	[MessageContract(WrapperName = "enviarSincrono", WrapperNamespace = "http://proces.wsnfe2.dsfnet.com.br", IsWrapped = true)]
+	internal class EnviarSincronoRequest : DSFBaseRequest
 	{
-		#region Constructor
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="CfgCertificados"/> class.
-		/// </summary>
-		internal CfgCertificados()
+		public EnviarSincronoRequest(string mensagemXml)
 		{
+			MensagemXml = mensagemXml;
 		}
-
-		#endregion Constructor
 	}
 }

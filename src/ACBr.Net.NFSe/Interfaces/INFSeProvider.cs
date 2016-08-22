@@ -105,7 +105,7 @@ namespace ACBr.Net.NFSe.Interfaces
 
 		RetornoWebService EnviarSincrono(int lote, NotaFiscalCollection notas);
 
-		RetornoWebService ConsultarSituacao(int lote, string protocolo, NotaFiscalCollection notas);
+		RetornoWebService ConsultarSituacao(int lote, string protocolo);
 
 		RetornoWebService ConsultarLoteRps(string protocolo, int lote, NotaFiscalCollection notas);
 

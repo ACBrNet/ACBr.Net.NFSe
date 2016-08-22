@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 07-28-2016
+// Created          : 19-08-2016
 //
 // Last Modified By : RFTD
-// Last Modified On : 07-28-2016
+// Last Modified On : 19-08-2016
 // ***********************************************************************
-// <copyright file="ProviderServiceBase.cs" company="ACBr.Net">
+// <copyright file="DSFBaseRequest.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,26 +29,14 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
-using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
 
-namespace ACBr.Net.NFSe.Providers
+namespace ACBr.Net.NFSe.Providers.DSF
 {
-	internal abstract class ProviderServiceBase<T> : ClientBase<T> where T : class
+	[MessageContract]
+	internal class DSFBaseRequest
 	{
-		protected ProviderServiceBase(string url, TimeSpan? timeOut = null, X509Certificate2 certificado = null) : base(new BasicHttpBinding(), new EndpointAddress(url))
-		{
-			((BasicHttpBinding)Endpoint.Binding).UseDefaultWebProxy = true;
-			if (ClientCredentials != null)
-				ClientCredentials.ClientCertificate.Certificate = certificado;
-
-			if (!timeOut.HasValue)
-				return;
-
-			Endpoint.Binding.OpenTimeout = timeOut.Value;
-			Endpoint.Binding.ReceiveTimeout = timeOut.Value;
-			Endpoint.Binding.SendTimeout = timeOut.Value;
-		}
+		[MessageBodyMember(Name = "mensagemXml", Namespace = "", Order = 0)]
+		public string MensagemXml;
 	}
 }

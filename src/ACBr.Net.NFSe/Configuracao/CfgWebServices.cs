@@ -37,7 +37,7 @@ namespace ACBr.Net.NFSe.Configuracao
 	/// <summary>
 	/// Classe de configuração dos webservices
 	/// </summary>
-	public sealed class CfgWebServices : DFeWebServicesBase
+	public sealed class CfgWebServices : DFeWebserviceConfigBase
 	{
 		#region Constructor
 
