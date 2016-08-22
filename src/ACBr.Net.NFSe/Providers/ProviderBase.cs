@@ -45,6 +45,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Xml;
 
 namespace ACBr.Net.NFSe.Providers
@@ -54,6 +55,17 @@ namespace ACBr.Net.NFSe.Providers
 	/// </summary>
 	public abstract class ProviderBase : INFSeProvider
 	{
+		#region Internal Types
+
+		public enum TipoArquivo
+		{
+			Webservice,
+			Rps,
+			NFSe
+		}
+
+		#endregion Internal Types
+
 		#region Constantes
 
 		/// <summary>
@@ -521,44 +533,85 @@ namespace ACBr.Net.NFSe.Providers
 			this.Log().Warn(s);
 		}
 
-        /// <summary>
-        /// Valida o XML de acordo com o schema.
-        /// </summary>
-        /// <param name="xml">A mensagem XML que deve ser verificada.</param>
-        /// <param name="provedor">O provedor.</param>
-        /// <param name="schema">O schema que será usado na verificação.</param>
+		/// <summary>
+		/// Valida o XML de acordo com o schema.
+		/// </summary>
+		/// <param name="xml">A mensagem XML que deve ser verificada.</param>
+		/// <param name="provedor">O provedor.</param>
+		/// <param name="schema">O schema que será usado na verificação.</param>
 		/// <returns>Se estiver tudo OK retorna null, caso contrário as mensagens de alertas e erros.</returns>
-        protected RetornoWebService ValidarSchema(string xml, string provedor, string schema)
-        {
-            schema = Path.Combine(Config.Geral.PathSchemas, provedor, schema);
-            string[] errosSchema;
-            string[] alertasSchema;
-            if (!CertificadoDigital.ValidarXml(xml, schema, out errosSchema, out alertasSchema))
-            {
-                var retLote = new RetornoWebService
-                {
-                    Sucesso = false,
-                    CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
-                    CodCidade = Config.WebServices.CodMunicipio,
-                    DataEnvioLote = DateTime.Now,
-                    NumeroLote = "0",
-                    Assincrono = true,
-                    xmlEnvio = xml
-                };
+		protected RetornoWebService ValidarSchema(string xml, string provedor, string schema)
+		{
+			schema = Path.Combine(Config.Geral.PathSchemas, provedor, schema);
+			string[] errosSchema;
+			string[] alertasSchema;
+			if (!CertificadoDigital.ValidarXml(xml, schema, out errosSchema, out alertasSchema))
+			{
+				var retLote = new RetornoWebService
+				{
+					Sucesso = false,
+					CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
+					CodCidade = Config.WebServices.CodMunicipio,
+					DataEnvioLote = DateTime.Now,
+					NumeroLote = "0",
+					Assincrono = true,
+					XmlEnvio = xml
+				};
 
-                foreach (var erro in errosSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
-                    retLote.Erros.Add(erro);
+				foreach (var erro in errosSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
+					retLote.Erros.Add(erro);
 
-                foreach (var alerta in alertasSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
-                    retLote.Alertas.Add(alerta);
+				foreach (var alerta in alertasSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
+					retLote.Alertas.Add(alerta);
 
-                return retLote;
-            }
-            return null;
-        }
+				return retLote;
+			}
+			return null;
+		}
 
-        #endregion Protected
+		protected void GravarRpsEmDisco(string conteudoArquivo, string nomeArquivo, DateTime data)
+		{
+			if (Config.Arquivos.Salvar == false) return;
 
-        #endregion Methods
-    }
+			GravarArquivoEmDisco(TipoArquivo.Rps, conteudoArquivo, nomeArquivo);
+		}
+
+		protected void GravarNFSeEmDisco(string conteudoArquivo, string nomeArquivo, DateTime data)
+		{
+			if (Config.Arquivos.Salvar == false) return;
+
+			GravarArquivoEmDisco(TipoArquivo.NFSe, conteudoArquivo, nomeArquivo);
+		}
+
+		protected void GravarArquivoEmDisco(string conteudoArquivo, string nomeArquivo)
+		{
+			if (Config.Geral.Salvar == false) return;
+
+			GravarArquivoEmDisco(TipoArquivo.Webservice, conteudoArquivo, nomeArquivo);
+		}
+
+		private void GravarArquivoEmDisco(TipoArquivo tipo, string conteudoArquivo, string nomeArquivo, DateTime? data = null)
+		{
+			switch (tipo)
+			{
+				case TipoArquivo.Webservice:
+					nomeArquivo = Path.Combine(Config.Arquivos.GetPathLote(), nomeArquivo);
+					break;
+
+				case TipoArquivo.Rps:
+					nomeArquivo = Path.Combine(Config.Arquivos.GetPathRps(data), nomeArquivo);
+					break;
+
+				case TipoArquivo.NFSe:
+					nomeArquivo = Path.Combine(Config.Arquivos.GetPathNFSe(data), nomeArquivo);
+					break;
+			}
+
+			File.WriteAllText(nomeArquivo, conteudoArquivo, Encoding.UTF8);
+		}
+
+		#endregion Protected
+
+		#endregion Methods
+	}
 }

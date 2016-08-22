@@ -119,6 +119,7 @@ namespace ACBr.Net.NFSe.Demo
 		{
 			acbrNFSe = new ACBrNFSe();
 
+			acbrNFSe.Configuracoes.Certificados.Certificado = "4E009FA5F9CABB8F";
 			acbrNFSe.Configuracoes.WebServices.CodMunicipio = 3543402;
 			acbrNFSe.Configuracoes.WebServices.Ambiente = TipoAmbiente.Homologacao;
 
