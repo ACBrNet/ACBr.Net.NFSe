@@ -49,7 +49,7 @@ namespace ACBr.Net.NFSe.Configuracao
 			Arquivos = new CfgArquivos(this);
 			Certificados = new CfgCertificados();
 			WebServices = new CfgWebServices();
-			PrestadoPadrao = new DadosPrestador();
+			PrestadorPadrao = new DadosPrestador();
 		}
 
 		#endregion Constructor
@@ -68,7 +68,7 @@ namespace ACBr.Net.NFSe.Configuracao
 		/// Gets the prestado padrão.
 		/// </summary>
 		/// <value>The prestado padrão.</value>
-		public DadosPrestador PrestadoPadrao { get; set; }
+		public DadosPrestador PrestadorPadrao { get; set; }
 
 		#endregion Properties
 	}

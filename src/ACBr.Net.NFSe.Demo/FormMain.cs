@@ -123,7 +123,7 @@ namespace ACBr.Net.NFSe.Demo
 			acbrNFSe.Configuracoes.WebServices.CodMunicipio = 3543402;
 			acbrNFSe.Configuracoes.WebServices.Ambiente = TipoAmbiente.Homologacao;
 
-			acbrNFSe.Configuracoes.PrestadoPadrao.InscricaoMunicipal = "0000000000";
+			acbrNFSe.Configuracoes.PrestadorPadrao.InscricaoMunicipal = "0000000000";
 
 			AddMunicipio(ProviderManager.Municipios.ToArray());
 

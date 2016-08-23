@@ -73,7 +73,7 @@ namespace ACBr.Net.NFSe.Nota
 		public override NotaFiscal AddNew()
 		{
 			var nota = new NotaFiscal();
-			nota.Prestador = Parent.Configuracoes.PrestadoPadrao;
+			nota.Prestador = Parent.Configuracoes.PrestadorPadrao;
 			Add(nota);
 			return nota;
 		}

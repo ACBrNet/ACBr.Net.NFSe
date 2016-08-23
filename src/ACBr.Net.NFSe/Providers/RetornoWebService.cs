@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 06-17-2016
 // ***********************************************************************
-// <copyright file="RetornoWebService.cs" company="ACBr.Net">
+// <copyright file="RetornoWebservice.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -35,11 +35,11 @@ using System.Collections.Generic;
 
 namespace ACBr.Net.NFSe.Providers
 {
-	public class RetornoWebService
+	public class RetornoWebservice
 	{
 		#region Constructor
 
-		internal RetornoWebService()
+		internal RetornoWebservice()
 		{
 			DataEnvioLote = DateTime.Now;
 			NotasFiscais = new List<NotaFiscal>();

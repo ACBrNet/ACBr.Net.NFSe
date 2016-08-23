@@ -31,7 +31,7 @@
 
 namespace ACBr.Net.NFSe.Nota
 {
-	public enum StatusRps
+	public enum SituacaoNFSeRps
 	{
 		Normal,
 		Cancelado

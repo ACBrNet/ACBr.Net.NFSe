@@ -101,25 +101,27 @@ namespace ACBr.Net.NFSe.Interfaces
 		/// <returns></returns>
 		NotaFiscal LoadXml(Stream stream);
 
-		RetornoWebService Enviar(int lote, NotaFiscalCollection notas);
+		RetornoWebservice Enviar(int lote, NotaFiscalCollection notas);
 
-		RetornoWebService EnviarSincrono(int lote, NotaFiscalCollection notas);
+		RetornoWebservice EnviarSincrono(int lote, NotaFiscalCollection notas);
 
-		RetornoWebService ConsultarSituacao(int lote, string protocolo);
+		RetornoWebservice ConsultarSituacao(int lote, string protocolo);
 
-		RetornoWebService ConsultarLoteRps(string protocolo, int lote, NotaFiscalCollection notas);
+		RetornoWebservice ConsultarLoteRps(string protocolo, int lote, NotaFiscalCollection notas);
 
-		RetornoWebService ConsultarSequencialRps(string serie);
+		RetornoWebservice ConsultarSequencialRps(string serie);
 
-		RetornoWebService ConsultaNFSeRps(string numero, string serie, string tipo);
+		RetornoWebservice ConsultaNFSeRps(string numero, string serie, string tipo, NotaFiscalCollection notas);
 
-		RetornoWebService ConsultaNFSe(DateTime inicio, DateTime fim, string numeroNfse, int pagina,
+		RetornoWebservice ConsultaNFSe(DateTime inicio, DateTime fim, string numeroNfse, int pagina,
 			string cnpjTomador, string imTomador, string nomeInter, string cnpjInter, string imInter,
-			string serie);
+			string serie, NotaFiscalCollection notas);
 
-		RetornoWebService CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas);
+		RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas);
 
-		RetornoWebService SubstituirNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas);
+		RetornoWebservice CancelaNFSe(int lote, NotaFiscalCollection notas);
+
+		RetornoWebservice SubstituirNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas);
 
 		#endregion Methods
 	}

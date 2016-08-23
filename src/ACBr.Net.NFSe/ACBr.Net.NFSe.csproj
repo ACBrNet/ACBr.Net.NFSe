@@ -151,7 +151,7 @@
     <Compile Include="Nota\Servico.cs" />
     <Compile Include="Nota\ServicosCollection.cs" />
     <Compile Include="Nota\SituacaoTributaria.cs" />
-    <Compile Include="Nota\StatusRPS.cs" />
+    <Compile Include="Nota\SituacaoNFSeRps.cs" />
     <Compile Include="Nota\TipoDeducao.cs" />
     <Compile Include="Nota\TipoEmissao.cs" />
     <Compile Include="Nota\TipoEmpreitadaGlobal.cs" />

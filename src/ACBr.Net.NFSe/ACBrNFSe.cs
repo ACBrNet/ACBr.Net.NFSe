@@ -151,8 +151,8 @@ namespace ACBr.Net.NFSe
 		/// </summary>
 		/// <param name="lote">Numero do lote.</param>
 		/// <param name="imprimir">Se for passado <c>true</c> imprime as RPS, se o envio foi executado com sucesso.</param>
-		/// <returns>RetornoWebService.</returns>
-		public RetornoWebService Enviar(int lote, bool imprimir)
+		/// <returns>RetornoWebservice.</returns>
+		public RetornoWebservice Enviar(int lote, bool imprimir)
 		{
 			Guard.Against<ArgumentException>(NotasFiscais.Count < 1, "ERRO: Nenhuma RPS adicionada ao Lote");
 			Guard.Against<ArgumentException>(NotasFiscais.Count > 50, $"ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS) excedido.{Environment.NewLine}" +
@@ -172,8 +172,8 @@ namespace ACBr.Net.NFSe
 		/// </summary>
 		/// <param name="lote">Numero do lote.</param>
 		/// <param name="imprimir">Se for passado <c>true</c> imprime as NFSe, se o envio foi executado com sucesso.</param>
-		/// <returns>RetornoWebService.</returns>
-		public RetornoWebService EnviarSincrono(int lote, bool imprimir)
+		/// <returns>RetornoWebservice.</returns>
+		public RetornoWebservice EnviarSincrono(int lote, bool imprimir)
 		{
 			Guard.Against<ArgumentException>(NotasFiscais.Count < 1, "ERRO: Nenhuma RPS adicionada ao Lote");
 			Guard.Against<ArgumentException>(NotasFiscais.Count > 50, $"ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS) excedido.{Environment.NewLine}" +
@@ -193,8 +193,8 @@ namespace ACBr.Net.NFSe
 		/// </summary>
 		/// <param name="lote">The lote.</param>
 		/// <param name="protocolo">The protocolo.</param>
-		/// <returns>RetornoWebService.</returns>
-		public RetornoWebService ConsultarSituacao(int lote, string protocolo = "")
+		/// <returns>RetornoWebservice.</returns>
+		public RetornoWebservice ConsultarSituacao(int lote, string protocolo = "")
 		{
 			var provider = ProviderManager.GetProvider(Configuracoes);
 			return provider.ConsultarSituacao(lote, protocolo);
@@ -205,9 +205,9 @@ namespace ACBr.Net.NFSe
 		/// </summary>
 		/// <param name="protocolo">The protocolo.</param>
 		/// <param name="lote">The lote.</param>
-		/// <returns>RetornoWebService.</returns>
+		/// <returns>RetornoWebservice.</returns>
 		/// <exception cref="NotImplementedException"></exception>
-		public RetornoWebService ConsultarLoteRps(string protocolo, int lote)
+		public RetornoWebservice ConsultarLoteRps(string protocolo, int lote)
 		{
 			var provider = ProviderManager.GetProvider(Configuracoes);
 			return provider.ConsultarLoteRps(protocolo, lote, NotasFiscais);
@@ -217,9 +217,9 @@ namespace ACBr.Net.NFSe
 		/// Consulta o numero de sequencia dos lotes de RPS.
 		/// </summary>
 		/// <param name="serie">The serie.</param>
-		/// <returns>RetornoWebService.</returns>
+		/// <returns>RetornoWebservice.</returns>
 		/// <exception cref="NotImplementedException"></exception>
-		public RetornoWebService ConsultarSequencialRps(string serie)
+		public RetornoWebservice ConsultarSequencialRps(string serie)
 		{
 			var provider = ProviderManager.GetProvider(Configuracoes);
 			return provider.ConsultarSequencialRps(serie);
@@ -232,12 +232,12 @@ namespace ACBr.Net.NFSe
 		/// <param name="numero">The numero.</param>
 		/// <param name="serie">The serie.</param>
 		/// <param name="tipo">The tipo.</param>
-		/// <returns>RetornoWebService.</returns>
+		/// <returns>RetornoWebservice.</returns>
 		/// <exception cref="NotImplementedException"></exception>
-		public RetornoWebService ConsultaNFSeRps(string numero, string serie, string tipo)
+		public RetornoWebservice ConsultaNFSeRps(string numero, string serie, string tipo)
 		{
 			var provider = ProviderManager.GetProvider(Configuracoes);
-			return provider.ConsultaNFSeRps(numero, serie, tipo);
+			return provider.ConsultaNFSeRps(numero, serie, tipo, NotasFiscais);
 		}
 
 		/// <summary>
@@ -254,16 +254,17 @@ namespace ACBr.Net.NFSe
 		/// <param name="cnpjInter">The CNPJ inter.</param>
 		/// <param name="imInter">The im inter.</param>
 		/// <param name="serie">The serie.</param>
-		/// <returns>RetornoWebService.</returns>
+		/// <returns>RetornoWebservice.</returns>
 		/// <exception cref="NotImplementedException"></exception>
-		public RetornoWebService ConsultaNFSe(DateTime inicio, DateTime fim, string numeroNfse = "", int pagina = 1,
+		public RetornoWebservice ConsultaNFSe(DateTime inicio, DateTime fim, string numeroNfse = "", int pagina = 1,
 			string cnpjTomador = "", string imTomador = "", string nomeInter = "", string cnpjInter = "", string imInter = "",
 			string serie = "")
 		{
 			Guard.Against<ArgumentException>(inicio.Date > fim.Date, "A data inicial não pode ser maior que a data final.");
 
 			var provider = ProviderManager.GetProvider(Configuracoes);
-			return provider.ConsultaNFSe(inicio, fim, numeroNfse, pagina, cnpjTomador, imTomador, nomeInter, cnpjInter, imInter, serie);
+			return provider.ConsultaNFSe(inicio, fim, numeroNfse, pagina, cnpjTomador,
+										 imTomador, nomeInter, cnpjInter, imInter, serie, NotasFiscais);
 		}
 
 		/// <summary>
@@ -272,8 +273,8 @@ namespace ACBr.Net.NFSe
 		/// <param name="codigoCancelamento">O codigo de cancelamento.</param>
 		/// <param name="numeroNFSe">O numero da NFSe.</param>
 		/// <param name="motivo">O motivo.</param>
-		/// <returns>RetornoWebService.</returns>
-		public RetornoWebService CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo)
+		/// <returns>RetornoWebservice.</returns>
+		public RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo)
 		{
 			Guard.Against<ArgumentException>(NotasFiscais.Count < 1, "ERRO: Nenhuma NFS-e carregada ao componente");
 
@@ -282,13 +283,28 @@ namespace ACBr.Net.NFSe
 		}
 
 		/// <summary>
+		/// Cancela as NFSe que estão carregadas na lista.
+		///
+		/// Obs.: Adicionar o motivo de cancelamento nas notas da lista.
+		/// </summary>
+		/// <param name="lote">Identificação do lote.</param>
+		/// <returns>RetornoWebservice.</returns>
+		public RetornoWebservice CancelaNFSe(int lote)
+		{
+			Guard.Against<ArgumentException>(NotasFiscais.Count < 1, "ERRO: Nenhuma NFS-e carregada ao componente");
+
+			var provider = ProviderManager.GetProvider(Configuracoes);
+			return provider.CancelaNFSe(lote, NotasFiscais);
+		}
+
+		/// <summary>
 		/// Substitui uma NFSe
 		/// </summary>
 		/// <param name="codigoCancelamento">O codigo de cancelamento.</param>
 		/// <param name="numeroNFSe">O numero da NFSe.</param>
 		/// <param name="motivo">O motivo.</param>
-		/// <returns>RetornoWebService.</returns>
-		public RetornoWebService SubstituirNFSe(string codigoCancelamento, string numeroNFSe, string motivo)
+		/// <returns>RetornoWebservice.</returns>
+		public RetornoWebservice SubstituirNFSe(string codigoCancelamento, string numeroNFSe, string motivo)
 		{
 			Guard.Against<ArgumentException>(codigoCancelamento.IsEmpty(), "ERRO: Código de Cancelamento não informado");
 			Guard.Against<ArgumentException>(numeroNFSe.IsEmpty(), "ERRO: Numero da NFS-e não informada");

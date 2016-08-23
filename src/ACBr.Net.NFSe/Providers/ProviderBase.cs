@@ -233,48 +233,53 @@ namespace ACBr.Net.NFSe.Providers
 			throw new NotImplementedException("GetXmlNFSe");
 		}
 
-		public virtual RetornoWebService Enviar(int lote, NotaFiscalCollection notas)
+		public virtual RetornoWebservice Enviar(int lote, NotaFiscalCollection notas)
 		{
 			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}
 
-		public virtual RetornoWebService EnviarSincrono(int lote, NotaFiscalCollection notas)
+		public virtual RetornoWebservice EnviarSincrono(int lote, NotaFiscalCollection notas)
 		{
 			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}
 
-		public virtual RetornoWebService ConsultarSituacao(int lote, string protocolo)
+		public virtual RetornoWebservice ConsultarSituacao(int lote, string protocolo)
 		{
 			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}
 
-		public virtual RetornoWebService ConsultarLoteRps(string protocolo, int lote, NotaFiscalCollection notas)
+		public virtual RetornoWebservice ConsultarLoteRps(string protocolo, int lote, NotaFiscalCollection notas)
 		{
 			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}
 
-		public virtual RetornoWebService ConsultarSequencialRps(string serie)
+		public virtual RetornoWebservice ConsultarSequencialRps(string serie)
 		{
 			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}
 
-		public virtual RetornoWebService ConsultaNFSeRps(string numero, string serie, string tipo)
+		public virtual RetornoWebservice ConsultaNFSeRps(string numero, string serie, string tipo, NotaFiscalCollection notas)
 		{
 			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}
 
-		public virtual RetornoWebService ConsultaNFSe(DateTime inicio, DateTime fim, string numeroNfse, int pagina, string cnpjTomador,
-			string imTomador, string nomeInter, string cnpjInter, string imInter, string serie)
+		public virtual RetornoWebservice ConsultaNFSe(DateTime inicio, DateTime fim, string numeroNfse, int pagina, string cnpjTomador,
+			string imTomador, string nomeInter, string cnpjInter, string imInter, string serie, NotaFiscalCollection notas)
 		{
 			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}
 
-		public virtual RetornoWebService CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas)
+		public virtual RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas)
 		{
 			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}
 
-		public virtual RetornoWebService SubstituirNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas)
+		public virtual RetornoWebservice CancelaNFSe(int lote, NotaFiscalCollection notas)
+		{
+			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
+		}
+
+		public virtual RetornoWebservice SubstituirNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas)
 		{
 			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}
@@ -543,17 +548,17 @@ namespace ACBr.Net.NFSe.Providers
 		/// <param name="provedor">O provedor.</param>
 		/// <param name="schema">O schema que será usado na verificação.</param>
 		/// <returns>Se estiver tudo OK retorna null, caso contrário as mensagens de alertas e erros.</returns>
-		protected RetornoWebService ValidarSchema(string xml, string schema)
+		protected RetornoWebservice ValidarSchema(string xml, string schema)
 		{
 			schema = Path.Combine(Config.Geral.PathSchemas, Name, schema);
 			string[] errosSchema;
 			string[] alertasSchema;
 			if (!CertificadoDigital.ValidarXml(xml, schema, out errosSchema, out alertasSchema))
 			{
-				var retLote = new RetornoWebService
+				var retLote = new RetornoWebservice
 				{
 					Sucesso = false,
-					CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
+					CPFCNPJRemetente = Config.PrestadorPadrao.CPFCNPJ,
 					CodCidade = Config.WebServices.CodMunicipio,
 					DataEnvioLote = DateTime.Now,
 					NumeroLote = "0",

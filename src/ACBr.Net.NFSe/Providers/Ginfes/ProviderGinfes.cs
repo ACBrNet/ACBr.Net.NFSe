@@ -53,12 +53,12 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 		#region Methods
 
-		public override RetornoWebService ConsultarSituacao(int lote, string protocolo)
+		public override RetornoWebservice ConsultarSituacao(int lote, string protocolo)
 		{
-			var retornoWS = new RetornoWebService()
+			var retornoWebservice = new RetornoWebservice()
 			{
 				Sucesso = false,
-				CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
+				CPFCNPJRemetente = Config.PrestadorPadrao.CPFCNPJ,
 				CodCidade = Config.WebServices.CodMunicipio,
 				DataEnvioLote = DateTime.Now,
 				NumeroLote = "0",
@@ -70,17 +70,17 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			loteBuilder.Append("<ConsultarSituacaoLoteRpsEnvio xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\" xmlns=\"http://www.ginfes.com.br/servico_consultar_situacao_lote_rps_envio_v03.xsd\">");
 			loteBuilder.Append("<Prestador>");
-			loteBuilder.Append($"<tipos:Cnpj>{Config.PrestadoPadrao.CPFCNPJ.ZeroFill(14)}</tipos:Cnpj>");
-			loteBuilder.Append($"<tipos:InscricaoMunicipal>{Config.PrestadoPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
+			loteBuilder.Append($"<tipos:Cnpj>{Config.PrestadorPadrao.CPFCNPJ.ZeroFill(14)}</tipos:Cnpj>");
+			loteBuilder.Append($"<tipos:InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
 			loteBuilder.Append("</Prestador>");
 			loteBuilder.Append($"<Protocolo>{protocolo}</Protocolo>");
 			loteBuilder.Append("</ConsultarSituacaoLoteRpsEnvio>");
-			retornoWS.XmlEnvio = CertificadoDigital.AssinarXml(loteBuilder.ToString(), "", "ConsultarSituacaoLoteRpsEnvio", Certificado);
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteBuilder.ToString(), "", "ConsultarSituacaoLoteRpsEnvio", Certificado);
 
-			GravarArquivoEmDisco(retornoWS.XmlEnvio, $"ConsultarSituacao-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
+			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarSituacao-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
 
 			// Verifica Schema
-			var retSchema = ValidarSchema(retornoWS.XmlEnvio, "servico_consultar_situacao_lote_rps_envio_v03.xsd");
+			var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, "servico_consultar_situacao_lote_rps_envio_v03.xsd");
 			if (retSchema != null)
 				return retSchema;
 
@@ -89,34 +89,34 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			{
 				var cliente = GetCliente(TipoUrl.ConsultarSituacao);
 				var cabecalho = GerarCabecalho();
-				retornoWS.XmlRetorno = cliente.ConsultarSituacao(cabecalho, retornoWS.XmlEnvio);
+				retornoWebservice.XmlRetorno = cliente.ConsultarSituacao(cabecalho, retornoWebservice.XmlEnvio);
 			}
 			catch (Exception ex)
 			{
-				retornoWS.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
-				return retornoWS;
+				retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
+				return retornoWebservice;
 			}
-			GravarArquivoEmDisco(retornoWS.XmlRetorno, $"ConsultarSituacao-{DateTime.Now:yyyyMMdd}-{lote}-ret.xml");
+			GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarSituacao-{DateTime.Now:yyyyMMdd}-{lote}-ret.xml");
 
 			// Analisa mensagem de retorno
-			var xmlRet = XDocument.Parse(retornoWS.XmlRetorno);
-			MensagemErro(retornoWS, xmlRet);
-			if (retornoWS.Erros.Count > 0)
-				return retornoWS;
+			var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
+			MensagemErro(retornoWebservice, xmlRet);
+			if (retornoWebservice.Erros.Count > 0)
+				return retornoWebservice;
 
-			retornoWS.Situacao = xmlRet.Root?.ElementAnyNs("Situacao")?.GetValue<string>() ?? "0";
-			retornoWS.Sucesso = (retornoWS.Situacao == "4");
-			retornoWS.NumeroLote = xmlRet.Root?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
+			retornoWebservice.Situacao = xmlRet.Root?.ElementAnyNs("Situacao")?.GetValue<string>() ?? "0";
+			retornoWebservice.Sucesso = (retornoWebservice.Situacao == "4");
+			retornoWebservice.NumeroLote = xmlRet.Root?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
 
-			return retornoWS;
+			return retornoWebservice;
 		}
 
-		public override RetornoWebService ConsultarLoteRps(string protocolo, int lote, NotaFiscalCollection notas)
+		public override RetornoWebservice ConsultarLoteRps(string protocolo, int lote, NotaFiscalCollection notas)
 		{
-			var retornoWebService = new RetornoWebService()
+			var retornoWebservice = new RetornoWebservice()
 			{
 				Sucesso = false,
-				CPFCNPJRemetente = Config.PrestadoPadrao.CPFCNPJ,
+				CPFCNPJRemetente = Config.PrestadorPadrao.CPFCNPJ,
 				CodCidade = Config.WebServices.CodMunicipio,
 				DataEnvioLote = DateTime.Now,
 				NumeroLote = "0",
@@ -127,18 +127,18 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			loteBuilder.Append("<ConsultarLoteRpsEnvio xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\" xmlns=\"http://www.ginfes.com.br/servico_consultar_lote_rps_envio_v03.xsd\">");
 			loteBuilder.Append("<Prestador>");
-			loteBuilder.Append($"<tipos:Cnpj>{Config.PrestadoPadrao.CPFCNPJ.ZeroFill(14)}</tipos:Cnpj>");
-			loteBuilder.Append($"<tipos:InscricaoMunicipal>{Config.PrestadoPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
+			loteBuilder.Append($"<tipos:Cnpj>{Config.PrestadorPadrao.CPFCNPJ.ZeroFill(14)}</tipos:Cnpj>");
+			loteBuilder.Append($"<tipos:InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
 			loteBuilder.Append("</Prestador>");
 			loteBuilder.Append($"<Protocolo>{protocolo}</Protocolo>");
 			loteBuilder.Append("</ConsultarLoteRpsEnvio>");
 
-			retornoWebService.XmlEnvio = CertificadoDigital.AssinarXml(loteBuilder.ToString(), "", "ConsultarLoteRpsEnvio", Certificado);
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteBuilder.ToString(), "", "ConsultarLoteRpsEnvio", Certificado);
 
-			GravarArquivoEmDisco(retornoWebService.XmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
+			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
 
 			// Verifica Schema
-			var retSchema = ValidarSchema(retornoWebService.XmlEnvio, "servico_consultar_lote_rps_envio_v03.xsd");
+			var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, "servico_consultar_lote_rps_envio_v03.xsd");
 			if (retSchema != null)
 				return retSchema;
 
@@ -147,28 +147,28 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			{
 				var cliente = GetCliente(TipoUrl.ConsultarLoteRps);
 				var cabecalho = GerarCabecalho();
-				retornoWebService.XmlRetorno = cliente.ConsultarLoteRps(cabecalho, retornoWebService.XmlEnvio);
+				retornoWebservice.XmlRetorno = cliente.ConsultarLoteRps(cabecalho, retornoWebservice.XmlEnvio);
 			}
 			catch (Exception ex)
 			{
-				retornoWebService.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
-				return retornoWebService;
+				retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
+				return retornoWebservice;
 			}
-			GravarArquivoEmDisco(retornoWebService.XmlRetorno, $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{lote}-ret.xml");
+			GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{lote}-ret.xml");
 
 			// Analisa mensagem de retorno
-			var xmlRet = XDocument.Parse(retornoWebService.XmlRetorno);
-			MensagemErro(retornoWebService, xmlRet);
-			if (retornoWebService.Erros.Count > 0)
-				return retornoWebService;
+			var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
+			MensagemErro(retornoWebservice, xmlRet);
+			if (retornoWebservice.Erros.Count > 0)
+				return retornoWebservice;
 
 			var cabeçalho = xmlRet.Element("ConsultarLoteRpsResposta");
-			return retornoWebService;
+			return retornoWebservice;
 		}
 
 		#region Private Methods
 
-		private static void MensagemErro(RetornoWebService retornoWs, XDocument xmlRet)
+		private static void MensagemErro(RetornoWebservice retornoWs, XDocument xmlRet)
 		{
 			var mensagens = xmlRet.ElementAnyNs("ListaMensagemRetorno");
 			if (mensagens == null) return;
