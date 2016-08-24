@@ -35,6 +35,7 @@ using ACBr.Net.NFSe.Providers;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Xml;
 
 namespace ACBr.Net.NFSe.Interfaces
@@ -85,7 +86,7 @@ namespace ACBr.Net.NFSe.Interfaces
 		/// </summary>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		NotaFiscal LoadXml(string xml);
+		NotaFiscal LoadXml(string xml, Encoding encoding);
 
 		/// <summary>
 		/// Carrega XML da NFSe no Componente a parte da classe XmlDocument.

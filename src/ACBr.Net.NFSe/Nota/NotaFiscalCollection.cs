@@ -32,6 +32,7 @@
 using ACBr.Net.DFe.Core.Collection;
 using ACBr.Net.NFSe.Providers;
 using System.IO;
+using System.Text;
 using System.Xml;
 
 namespace ACBr.Net.NFSe.Nota
@@ -83,10 +84,10 @@ namespace ACBr.Net.NFSe.Nota
 		/// </summary>
 		/// <param name="xml">caminho do arquivo XML.</param>
 		/// <returns>NotaFiscal carregada.</returns>
-		public NotaFiscal Load(string xml)
+		public NotaFiscal Load(string xml, Encoding encoding = null)
 		{
 			var provider = ProviderManager.GetProvider(Parent.Configuracoes);
-			var nota = provider.LoadXml(xml);
+			var nota = provider.LoadXml(xml, encoding);
 			Add(nota);
 			return nota;
 		}
