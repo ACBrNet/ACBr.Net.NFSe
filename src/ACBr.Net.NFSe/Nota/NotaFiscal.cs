@@ -51,8 +51,9 @@ namespace ACBr.Net.NFSe.Nota
 			IdentificacaoRps = new IdentificacaoRps();
 			RpsSubstituido = new IdeRpsSubtituida();
 			Servico = new DadosServico();
-			Prestador = new DadosPrestador();
-			IntermediarioServico = new IdeIntermediarioServico();
+            Prestador = new DadosPrestador();
+            Tomador = new DadosTomador();
+            IntermediarioServico = new IdeIntermediarioServico();
 			ConstrucaoCivil = new DadosConstrucaoCivil();
 			CondicaoPagamento = new CondPagamento();
 			OrgaoGerador = new IdeOrgaoGerador();
