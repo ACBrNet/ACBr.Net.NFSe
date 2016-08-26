@@ -38,44 +38,50 @@ namespace ACBr.Net.NFSe.Demo
 			ExecuteSafe(() => acbrNFSe.ConsultarSituacao(0, "10"));
 		}
 
-		private void btnSalvar_Click(object sender, EventArgs e)
+		private void btnAdicionar_Click(object sender, EventArgs e)
 		{
 			/*
 			Exemplo de como adicionar Cidade no arquivo de cidades
 
 			var municipio = new MunicipioNFSe
 			{
-				Nome = "Ribeirão Preto",
-				UF = "SP",
-				Codigo = 3543402,
-				CodigoSiafi = 0,
+				Nome = "Nova Iguaçu",
+				UF = "RJ",
+				Codigo = 3303500,
+				CodigoSiafi = 5869,
+				TamanhoIM = 0,
 				Provedor = "GINFES"
 			};
 
-			municipio.UrlProducao.Add(TipoUrl.Enviar, "https://producao.ginfes.com.br/ServiceGinfesImpl?wsdl");
-			municipio.UrlProducao.Add(TipoUrl.EnviarSincrono, "");
-			municipio.UrlProducao.Add(TipoUrl.CancelaNFSe, "https://producao.ginfes.com.br/ServiceGinfesImpl?wsdl");
-			municipio.UrlProducao.Add(TipoUrl.ConsultaNFSe, "https://producao.ginfes.com.br/ServiceGinfesImpl?wsdl");
-			municipio.UrlProducao.Add(TipoUrl.ConsultaNFSeRps, "https://producao.ginfes.com.br/ServiceGinfesImpl?wsdl");
-			municipio.UrlProducao.Add(TipoUrl.ConsultarLoteRps, "https://producao.ginfes.com.br/ServiceGinfesImpl?wsdl");
-			municipio.UrlProducao.Add(TipoUrl.ConsultarSituacao, "https://producao.ginfes.com.br/ServiceGinfesImpl?wsdl");
-			municipio.UrlProducao.Add(TipoUrl.ConsultarSequencialRps, "");
-			municipio.UrlProducao.Add(TipoUrl.SubstituirNFSe, "");
+			var urlProducao = "https://producao.ginfes.com.br/ServiceGinfesImpl?wsdl";
+			var urlHomologacao = "https://homologacao.ginfes.com.br/ServiceGinfesImpl?wsdl";
 
-			municipio.UrlHomologacao.Add(TipoUrl.Enviar, "https://homologacao.ginfes.com.br/ServiceGinfesImpl?wsdl");
-			municipio.UrlHomologacao.Add(TipoUrl.EnviarSincrono, "");
-			municipio.UrlHomologacao.Add(TipoUrl.CancelaNFSe, "https://homologacao.ginfes.com.br/ServiceGinfesImpl?wsdl");
-			municipio.UrlHomologacao.Add(TipoUrl.ConsultaNFSe, "https://homologacao.ginfes.com.br/ServiceGinfesImpl?wsdl");
-			municipio.UrlHomologacao.Add(TipoUrl.ConsultaNFSeRps, "https://homologacao.ginfes.com.br/ServiceGinfesImpl?wsdl");
-			municipio.UrlHomologacao.Add(TipoUrl.ConsultarLoteRps, "https://homologacao.ginfes.com.br/ServiceGinfesImpl?wsdl");
-			municipio.UrlHomologacao.Add(TipoUrl.ConsultarSituacao, "https://homologacao.ginfes.com.br/ServiceGinfesImpl?wsdl");
-			municipio.UrlHomologacao.Add(TipoUrl.ConsultarSequencialRps, "");
-			municipio.UrlHomologacao.Add(TipoUrl.SubstituirNFSe, "");
+			municipio.UrlProducao.Add(TipoUrl.Enviar, urlProducao);
+			municipio.UrlProducao.Add(TipoUrl.EnviarSincrono, urlProducao);
+			municipio.UrlProducao.Add(TipoUrl.CancelaNFSe, urlProducao);
+			municipio.UrlProducao.Add(TipoUrl.ConsultaNFSe, urlProducao);
+			municipio.UrlProducao.Add(TipoUrl.ConsultaNFSeRps, urlProducao);
+			municipio.UrlProducao.Add(TipoUrl.ConsultarLoteRps, urlProducao);
+			municipio.UrlProducao.Add(TipoUrl.ConsultarSituacao, urlProducao);
+			municipio.UrlProducao.Add(TipoUrl.ConsultarSequencialRps, urlProducao);
+			municipio.UrlProducao.Add(TipoUrl.SubstituirNFSe, urlProducao);
+
+			municipio.UrlHomologacao.Add(TipoUrl.Enviar, urlHomologacao);
+			municipio.UrlHomologacao.Add(TipoUrl.EnviarSincrono, urlHomologacao);
+			municipio.UrlHomologacao.Add(TipoUrl.CancelaNFSe, urlHomologacao);
+			municipio.UrlHomologacao.Add(TipoUrl.ConsultaNFSe, urlHomologacao);
+			municipio.UrlHomologacao.Add(TipoUrl.ConsultaNFSeRps, urlHomologacao);
+			municipio.UrlHomologacao.Add(TipoUrl.ConsultarLoteRps, urlHomologacao);
+			municipio.UrlHomologacao.Add(TipoUrl.ConsultarSituacao, urlHomologacao);
+			municipio.UrlHomologacao.Add(TipoUrl.ConsultarSequencialRps, urlHomologacao);
+			municipio.UrlHomologacao.Add(TipoUrl.SubstituirNFSe, urlHomologacao);
 
 			AddMunicipio(municipio);
-
 			*/
+		}
 
+		private void btnSalvar_Click(object sender, EventArgs e)
+		{
 			ExecuteSafe(() =>
 			{
 				if (listView1.Items.Count < 1) return;
@@ -156,6 +162,7 @@ namespace ACBr.Net.NFSe.Demo
 
 		private void UpdateCidades()
 		{
+			cmbCidades.DataSource = null;
 			cmbCidades.Items.Clear();
 			cmbCidades.DisplayMember = "Nome";
 			cmbCidades.ValueMember = "Codigo";

@@ -59,6 +59,8 @@ namespace ACBr.Net.NFSe.Providers
 
 		public string Provedor { get; set; }
 
+		public int TamanhoIM { get; set; }
+
 		public Dictionary<TipoUrl, string> UrlHomologacao { get; }
 
 		public Dictionary<TipoUrl, string> UrlProducao { get; }

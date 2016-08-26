@@ -872,18 +872,19 @@
 			// 
 			this.btnAdicionar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnAdicionar.Location = new System.Drawing.Point(693, 454);
+			this.btnAdicionar.Location = new System.Drawing.Point(693, 434);
 			this.btnAdicionar.Name = "btnAdicionar";
 			this.btnAdicionar.Size = new System.Drawing.Size(75, 23);
 			this.btnAdicionar.TabIndex = 3;
 			this.btnAdicionar.Text = "Adicionar";
 			this.btnAdicionar.UseVisualStyleBackColor = true;
+			this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
 			// 
 			// btnSalvar
 			// 
 			this.btnSalvar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnSalvar.Location = new System.Drawing.Point(774, 454);
+			this.btnSalvar.Location = new System.Drawing.Point(774, 434);
 			this.btnSalvar.Name = "btnSalvar";
 			this.btnSalvar.Size = new System.Drawing.Size(75, 23);
 			this.btnSalvar.TabIndex = 2;
@@ -895,7 +896,7 @@
 			// 
 			this.btnCarregar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCarregar.Location = new System.Drawing.Point(612, 456);
+			this.btnCarregar.Location = new System.Drawing.Point(612, 436);
 			this.btnCarregar.Name = "btnCarregar";
 			this.btnCarregar.Size = new System.Drawing.Size(75, 23);
 			this.btnCarregar.TabIndex = 1;
@@ -917,7 +918,7 @@
 			this.listView1.Location = new System.Drawing.Point(3, 3);
 			this.listView1.MultiSelect = false;
 			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(851, 445);
+			this.listView1.Size = new System.Drawing.Size(851, 425);
 			this.listView1.TabIndex = 0;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.Details;

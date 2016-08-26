@@ -37,7 +37,6 @@ using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -271,7 +270,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			rpsTag.SetAttribute("Id", $"rps:{nota.InfId.Id}");
 
 			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "Assinatura", 1, 2000, 1, assinatura));
-			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalPrestador", 01, 11, 1, nota.Prestador.InscricaoMunicipal.OnlyNumbers()));
+			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalPrestador", 01, Municipio.TamanhoIM, 1, nota.Prestador.InscricaoMunicipal.OnlyNumbers()));
 			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "RazaoSocialPrestador", 1, 120, 1, RetirarAcentos ? nota.Prestador.RazaoSocial.RemoveAccent() : nota.Prestador.RazaoSocial));
 			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoRPS", 1, 20, 1, "RPS"));
 
@@ -292,7 +291,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			rpsTag.AddTag(AdicionarTag(TipoCampo.Int, "", "SeriePrestacao", 01, 02, 1,
 				nota.IdentificacaoRps.SeriePrestacao.IsEmpty() ? "99" : nota.IdentificacaoRps.SeriePrestacao.OnlyNumbers()));
 
-			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalTomador", 1, 11, 1, nota.Tomador.InscricaoMunicipal.OnlyNumbers()));
+			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalTomador", 1, Municipio.TamanhoIM, 1, nota.Tomador.InscricaoMunicipal.OnlyNumbers()));
 			rpsTag.AddTag(AdicionarTagCNPJCPF("CPFCNPJTomador", "CPFCNPJTomador", nota.Tomador.CpfCnpj));
 			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "RazaoSocialTomador", 1, 120, 1, RetirarAcentos ? nota.Tomador.RazaoSocial.RemoveAccent() : nota.Tomador.RazaoSocial));
 			rpsTag.AddTag(AdicionarTag(TipoCampo.Str, "", "DocTomadorEstrangeiro", 0, 20, 1, nota.Tomador.DocTomadorEstrangeiro));
@@ -362,7 +361,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			notaTag.AddTag(AdicionarTag(TipoCampo.Int, "", "NumeroLote", 1, 11, 1, nota.NumeroLote));
 			notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "CodigoVerificacao", 1, 200, 1, nota.ChaveNfse));
 			notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "Assinatura", 1, 2000, 1, nota.Assinatura));
-			notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalPrestador", 01, 11, 1, nota.Prestador.InscricaoMunicipal.OnlyNumbers()));
+			notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalPrestador", 01, Municipio.TamanhoIM, 1, nota.Prestador.InscricaoMunicipal.OnlyNumbers()));
 			notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "RazaoSocialPrestador", 1, 120, 1, RetirarAcentos ? nota.Prestador.RazaoSocial.RemoveAccent() : nota.Prestador.RazaoSocial));
 			notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "TipoRPS", 1, 20, 1, "RPS"));
 
@@ -383,7 +382,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			notaTag.AddTag(AdicionarTag(TipoCampo.Int, "", "SeriePrestacao", 1, 2, 1,
 				nota.IdentificacaoRps.SeriePrestacao.IsEmpty() ? "99" : nota.IdentificacaoRps.SeriePrestacao));
 
-			notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalTomador", 1, 11, 1, nota.Tomador.InscricaoMunicipal.OnlyNumbers()));
+			notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalTomador", 1, Municipio.TamanhoIM, 1, nota.Tomador.InscricaoMunicipal.OnlyNumbers()));
 			notaTag.AddTag(AdicionarTagCNPJCPF("CPFCNPJTomador", "CPFCNPJTomador", nota.Tomador.CpfCnpj));
 			notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "RazaoSocialTomador", 1, 120, 1, RetirarAcentos ? nota.Tomador.RazaoSocial.RemoveAccent() : nota.Tomador.RazaoSocial));
 			notaTag.AddTag(AdicionarTag(TipoCampo.Str, "", "DocTomadorEstrangeiro", 0, 20, 1, nota.Tomador.DocTomadorEstrangeiro));
@@ -761,14 +760,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 				return retornoWebservice;
 			}
 
-			if (Config.Geral.Salvar)
-			{
-				var loteFile = Path.Combine(Config.Arquivos.GetPathLote(), $"Consultalote-{DateTime.Now:yyyyMMdd}-{lote}-ret.xml");
-				File.WriteAllText(loteFile, retornoWebservice.XmlRetorno, Encoding.UTF8);
-			}
+			GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"Consultalote-{DateTime.Now:yyyyMMdd}-{lote}-ret.xml");
 
 			var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-
 			var cabeçalho = xmlRet.ElementAnyNs("Cabecalho");
 
 			retornoWebservice.Sucesso = cabeçalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
@@ -1019,7 +1013,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 			var valor = nota.Servico.Valores.ValorServicos - nota.Servico.Valores.ValorDeducoes;
 			var rec = nota.Servico.Valores.IssRetido == SituacaoTributaria.Normal ? "N" : "S";
-			var sign = $"{nota.Prestador.InscricaoMunicipal.ZeroFill(11)}{nota.IdentificacaoRps.Serie.FillLeft(5)}" + $"{nota.IdentificacaoRps.Numero.ZeroFill(12)}{nota.IdentificacaoRps.DataEmissaoRps:yyyyMMdd}{tributacao} " + $"{situacao}{rec}{Math.Round(valor * 100).ToString().ZeroFill(15)}" + $"{Math.Round(nota.Servico.Valores.ValorDeducoes * 100).ToString().ZeroFill(15)}" + $"{nota.Servico.CodigoCnae.ZeroFill(10)}{nota.Tomador.CpfCnpj.ZeroFill(14)}";
+			var sign = $"{nota.Prestador.InscricaoMunicipal.ZeroFill(Municipio.TamanhoIM)}{nota.IdentificacaoRps.Serie.FillLeft(5)}" + $"{nota.IdentificacaoRps.Numero.ZeroFill(12)}{nota.IdentificacaoRps.DataEmissaoRps:yyyyMMdd}{tributacao} " + $"{situacao}{rec}{Math.Round(valor * 100).ToString().ZeroFill(15)}" + $"{Math.Round(nota.Servico.Valores.ValorDeducoes * 100).ToString().ZeroFill(15)}" + $"{nota.Servico.CodigoCnae.ZeroFill(10)}{nota.Tomador.CpfCnpj.ZeroFill(14)}";
 
 			assinatura = sign.ToSha1Hash().ToLowerInvariant();
 		}
