@@ -79,12 +79,13 @@ namespace ACBr.Net.NFSe.Nota
 			return nota;
 		}
 
-		/// <summary>
-		/// Carrega a NFSe/RPS do arquivo.
-		/// </summary>
-		/// <param name="xml">caminho do arquivo XML.</param>
-		/// <returns>NotaFiscal carregada.</returns>
-		public NotaFiscal Load(string xml, Encoding encoding = null)
+        /// <summary>
+        /// Carrega a NFSe/RPS do arquivo.
+        /// </summary>
+        /// <param name="xml">caminho do arquivo XML ou string com o XML.</param>
+		/// <param name="encoding">encoding do XML.</param>
+        /// <returns>NotaFiscal carregada.</returns>
+        public NotaFiscal Load(string xml, Encoding encoding = null)
 		{
 			var provider = ProviderManager.GetProvider(Parent.Configuracoes);
 			var nota = provider.LoadXml(xml, encoding);
