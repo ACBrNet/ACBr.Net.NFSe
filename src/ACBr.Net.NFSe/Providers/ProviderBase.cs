@@ -47,6 +47,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace ACBr.Net.NFSe.Providers
 {
@@ -130,15 +131,6 @@ namespace ACBr.Net.NFSe.Providers
 
 		#endregion Constantes
 
-		#region Fields
-
-		/// <summary>
-		/// The xmldoc
-		/// </summary>
-		protected readonly XmlDocument Xmldoc;
-
-		#endregion Fields
-
 		#region Constructor
 
 		/// <summary>
@@ -149,7 +141,6 @@ namespace ACBr.Net.NFSe.Providers
 			Name = "Base";
 			ListaDeAlertas = new List<string>();
 			FormatoAlerta = "TAG:%TAG% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.";
-			Xmldoc = new XmlDocument();
 			Config = config;
 			Municipio = municipio;
 		}
@@ -327,29 +318,31 @@ namespace ACBr.Net.NFSe.Providers
 		/// </summary>
 		/// <param name="tagCPF">The i d1.</param>
 		/// <param name="tagCNPJ">The i d2.</param>
-		/// <param name="cnpjcpf">The CNPJCPF.</param>
+		/// <param name="valor">The CNPJCPF.</param>
+		/// <param name="ns"></param>
+		/// <param name="nsAtt"></param>
 		/// <returns>XmlElement.</returns>
-		protected XmlElement AdicionarTagCNPJCPF(string tagCPF, string tagCNPJ, string cnpjcpf, string prefix = "", string namespaceUri = "")
+		protected XElement AdicionarTagCNPJCPF(string tagCPF, string tagCNPJ, string valor, XNamespace ns = null)
 		{
-			cnpjcpf = cnpjcpf.Trim().OnlyNumbers();
+			valor = valor.Trim().OnlyNumbers();
 
-			XmlElement tag = null;
-			switch (cnpjcpf.Length)
+			XElement tag = null;
+			switch (valor.Length)
 			{
 				case 11:
-					tag = AdicionarTag(TipoCampo.Str, "CPF", tagCPF, 11, 11, 1, cnpjcpf, string.Empty, prefix, namespaceUri);
-					if (!cnpjcpf.IsCPF())
+					tag = AdicionarTag(TipoCampo.StrNumber, "CPF", tagCPF, 11, 11, 1, valor, string.Empty, ns);
+					if (!valor.IsCPF())
 						WAlerta(tagCPF, "CPF", "CPF", ErrMsgInvalido);
 					break;
 
 				case 14:
-					tag = AdicionarTag(TipoCampo.Str, "CNPJ", tagCNPJ, 14, 14, 1, cnpjcpf, string.Empty, prefix, namespaceUri);
-					if (!cnpjcpf.IsCNPJ())
+					tag = AdicionarTag(TipoCampo.Str, "CNPJ", tagCNPJ, 14, 14, 1, valor, string.Empty, ns);
+					if (!valor.IsCNPJ())
 						WAlerta(tagCNPJ, "CNPJ", "CNPJ", ErrMsgInvalido);
 					break;
 			}
 
-			if (!cnpjcpf.Length.IsIn(11, 14))
+			if (!valor.Length.IsIn(11, 14))
 				WAlerta($"{tagCPF}-{tagCNPJ}", "CNPJ-CPF", "CNPJ/CPF", ErrMsgVazio);
 
 			return tag;
@@ -361,18 +354,19 @@ namespace ACBr.Net.NFSe.Providers
 		/// <param name="tipo">The tipo.</param>
 		/// <param name="id">The identifier.</param>
 		/// <param name="tag">The tag.</param>
-		/// <param name="prefix">O namespace da Tag</param>
 		/// <param name="min">The minimum.</param>
 		/// <param name="max">The maximum.</param>
 		/// <param name="ocorrencias">The ocorrencias.</param>
 		/// <param name="valor">The valor.</param>
 		/// <param name="descricao">The descricao.</param>
-		/// <param name="namespaceUri"></param>
+		/// <param name="ns"></param>
+		/// <param name="nsAtt"></param>
 		/// <returns>XmlElement.</returns>
-		protected XmlElement AdicionarTag(TipoCampo tipo, string id, string prefix, string tag, string namespaceUri, int min,
-			int max, int ocorrencias, object valor, string descricao = "")
+		protected XElement AdicionarTag(TipoCampo tipo, string id, string tag, XNamespace ns, int min, int max, int ocorrencias, object valor, string descricao = "")
 		{
-			return AdicionarTag(tipo, id, tag, min, max, ocorrencias, valor, descricao, prefix, namespaceUri);
+			Guard.Against<ArgumentException>(ns == null, "Namespace não informado");
+
+			return AdicionarTag(tipo, id, tag, min, max, ocorrencias, valor, descricao, ns);
 		}
 
 		/// <summary>
@@ -388,14 +382,12 @@ namespace ACBr.Net.NFSe.Providers
 		/// <param name="valor">The valor.</param>
 		/// <param name="descricao">The descricao.</param>
 		/// <returns>XmlElement.</returns>
-		protected XmlElement AdicionarTag(TipoCampo tipo, string id, string tag, int min,
-			int max, int ocorrencias, object valor, string descricao = "")
+		protected XElement AdicionarTag(TipoCampo tipo, string id, string tag, int min, int max, int ocorrencias, object valor, string descricao = "")
 		{
-			return AdicionarTag(tipo, id, tag, min, max, ocorrencias, valor, descricao, string.Empty, string.Empty);
+			return AdicionarTag(tipo, id, tag, min, max, ocorrencias, valor, descricao, null);
 		}
 
-		private XmlElement AdicionarTag(TipoCampo tipo, string id, string tag, int min,
-			int max, int ocorrencias, object valor, string descricao = "", string prefix = "", string namespaceUri = "")
+		private XElement AdicionarTag(TipoCampo tipo, string id, string tag, int min, int max, int ocorrencias, object valor, string descricao, XNamespace ns)
 		{
 			try
 			{
@@ -544,22 +536,22 @@ namespace ACBr.Net.NFSe.Providers
 
 				WAlerta(id, tag, descricao, alerta);
 
-				XmlElement xmlTag = null;
+				XElement xmlTag = null;
 				if (ocorrencias == 1 && estaVazio)
-					xmlTag = Xmldoc.CreateElement(prefix, tag, namespaceUri);
+					xmlTag = GetElement(tag, string.Empty, ns);
 
-				if (estaVazio)
-					return xmlTag;
-
-				xmlTag = Xmldoc.CreateElement(prefix, tag, namespaceUri);
-				xmlTag.InnerText = conteudoProcessado;
-				return xmlTag;
+				return estaVazio ? xmlTag : GetElement(tag, conteudoProcessado, ns);
 			}
 			catch (Exception ex)
 			{
 				WAlerta(id, tag, descricao, ex.ToString());
-				return Xmldoc.CreateElement(prefix, tag, namespaceUri);
+				return GetElement(tag, string.Empty, ns);
 			}
+		}
+
+		private static XElement GetElement(string name, string value, XNamespace ns = null)
+		{
+			return ns != null ? new XElement(ns + name, value) : new XElement(name, value);
 		}
 
 		/// <summary>

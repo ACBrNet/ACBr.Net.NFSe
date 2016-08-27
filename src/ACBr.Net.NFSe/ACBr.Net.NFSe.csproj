@@ -51,7 +51,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="ACBr.Net.DFe.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d3bb9130f8b775a6, processorArchitecture=MSIL">
-      <HintPath>..\packages\ACBr.Net.DFe.Core.1.0.1.3-beta1\lib\net40\ACBr.Net.DFe.Core.dll</HintPath>
+      <HintPath>..\packages\ACBr.Net.DFe.Core.1.0.1.3-beta2\lib\net40\ACBr.Net.DFe.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -133,10 +133,9 @@
     <Compile Include="Nota\Endereco.cs" />
     <Compile Include="Nota\ExigibilidadeIss.cs" />
     <Compile Include="Nota\IdeIntermediarioServico.cs" />
-    <Compile Include="Nota\IdentificacaoNfse.cs" />
+    <Compile Include="Nota\IdentificacaoNFSe.cs" />
     <Compile Include="Nota\IdentificacaoRps.cs" />
     <Compile Include="Nota\IdeOrgaoGerador.cs" />
-    <Compile Include="Nota\InfID.cs" />
     <Compile Include="Nota\LocalPrestacaoServico.cs" />
     <Compile Include="Nota\NaturezaOperacao.cs" />
     <Compile Include="Nota\NfseFrete.cs" />

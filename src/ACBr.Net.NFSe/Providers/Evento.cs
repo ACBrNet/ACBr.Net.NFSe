@@ -42,7 +42,7 @@ namespace ACBr.Net.NFSe.Providers
 		/// </summary>
 		public Evento()
 		{
-			IdentificacaoNfse = new IdentificacaoNfse();
+			IdentificacaoNfse = new IdentificacaoNFSe();
 			IdentificacaoRps = new IdentificacaoRps();
 		}
 
@@ -58,7 +58,7 @@ namespace ACBr.Net.NFSe.Providers
 
 		public IdentificacaoRps IdentificacaoRps { get; set; }
 
-		public IdentificacaoNfse IdentificacaoNfse { get; set; }
+		public IdentificacaoNFSe IdentificacaoNfse { get; set; }
 
 		#endregion Propriedades
 	}

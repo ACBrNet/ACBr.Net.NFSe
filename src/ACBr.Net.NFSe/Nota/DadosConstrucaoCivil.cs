@@ -58,7 +58,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		public string BairroObra { get; set; }
 
-		public string CEPObra { get; set; }
+		public string CepObra { get; set; }
 
 		public string CodigoMunicipioObra { get; set; }
 

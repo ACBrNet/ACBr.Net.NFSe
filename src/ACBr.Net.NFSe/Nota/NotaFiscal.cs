@@ -47,13 +47,14 @@ namespace ACBr.Net.NFSe.Nota
 		/// </summary>
 		internal NotaFiscal()
 		{
-			InfId = new InfID();
+			Id = 0;
 			IdentificacaoRps = new IdentificacaoRps();
+			IdentificacaoNFSe = new IdentificacaoNFSe();
 			RpsSubstituido = new IdeRpsSubtituida();
 			Servico = new DadosServico();
-            Prestador = new DadosPrestador();
-            Tomador = new DadosTomador();
-            IntermediarioServico = new IdeIntermediarioServico();
+			Prestador = new DadosPrestador();
+			Tomador = new DadosTomador();
+			IntermediarioServico = new IdeIntermediarioServico();
 			ConstrucaoCivil = new DadosConstrucaoCivil();
 			CondicaoPagamento = new CondPagamento();
 			OrgaoGerador = new IdeOrgaoGerador();
@@ -67,9 +68,15 @@ namespace ACBr.Net.NFSe.Nota
 
 		#region Propriedades
 
-		public InfID InfId { get; }
+		public int Id { get; set; }
 
 		public IdentificacaoRps IdentificacaoRps { get; }
+
+		public IdentificacaoNFSe IdentificacaoNFSe { get; }
+
+		public IdeRpsSubtituida RpsSubstituido { get; }
+
+		public ConfirmacaoCancelamento NfseCancelamento { get; }
 
 		public DadosPrestador Prestador { get; internal set; }
 
@@ -77,13 +84,17 @@ namespace ACBr.Net.NFSe.Nota
 
 		public DadosServico Servico { get; }
 
+		public LocalPrestacaoServico LogradouLocalPrestacaoServico { get; set; }
+
+		public IdeIntermediarioServico IntermediarioServico { get; }
+
+		public DadosConstrucaoCivil ConstrucaoCivil { get; }
+
 		public NaturezaOperacao NaturezaOperacao { get; set; }
 
 		public RegimeEspecialTributacao RegimeEspecialTributacao { get; set; }
 
 		public DateTime DataOptanteSimplesNacional { get; set; }
-
-		public LocalPrestacaoServico LogradouLocalPrestacaoServico { get; set; }
 
 		public NFSeSimNao IncentivadorCultural { get; set; }
 
@@ -91,17 +102,13 @@ namespace ACBr.Net.NFSe.Nota
 
 		public SituacaoNFSeRps Situacao { get; set; }
 
-		public IdeRpsSubtituida RpsSubstituido { get; }
-
-		public IdeIntermediarioServico IntermediarioServico { get; }
-
-		public DadosConstrucaoCivil ConstrucaoCivil { get; }
-
 		public NFSeSimNao DeducaoMateriais { get; set; }
 
 		public CondPagamento CondicaoPagamento { get; }
 
-		public string Numero { get; set; }
+		public string NumeroLote { get; set; }
+
+		public string Protocolo { get; set; }
 
 		public string Competencia { get; set; }
 
@@ -111,27 +118,13 @@ namespace ACBr.Net.NFSe.Nota
 
 		public IdeOrgaoGerador OrgaoGerador { get; }
 
-		public Signature Signature { get; set; }
-
-		public string NumeroLote { get; set; }
-
-		public string Protocolo { get; set; }
-
-		public DateTime DhRecebimento { get; set; }
-
-		public ConfirmacaoCancelamento NfseCancelamento { get; }
-
 		public string NFSeSubstituidora { get; set; }
 
 		public string MotivoCancelamento { get; set; }
 
-		public string ChaveNfse { get; set; }
-
 		public TipoEmissao TipoEmissao { get; set; }
 
 		public TipoEmpreitadaGlobal EmpreitadaGlobal { get; set; }
-
-		public string ModeloNfse { get; set; }
 
 		public DadosTransportadora Transportadora { get; }
 
@@ -140,6 +133,8 @@ namespace ACBr.Net.NFSe.Nota
 		public TipoTributacao TipoTributacao { get; set; }
 
 		public string Assinatura { get; set; }
+
+		public Signature Signature { get; set; }
 
 		#endregion Propriedades
 	}

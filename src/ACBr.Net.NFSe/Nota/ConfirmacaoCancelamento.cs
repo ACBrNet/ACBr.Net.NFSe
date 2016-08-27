@@ -41,7 +41,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		internal ConfirmacaoCancelamento()
 		{
-			InfId = new InfID();
+			Id = 0;
 			Pedido = new PedidoCancelamento();
 			Signature = new Signature();
 			DataHora = DateTime.Now;
@@ -51,7 +51,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		#region Propriedades
 
-		public InfID InfId { get; }
+		public int Id { get; set; }
 
 		public PedidoCancelamento Pedido { get; }
 

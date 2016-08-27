@@ -54,7 +54,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		public decimal ValorInss { get; set; }
 
-		public decimal ValorIR { get; set; }
+		public decimal ValorIr { get; set; }
 
 		public decimal ValorCsll { get; set; }
 

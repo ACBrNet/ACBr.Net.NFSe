@@ -32,7 +32,6 @@
 using ACBr.Net.Core;
 using ACBr.Net.Core.Exceptions;
 using ACBr.Net.Core.Extensions;
-using ACBr.Net.Core.Logging;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Interfaces;
 using ACBr.Net.NFSe.Nota;
@@ -123,7 +122,7 @@ namespace ACBr.Net.NFSe
 
 	[ToolboxItem(typeof(ACBrNFSe))]
 	// ReSharper disable once InconsistentNaming
-	public class ACBrNFSe : ACBrComponent, IACBrLog
+	public class ACBrNFSe : ACBrComponent
 	{
 		#region Propriedades
 

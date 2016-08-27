@@ -30,35 +30,33 @@
 // ***********************************************************************
 
 using ACBr.Net.Core.Generics;
+using System;
 
 namespace ACBr.Net.NFSe.Nota
 {
-	public sealed class IdentificacaoNfse : GenericClone<IdentificacaoNfse>
+	public sealed class IdentificacaoNFSe : GenericClone<IdentificacaoNFSe>
 	{
-		#region Constructors
+		#region Constructor
 
-		internal IdentificacaoNfse()
+		/// <summary>
+		/// Initializes a new instance of the <see cref="IdentificacaoRps"/> class.
+		/// </summary>
+		internal IdentificacaoNFSe()
 		{
 			Numero = string.Empty;
-			ChaveNFSe = string.Empty;
-			Cnpj = string.Empty;
-			InscricaoMunicipal = string.Empty;
-			CodigoMunicipio = string.Empty;
 		}
 
-		#endregion Constructors
+		#endregion Constructor
 
 		#region Propriedades
 
 		public string Numero { get; set; }
 
-		public string ChaveNFSe { get; set; }
+		public string Chave { get; set; }
 
-		public string Cnpj { get; set; }
+		public DateTime DataEmissao { get; set; }
 
-		public string InscricaoMunicipal { get; set; }
-
-		public string CodigoMunicipio { get; set; }
+		public string ModeloNfse { get; set; }
 
 		#endregion Propriedades
 	}
