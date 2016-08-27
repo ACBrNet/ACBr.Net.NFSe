@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 10-01-2014
 // ***********************************************************************
-// <copyright file="NotaFiscalCollection.cs" company="ACBr.Net">
+// <copyright path="NotaFiscalCollection.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,11 +29,12 @@
 // <summary></summary>
 // ***********************************************************************
 
+using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core.Collection;
 using ACBr.Net.NFSe.Providers;
 using System.IO;
 using System.Text;
-using System.Xml;
+using System.Xml.Linq;
 
 namespace ACBr.Net.NFSe.Nota
 {
@@ -79,13 +80,13 @@ namespace ACBr.Net.NFSe.Nota
 			return nota;
 		}
 
-        /// <summary>
-        /// Carrega a NFSe/RPS do arquivo.
-        /// </summary>
-        /// <param name="xml">caminho do arquivo XML ou string com o XML.</param>
+		/// <summary>
+		/// Carrega a NFSe/RPS do arquivo.
+		/// </summary>
+		/// <param name="xml">caminho do arquivo XML ou string com o XML.</param>
 		/// <param name="encoding">encoding do XML.</param>
-        /// <returns>NotaFiscal carregada.</returns>
-        public NotaFiscal Load(string xml, Encoding encoding = null)
+		/// <returns>NotaFiscal carregada.</returns>
+		public NotaFiscal Load(string xml, Encoding encoding = null)
 		{
 			var provider = ProviderManager.GetProvider(Parent.Configuracoes);
 			var nota = provider.LoadXml(xml, encoding);
@@ -111,12 +112,58 @@ namespace ACBr.Net.NFSe.Nota
 		/// </summary>
 		/// <param name="xml">XMLDocument da NFSe/RPS.</param>
 		/// <returns>NotaFiscal carregada.</returns>
-		public NotaFiscal Load(XmlDocument xml)
+		public NotaFiscal Load(XDocument xml)
 		{
 			var provider = ProviderManager.GetProvider(Parent.Configuracoes);
 			var nota = provider.LoadXml(xml);
 			Add(nota);
 			return nota;
+		}
+
+		/// <summary>
+		/// Salvar o xml da Rps/NFSe no determinado arquivo
+		/// </summary>
+		/// <param name="nota">A nota para salvar</param>
+		/// <param name="path">Caminho onde sera salvo o arquivo.</param>
+		/// <returns></returns>
+		public void Save(NotaFiscal nota, string path)
+		{
+			var provider = ProviderManager.GetProvider(Parent.Configuracoes);
+			var file = nota.IdentificacaoNFSe.Numero.IsEmpty() ? $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml" :
+																 $"NFSe-{nota.IdentificacaoNFSe.Chave}-{nota.IdentificacaoNFSe.Numero}.xml";
+
+			var xmlNota = nota.IdentificacaoNFSe.Numero.IsEmpty() ? provider.GetXmlRPS(nota) : provider.GetXmlNFSe(nota);
+
+			path = Path.Combine(path, file);
+
+			var doc = XDocument.Parse(xmlNota);
+			doc.Save(path, SaveOptions.OmitDuplicateNamespaces);
+		}
+
+		/// <summary>
+		/// Salvar o xml da Rps/NFSe no determinado arquivo
+		/// </summary>
+		/// <param name="nota">A nota para salvar</param>
+		/// <param name="stream">Stream onde sera salvo o xml</param>
+		/// <returns></returns>
+		public void Save(NotaFiscal nota, Stream stream)
+		{
+			var provider = ProviderManager.GetProvider(Parent.Configuracoes);
+			var xmlNota = nota.IdentificacaoNFSe.Numero.IsEmpty() ? provider.GetXmlRPS(nota) : provider.GetXmlNFSe(nota);
+
+			var doc = XDocument.Parse(xmlNota);
+			doc.Save(stream, SaveOptions.OmitDuplicateNamespaces);
+		}
+
+		/// <summary>
+		/// Gera o Xml Da Rps
+		/// </summary>
+		/// <param name="nota"></param>
+		/// <returns></returns>
+		public string GetXml(NotaFiscal nota)
+		{
+			var provider = ProviderManager.GetProvider(Parent.Configuracoes);
+			return nota.IdentificacaoNFSe.Numero.IsEmpty() ? provider.GetXmlRPS(nota) : provider.GetXmlNFSe(nota);
 		}
 
 		#endregion Methods

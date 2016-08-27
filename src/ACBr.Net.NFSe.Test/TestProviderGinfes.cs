@@ -1,5 +1,7 @@
-﻿using ACBr.Net.DFe.Core.Common;
+﻿using ACBr.Net.Core.Extensions;
+using ACBr.Net.DFe.Core.Common;
 using System.IO;
+using System.Xml.Linq;
 using Xunit;
 
 namespace ACBr.Net.NFSe.Test
@@ -8,7 +10,8 @@ namespace ACBr.Net.NFSe.Test
 	{
 		#region Setup
 
-		private ACBrNFSe GetACBrNFSe()
+		// ReSharper disable once InconsistentNaming
+		private static ACBrNFSe GetACBrNFSe()
 		{
 			var acbrNFSe = new ACBrNFSe();
 
@@ -34,15 +37,19 @@ namespace ACBr.Net.NFSe.Test
 		#endregion Setup
 
 		[Fact]
-		public void TestarGeracaoRPS()
+		public void TestarGeracaoRps()
 		{
 			var acbrNFSe = GetACBrNFSe();
 
 			var dados = new MemoryStream(Properties.Resources.Ginfes);
 			acbrNFSe.NotasFiscais.Load(dados);
-			var ret = acbrNFSe.Enviar(10, false);
+			var rpsGerada = acbrNFSe.NotasFiscais.GetXml(acbrNFSe.NotasFiscais[0]);
 
-			Assert.True(ret.Sucesso, "Erro nos dados de configuração do NFSe");
+			dados.Position = 0;
+			var xml = XDocument.Load(dados);
+			var rpsOriginal = xml.AsString();
+
+			Assert.True(rpsGerada == rpsOriginal, "Erro na Geração do Xml da Rps");
 		}
 	}
 }

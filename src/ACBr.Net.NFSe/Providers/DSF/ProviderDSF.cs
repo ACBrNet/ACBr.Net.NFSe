@@ -84,61 +84,61 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 		#region Public
 
-		public override NotaFiscal LoadXml(XmlDocument xml)
+		public override NotaFiscal LoadXml(XDocument xml)
 		{
-			var root = xml["Nota"] ?? xml["RPS"];
+			var root = xml.ElementAnyNs("Nota") ?? xml.ElementAnyNs("RPS");
 			Guard.Against<XmlException>(root == null, "Xml de Nota/RPS invalida.");
 
 			var ret = new NotaFiscal();
 			// Prestador
-			ret.Prestador.InscricaoMunicipal = root["InscricaoMunicipalPrestador"].GetValue<string>();
-			ret.Prestador.RazaoSocial = root["RazaoSocialPrestador"].GetValue<string>();
-			ret.Prestador.Contato.DDD = root["DDDPrestador"].GetValue<string>();
-			ret.Prestador.Contato.Telefone = root["TelefonePrestador"].GetValue<string>();
-			ret.IntermediarioServico.CpfCnpj = root["CPFCNPJIntermediario"].GetValue<string>();
+			ret.Prestador.InscricaoMunicipal = root.ElementAnyNs("InscricaoMunicipalPrestador").GetValue<string>();
+			ret.Prestador.RazaoSocial = root.ElementAnyNs("RazaoSocialPrestador").GetValue<string>();
+			ret.Prestador.Contato.DDD = root.ElementAnyNs("DDDPrestador").GetValue<string>();
+			ret.Prestador.Contato.Telefone = root.ElementAnyNs("TelefonePrestador").GetValue<string>();
+			ret.IntermediarioServico.CpfCnpj = root.ElementAnyNs("CPFCNPJIntermediario").GetValue<string>();
 
 			// Tomador
-			ret.Tomador.InscricaoMunicipal = root["InscricaoMunicipalTomador"].GetValue<string>();
-			ret.Tomador.CpfCnpj = root["CPFCNPJTomador"].GetValue<string>();
-			ret.Tomador.RazaoSocial = root["RazaoSocialTomador"].GetValue<string>();
-			ret.Tomador.Endereco.TipoLogradouro = root["TipoLogradouroTomador"].GetValue<string>();
-			ret.Tomador.Endereco.Logradouro = root["LogradouroTomador"].GetValue<string>();
-			ret.Tomador.Endereco.Numero = root["NumeroEnderecoTomador"].GetValue<string>();
-			ret.Tomador.Endereco.Complemento = root["ComplementoEnderecoTomador"].GetValue<string>();
-			ret.Tomador.Endereco.TipoBairro = root["TipoBairroTomador"].GetValue<string>();
-			ret.Tomador.Endereco.Bairro = root["BairroTomador"].GetValue<string>();
-			ret.Tomador.Endereco.CodigoMunicipio = root["CidadeTomador"].GetValue<string>();
-			ret.Tomador.Endereco.Municipio = root["CidadeTomadorDescricao"].GetValue<string>();
-			ret.Tomador.Endereco.Cep = root["CEPTomador"].GetValue<string>();
-			ret.Tomador.Contato.Email = root["EmailTomador"].GetValue<string>();
-			ret.Tomador.Contato.DDD = root["DDDTomador"].GetValue<string>();
-			ret.Tomador.Contato.Telefone = root["TelefoneTomador"].GetValue<string>();
+			ret.Tomador.InscricaoMunicipal = root.ElementAnyNs("InscricaoMunicipalTomador").GetValue<string>();
+			ret.Tomador.CpfCnpj = root.ElementAnyNs("CPFCNPJTomador").GetValue<string>();
+			ret.Tomador.RazaoSocial = root.ElementAnyNs("RazaoSocialTomador").GetValue<string>();
+			ret.Tomador.Endereco.TipoLogradouro = root.ElementAnyNs("TipoLogradouroTomador").GetValue<string>();
+			ret.Tomador.Endereco.Logradouro = root.ElementAnyNs("LogradouroTomador").GetValue<string>();
+			ret.Tomador.Endereco.Numero = root.ElementAnyNs("NumeroEnderecoTomador").GetValue<string>();
+			ret.Tomador.Endereco.Complemento = root.ElementAnyNs("ComplementoEnderecoTomador").GetValue<string>();
+			ret.Tomador.Endereco.TipoBairro = root.ElementAnyNs("TipoBairroTomador").GetValue<string>();
+			ret.Tomador.Endereco.Bairro = root.ElementAnyNs("BairroTomador").GetValue<string>();
+			ret.Tomador.Endereco.CodigoMunicipio = root.ElementAnyNs("CidadeTomador").GetValue<string>();
+			ret.Tomador.Endereco.Municipio = root.ElementAnyNs("CidadeTomadorDescricao").GetValue<string>();
+			ret.Tomador.Endereco.Cep = root.ElementAnyNs("CEPTomador").GetValue<string>();
+			ret.Tomador.Contato.Email = root.ElementAnyNs("EmailTomador").GetValue<string>();
+			ret.Tomador.Contato.DDD = root.ElementAnyNs("DDDTomador").GetValue<string>();
+			ret.Tomador.Contato.Telefone = root.ElementAnyNs("TelefoneTomador").GetValue<string>();
 
 			// Dados NFSe
-			ret.IdentificacaoNFSe.Numero = root["NumeroNota"].GetValue<string>();
-			ret.IdentificacaoNFSe.DataEmissao = root["DataProcessamento"].GetValue<DateTime>();
-			ret.NumeroLote = root["NumeroLote"].GetValue<string>();
-			ret.IdentificacaoNFSe.Chave = root["CodigoVerificacao"].GetValue<string>();
+			ret.IdentificacaoNFSe.Numero = root.ElementAnyNs("NumeroNota").GetValue<string>();
+			ret.IdentificacaoNFSe.DataEmissao = root.ElementAnyNs("DataProcessamento").GetValue<DateTime>();
+			ret.NumeroLote = root.ElementAnyNs("NumeroLote").GetValue<string>();
+			ret.IdentificacaoNFSe.Chave = root.ElementAnyNs("CodigoVerificacao").GetValue<string>();
 
 			//RPS
-			ret.IdentificacaoRps.Numero = root["NumeroRPS"].GetValue<string>();
-			ret.IdentificacaoRps.DataEmissao = root["DataEmissaoRPS"].GetValue<DateTime>();
-			ret.IdentificacaoRps.SeriePrestacao = root["SeriePrestacao"].GetValue<string>();
+			ret.IdentificacaoRps.Numero = root.ElementAnyNs("NumeroRPS").GetValue<string>();
+			ret.IdentificacaoRps.DataEmissao = root.ElementAnyNs("DataEmissaoRPS").GetValue<DateTime>();
+			ret.IdentificacaoRps.SeriePrestacao = root.ElementAnyNs("SeriePrestacao").GetValue<string>();
 
 			// RPS Substituido
-			ret.RpsSubstituido.Serie = root["SerieRPSSubstituido"].GetValue<string>();
-			ret.RpsSubstituido.NumeroRps = root["NumeroRPSSubstituido"].GetValue<string>();
-			ret.RpsSubstituido.NumeroNfse = root["NumeroNFSeSubstituida"].GetValue<string>();
-			ret.RpsSubstituido.DataEmissaoNfseSubstituida = root["DataEmissaoNFSeSubstituida"].GetValue<DateTime>();
+			ret.RpsSubstituido.Serie = root.ElementAnyNs("SerieRPSSubstituido").GetValue<string>();
+			ret.RpsSubstituido.NumeroRps = root.ElementAnyNs("NumeroRPSSubstituido").GetValue<string>();
+			ret.RpsSubstituido.NumeroNfse = root.ElementAnyNs("NumeroNFSeSubstituida").GetValue<string>();
+			ret.RpsSubstituido.DataEmissaoNfseSubstituida = root.ElementAnyNs("DataEmissaoNFSeSubstituida").GetValue<DateTime>();
 
 			// Servico
-			ret.Servico.CodigoCnae = root["CodigoAtividade"].GetValue<string>();
-			ret.Servico.Valores.Aliquota = root["AliquotaAtividade"].GetValue<decimal>();
-			ret.Servico.Valores.IssRetido = root["TipoRecolhimento"].GetValue<char>() == 'A' ? SituacaoTributaria.Normal : SituacaoTributaria.Retencao;
-			ret.Servico.CodigoMunicipio = root["MunicipioPrestacao"].GetValue<string>();
-			ret.Servico.Municipio = root["MunicipioPrestacaoDescricao"].GetValue<string>();
+			ret.Servico.CodigoCnae = root.ElementAnyNs("CodigoAtividade").GetValue<string>();
+			ret.Servico.Valores.Aliquota = root.ElementAnyNs("AliquotaAtividade").GetValue<decimal>();
+			ret.Servico.Valores.IssRetido = root.ElementAnyNs("TipoRecolhimento").GetValue<char>() == 'A' ? SituacaoTributaria.Normal : SituacaoTributaria.Retencao;
+			ret.Servico.CodigoMunicipio = root.ElementAnyNs("MunicipioPrestacao").GetValue<string>();
+			ret.Servico.Municipio = root.ElementAnyNs("MunicipioPrestacaoDescricao").GetValue<string>();
 
-			switch (root["Operacao"].GetValue<char>())
+			switch (root.ElementAnyNs("Operacao").GetValue<char>())
 			{
 				case 'B':
 					ret.NaturezaOperacao = NaturezaOperacao.NT02;
@@ -161,7 +161,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 					break;
 			}
 
-			switch (root["Tributacao"].GetValue<char>())
+			switch (root.ElementAnyNs("Tributacao").GetValue<char>())
 			{
 				case 'C':
 					ret.TipoTributacao = TipoTributacao.Isenta;
@@ -203,55 +203,55 @@ namespace ACBr.Net.NFSe.Providers.DSF
 					break;
 			}
 
-			ret.Servico.Valores.ValorPis = root["ValorPIS"].GetValue<decimal>();
-			ret.Servico.Valores.ValorCofins = root["ValorCOFINS"].GetValue<decimal>();
-			ret.Servico.Valores.ValorInss = root["ValorINSS"].GetValue<decimal>();
-			ret.Servico.Valores.ValorIr = root["ValorIR"].GetValue<decimal>();
-			ret.Servico.Valores.ValorCsll = root["ValorCSLL"].GetValue<decimal>();
-			ret.Servico.Valores.AliquotaPis = root["AliquotaPIS"].GetValue<decimal>();
-			ret.Servico.Valores.AliquotaCofins = root["AliquotaCOFINS"].GetValue<decimal>();
-			ret.Servico.Valores.AliquotaInss = root["AliquotaINSS"].GetValue<decimal>();
-			ret.Servico.Valores.AliquotaIR = root["AliquotaIR"].GetValue<decimal>();
-			ret.Servico.Valores.AliquotaCsll = root["AliquotaCSLL"].GetValue<decimal>();
-			ret.Servico.Descricao = root["DescricaoRPS"].GetValue<string>();
+			ret.Servico.Valores.ValorPis = root.ElementAnyNs("ValorPIS").GetValue<decimal>();
+			ret.Servico.Valores.ValorCofins = root.ElementAnyNs("ValorCOFINS").GetValue<decimal>();
+			ret.Servico.Valores.ValorInss = root.ElementAnyNs("ValorINSS").GetValue<decimal>();
+			ret.Servico.Valores.ValorIr = root.ElementAnyNs("ValorIR").GetValue<decimal>();
+			ret.Servico.Valores.ValorCsll = root.ElementAnyNs("ValorCSLL").GetValue<decimal>();
+			ret.Servico.Valores.AliquotaPis = root.ElementAnyNs("AliquotaPIS").GetValue<decimal>();
+			ret.Servico.Valores.AliquotaCofins = root.ElementAnyNs("AliquotaCOFINS").GetValue<decimal>();
+			ret.Servico.Valores.AliquotaInss = root.ElementAnyNs("AliquotaINSS").GetValue<decimal>();
+			ret.Servico.Valores.AliquotaIR = root.ElementAnyNs("AliquotaIR").GetValue<decimal>();
+			ret.Servico.Valores.AliquotaCsll = root.ElementAnyNs("AliquotaCSLL").GetValue<decimal>();
+			ret.Servico.Descricao = root.ElementAnyNs("DescricaoRPS").GetValue<string>();
 
 			//Outros
-			ret.MotivoCancelamento = root["MotCancelamento"].GetValue<string>();
+			ret.MotivoCancelamento = root.ElementAnyNs("MotCancelamento").GetValue<string>();
 
 			//Deduções
-			var deducoes = root["Deducoes"];
-			if (deducoes != null && deducoes.HasChildNodes)
+			var deducoes = root.ElementAnyNs("Deducoes");
+			if (deducoes != null && deducoes.HasElements)
 			{
-				foreach (XmlNode node in deducoes.ChildNodes)
+				foreach (var node in deducoes.Descendants())
 				{
-					var deducaoRoot = node["Deducao"];
+					var deducaoRoot = node.ElementAnyNs("Deducao");
 					var deducao = ret.Servico.Deducoes.AddNew();
-					deducao.DeducaoPor = (DeducaoPor)Enum.Parse(typeof(DeducaoPor), deducaoRoot["DeducaoPor"].GetValue<string>());
-					deducao.TipoDeducao = deducaoRoot["TipoDeducao"].GetValue<string>().ToEnum(
+					deducao.DeducaoPor = (DeducaoPor)Enum.Parse(typeof(DeducaoPor), deducaoRoot.ElementAnyNs("DeducaoPor").GetValue<string>());
+					deducao.TipoDeducao = deducaoRoot.ElementAnyNs("TipoDeducao").GetValue<string>().ToEnum(
 						new[] { "", "Despesas com Materiais", "Despesas com Mercadorias", "Despesas com Subempreitada",
 								"Servicos de Veiculacao e Divulgacao", "Mapa de Const. Civil", "Servicos" },
 						new[] { TipoDeducao.Nenhum, TipoDeducao.Materiais, TipoDeducao.Mercadorias, TipoDeducao.SubEmpreitada,
 								TipoDeducao.VeiculacaoeDivulgacao, TipoDeducao.MapadeConstCivil, TipoDeducao.Servicos });
-					deducao.CPFCNPJReferencia = deducaoRoot["CPFCNPJReferencia"].GetValue<string>();
-					deducao.NumeroNFReferencia = deducaoRoot["NumeroNFReferencia"].GetValue<int?>();
-					deducao.ValorTotalReferencia = deducaoRoot["ValorTotalReferencia"].GetValue<decimal>();
-					deducao.PercentualDeduzir = deducaoRoot["PercentualDeduzir"].GetValue<decimal>();
-					deducao.ValorDeduzir = deducaoRoot["ValorDeduzir"].GetValue<decimal>();
+					deducao.CPFCNPJReferencia = deducaoRoot.ElementAnyNs("CPFCNPJReferencia").GetValue<string>();
+					deducao.NumeroNFReferencia = deducaoRoot.ElementAnyNs("NumeroNFReferencia").GetValue<int?>();
+					deducao.ValorTotalReferencia = deducaoRoot.ElementAnyNs("ValorTotalReferencia").GetValue<decimal>();
+					deducao.PercentualDeduzir = deducaoRoot.ElementAnyNs("PercentualDeduzir").GetValue<decimal>();
+					deducao.ValorDeduzir = deducaoRoot.ElementAnyNs("ValorDeduzir").GetValue<decimal>();
 				}
 			}
 
 			//Serviços
-			var servicos = root["Itens"];
-			if (servicos != null && servicos.HasChildNodes)
+			var servicos = root.ElementAnyNs("Itens");
+			if (servicos != null && servicos.HasElements)
 			{
-				foreach (XmlNode node in servicos.ChildNodes)
+				foreach (var node in servicos.Descendants())
 				{
-					var servicoRoot = node["Item"];
+					var servicoRoot = node.ElementAnyNs("Item");
 					var servico = ret.Servico.ItensServico.AddNew();
-					servico.Descricao = servicoRoot["DiscriminacaoServico"].GetValue<string>();
-					servico.Quantidade = servicoRoot["Quantidade"].GetValue<decimal>();
-					servico.ValorServicos = servicoRoot["ValorUnitario"].GetValue<decimal>();
-					servico.Tributavel = servicoRoot["Tributavel"].GetValue<string>() == "S" ? NFSeSimNao.Sim : NFSeSimNao.Nao;
+					servico.Descricao = servicoRoot.ElementAnyNs("DiscriminacaoServico").GetValue<string>();
+					servico.Quantidade = servicoRoot.ElementAnyNs("Quantidade").GetValue<decimal>();
+					servico.ValorServicos = servicoRoot.ElementAnyNs("ValorUnitario").GetValue<decimal>();
+					servico.Tributavel = servicoRoot.ElementAnyNs("Tributavel").GetValue<string>() == "S" ? NFSeSimNao.Sim : NFSeSimNao.Nao;
 				}
 			}
 
@@ -264,6 +264,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 			var xmldoc = new XDocument(new XDeclaration("1.0", "UTF-8", null));
 			var rpsTag = new XElement("RPS", new XAttribute("Id", $"rps:{nota.Id}"));
+			xmldoc.Add(rpsTag);
 
 			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "Assinatura", 1, 2000, 1, assinatura));
 			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalPrestador", 01, Municipio.TamanhoIM, 1, nota.Prestador.InscricaoMunicipal.OnlyNumbers()));
@@ -338,7 +339,6 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			if (nota.Servico.Deducoes.Count > 0)
 				rpsTag.AddChild(GerarDeducoes(nota.Servico.Deducoes));
 
-			xmldoc.Add(rpsTag);
 			return xmldoc.AsString(identado, showDeclaration);
 		}
 
@@ -348,6 +348,8 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 			var xmldoc = new XDocument(new XDeclaration("1.0", "UTF-8", null));
 			var notaTag = new XElement("Nota");
+			xmldoc.Add(notaTag);
+
 			notaTag.AddChild(AdicionarTag(TipoCampo.Int, "", "NumeroNota", 1, 11, 1, nota.IdentificacaoNFSe.Numero));
 			notaTag.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataProcessamento", 1, 21, 1, nota.IdentificacaoNFSe.DataEmissao));
 			notaTag.AddChild(AdicionarTag(TipoCampo.Int, "", "NumeroLote", 1, 11, 1, nota.NumeroLote));
@@ -424,7 +426,6 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			if (nota.Servico.Deducoes.Count > 0)
 				notaTag.AddChild(GerarDeducoes(nota.Servico.Deducoes));
 
-			xmldoc.Add(notaTag);
 			return xmldoc.AsString(identado, showDeclaration);
 		}
 

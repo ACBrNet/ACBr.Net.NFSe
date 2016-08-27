@@ -36,7 +36,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Xml;
+using System.Xml.Linq;
 
 namespace ACBr.Net.NFSe.Interfaces
 {
@@ -70,7 +70,7 @@ namespace ACBr.Net.NFSe.Interfaces
 		/// <param name="identado">if set to <c>true</c> [identado].</param>
 		/// <param name="showDeclaration">if set to <c>true</c> [show declaration].</param>
 		/// <returns>System.String.</returns>
-		string GetXmlRPS(Nota.NotaFiscal item, bool identado = true, bool showDeclaration = true);
+		string GetXmlRPS(NotaFiscal item, bool identado = true, bool showDeclaration = true);
 
 		/// <summary>
 		/// Gets the XML nf se.
@@ -79,7 +79,7 @@ namespace ACBr.Net.NFSe.Interfaces
 		/// <param name="identado">if set to <c>true</c> [identado].</param>
 		/// <param name="showDeclaration">if set to <c>true</c> [show declaration].</param>
 		/// <returns>System.String.</returns>
-		string GetXmlNFSe(Nota.NotaFiscal nota, bool identado = true, bool showDeclaration = true);
+		string GetXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true);
 
 		/// <summary>
 		/// Carrega XML da NFSe no Componente a partir do caminho do XML.
@@ -93,7 +93,7 @@ namespace ACBr.Net.NFSe.Interfaces
 		/// </summary>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		NotaFiscal LoadXml(XmlDocument xml);
+		NotaFiscal LoadXml(XDocument xml);
 
 		/// <summary>
 		/// Carrega XML da NFSe no Componente a partir do Stream.

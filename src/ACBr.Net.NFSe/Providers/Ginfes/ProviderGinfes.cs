@@ -57,15 +57,14 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 		#region Methods
 
-		public override NotaFiscal LoadXml(XmlDocument xml)
+		public override NotaFiscal LoadXml(XDocument xml)
 		{
-			var xmlX = xml.ToXDocument();
-			Guard.Against<XmlException>(xmlX == null, "Xml de Nota invalida.");
+			Guard.Against<XmlException>(xml == null, "Xml de Nota invalida.");
 
 			//Verifica qual XML deverá ser processado:
 			var formatoXmlNFSe = true;
 
-			var root = xmlX.ElementAnyNs("EnviarLoteRpsEnvio");
+			var root = xml.ElementAnyNs("EnviarLoteRpsEnvio");
 			if (root != null)
 			{
 				// XML para Enviar Lote Rps
@@ -74,8 +73,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			}
 			else
 			{
-				root = xmlX.ElementAnyNs("ConsultarNfseResposta") ?? xmlX.ElementAnyNs("ConsultarLoteRpsResposta");
-				root = root != null ? root.ElementAnyNs("ListaNfse") : xmlX.ElementAnyNs("ConsultarNfseRpsResposta");
+				root = xml.ElementAnyNs("ConsultarNfseResposta") ?? xml.ElementAnyNs("ConsultarLoteRpsResposta");
+				root = root != null ? root.ElementAnyNs("ListaNfse") : xml.ElementAnyNs("ConsultarNfseRpsResposta");
 				root = root?.ElementAnyNs("CompNfse")?.ElementAnyNs("Nfse")?.ElementAnyNs("InfNfse");
 			}
 
@@ -836,7 +835,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 		private static void MensagemErro(RetornoWebservice retornoWs, XContainer xmlRet, string xmlTag)
 		{
-			XElement mensagens = xmlRet?.ElementAnyNs(xmlTag);
+			var mensagens = xmlRet?.ElementAnyNs(xmlTag);
 			mensagens = mensagens?.ElementAnyNs("ListaMensagemRetorno");
 			if (mensagens == null)
 				return;

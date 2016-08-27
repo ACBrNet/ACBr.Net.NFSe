@@ -46,7 +46,6 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Xml;
 using System.Xml.Linq;
 
 namespace ACBr.Net.NFSe.Providers
@@ -195,24 +194,26 @@ namespace ACBr.Net.NFSe.Providers
 
 		public NotaFiscal LoadXml(string xml, Encoding encoding = null)
 		{
-			var doc = new XmlDocument();
+			Guard.Against<ArgumentNullException>(xml.IsEmpty(), "Xml não pode ser vazio ou nulo");
+
+			XDocument doc;
 			if (File.Exists(xml))
 			{
 				if (encoding == null)
 				{
-					doc.Load(xml);
+					doc = XDocument.Load(xml);
 				}
 				else
 				{
 					using (var sr = new StreamReader(xml, encoding))
 					{
-						doc.Load(sr);
+						doc = XDocument.Load(sr);
 					}
 				}
 			}
 			else
 			{
-				doc.LoadXml(xml);
+				doc = XDocument.Parse(xml);
 			}
 
 			return LoadXml(doc);
@@ -221,12 +222,12 @@ namespace ACBr.Net.NFSe.Providers
 		public NotaFiscal LoadXml(Stream stream)
 		{
 			Guard.Against<ArgumentNullException>(stream == null, "Stream não pode ser nulo !");
-			var doc = new XmlDocument();
-			doc.Load(stream);
+
+			var doc = XDocument.Load(stream);
 			return LoadXml(doc);
 		}
 
-		public virtual NotaFiscal LoadXml(XmlDocument xml)
+		public virtual NotaFiscal LoadXml(XDocument xml)
 		{
 			throw new NotImplementedException("LoadXml");
 		}
