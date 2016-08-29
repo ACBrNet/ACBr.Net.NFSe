@@ -41,7 +41,7 @@ namespace ACBr.Net.NFSe.Nota
 		internal PedidoCancelamento()
 		{
 			Id = 0;
-			IdentificacaoNfse = new IdentificacaoNFSe();
+			IdentificacaoNFSe = new IdeNFSe();
 			Signature = new Signature();
 		}
 
@@ -51,7 +51,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		public int Id { get; }
 
-		public IdentificacaoNFSe IdentificacaoNfse { get; }
+		public IdeNFSe IdentificacaoNFSe { get; }
 
 		public string CodigoCancelamento { get; set; }
 

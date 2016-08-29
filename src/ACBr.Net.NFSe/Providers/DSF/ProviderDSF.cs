@@ -93,9 +93,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			// Prestador
 			ret.Prestador.InscricaoMunicipal = root.ElementAnyNs("InscricaoMunicipalPrestador").GetValue<string>();
 			ret.Prestador.RazaoSocial = root.ElementAnyNs("RazaoSocialPrestador").GetValue<string>();
-			ret.Prestador.Contato.DDD = root.ElementAnyNs("DDDPrestador").GetValue<string>();
-			ret.Prestador.Contato.Telefone = root.ElementAnyNs("TelefonePrestador").GetValue<string>();
-			ret.IntermediarioServico.CpfCnpj = root.ElementAnyNs("CPFCNPJIntermediario").GetValue<string>();
+			ret.Prestador.DadosContato.DDD = root.ElementAnyNs("DDDPrestador").GetValue<string>();
+			ret.Prestador.DadosContato.Telefone = root.ElementAnyNs("TelefonePrestador").GetValue<string>();
+			ret.Intermediario.CpfCnpj = root.ElementAnyNs("CPFCNPJIntermediario").GetValue<string>();
 
 			// Tomador
 			ret.Tomador.InscricaoMunicipal = root.ElementAnyNs("InscricaoMunicipalTomador").GetValue<string>();
@@ -110,9 +110,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			ret.Tomador.Endereco.CodigoMunicipio = root.ElementAnyNs("CidadeTomador").GetValue<string>();
 			ret.Tomador.Endereco.Municipio = root.ElementAnyNs("CidadeTomadorDescricao").GetValue<string>();
 			ret.Tomador.Endereco.Cep = root.ElementAnyNs("CEPTomador").GetValue<string>();
-			ret.Tomador.Contato.Email = root.ElementAnyNs("EmailTomador").GetValue<string>();
-			ret.Tomador.Contato.DDD = root.ElementAnyNs("DDDTomador").GetValue<string>();
-			ret.Tomador.Contato.Telefone = root.ElementAnyNs("TelefoneTomador").GetValue<string>();
+			ret.Tomador.DadosContato.Email = root.ElementAnyNs("EmailTomador").GetValue<string>();
+			ret.Tomador.DadosContato.DDD = root.ElementAnyNs("DDDTomador").GetValue<string>();
+			ret.Tomador.DadosContato.Telefone = root.ElementAnyNs("TelefoneTomador").GetValue<string>();
 
 			// Dados NFSe
 			ret.IdentificacaoNFSe.Numero = root.ElementAnyNs("NumeroNota").GetValue<string>();
@@ -216,7 +216,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			ret.Servico.Descricao = root.ElementAnyNs("DescricaoRPS").GetValue<string>();
 
 			//Outros
-			ret.MotivoCancelamento = root.ElementAnyNs("MotCancelamento").GetValue<string>();
+			ret.Cancelamento.MotivoCancelamento = root.ElementAnyNs("MotCancelamento").GetValue<string>();
 
 			//Deduções
 			var deducoes = root.ElementAnyNs("Deducoes");
@@ -300,7 +300,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "CidadeTomador", 1, 10, 1, nota.Tomador.Endereco.CodigoMunicipio));
 			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "CidadeTomadorDescricao", 1, 50, 1, RetirarAcentos ? nota.Tomador.Endereco.Municipio.RemoveAccent() : nota.Tomador.Endereco.Municipio));
 			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "CEPTomador", 1, 8, 1, nota.Tomador.Endereco.Cep.OnlyNumbers()));
-			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "EmailTomador", 1, 60, 1, nota.Tomador.Contato.Email));
+			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "EmailTomador", 1, 60, 1, nota.Tomador.DadosContato.Email));
 			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoAtividade", 1, 9, 1, nota.Servico.CodigoCnae));
 			rpsTag.AddChild(AdicionarTag(TipoCampo.De2, "", "AliquotaAtividade", 1, 11, 1, nota.Servico.Valores.Aliquota));
 
@@ -327,13 +327,13 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "DescricaoRPS", 1, 1500, 1, RetirarAcentos ? nota.Servico.Descricao.RemoveAccent() : nota.Servico.Descricao));
 
-			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "DDDPrestador", 0, 3, 1, nota.Prestador.Contato.DDD.OnlyNumbers()));
-			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TelefonePrestador", 0, 8, 1, nota.Prestador.Contato.Telefone.OnlyNumbers()));
-			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "DDDTomador", 0, 03, 1, nota.Tomador.Contato.DDD.OnlyNumbers()));
-			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TelefoneTomador", 0, 8, 1, nota.Tomador.Contato.Telefone.OnlyNumbers()));
+			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "DDDPrestador", 0, 3, 1, nota.Prestador.DadosContato.DDD.OnlyNumbers()));
+			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TelefonePrestador", 0, 8, 1, nota.Prestador.DadosContato.Telefone.OnlyNumbers()));
+			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "DDDTomador", 0, 03, 1, nota.Tomador.DadosContato.DDD.OnlyNumbers()));
+			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TelefoneTomador", 0, 8, 1, nota.Tomador.DadosContato.Telefone.OnlyNumbers()));
 
-			if (!nota.IntermediarioServico.CpfCnpj.IsEmpty())
-				rpsTag.AddChild(AdicionarTagCNPJCPF("CPFCNPJIntermediario", "CPFCNPJIntermediario", nota.IntermediarioServico.CpfCnpj));
+			if (!nota.Intermediario.CpfCnpj.IsEmpty())
+				rpsTag.AddChild(AdicionarTagCNPJCPF("CPFCNPJIntermediario", "CPFCNPJIntermediario", nota.Intermediario.CpfCnpj));
 
 			rpsTag.AddChild(GerarServicos(nota.Servico.ItensServico));
 			if (nota.Servico.Deducoes.Count > 0)
@@ -386,7 +386,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "CidadeTomador", 1, 10, 1, nota.Tomador.Endereco.CodigoMunicipio));
 			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "CidadeTomadorDescricao", 1, 50, 1, RetirarAcentos ? nota.Tomador.Endereco.Municipio.RemoveAccent() : nota.Tomador.Endereco.Municipio));
 			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "CEPTomador", 1, 8, 1, nota.Tomador.Endereco.Cep.OnlyNumbers()));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "EmailTomador", 1, 60, 1, nota.Tomador.Contato.Email));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "EmailTomador", 1, 60, 1, nota.Tomador.DadosContato.Email));
 			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoAtividade", 1, 9, 1, nota.Servico.CodigoCnae));
 			notaTag.AddChild(AdicionarTag(TipoCampo.De2, "", "AliquotaAtividade", 1, 11, 1, nota.Servico.Valores.Aliquota));
 			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TipoRecolhimento", 01, 01, 1, recolhimento));
@@ -411,16 +411,16 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "DescricaoRPS", 1, 1500, 1, RetirarAcentos ? nota.Servico.Descricao.RemoveAccent() : nota.Servico.Descricao));
 
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "DDDPrestador", 0, 3, 1, nota.Prestador.Contato.DDD.OnlyNumbers()));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TelefonePrestador", 0, 8, 1, nota.Prestador.Contato.Telefone.OnlyNumbers()));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "DDDTomador", 0, 03, 1, nota.Tomador.Contato.DDD.OnlyNumbers()));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TelefoneTomador", 0, 8, 1, nota.Tomador.Contato.Telefone.OnlyNumbers()));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "DDDPrestador", 0, 3, 1, nota.Prestador.DadosContato.DDD.OnlyNumbers()));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TelefonePrestador", 0, 8, 1, nota.Prestador.DadosContato.Telefone.OnlyNumbers()));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "DDDTomador", 0, 03, 1, nota.Tomador.DadosContato.DDD.OnlyNumbers()));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TelefoneTomador", 0, 8, 1, nota.Tomador.DadosContato.Telefone.OnlyNumbers()));
 
 			if (nota.Situacao == SituacaoNFSeRps.Cancelado)
-				notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "MotCancelamento", 1, 80, 1, RetirarAcentos ? nota.MotivoCancelamento.RemoveAccent() : nota.MotivoCancelamento));
+				notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "MotCancelamento", 1, 80, 1, RetirarAcentos ? nota.Cancelamento.MotivoCancelamento.RemoveAccent() : nota.Cancelamento.MotivoCancelamento));
 
-			if (!nota.IntermediarioServico.CpfCnpj.IsEmpty())
-				notaTag.AddChild(AdicionarTagCNPJCPF("CPFCNPJIntermediario", "CPFCNPJIntermediario", nota.IntermediarioServico.CpfCnpj));
+			if (!nota.Intermediario.CpfCnpj.IsEmpty())
+				notaTag.AddChild(AdicionarTagCNPJCPF("CPFCNPJIntermediario", "CPFCNPJIntermediario", nota.Intermediario.CpfCnpj));
 
 			notaTag.AddChild(GerarServicos(nota.Servico.ItensServico));
 			if (nota.Servico.Deducoes.Count > 0)
@@ -637,7 +637,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 				loteCancelamento.Append($"<InscricaoMunicipalPrestador>{nota.Prestador.InscricaoMunicipal.OnlyNumbers()}</InscricaoMunicipalPrestador>");
 				loteCancelamento.Append($"<NumeroNota>{numeroNota}</NumeroNota>");
 				loteCancelamento.Append($"<CodigoVerificacao>{nota.IdentificacaoNFSe.Chave}</CodigoVerificacao>");
-				loteCancelamento.Append($"<MotivoCancelamento>{nota.MotivoCancelamento}</MotivoCancelamento>");
+				loteCancelamento.Append($"<MotivoCancelamento>{nota.Cancelamento.MotivoCancelamento}</MotivoCancelamento>");
 				loteCancelamento.Append("</Nota>");
 			}
 
@@ -696,7 +696,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 				if (nota == null) continue;
 
 				nota.Situacao = SituacaoNFSeRps.Cancelado;
-				nota.MotivoCancelamento = notaCancelada.ElementAnyNs("MotivoCancelamento")?.GetValue<string>() ?? string.Empty;
+				nota.Cancelamento.MotivoCancelamento = notaCancelada.ElementAnyNs("MotivoCancelamento")?.GetValue<string>() ?? string.Empty;
 				nota.IdentificacaoNFSe.Chave = notaCancelada.ElementAnyNs("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
 
 				var xmlNFSe = GetXmlNFSe(nota);

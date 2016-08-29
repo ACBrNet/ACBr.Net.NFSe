@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 01-07-2015
 // ***********************************************************************
-// <copyright file="IdentificacaoRps.cs" company="ACBr.Net">
+// <copyright file="IdeRps.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -37,14 +37,14 @@ namespace ACBr.Net.NFSe.Nota
 	/// <summary>
 	/// Classe IdentificacaoRps. Está classe não pode ser herdada.
 	/// </summary>
-	public sealed class IdentificacaoRps : GenericClone<IdentificacaoRps>
+	public sealed class IdeRps : GenericClone<IdeRps>
 	{
 		#region Constructor
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="IdentificacaoRps"/> class.
+		/// Initializes a new instance of the <see cref="IdeRps"/> class.
 		/// </summary>
-		internal IdentificacaoRps()
+		internal IdeRps()
 		{
 			Numero = string.Empty;
 			Serie = string.Empty;

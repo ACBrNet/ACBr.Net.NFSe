@@ -261,8 +261,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 					var rootPrestadorContato = rootPrestador.ElementAnyNs("Contato");
 					if (rootPrestadorContato != null)
 					{
-						ret.Prestador.Contato.Telefone = rootPrestadorContato.ElementAnyNs("Telefone")?.GetValue<string>() ?? string.Empty;
-						ret.Prestador.Contato.Email = rootPrestadorContato.ElementAnyNs("Email")?.GetValue<string>() ?? string.Empty;
+						ret.Prestador.DadosContato.Telefone = rootPrestadorContato.ElementAnyNs("Telefone")?.GetValue<string>() ?? string.Empty;
+						ret.Prestador.DadosContato.Email = rootPrestadorContato.ElementAnyNs("Email")?.GetValue<string>() ?? string.Empty;
 					}
 				}
 			}
@@ -308,8 +308,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 				var rootTomadorContato = rootTomador.ElementAnyNs("Contato");
 				if (rootTomadorContato != null)
 				{
-					ret.Tomador.Contato.Telefone = rootTomadorContato.ElementAnyNs("Telefone")?.GetValue<string>() ?? string.Empty;
-					ret.Tomador.Contato.Email = rootTomadorContato.ElementAnyNs("Email")?.GetValue<string>() ?? string.Empty;
+					ret.Tomador.DadosContato.Telefone = rootTomadorContato.ElementAnyNs("Telefone")?.GetValue<string>() ?? string.Empty;
+					ret.Tomador.DadosContato.Email = rootTomadorContato.ElementAnyNs("Email")?.GetValue<string>() ?? string.Empty;
 				}
 			}
 
@@ -317,15 +317,15 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			var rootIntermediarioIdentificacao = root.ElementAnyNs("IntermediarioServico");
 			if (rootIntermediarioIdentificacao != null)
 			{
-				ret.IntermediarioServico.RazaoSocial = rootIntermediarioIdentificacao.ElementAnyNs("RazaoSocial")?.GetValue<string>() ?? string.Empty;
+				ret.Intermediario.RazaoSocial = rootIntermediarioIdentificacao.ElementAnyNs("RazaoSocial")?.GetValue<string>() ?? string.Empty;
 				var rootIntermediarioIdentificacaoCpfCnpj = rootIntermediarioIdentificacao.ElementAnyNs("CpfCnpj");
 				if (rootIntermediarioIdentificacaoCpfCnpj != null)
 				{
-					ret.IntermediarioServico.CpfCnpj = rootIntermediarioIdentificacaoCpfCnpj.ElementAnyNs("Cpf")?.GetValue<string>() ?? string.Empty;
-					if (String.IsNullOrWhiteSpace(ret.IntermediarioServico.CpfCnpj))
-						ret.IntermediarioServico.CpfCnpj = rootIntermediarioIdentificacaoCpfCnpj.ElementAnyNs("Cnpj")?.GetValue<string>() ?? string.Empty;
+					ret.Intermediario.CpfCnpj = rootIntermediarioIdentificacaoCpfCnpj.ElementAnyNs("Cpf")?.GetValue<string>() ?? string.Empty;
+					if (String.IsNullOrWhiteSpace(ret.Intermediario.CpfCnpj))
+						ret.Intermediario.CpfCnpj = rootIntermediarioIdentificacaoCpfCnpj.ElementAnyNs("Cnpj")?.GetValue<string>() ?? string.Empty;
 				}
-				ret.IntermediarioServico.InscricaoMunicipal = rootIntermediarioIdentificacao.ElementAnyNs("InscricaoMunicipal")?.GetValue<string>() ?? string.Empty;
+				ret.Intermediario.InscricaoMunicipal = rootIntermediarioIdentificacao.ElementAnyNs("InscricaoMunicipal")?.GetValue<string>() ?? string.Empty;
 			}
 
 			if (formatoXmlNFSe == true)
@@ -550,22 +550,22 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			var contato = new XElement(ns + "Contato");
 			tomador.AddChild(contato);
 
-			contato.AddChild(AdicionarTag(TipoCampo.StrNumber, "CT1", "Telefone", ns, 1, 11, 1, nota.Tomador.Contato.Telefone));
-			contato.AddChild(AdicionarTag(TipoCampo.Str, "CT2", "Email", ns, 1, 80, 1, nota.Tomador.Contato.Email));
+			contato.AddChild(AdicionarTag(TipoCampo.StrNumber, "CT1", "Telefone", ns, 1, 11, 1, nota.Tomador.DadosContato.Telefone));
+			contato.AddChild(AdicionarTag(TipoCampo.Str, "CT2", "Email", ns, 1, 80, 1, nota.Tomador.DadosContato.Email));
 
-			if (!nota.IntermediarioServico.RazaoSocial.IsEmpty())
+			if (!nota.Intermediario.RazaoSocial.IsEmpty())
 			{
 				var intServico = new XElement(ns + "IntermediarioServico");
 				infoRps.AddChild(intServico);
 
-				intServico.AddChild(AdicionarTag(TipoCampo.Str, "IS1", "RazaoSocial", ns, 1, 115, 0, nota.IntermediarioServico.RazaoSocial));
+				intServico.AddChild(AdicionarTag(TipoCampo.Str, "IS1", "RazaoSocial", ns, 1, 115, 0, nota.Intermediario.RazaoSocial));
 
 				var intServicoCpfCnpj = new XElement(ns + "CpfCnpj");
 				intServico.AddChild(intServicoCpfCnpj);
 
-				cpfCnpj.AddChild(AdicionarTagCNPJCPF("Cpf", "Cnpj", nota.IntermediarioServico.CpfCnpj, ns));
+				cpfCnpj.AddChild(AdicionarTagCNPJCPF("Cpf", "Cnpj", nota.Intermediario.CpfCnpj, ns));
 
-				intServico.AddChild(AdicionarTag(TipoCampo.StrNumber, "IS3", "InscricaoMunicipal", ns, 1, 15, 0, nota.IntermediarioServico.InscricaoMunicipal));
+				intServico.AddChild(AdicionarTag(TipoCampo.StrNumber, "IS3", "InscricaoMunicipal", ns, 1, 15, 0, nota.Intermediario.InscricaoMunicipal));
 			}
 
 			if (!nota.ConstrucaoCivil.CodigoObra.IsEmpty())

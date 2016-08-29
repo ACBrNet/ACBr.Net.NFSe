@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 06-05-2016
+// Created          : 01-06-2015
 //
 // Last Modified By : RFTD
-// Last Modified On : 06-05-2016
+// Last Modified On : 01-06-2015
 // ***********************************************************************
-// <copyright file="ConfirmacaoCancelamento.cs" company="ACBr.Net">
+// <copyright file="Contato.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -28,36 +28,47 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 using ACBr.Net.Core.Generics;
-using ACBr.Net.DFe.Core.Document;
-using System;
 
 namespace ACBr.Net.NFSe.Nota
 {
-	public sealed class ConfirmacaoCancelamento : GenericClone<ConfirmacaoCancelamento>
+	/// <summary>
+	/// Classe Contato. Está classe não pode ser herdada.
+	/// </summary>
+	public sealed class DadosContato : GenericClone<DadosContato>
 	{
-		#region Constructors
+		#region Constructor
 
-		internal ConfirmacaoCancelamento()
+		/// <summary>
+		/// Initializes a new instance of the <see cref="DadosContato"/> class.
+		/// </summary>
+		internal DadosContato()
 		{
-			Id = 0;
-			Pedido = new PedidoCancelamento();
-			Signature = new Signature();
-			DataHora = DateTime.Now;
+			Telefone = string.Empty;
+			Email = string.Empty;
 		}
 
-		#endregion Constructors
+		#endregion Constructor
 
 		#region Propriedades
 
-		public int Id { get; set; }
+		/// <summary>
+		/// Gets or sets the DDD.
+		/// </summary>
+		/// <value>The DDD.</value>
+		public string DDD { get; set; }
 
-		public PedidoCancelamento Pedido { get; }
+		/// <summary>
+		/// Gets or sets the telefone.
+		/// </summary>
+		/// <value>The telefone.</value>
+		public string Telefone { get; set; }
 
-		public DateTime DataHora { get; set; }
-
-		public Signature Signature { get; }
+		/// <summary>
+		/// Gets or sets the email.
+		/// </summary>
+		/// <value>The email.</value>
+		public string Email { get; set; }
 
 		#endregion Propriedades
 	}

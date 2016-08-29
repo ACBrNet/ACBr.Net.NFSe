@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 06-07-2016
+// Created          : 06-05-2016
 //
 // Last Modified By : RFTD
-// Last Modified On : 06-07-2016
+// Last Modified On : 06-05-2016
 // ***********************************************************************
-// <copyright file="IdeRpsSubtituida.cs" company="ACBr.Net">
+// <copyright file="ConfirmacaoCancelamento.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -30,53 +30,36 @@
 // ***********************************************************************
 
 using ACBr.Net.Core.Generics;
+using ACBr.Net.DFe.Core.Document;
 using System;
 
 namespace ACBr.Net.NFSe.Nota
 {
-	public sealed class IdeRpsSubtituida : GenericClone<IdeRpsSubtituida>
+	public sealed class IdeCancelamento : GenericClone<IdeCancelamento>
 	{
-		#region Constructor
+		#region Constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="IdeRps"/> class.
-		/// </summary>
-		internal IdeRpsSubtituida()
+		internal IdeCancelamento()
 		{
-			NumeroRps = string.Empty;
-			NumeroNfse = string.Empty;
-			Serie = string.Empty;
+			Id = 0;
+			Pedido = new PedidoCancelamento();
+			Signature = new Signature();
+			DataHora = DateTime.Now;
 		}
 
-		#endregion Constructor
+		#endregion Constructors
 
 		#region Propriedades
 
-		/// <summary>
-		/// Gets or sets the numero.
-		/// </summary>
-		/// <value>The numero.</value>
-		public string NumeroRps { get; set; }
+		public int Id { get; set; }
 
-		/// <summary>
-		/// Gets or sets the numero.
-		/// </summary>
-		/// <value>The numero.</value>
-		public string NumeroNfse { get; set; }
+		public PedidoCancelamento Pedido { get; }
 
-		/// <summary>
-		/// Gets or sets the serie.
-		/// </summary>
-		/// <value>The serie.</value>
-		public string Serie { get; set; }
+		public string MotivoCancelamento { get; set; }
 
-		/// <summary>
-		/// Gets or sets the data emissao nf se substituida.
-		/// </summary>
-		/// <value>The data emissao nf se substituida.</value>
-		public DateTime DataEmissaoNfseSubstituida { get; set; }
+		public DateTime DataHora { get; set; }
 
-		public string NFSeSubstituidora { get; set; }
+		public Signature Signature { get; }
 
 		#endregion Propriedades
 	}

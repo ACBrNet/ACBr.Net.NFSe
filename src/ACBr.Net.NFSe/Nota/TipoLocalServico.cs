@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 05-26-2016
 // ***********************************************************************
-// <copyright file="CondPagamento.cs" company="ACBr.Net">
+// <copyright file="TipoLocalServico.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,29 +29,11 @@
 // <summary></summary>
 // ***********************************************************************
 
-using ACBr.Net.Core.Generics;
-
 namespace ACBr.Net.NFSe.Nota
 {
-	public sealed class CondPagamento : GenericClone<CondPagamento>
+	public enum TipoLocalServico
 	{
-		#region Contructors
-
-		internal CondPagamento()
-		{
-			Parcelas = new ParcelasCollection();
-		}
-
-		#endregion Contructors
-
-		#region Propriedades
-
-		public CondicaoPagamento Condicao { get; set; }
-
-		public int QtdParcela { get; set; }
-
-		public ParcelasCollection Parcelas { get; }
-
-		#endregion Propriedades
+		Tomador,
+		Prestador
 	}
 }

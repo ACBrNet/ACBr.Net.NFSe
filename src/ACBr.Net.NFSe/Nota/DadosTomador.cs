@@ -43,7 +43,7 @@ namespace ACBr.Net.NFSe.Nota
         internal DadosTomador()
         {
 			Endereco = new Endereco();
-			Contato = new Contato();
+			DadosContato = new DadosContato();
 		}
 
 		#endregion Constructor
@@ -62,7 +62,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		public Endereco Endereco { get; }
 
-		public Contato Contato { get; }
+		public DadosContato DadosContato { get; }
 
 		#endregion Propriedades
 	}

@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 10-01-2014
 // ***********************************************************************
-// <copyright file="NFSe.cs" company="ACBr.Net">
+// <copyright file="NotaFiscal.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -48,18 +48,18 @@ namespace ACBr.Net.NFSe.Nota
 		internal NotaFiscal()
 		{
 			Id = 0;
-			IdentificacaoRps = new IdentificacaoRps();
-			IdentificacaoNFSe = new IdentificacaoNFSe();
+			IdentificacaoRps = new IdeRps();
+			IdentificacaoNFSe = new IdeNFSe();
 			RpsSubstituido = new IdeRpsSubtituida();
 			Servico = new DadosServico();
 			Prestador = new DadosPrestador();
 			Tomador = new DadosTomador();
-			IntermediarioServico = new IdeIntermediarioServico();
+			Intermediario = new DadosIntermediario();
 			ConstrucaoCivil = new DadosConstrucaoCivil();
-			CondicaoPagamento = new CondPagamento();
+			Pagamento = new DadosPagamento();
 			OrgaoGerador = new IdeOrgaoGerador();
 			Signature = new Signature();
-			NfseCancelamento = new ConfirmacaoCancelamento();
+			Cancelamento = new IdeCancelamento();
 			Transportadora = new DadosTransportadora();
 			Emails = new EmailCollection();
 		}
@@ -70,25 +70,31 @@ namespace ACBr.Net.NFSe.Nota
 
 		public int Id { get; set; }
 
-		public IdentificacaoRps IdentificacaoRps { get; }
+		public IdeRps IdentificacaoRps { get; }
 
-		public IdentificacaoNFSe IdentificacaoNFSe { get; }
+		public IdeNFSe IdentificacaoNFSe { get; }
 
 		public IdeRpsSubtituida RpsSubstituido { get; }
 
-		public ConfirmacaoCancelamento NfseCancelamento { get; }
+		public IdeCancelamento Cancelamento { get; }
+
+		public IdeOrgaoGerador OrgaoGerador { get; }
 
 		public DadosPrestador Prestador { get; internal set; }
 
-		public DadosTomador Tomador { get; set; }
+		public DadosTomador Tomador { get; }
+
+		public DadosIntermediario Intermediario { get; }
 
 		public DadosServico Servico { get; }
 
-		public LocalPrestacaoServico LogradouLocalPrestacaoServico { get; set; }
-
-		public IdeIntermediarioServico IntermediarioServico { get; }
-
 		public DadosConstrucaoCivil ConstrucaoCivil { get; }
+
+		public DadosTransportadora Transportadora { get; }
+
+		public DadosPagamento Pagamento { get; }
+
+		public EmailCollection Emails { get; }
 
 		public NaturezaOperacao NaturezaOperacao { get; set; }
 
@@ -104,7 +110,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		public NFSeSimNao DeducaoMateriais { get; set; }
 
-		public CondPagamento CondicaoPagamento { get; }
+		public TipoLocalServico LocalServico { get; set; }
 
 		public string NumeroLote { get; set; }
 
@@ -116,19 +122,9 @@ namespace ACBr.Net.NFSe.Nota
 
 		public decimal ValorCredito { get; set; }
 
-		public IdeOrgaoGerador OrgaoGerador { get; }
-
-		public string NFSeSubstituidora { get; set; }
-
-		public string MotivoCancelamento { get; set; }
-
 		public TipoEmissao TipoEmissao { get; set; }
 
 		public TipoEmpreitadaGlobal EmpreitadaGlobal { get; set; }
-
-		public DadosTransportadora Transportadora { get; }
-
-		public EmailCollection Emails { get; }
 
 		public TipoTributacao TipoTributacao { get; set; }
 

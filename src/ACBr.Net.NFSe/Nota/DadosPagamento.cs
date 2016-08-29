@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 06-07-2016
+// Created          : 05-26-2016
 //
 // Last Modified By : RFTD
-// Last Modified On : 06-07-2016
+// Last Modified On : 05-26-2016
 // ***********************************************************************
-// <copyright file="IdeRpsSubtituida.cs" company="ACBr.Net">
+// <copyright file="DadosPagamento.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -30,53 +30,27 @@
 // ***********************************************************************
 
 using ACBr.Net.Core.Generics;
-using System;
 
 namespace ACBr.Net.NFSe.Nota
 {
-	public sealed class IdeRpsSubtituida : GenericClone<IdeRpsSubtituida>
+	public sealed class DadosPagamento : GenericClone<DadosPagamento>
 	{
-		#region Constructor
+		#region Contructors
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="IdeRps"/> class.
-		/// </summary>
-		internal IdeRpsSubtituida()
+		internal DadosPagamento()
 		{
-			NumeroRps = string.Empty;
-			NumeroNfse = string.Empty;
-			Serie = string.Empty;
+			Parcelas = new ParcelasCollection();
 		}
 
-		#endregion Constructor
+		#endregion Contructors
 
 		#region Propriedades
 
-		/// <summary>
-		/// Gets or sets the numero.
-		/// </summary>
-		/// <value>The numero.</value>
-		public string NumeroRps { get; set; }
+		public FormaPagamento Forma { get; set; }
 
-		/// <summary>
-		/// Gets or sets the numero.
-		/// </summary>
-		/// <value>The numero.</value>
-		public string NumeroNfse { get; set; }
+		public int QtdParcela { get; set; }
 
-		/// <summary>
-		/// Gets or sets the serie.
-		/// </summary>
-		/// <value>The serie.</value>
-		public string Serie { get; set; }
-
-		/// <summary>
-		/// Gets or sets the data emissao nf se substituida.
-		/// </summary>
-		/// <value>The data emissao nf se substituida.</value>
-		public DateTime DataEmissaoNfseSubstituida { get; set; }
-
-		public string NFSeSubstituidora { get; set; }
+		public ParcelasCollection Parcelas { get; }
 
 		#endregion Propriedades
 	}

@@ -69,6 +69,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SetupACBrNFSe.cs" />
     <Compile Include="TestProviderGinfes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

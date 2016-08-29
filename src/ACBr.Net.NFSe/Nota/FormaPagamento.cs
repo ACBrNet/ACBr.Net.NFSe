@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 01-06-2015
+// Created          : 05-26-2016
 //
 // Last Modified By : RFTD
-// Last Modified On : 01-06-2015
+// Last Modified On : 05-26-2016
 // ***********************************************************************
-// <copyright file="Contato.cs" company="ACBr.Net">
+// <copyright file="FormaPagamento.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -28,48 +28,16 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using ACBr.Net.Core.Generics;
+
 
 namespace ACBr.Net.NFSe.Nota
 {
-    /// <summary>
-    /// Classe Contato. Está classe não pode ser herdada.
-    /// </summary>
-    public sealed class Contato : GenericClone<Contato>
-    {
-        #region Constructor
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Contato"/> class.
-        /// </summary>
-        internal Contato()
-        {
-            Telefone = string.Empty;
-            Email = string.Empty;
-        }
-
-		#endregion Constructor
-
-		#region Propriedades
-
-		/// <summary>
-		/// Gets or sets the DDD.
-		/// </summary>
-		/// <value>The DDD.</value>
-		public string DDD { get; set; }
-
-        /// <summary>
-        /// Gets or sets the telefone.
-        /// </summary>
-        /// <value>The telefone.</value>
-        public string Telefone { get; set; }
-
-        /// <summary>
-        /// Gets or sets the email.
-        /// </summary>
-        /// <value>The email.</value>
-        public string Email { get; set; }
-
-        #endregion #region Propriedades
-    }
+	public enum FormaPagamento
+	{
+		AVista,
+		NaApresentacao,
+		APrazo,
+		CartaoCredito,
+		CartaoDebito
+	}
 }

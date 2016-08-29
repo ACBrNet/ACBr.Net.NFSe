@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 06-05-2016
 // ***********************************************************************
-// <copyright file="IdentificacaoNfse.cs" company="ACBr.Net">
+// <copyright file="IdeNFSe.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -34,14 +34,14 @@ using System;
 
 namespace ACBr.Net.NFSe.Nota
 {
-	public sealed class IdentificacaoNFSe : GenericClone<IdentificacaoNFSe>
+	public sealed class IdeNFSe : GenericClone<IdeNFSe>
 	{
 		#region Constructor
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="IdentificacaoRps"/> class.
+		/// Initializes a new instance of the <see cref="IdeRps"/> class.
 		/// </summary>
-		internal IdentificacaoNFSe()
+		internal IdeNFSe()
 		{
 			Numero = string.Empty;
 		}

@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 05-26-2016
 // ***********************************************************************
-// <copyright file="CondicaoPagamento.cs" company="ACBr.Net">
+// <copyright file="DadosIntermediario.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,15 +29,33 @@
 // <summary></summary>
 // ***********************************************************************
 
+using ACBr.Net.Core.Generics;
 
 namespace ACBr.Net.NFSe.Nota
 {
-	public enum CondicaoPagamento
+	public sealed class DadosIntermediario : GenericClone<DadosIntermediario>
 	{
-		AVista,
-		NaApresentacao,
-		APrazo,
-		CartaoCredito,
-		CartaoDebito
+		#region Contructors
+
+		internal DadosIntermediario()
+		{
+			
+		}
+
+		#endregion Contructors
+
+		#region Propriedades
+
+		public string RazaoSocial { get; set; }
+
+		public string CpfCnpj { get; set; }
+
+		public string InscricaoMunicipal { get; set; }
+
+		public SituacaoTributaria IssRetido { get; set; }
+
+		public string EMail { get; set; }
+
+		#endregion Propriedades
 	}
 }

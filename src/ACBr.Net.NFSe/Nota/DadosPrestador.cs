@@ -45,7 +45,7 @@ namespace ACBr.Net.NFSe.Nota
 			FraseSecreta = string.Empty;
 			CUF = 0;
 			Endereco = new Endereco();
-			Contato = new Contato();
+			DadosContato = new DadosContato();
 		}
 
 		#endregion Constructors
@@ -92,7 +92,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		public Endereco Endereco { get; }
 
-		public Contato Contato { get; }
+		public DadosContato DadosContato { get; }
 
 		#endregion Propriedades
 	}
