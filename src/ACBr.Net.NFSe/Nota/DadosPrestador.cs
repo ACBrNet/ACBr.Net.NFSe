@@ -39,11 +39,10 @@ namespace ACBr.Net.NFSe.Nota
 
 		internal DadosPrestador()
 		{
-			CPFCNPJ = string.Empty;
+			CpfCnpj = string.Empty;
 			InscricaoMunicipal = string.Empty;
 			Senha = string.Empty;
 			FraseSecreta = string.Empty;
-			CUF = 0;
 			Endereco = new Endereco();
 			DadosContato = new DadosContato();
 		}
@@ -56,7 +55,7 @@ namespace ACBr.Net.NFSe.Nota
 		/// Gets or sets the CNPJ.
 		/// </summary>
 		/// <value>The CNPJ.</value>
-		public string CPFCNPJ { get; set; }
+		public string CpfCnpj { get; set; }
 
 		/// <summary>
 		/// Gets or sets the inscricao municipal.
@@ -77,12 +76,6 @@ namespace ACBr.Net.NFSe.Nota
 		/// </summary>
 		/// <value>The frase secreta.</value>
 		public string FraseSecreta { get; set; }
-
-		/// <summary>
-		/// Gets or sets the c uf.
-		/// </summary>
-		/// <value>The c uf.</value>
-		public int CUF { get; set; }
 
 		public string ChaveAcesso { get; set; }
 
