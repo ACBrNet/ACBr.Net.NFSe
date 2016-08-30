@@ -463,7 +463,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 			loteRps = loteRps.SafeReplace("%NOTAS%", xmlNotas.ToString());
 
-			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteRps, "", "ReqEnvioLoteRPS", Certificado, true);
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteRps, "", "ns1:ReqEnvioLoteRPS", Certificado, true);
 
 			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-{lote}-env.xml");
 
@@ -544,7 +544,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			}
 
 			loteRps = loteRps.SafeReplace("%NOTAS%", xmlNotas.ToString());
-			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteRps, "", "ReqEnvioLoteRPS", Certificado, true);
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteRps, "", "ns1:ReqEnvioLoteRPS", Certificado, true);
 
 			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-{lote}-env.xml");
 
@@ -623,7 +623,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			loteCancelamento.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			loteCancelamento.Append("<ns1:ReqCancelamentoNFSe xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqCancelamentoNFSe.xsd\">");
 			loteCancelamento.Append("<Cabecalho>");
-			loteCancelamento.Append($"<CodCidade>{Config.WebServices.CodMunicipio}</CodCidade>");
+			loteCancelamento.Append($"<CodCidade>{Municipio.CodigoSiafi}</CodCidade>");
 			loteCancelamento.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CPFCNPJ.OnlyNumbers().ZeroFill(14)}</CPFCNPJRemetente>");
 			loteCancelamento.Append("<transacao>true</transacao>");
 			loteCancelamento.Append("<Versao>1</Versao>");
@@ -803,7 +803,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			lote.Append("<ns1:ConsultaSeqRps xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ConsultaSeqRps.xsd\">");
 			lote.Append("<Cabecalho>");
 			lote.Append($"<CodCid>{Municipio.CodigoSiafi}</CodCid>");
-			lote.Append($"<IMPrestador>{Config.PrestadorPadrao.InscricaoMunicipal.ZeroFill(11)}</IMPrestador>");
+			lote.Append($"<IMPrestador>{Config.PrestadorPadrao.InscricaoMunicipal.ZeroFill(Municipio.TamanhoIM)}</IMPrestador>");
 			lote.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CPFCNPJ.ZeroFill(14)}</CPFCNPJRemetente>");
 			lote.Append($"<SeriePrestacao>{serie}</SeriePrestacao>");
 			lote.Append("<Versao>1</Versao>");
@@ -846,6 +846,181 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 			var alertas = xmlRet.ElementAnyNs("Alertas");
 			retornoWebservice.Alertas.AddRange(ProcessarEventos(TipoEvento.Alertas, alertas));
+
+			return retornoWebservice;
+		}
+
+		public override RetornoWebservice ConsultaNFSe(DateTime inicio, DateTime fim, string numeroNfse, int pagina, string cnpjTomador,
+			string imTomador, string nomeInter, string cnpjInter, string imInter, string serie, NotaFiscalCollection notas)
+		{
+			var retornoWebservice = new RetornoWebservice()
+			{
+				Sucesso = false,
+				CPFCNPJRemetente = Config.PrestadorPadrao.CPFCNPJ,
+				CodCidade = Config.WebServices.CodMunicipio,
+				DataEnvioLote = DateTime.Now,
+				NumeroLote = "0",
+				Assincrono = false
+			};
+
+			var lote = new StringBuilder();
+			lote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+			lote.Append(
+				"<ns1:ReqConsultaNotas xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqConsultaNotas.xsd\">");
+			lote.Append("<Cabecalho Id=\"Consulta:notas\">");
+			lote.Append($"<CodCidade>{Municipio.CodigoSiafi}</CodCidade>");
+			lote.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CPFCNPJ.ZeroFill(14)}</CPFCNPJRemetente>");
+			lote.Append(
+				$"<InscricaoMunicipalPrestador>{Config.PrestadorPadrao.InscricaoMunicipal.ZeroFill(Municipio.TamanhoIM)}</InscricaoMunicipalPrestador>");
+			lote.Append($"<dtInicio>{inicio:yyyy-MM-dd}</dtInicio>");
+			lote.Append($"<dtFim>{fim:yyyy-MM-dd}</dtFim>");
+			lote.Append($"<NotaInicial>{numeroNfse}</NotaInicial>");
+			lote.Append("<Versao>1</Versao>");
+			lote.Append("</Cabecalho>");
+			lote.Append("</ns1:ReqConsultaNotas>");
+
+			var loteXml = lote.ToString();
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteXml, "", "ns1:ReqConsultaNotas", Certificado, true);
+			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConNota-{inicio:yyyyMMdd}-{fim:yyyyMMdd}-env.xml");
+
+			// Verifica Schema
+			var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, "ReqConsultaNotas.xsd");
+			if (retSchema != null)
+				return retSchema;
+
+			try
+			{
+				var url = GetUrl(TipoUrl.ConsultaNFSe);
+				var cliente = new DSFServiceClient(url, TimeOut, Certificado);
+
+				retornoWebservice.XmlRetorno = cliente.ConsultarNFSe(retornoWebservice.XmlEnvio);
+			}
+			catch (Exception ex)
+			{
+				retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
+				return retornoWebservice;
+			}
+
+			GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConNota-{inicio:yyyyMMdd}-{fim:yyyyMMdd}-ret.xml");
+
+			var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
+
+			var erros = xmlRet.ElementAnyNs("Erros");
+			retornoWebservice.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));
+
+			retornoWebservice.Sucesso = !retornoWebservice.Erros.Any();
+
+			var notasXml = xmlRet.ElementAnyNs("Notas");
+			if (notasXml != null && notasXml.HasElements)
+			{
+				notas.AddRange(notasXml.ElementsAnyNs("Nota").Select(element => LoadXml(element.OuterXml())).ToArray());
+			}
+
+			return retornoWebservice;
+		}
+
+		public override RetornoWebservice ConsultaNFSeRps(string numero, string serie, string tipo, NotaFiscalCollection notas)
+		{
+			var retornoWebservice = new RetornoWebservice()
+			{
+				Sucesso = false,
+				CPFCNPJRemetente = Config.PrestadorPadrao.CPFCNPJ,
+				CodCidade = Config.WebServices.CodMunicipio,
+				DataEnvioLote = DateTime.Now,
+				NumeroLote = "0",
+				Assincrono = false
+			};
+
+			var lote = new StringBuilder();
+			lote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+			lote.Append("<ns1:ReqConsultaNFSeRPS xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqConsultaNFSeRPS.xsd\">");
+			lote.Append("<Cabecalho>");
+			lote.Append($"<CodCidade>{Municipio.CodigoSiafi}</CodCidade>");
+			lote.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CPFCNPJ.OnlyNumbers().ZeroFill(14)}</CPFCNPJRemetente>");
+			lote.Append("<transacao>true</transacao>");
+			lote.Append("<Versao>1</Versao>");
+			lote.Append("</Cabecalho>");
+			lote.Append($"<Lote Id=\"{numero}\">");
+
+			if (notas.Count(x => !x.IdentificacaoNFSe.Numero.IsEmpty()) > 1)
+			{
+				lote.Append("<NotaConsulta>");
+				foreach (var nota in notas.Where(x => !x.IdentificacaoNFSe.Numero.IsEmpty()))
+				{
+					lote.Append($"<Nota Id=\"nota:{nota.IdentificacaoNFSe.Numero}\">");
+					lote.Append($"<InscricaoMunicipalPrestador>{nota.Prestador.InscricaoMunicipal.OnlyNumbers().ZeroFill(Municipio.TamanhoIM)}</InscricaoMunicipalPrestador>");
+					lote.Append($"<NumeroNota >{nota.IdentificacaoNFSe.Numero}</NumeroNota >");
+					lote.Append($"<CodigoVerificacao>{nota.IdentificacaoNFSe.Chave}</CodigoVerificacao>");
+					lote.Append("</Nota>");
+				}
+
+				lote.Append("</NotaConsulta>");
+			}
+
+			if (notas.Count(x => x.IdentificacaoNFSe.Numero.IsEmpty()) > 1)
+			{
+				lote.Append("<RPSConsulta>");
+
+				foreach (var nota in notas.Where(x => x.IdentificacaoNFSe.Numero.IsEmpty()))
+				{
+					lote.Append($"<RPS Id=\"rps:{nota.IdentificacaoRps.Numero}\">");
+					lote.Append($"<InscricaoMunicipalPrestador>{nota.Prestador.InscricaoMunicipal.OnlyNumbers().ZeroFill(Municipio.TamanhoIM)}</InscricaoMunicipalPrestador>");
+					lote.Append($"<NumeroRPS>{nota.IdentificacaoRps.Numero}</NumeroRPS>");
+					lote.Append($"<SeriePrestacao>{nota.IdentificacaoRps.SeriePrestacao}</SeriePrestacao>");
+					lote.Append("</RPS>");
+				}
+
+				lote.Append("</RPSConsulta>");
+			}
+
+			lote.Append("</Lote>");
+			lote.Append("</ns1:ReqConsultaNFSeRPS>");
+
+			var loteXml = lote.ToString();
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteXml, "", "ns1:ReqConsultaNFSeRPS", Certificado, true);
+			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConNotaRps-{numero}-env.xml");
+
+			// Verifica Schema
+			var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, "ReqConsultaNFSeRPS.xsd");
+			if (retSchema != null)
+				return retSchema;
+
+			try
+			{
+				var url = GetUrl(TipoUrl.ConsultaNFSeRps);
+				var cliente = new DSFServiceClient(url, TimeOut, Certificado);
+
+				retornoWebservice.XmlRetorno = cliente.ConsultarNFSeRps(retornoWebservice.XmlEnvio);
+			}
+			catch (Exception ex)
+			{
+				retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
+				return retornoWebservice;
+			}
+
+			GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConNotaRps-{numero}-ret.xml");
+
+			var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
+
+			var erros = xmlRet.ElementAnyNs("Erros");
+			retornoWebservice.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));
+
+			var alertas = xmlRet.ElementAnyNs("Alertas");
+			retornoWebservice.Alertas.AddRange(ProcessarEventos(TipoEvento.Alertas, alertas));
+
+			retornoWebservice.Sucesso = !retornoWebservice.Erros.Any();
+
+			var retNotas = new NotaFiscal[0];
+			var notasXml = xmlRet.ElementAnyNs("NotasConsultadas");
+			if (notasXml != null && notasXml.HasElements)
+			{
+				retNotas = notasXml.ElementsAnyNs("Nota").Select(element => LoadXml(element.OuterXml())).ToArray();
+			}
+
+			if (!retNotas.Any()) return retornoWebservice;
+
+			notas.Clear();
+			notas.AddRange(retNotas);
 
 			return retornoWebservice;
 		}
