@@ -70,11 +70,17 @@ namespace ACBr.Net.NFSe.Nota
 		/// <value>The serie.</value>
 		public string Serie { get; set; }
 
-		/// <summary>
-		/// Gets or sets the data emissao nf se substituida.
-		/// </summary>
-		/// <value>The data emissao nf se substituida.</value>
-		public DateTime DataEmissaoNfseSubstituida { get; set; }
+        /// <summary>
+        /// Gets or sets the tipo.
+        /// </summary>
+        /// <value>The tipo.</value>
+        public TipoRps Tipo { get; set; }
+
+        /// <summary>
+        /// Gets or sets the data emissao nf se substituida.
+        /// </summary>
+        /// <value>The data emissao nf se substituida.</value>
+        public DateTime DataEmissaoNfseSubstituida { get; set; }
 
 		public string NFSeSubstituidora { get; set; }
 

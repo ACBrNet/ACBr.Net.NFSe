@@ -323,7 +323,7 @@ namespace ACBr.Net.NFSe.Providers
 		/// <param name="ns"></param>
 		/// <param name="nsAtt"></param>
 		/// <returns>XmlElement.</returns>
-		protected XElement AdicionarTagCNPJCPF(string tagCPF, string tagCNPJ, string valor, XNamespace ns = null)
+		protected XElement AdicionarTagCNPJCPF(string id, string tagCPF, string tagCNPJ, string valor, XNamespace ns = null)
 		{
 			valor = valor.Trim().OnlyNumbers();
 
@@ -331,20 +331,20 @@ namespace ACBr.Net.NFSe.Providers
 			switch (valor.Length)
 			{
 				case 11:
-					tag = AdicionarTag(TipoCampo.StrNumber, "CPF", tagCPF, 11, 11, 1, valor, string.Empty, ns);
+					tag = AdicionarTag(TipoCampo.StrNumber, id, tagCPF, 11, 11, 1, valor, string.Empty, ns);
 					if (!valor.IsCPF())
 						WAlerta(tagCPF, "CPF", "CPF", ErrMsgInvalido);
 					break;
 
 				case 14:
-					tag = AdicionarTag(TipoCampo.Str, "CNPJ", tagCNPJ, 14, 14, 1, valor, string.Empty, ns);
+					tag = AdicionarTag(TipoCampo.Str, id, tagCNPJ, 14, 14, 1, valor, string.Empty, ns);
 					if (!valor.IsCNPJ())
 						WAlerta(tagCNPJ, "CNPJ", "CNPJ", ErrMsgInvalido);
 					break;
 			}
 
 			if (!valor.Length.IsIn(11, 14))
-				WAlerta($"{tagCPF}-{tagCNPJ}", "CNPJ-CPF", "CNPJ/CPF", ErrMsgVazio);
+				WAlerta($"{tagCPF}-{tagCNPJ}", id, "CNPJ/CPF", ErrMsgVazio);
 
 			return tag;
 		}
@@ -595,9 +595,9 @@ namespace ACBr.Net.NFSe.Providers
 				var retLote = new RetornoWebservice
 				{
 					Sucesso = false,
-					CPFCNPJRemetente = Config.PrestadorPadrao.CPFCNPJ,
+					CPFCNPJRemetente = Config.PrestadorPadrao.CpfCnpj,
 					CodCidade = Config.WebServices.CodMunicipio,
-					DataEnvioLote = DateTime.Now,
+					DataLote = DateTime.Now,
 					NumeroLote = "0",
 					Assincrono = true,
 					XmlEnvio = xml
