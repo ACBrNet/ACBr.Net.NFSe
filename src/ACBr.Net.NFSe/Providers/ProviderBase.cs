@@ -64,6 +64,13 @@ namespace ACBr.Net.NFSe.Providers
 			NFSe
 		}
 
+		protected enum Ocorrencia
+		{
+			NaoObrigatoria,
+			Obrigatoria,
+			SeDiferenteDeZero
+		}
+
 		#endregion Internal Types
 
 		#region Constantes
@@ -331,13 +338,13 @@ namespace ACBr.Net.NFSe.Providers
 			switch (valor.Length)
 			{
 				case 11:
-					tag = AdicionarTag(TipoCampo.StrNumber, "CPF", tagCPF, 11, 11, 1, valor, string.Empty, ns);
+					tag = AdicionarTag(TipoCampo.StrNumber, "CPF", tagCPF, 11, 11, Ocorrencia.Obrigatoria, valor, string.Empty, ns);
 					if (!valor.IsCPF())
 						WAlerta(tagCPF, "CPF", "CPF", ErrMsgInvalido);
 					break;
 
 				case 14:
-					tag = AdicionarTag(TipoCampo.Str, "CNPJ", tagCNPJ, 14, 14, 1, valor, string.Empty, ns);
+					tag = AdicionarTag(TipoCampo.Str, "CNPJ", tagCNPJ, 14, 14, Ocorrencia.Obrigatoria, valor, string.Empty, ns);
 					if (!valor.IsCNPJ())
 						WAlerta(tagCNPJ, "CNPJ", "CNPJ", ErrMsgInvalido);
 					break;
@@ -357,17 +364,17 @@ namespace ACBr.Net.NFSe.Providers
 		/// <param name="tag">The tag.</param>
 		/// <param name="min">The minimum.</param>
 		/// <param name="max">The maximum.</param>
-		/// <param name="ocorrencias">The ocorrencias.</param>
+		/// <param name="ocorrencia">The ocorrencia.</param>
 		/// <param name="valor">The valor.</param>
 		/// <param name="descricao">The descricao.</param>
 		/// <param name="ns"></param>
 		/// <param name="nsAtt"></param>
 		/// <returns>XmlElement.</returns>
-		protected XElement AdicionarTag(TipoCampo tipo, string id, string tag, XNamespace ns, int min, int max, int ocorrencias, object valor, string descricao = "")
+		protected XElement AdicionarTag(TipoCampo tipo, string id, string tag, XNamespace ns, int min, int max, Ocorrencia ocorrencia, object valor, string descricao = "")
 		{
 			Guard.Against<ArgumentException>(ns == null, "Namespace não informado");
 
-			return AdicionarTag(tipo, id, tag, min, max, ocorrencias, valor, descricao, ns);
+			return AdicionarTag(tipo, id, tag, min, max, ocorrencia, valor, descricao, ns);
 		}
 
 		/// <summary>
@@ -379,21 +386,21 @@ namespace ACBr.Net.NFSe.Providers
 		/// <param name="namespaceUri">O namespace da Tag</param>
 		/// <param name="min">The minimum.</param>
 		/// <param name="max">The maximum.</param>
-		/// <param name="ocorrencias">The ocorrencias.</param>
+		/// <param name="ocorrencia">The ocorrencia.</param>
 		/// <param name="valor">The valor.</param>
 		/// <param name="descricao">The descricao.</param>
 		/// <returns>XmlElement.</returns>
-		protected XElement AdicionarTag(TipoCampo tipo, string id, string tag, int min, int max, int ocorrencias, object valor, string descricao = "")
+		protected XElement AdicionarTag(TipoCampo tipo, string id, string tag, int min, int max, Ocorrencia ocorrencia, object valor, string descricao = "")
 		{
-			return AdicionarTag(tipo, id, tag, min, max, ocorrencias, valor, descricao, null);
+			return AdicionarTag(tipo, id, tag, min, max, ocorrencia, valor, descricao, null);
 		}
 
-		private XElement AdicionarTag(TipoCampo tipo, string id, string tag, int min, int max, int ocorrencias, object valor, string descricao, XNamespace ns)
+		private XElement AdicionarTag(TipoCampo tipo, string id, string tag, int min, int max, Ocorrencia ocorrencia, object valor, string descricao, XNamespace ns)
 		{
 			try
 			{
 				var conteudoProcessado = string.Empty;
-				var estaVazio = valor == null;
+				var estaVazio = valor == null || valor.ToString().IsEmpty();
 
 				switch (tipo)
 				{
@@ -520,7 +527,7 @@ namespace ACBr.Net.NFSe.Providers
 				}
 
 				string alerta;
-				if (ocorrencias == 1 && estaVazio && min > 0)
+				if (ocorrencia == 1 && estaVazio && min > 0)
 					alerta = ErrMsgVazio;
 				else
 					alerta = string.Empty;
@@ -538,7 +545,7 @@ namespace ACBr.Net.NFSe.Providers
 				WAlerta(id, tag, descricao, alerta);
 
 				XElement xmlTag = null;
-				if (ocorrencias == 1 && estaVazio)
+				if (ocorrencia == 1 && estaVazio)
 					xmlTag = GetElement(tag, string.Empty, ns);
 
 				return estaVazio ? xmlTag : GetElement(tag, conteudoProcessado, ns);
