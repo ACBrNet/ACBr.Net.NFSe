@@ -6,8 +6,8 @@ namespace ACBr.Net.NFSe.Test
 	{
 		#region Setup
 
-		private ACBrNFSe _instance;
-		public static ACBrNFSe Instance => _instance ?? (_instance = GetACBrNFSe());
+		private static ACBrNFSe instance;
+		public static ACBrNFSe Instance => instance ?? (instance = GetACBrNFSe());
 
 		// ReSharper disable once InconsistentNaming
 		private static ACBrNFSe GetACBrNFSe()
@@ -27,7 +27,7 @@ namespace ACBr.Net.NFSe.Test
 			acbrNFSe.Configuracoes.Certificados.Certificado = "4E009FA5F9CABB8F";
 			acbrNFSe.Configuracoes.Certificados.Senha = "";
 
-			acbrNFSe.Configuracoes.PrestadorPadrao.CPFCNPJ = "03514896000115";
+			acbrNFSe.Configuracoes.PrestadorPadrao.CpfCnpj = "03514896000115";
 			acbrNFSe.Configuracoes.PrestadorPadrao.InscricaoMunicipal = "85841";
 
 			return acbrNFSe;

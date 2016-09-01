@@ -118,7 +118,7 @@ namespace ACBr.Net.NFSe.Interfaces
 			string cnpjTomador, string imTomador, string nomeInter, string cnpjInter, string imInter,
 			string serie, NotaFiscalCollection notas);
 
-		RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas);
+		RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo);
 
 		RetornoWebservice CancelaNFSe(int lote, NotaFiscalCollection notas);
 

@@ -285,7 +285,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			rpsTag.AddChild(AdicionarTag(TipoCampo.Int, "", "SeriePrestacao", 01, 02, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.SeriePrestacao.IsEmpty() ? "99" : nota.IdentificacaoRps.SeriePrestacao.OnlyNumbers()));
 
 			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalTomador", 1, Municipio.TamanhoIM, Ocorrencia.Obrigatoria, nota.Tomador.InscricaoMunicipal.OnlyNumbers()));
-			rpsTag.AddChild(AdicionarTagCNPJCPF("CPFCNPJTomador", "CPFCNPJTomador", nota.Tomador.CpfCnpj));
+			rpsTag.AddChild(AdicionarTagCNPJCPF("", "CPFCNPJTomador", "CPFCNPJTomador", nota.Tomador.CpfCnpj));
 			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "RazaoSocialTomador", 1, 120, Ocorrencia.Obrigatoria, RetirarAcentos ? nota.Tomador.RazaoSocial.RemoveAccent() : nota.Tomador.RazaoSocial));
 			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "DocTomadorEstrangeiro", 0, 20, Ocorrencia.Obrigatoria, nota.Tomador.DocTomadorEstrangeiro));
 			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TipoLogradouroTomador", 0, 10, Ocorrencia.Obrigatoria, nota.Tomador.Endereco.TipoLogradouro));
@@ -330,7 +330,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			rpsTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TelefoneTomador", 0, 8, Ocorrencia.Obrigatoria, nota.Tomador.DadosContato.Telefone.OnlyNumbers()));
 
 			if (!nota.Intermediario.CpfCnpj.IsEmpty())
-				rpsTag.AddChild(AdicionarTagCNPJCPF("CPFCNPJIntermediario", "CPFCNPJIntermediario", nota.Intermediario.CpfCnpj));
+				rpsTag.AddChild(AdicionarTagCNPJCPF("", "CPFCNPJIntermediario", "CPFCNPJIntermediario", nota.Intermediario.CpfCnpj));
 
 			rpsTag.AddChild(GerarServicos(nota.Servico.ItensServico));
 			if (nota.Servico.Deducoes.Count > 0)
@@ -347,77 +347,77 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var notaTag = new XElement("Nota");
 			xmldoc.Add(notaTag);
 
-			notaTag.AddChild(AdicionarTag(TipoCampo.Int, "", "NumeroNota", 1, 11, 1, nota.IdentificacaoNFSe.Numero));
-			notaTag.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataProcessamento", 1, 21, 1, nota.IdentificacaoNFSe.DataEmissao));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Int, "", "NumeroLote", 1, 11, 1, nota.NumeroLote));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoVerificacao", 1, 200, 1, nota.IdentificacaoNFSe.Chave));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "Assinatura", 1, 2000, 1, nota.Assinatura));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalPrestador", 01, Municipio.TamanhoIM, 1, nota.Prestador.InscricaoMunicipal.OnlyNumbers()));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "RazaoSocialPrestador", 1, 120, 1, RetirarAcentos ? nota.Prestador.RazaoSocial.RemoveAccent() : nota.Prestador.RazaoSocial));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TipoRPS", 1, 20, 1, "RPS"));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "SerieRPS", 01, 02, 1, nota.IdentificacaoRps.Serie.IsEmpty() ? "NF" : nota.IdentificacaoRps.Serie));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "NumeroRPS", 1, 12, 1, nota.IdentificacaoRps.Serie));
-			notaTag.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataEmissaoRPS", 1, 21, 1, nota.IdentificacaoRps.DataEmissao));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "SituacaoRPS", 1, 1, 1, situacao));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Int, "", "NumeroNota", 1, 11, Ocorrencia.Obrigatoria, nota.IdentificacaoNFSe.Numero));
+			notaTag.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataProcessamento", 1, 21, Ocorrencia.Obrigatoria, nota.IdentificacaoNFSe.DataEmissao));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Int, "", "NumeroLote", 1, 11, Ocorrencia.Obrigatoria, nota.NumeroLote));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoVerificacao", 1, 200, Ocorrencia.Obrigatoria, nota.IdentificacaoNFSe.Chave));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "Assinatura", 1, 2000, Ocorrencia.Obrigatoria, nota.Assinatura));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalPrestador", 01, Municipio.TamanhoIM, Ocorrencia.Obrigatoria, nota.Prestador.InscricaoMunicipal.OnlyNumbers()));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "RazaoSocialPrestador", 1, 120, Ocorrencia.Obrigatoria, RetirarAcentos ? nota.Prestador.RazaoSocial.RemoveAccent() : nota.Prestador.RazaoSocial));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TipoRPS", 1, 20, Ocorrencia.Obrigatoria, "RPS"));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "SerieRPS", 01, 02, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.Serie.IsEmpty() ? "NF" : nota.IdentificacaoRps.Serie));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "NumeroRPS", 1, 12, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.Serie));
+			notaTag.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataEmissaoRPS", 1, 21, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.DataEmissao));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "SituacaoRPS", 1, 1, Ocorrencia.Obrigatoria, situacao));
 
 			if (!nota.RpsSubstituido.NumeroRps.IsEmpty())
 			{
-				notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "SerieRPSSubstituido", 0, 2, 1, "NF"));
-				notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "NumeroRPSSubstituido", 0, 2, 1, nota.RpsSubstituido.NumeroRps));
-				notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "NumeroNFSeSubstituida", 0, 2, 1, nota.RpsSubstituido.NumeroNfse));
-				notaTag.AddChild(AdicionarTag(TipoCampo.Dat, "", "DataEmissaoNFSeSubstituida", 0, 2, 1, nota.RpsSubstituido.DataEmissaoNfseSubstituida));
+				notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "SerieRPSSubstituido", 0, 2, Ocorrencia.Obrigatoria, "NF"));
+				notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "NumeroRPSSubstituido", 0, 2, Ocorrencia.Obrigatoria, nota.RpsSubstituido.NumeroRps));
+				notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "NumeroNFSeSubstituida", 0, 2, Ocorrencia.Obrigatoria, nota.RpsSubstituido.NumeroNfse));
+				notaTag.AddChild(AdicionarTag(TipoCampo.Dat, "", "DataEmissaoNFSeSubstituida", 0, 2, Ocorrencia.Obrigatoria, nota.RpsSubstituido.DataEmissaoNfseSubstituida));
 			}
 
-			notaTag.AddChild(AdicionarTag(TipoCampo.Int, "", "SeriePrestacao", 1, 2, 1, nota.IdentificacaoRps.SeriePrestacao.IsEmpty() ? "99" : nota.IdentificacaoRps.SeriePrestacao));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Int, "", "SeriePrestacao", 1, 2, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.SeriePrestacao.IsEmpty() ? "99" : nota.IdentificacaoRps.SeriePrestacao));
 
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalTomador", 1, Municipio.TamanhoIM, 1, nota.Tomador.InscricaoMunicipal.OnlyNumbers()));
-			notaTag.AddChild(AdicionarTagCNPJCPF("CPFCNPJTomador", "CPFCNPJTomador", nota.Tomador.CpfCnpj));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "RazaoSocialTomador", 1, 120, 1, RetirarAcentos ? nota.Tomador.RazaoSocial.RemoveAccent() : nota.Tomador.RazaoSocial));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "DocTomadorEstrangeiro", 0, 20, 1, nota.Tomador.DocTomadorEstrangeiro));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TipoLogradouroTomador", 0, 10, 1, nota.Tomador.Endereco.TipoLogradouro));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "LogradouroTomador", 1, 50, 1, RetirarAcentos ? nota.Tomador.Endereco.Logradouro.RemoveAccent() : nota.Tomador.Endereco.Logradouro));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "NumeroEnderecoTomador", 1, 9, 1, nota.Tomador.Endereco.Numero));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "ComplementoEnderecoTomador", 1, 30, 0, RetirarAcentos ? nota.Tomador.Endereco.Complemento.RemoveAccent() : nota.Tomador.Endereco.Complemento));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TipoBairroTomador", 0, 10, 1, nota.Tomador.Endereco.TipoBairro));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "BairroTomador", 1, 50, 1, RetirarAcentos ? nota.Tomador.Endereco.Bairro.RemoveAccent() : nota.Tomador.Endereco.Bairro));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "CidadeTomador", 1, 10, 1, nota.Tomador.Endereco.CodigoMunicipio));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "CidadeTomadorDescricao", 1, 50, 1, RetirarAcentos ? nota.Tomador.Endereco.Municipio.RemoveAccent() : nota.Tomador.Endereco.Municipio));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "CEPTomador", 1, 8, 1, nota.Tomador.Endereco.Cep.OnlyNumbers()));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "EmailTomador", 1, 60, 1, nota.Tomador.DadosContato.Email));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoAtividade", 1, 9, 1, nota.Servico.CodigoCnae));
-			notaTag.AddChild(AdicionarTag(TipoCampo.De2, "", "AliquotaAtividade", 1, 11, 1, nota.Servico.Valores.Aliquota));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TipoRecolhimento", 01, 01, 1, recolhimento));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "MunicipioPrestacao", 01, 10, 1, nota.Servico.CodigoMunicipio.ZeroFill(7)));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "MunicipioPrestacaoDescricao", 01, 30, 1, RetirarAcentos ? nota.Servico.Municipio.RemoveAccent() : nota.Servico.Municipio));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "Operacao", 01, 01, 1, operacao));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "Tributacao", 01, 01, 1, tributacao));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipalTomador", 1, Municipio.TamanhoIM, Ocorrencia.Obrigatoria, nota.Tomador.InscricaoMunicipal.OnlyNumbers()));
+			notaTag.AddChild(AdicionarTagCNPJCPF("", "CPFCNPJTomador", "CPFCNPJTomador", nota.Tomador.CpfCnpj));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "RazaoSocialTomador", 1, 120, Ocorrencia.Obrigatoria, RetirarAcentos ? nota.Tomador.RazaoSocial.RemoveAccent() : nota.Tomador.RazaoSocial));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "DocTomadorEstrangeiro", 0, 20, Ocorrencia.Obrigatoria, nota.Tomador.DocTomadorEstrangeiro));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TipoLogradouroTomador", 0, 10, Ocorrencia.Obrigatoria, nota.Tomador.Endereco.TipoLogradouro));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "LogradouroTomador", 1, 50, Ocorrencia.Obrigatoria, RetirarAcentos ? nota.Tomador.Endereco.Logradouro.RemoveAccent() : nota.Tomador.Endereco.Logradouro));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "NumeroEnderecoTomador", 1, 9, Ocorrencia.Obrigatoria, nota.Tomador.Endereco.Numero));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "ComplementoEnderecoTomador", 1, 30, Ocorrencia.NaoObrigatoria, RetirarAcentos ? nota.Tomador.Endereco.Complemento.RemoveAccent() : nota.Tomador.Endereco.Complemento));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TipoBairroTomador", 0, 10, Ocorrencia.Obrigatoria, nota.Tomador.Endereco.TipoBairro));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "BairroTomador", 1, 50, Ocorrencia.Obrigatoria, RetirarAcentos ? nota.Tomador.Endereco.Bairro.RemoveAccent() : nota.Tomador.Endereco.Bairro));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "CidadeTomador", 1, 10, Ocorrencia.Obrigatoria, nota.Tomador.Endereco.CodigoMunicipio));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "CidadeTomadorDescricao", 1, 50, Ocorrencia.Obrigatoria, RetirarAcentos ? nota.Tomador.Endereco.Municipio.RemoveAccent() : nota.Tomador.Endereco.Municipio));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "CEPTomador", 1, 8, Ocorrencia.Obrigatoria, nota.Tomador.Endereco.Cep.OnlyNumbers()));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "EmailTomador", 1, 60, Ocorrencia.Obrigatoria, nota.Tomador.DadosContato.Email));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoAtividade", 1, 9, Ocorrencia.Obrigatoria, nota.Servico.CodigoCnae));
+			notaTag.AddChild(AdicionarTag(TipoCampo.De2, "", "AliquotaAtividade", 1, 11, Ocorrencia.Obrigatoria, nota.Servico.Valores.Aliquota));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TipoRecolhimento", 01, 01, Ocorrencia.Obrigatoria, recolhimento));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "MunicipioPrestacao", 01, 10, Ocorrencia.Obrigatoria, nota.Servico.CodigoMunicipio.ZeroFill(7)));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "MunicipioPrestacaoDescricao", 01, 30, Ocorrencia.Obrigatoria, RetirarAcentos ? nota.Servico.Municipio.RemoveAccent() : nota.Servico.Municipio));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "Operacao", 01, 01, Ocorrencia.Obrigatoria, operacao));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "Tributacao", 01, 01, Ocorrencia.Obrigatoria, tributacao));
 
 			//Valores
-			notaTag.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorPIS", 1, 2, 1, nota.Servico.Valores.ValorPis));
-			notaTag.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorCOFINS", 1, 2, 1, nota.Servico.Valores.ValorCofins));
-			notaTag.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorINSS", 1, 2, 1, nota.Servico.Valores.ValorInss));
-			notaTag.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorIR", 1, 2, 1, nota.Servico.Valores.ValorIr));
-			notaTag.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorCSLL", 1, 2, 1, nota.Servico.Valores.ValorCsll));
+			notaTag.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorPIS", 1, 2, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorPis));
+			notaTag.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorCOFINS", 1, 2, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorCofins));
+			notaTag.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorINSS", 1, 2, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorInss));
+			notaTag.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorIR", 1, 2, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorIr));
+			notaTag.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorCSLL", 1, 2, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorCsll));
 
 			//Aliquotas criar propriedades
-			notaTag.AddChild(AdicionarTag(TipoCampo.De4, "", "AliquotaPIS", 1, 2, 1, nota.Servico.Valores.AliquotaPis));
-			notaTag.AddChild(AdicionarTag(TipoCampo.De4, "", "AliquotaCOFINS", 1, 2, 1, nota.Servico.Valores.AliquotaCofins));
-			notaTag.AddChild(AdicionarTag(TipoCampo.De4, "", "AliquotaINSS", 1, 2, 1, nota.Servico.Valores.AliquotaInss));
-			notaTag.AddChild(AdicionarTag(TipoCampo.De4, "", "AliquotaIR", 1, 2, 1, nota.Servico.Valores.AliquotaIR));
-			notaTag.AddChild(AdicionarTag(TipoCampo.De4, "", "AliquotaCSLL", 1, 2, 1, nota.Servico.Valores.AliquotaCsll));
+			notaTag.AddChild(AdicionarTag(TipoCampo.De4, "", "AliquotaPIS", 1, 2, Ocorrencia.Obrigatoria, nota.Servico.Valores.AliquotaPis));
+			notaTag.AddChild(AdicionarTag(TipoCampo.De4, "", "AliquotaCOFINS", 1, 2, Ocorrencia.Obrigatoria, nota.Servico.Valores.AliquotaCofins));
+			notaTag.AddChild(AdicionarTag(TipoCampo.De4, "", "AliquotaINSS", 1, 2, Ocorrencia.Obrigatoria, nota.Servico.Valores.AliquotaInss));
+			notaTag.AddChild(AdicionarTag(TipoCampo.De4, "", "AliquotaIR", 1, 2, Ocorrencia.Obrigatoria, nota.Servico.Valores.AliquotaIR));
+			notaTag.AddChild(AdicionarTag(TipoCampo.De4, "", "AliquotaCSLL", 1, 2, Ocorrencia.Obrigatoria, nota.Servico.Valores.AliquotaCsll));
 
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "DescricaoRPS", 1, 1500, 1, RetirarAcentos ? nota.Servico.Descricao.RemoveAccent() : nota.Servico.Descricao));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "DescricaoRPS", 1, 1500, Ocorrencia.Obrigatoria, RetirarAcentos ? nota.Servico.Descricao.RemoveAccent() : nota.Servico.Descricao));
 
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "DDDPrestador", 0, 3, 1, nota.Prestador.DadosContato.DDD.OnlyNumbers()));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TelefonePrestador", 0, 8, 1, nota.Prestador.DadosContato.Telefone.OnlyNumbers()));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "DDDTomador", 0, 03, 1, nota.Tomador.DadosContato.DDD.OnlyNumbers()));
-			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TelefoneTomador", 0, 8, 1, nota.Tomador.DadosContato.Telefone.OnlyNumbers()));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "DDDPrestador", 0, 3, Ocorrencia.Obrigatoria, nota.Prestador.DadosContato.DDD.OnlyNumbers()));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TelefonePrestador", 0, 8, Ocorrencia.Obrigatoria, nota.Prestador.DadosContato.Telefone.OnlyNumbers()));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "DDDTomador", 0, 03, Ocorrencia.Obrigatoria, nota.Tomador.DadosContato.DDD.OnlyNumbers()));
+			notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "TelefoneTomador", 0, 8, Ocorrencia.Obrigatoria, nota.Tomador.DadosContato.Telefone.OnlyNumbers()));
 
 			if (nota.Situacao == SituacaoNFSeRps.Cancelado)
-				notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "MotCancelamento", 1, 80, 1, RetirarAcentos ? nota.Cancelamento.MotivoCancelamento.RemoveAccent() : nota.Cancelamento.MotivoCancelamento));
+				notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "MotCancelamento", 1, 80, Ocorrencia.Obrigatoria, RetirarAcentos ? nota.Cancelamento.MotivoCancelamento.RemoveAccent() : nota.Cancelamento.MotivoCancelamento));
 
 			if (!nota.Intermediario.CpfCnpj.IsEmpty())
-				notaTag.AddChild(AdicionarTagCNPJCPF("CPFCNPJIntermediario", "CPFCNPJIntermediario", nota.Intermediario.CpfCnpj));
+				notaTag.AddChild(AdicionarTagCNPJCPF("", "CPFCNPJIntermediario", "CPFCNPJIntermediario", nota.Intermediario.CpfCnpj));
 
 			notaTag.AddChild(GerarServicos(nota.Servico.ItensServico));
 			if (nota.Servico.Deducoes.Count > 0)
@@ -431,9 +431,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var retornoWebservice = new RetornoWebservice()
 			{
 				Sucesso = false,
-				CPFCNPJRemetente = Config.PrestadorPadrao.CPFCNPJ,
+				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
 				CodCidade = Config.WebServices.CodMunicipio,
-				DataEnvioLote = DateTime.Now,
+				DataLote = DateTime.Now,
 				NumeroLote = "0",
 				Assincrono = true
 			};
@@ -490,8 +490,8 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			retornoWebservice.Sucesso = cabeçalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
 			retornoWebservice.CodCidade = cabeçalho?.ElementAnyNs("CodCidade")?.GetValue<int>() ?? 0;
 			retornoWebservice.NumeroLote = cabeçalho?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
-			retornoWebservice.CPFCNPJRemetente = cabeçalho?.ElementAnyNs("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
-			retornoWebservice.DataEnvioLote = cabeçalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
+			retornoWebservice.CpfCnpjRemetente = cabeçalho?.ElementAnyNs("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
+			retornoWebservice.DataLote = cabeçalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
 			var erros = xmlRet.ElementAnyNs("Erros");
 			retornoWebservice.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));
@@ -513,9 +513,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var retornoWebservice = new RetornoWebservice
 			{
 				Sucesso = false,
-				CPFCNPJRemetente = Config.PrestadorPadrao.CPFCNPJ,
+				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
 				CodCidade = Config.WebServices.CodMunicipio,
-				DataEnvioLote = DateTime.Now,
+				DataLote = DateTime.Now,
 				NumeroLote = "0",
 				Assincrono = false
 			};
@@ -571,8 +571,8 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			retornoWebservice.Sucesso = cabeçalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
 			retornoWebservice.CodCidade = cabeçalho?.ElementAnyNs("CodCidade")?.GetValue<int>() ?? 0;
 			retornoWebservice.NumeroLote = cabeçalho?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
-			retornoWebservice.CPFCNPJRemetente = cabeçalho?.ElementAnyNs("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
-			retornoWebservice.DataEnvioLote = cabeçalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
+			retornoWebservice.CpfCnpjRemetente = cabeçalho?.ElementAnyNs("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
+			retornoWebservice.DataLote = cabeçalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
 			var erros = xmlRet.ElementAnyNs("Erros");
 			retornoWebservice.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));
@@ -609,9 +609,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var retornoWebservice = new RetornoWebservice
 			{
 				Sucesso = false,
-				CPFCNPJRemetente = Config.PrestadorPadrao.CPFCNPJ,
+				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
 				CodCidade = Config.WebServices.CodMunicipio,
-				DataEnvioLote = DateTime.Now,
+				DataLote = DateTime.Now,
 				NumeroLote = "0",
 				Assincrono = false
 			};
@@ -621,7 +621,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			loteCancelamento.Append("<ns1:ReqCancelamentoNFSe xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqCancelamentoNFSe.xsd\">");
 			loteCancelamento.Append("<Cabecalho>");
 			loteCancelamento.Append($"<CodCidade>{Municipio.CodigoSiafi}</CodCidade>");
-			loteCancelamento.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CPFCNPJ.OnlyNumbers().ZeroFill(14)}</CPFCNPJRemetente>");
+			loteCancelamento.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CpfCnpj.OnlyNumbers().ZeroFill(14)}</CPFCNPJRemetente>");
 			loteCancelamento.Append("<transacao>true</transacao>");
 			loteCancelamento.Append("<Versao>1</Versao>");
 			loteCancelamento.Append("</Cabecalho>");
@@ -672,8 +672,8 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			retornoWebservice.Sucesso = cabeçalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
 			retornoWebservice.CodCidade = cabeçalho?.ElementAnyNs("CodCidade")?.GetValue<int>() ?? 0;
 			retornoWebservice.NumeroLote = cabeçalho?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
-			retornoWebservice.CPFCNPJRemetente = cabeçalho?.ElementAnyNs("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
-			retornoWebservice.DataEnvioLote = cabeçalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
+			retornoWebservice.CpfCnpjRemetente = cabeçalho?.ElementAnyNs("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
+			retornoWebservice.DataLote = cabeçalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
 			var erros = xmlRet.ElementAnyNs("Erros");
 			retornoWebservice.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));
@@ -703,14 +703,90 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			return retornoWebservice;
 		}
 
+		public override RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo)
+		{
+			var retornoWebservice = new RetornoWebservice
+			{
+				Sucesso = false,
+				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
+				CodCidade = Config.WebServices.CodMunicipio,
+				DataLote = DateTime.Now,
+				NumeroLote = "0",
+				Assincrono = false
+			};
+
+			var loteCancelamento = new StringBuilder();
+			loteCancelamento.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+			loteCancelamento.Append("<ns1:ReqCancelamentoNFSe xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqCancelamentoNFSe.xsd\">");
+			loteCancelamento.Append("<Cabecalho>");
+			loteCancelamento.Append($"<CodCidade>{Municipio.CodigoSiafi}</CodCidade>");
+			loteCancelamento.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CpfCnpj.OnlyNumbers().ZeroFill(14)}</CPFCNPJRemetente>");
+			loteCancelamento.Append("<transacao>true</transacao>");
+			loteCancelamento.Append("<Versao>1</Versao>");
+			loteCancelamento.Append("</Cabecalho>");
+			loteCancelamento.Append("<Lote Id=\"lote:1\">"); //Checar se o numero do lote é necessario ou pode ser sempre o mesmo.
+
+			loteCancelamento.Append($"<Nota Id=\"nota:{numeroNFSe}\">");
+			loteCancelamento.Append($"<InscricaoMunicipalPrestador>{Config.PrestadorPadrao.InscricaoMunicipal.OnlyNumbers()}</InscricaoMunicipalPrestador>");
+			loteCancelamento.Append($"<NumeroNota>{numeroNFSe}</NumeroNota>");
+			loteCancelamento.Append($"<CodigoVerificacao>{codigoCancelamento}</CodigoVerificacao>");
+			loteCancelamento.Append($"<MotivoCancelamento>{motivo}</MotivoCancelamento>");
+			loteCancelamento.Append("</Nota>");
+
+			loteCancelamento.Append("</Lote>");
+			loteCancelamento.Append("</ns1:ReqCancelamentoNFSe>");
+
+			var loteRps = loteCancelamento.ToString();
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteRps, "", "ReqCancelamentoNFSe", Certificado, true);
+
+			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CanNFSe-{loteCancelamento}-env.xml");
+
+			// Verifica Schema
+			var retSchema = ValidarSchema(loteRps, "ReqCancelamentoNFSe.xsd");
+			if (retSchema != null)
+				return retSchema;
+
+			var url = GetUrl(TipoUrl.CancelaNFSe);
+			var cliente = new DSFServiceClient(url, TimeOut, Certificado);
+
+			try
+			{
+				retornoWebservice.XmlRetorno = cliente.Cancelar(loteRps);
+			}
+			catch (Exception ex)
+			{
+				retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
+				return retornoWebservice;
+			}
+
+			GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"CanNFSe-{loteCancelamento}-ret.xml");
+
+			var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
+			var cabeçalho = xmlRet.ElementAnyNs("Cabecalho");
+
+			retornoWebservice.Sucesso = cabeçalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
+			retornoWebservice.CodCidade = cabeçalho?.ElementAnyNs("CodCidade")?.GetValue<int>() ?? 0;
+			retornoWebservice.NumeroLote = cabeçalho?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
+			retornoWebservice.CpfCnpjRemetente = cabeçalho?.ElementAnyNs("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
+			retornoWebservice.DataLote = cabeçalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
+
+			var erros = xmlRet.ElementAnyNs("Erros");
+			retornoWebservice.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));
+
+			var alertas = xmlRet.ElementAnyNs("Alertas");
+			retornoWebservice.Alertas.AddRange(ProcessarEventos(TipoEvento.Alertas, alertas));
+
+			return retornoWebservice;
+		}
+
 		public override RetornoWebservice ConsultarLoteRps(string protocolo, int lote, NotaFiscalCollection notas)
 		{
 			var retornoWebservice = new RetornoWebservice()
 			{
 				Sucesso = false,
-				CPFCNPJRemetente = Config.PrestadorPadrao.CPFCNPJ,
+				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
 				CodCidade = Config.WebServices.CodMunicipio,
-				DataEnvioLote = DateTime.Now,
+				DataLote = DateTime.Now,
 				NumeroLote = "0",
 				Assincrono = false
 			};
@@ -720,7 +796,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			loteBuilder.Append("<ns1:ReqConsultaLote xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote  http://localhost:8080/WsNFe2/xsd/ReqConsultaLote.xsd\">");
 			loteBuilder.Append("<Cabecalho>");
 			loteBuilder.Append($"<CodCidade>{Municipio.CodigoSiafi}</CodCidade>");
-			loteBuilder.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CPFCNPJ.ZeroFill(14)}</CPFCNPJRemetente>");
+			loteBuilder.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CPFCNPJRemetente>");
 			loteBuilder.Append("<Versao>1</Versao>");
 			loteBuilder.Append($"<NumeroLote>{lote}</NumeroLote>");
 			loteBuilder.Append("</Cabecalho>");
@@ -755,8 +831,8 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			retornoWebservice.Sucesso = cabeçalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
 			retornoWebservice.CodCidade = cabeçalho?.ElementAnyNs("CodCidade")?.GetValue<int>() ?? 0;
 			retornoWebservice.NumeroLote = cabeçalho?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
-			retornoWebservice.CPFCNPJRemetente = cabeçalho?.ElementAnyNs("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
-			retornoWebservice.DataEnvioLote = cabeçalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
+			retornoWebservice.CpfCnpjRemetente = cabeçalho?.ElementAnyNs("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
+			retornoWebservice.DataLote = cabeçalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
 			var erros = xmlRet.ElementAnyNs("Erros");
 			retornoWebservice.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));
@@ -788,9 +864,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var retornoWebservice = new RetornoWebservice()
 			{
 				Sucesso = false,
-				CPFCNPJRemetente = Config.PrestadorPadrao.CPFCNPJ,
+				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
 				CodCidade = Config.WebServices.CodMunicipio,
-				DataEnvioLote = DateTime.Now,
+				DataLote = DateTime.Now,
 				NumeroLote = "0",
 				Assincrono = false
 			};
@@ -801,7 +877,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			lote.Append("<Cabecalho>");
 			lote.Append($"<CodCid>{Municipio.CodigoSiafi}</CodCid>");
 			lote.Append($"<IMPrestador>{Config.PrestadorPadrao.InscricaoMunicipal.ZeroFill(Municipio.TamanhoIM)}</IMPrestador>");
-			lote.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CPFCNPJ.ZeroFill(14)}</CPFCNPJRemetente>");
+			lote.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CPFCNPJRemetente>");
 			lote.Append($"<SeriePrestacao>{serie}</SeriePrestacao>");
 			lote.Append("<Versao>1</Versao>");
 			lote.Append("</Cabecalho>");
@@ -836,7 +912,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			retornoWebservice.Sucesso = true;
 			retornoWebservice.CodCidade = cabeçalho?.ElementAnyNs("CodCidade")?.GetValue<int>() ?? 0;
 			retornoWebservice.NumeroUltimoRps = cabeçalho?.ElementAnyNs("NroUltimoRps")?.GetValue<string>() ?? string.Empty;
-			retornoWebservice.CPFCNPJRemetente = cabeçalho?.ElementAnyNs("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
+			retornoWebservice.CpfCnpjRemetente = cabeçalho?.ElementAnyNs("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
 
 			var erros = xmlRet.ElementAnyNs("Erros");
 			retornoWebservice.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));
@@ -853,9 +929,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var retornoWebservice = new RetornoWebservice()
 			{
 				Sucesso = false,
-				CPFCNPJRemetente = Config.PrestadorPadrao.CPFCNPJ,
+				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
 				CodCidade = Config.WebServices.CodMunicipio,
-				DataEnvioLote = DateTime.Now,
+				DataLote = DateTime.Now,
 				NumeroLote = "0",
 				Assincrono = false
 			};
@@ -866,9 +942,8 @@ namespace ACBr.Net.NFSe.Providers.DSF
 				"<ns1:ReqConsultaNotas xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqConsultaNotas.xsd\">");
 			lote.Append("<Cabecalho Id=\"Consulta:notas\">");
 			lote.Append($"<CodCidade>{Municipio.CodigoSiafi}</CodCidade>");
-			lote.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CPFCNPJ.ZeroFill(14)}</CPFCNPJRemetente>");
-			lote.Append(
-				$"<InscricaoMunicipalPrestador>{Config.PrestadorPadrao.InscricaoMunicipal.ZeroFill(Municipio.TamanhoIM)}</InscricaoMunicipalPrestador>");
+			lote.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CPFCNPJRemetente>");
+			lote.Append($"<InscricaoMunicipalPrestador>{Config.PrestadorPadrao.InscricaoMunicipal.ZeroFill(Municipio.TamanhoIM)}</InscricaoMunicipalPrestador>");
 			lote.Append($"<dtInicio>{inicio:yyyy-MM-dd}</dtInicio>");
 			lote.Append($"<dtFim>{fim:yyyy-MM-dd}</dtFim>");
 			lote.Append($"<NotaInicial>{numeroNfse}</NotaInicial>");
@@ -921,9 +996,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var retornoWebservice = new RetornoWebservice()
 			{
 				Sucesso = false,
-				CPFCNPJRemetente = Config.PrestadorPadrao.CPFCNPJ,
+				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
 				CodCidade = Config.WebServices.CodMunicipio,
-				DataEnvioLote = DateTime.Now,
+				DataLote = DateTime.Now,
 				NumeroLote = "0",
 				Assincrono = false
 			};
@@ -933,7 +1008,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			lote.Append("<ns1:ReqConsultaNFSeRPS xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqConsultaNFSeRPS.xsd\">");
 			lote.Append("<Cabecalho>");
 			lote.Append($"<CodCidade>{Municipio.CodigoSiafi}</CodCidade>");
-			lote.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CPFCNPJ.OnlyNumbers().ZeroFill(14)}</CPFCNPJRemetente>");
+			lote.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CpfCnpj.OnlyNumbers().ZeroFill(14)}</CPFCNPJRemetente>");
 			lote.Append("<transacao>true</transacao>");
 			lote.Append("<Versao>1</Versao>");
 			lote.Append("</Cabecalho>");
@@ -1033,7 +1108,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			xmlLote.Append("<ns1:ReqEnvioLoteRPS xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqEnvioLoteRPS.xsd\">");
 			xmlLote.Append("<Cabecalho>");
 			xmlLote.Append($"<CodCidade>{Municipio.CodigoSiafi}</CodCidade>");
-			xmlLote.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CPFCNPJ.ZeroFill(14)}</CPFCNPJRemetente>");
+			xmlLote.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CPFCNPJRemetente>");
 			xmlLote.Append($"<RazaoSocialRemetente>{Config.PrestadorPadrao.RazaoSocial}</RazaoSocialRemetente>");
 			xmlLote.Append("<transacao/>");
 			xmlLote.Append("<dtInicio>%DTINICIO%</dtInicio>");

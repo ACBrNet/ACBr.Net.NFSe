@@ -36,7 +36,7 @@ using System;
 namespace ACBr.Net.NFSe.Nota
 {
 	/// <summary>
-	/// Classe NFSe. Está classe não pode ser herdada.
+	/// Classe NotaFiscal. Está classe não pode ser herdada.
 	/// </summary>
 	public sealed class NotaFiscal : GenericClone<NotaFiscal>
 	{

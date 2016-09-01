@@ -33,7 +33,6 @@ using ACBr.Net.Core.Exceptions;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.Core.Logging;
 using ACBr.Net.DFe.Core;
-using ACBr.Net.DFe.Core.Attributes;
 using ACBr.Net.DFe.Core.Common;
 using ACBr.Net.DFe.Core.Serializer;
 using ACBr.Net.NFSe.Configuracao;
@@ -285,7 +284,7 @@ namespace ACBr.Net.NFSe.Providers
 			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}
 
-		public virtual RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas)
+		public virtual RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo)
 		{
 			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}
@@ -324,13 +323,13 @@ namespace ACBr.Net.NFSe.Providers
 		/// <summary>
 		/// Adicionars the tag CNPJCPF.
 		/// </summary>
+		/// <param name="id"></param>
 		/// <param name="tagCPF">The i d1.</param>
 		/// <param name="tagCNPJ">The i d2.</param>
 		/// <param name="valor">The CNPJCPF.</param>
 		/// <param name="ns"></param>
-		/// <param name="nsAtt"></param>
 		/// <returns>XmlElement.</returns>
-		protected XElement AdicionarTagCNPJCPF(string tagCPF, string tagCNPJ, string valor, XNamespace ns = null)
+		protected XElement AdicionarTagCNPJCPF(string id, string tagCPF, string tagCNPJ, string valor, XNamespace ns = null)
 		{
 			valor = valor.Trim().OnlyNumbers();
 
@@ -338,13 +337,13 @@ namespace ACBr.Net.NFSe.Providers
 			switch (valor.Length)
 			{
 				case 11:
-					tag = AdicionarTag(TipoCampo.StrNumber, "CPF", tagCPF, 11, 11, Ocorrencia.Obrigatoria, valor, string.Empty, ns);
+					tag = AdicionarTag(TipoCampo.StrNumber, id, tagCPF, 11, 11, Ocorrencia.Obrigatoria, valor, string.Empty, ns);
 					if (!valor.IsCPF())
 						WAlerta(tagCPF, "CPF", "CPF", ErrMsgInvalido);
 					break;
 
 				case 14:
-					tag = AdicionarTag(TipoCampo.Str, "CNPJ", tagCNPJ, 14, 14, Ocorrencia.Obrigatoria, valor, string.Empty, ns);
+					tag = AdicionarTag(TipoCampo.Str, id, tagCNPJ, 14, 14, Ocorrencia.Obrigatoria, valor, string.Empty, ns);
 					if (!valor.IsCNPJ())
 						WAlerta(tagCNPJ, "CNPJ", "CNPJ", ErrMsgInvalido);
 					break;
@@ -402,151 +401,154 @@ namespace ACBr.Net.NFSe.Providers
 				var conteudoProcessado = string.Empty;
 				var estaVazio = valor == null || valor.ToString().IsEmpty();
 
-				switch (tipo)
+				if (!estaVazio)
 				{
-					case TipoCampo.Str:
-						if (!estaVazio)
+					// ReSharper disable once SwitchStatementMissingSomeCases
+					switch (tipo)
+					{
+						case TipoCampo.Str:
 							conteudoProcessado = valor.ToString().Trim();
-						break;
+							break;
 
-					case TipoCampo.Dat:
-					case TipoCampo.DatCFe:
-						if (!estaVazio)
-						{
+						case TipoCampo.Dat:
+						case TipoCampo.DatCFe:
 							DateTime data;
 							if (DateTime.TryParse(valor.ToString(), out data))
+							{
 								conteudoProcessado = data.ToString(tipo == TipoCampo.DatCFe ? "yyyyMMdd" : "yyyy-MM-dd");
+							}
 							else
+							{
 								estaVazio = true;
-						}
-						break;
+							}
+							break;
 
-					case TipoCampo.Hor:
-					case TipoCampo.HorCFe:
-						if (!estaVazio)
-						{
+						case TipoCampo.Hor:
+						case TipoCampo.HorCFe:
 							DateTime hora;
 							if (DateTime.TryParse(valor.ToString(), out hora))
+							{
 								conteudoProcessado = hora.ToString(tipo == TipoCampo.HorCFe ? "HHmmss" : "HH:mm:ss");
+							}
 							else
+							{
 								estaVazio = true;
-						}
-						break;
+							}
+							break;
 
-					case TipoCampo.DatHor:
-						if (!estaVazio)
-						{
+						case TipoCampo.DatHor:
 							DateTime dthora;
 							if (DateTime.TryParse(valor.ToString(), out dthora))
 								conteudoProcessado = dthora.ToString("s");
 							else
 								estaVazio = true;
-						}
-						break;
+							break;
 
-					case TipoCampo.DatHorTz:
-						if (!estaVazio)
-						{
+						case TipoCampo.DatHorTz:
 							DateTime dthoratz;
 							if (DateTime.TryParse(valor.ToString(), out dthoratz))
+							{
 								conteudoProcessado = dthoratz.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'sszzz");
+							}
 							else
+							{
 								estaVazio = true;
-						}
-						break;
+							}
+							break;
 
-					case TipoCampo.De2:
-					case TipoCampo.De3:
-					case TipoCampo.De4:
-					case TipoCampo.De6:
-					case TipoCampo.De10:
-						if (!estaVazio)
-						{
+						case TipoCampo.De2:
+						case TipoCampo.De3:
+						case TipoCampo.De4:
+						case TipoCampo.De6:
+						case TipoCampo.De10:
 							var numberFormat = CultureInfo.InvariantCulture.NumberFormat;
 							decimal vDecimal;
 							if (decimal.TryParse(valor.ToString(), out vDecimal))
 							{
-								// ReSharper disable once SwitchStatementMissingSomeCases
-								switch (tipo)
+								if (ocorrencia == Ocorrencia.SeDiferenteDeZero && vDecimal == 0)
 								{
-									case TipoCampo.De2:
-										conteudoProcessado = string.Format(numberFormat, "{0:0.00}", vDecimal);
-										break;
+									estaVazio = true;
+								}
+								else
+								{
+									// ReSharper disable once SwitchStatementMissingSomeCases
+									switch (tipo)
+									{
+										case TipoCampo.De2:
+											conteudoProcessado = string.Format(numberFormat, "{0:0.00}", vDecimal);
+											break;
 
-									case TipoCampo.De3:
-										conteudoProcessado = string.Format(numberFormat, "{0:0.000}", vDecimal);
-										break;
+										case TipoCampo.De3:
+											conteudoProcessado = string.Format(numberFormat, "{0:0.000}", vDecimal);
+											break;
 
-									case TipoCampo.De4:
-										conteudoProcessado = string.Format(numberFormat, "{0:0.0000}", vDecimal);
-										break;
+										case TipoCampo.De4:
+											conteudoProcessado = string.Format(numberFormat, "{0:0.0000}", vDecimal);
+											break;
 
-									case TipoCampo.De6:
-										conteudoProcessado = string.Format(numberFormat, "{0:0.000000}", vDecimal);
-										break;
+										case TipoCampo.De6:
+											conteudoProcessado = string.Format(numberFormat, "{0:0.000000}", vDecimal);
+											break;
 
-									default:
-										conteudoProcessado = string.Format(numberFormat, "{0:0.0000000000}", vDecimal);
-										break;
+										default:
+											conteudoProcessado = string.Format(numberFormat, "{0:0.0000000000}", vDecimal);
+											break;
+									}
 								}
 							}
 							else
+							{
 								estaVazio = true;
-						}
-						break;
+							}
 
-					case TipoCampo.Int:
-					case TipoCampo.StrNumberFill:
-						if (!estaVazio)
-						{
+							break;
+
+						case TipoCampo.Int:
+						case TipoCampo.StrNumberFill:
 							conteudoProcessado = valor.ToString();
 							if (conteudoProcessado.Length < min)
+							{
 								conteudoProcessado = conteudoProcessado.ZeroFill(min);
-						}
-						break;
+							}
+							break;
 
-					case TipoCampo.StrNumber:
-						if (!estaVazio)
+						case TipoCampo.StrNumber:
 							conteudoProcessado = valor.ToString().OnlyNumbers();
-						break;
+							break;
 
-					case TipoCampo.Enum:
-						if (!estaVazio)
-						{
-							var member = valor.GetType().GetMember(valor.ToString()).FirstOrDefault();
-							var enumAttribute = member?.GetCustomAttributes(false).OfType<DFeEnumAttribute>().FirstOrDefault();
-							var enumValue = enumAttribute?.Value;
-							conteudoProcessado = enumValue ?? valor.ToString();
-						}
-						break;
-
-					default:
-						if (!estaVazio)
+						default:
 							conteudoProcessado = valor.ToString();
-						break;
+							break;
+					}
 				}
 
-				string alerta;
-				if (ocorrencia == 1 && estaVazio && min > 0)
+				var alerta = string.Empty;
+				if (ocorrencia == Ocorrencia.Obrigatoria && estaVazio)
+				{
 					alerta = ErrMsgVazio;
-				else
-					alerta = string.Empty;
+				}
 
-				if (!string.IsNullOrEmpty(conteudoProcessado.Trim()) &&
-					(conteudoProcessado.Length < min && string.IsNullOrEmpty(alerta) && conteudoProcessado.Length > 1))
+				if (!conteudoProcessado.IsEmpty() && conteudoProcessado.Length < min && alerta.IsEmpty() && conteudoProcessado.Length > 1)
+				{
 					alerta = ErrMsgMenor;
+				}
 
-				if (!string.IsNullOrEmpty(conteudoProcessado.Trim()) && conteudoProcessado.Length > max)
+				if (!conteudoProcessado.IsEmpty() && conteudoProcessado.Length > max)
+				{
 					alerta = ErrMsgMaior;
+				}
 
-				if (!string.IsNullOrEmpty(alerta.Trim()) && ErrMsgVazio.Equals(alerta) && !estaVazio)
+				if (!alerta.IsEmpty() && ErrMsgVazio.Equals(alerta) && !estaVazio)
+				{
 					alerta += $" [{valor}]";
-
-				WAlerta(id, tag, descricao, alerta);
+					WAlerta(id, tag, descricao, alerta);
+				}
 
 				XElement xmlTag = null;
-				if (ocorrencia == 1 && estaVazio)
+				if (ocorrencia == Ocorrencia.Obrigatoria && estaVazio)
+				{
 					xmlTag = GetElement(tag, string.Empty, ns);
+				}
 
 				return estaVazio ? xmlTag : GetElement(tag, conteudoProcessado, ns);
 			}
@@ -602,9 +604,9 @@ namespace ACBr.Net.NFSe.Providers
 				var retLote = new RetornoWebservice
 				{
 					Sucesso = false,
-					CPFCNPJRemetente = Config.PrestadorPadrao.CPFCNPJ,
+					CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
 					CodCidade = Config.WebServices.CodMunicipio,
-					DataEnvioLote = DateTime.Now,
+					DataLote = DateTime.Now,
 					NumeroLote = "0",
 					Assincrono = true,
 					XmlEnvio = xml
@@ -621,6 +623,12 @@ namespace ACBr.Net.NFSe.Providers
 			return null;
 		}
 
+		/// <summary>
+		/// Grava o xml da Rps no disco
+		/// </summary>
+		/// <param name="conteudoArquivo"></param>
+		/// <param name="nomeArquivo"></param>
+		/// <param name="data"></param>
 		protected void GravarRpsEmDisco(string conteudoArquivo, string nomeArquivo, DateTime data)
 		{
 			if (Config.Arquivos.Salvar == false) return;
@@ -628,6 +636,12 @@ namespace ACBr.Net.NFSe.Providers
 			GravarArquivoEmDisco(TipoArquivo.Rps, conteudoArquivo, nomeArquivo);
 		}
 
+		/// <summary>
+		/// Grava o xml da NFSe no disco
+		/// </summary>
+		/// <param name="conteudoArquivo"></param>
+		/// <param name="nomeArquivo"></param>
+		/// <param name="data"></param>
 		protected void GravarNFSeEmDisco(string conteudoArquivo, string nomeArquivo, DateTime data)
 		{
 			if (Config.Arquivos.Salvar == false) return;
@@ -635,6 +649,11 @@ namespace ACBr.Net.NFSe.Providers
 			GravarArquivoEmDisco(TipoArquivo.NFSe, conteudoArquivo, nomeArquivo);
 		}
 
+		/// <summary>
+		/// Grava o xml de comunicação com o webservice no disco
+		/// </summary>
+		/// <param name="conteudoArquivo"></param>
+		/// <param name="nomeArquivo"></param>
 		protected void GravarArquivoEmDisco(string conteudoArquivo, string nomeArquivo)
 		{
 			if (Config.Geral.Salvar == false) return;
