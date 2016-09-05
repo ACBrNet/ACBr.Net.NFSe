@@ -896,7 +896,7 @@
 			// 
 			this.btnCarregar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCarregar.Location = new System.Drawing.Point(612, 436);
+			this.btnCarregar.Location = new System.Drawing.Point(612, 434);
 			this.btnCarregar.Name = "btnCarregar";
 			this.btnCarregar.Size = new System.Drawing.Size(75, 23);
 			this.btnCarregar.TabIndex = 1;
@@ -922,6 +922,7 @@
 			this.listView1.TabIndex = 0;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.Details;
+			this.listView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDoubleClick);
 			// 
 			// cmhCidade
 			// 

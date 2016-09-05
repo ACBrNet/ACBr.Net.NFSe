@@ -78,6 +78,14 @@ namespace ACBr.Net.NFSe.Demo
 
 			AddMunicipio(municipio);
 			*/
+
+			var municipio = new MunicipioNFSe();
+			using (var form = new FormEdtMunicipio())
+			{
+				if (form.Editar(municipio).Equals(DialogResult.Cancel)) return;
+
+				AddMunicipio(municipio);
+			}
 		}
 
 		private void btnSalvar_Click(object sender, EventArgs e)
@@ -117,6 +125,20 @@ namespace ACBr.Net.NFSe.Demo
 			txtUf.Text = municipio?.UF;
 			txtCodCidade.Text = municipio?.Codigo.ToString();
 			txtCodSiafi.Text = municipio?.CodigoSiafi.ToString();
+		}
+
+		private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			if (listView1.SelectedItems.Count < 1) return;
+
+			var municipio = listView1.SelectedItems[0].Tag as MunicipioNFSe;
+			using (var form = new FormEdtMunicipio())
+			{
+				if (form.Editar(municipio).Equals(DialogResult.Cancel)) return;
+
+				listView1.Refresh();
+				UpdateCidades();
+			}
 		}
 
 		#endregion EventHandlers

@@ -41,8 +41,28 @@ namespace ACBr.Net.NFSe.Providers
 
 		public MunicipioNFSe()
 		{
-			UrlHomologacao = new Dictionary<TipoUrl, string>();
-			UrlProducao = new Dictionary<TipoUrl, string>();
+			UrlHomologacao = new Dictionary<TipoUrl, string>(9);
+			UrlProducao = new Dictionary<TipoUrl, string>(9);
+
+			UrlProducao[TipoUrl.Enviar] = string.Empty;
+			UrlProducao[TipoUrl.EnviarSincrono] = string.Empty;
+			UrlProducao[TipoUrl.CancelaNFSe] = string.Empty;
+			UrlProducao[TipoUrl.ConsultaNFSe] = string.Empty;
+			UrlProducao[TipoUrl.ConsultaNFSeRps] = string.Empty;
+			UrlProducao[TipoUrl.ConsultarLoteRps] = string.Empty;
+			UrlProducao[TipoUrl.ConsultarSituacao] = string.Empty;
+			UrlProducao[TipoUrl.ConsultarSequencialRps] = string.Empty;
+			UrlProducao[TipoUrl.SubstituirNFSe] = string.Empty;
+
+			UrlHomologacao[TipoUrl.Enviar] = string.Empty;
+			UrlHomologacao[TipoUrl.EnviarSincrono] = string.Empty;
+			UrlHomologacao[TipoUrl.CancelaNFSe] = string.Empty;
+			UrlHomologacao[TipoUrl.ConsultaNFSe] = string.Empty;
+			UrlHomologacao[TipoUrl.ConsultaNFSeRps] = string.Empty;
+			UrlHomologacao[TipoUrl.ConsultarLoteRps] = string.Empty;
+			UrlHomologacao[TipoUrl.ConsultarSituacao] = string.Empty;
+			UrlHomologacao[TipoUrl.ConsultarSequencialRps] = string.Empty;
+			UrlHomologacao[TipoUrl.SubstituirNFSe] = string.Empty;
 		}
 
 		#endregion Constructors
