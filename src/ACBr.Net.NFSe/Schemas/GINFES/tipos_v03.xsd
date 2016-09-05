@@ -28,7 +28,7 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="tsNaturezaOperacao">
 		<xsd:restriction base="xsd:byte">
-			<xsd:pattern value="1|2|3|4|5|6|7"/>
+			<xsd:pattern value="1|2|3|4|5|6"/>
 			<xsd:whiteSpace value="collapse"/>
 		</xsd:restriction>
 	</xsd:simpleType>
@@ -483,7 +483,7 @@
 	<xsd:complexType name="tcCancelamentoNfse">
 		<xsd:sequence>
 			<xsd:element name="Confirmacao" type="tcConfirmacaoCancelamento"/>
-			<xsd:element ref="dsig:Signature"/>
+			<xsd:element ref="dsig:Signature" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:complexType name="tcInfSubstituicaoNfse">
