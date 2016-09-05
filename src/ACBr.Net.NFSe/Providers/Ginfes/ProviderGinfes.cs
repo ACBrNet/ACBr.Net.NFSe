@@ -56,42 +56,47 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
         #endregion Constructors
 
         #region Methods
+        private enum LoadXmlFormato { Indefinido, NFSe, RPS }
 
         public override NotaFiscal LoadXml(XDocument xml)
         {
-            Guard.Against<XmlException>(xml == null, "Xml de Nota invalida.");
+            Guard.Against<XmlException>(xml == null, "Xml invalido.");
 
-            //Verifica qual XML deverá ser processado:
-            var formatoXmlNFSe = true;
+            XElement rootGrupo, rootDoc, rootCan, rootSub;
+            var formatoXml = LoadXmlFormato.Indefinido;
 
-            var root = xml.ElementAnyNs("EnviarLoteRpsEnvio");
-            if (root != null)
+            rootGrupo = xml.ElementAnyNs("CompNfse");
+            if (rootGrupo != null)
             {
-                // XML para Enviar Lote Rps
-                formatoXmlNFSe = false;
-                root = root.ElementAnyNs("LoteRps")?.ElementAnyNs("ListaRps")?.ElementAnyNs("Rps")?.ElementAnyNs("InfRps");
+                formatoXml = LoadXmlFormato.NFSe;
+                rootDoc = rootGrupo.ElementAnyNs("Nfse")?.ElementAnyNs("InfNfse");
+                rootCan = rootGrupo.ElementAnyNs("NfseCancelamento");
+                rootSub = rootGrupo.ElementAnyNs("NfseSubstituicao");
             }
             else
             {
-                root = xml.ElementAnyNs("ConsultarNfseResposta") ?? xml.ElementAnyNs("ConsultarLoteRpsResposta");
-                root = root != null ? root.ElementAnyNs("ListaNfse") : xml.ElementAnyNs("ConsultarNfseRpsResposta");
-                root = root?.ElementAnyNs("CompNfse")?.ElementAnyNs("Nfse")?.ElementAnyNs("InfNfse");
+                rootDoc = xml.ElementAnyNs("Rps");
+                if (rootDoc != null)
+                {
+                    formatoXml = LoadXmlFormato.RPS;
+                    rootDoc = rootDoc.ElementAnyNs("InfRps");
+                }
             }
 
-            Guard.Against<XmlException>(root == null, "Xml de Nota invalida.");
+            Guard.Against<XmlException>(rootDoc == null, "Xml de RPS ou NFSe invalido.");
 
             var ret = new NotaFiscal();
 
-            if (formatoXmlNFSe)
+            if (formatoXml == LoadXmlFormato.NFSe)
             {
                 // Nota Fiscal
-                ret.IdentificacaoNFSe.Numero = root.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
-                ret.IdentificacaoNFSe.Chave = root.ElementAnyNs("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
-                ret.IdentificacaoNFSe.DataEmissao = root.ElementAnyNs("DataEmissao")?.GetValue<DateTime>() ?? DateTime.MinValue;
+                ret.IdentificacaoNFSe.Numero = rootDoc.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
+                ret.IdentificacaoNFSe.Chave = rootDoc.ElementAnyNs("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
+                ret.IdentificacaoNFSe.DataEmissao = rootDoc.ElementAnyNs("DataEmissao")?.GetValue<DateTime>() ?? DateTime.MinValue;
             }
 
             // RPS
-            var rootRps = root.ElementAnyNs("IdentificacaoRps");
+            var rootRps = rootDoc.ElementAnyNs("IdentificacaoRps");
             if (rootRps != null)
             {
                 ret.IdentificacaoRps.Numero = rootRps.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
@@ -99,13 +104,13 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 ret.IdentificacaoRps.Tipo = rootRps.ElementAnyNs("Tipo")?.GetValue<TipoRps>() ?? TipoRps.RPS;
             }
 
-            if (formatoXmlNFSe)
-                ret.IdentificacaoRps.DataEmissao = root.ElementAnyNs("DataEmissaoRps")?.GetValue<DateTime>() ?? DateTime.MinValue;
+            if (formatoXml == LoadXmlFormato.NFSe)
+                ret.IdentificacaoRps.DataEmissao = rootDoc.ElementAnyNs("DataEmissaoRps")?.GetValue<DateTime>() ?? DateTime.MinValue;
             else
-                ret.IdentificacaoRps.DataEmissao = root.ElementAnyNs("DataEmissao")?.GetValue<DateTime>() ?? DateTime.MinValue;
+                ret.IdentificacaoRps.DataEmissao = rootDoc.ElementAnyNs("DataEmissao")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
             // Natureza da Operação
-            switch (root.ElementAnyNs("NaturezaOperacao")?.GetValue<char>())
+            switch (rootDoc.ElementAnyNs("NaturezaOperacao")?.GetValue<char>())
             {
                 case '1':
                     ret.NaturezaOperacao = NaturezaOperacao.NT01;
@@ -133,14 +138,14 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             }
 
             // Simples Nacional
-            if (root.ElementAnyNs("OptanteSimplesNacional")?.GetValue<char>() == '1')
+            if (rootDoc.ElementAnyNs("OptanteSimplesNacional")?.GetValue<char>() == '1')
             {
                 ret.RegimeEspecialTributacao = RegimeEspecialTributacao.SimplesNacional;
             }
             else
             {
                 // Regime Especial de Tributaçao
-                switch (root.ElementAnyNs("RegimeEspecialTributacao")?.GetValue<char>())
+                switch (rootDoc.ElementAnyNs("RegimeEspecialTributacao")?.GetValue<char>())
                 {
                     case '1':
                         ret.RegimeEspecialTributacao = RegimeEspecialTributacao.MicroEmpresaMunicipal;
@@ -169,7 +174,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             }
 
             // Regime Especial de Tributaçao
-            switch (root.ElementAnyNs("IncentivadorCultural")?.GetValue<char>())
+            switch (rootDoc.ElementAnyNs("IncentivadorCultural")?.GetValue<char>())
             {
                 case '1':
                     ret.IncentivadorCultural = NFSeSimNao.Sim;
@@ -181,11 +186,11 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             }
 
             // Situação do RPS
-            if (formatoXmlNFSe == false)
+            if (formatoXml == LoadXmlFormato.RPS)
             {
-                ret.Situacao = (root.ElementAnyNs("Competencia")?.GetValue<string>() ?? string.Empty) == "2" ? SituacaoNFSeRps.Cancelado : SituacaoNFSeRps.Normal;
+                ret.Situacao = (rootDoc.ElementAnyNs("Competencia")?.GetValue<string>() ?? string.Empty) == "2" ? SituacaoNFSeRps.Cancelado : SituacaoNFSeRps.Normal;
                 // RPS Substituido
-                var rootRpsSubstituido = root.ElementAnyNs("RpsSubstituido");
+                var rootRpsSubstituido = rootDoc.ElementAnyNs("RpsSubstituido");
                 if (rootRpsSubstituido != null)
                 {
                     ret.RpsSubstituido.NumeroRps = rootRpsSubstituido.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
@@ -194,15 +199,15 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 }
             }
 
-            if (formatoXmlNFSe == true)
+            if (formatoXml == LoadXmlFormato.NFSe)
             {
-                ret.Competencia = root.ElementAnyNs("Competencia")?.GetValue<string>() ?? string.Empty;
-                ret.RpsSubstituido.NumeroNfse = root.ElementAnyNs("NfseSubstituida")?.GetValue<string>() ?? string.Empty;
-                ret.OutrasInformacoes = root.ElementAnyNs("OutrasInformacoes")?.GetValue<string>() ?? string.Empty;
+                ret.Competencia = rootDoc.ElementAnyNs("Competencia")?.GetValue<string>() ?? string.Empty;
+                ret.RpsSubstituido.NumeroNfse = rootDoc.ElementAnyNs("NfseSubstituida")?.GetValue<string>() ?? string.Empty;
+                ret.OutrasInformacoes = rootDoc.ElementAnyNs("OutrasInformacoes")?.GetValue<string>() ?? string.Empty;
             }
 
             // Serviços e Valores
-            var rootServico = root.ElementAnyNs("Servico");
+            var rootServico = rootDoc.ElementAnyNs("Servico");
             if (rootServico != null)
             {
                 var rootServicoValores = rootServico.ElementAnyNs("Valores");
@@ -231,13 +236,13 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 ret.Servico.Discriminacao = rootServico.ElementAnyNs("Discriminacao")?.GetValue<string>() ?? string.Empty;
                 ret.Servico.CodigoMunicipio = rootServico.ElementAnyNs("CodigoMunicipio")?.GetValue<string>() ?? string.Empty;
             }
-            if (formatoXmlNFSe == true)
-                ret.ValorCredito = root.ElementAnyNs("ValorCredito")?.GetValue<Decimal>() ?? 0;
+            if (formatoXml == LoadXmlFormato.NFSe)
+                ret.ValorCredito = rootDoc.ElementAnyNs("ValorCredito")?.GetValue<Decimal>() ?? 0;
 
-            if (formatoXmlNFSe == true)
+            if (formatoXml == LoadXmlFormato.NFSe)
             {
                 // Prestador (Nota Fiscal)
-                var rootPrestador = root.ElementAnyNs("PrestadorServico");
+                var rootPrestador = rootDoc.ElementAnyNs("PrestadorServico");
                 if (rootPrestador != null)
                 {
                     var rootPretadorIdentificacao = rootPrestador.ElementAnyNs("IdentificacaoPrestador");
@@ -270,7 +275,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             else
             {
                 // Prestador (RPS)
-                var rootPrestador = root.ElementAnyNs("Prestador");
+                var rootPrestador = rootDoc.ElementAnyNs("Prestador");
                 if (rootPrestador != null)
                 {
                     ret.Prestador.CpfCnpj = rootPrestador.ElementAnyNs("Cnpj")?.GetValue<string>() ?? string.Empty;
@@ -279,7 +284,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             }
 
             // Tomador
-            var rootTomador = root.ElementAnyNs(formatoXmlNFSe == true ? "TomadorServico" : "Tomador");
+            var rootTomador = rootDoc.ElementAnyNs(formatoXml == LoadXmlFormato.NFSe ? "TomadorServico" : "Tomador");
             if (rootTomador != null)
             {
                 var rootTomadorIdentificacao = rootTomador.ElementAnyNs("IdentificacaoTomador");
@@ -315,7 +320,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             }
 
             // Intermediario
-            var rootIntermediarioIdentificacao = root.ElementAnyNs("IntermediarioServico");
+            var rootIntermediarioIdentificacao = rootDoc.ElementAnyNs("IntermediarioServico");
             if (rootIntermediarioIdentificacao != null)
             {
                 ret.Intermediario.RazaoSocial = rootIntermediarioIdentificacao.ElementAnyNs("RazaoSocial")?.GetValue<string>() ?? string.Empty;
@@ -329,10 +334,10 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 ret.Intermediario.InscricaoMunicipal = rootIntermediarioIdentificacao.ElementAnyNs("InscricaoMunicipal")?.GetValue<string>() ?? string.Empty;
             }
 
-            if (formatoXmlNFSe == true)
+            if (formatoXml == LoadXmlFormato.NFSe)
             {
                 // Orgão Gerador
-                var rootOrgaoGerador = root.ElementAnyNs("OrgaoGerador");
+                var rootOrgaoGerador = rootDoc.ElementAnyNs("OrgaoGerador");
                 if (rootOrgaoGerador != null)
                 {
                     ret.OrgaoGerador.CodigoMunicipio = rootOrgaoGerador.ElementAnyNs("CodigoMunicipio")?.GetValue<string>() ?? string.Empty;
@@ -341,7 +346,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             }
 
             // Construção Civil
-            var rootConstrucaoCivil = root.ElementAnyNs("ConstrucaoCivil");
+            var rootConstrucaoCivil = rootDoc.ElementAnyNs("ConstrucaoCivil");
             if (rootConstrucaoCivil != null)
             {
                 ret.ConstrucaoCivil.CodigoObra = rootConstrucaoCivil.ElementAnyNs("CodigoObra")?.GetValue<string>() ?? string.Empty;
@@ -602,7 +607,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 conCivil.AddChild(AdicionarTag(TipoCampo.Str, "", "Art", ns, 1, 15, 1, nota.ConstrucaoCivil.Art));
             }
 
-            
+
             return xmlDoc.AsString(false, false);
         }
 
@@ -743,10 +748,12 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                     retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Situação de lote de RPS: 1 – Não Recebido" });
                     break;
                 case "2":
-                    retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Situação de lote de RPS: 2 – Não Processado" });
+                    retornoWebservice.Alertas.Add(new Evento { Codigo = "0", Descricao = "Situação de lote de RPS: 2 – Não Processado" });
+                    retornoWebservice.Sucesso = true;
                     break;
                 case "3":
-                    retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Situação de lote de RPS: 3 – Processado com Erro" });
+                    retornoWebservice.Alertas.Add(new Evento { Codigo = "0", Descricao = "Situação de lote de RPS: 3 – Processado com Erro" });
+                    retornoWebservice.Sucesso = true;
                     break;
                 case "4":
                     retornoWebservice.Sucesso = true;
@@ -826,22 +833,116 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 var chaveNFSe = nfse.ElementAnyNs("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
                 var dataNFSe = nfse.ElementAnyNs("DataEmissao")?.GetValue<DateTime>() ?? DateTime.Now;
                 var numeroRps = nfse?.ElementAnyNs("IdentificacaoRps")?.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
-                var nfseXml = nfse.ToString();
-                GravarNFSeEmDisco(nfseXml, $"NFSe-{numeroNFSe}-{chaveNFSe}-.xml", dataNFSe);
+                GravarNFSeEmDisco(compNfse.ToString(), $"NFSe-{numeroNFSe}-{chaveNFSe}-.xml", dataNFSe);
 
-                if (notas.Count > 0)
+                var nota = notas.FirstOrDefault(x => x.IdentificacaoRps.Numero == numeroRps);
+                if (nota == null)
                 {
-                    var nota = notas.FirstOrDefault(x => x.IdentificacaoRps.Numero == numeroRps);
-                    if (nota != null)
-                    {
-                        nota.IdentificacaoNFSe.Numero = numeroNFSe;
-                        nota.IdentificacaoNFSe.Chave = chaveNFSe;
-                    }
-                    var xml = GetXmlNFSe(nota);
+                    nota = LoadXml(compNfse.ToString());
+                    notas.Add(nota);
+                }
+                else
+                {
+                    nota.IdentificacaoNFSe.Numero = numeroNFSe;
+                    nota.IdentificacaoNFSe.Chave = chaveNFSe;
                 }
             }
             return retornoWebservice;
         }
+
+        public override RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas)
+        {
+            // ATENÇÃO: A versão do serviço de cancelamento implementada é a V2.
+            // Conforme indicado nos links abaixo:
+            //      http://desenvolvimentonfse.forumeiros.com/t209-resolvidowebservice-v3-cancelamento
+            //      http://desenvolvimentonfse.forumeiros.com/t683-problemas-no-arquivo-xsd-de-cancelamento
+
+            var retornoWebservice = new RetornoWebservice
+            {
+                Sucesso = false,
+                CPFCNPJRemetente = Config.PrestadorPadrao.CpfCnpj,
+                CodCidade = Config.WebServices.CodMunicipio,
+                DataLote = DateTime.Now,
+                NumeroLote = "0",
+                Assincrono = false
+            };
+
+            if (string.IsNullOrWhiteSpace(numeroNFSe))
+            {
+                retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Número da NFSe não informado para cancelamento." });
+                return retornoWebservice;
+            }
+
+            var loteCancelar = new StringBuilder();
+            loteCancelar.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            loteCancelar.Append("<CancelarNfseEnvio xmlns=\"http://www.ginfes.com.br/servico_cancelar_nfse_envio_v03.xsd\">");
+            loteCancelar.Append("<Pedido xmlns=\"\">");
+            loteCancelar.Append("<tipos:InfPedidoCancelamento Id=\"\" xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\">");
+            loteCancelar.Append("<tipos:IdentificacaoNfse>");
+            loteCancelar.Append($"<tipos:Numero>{numeroNFSe}</tipos:Numero>");
+            loteCancelar.Append($"<tipos:Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tipos:Cnpj>");
+            loteCancelar.Append($"<tipos:InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
+            loteCancelar.Append($"<tipos:CodigoMunicipio>{Config.PrestadorPadrao.Endereco.CodigoMunicipio}</tipos:CodigoMunicipio>");
+            loteCancelar.Append("</tipos:IdentificacaoNfse>");
+            loteCancelar.Append($"<tipos:CodigoCancelamento>{codigoCancelamento}</tipos:CodigoCancelamento>");
+            loteCancelar.Append("</tipos:InfPedidoCancelamento>");
+            loteCancelar.Append("</Pedido>");
+            loteCancelar.Append("</CancelarNfseEnvio>");
+
+            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteCancelar.ToString(), "", "Pedido", Certificado);
+
+            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CanNFSe-{numeroNFSe}-env.xml");
+
+            // Verifica Schema
+            //var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, "servico_cancelar_nfse_envio_v02.xsd");
+            var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, "servico_cancelar_nfse_envio_v03.xsd");
+            if (retSchema != null)
+                return retSchema;
+
+            // Recebe mensagem de retorno
+            try
+            {
+                var cliente = GetCliente(TipoUrl.CancelaNFSe);
+                var cabecalho = GerarCabecalho();
+                retornoWebservice.XmlRetorno = cliente.CancelarNfse(cabecalho, retornoWebservice.XmlEnvio);
+            }
+            catch (Exception ex)
+            {
+                retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
+                return retornoWebservice;
+            }
+             GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"CanNFSe-{numeroNFSe}-ret.xml");
+
+            // Analisa mensagem de retorno
+            var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
+            MensagemErro(retornoWebservice, xmlRet, "CancelarNfseResposta");
+            if (retornoWebservice.Erros.Count > 0)
+                return retornoWebservice;
+
+            var confirmacaoCancelamento = xmlRet.ElementAnyNs("CancelarNfseResposta")?.ElementAnyNs("Cancelamento")?.ElementAnyNs("Confirmacao")?.ElementAnyNs("InfConfirmacaoCancelamento");
+            if (confirmacaoCancelamento == null)
+            {
+                retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Confirmação do cancelamento não encontrada! (InfConfirmacaoCancelamento)" });
+                return retornoWebservice;
+            }
+
+            retornoWebservice.Sucesso = confirmacaoCancelamento.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
+            retornoWebservice.DataLote = confirmacaoCancelamento.ElementAnyNs("DataHora")?.GetValue<DateTime>() ?? DateTime.MinValue;
+
+            // Se a nota fiscal cancelada existir na coleção de Notas Fiscais, atualiza seu status:
+            var nota = notas.FirstOrDefault(x => x.IdentificacaoNFSe.Numero.Trim() == numeroNFSe);
+            if (nota != null)
+            {
+                nota.Situacao = SituacaoNFSeRps.Cancelado;
+                nota.Cancelamento.Pedido.CodigoCancelamento = codigoCancelamento;
+                nota.Cancelamento.MotivoCancelamento = motivo;
+                // No caso do Ginfes, não retorna o XML da NotaFiscal Cancelada.
+                // Por este motivo, não grava o arquivo NFSe-{nota.IdentificacaoNFSe.Chave}-{nota.IdentificacaoNFSe.Numero}.xml
+            }
+
+            return retornoWebservice;
+        }
+
 
         #endregion Methods
 

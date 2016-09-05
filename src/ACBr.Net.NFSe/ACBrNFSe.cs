@@ -275,8 +275,6 @@ namespace ACBr.Net.NFSe
 		/// <returns>RetornoWebservice.</returns>
 		public RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo)
 		{
-			Guard.Against<ArgumentException>(NotasFiscais.Count < 1, "ERRO: Nenhuma NFS-e carregada ao componente");
-
 			var provider = ProviderManager.GetProvider(Configuracoes);
 			return provider.CancelaNFSe(codigoCancelamento, numeroNFSe, motivo, NotasFiscais);
 		}
