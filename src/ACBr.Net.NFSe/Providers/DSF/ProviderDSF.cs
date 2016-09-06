@@ -703,7 +703,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			return retornoWebservice;
 		}
 
-		public override RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo)
+		public override RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas)
 		{
 			var retornoWebservice = new RetornoWebservice
 			{
@@ -775,6 +775,23 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 			var alertas = xmlRet.ElementAnyNs("Alertas");
 			retornoWebservice.Alertas.AddRange(ProcessarEventos(TipoEvento.Alertas, alertas));
+
+			var notasCanceladas = xmlRet.ElementAnyNs("NotasCanceladas");
+			if (notasCanceladas == null) return retornoWebservice;
+
+			foreach (var notaCancelada in notasCanceladas.ElementsAnyNs("Nota"))
+			{
+				var numeroRps = notaCancelada.ElementAnyNs("NumeroNota")?.GetValue<string>() ?? string.Empty;
+				var nota = notas.FirstOrDefault(x => x.IdentificacaoNFSe.Numero.Trim() == numeroRps.Trim());
+				if (nota == null) continue;
+
+				nota.Situacao = SituacaoNFSeRps.Cancelado;
+				nota.Cancelamento.MotivoCancelamento = notaCancelada.ElementAnyNs("MotivoCancelamento")?.GetValue<string>() ?? string.Empty;
+				nota.IdentificacaoNFSe.Chave = notaCancelada.ElementAnyNs("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
+
+				var xmlNFSe = GetXmlNFSe(nota);
+				GravarNFSeEmDisco(xmlNFSe, $"NFSe-{nota.IdentificacaoNFSe.Chave}-{nota.IdentificacaoNFSe.Numero}-Canc.xml", nota.IdentificacaoNFSe.DataEmissao);
+			}
 
 			return retornoWebservice;
 		}

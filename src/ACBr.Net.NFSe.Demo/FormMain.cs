@@ -40,52 +40,27 @@ namespace ACBr.Net.NFSe.Demo
 
 		private void btnAdicionar_Click(object sender, EventArgs e)
 		{
-			/*
-			Exemplo de como adicionar Cidade no arquivo de cidades
-
-			var municipio = new MunicipioNFSe
+			ExecuteSafe(() =>
 			{
-				Nome = "Nova Iguaçu",
-				UF = "RJ",
-				Codigo = 3303500,
-				CodigoSiafi = 5869,
-				TamanhoIM = 0,
-				Provedor = "GINFES"
-			};
-
-			var urlProducao = "https://producao.ginfes.com.br/ServiceGinfesImpl?wsdl";
-			var urlHomologacao = "https://homologacao.ginfes.com.br/ServiceGinfesImpl?wsdl";
-
-			municipio.UrlProducao.Add(TipoUrl.Enviar, urlProducao);
-			municipio.UrlProducao.Add(TipoUrl.EnviarSincrono, urlProducao);
-			municipio.UrlProducao.Add(TipoUrl.CancelaNFSe, urlProducao);
-			municipio.UrlProducao.Add(TipoUrl.ConsultaNFSe, urlProducao);
-			municipio.UrlProducao.Add(TipoUrl.ConsultaNFSeRps, urlProducao);
-			municipio.UrlProducao.Add(TipoUrl.ConsultarLoteRps, urlProducao);
-			municipio.UrlProducao.Add(TipoUrl.ConsultarSituacao, urlProducao);
-			municipio.UrlProducao.Add(TipoUrl.ConsultarSequencialRps, urlProducao);
-			municipio.UrlProducao.Add(TipoUrl.SubstituirNFSe, urlProducao);
-
-			municipio.UrlHomologacao.Add(TipoUrl.Enviar, urlHomologacao);
-			municipio.UrlHomologacao.Add(TipoUrl.EnviarSincrono, urlHomologacao);
-			municipio.UrlHomologacao.Add(TipoUrl.CancelaNFSe, urlHomologacao);
-			municipio.UrlHomologacao.Add(TipoUrl.ConsultaNFSe, urlHomologacao);
-			municipio.UrlHomologacao.Add(TipoUrl.ConsultaNFSeRps, urlHomologacao);
-			municipio.UrlHomologacao.Add(TipoUrl.ConsultarLoteRps, urlHomologacao);
-			municipio.UrlHomologacao.Add(TipoUrl.ConsultarSituacao, urlHomologacao);
-			municipio.UrlHomologacao.Add(TipoUrl.ConsultarSequencialRps, urlHomologacao);
-			municipio.UrlHomologacao.Add(TipoUrl.SubstituirNFSe, urlHomologacao);
-
-			AddMunicipio(municipio);
-			*/
-
-			var municipio = new MunicipioNFSe();
-			using (var form = new FormEdtMunicipio())
-			{
-				if (form.Editar(municipio).Equals(DialogResult.Cancel)) return;
+				var municipio = new MunicipioNFSe();
+				if (FormEdtMunicipio.Editar(municipio).Equals(DialogResult.Cancel)) return;
 
 				AddMunicipio(municipio);
-			}
+			});
+		}
+
+		private void btnDeletar_Click(object sender, EventArgs e)
+		{
+			ExecuteSafe(() =>
+			{
+				if (listView1.SelectedItems.Count < 1) return;
+
+				if (MessageBox.Show(@"Você tem certeza?", @"ACBrNFSe Demo", MessageBoxButtons.YesNo).Equals(DialogResult.No)) return;
+
+				var municipio = listView1.SelectedItems[0];
+				listView1.Items.Remove(municipio);
+				UpdateCidades();
+			});
 		}
 
 		private void btnSalvar_Click(object sender, EventArgs e)
@@ -129,16 +104,16 @@ namespace ACBr.Net.NFSe.Demo
 
 		private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
-			if (listView1.SelectedItems.Count < 1) return;
-
-			var municipio = listView1.SelectedItems[0].Tag as MunicipioNFSe;
-			using (var form = new FormEdtMunicipio())
+			ExecuteSafe(() =>
 			{
-				if (form.Editar(municipio).Equals(DialogResult.Cancel)) return;
+				if (listView1.SelectedItems.Count < 1) return;
+
+				var municipio = listView1.SelectedItems[0].Tag as MunicipioNFSe;
+				if (FormEdtMunicipio.Editar(municipio).Equals(DialogResult.Cancel)) return;
 
 				listView1.Refresh();
 				UpdateCidades();
-			}
+			});
 		}
 
 		#endregion EventHandlers

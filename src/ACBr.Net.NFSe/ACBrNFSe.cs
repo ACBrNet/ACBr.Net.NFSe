@@ -276,7 +276,7 @@ namespace ACBr.Net.NFSe
 		public RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo)
 		{
 			var provider = ProviderManager.GetProvider(Configuracoes);
-			return provider.CancelaNFSe(codigoCancelamento, numeroNFSe, motivo);
+			return provider.CancelaNFSe(codigoCancelamento, numeroNFSe, motivo, NotasFiscais);
 		}
 
 		/// <summary>

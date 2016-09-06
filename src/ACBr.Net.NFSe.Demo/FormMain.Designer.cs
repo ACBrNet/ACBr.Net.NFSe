@@ -113,6 +113,7 @@
 			this.cmhProvedor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+			this.btnDeletar = new System.Windows.Forms.Button();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tabControl3.SuspendLayout();
@@ -856,6 +857,7 @@
 			// 
 			// tabPage3
 			// 
+			this.tabPage3.Controls.Add(this.btnDeletar);
 			this.tabPage3.Controls.Add(this.btnAdicionar);
 			this.tabPage3.Controls.Add(this.btnSalvar);
 			this.tabPage3.Controls.Add(this.btnCarregar);
@@ -872,7 +874,7 @@
 			// 
 			this.btnAdicionar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnAdicionar.Location = new System.Drawing.Point(693, 434);
+			this.btnAdicionar.Location = new System.Drawing.Point(774, 434);
 			this.btnAdicionar.Name = "btnAdicionar";
 			this.btnAdicionar.Size = new System.Drawing.Size(75, 23);
 			this.btnAdicionar.TabIndex = 3;
@@ -884,7 +886,7 @@
 			// 
 			this.btnSalvar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnSalvar.Location = new System.Drawing.Point(774, 434);
+			this.btnSalvar.Location = new System.Drawing.Point(89, 434);
 			this.btnSalvar.Name = "btnSalvar";
 			this.btnSalvar.Size = new System.Drawing.Size(75, 23);
 			this.btnSalvar.TabIndex = 2;
@@ -896,7 +898,7 @@
 			// 
 			this.btnCarregar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCarregar.Location = new System.Drawing.Point(612, 434);
+			this.btnCarregar.Location = new System.Drawing.Point(8, 434);
 			this.btnCarregar.Name = "btnCarregar";
 			this.btnCarregar.Size = new System.Drawing.Size(75, 23);
 			this.btnCarregar.TabIndex = 1;
@@ -963,6 +965,18 @@
 			// 
 			this.lblStatus.Name = "lblStatus";
 			this.lblStatus.Size = new System.Drawing.Size(0, 17);
+			// 
+			// btnDeletar
+			// 
+			this.btnDeletar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnDeletar.Location = new System.Drawing.Point(693, 434);
+			this.btnDeletar.Name = "btnDeletar";
+			this.btnDeletar.Size = new System.Drawing.Size(75, 23);
+			this.btnDeletar.TabIndex = 4;
+			this.btnDeletar.Text = "Deletar";
+			this.btnDeletar.UseVisualStyleBackColor = true;
+			this.btnDeletar.Click += new System.EventHandler(this.btnDeletar_Click);
 			// 
 			// FormMain
 			// 
@@ -1086,6 +1100,7 @@
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.ToolStripStatusLabel lblStatus;
+		private System.Windows.Forms.Button btnDeletar;
 	}
 }
 

@@ -284,7 +284,7 @@ namespace ACBr.Net.NFSe.Providers
 			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}
 
-		public virtual RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo)
+		public virtual RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas)
 		{
 			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}
