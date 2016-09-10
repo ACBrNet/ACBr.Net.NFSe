@@ -37,7 +37,7 @@ namespace ACBr.Net.NFSe
 
 		RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo);
 
-		RetornoWebservice ConsultaNFSe(DateTime inicio, DateTime fim, string numeroNfse = "", int pagina = 1, string cnpjTomador = "", string imTomador = "", string nomeInter = "", string cnpjInter = "", string imInter = "", string serie = "");
+		RetornoWebservice ConsultaNFSe(DateTime? inicio, DateTime? fim, string numeroNfse = "", int pagina = 1, string cnpjTomador = "", string imTomador = "", string nomeInter = "", string cnpjInter = "", string imInter = "", string serie = "");
 
 		RetornoWebservice ConsultaNFSeRps(string numero, string serie, TipoRps tipo);
 

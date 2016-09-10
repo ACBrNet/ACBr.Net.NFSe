@@ -181,11 +181,10 @@ namespace ACBr.Net.NFSe
 		/// <param name="serie">The serie.</param>
 		/// <returns>RetornoWebservice.</returns>
 		/// <exception cref="NotImplementedException"></exception>
-		public RetornoWebservice ConsultaNFSe(DateTime inicio, DateTime fim, string numeroNfse = "", int pagina = 1,
-			string cnpjTomador = "", string imTomador = "", string nomeInter = "", string cnpjInter = "", string imInter = "",
-			string serie = "")
+		public RetornoWebservice ConsultaNFSe(DateTime? inicio, DateTime? fim, string numeroNfse = "", int pagina = 1,
+			string cnpjTomador = "", string imTomador = "", string nomeInter = "", string cnpjInter = "", string imInter = "", string serie = "")
 		{
-			Guard.Against<ACBrException>(inicio.Date > fim.Date, "A data inicial não pode ser maior que a data final.");
+			Guard.Against<ACBrException>(inicio?.Date > fim?.Date, "A data inicial não pode ser maior que a data final.");
 
 			var provider = ProviderManager.GetProvider(Configuracoes);
 			return provider.ConsultaNFSe(inicio, fim, numeroNfse, pagina, cnpjTomador,

@@ -941,7 +941,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			return retornoWebservice;
 		}
 
-		public override RetornoWebservice ConsultaNFSe(DateTime inicio, DateTime fim, string numeroNfse, int pagina, string cnpjTomador,
+		public override RetornoWebservice ConsultaNFSe(DateTime? inicio, DateTime? fim, string numeroNfse, int pagina, string cnpjTomador,
 			string imTomador, string nomeInter, string cnpjInter, string imInter, string serie, NotaFiscalCollection notas)
 		{
 			var retornoWebservice = new RetornoWebservice()
