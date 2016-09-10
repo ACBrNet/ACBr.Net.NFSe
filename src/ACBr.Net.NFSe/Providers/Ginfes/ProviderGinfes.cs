@@ -72,7 +72,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 		{
 			Guard.Against<XmlException>(xml == null, "Xml invalido.");
 
-			XElement rootDoc = null;
+			XElement rootDoc;
 			XElement rootCanc = null;
 			var formatoXml = LoadXmlFormato.Indefinido;
 
@@ -152,49 +152,49 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			}
 
 			// Simples Nacional
-			if (rootDoc.ElementAnyNs("OptanteSimplesNacional")?.GetValue<char>() == '1')
+			if (rootDoc.ElementAnyNs("OptanteSimplesNacional")?.GetValue<int>() == 1)
 			{
 				ret.RegimeEspecialTributacao = RegimeEspecialTributacao.SimplesNacional;
 			}
 			else
 			{
 				// Regime Especial de Tributaçao
-				switch (rootDoc.ElementAnyNs("RegimeEspecialTributacao")?.GetValue<char>())
+				switch (rootDoc.ElementAnyNs("RegimeEspecialTributacao")?.GetValue<int>())
 				{
-					case '1':
+					case 1:
 						ret.RegimeEspecialTributacao = RegimeEspecialTributacao.MicroEmpresaMunicipal;
 						break;
 
-					case '2':
+					case 2:
 						ret.RegimeEspecialTributacao = RegimeEspecialTributacao.Estimativa;
 						break;
 
-					case '3':
+					case 3:
 						ret.RegimeEspecialTributacao = RegimeEspecialTributacao.SociedadeProfissionais;
 						break;
 
-					case '4':
+					case 4:
 						ret.RegimeEspecialTributacao = RegimeEspecialTributacao.Cooperativa;
 						break;
 
-					case '5':
+					case 5:
 						ret.RegimeEspecialTributacao = RegimeEspecialTributacao.MicroEmpresarioIndividual;
 						break;
 
-					case '6':
+					case 6:
 						ret.RegimeEspecialTributacao = RegimeEspecialTributacao.MicroEmpresarioEmpresaPP;
 						break;
 				}
 			}
 
 			// Regime Especial de Tributaçao
-			switch (rootDoc.ElementAnyNs("IncentivadorCultural")?.GetValue<char>())
+			switch (rootDoc.ElementAnyNs("IncentivadorCultural")?.GetValue<int>())
 			{
-				case '1':
+				case 1:
 					ret.IncentivadorCultural = NFSeSimNao.Sim;
 					break;
 
-				case '2':
+				case 2:
 					ret.IncentivadorCultural = NFSeSimNao.Nao;
 					break;
 			}
@@ -477,7 +477,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			var xmlDoc = new XDocument(new XDeclaration("1.0", "UTF-8", null));
 
 			XNamespace ns = "http://www.ginfes.com.br/tipos_v03.xsd";
-			var rps = new XElement(ns + "Rps", new XAttribute(XNamespace.Xmlns + "tipos", ns));
+			var rps = new XElement("Rps", new XAttribute(XNamespace.Xmlns + "tipos", ns));
 			xmlDoc.Add(rps);
 
 			var infoRps = new XElement(ns + "InfRps", new XAttribute("Id", nota.IdentificacaoRps.Numero));
@@ -708,13 +708,13 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			var xmlDoc = new XDocument(new XDeclaration("1.0", "UTF-8", null));
 
 			XNamespace ns = "http://www.ginfes.com.br/tipos_v03.xsd";
-			var compNfse = new XElement(ns + "CompNfse", new XAttribute(XNamespace.Xmlns + "ns3", ns));
+			var compNfse = new XElement("CompNfse", new XAttribute(XNamespace.Xmlns + "ns3", ns));
 			xmlDoc.Add(compNfse);
 
 			var nfse = new XElement(ns + "Nfse", new XAttribute(XNamespace.Xmlns + "ns4", ns));
 			compNfse.Add(nfse);
 
-			var infNfse = new XElement(ns + "InfNfse");
+			var infNfse = new XElement(ns + "InfNfse", new XAttribute("Id", nota.IdentificacaoNFSe.Numero));
 			nfse.Add(infNfse);
 
 			infNfse.AddChild(AdicionarTag(TipoCampo.Int, "", "Numero", ns, 1, 15, Ocorrencia.Obrigatoria, nota.IdentificacaoNFSe.Numero));
@@ -873,16 +873,21 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			if (retornoWebservice.Erros.Count > 0) return retornoWebservice;
 
 			var xmlLoteRps = new StringBuilder();
+
+			XNamespace ns = "http://www.ginfes.com.br/tipos_v03.xsd";
+
 			foreach (var nota in notas)
 			{
 				var xmlRps = GetXmlRPS(nota, false, false);
-				xmlLoteRps.Append(xmlRps);
 				GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
+
+				var xDoc = XDocument.Parse(xmlRps);
+				xDoc.Root.Name = ns + xDoc.Root.Name.ToString();
+				xmlRps = xDoc.AsString(false, false);
+				xmlLoteRps.Append(xmlRps);
 			}
 
 			var loteRps = GerarEnvelopeEnvio(lote, notas.Count, xmlLoteRps.ToString());
-			//loteRps = CertificadoDigital.AssinarXmlTodos(loteRps, "", "tipos:Rps", Certificado);
-
 			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteRps, "", "EnviarLoteRpsEnvio", Certificado);
 
 			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-{lote}-env.xml");
