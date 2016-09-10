@@ -33,7 +33,7 @@ using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
-	[MessageContract(WrapperName = "consultarLoteResponse", WrapperNamespace = "http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws", IsWrapped = true)]
+	[MessageContract(WrapperName = "consultarLoteResponse", IsWrapped = true)]
 	internal class ConsultarLoteResponse
 	{
 		public ConsultarLoteResponse(string consultarLoteReturn)

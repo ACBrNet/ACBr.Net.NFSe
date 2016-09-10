@@ -35,7 +35,7 @@ using System.ServiceModel;
 namespace ACBr.Net.NFSe.Providers.DSF
 {
 	[EditorBrowsable(EditorBrowsableState.Advanced)]
-	[MessageContract(WrapperName = "consultarNFSeRpsResponse", WrapperNamespace = "http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws", IsWrapped = true)]
+	[MessageContract(WrapperName = "consultarNFSeRpsResponse", IsWrapped = true)]
 	internal class ConsultarNFSeRpsResponse
 	{
 		public ConsultarNFSeRpsResponse(string consultarNFSeRpsReturn)

@@ -14,7 +14,7 @@ namespace ACBr.Net.NFSe.Test
 
 			acbrNFSe.NotasFiscais.Clear();
 
-			var dados = new MemoryStream(Properties.Resources.Ginfes);
+			var dados = new MemoryStream(Properties.Resources.Exemplo_Rps_Ginfes);
 			acbrNFSe.NotasFiscais.Load(dados);
 
 			Assert.True(acbrNFSe.NotasFiscais.Count == 1, "Erro ao carregar a Rps");
@@ -23,7 +23,7 @@ namespace ACBr.Net.NFSe.Test
 
 			dados.Position = 0;
 			var xml = XDocument.Load(dados);
-			var rpsOriginal = xml.AsString();
+			var rpsOriginal = xml.AsString(true);
 
 			Assert.True(rpsGerada == rpsOriginal, "Erro na Geração do Xml da Rps");
 		}

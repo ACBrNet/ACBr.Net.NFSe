@@ -63,9 +63,9 @@ namespace ACBr.Net.NFSe.Test.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Ginfes {
+        internal static byte[] Exemplo_Rps_Ginfes {
             get {
-                object obj = ResourceManager.GetObject("Ginfes", resourceCulture);
+                object obj = ResourceManager.GetObject("Exemplo_Rps_Ginfes", resourceCulture);
                 return ((byte[])(obj));
             }
         }

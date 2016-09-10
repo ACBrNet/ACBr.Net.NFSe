@@ -140,7 +140,7 @@ namespace ACBr.Net.NFSe.Providers
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ProviderBase"/> class.
 		/// </summary>
-		internal ProviderBase(ConfiguracoesNFSe config, MunicipioNFSe municipio)
+		protected ProviderBase(ConfiguracoesNFSe config, MunicipioNFSe municipio)
 		{
 			Name = "Base";
 			ListaDeAlertas = new List<string>();

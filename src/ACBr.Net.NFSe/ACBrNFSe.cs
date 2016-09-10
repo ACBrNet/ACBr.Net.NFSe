@@ -114,7 +114,8 @@ namespace ACBr.Net.NFSe
 
 		/// <summary>
 		/// Consulta a situação do lote de RPS.
-		/// Obs: Nem todos provedores suportar este metodo.
+		///
+		/// Obs.: Nem todos provedores suportam este metodo.
 		/// </summary>
 		/// <param name="lote">The lote.</param>
 		/// <param name="protocolo">The protocolo.</param>
@@ -126,7 +127,9 @@ namespace ACBr.Net.NFSe
 		}
 
 		/// <summary>
-		/// Consultars the lote RPS.
+		/// Consulta o lote de Rps
+		///
+		/// Obs.: Nem todos provedores suportam este metodo.
 		/// </summary>
 		/// <param name="protocolo">The protocolo.</param>
 		/// <param name="lote">The lote.</param>
@@ -140,6 +143,8 @@ namespace ACBr.Net.NFSe
 
 		/// <summary>
 		/// Consulta o numero de sequencia dos lotes de RPS.
+		///
+		/// Obs.: Nem todos provedores suportam este metodo.
 		/// </summary>
 		/// <param name="serie">The serie.</param>
 		/// <returns>RetornoWebservice.</returns>
@@ -152,7 +157,8 @@ namespace ACBr.Net.NFSe
 
 		/// <summary>
 		/// Consulta a NFSe/RPS que atende os filtros informados.
-		/// Obs: Nem todos provedores suportar este metodo.
+		///
+		/// Obs.: Nem todos provedores suportam este metodo.
 		/// </summary>
 		/// <param name="numero">The numero.</param>
 		/// <param name="serie">The serie.</param>
@@ -166,8 +172,9 @@ namespace ACBr.Net.NFSe
 		}
 
 		/// <summary>
-		/// Consulta as NFSe no periodo informado de acordo com os filtros.
-		/// Obs: Nem todos provedores suportar este metodo.
+		/// Consulta as NFSe de acordo com os filtros.
+		///
+		/// Obs.: Nem todos provedores suportam este metodo.
 		/// </summary>
 		/// <param name="inicio">The inicio.</param>
 		/// <param name="fim">The fim.</param>
@@ -193,6 +200,8 @@ namespace ACBr.Net.NFSe
 
 		/// <summary>
 		/// Cancela uma NFSe
+		///
+		/// Obs.: Nem todos provedores suportam este metodo.
 		/// </summary>
 		/// <param name="codigoCancelamento">O codigo de cancelamento.</param>
 		/// <param name="numeroNFSe">O numero da NFSe.</param>
@@ -208,6 +217,7 @@ namespace ACBr.Net.NFSe
 		/// Cancela as NFSe que estão carregadas na lista.
 		///
 		/// Obs.: Adicionar o motivo de cancelamento nas notas da lista.
+		///       Nem todos provedores suportam este metodo.
 		/// </summary>
 		/// <param name="lote">Identificação do lote.</param>
 		/// <returns>RetornoWebservice.</returns>
@@ -221,6 +231,8 @@ namespace ACBr.Net.NFSe
 
 		/// <summary>
 		/// Substitui uma NFSe
+		///
+		/// Obs.: Nem todos provedores suportam este metodo.
 		/// </summary>
 		/// <param name="codigoCancelamento">O codigo de cancelamento.</param>
 		/// <param name="numeroNFSe">O numero da NFSe.</param>

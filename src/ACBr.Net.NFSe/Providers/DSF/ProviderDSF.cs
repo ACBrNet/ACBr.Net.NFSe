@@ -337,7 +337,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			if (nota.Servico.Deducoes.Count > 0)
 				rpsTag.AddChild(GerarDeducoes(nota.Servico.Deducoes));
 
-			return xmldoc.AsString(identado, showDeclaration);
+			return xmldoc.AsString(identado, showDeclaration, Encoding.UTF8);
 		}
 
 		public override string GetXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
@@ -424,7 +424,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			if (nota.Servico.Deducoes.Count > 0)
 				notaTag.AddChild(GerarDeducoes(nota.Servico.Deducoes));
 
-			return xmldoc.AsString(identado, showDeclaration);
+			return xmldoc.AsString(identado, showDeclaration, Encoding.UTF8);
 		}
 
 		public override RetornoWebservice Enviar(int lote, NotaFiscalCollection notas)

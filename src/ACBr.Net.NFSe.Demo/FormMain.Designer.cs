@@ -99,6 +99,13 @@
 			this.txtCertificado = new System.Windows.Forms.TextBox();
 			this.label9 = new System.Windows.Forms.Label();
 			this.tabPage5 = new System.Windows.Forms.TabPage();
+			this.btnSelecionarArquivo = new System.Windows.Forms.Button();
+			this.txtArquivoCidades = new System.Windows.Forms.TextBox();
+			this.label13 = new System.Windows.Forms.Label();
+			this.chkSalvarArquivos = new System.Windows.Forms.CheckBox();
+			this.btnSelecionarSchema = new System.Windows.Forms.Button();
+			this.txtSchemas = new System.Windows.Forms.TextBox();
+			this.label12 = new System.Windows.Forms.Label();
 			this.tabPage6 = new System.Windows.Forms.TabPage();
 			this.tabPage7 = new System.Windows.Forms.TabPage();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -114,13 +121,6 @@
 			this.cmhProvedor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-			this.btnSelecionarSchema = new System.Windows.Forms.Button();
-			this.txtSchemas = new System.Windows.Forms.TextBox();
-			this.label12 = new System.Windows.Forms.Label();
-			this.chkSalvarArquivos = new System.Windows.Forms.CheckBox();
-			this.btnSelecionarArquivo = new System.Windows.Forms.Button();
-			this.txtArquivoCidades = new System.Windows.Forms.TextBox();
-			this.label13 = new System.Windows.Forms.Label();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tabControl3.SuspendLayout();
@@ -335,6 +335,7 @@
 			this.rtLogResposta.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.rtLogResposta.Location = new System.Drawing.Point(3, 3);
 			this.rtLogResposta.Name = "rtLogResposta";
+			this.rtLogResposta.ReadOnly = true;
 			this.rtLogResposta.Size = new System.Drawing.Size(554, 268);
 			this.rtLogResposta.TabIndex = 1;
 			this.rtLogResposta.Text = "";
@@ -376,6 +377,7 @@
 			this.rtbLog.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.rtbLog.Location = new System.Drawing.Point(3, 3);
 			this.rtbLog.Name = "rtbLog";
+			this.rtbLog.ReadOnly = true;
 			this.rtbLog.Size = new System.Drawing.Size(554, 268);
 			this.rtbLog.TabIndex = 0;
 			this.rtbLog.Text = "";
@@ -852,6 +854,68 @@
 			this.tabPage5.Text = "Geral";
 			this.tabPage5.UseVisualStyleBackColor = true;
 			// 
+			// btnSelecionarArquivo
+			// 
+			this.btnSelecionarArquivo.Location = new System.Drawing.Point(239, 89);
+			this.btnSelecionarArquivo.Name = "btnSelecionarArquivo";
+			this.btnSelecionarArquivo.Size = new System.Drawing.Size(24, 20);
+			this.btnSelecionarArquivo.TabIndex = 19;
+			this.btnSelecionarArquivo.Text = "...";
+			this.btnSelecionarArquivo.UseVisualStyleBackColor = true;
+			this.btnSelecionarArquivo.Click += new System.EventHandler(this.btnSelecionarArquivo_Click);
+			// 
+			// txtArquivoCidades
+			// 
+			this.txtArquivoCidades.Location = new System.Drawing.Point(6, 90);
+			this.txtArquivoCidades.Name = "txtArquivoCidades";
+			this.txtArquivoCidades.Size = new System.Drawing.Size(227, 20);
+			this.txtArquivoCidades.TabIndex = 21;
+			// 
+			// label13
+			// 
+			this.label13.AutoSize = true;
+			this.label13.Location = new System.Drawing.Point(6, 74);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(84, 13);
+			this.label13.TabIndex = 20;
+			this.label13.Text = "Arquivo Cidades";
+			// 
+			// chkSalvarArquivos
+			// 
+			this.chkSalvarArquivos.AutoSize = true;
+			this.chkSalvarArquivos.Location = new System.Drawing.Point(6, 54);
+			this.chkSalvarArquivos.Name = "chkSalvarArquivos";
+			this.chkSalvarArquivos.Size = new System.Drawing.Size(129, 17);
+			this.chkSalvarArquivos.TabIndex = 18;
+			this.chkSalvarArquivos.Text = "Salvar arquivos NFSe";
+			this.chkSalvarArquivos.UseVisualStyleBackColor = true;
+			// 
+			// btnSelecionarSchema
+			// 
+			this.btnSelecionarSchema.Location = new System.Drawing.Point(239, 28);
+			this.btnSelecionarSchema.Name = "btnSelecionarSchema";
+			this.btnSelecionarSchema.Size = new System.Drawing.Size(24, 20);
+			this.btnSelecionarSchema.TabIndex = 10;
+			this.btnSelecionarSchema.Text = "...";
+			this.btnSelecionarSchema.UseVisualStyleBackColor = true;
+			this.btnSelecionarSchema.Click += new System.EventHandler(this.btnSelecionarSchema_Click);
+			// 
+			// txtSchemas
+			// 
+			this.txtSchemas.Location = new System.Drawing.Point(6, 28);
+			this.txtSchemas.Name = "txtSchemas";
+			this.txtSchemas.Size = new System.Drawing.Size(227, 20);
+			this.txtSchemas.TabIndex = 12;
+			// 
+			// label12
+			// 
+			this.label12.AutoSize = true;
+			this.label12.Location = new System.Drawing.Point(6, 12);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(81, 13);
+			this.label12.TabIndex = 11;
+			this.label12.Text = "Pasta Schemas";
+			// 
 			// tabPage6
 			// 
 			this.tabPage6.Location = new System.Drawing.Point(4, 22);
@@ -995,68 +1059,6 @@
 			// 
 			this.lblStatus.Name = "lblStatus";
 			this.lblStatus.Size = new System.Drawing.Size(0, 17);
-			// 
-			// btnSelecionarSchema
-			// 
-			this.btnSelecionarSchema.Location = new System.Drawing.Point(239, 28);
-			this.btnSelecionarSchema.Name = "btnSelecionarSchema";
-			this.btnSelecionarSchema.Size = new System.Drawing.Size(24, 20);
-			this.btnSelecionarSchema.TabIndex = 10;
-			this.btnSelecionarSchema.Text = "...";
-			this.btnSelecionarSchema.UseVisualStyleBackColor = true;
-			this.btnSelecionarSchema.Click += new System.EventHandler(this.btnSelecionarSchema_Click);
-			// 
-			// txtSchemas
-			// 
-			this.txtSchemas.Location = new System.Drawing.Point(6, 28);
-			this.txtSchemas.Name = "txtSchemas";
-			this.txtSchemas.Size = new System.Drawing.Size(227, 20);
-			this.txtSchemas.TabIndex = 12;
-			// 
-			// label12
-			// 
-			this.label12.AutoSize = true;
-			this.label12.Location = new System.Drawing.Point(6, 12);
-			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(81, 13);
-			this.label12.TabIndex = 11;
-			this.label12.Text = "Pasta Schemas";
-			// 
-			// chkSalvarArquivos
-			// 
-			this.chkSalvarArquivos.AutoSize = true;
-			this.chkSalvarArquivos.Location = new System.Drawing.Point(6, 54);
-			this.chkSalvarArquivos.Name = "chkSalvarArquivos";
-			this.chkSalvarArquivos.Size = new System.Drawing.Size(129, 17);
-			this.chkSalvarArquivos.TabIndex = 18;
-			this.chkSalvarArquivos.Text = "Salvar arquivos NFSe";
-			this.chkSalvarArquivos.UseVisualStyleBackColor = true;
-			// 
-			// btnSelecionarArquivo
-			// 
-			this.btnSelecionarArquivo.Location = new System.Drawing.Point(239, 89);
-			this.btnSelecionarArquivo.Name = "btnSelecionarArquivo";
-			this.btnSelecionarArquivo.Size = new System.Drawing.Size(24, 20);
-			this.btnSelecionarArquivo.TabIndex = 19;
-			this.btnSelecionarArquivo.Text = "...";
-			this.btnSelecionarArquivo.UseVisualStyleBackColor = true;
-			this.btnSelecionarArquivo.Click += new System.EventHandler(this.btnSelecionarArquivo_Click);
-			// 
-			// txtArquivoCidades
-			// 
-			this.txtArquivoCidades.Location = new System.Drawing.Point(6, 90);
-			this.txtArquivoCidades.Name = "txtArquivoCidades";
-			this.txtArquivoCidades.Size = new System.Drawing.Size(227, 20);
-			this.txtArquivoCidades.TabIndex = 21;
-			// 
-			// label13
-			// 
-			this.label13.AutoSize = true;
-			this.label13.Location = new System.Drawing.Point(6, 74);
-			this.label13.Name = "label13";
-			this.label13.Size = new System.Drawing.Size(84, 13);
-			this.label13.TabIndex = 20;
-			this.label13.Text = "Arquivo Cidades";
 			// 
 			// FormMain
 			// 

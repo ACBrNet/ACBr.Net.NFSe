@@ -33,7 +33,7 @@ using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
-	[MessageContract(WrapperName = "cancelarResponse", WrapperNamespace = "http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws", IsWrapped = true)]
+	[MessageContract(WrapperName = "cancelarResponse", IsWrapped = true)]
 	internal class CancelarResponse
 	{
 		public CancelarResponse(string cancelarReturn)

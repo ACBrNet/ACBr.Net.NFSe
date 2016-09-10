@@ -120,29 +120,33 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 				ret.IdentificacaoRps.DataEmissao = rootDoc.ElementAnyNs("DataEmissao")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
 			// Natureza da Operação
-			switch (rootDoc.ElementAnyNs("NaturezaOperacao")?.GetValue<char>())
+			switch (rootDoc.ElementAnyNs("NaturezaOperacao")?.GetValue<int>())
 			{
-				case '1':
+				case 0:
+					ret.NaturezaOperacao = NaturezaOperacao.NT00;
+					break;
+
+				case 1:
 					ret.NaturezaOperacao = NaturezaOperacao.NT01;
 					break;
 
-				case '2':
+				case 2:
 					ret.NaturezaOperacao = NaturezaOperacao.NT02;
 					break;
 
-				case '3':
+				case 3:
 					ret.NaturezaOperacao = NaturezaOperacao.NT03;
 					break;
 
-				case '4':
+				case 4:
 					ret.NaturezaOperacao = NaturezaOperacao.NT04;
 					break;
 
-				case '5':
+				case 5:
 					ret.NaturezaOperacao = NaturezaOperacao.NT05;
 					break;
 
-				case '6':
+				case 6:
 					ret.NaturezaOperacao = NaturezaOperacao.NT06;
 					break;
 			}
@@ -230,7 +234,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 					ret.Servico.Valores.ValorInss = rootServicoValores.ElementAnyNs("ValorInss")?.GetValue<decimal>() ?? 0;
 					ret.Servico.Valores.ValorIr = rootServicoValores.ElementAnyNs("ValorIr")?.GetValue<decimal>() ?? 0;
 					ret.Servico.Valores.ValorCsll = rootServicoValores.ElementAnyNs("ValorCsll")?.GetValue<decimal>() ?? 0;
-					ret.Servico.Valores.IssRetido = SituacaoTributaria.Normal;
+					ret.Servico.Valores.IssRetido = (rootServicoValores.ElementAnyNs("IssRetido")?.GetValue<int>() ?? 0) == 1 ? SituacaoTributaria.Retencao : SituacaoTributaria.Normal;
 					ret.Servico.Valores.ValorIss = rootServicoValores.ElementAnyNs("ValorIss")?.GetValue<decimal>() ?? 0;
 					ret.Servico.Valores.ValorOutrasRetencoes = rootServicoValores.ElementAnyNs("OutrasRetencoes")?.GetValue<decimal>() ?? 0;
 					ret.Servico.Valores.BaseCalculo = rootServicoValores.ElementAnyNs("BaseCalculo")?.GetValue<decimal>() ?? 0;
@@ -462,7 +466,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			}
 			else
 			{
-				regimeEspecialTributacao = ((int)nota.RegimeEspecialTributacao).ToString();
+				var regime = (int)nota.RegimeEspecialTributacao;
+				regimeEspecialTributacao = regime == 0 ? string.Empty : regime.ToString();
 				optanteSimplesNacional = "2";
 			}
 
@@ -475,7 +480,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			var rps = new XElement(ns + "Rps", new XAttribute(XNamespace.Xmlns + "tipos", ns));
 			xmlDoc.Add(rps);
 
-			var infoRps = new XElement(ns + "InfRps");
+			var infoRps = new XElement(ns + "InfRps", new XAttribute("Id", nota.IdentificacaoRps.Numero));
 			rps.Add(infoRps);
 
 			var ideRps = new XElement(ns + "IdentificacaoRps");
@@ -524,7 +529,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			valores.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorIssRetido", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.ValorIssRetido));
 			valores.AddChild(AdicionarTag(TipoCampo.De2, "", "OutrasRetencoes", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.OutrasRetencoes));
 			valores.AddChild(AdicionarTag(TipoCampo.De2, "", "BaseCalculo", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.BaseCalculo));
-			valores.AddChild(AdicionarTag(TipoCampo.De4, "", "Aliquota", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.Aliquota / 100)); // Valor Percentual - Exemplos: 1% => 0.01   /   25,5% => 0.255   /   100% => 1
+			// Valor Percentual - Exemplos: 1% => 0.01   /   25,5% => 0.255   /   100% => 1
+			valores.AddChild(AdicionarTag(TipoCampo.De4, "", "Aliquota", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.Aliquota));
 			valores.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorLiquidoNfse", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.ValorLiquidoNfse));
 			valores.AddChild(AdicionarTag(TipoCampo.De2, "", "DescontoIncondicionado", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.DescontoIncondicionado));
 			valores.AddChild(AdicionarTag(TipoCampo.De2, "", "DescontoCondicionado", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.DescontoCondicionado));
@@ -571,11 +577,14 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 				endereco.AddChild(AdicionarTag(TipoCampo.StrNumberFill, "", "Cep", ns, 8, 8, Ocorrencia.NaoObrigatoria, nota.Tomador.Endereco.Cep));
 			}
 
-			var contato = new XElement(ns + "Contato");
-			tomador.AddChild(contato);
+			if (!nota.Tomador.DadosContato.Telefone.IsEmpty() || !nota.Tomador.DadosContato.Email.IsEmpty())
+			{
+				var contato = new XElement(ns + "Contato");
+				tomador.AddChild(contato);
 
-			contato.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "Telefone", ns, 1, 11, Ocorrencia.Obrigatoria, nota.Tomador.DadosContato.Telefone));
-			contato.AddChild(AdicionarTag(TipoCampo.Str, "", "Email", ns, 1, 80, Ocorrencia.Obrigatoria, nota.Tomador.DadosContato.Email));
+				contato.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "Telefone", ns, 1, 11, Ocorrencia.NaoObrigatoria, nota.Tomador.DadosContato.Telefone));
+				contato.AddChild(AdicionarTag(TipoCampo.Str, "", "Email", ns, 1, 80, Ocorrencia.NaoObrigatoria, nota.Tomador.DadosContato.Email));
+			}
 
 			if (!nota.Intermediario.RazaoSocial.IsEmpty())
 			{
@@ -601,7 +610,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 				conCivil.AddChild(AdicionarTag(TipoCampo.Str, "", "Art", ns, 1, 15, Ocorrencia.Obrigatoria, nota.ConstrucaoCivil.Art));
 			}
 
-			return xmlDoc.AsString(false, false);
+			return xmlDoc.AsString(identado, showDeclaration, Encoding.UTF8);
 		}
 
 		public override string GetXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
@@ -835,7 +844,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 				conCivil.AddChild(AdicionarTag(TipoCampo.Str, "", "Art", ns, 1, 15, Ocorrencia.Obrigatoria, nota.ConstrucaoCivil.Art));
 			}
 
-			return xmlDoc.AsString(false, false);
+			return xmlDoc.AsString(identado, showDeclaration, Encoding.UTF8);
 		}
 
 		public override RetornoWebservice Enviar(int lote, NotaFiscalCollection notas)

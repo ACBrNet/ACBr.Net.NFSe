@@ -1,17 +1,4 @@
 // ***********************************************************************
-// Assembly         : G2i.NFSe
-// Author           : RFTD
-// Created          : 10-08-2014
-//
-// Last Modified By : RFTD
-// Last Modified On : 10-08-2014
-// ***********************************************************************
-// <copyright file="consultarSequencialRpsRequest.cs" company="ACBr.Net">
-//     Copyright (c) ACBr.Net. All rights reserved.
-// </copyright>
-// <summary></summary>
-// ***********************************************************************
-// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
 // Created          : 19-08-2016

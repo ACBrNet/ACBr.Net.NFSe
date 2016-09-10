@@ -35,7 +35,7 @@ using System.ServiceModel;
 namespace ACBr.Net.NFSe.Providers.DSF
 {
 	[EditorBrowsable(EditorBrowsableState.Advanced)]
-	[MessageContract(WrapperName = "enviarSincronoResponse", WrapperNamespace = "http://issdigital.pmcg.ms.gov.br/WsNFe2/LoteRps.jws", IsWrapped = true)]
+	[MessageContract(WrapperName = "enviarSincronoResponse", IsWrapped = true)]
 	internal class EnviarSincronoResponse
 	{
 		public EnviarSincronoResponse(string enviarSincronoReturn)
