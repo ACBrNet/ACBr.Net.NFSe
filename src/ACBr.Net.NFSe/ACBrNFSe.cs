@@ -42,94 +42,36 @@ using System.ComponentModel;
 #region COM Interop Attributes
 
 #if COM_INTEROP
+
 using System.Runtime.InteropServices;
+
 #endif
 
 #endregion COM Interop Attributes
 
 namespace ACBr.Net.NFSe
 {
-	#region COM Interop
-
-	/* NOTAS para COM INTEROP
-	 * Há um modo de compilação com a diretiva COM_INTEROP que inseri atributos e código específico
-	 * para a DLL ser exportada para COM (ActiveX)
-	 *
-	 * O modelo COM possui alguma limitações/diferenças em relação ao modelo .NET
-	 * Inserir os #if COM_INTEROP para prover implementações distintas nas modificações necessárias para COM:
-	 *
-	 * - Inserir atributos ComVisible(true), Guid("xxx") e ClassInterface(ClassInterfaceType.AutoDual) em todas as classes envolvidas
-	 *
-	 * - Propriedades/métodos que usam "Decimal" devem incluir o atributo MarshalAs(UnmanagedType.Currency)
-	 *   usar [return: ...] para retornos de métodos e propriedades ou [param: ...] para o set de propriedades
-	 *
-	 * - Métodos que recebem array como parâmetros devem fazer como "ref".
-	 *   Propriedades só podem retornar arrays, nunca receber.
-	 *
-	 * - Overload não é permitido. Métodos com mesmos nomes devem ser renomeados.
-	 *   É possível usar parâmetros default, simplificando a necessidade de Overload
-	 *
-	 * - Generic não deve ser usado. Todas as classes Generic devem ser re-escritas como classes específicas
-	 *
-	 * - Eventos precisam de uma Interface com as declarações dos métodos (eventos) com o atributo [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
-	 *   A classe que declara os eventos precisa do atributo [ComSourceInterfaces(typeof(INomeDaInterface))]
-	 *   Nenhum delegate deverá ser Generic, precisam ser re-escritos.
-	 *
-	 *   OBS: Por padrão o modelo .Net recebe os eventos com a assinatura void(object sender, EventArgs e)
-	 *   O modelo COM não precisa desses parâmetros. Assim o delegate EventHandler foi redefinido para uma assinatura void()
-	 *   Outros EventArgs devem seguir a assitarua COM void(MyEventArg e) ao invés da assinatura .NET void(object sender, MyEventArgs e)
-	 * */
-
-#if COM_INTEROP
-
-	#region IDispatch Interface
-
-	#region Documentation
-
-	/// <summary>
-	/// Interface contendo os eventos publicados pelo componente COM
-	/// </summary>
-
-	#endregion Documentation
-
-	#endregion IDispatch Interface
-
-	#region Delegates
-
-	#region Comments
-
-	///os componentes COM não suportam Generics
-	///Estas são implementações específicas de delegates que no .Net são representados como EventHandler<T>
-
-	#endregion Comments
-
-	#endregion Delegates
-
-#endif
-
-	#endregion COM Interop
-
 	#region COM Interop Attributes
 
 #if COM_INTEROP
 
 	[ComVisible(true)]
-    [Guid("0BE7D93A-0C14-4E14-B744-8653838197BA")]
-	[ClassInterface(ClassInterfaceType.AutoDual)]
+	[Guid("842C5505-4E4B-4843-933D-42D23A522417")]
+	[ComSourceInterfaces(typeof(IACBrNFSe))]
 #endif
 
 	#endregion COM Interop Attributes
 
-	[ToolboxItem(typeof(ACBrNFSe))]
+	[ToolboxItem(true)]
 	// ReSharper disable once InconsistentNaming
-	public class ACBrNFSe : ACBrComponent
+	public sealed class ACBrNFSe : ACBrComponent, IACBrNFSe
 	{
 		#region Propriedades
 
 		/// <summary>
 		/// Configurações do Componente
 		/// </summary>
-		public Configuracoes Configuracoes { get; private set; }
+		public ConfiguracoesNFSe Configuracoes { get; private set; }
 
 		/// <summary>
 		/// Componente de impressão
@@ -146,39 +88,23 @@ namespace ACBr.Net.NFSe
 		#region Methods
 
 		/// <summary>
-		/// Envia as NFSe para o provedor da cidade de forma assincrona.
+		/// Envia as NFSe para o provedor da cidade.
 		/// </summary>
 		/// <param name="lote">Numero do lote.</param>
-		/// <param name="imprimir">Se for passado <c>true</c> imprime as RPS, se o envio foi executado com sucesso.</param>
+		/// <param name="sincrono">Se for informado <c>true</c> o envio será sincrono.</param>
+		/// <param name="imprimir">Se for informado <c>true</c> imprime as RPS, se o envio foi executado com sucesso.</param>
 		/// <returns>RetornoWebservice.</returns>
-		public RetornoWebservice Enviar(int lote, bool imprimir)
+		public RetornoWebservice Enviar(int lote, bool sincrono = false, bool imprimir = false)
+
 		{
-			Guard.Against<ArgumentException>(NotasFiscais.Count < 1, "ERRO: Nenhuma RPS adicionada ao Lote");
-			Guard.Against<ArgumentException>(NotasFiscais.Count > 50, $"ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS) excedido.{Environment.NewLine}" +
-																	  $"Quantidade atual: {NotasFiscais.Count}");
+			Guard.Against<ACBrException>(NotasFiscais.Count < 1, "ERRO: Nenhuma RPS adicionada ao Lote");
+
+			Guard.Against<ACBrException>(NotasFiscais.Count > 50,
+				$"ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS) excedido.{Environment.NewLine}" +
+				$"Quantidade atual: {NotasFiscais.Count}");
 			var provider = ProviderManager.GetProvider(Configuracoes);
-			var ret = provider.Enviar(lote, NotasFiscais);
 
-			if (ret.Sucesso && DaNfSe != null && imprimir)
-				DaNfSe.Imprimir();
-
-			return ret;
-		}
-
-		/// <summary>
-		/// Envia as NFSe para o provedor da cidade de forma sincrona.
-		/// Obs: Nem todos provedores suportar este metodo.
-		/// </summary>
-		/// <param name="lote">Numero do lote.</param>
-		/// <param name="imprimir">Se for passado <c>true</c> imprime as NFSe, se o envio foi executado com sucesso.</param>
-		/// <returns>RetornoWebservice.</returns>
-		public RetornoWebservice EnviarSincrono(int lote, bool imprimir)
-		{
-			Guard.Against<ArgumentException>(NotasFiscais.Count < 1, "ERRO: Nenhuma RPS adicionada ao Lote");
-			Guard.Against<ArgumentException>(NotasFiscais.Count > 50, $"ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS) excedido.{Environment.NewLine}" +
-																	  $"Quantidade atual: {NotasFiscais.Count}");
-			var provider = ProviderManager.GetProvider(Configuracoes);
-			var ret = provider.EnviarSincrono(lote, NotasFiscais);
+			var ret = sincrono ? provider.EnviarSincrono(lote, NotasFiscais) : provider.Enviar(lote, NotasFiscais);
 
 			if (ret.Sucesso && DaNfSe != null && imprimir)
 				DaNfSe.Imprimir();
@@ -233,7 +159,7 @@ namespace ACBr.Net.NFSe
 		/// <param name="tipo">The tipo.</param>
 		/// <returns>RetornoWebservice.</returns>
 		/// <exception cref="NotImplementedException"></exception>
-		public RetornoWebservice ConsultaNFSeRps(string numero, string serie, string tipo)
+		public RetornoWebservice ConsultaNFSeRps(string numero, string serie, TipoRps tipo)
 		{
 			var provider = ProviderManager.GetProvider(Configuracoes);
 			return provider.ConsultaNFSeRps(numero, serie, tipo, NotasFiscais);
@@ -259,7 +185,7 @@ namespace ACBr.Net.NFSe
 			string cnpjTomador = "", string imTomador = "", string nomeInter = "", string cnpjInter = "", string imInter = "",
 			string serie = "")
 		{
-			Guard.Against<ArgumentException>(inicio.Date > fim.Date, "A data inicial não pode ser maior que a data final.");
+			Guard.Against<ACBrException>(inicio.Date > fim.Date, "A data inicial não pode ser maior que a data final.");
 
 			var provider = ProviderManager.GetProvider(Configuracoes);
 			return provider.ConsultaNFSe(inicio, fim, numeroNfse, pagina, cnpjTomador,
@@ -311,8 +237,6 @@ namespace ACBr.Net.NFSe
 			return provider.SubstituirNFSe(codigoCancelamento, numeroNFSe, motivo, NotasFiscais);
 		}
 
-		#endregion Methods
-
 		#region Override Methods
 
 		/// <summary>
@@ -320,8 +244,8 @@ namespace ACBr.Net.NFSe
 		/// </summary>
 		protected override void OnInitialize()
 		{
-			Configuracoes = new Configuracoes();
-			NotasFiscais = new NotaFiscalCollection(this);
+			Configuracoes = new ConfiguracoesNFSe();
+			NotasFiscais = new NotaFiscalCollection(Configuracoes);
 		}
 
 		/// <summary>
@@ -332,5 +256,7 @@ namespace ACBr.Net.NFSe
 		}
 
 		#endregion Override Methods
+
+		#endregion Methods
 	}
 }

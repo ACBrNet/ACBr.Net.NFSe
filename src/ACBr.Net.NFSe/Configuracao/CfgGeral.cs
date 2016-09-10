@@ -89,7 +89,7 @@ namespace ACBr.Net.NFSe.Configuracao
 			set
 			{
 				arquivoMunicipios = value;
-				ProviderManager.Deserialize(arquivoMunicipios);
+				ProviderManager.Load(arquivoMunicipios);
 			}
 		}
 

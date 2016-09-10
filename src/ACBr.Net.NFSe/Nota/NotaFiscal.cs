@@ -29,8 +29,11 @@
 // <summary></summary>
 // ***********************************************************************
 
+using ACBr.Net.Core;
+using ACBr.Net.Core.Exceptions;
 using ACBr.Net.Core.Generics;
 using ACBr.Net.DFe.Core.Document;
+using ACBr.Net.NFSe.Configuracao;
 using System;
 
 namespace ACBr.Net.NFSe.Nota
@@ -40,19 +43,29 @@ namespace ACBr.Net.NFSe.Nota
 	/// </summary>
 	public sealed class NotaFiscal : GenericClone<NotaFiscal>
 	{
+		#region Fields
+
+		private ConfiguracoesNFSe config;
+
+		#endregion Fields
+
 		#region Constructor
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="NotaFiscal"/> class.
 		/// </summary>
-		internal NotaFiscal()
+		public NotaFiscal(ConfiguracoesNFSe config, bool prestadorPadrão = true)
 		{
+			Guard.Against<ACBrException>(config == null, "Configurações não podem ser nulas");
+
+			this.config = config;
+
 			Id = 0;
 			IdentificacaoRps = new IdeRps();
 			IdentificacaoNFSe = new IdeNFSe();
 			RpsSubstituido = new IdeRpsSubtituida();
 			Servico = new DadosServico();
-			Prestador = new DadosPrestador();
+			Prestador = prestadorPadrão ? config.PrestadorPadrao : new DadosPrestador();
 			Tomador = new DadosTomador();
 			Intermediario = new DadosIntermediario();
 			ConstrucaoCivil = new DadosConstrucaoCivil();

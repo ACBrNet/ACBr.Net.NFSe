@@ -1,11 +1,12 @@
-﻿using ACBr.Net.Core.Logging;
-using ACBr.Net.DFe.Core.Common;
+﻿using ACBr.Net.Core.Extensions;
+using ACBr.Net.Core.Logging;
 using ACBr.Net.NFSe.Providers;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
 using NLog.Windows.Forms;
 using System;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -35,7 +36,25 @@ namespace ACBr.Net.NFSe.Demo
 
 		private void btnConsultarSituacao_Click(object sender, EventArgs e)
 		{
-			ExecuteSafe(() => acbrNFSe.ConsultarSituacao(0, "10"));
+			ExecuteSafe(() =>
+			{
+				var ret = acbrNFSe.ConsultarSituacao(0, "10");
+				wbbDados.LoadXml(ret.XmlEnvio);
+				wbbResposta.LoadXml(ret.XmlRetorno);
+			});
+		}
+
+		private void btnSelecionarSchema_Click(object sender, EventArgs e)
+		{
+			ExecuteSafe(() =>
+			{
+				txtSchemas.Text = Helpers.SelectFolder();
+			});
+		}
+
+		private void btnSelecionarArquivo_Click(object sender, EventArgs e)
+		{
+			LoadMunicipios();
 		}
 
 		private void btnAdicionar_Click(object sender, EventArgs e)
@@ -63,16 +82,23 @@ namespace ACBr.Net.NFSe.Demo
 			});
 		}
 
+		private void btnCarregar_Click(object sender, EventArgs e)
+		{
+			LoadMunicipios();
+		}
+
 		private void btnSalvar_Click(object sender, EventArgs e)
 		{
 			ExecuteSafe(() =>
 			{
 				if (listView1.Items.Count < 1) return;
 
+				var path = Helpers.SelectFolder();
+				if (path.IsEmpty()) return;
+
 				var municipios = listView1.Items.Cast<ListViewItem>().Select(x => (MunicipioNFSe)x.Tag);
-				ProviderManager.Municipios.Clear();
 				ProviderManager.Municipios.AddRange(municipios);
-				ProviderManager.Serialize();
+				ProviderManager.Save(Path.Combine(path, "Municipios.nfse"));
 			});
 		}
 
@@ -89,7 +115,7 @@ namespace ACBr.Net.NFSe.Demo
 		{
 			ExecuteSafe(() =>
 			{
-				var file = Helpers.OpenFiles("Certificate Files (*.pfx)|*.pfx|All Files (*.*)|*.*", "Selecione o certificado");
+				var file = Helpers.OpenFile("Certificate Files (*.pfx)|*.pfx|All Files (*.*)|*.*", "Selecione o certificado");
 				txtCertificado.Text = file;
 			});
 		}
@@ -121,15 +147,7 @@ namespace ACBr.Net.NFSe.Demo
 		protected override void OnLoad(EventArgs e)
 		{
 			acbrNFSe = new ACBrNFSe();
-
-			acbrNFSe.Configuracoes.Certificados.Certificado = "4E009FA5F9CABB8F";
-			acbrNFSe.Configuracoes.WebServices.CodMunicipio = 3543402;
-			acbrNFSe.Configuracoes.WebServices.Ambiente = TipoAmbiente.Homologacao;
-
-			acbrNFSe.Configuracoes.PrestadorPadrao.InscricaoMunicipal = "0000000000";
-
 			AddMunicipio(ProviderManager.Municipios.ToArray());
-
 			base.OnLoad(e);
 		}
 
@@ -155,6 +173,26 @@ namespace ACBr.Net.NFSe.Demo
 			}
 
 			UpdateCidades();
+		}
+
+		private void LoadMunicipios()
+		{
+			ExecuteSafe(() =>
+			{
+				var arquivo = Helpers.OpenFile("Arquivo de cidades NFSe (*.nfse) | *.nfse |Todos os arquivos | *.*", "Selecione o arquivo de cidades");
+				if (arquivo.IsEmpty()) return;
+
+				ProviderManager.Load(arquivo);
+
+				txtArquivoCidades.Text = arquivo;
+
+				listView1.BeginUpdate();
+
+				listView1.Items.Clear();
+				AddMunicipio(ProviderManager.Municipios.ToArray());
+
+				listView1.EndUpdate();
+			});
 		}
 
 		private void UpdateCidades()

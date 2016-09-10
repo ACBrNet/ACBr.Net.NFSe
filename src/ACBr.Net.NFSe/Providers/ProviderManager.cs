@@ -33,8 +33,6 @@ using ACBr.Net.Core;
 using ACBr.Net.Core.Exceptions;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.NFSe.Configuracao;
-using ACBr.Net.NFSe.Interfaces;
-using ACBr.Net.NFSe.Providers.Betha;
 using ACBr.Net.NFSe.Providers.DSF;
 using ACBr.Net.NFSe.Providers.Ginfes;
 using System;
@@ -56,14 +54,31 @@ namespace ACBr.Net.NFSe.Providers
 		static ProviderManager()
 		{
 			Municipios = new List<MunicipioNFSe>();
-			Deserialize();
+			Providers = new Dictionary<string, Type>
+			{
+				{"DSF", typeof(ProviderDSF)},
+				{"ISSDSF", typeof(ProviderDSF)},
+				{"GINFES", typeof(ProviderGinfes)}
+			};
+
+			Load();
 		}
 
 		#endregion Constructors
 
 		#region Propriedades
 
+		/// <summary>
+		/// Municipios cadastrados no ACBrNFSe
+		/// </summary>
+		/// <value>Os municipios</value>
 		public static List<MunicipioNFSe> Municipios { get; }
+
+		/// <summary>
+		/// Provedores cadastrados no ACBrNFSe
+		/// </summary>
+		/// <value>Os provedores</value>
+		public static Dictionary<string, Type> Providers { get; }
 
 		#endregion Propriedades
 
@@ -71,7 +86,11 @@ namespace ACBr.Net.NFSe.Providers
 
 		#region Public
 
-		public static void Serialize(string path = "Municipios.nfse")
+		/// <summary>
+		/// Salva o arquivo de cidades.
+		/// </summary>
+		/// <param name="path">Caminho para salvar o arquivo</param>
+		public static void Save(string path = "Municipios.nfse")
 		{
 			Guard.Against<ArgumentNullException>(path == null, "Path invalido.");
 
@@ -80,11 +99,15 @@ namespace ACBr.Net.NFSe.Providers
 
 			using (var fileStream = new FileStream(path, FileMode.CreateNew))
 			{
-				Serialize(fileStream);
+				Save(fileStream);
 			}
 		}
 
-		public static void Serialize(Stream stream)
+		/// <summary>
+		/// Salva o arquivo de cidades.
+		/// </summary>
+		/// <param name="stream">O stream.</param>
+		public static void Save(Stream stream)
 		{
 			using (var zip = new GZipStream(stream, CompressionMode.Compress))
 			{
@@ -93,7 +116,12 @@ namespace ACBr.Net.NFSe.Providers
 			}
 		}
 
-		public static void Deserialize(string path = "", bool clean = true)
+		/// <summary>
+		/// Carrega o arquivo de cidades.
+		/// </summary>
+		/// <param name="path">The path.</param>
+		/// <param name="clean">if set to <c>true</c> [clean].</param>
+		public static void Load(string path = "", bool clean = true)
 		{
 			byte[] buffer = null;
 			if (path.IsEmpty())
@@ -109,11 +137,16 @@ namespace ACBr.Net.NFSe.Providers
 
 			using (var stream = new MemoryStream(buffer))
 			{
-				Deserialize(stream, clean);
+				Load(stream, clean);
 			}
 		}
 
-		public static void Deserialize(Stream stream, bool clean = true)
+		/// <summary>
+		/// Carrega o arquivo de cidades.
+		/// </summary>
+		/// <param name="stream">The stream.</param>
+		/// <param name="clean">if set to <c>true</c> [clean].</param>
+		public static void Load(Stream stream, bool clean = true)
 		{
 			Guard.Against<ArgumentException>(stream == null, "Arquivo de cidades não encontrado");
 
@@ -131,26 +164,23 @@ namespace ACBr.Net.NFSe.Providers
 
 		#region Internal
 
-		public static INFSeProvider GetProvider(Configuracoes config)
+		/// <summary>
+		/// Retorna o provedor para o municipio nas configurações informadas.
+		/// </summary>
+		/// <param name="config">A configuração.</param>
+		/// <returns>Provedor NFSe.</returns>
+		public static ProviderBase GetProvider(ConfiguracoesNFSe config)
 		{
 			var municipio = Municipios.SingleOrDefault(x => x.Codigo == config.WebServices.CodMunicipio);
-			Guard.Against<ACBrException>(municipio == null, "Provedor para esta cidade não implementado ou não especificado ! ");
+			Guard.Against<ACBrException>(municipio == null, "Provedor para esta cidade não implementado ou não especificado!");
 
-			switch (municipio.Provedor.ToUpper())
-			{
-				case "DSF":
-				case "ISSDSF":
-					return new ProviderDSF(config, municipio);
+			// ReSharper disable once PossibleNullReferenceException
+			var providerType = Providers[municipio.Provedor.ToUpper()];
+			Guard.Against<ACBrException>(providerType == null, "Provedor não encontrado!");
+			Guard.Against<ACBrException>(!typeof(ProviderBase).IsAssignableFrom(providerType), "Classe base do provedor incorreta!");
 
-				case "GINFES":
-					return new ProviderGinfes(config, municipio);
-
-				case "BETHA":
-					return new ProviderBetha(config, municipio);
-
-				default:
-					throw new ACBrException("Provedor não encontrado");
-			}
+			// ReSharper disable once AssignNullToNotNullAttribute
+			return (ProviderBase)Activator.CreateInstance(providerType, config, municipio);
 		}
 
 		#endregion Internal

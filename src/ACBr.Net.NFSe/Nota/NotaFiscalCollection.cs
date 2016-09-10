@@ -29,8 +29,11 @@
 // <summary></summary>
 // ***********************************************************************
 
+using ACBr.Net.Core;
+using ACBr.Net.Core.Exceptions;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core.Collection;
+using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Providers;
 using System.IO;
 using System.Text;
@@ -43,28 +46,26 @@ namespace ACBr.Net.NFSe.Nota
 	/// </summary>
 	public sealed class NotaFiscalCollection : DFeCollection<NotaFiscal>
 	{
+		#region Fields
+
+		private ConfiguracoesNFSe config;
+
+		#endregion Fields
+
 		#region Constructor
 
 		/// <summary>
-		/// Inicializa uma nova instacia da classe <see cref="NotaFiscalCollection"/>.
+		/// Inicializa uma nova instacia da classe <see cref="NotaFiscalCollection" />.
 		/// </summary>
-		/// <param name="parent">The parent.</param>
-		internal NotaFiscalCollection(ACBrNFSe parent)
+		/// <param name="config">The configuration.</param>
+		public NotaFiscalCollection(ConfiguracoesNFSe config)
 		{
-			Parent = parent;
+			Guard.Against<ACBrException>(config == null, "Configurações não podem ser nulas");
+
+			this.config = config;
 		}
 
 		#endregion Constructor
-
-		#region Propriedades
-
-		/// <summary>
-		/// Gets the parent.
-		/// </summary>
-		/// <value>The parent.</value>
-		public ACBrNFSe Parent { get; }
-
-		#endregion Propriedades
 
 		#region Methods
 
@@ -74,8 +75,7 @@ namespace ACBr.Net.NFSe.Nota
 		/// <returns>T.</returns>
 		public override NotaFiscal AddNew()
 		{
-			var nota = new NotaFiscal();
-			nota.Prestador = Parent.Configuracoes.PrestadorPadrao;
+			var nota = new NotaFiscal(config);
 			Add(nota);
 			return nota;
 		}
@@ -88,7 +88,7 @@ namespace ACBr.Net.NFSe.Nota
 		/// <returns>NotaFiscal carregada.</returns>
 		public NotaFiscal Load(string xml, Encoding encoding = null)
 		{
-			var provider = ProviderManager.GetProvider(Parent.Configuracoes);
+			var provider = ProviderManager.GetProvider(config);
 			var nota = provider.LoadXml(xml, encoding);
 			Add(nota);
 			return nota;
@@ -101,7 +101,7 @@ namespace ACBr.Net.NFSe.Nota
 		/// <returns>NotaFiscal carregada.</returns>
 		public NotaFiscal Load(Stream stream)
 		{
-			var provider = ProviderManager.GetProvider(Parent.Configuracoes);
+			var provider = ProviderManager.GetProvider(config);
 			var nota = provider.LoadXml(stream);
 			Add(nota);
 			return nota;
@@ -114,7 +114,7 @@ namespace ACBr.Net.NFSe.Nota
 		/// <returns>NotaFiscal carregada.</returns>
 		public NotaFiscal Load(XDocument xml)
 		{
-			var provider = ProviderManager.GetProvider(Parent.Configuracoes);
+			var provider = ProviderManager.GetProvider(config);
 			var nota = provider.LoadXml(xml);
 			Add(nota);
 			return nota;
@@ -128,7 +128,7 @@ namespace ACBr.Net.NFSe.Nota
 		/// <returns></returns>
 		public void Save(NotaFiscal nota, string path)
 		{
-			var provider = ProviderManager.GetProvider(Parent.Configuracoes);
+			var provider = ProviderManager.GetProvider(config);
 			var file = nota.IdentificacaoNFSe.Numero.IsEmpty() ? $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml" :
 																 $"NFSe-{nota.IdentificacaoNFSe.Chave}-{nota.IdentificacaoNFSe.Numero}.xml";
 
@@ -148,7 +148,7 @@ namespace ACBr.Net.NFSe.Nota
 		/// <returns></returns>
 		public void Save(NotaFiscal nota, Stream stream)
 		{
-			var provider = ProviderManager.GetProvider(Parent.Configuracoes);
+			var provider = ProviderManager.GetProvider(config);
 			var xmlNota = nota.IdentificacaoNFSe.Numero.IsEmpty() ? provider.GetXmlRPS(nota) : provider.GetXmlNFSe(nota);
 
 			var doc = XDocument.Parse(xmlNota);
@@ -162,7 +162,7 @@ namespace ACBr.Net.NFSe.Nota
 		/// <returns></returns>
 		public string GetXml(NotaFiscal nota)
 		{
-			var provider = ProviderManager.GetProvider(Parent.Configuracoes);
+			var provider = ProviderManager.GetProvider(config);
 			return nota.IdentificacaoNFSe.Numero.IsEmpty() ? provider.GetXmlRPS(nota) : provider.GetXmlNFSe(nota);
 		}
 

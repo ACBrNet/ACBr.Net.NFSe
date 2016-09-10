@@ -46,7 +46,7 @@ namespace ACBr.Net.NFSe.Configuracao
 		/// <summary>
 		/// Inicializa uma nova instancia da classe <see cref="CfgArquivos"/>.
 		/// </summary>
-		internal CfgArquivos(Configuracoes parent)
+		internal CfgArquivos(ConfiguracoesNFSe parent)
 		{
 			Parent = parent;
 			Salvar = false;
@@ -91,7 +91,7 @@ namespace ACBr.Net.NFSe.Configuracao
 		[Browsable(true)]
 		public string PathRps { get; set; }
 
-		private Configuracoes Parent { get; }
+		private ConfiguracoesNFSe Parent { get; }
 
 		#endregion Properties
 

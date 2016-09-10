@@ -36,7 +36,6 @@ using ACBr.Net.DFe.Core;
 using ACBr.Net.DFe.Core.Common;
 using ACBr.Net.DFe.Core.Serializer;
 using ACBr.Net.NFSe.Configuracao;
-using ACBr.Net.NFSe.Interfaces;
 using ACBr.Net.NFSe.Nota;
 using System;
 using System.Collections.Generic;
@@ -52,7 +51,7 @@ namespace ACBr.Net.NFSe.Providers
 	/// <summary>
 	/// Class ProviderBase.
 	/// </summary>
-	public abstract class ProviderBase : INFSeProvider
+	public abstract class ProviderBase : IACBrLog
 	{
 		#region Internal Types
 
@@ -141,7 +140,7 @@ namespace ACBr.Net.NFSe.Providers
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ProviderBase"/> class.
 		/// </summary>
-		internal ProviderBase(Configuracoes config, MunicipioNFSe municipio)
+		internal ProviderBase(ConfiguracoesNFSe config, MunicipioNFSe municipio)
 		{
 			Name = "Base";
 			ListaDeAlertas = new List<string>();
@@ -174,7 +173,7 @@ namespace ACBr.Net.NFSe.Providers
 		/// <value><c>true</c> if [retirar acentos]; otherwise, <c>false</c>.</value>
 		public bool RetirarAcentos { get; set; }
 
-		public Configuracoes Config { get; }
+		public ConfiguracoesNFSe Config { get; }
 
 		public MunicipioNFSe Municipio { get; }
 
@@ -273,7 +272,7 @@ namespace ACBr.Net.NFSe.Providers
 			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}
 
-		public virtual RetornoWebservice ConsultaNFSeRps(string numero, string serie, string tipo, NotaFiscalCollection notas)
+		public virtual RetornoWebservice ConsultaNFSeRps(string numero, string serie, TipoRps tipo, NotaFiscalCollection notas)
 		{
 			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}

@@ -37,7 +37,7 @@ namespace ACBr.Net.NFSe.Providers.Betha
 	{
 		#region Constructors
 
-		public ProviderBetha(Configuracoes config, MunicipioNFSe municipio) : base(config, municipio)
+		public ProviderBetha(ConfiguracoesNFSe config, MunicipioNFSe municipio) : base(config, municipio)
 		{
 			Name = "Betha";
 		}

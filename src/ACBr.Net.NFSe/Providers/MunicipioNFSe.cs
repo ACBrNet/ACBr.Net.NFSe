@@ -34,55 +34,98 @@ using System.Collections.Generic;
 
 namespace ACBr.Net.NFSe.Providers
 {
+	/// <summary>
+	/// Class MunicipioNFSe. This class cannot be inherited.
+	/// </summary>
 	[Serializable]
-	public class MunicipioNFSe
+	public sealed class MunicipioNFSe
 	{
 		#region Constructors
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MunicipioNFSe"/> class.
+		/// </summary>
 		public MunicipioNFSe()
 		{
-			UrlHomologacao = new Dictionary<TipoUrl, string>(9);
-			UrlProducao = new Dictionary<TipoUrl, string>(9);
+			UrlHomologacao = new Dictionary<TipoUrl, string>(9)
+			{
+				{ TipoUrl.Enviar, string.Empty },
+				{ TipoUrl.EnviarSincrono, string.Empty },
+				{ TipoUrl.CancelaNFSe, string.Empty },
+				{ TipoUrl.ConsultaNFSe, string.Empty },
+				{ TipoUrl.ConsultaNFSeRps, string.Empty },
+				{ TipoUrl.ConsultarLoteRps, string.Empty },
+				{ TipoUrl.ConsultarSituacao, string.Empty },
+				{ TipoUrl.ConsultarSequencialRps, string.Empty },
+				{ TipoUrl.SubstituirNFSe, string.Empty}
+			};
 
-			UrlProducao[TipoUrl.Enviar] = string.Empty;
-			UrlProducao[TipoUrl.EnviarSincrono] = string.Empty;
-			UrlProducao[TipoUrl.CancelaNFSe] = string.Empty;
-			UrlProducao[TipoUrl.ConsultaNFSe] = string.Empty;
-			UrlProducao[TipoUrl.ConsultaNFSeRps] = string.Empty;
-			UrlProducao[TipoUrl.ConsultarLoteRps] = string.Empty;
-			UrlProducao[TipoUrl.ConsultarSituacao] = string.Empty;
-			UrlProducao[TipoUrl.ConsultarSequencialRps] = string.Empty;
-			UrlProducao[TipoUrl.SubstituirNFSe] = string.Empty;
-
-			UrlHomologacao[TipoUrl.Enviar] = string.Empty;
-			UrlHomologacao[TipoUrl.EnviarSincrono] = string.Empty;
-			UrlHomologacao[TipoUrl.CancelaNFSe] = string.Empty;
-			UrlHomologacao[TipoUrl.ConsultaNFSe] = string.Empty;
-			UrlHomologacao[TipoUrl.ConsultaNFSeRps] = string.Empty;
-			UrlHomologacao[TipoUrl.ConsultarLoteRps] = string.Empty;
-			UrlHomologacao[TipoUrl.ConsultarSituacao] = string.Empty;
-			UrlHomologacao[TipoUrl.ConsultarSequencialRps] = string.Empty;
-			UrlHomologacao[TipoUrl.SubstituirNFSe] = string.Empty;
+			UrlProducao = new Dictionary<TipoUrl, string>(9)
+			{
+				{ TipoUrl.Enviar, string.Empty },
+				{ TipoUrl.EnviarSincrono, string.Empty },
+				{ TipoUrl.CancelaNFSe, string.Empty },
+				{ TipoUrl.ConsultaNFSe, string.Empty },
+				{ TipoUrl.ConsultaNFSeRps, string.Empty },
+				{ TipoUrl.ConsultarLoteRps, string.Empty },
+				{ TipoUrl.ConsultarSituacao, string.Empty },
+				{ TipoUrl.ConsultarSequencialRps, string.Empty },
+				{ TipoUrl.SubstituirNFSe, string.Empty }
+			};
 		}
 
 		#endregion Constructors
 
 		#region Propriedades
 
+		/// <summary>
+		/// Define ou retorna o codigo IBGE do municipio
+		/// </summary>
+		/// <value>The codigo.</value>
 		public int Codigo { get; set; }
 
+		/// <summary>
+		/// Define ou retorna o codigo Siafi do municipio
+		/// Obrigatorio para municipios com provedor DSF/ISSDSF
+		/// </summary>
+		/// <value>The codigo siafi.</value>
 		public int CodigoSiafi { get; set; }
 
+		/// <summary>
+		/// Define ou retorna o nome do municipio
+		/// </summary>
+		/// <value>The nome.</value>
 		public string Nome { get; set; }
 
+		/// <summary>
+		/// Define ou retorna a UF do municipio
+		/// </summary>
+		/// <value>The uf.</value>
 		public string UF { get; set; }
 
+		/// <summary>
+		/// Define ou retorna o nome do provedor
+		/// </summary>
+		/// <value>The provedor.</value>
 		public string Provedor { get; set; }
 
+		/// <summary>
+		/// Define ou retorna o tamanho da inscrição municipal
+		/// Para validação em alguns provedores
+		/// </summary>
+		/// <value>The tamanho im.</value>
 		public int TamanhoIM { get; set; }
 
+		/// <summary>
+		/// Lista de url de homologação dos serviços.
+		/// </summary>
+		/// <value>The URL homologacao.</value>
 		public Dictionary<TipoUrl, string> UrlHomologacao { get; }
 
+		/// <summary>
+		/// Lista de url de produção dos serviços.
+		/// </summary>
+		/// <value>The URL producao.</value>
 		public Dictionary<TipoUrl, string> UrlProducao { get; }
 
 		#endregion Propriedades

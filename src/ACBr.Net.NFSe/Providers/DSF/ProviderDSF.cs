@@ -73,7 +73,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 		#region Constructors
 
-		public ProviderDSF(Configuracoes config, MunicipioNFSe municipio) : base(config, municipio)
+		public ProviderDSF(ConfiguracoesNFSe config, MunicipioNFSe municipio) : base(config, municipio)
 		{
 			Name = "DSF";
 		}
@@ -89,7 +89,8 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var root = xml.ElementAnyNs("Nota") ?? xml.ElementAnyNs("RPS");
 			Guard.Against<XmlException>(root == null, "Xml de Nota/RPS invalida.");
 
-			var ret = new NotaFiscal();
+			var ret = new NotaFiscal(Config, false);
+
 			// Prestador
 			ret.Prestador.InscricaoMunicipal = root.ElementAnyNs("InscricaoMunicipalPrestador").GetValue<string>();
 			ret.Prestador.RazaoSocial = root.ElementAnyNs("RazaoSocialPrestador").GetValue<string>();
@@ -1008,7 +1009,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			return retornoWebservice;
 		}
 
-		public override RetornoWebservice ConsultaNFSeRps(string numero, string serie, string tipo, NotaFiscalCollection notas)
+		public override RetornoWebservice ConsultaNFSeRps(string numero, string serie, TipoRps tipo, NotaFiscalCollection notas)
 		{
 			var retornoWebservice = new RetornoWebservice()
 			{

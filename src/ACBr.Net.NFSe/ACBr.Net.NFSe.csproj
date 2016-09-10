@@ -44,6 +44,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>..\..\bin\COM Interop\ACBr.Net.NFSe.XML</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
+    <RegisterForComInterop>false</RegisterForComInterop>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ACBr.Net.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d3bb9130f8b775a6, processorArchitecture=MSIL">
@@ -72,7 +73,8 @@
     <Compile Include="Configuracao\CfgCertificados.cs" />
     <Compile Include="Configuracao\CfgGeral.cs" />
     <Compile Include="Configuracao\CfgWebServices.cs" />
-    <Compile Include="Configuracao\Configuracoes.cs" />
+    <Compile Include="Configuracao\ConfiguracoesNFSe.cs" />
+    <Compile Include="Interfaces\IACBrNFSe.cs" />
     <Compile Include="Providers\Betha\BethaConsultarSituacaoLoteRpsServiceClient.cs" />
     <Compile Include="Providers\Betha\BethaCancelarNev01ServiceClient.cs" />
     <Compile Include="Providers\Betha\BethaConsultarLoteRpsServiceClient.cs" />
@@ -116,7 +118,6 @@
     <Compile Include="Providers\ProviderBase.cs" />
     <Compile Include="Providers\DSF\ProviderDSF.cs" />
     <Compile Include="Interfaces\IDANFSe.cs" />
-    <Compile Include="Interfaces\INFSeProvider.cs" />
     <Compile Include="Nota\FormaPagamento.cs" />
     <Compile Include="Nota\DadosPagamento.cs" />
     <Compile Include="Nota\IdeCancelamento.cs" />

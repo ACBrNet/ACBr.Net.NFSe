@@ -59,7 +59,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 		#region Constructors
 
-		public ProviderGinfes(Configuracoes config, MunicipioNFSe municipio) : base(config, municipio)
+		public ProviderGinfes(ConfiguracoesNFSe config, MunicipioNFSe municipio) : base(config, municipio)
 		{
 			Name = "Ginfes";
 		}
@@ -93,7 +93,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 			Guard.Against<XmlException>(rootDoc == null, "Xml de RPS ou NFSe invalido.");
 
-			var ret = new NotaFiscal();
+			var ret = new NotaFiscal(Config, false);
 
 			if (formatoXml == LoadXmlFormato.NFSe)
 			{

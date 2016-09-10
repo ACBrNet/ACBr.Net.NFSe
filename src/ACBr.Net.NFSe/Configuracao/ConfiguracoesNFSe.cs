@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 06-07-2016
 // ***********************************************************************
-// <copyright file="Configuracoes.cs" company="ACBr.Net">
+// <copyright file="ConfiguracoesNFSe.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -34,16 +34,16 @@ using ACBr.Net.NFSe.Nota;
 namespace ACBr.Net.NFSe.Configuracao
 {
 	/// <summary>
-	/// Class Configuracoes. This class cannot be inherited.
+	/// Class ConfiguracoesNFSe. This class cannot be inherited.
 	/// </summary>
-	public sealed class Configuracoes
+	public sealed class ConfiguracoesNFSe
 	{
 		#region Constructor
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Configuracoes"/> class.
+		/// Initializes a new instance of the <see cref="ConfiguracoesNFSe"/> class.
 		/// </summary>
-		internal Configuracoes()
+		public ConfiguracoesNFSe()
 		{
 			Geral = new CfgGeral();
 			Arquivos = new CfgArquivos(this);
