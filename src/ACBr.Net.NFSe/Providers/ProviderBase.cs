@@ -237,9 +237,9 @@ namespace ACBr.Net.NFSe.Providers
 			throw new NotImplementedException("LoadXml");
 		}
 
-		public virtual string GetXmlRPS(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
+		public virtual string GetXmlRps(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
 		{
-			throw new NotImplementedException("GetXmlRPS");
+			throw new NotImplementedException("GetXmlRps");
 		}
 
 		public virtual string GetXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)

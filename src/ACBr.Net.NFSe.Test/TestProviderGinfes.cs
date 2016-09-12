@@ -24,6 +24,9 @@ namespace ACBr.Net.NFSe.Test
 			dados.Position = 0;
 			var xml = XDocument.Load(dados);
 			var rpsOriginal = xml.AsString(true);
+
+			acbrNFSe.Enviar(1);
+
 			Assert.True(rpsGerada == rpsOriginal, "Erro na Geração do Xml da Rps");
 		}
 

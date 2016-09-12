@@ -132,7 +132,7 @@ namespace ACBr.Net.NFSe.Nota
 			var file = nota.IdentificacaoNFSe.Numero.IsEmpty() ? $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml" :
 																 $"NFSe-{nota.IdentificacaoNFSe.Chave}-{nota.IdentificacaoNFSe.Numero}.xml";
 
-			var xmlNota = nota.IdentificacaoNFSe.Numero.IsEmpty() ? provider.GetXmlRPS(nota) : provider.GetXmlNFSe(nota);
+			var xmlNota = nota.IdentificacaoNFSe.Numero.IsEmpty() ? provider.GetXmlRps(nota) : provider.GetXmlNFSe(nota);
 
 			path = Path.Combine(path, file);
 
@@ -149,7 +149,7 @@ namespace ACBr.Net.NFSe.Nota
 		public void Save(NotaFiscal nota, Stream stream)
 		{
 			var provider = ProviderManager.GetProvider(config);
-			var xmlNota = nota.IdentificacaoNFSe.Numero.IsEmpty() ? provider.GetXmlRPS(nota) : provider.GetXmlNFSe(nota);
+			var xmlNota = nota.IdentificacaoNFSe.Numero.IsEmpty() ? provider.GetXmlRps(nota) : provider.GetXmlNFSe(nota);
 
 			var doc = XDocument.Parse(xmlNota);
 			doc.Save(stream, SaveOptions.OmitDuplicateNamespaces);
@@ -163,7 +163,7 @@ namespace ACBr.Net.NFSe.Nota
 		public string GetXml(NotaFiscal nota)
 		{
 			var provider = ProviderManager.GetProvider(config);
-			return nota.IdentificacaoNFSe.Numero.IsEmpty() ? provider.GetXmlRPS(nota) : provider.GetXmlNFSe(nota);
+			return nota.IdentificacaoNFSe.Numero.IsEmpty() ? provider.GetXmlRps(nota) : provider.GetXmlNFSe(nota);
 		}
 
 		#endregion Methods

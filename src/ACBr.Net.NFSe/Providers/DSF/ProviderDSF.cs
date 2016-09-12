@@ -259,7 +259,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			return ret;
 		}
 
-		public override string GetXmlRPS(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
+		public override string GetXmlRps(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
 		{
 			GerarCampos(nota);
 
@@ -454,7 +454,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var xmlNotas = new StringBuilder();
 			foreach (var nota in notas)
 			{
-				var xmlRps = GetXmlRPS(nota, false, false);
+				var xmlRps = GetXmlRps(nota, false, false);
 				xmlNotas.Append(xmlRps);
 				GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
 			}
@@ -536,7 +536,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var xmlNotas = new StringBuilder();
 			foreach (var nota in notas)
 			{
-				var xmlRps = GetXmlRPS(nota, false, false);
+				var xmlRps = GetXmlRps(nota, false, false);
 				xmlNotas.Append(xmlRps);
 				GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
 			}
