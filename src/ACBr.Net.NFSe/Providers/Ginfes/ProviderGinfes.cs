@@ -516,11 +516,11 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 				rpsSubstituido.AddChild(AdicionarTag(TipoCampo.Int, "", "Serie", ns, 1, 5, Ocorrencia.Obrigatoria, nota.RpsSubstituido.Serie));
 				rpsSubstituido.AddChild(AdicionarTag(TipoCampo.Int, "", "Tipo", ns, 1, 1, Ocorrencia.Obrigatoria, tipoRpsSubstituido));
 
-				nfse.AddChild(rpsSubstituido);
+                infNfse.AddChild(rpsSubstituido);
 			}
 
 			var servico = new XElement(ns + "Servico");
-			nfse.AddChild(servico);
+            infNfse.AddChild(servico);
 
 			var valores = new XElement(ns + "Valores");
 			servico.AddChild(valores);
@@ -554,13 +554,13 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			servico.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "CodigoMunicipio", ns, 1, 7, Ocorrencia.Obrigatoria, nota.Servico.CodigoMunicipio));
 
 			var prestador = new XElement(ns + "Prestador");
-			nfse.AddChild(prestador);
+            infNfse.AddChild(prestador);
 
 			prestador.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Prestador.CpfCnpj.ZeroFill(14), ns));
 			prestador.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "InscricaoMunicipal", ns, 1, 15, Ocorrencia.Obrigatoria, nota.Prestador.InscricaoMunicipal));
 
 			var tomador = new XElement(ns + "Tomador");
-			nfse.AddChild(tomador);
+            infNfse.AddChild(tomador);
 
 			var ideTomador = new XElement(ns + "IdentificacaoTomador");
 			tomador.AddChild(ideTomador);
@@ -596,7 +596,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			if (!nota.Intermediario.RazaoSocial.IsEmpty())
 			{
 				var intServico = new XElement(ns + "IntermediarioServico");
-				nfse.AddChild(intServico);
+                infNfse.AddChild(intServico);
 
 				intServico.AddChild(AdicionarTag(TipoCampo.Str, "", "RazaoSocial", ns, 1, 115, 0, nota.Intermediario.RazaoSocial));
 
@@ -611,13 +611,48 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			if (!nota.ConstrucaoCivil.CodigoObra.IsEmpty())
 			{
 				var conCivil = new XElement(ns + "ConstrucaoCivil");
-				nfse.AddChild(conCivil);
+                infNfse.AddChild(conCivil);
 
 				conCivil.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoObra", ns, 1, 15, Ocorrencia.Obrigatoria, nota.ConstrucaoCivil.CodigoObra));
 				conCivil.AddChild(AdicionarTag(TipoCampo.Str, "", "Art", ns, 1, 15, Ocorrencia.Obrigatoria, nota.ConstrucaoCivil.Art));
 			}
 
-			return xmlDoc.AsString(identado, showDeclaration, Encoding.UTF8);
+            if (!nota.OrgaoGerador.CodigoMunicipio.IsEmpty())
+            {
+                var orgGerador = new XElement(ns + "OrgaoGerador");
+                infNfse.AddChild(orgGerador);
+
+                orgGerador.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "CodigoMunicipio", ns, 1, 7, Ocorrencia.NaoObrigatoria, nota.OrgaoGerador.CodigoMunicipio));
+                orgGerador.AddChild(AdicionarTag(TipoCampo.Str, "", "Uf", ns, 2, 2, Ocorrencia.NaoObrigatoria, nota.OrgaoGerador.Uf));
+            }
+
+            if (nota.Situacao == SituacaoNFSeRps.Cancelado)
+            {
+                var cancelamento = new XElement(ns + "NfseCancelamento");
+                compNfse.AddChild(cancelamento);
+                var cancConfirmacao = new XElement(ns + "Confirmacao");
+                cancelamento.AddChild(cancConfirmacao);
+                var cancPedido = new XElement(ns + "Pedido");
+                cancConfirmacao.AddChild(cancPedido);
+                var cancInfPedido = new XElement(ns + "InfPedidoCancelamento", new XAttribute("Id", ""));
+                cancPedido.AddChild(cancInfPedido);
+                var cancIdNFSe = new XElement(ns + "IdentificacaoNfse");
+                cancInfPedido.AddChild(cancIdNFSe);
+                cancIdNFSe.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "Numero", ns, 1, 15, Ocorrencia.Obrigatoria, nota.IdentificacaoNFSe.Numero));
+                cancIdNFSe.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Prestador.CpfCnpj.ZeroFill(14), ns));
+                cancIdNFSe.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "InscricaoMunicipal", ns, 1, 15, Ocorrencia.Obrigatoria, nota.Prestador.InscricaoMunicipal));
+                cancIdNFSe.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "CodigoMunicipio", ns, 1, 7, Ocorrencia.Obrigatoria, nota.Prestador.Endereco.CodigoMunicipio));
+
+                cancInfPedido.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "CodigoCancelamento", ns, 1, 4, Ocorrencia.Obrigatoria, nota.Cancelamento.Pedido.CodigoCancelamento));
+
+                var cancInfConfirmacao = new XElement(ns + "InfConfirmacaoCancelamento");
+                cancConfirmacao.AddChild(cancInfConfirmacao);
+
+                cancInfConfirmacao.AddChild(AdicionarTag(TipoCampo.Str, "", "Sucesso", ns, 1, 4, Ocorrencia.Obrigatoria, "true"));
+                cancInfConfirmacao.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataHora", ns, 20, 20, Ocorrencia.Obrigatoria, nota.Cancelamento.DataHora));
+            }
+
+            return xmlDoc.AsString(identado, showDeclaration, Encoding.UTF8);
 		}
 
 		public override RetornoWebservice Enviar(int lote, NotaFiscalCollection notas)
@@ -654,8 +689,23 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 				GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
 			}
 
-			var loteRps = GerarEnvelopeEnvio(lote, notas.Count, xmlLoteRps.ToString());
-			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteRps, "", "EnviarLoteRpsEnvio", Certificado);
+			var xmlLote = new StringBuilder();
+            xmlLote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            xmlLote.Append("<EnviarLoteRpsEnvio xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\" xmlns=\"http://www.ginfes.com.br/servico_enviar_lote_rps_envio_v03.xsd\">");
+            xmlLote.Append("<LoteRps>");
+            xmlLote.Append($"<tipos:NumeroLote>{lote}</tipos:NumeroLote>");
+            xmlLote.Append($"<tipos:Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tipos:Cnpj>");
+            xmlLote.Append($"<tipos:InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
+            xmlLote.Append($"<tipos:QuantidadeRps>{notas.Count}</tipos:QuantidadeRps>");
+            xmlLote.Append("<tipos:ListaRps>");
+            xmlLote.Append(xmlLoteRps.ToString());
+            xmlLote.Append("</tipos:ListaRps>");
+            xmlLote.Append("</LoteRps>");
+            xmlLote.Append("</EnviarLoteRpsEnvio>");
+            var loteRps = xmlLote.ToString();
+
+
+            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteRps, "", "EnviarLoteRpsEnvio", Certificado);
 
 			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-{lote}-env.xml");
 
@@ -1374,24 +1424,6 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			cabecalho.Append("<versaoDados>3</versaoDados>");
 			cabecalho.Append("</ns2:cabecalho>");
 			return cabecalho.ToString();
-		}
-
-		private string GerarEnvelopeEnvio(int numeroLote, int quantidadeRps, string xmlLoteRps)
-		{
-			var xmlLote = new StringBuilder();
-			xmlLote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-			xmlLote.Append("<EnviarLoteRpsEnvio xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\" xmlns=\"http://www.ginfes.com.br/servico_enviar_lote_rps_envio_v03.xsd\">");
-			xmlLote.Append("<LoteRps>");
-			xmlLote.Append($"<tipos:NumeroLote>{numeroLote}</tipos:NumeroLote>");
-			xmlLote.Append($"<tipos:Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tipos:Cnpj>");
-			xmlLote.Append($"<tipos:InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
-			xmlLote.Append($"<tipos:QuantidadeRps>{quantidadeRps}</tipos:QuantidadeRps>");
-			xmlLote.Append("<tipos:ListaRps>");
-			xmlLote.Append(xmlLoteRps);
-			xmlLote.Append("</tipos:ListaRps>");
-			xmlLote.Append("</LoteRps>");
-			xmlLote.Append("</EnviarLoteRpsEnvio>");
-			return xmlLote.ToString();
 		}
 
 		private static void MensagemErro(RetornoWebservice retornoWs, XContainer xmlRet, string xmlTag)
