@@ -35,16 +35,36 @@ using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core.Collection;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Providers;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml.Linq;
 
+#region COM Interop Attributes
+
+#if COM_INTEROP
+
+using System.Runtime.InteropServices;
+
+#endif
+
+#endregion COM Interop Attributes
+
 namespace ACBr.Net.NFSe.Nota
 {
-	/// <summary>
-	/// Classe NotaFiscalCollection. Está classe não pode ser herdada.
-	/// </summary>
-	public sealed class NotaFiscalCollection : DFeCollection<NotaFiscal>
+	#region COM Interop Attributes
+
+#if COM_INTEROP
+
+	[ComVisible(true)]
+	[Guid("898CE868-8D47-4C28-9912-48464685188A")]
+	[ClassInterface(ClassInterfaceType.AutoDual)]
+#endif
+
+	#endregion COM Interop Attributes
+
+	public sealed class NotaFiscalCollection : DFeCollection<NotaFiscal>, IEnumerable<NotaFiscal>
 	{
 		#region Fields
 
@@ -167,5 +187,35 @@ namespace ACBr.Net.NFSe.Nota
 		}
 
 		#endregion Methods
+
+		#region IEnumerable<NotaFiscal>
+
+#if COM_INTEROP
+
+		[DispId(-4)]
+		public IDictionaryEnumerator GetEnumerator()
+#else
+
+		public IEnumerator<NotaFiscal> GetEnumerator()
+#endif
+		{
+#if COM_INTEROP
+			return (IDictionaryEnumerator)(List.GetEnumerator() as IEnumerator);
+#else
+			return List.GetEnumerator();
+#endif
+		}
+
+		IEnumerator<NotaFiscal> IEnumerable<NotaFiscal>.GetEnumerator()
+		{
+			return List.GetEnumerator();
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return List.GetEnumerator();
+		}
+
+		#endregion IEnumerable<NotaFiscal>
 	}
 }

@@ -669,11 +669,11 @@ namespace ACBr.Net.NFSe.Providers
 					break;
 
 				case TipoArquivo.Rps:
-					nomeArquivo = Path.Combine(Config.Arquivos.GetPathRps(data), nomeArquivo);
+					nomeArquivo = Path.Combine(Config.Arquivos.GetPathRps(data ?? DateTime.Today), nomeArquivo);
 					break;
 
 				case TipoArquivo.NFSe:
-					nomeArquivo = Path.Combine(Config.Arquivos.GetPathNFSe(data), nomeArquivo);
+					nomeArquivo = Path.Combine(Config.Arquivos.GetPathNFSe(data ?? DateTime.Today), nomeArquivo);
 					break;
 			}
 

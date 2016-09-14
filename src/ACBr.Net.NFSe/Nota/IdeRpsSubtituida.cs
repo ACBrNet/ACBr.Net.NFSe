@@ -32,8 +32,28 @@
 using ACBr.Net.Core.Generics;
 using System;
 
+#region COM Interop Attributes
+
+#if COM_INTEROP
+
+using System.Runtime.InteropServices;
+
+#endif
+
+#endregion COM Interop Attributes
+
 namespace ACBr.Net.NFSe.Nota
 {
+	#region COM Interop Attributes
+
+#if COM_INTEROP
+
+	[ComVisible(true)]
+	[Guid("8B3065B7-2899-4B37-9737-148290A4582E")]
+#endif
+
+	#endregion COM Interop Attributes
+
 	public sealed class IdeRpsSubtituida : GenericClone<IdeRpsSubtituida>
 	{
 		#region Constructor
@@ -70,17 +90,17 @@ namespace ACBr.Net.NFSe.Nota
 		/// <value>The serie.</value>
 		public string Serie { get; set; }
 
-        /// <summary>
-        /// Gets or sets the tipo.
-        /// </summary>
-        /// <value>The tipo.</value>
-        public TipoRps Tipo { get; set; }
+		/// <summary>
+		/// Gets or sets the tipo.
+		/// </summary>
+		/// <value>The tipo.</value>
+		public TipoRps Tipo { get; set; }
 
-        /// <summary>
-        /// Gets or sets the data emissao nf se substituida.
-        /// </summary>
-        /// <value>The data emissao nf se substituida.</value>
-        public DateTime DataEmissaoNfseSubstituida { get; set; }
+		/// <summary>
+		/// Gets or sets the data emissao nf se substituida.
+		/// </summary>
+		/// <value>The data emissao nf se substituida.</value>
+		public DateTime DataEmissaoNfseSubstituida { get; set; }
 
 		public string NFSeSubstituidora { get; set; }
 

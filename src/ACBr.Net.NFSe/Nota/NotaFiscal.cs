@@ -36,11 +36,28 @@ using ACBr.Net.DFe.Core.Document;
 using ACBr.Net.NFSe.Configuracao;
 using System;
 
+#region COM Interop Attributes
+
+#if COM_INTEROP
+
+using System.Runtime.InteropServices;
+
+#endif
+
+#endregion COM Interop Attributes
+
 namespace ACBr.Net.NFSe.Nota
 {
-	/// <summary>
-	/// Classe NotaFiscal. Está classe não pode ser herdada.
-	/// </summary>
+	#region COM Interop Attributes
+
+#if COM_INTEROP
+
+	[ComVisible(true)]
+	[Guid("6E7C0D03-9D0F-4C00-8940-E5329BB4F9D4")]
+#endif
+
+	#endregion COM Interop Attributes
+
 	public sealed class NotaFiscal : GenericClone<NotaFiscal>
 	{
 		#region Fields

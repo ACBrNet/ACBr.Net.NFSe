@@ -30,11 +30,28 @@
 // ***********************************************************************
 using ACBr.Net.Core.Generics;
 
+#region COM Interop Attributes
+
+#if COM_INTEROP
+
+using System.Runtime.InteropServices;
+
+#endif
+
+#endregion COM Interop Attributes
+
 namespace ACBr.Net.NFSe.Nota
 {
-	/// <summary>
-	/// Classe Contato. Está classe não pode ser herdada.
-	/// </summary>
+	#region COM Interop Attributes
+
+#if COM_INTEROP
+
+	[ComVisible(true)]
+	[Guid("0A6BE9EE-A7B2-48D9-BE5A-1CA46B9B5C2C")]
+#endif
+
+	#endregion COM Interop Attributes
+
 	public sealed class DadosContato : GenericClone<DadosContato>
 	{
 		#region Constructor

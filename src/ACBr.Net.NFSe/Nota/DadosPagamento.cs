@@ -31,8 +31,28 @@
 
 using ACBr.Net.Core.Generics;
 
+#region COM Interop Attributes
+
+#if COM_INTEROP
+
+using System.Runtime.InteropServices;
+
+#endif
+
+#endregion COM Interop Attributes
+
 namespace ACBr.Net.NFSe.Nota
 {
+	#region COM Interop Attributes
+
+#if COM_INTEROP
+
+	[ComVisible(true)]
+	[Guid("1E0C29B8-3A0A-4811-BFA1-98BE43DE0D02")]
+#endif
+
+	#endregion COM Interop Attributes
+
 	public sealed class DadosPagamento : GenericClone<DadosPagamento>
 	{
 		#region Contructors

@@ -32,11 +32,28 @@
 using ACBr.Net.Core.Generics;
 using System;
 
+#region COM Interop Attributes
+
+#if COM_INTEROP
+
+using System.Runtime.InteropServices;
+
+#endif
+
+#endregion COM Interop Attributes
+
 namespace ACBr.Net.NFSe.Nota
 {
-	/// <summary>
-	/// Classe IdentificacaoRps. Está classe não pode ser herdada.
-	/// </summary>
+	#region COM Interop Attributes
+
+#if COM_INTEROP
+
+	[ComVisible(true)]
+	[Guid("A281AA32-0355-432B-86D4-0E219B775F4B")]
+#endif
+
+	#endregion COM Interop Attributes
+
 	public sealed class IdeRps : GenericClone<IdeRps>
 	{
 		#region Constructor

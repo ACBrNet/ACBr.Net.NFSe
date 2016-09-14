@@ -34,11 +34,28 @@ using System;
 using System.ComponentModel;
 using System.IO;
 
+#region COM Interop Attributes
+
+#if COM_INTEROP
+
+using System.Runtime.InteropServices;
+
+#endif
+
+#endregion COM Interop Attributes
+
 namespace ACBr.Net.NFSe.Configuracao
 {
-	/// <summary>
-	/// Classe de configuração de salvamento dos arquivos da NFe
-	/// </summary>
+	#region COM Interop Attributes
+
+#if COM_INTEROP
+
+	[ComVisible(true)]
+	[Guid("B1BD7344-5878-41D0-BFEC-5220BE61AF0F")]
+#endif
+
+	#endregion COM Interop Attributes
+
 	public sealed class CfgArquivos : DFeArquivosConfigBase
 	{
 		#region Constructor
@@ -97,17 +114,12 @@ namespace ACBr.Net.NFSe.Configuracao
 
 		#region Methods
 
-		/// <summary>
-		/// Gets the path n fe.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		/// <returns>System.String.</returns>
-		public string GetPathNFSe(DateTime? data = null)
+		public string GetPathNFSe(DateTime data)
 		{
 			var dir = string.IsNullOrEmpty(PathNFSe.Trim()) ? Parent.Geral.PathSalvar : PathNFSe;
 
 			if (PastaMensal)
-				dir = Path.Combine(dir, data?.ToString("yyyyMM") ?? DateTime.Now.ToString("yyyyMM"));
+				dir = Path.Combine(dir, data.ToString("yyyyMM"));
 
 			if (AdicionarLiteral && !dir.EndsWith("NFSe"))
 				dir = Path.Combine(dir, "NFSe");
@@ -118,10 +130,6 @@ namespace ACBr.Net.NFSe.Configuracao
 			return dir;
 		}
 
-		/// <summary>
-		/// Gets the path m de.
-		/// </summary>
-		/// <returns>System.String.</returns>
 		public string GetPathLote()
 		{
 			var dir = string.IsNullOrEmpty(PathLote.Trim()) ? Parent.Geral.PathSalvar : PathLote;
@@ -138,17 +146,12 @@ namespace ACBr.Net.NFSe.Configuracao
 			return dir;
 		}
 
-		/// <summary>
-		/// Gets the path RPS.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		/// <returns>System.String.</returns>
-		public string GetPathRps(DateTime? data = null)
+		public string GetPathRps(DateTime data)
 		{
 			var dir = string.IsNullOrEmpty(PathRps.Trim()) ? Parent.Geral.PathSalvar : PathRps;
 
 			if (PastaMensal)
-				dir = Path.Combine(dir, data?.ToString("yyyyMM") ?? DateTime.Now.ToString("yyyyMM"));
+				dir = Path.Combine(dir, data.ToString("yyyyMM"));
 
 			if (AdicionarLiteral && !dir.EndsWith("RPS"))
 				dir = Path.Combine(dir, "RPS");

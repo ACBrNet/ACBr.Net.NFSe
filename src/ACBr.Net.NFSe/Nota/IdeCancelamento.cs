@@ -33,8 +33,28 @@ using ACBr.Net.Core.Generics;
 using ACBr.Net.DFe.Core.Document;
 using System;
 
+#region COM Interop Attributes
+
+#if COM_INTEROP
+
+using System.Runtime.InteropServices;
+
+#endif
+
+#endregion COM Interop Attributes
+
 namespace ACBr.Net.NFSe.Nota
 {
+	#region COM Interop Attributes
+
+#if COM_INTEROP
+
+	[ComVisible(true)]
+	[Guid("BC8B1130-8C56-46FE-B2C0-21A8823DBED2")]
+#endif
+
+	#endregion COM Interop Attributes
+
 	public sealed class IdeCancelamento : GenericClone<IdeCancelamento>
 	{
 		#region Constructors

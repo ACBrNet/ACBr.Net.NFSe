@@ -31,8 +31,28 @@
 
 using ACBr.Net.Core.Generics;
 
+#region COM Interop Attributes
+
+#if COM_INTEROP
+
+using System.Runtime.InteropServices;
+
+#endif
+
+#endregion COM Interop Attributes
+
 namespace ACBr.Net.NFSe.Nota
 {
+	#region COM Interop Attributes
+
+#if COM_INTEROP
+
+	[ComVisible(true)]
+	[Guid("1A7A3A95-3FD9-4B05-81DA-C0A943DACE8A")]
+#endif
+
+	#endregion COM Interop Attributes
+
 	public sealed class Endereco : GenericClone<Endereco>
 	{
 		#region Constructor

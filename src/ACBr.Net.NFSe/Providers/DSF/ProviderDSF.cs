@@ -452,7 +452,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			loteRps = loteRps.SafeReplace("%LOTE%", lote.ToString());
 
 			var xmlNotas = new StringBuilder();
-			foreach (var nota in notas)
+			foreach (NotaFiscal nota in notas)
 			{
 				var xmlRps = GetXmlRps(nota, false, false);
 				xmlNotas.Append(xmlRps);
@@ -503,8 +503,10 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			if (!retornoWebservice.Sucesso)
 				return retornoWebservice;
 
-			foreach (var nota in notas)
+			foreach (NotaFiscal nota in notas)
+			{
 				nota.NumeroLote = retornoWebservice.NumeroLote;
+			}
 
 			return retornoWebservice;
 		}
@@ -534,7 +536,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			loteRps = loteRps.SafeReplace("%LOTE%", lote.ToString());
 
 			var xmlNotas = new StringBuilder();
-			foreach (var nota in notas)
+
+			// ReSharper disable once SuggestVarOrType_SimpleTypes
+			foreach (NotaFiscal nota in notas)
 			{
 				var xmlRps = GetXmlRps(nota, false, false);
 				xmlNotas.Append(xmlRps);
@@ -583,8 +587,11 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 			if (!retornoWebservice.Sucesso) return retornoWebservice;
 
-			foreach (var nota in notas)
+			// ReSharper disable once SuggestVarOrType_SimpleTypes
+			foreach (NotaFiscal nota in notas)
+			{
 				nota.NumeroLote = retornoWebservice.NumeroLote;
+			}
 
 			var nfseRps = ProcessarEventos(TipoEvento.ListNFSeRps, xmlRet.Element("ChavesNFSeRPS"));
 			if (nfseRps == null) return retornoWebservice;
@@ -628,7 +635,8 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			loteCancelamento.Append("</Cabecalho>");
 			loteCancelamento.Append($"<Lote Id=\"lote:{lote}\">");
 
-			foreach (var nota in notas)
+			// ReSharper disable once SuggestVarOrType_SimpleTypes
+			foreach (NotaFiscal nota in notas)
 			{
 				var numeroNota = nota.IdentificacaoNFSe.Numero.Trim();
 				loteCancelamento.Append($"<Nota Id=\"nota:{numeroNota}\">");

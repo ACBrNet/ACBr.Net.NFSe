@@ -29,12 +29,27 @@
 // <summary></summary>
 // ***********************************************************************
 
+#region COM Interop Attributes
+
+#if COM_INTEROP
+
+using System.Runtime.InteropServices;
+
+#endif
+
+#endregion COM Interop Attributes
+
 namespace ACBr.Net.NFSe.Nota
 {
-	/// <summary>
-	/// Enum NaturezaOperacao
-	/// Cada Provedor tem suas proprias naturezas ver no Help de cada uma
-	/// </summary>
+	#region COM_INTEROP
+
+#if COM_INTEROP
+
+	[ComVisible(true)]
+#endif
+
+	#endregion COM_INTEROP
+
 	public enum NaturezaOperacao
 	{
 		/// <summary>

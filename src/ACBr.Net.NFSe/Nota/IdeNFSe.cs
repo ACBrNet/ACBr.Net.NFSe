@@ -32,8 +32,28 @@
 using ACBr.Net.Core.Generics;
 using System;
 
+#region COM Interop Attributes
+
+#if COM_INTEROP
+
+using System.Runtime.InteropServices;
+
+#endif
+
+#endregion COM Interop Attributes
+
 namespace ACBr.Net.NFSe.Nota
 {
+	#region COM Interop Attributes
+
+#if COM_INTEROP
+
+	[ComVisible(true)]
+	[Guid("37413DED-9FCA-450E-A5BD-6A773AB8C956")]
+#endif
+
+	#endregion COM Interop Attributes
+
 	public sealed class IdeNFSe : GenericClone<IdeNFSe>
 	{
 		#region Constructor
