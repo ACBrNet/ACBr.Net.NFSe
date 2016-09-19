@@ -30,6 +30,7 @@
 // ***********************************************************************
 
 using ACBr.Net.Core.Generics;
+using PropertyChanged;
 
 #region COM Interop Attributes
 
@@ -49,10 +50,12 @@ namespace ACBr.Net.NFSe.Nota
 
 	[ComVisible(true)]
 	[Guid("D71CDC10-AABB-4F3B-B0FD-170CAD0D1109")]
+	[ClassInterface(ClassInterfaceType.None)]
 #endif
 
 	#endregion COM Interop Attributes
 
+	[ImplementPropertyChanged]
 	public sealed class IdeOrgaoGerador : GenericClone<IdeOrgaoGerador>
 	{
 		#region Constructors

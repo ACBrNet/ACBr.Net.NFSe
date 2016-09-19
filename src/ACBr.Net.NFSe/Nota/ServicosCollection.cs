@@ -32,11 +32,13 @@
 using ACBr.Net.DFe.Core.Collection;
 using System.Collections;
 using System.Collections.Generic;
+using PropertyChanged;
 
 #region COM Interop Attributes
 
 #if COM_INTEROP
 
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 #endif
@@ -51,11 +53,12 @@ namespace ACBr.Net.NFSe.Nota
 
 	[ComVisible(true)]
 	[Guid("251F7C51-69EE-47ED-9E98-E39550C4DE08")]
-	[ClassInterface(ClassInterfaceType.AutoDual)]
+	[ClassInterface(ClassInterfaceType.None)]
 #endif
 
 	#endregion COM Interop Attributes
 
+	[ImplementPropertyChanged]
 	public sealed class ServicosCollection : DFeCollection<Servico>, IEnumerable<Servico>
 	{
 		#region Constructors
@@ -65,6 +68,31 @@ namespace ACBr.Net.NFSe.Nota
 		}
 
 		#endregion Constructors
+
+		#region Propriedades
+
+		#region COM Interop Attributes
+
+#if COM_INTEROP
+
+		[IndexerName("GetItem")]
+#endif
+
+		#endregion COM Interop Attributes
+
+		public new Servico this[int index]
+		{
+			get
+			{
+				return List[index];
+			}
+			set
+			{
+				List[index] = value;
+			}
+		}
+
+		#endregion Propriedades
 
 		#region Methods
 

@@ -32,11 +32,13 @@
 using ACBr.Net.DFe.Core.Collection;
 using System.Collections;
 using System.Collections.Generic;
+using PropertyChanged;
 
 #region COM Interop Attributes
 
 #if COM_INTEROP
 
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 #endif
@@ -51,11 +53,12 @@ namespace ACBr.Net.NFSe.Nota
 
 	[ComVisible(true)]
 	[Guid("EB1A054A-833A-4220-937A-A8DA44AB3E07")]
-	[ClassInterface(ClassInterfaceType.AutoDual)]
+	[ClassInterface(ClassInterfaceType.None)]
 #endif
 
 	#endregion COM Interop Attributes
 
+	[ImplementPropertyChanged]
 	public sealed class ParcelasCollection : DFeCollection<Parcelas>, IEnumerable<Parcelas>
 	{
 		#region Contructors
@@ -65,6 +68,42 @@ namespace ACBr.Net.NFSe.Nota
 		}
 
 		#endregion Contructors
+
+		#region Propriedades
+
+		#region COM Interop Attributes
+
+#if COM_INTEROP
+
+		[IndexerName("GetItem")]
+#endif
+
+		#endregion COM Interop Attributes
+
+		public new Parcelas this[int index]
+		{
+			get
+			{
+				return List[index];
+			}
+			set
+			{
+				List[index] = value;
+			}
+		}
+
+		#endregion Propriedades
+
+		#region Methods
+
+		public override Parcelas AddNew()
+		{
+			var ret = new Parcelas();
+			Add(ret);
+			return ret;
+		}
+
+		#endregion Methods
 
 		#region IEnumerable<Parcelas>
 

@@ -29,6 +29,9 @@
 // <summary></summary>
 // ***********************************************************************
 
+using ACBr.Net.Core.Generics;
+using PropertyChanged;
+
 #region COM Interop Attributes
 
 #if COM_INTEROP
@@ -47,11 +50,13 @@ namespace ACBr.Net.NFSe.Nota
 
 	[ComVisible(true)]
 	[Guid("94D5A33C-8307-4D56-83EB-9FC26BCBD8F1")]
+	[ClassInterface(ClassInterfaceType.None)]
 #endif
 
 	#endregion COM Interop Attributes
 
-	public sealed class ValoresServico
+	[ImplementPropertyChanged]
+	public sealed class ValoresServico : GenericClone<ValoresServico>
 	{
 		#region Constructors
 

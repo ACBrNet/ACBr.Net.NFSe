@@ -10,43 +10,63 @@
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
-//	 Permission is hereby granted, free of charge, to any person obtaining 
-// a copy of this software and associated documentation files (the "Software"), 
-// to deal in the Software without restriction, including without limitation 
-// the rights to use, copy, modify, merge, publish, distribute, sublicense, 
-// and/or sell copies of the Software, and to permit persons to whom the 
+//	 Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the
 // Software is furnished to do so, subject to the following conditions:
-//	 The above copyright notice and this permission notice shall be 
+//	 The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-//	 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
-// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
-// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+//	 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
 using ACBr.Net.Core.Generics;
+using PropertyChanged;
+
+#region COM Interop Attributes
+
+#if COM_INTEROP
+
+using System.Runtime.InteropServices;
+
+#endif
+
+#endregion COM Interop Attributes
 
 namespace ACBr.Net.NFSe.Nota
 {
-    /// <summary>
-    /// Classe Servico. Está classe não pode ser herdada.
-    /// </summary>
-    public sealed class Servico : GenericClone<Servico>
-    {
-        #region Constructor
+	#region COM Interop Attributes
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Servico"/> class.
-        /// </summary>
-        internal Servico()
-        {
+#if COM_INTEROP
+
+	[ComVisible(true)]
+	[Guid("8817A31D-4836-4A6D-A072-A36CE70F3DA6")]
+	[ClassInterface(ClassInterfaceType.None)]
+#endif
+
+	#endregion COM Interop Attributes
+
+	[ImplementPropertyChanged]
+	public sealed class Servico : GenericClone<Servico>
+	{
+		#region Constructor
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Servico"/> class.
+		/// </summary>
+		internal Servico()
+		{
 			Tributavel = NFSeSimNao.Sim;
-        }
+		}
 
 		#endregion Constructor
 
@@ -56,39 +76,219 @@ namespace ACBr.Net.NFSe.Nota
 
 		public string Descricao { get; set; }
 
-		public decimal Quantidade { get; set; }
+		public decimal Quantidade
+		{
+			#region COM_INTEROP
 
-		public decimal ValorUnitario { get; set; }
+#if COM_INTEROP
+			[return: MarshalAs(UnmanagedType.Currency)]
+#endif
 
-		public decimal ValorTotal { get; set; }
+			#endregion COM_INTEROP
 
-		public decimal ValorServicos { get; set; }
+			get;
+			set;
+		}
 
-		public decimal ValorDeducoes { get; set; }
+		public decimal ValorUnitario
+		{
+			#region COM_INTEROP
 
-		public decimal ValorIss { get; set; }
+#if COM_INTEROP
+			[return: MarshalAs(UnmanagedType.Currency)]
+#endif
 
-		public decimal Aliquota { get; set; }
+			#endregion COM_INTEROP
 
-		public decimal BaseCalculo { get; set; }
+			get;
+			set;
+		}
 
-		public decimal DescontoCondicionado { get; set; }
+		public decimal ValorTotal
+		{
+			#region COM_INTEROP
 
-		public decimal DescontoIncondicionado { get; set; }
+#if COM_INTEROP
+			[return: MarshalAs(UnmanagedType.Currency)]
+#endif
+
+			#endregion COM_INTEROP
+
+			get;
+			set;
+		}
+
+		public decimal ValorServicos
+		{
+			#region COM_INTEROP
+
+#if COM_INTEROP
+			[return: MarshalAs(UnmanagedType.Currency)]
+#endif
+
+			#endregion COM_INTEROP
+
+			get;
+			set;
+		}
+
+		public decimal ValorDeducoes
+		{
+			#region COM_INTEROP
+
+#if COM_INTEROP
+			[return: MarshalAs(UnmanagedType.Currency)]
+#endif
+
+			#endregion COM_INTEROP
+
+			get;
+			set;
+		}
+
+		public decimal ValorIss
+		{
+			#region COM_INTEROP
+
+#if COM_INTEROP
+			[return: MarshalAs(UnmanagedType.Currency)]
+#endif
+
+			#endregion COM_INTEROP
+
+			get;
+			set;
+		}
+
+		public decimal Aliquota
+		{
+			#region COM_INTEROP
+
+#if COM_INTEROP
+			[return: MarshalAs(UnmanagedType.Currency)]
+#endif
+
+			#endregion COM_INTEROP
+
+			get;
+			set;
+		}
+
+		public decimal BaseCalculo
+		{
+			#region COM_INTEROP
+
+#if COM_INTEROP
+			[return: MarshalAs(UnmanagedType.Currency)]
+#endif
+
+			#endregion COM_INTEROP
+
+			get;
+			set;
+		}
+
+		public decimal DescontoCondicionado
+		{
+			#region COM_INTEROP
+
+#if COM_INTEROP
+			[return: MarshalAs(UnmanagedType.Currency)]
+#endif
+
+			#endregion COM_INTEROP
+
+			get;
+			set;
+		}
+
+		public decimal DescontoIncondicionado
+		{
+			#region COM_INTEROP
+
+#if COM_INTEROP
+			[return: MarshalAs(UnmanagedType.Currency)]
+#endif
+
+			#endregion COM_INTEROP
+
+			get;
+			set;
+		}
 
 		public string Discriminacao { get; set; }
 
 		public NFSeSimNao Tributavel { get; set; }
 
-		public decimal ValorPis { get; set; }
+		public decimal ValorPis
+		{
+			#region COM_INTEROP
 
-		public decimal ValorCofins { get; set; }
+#if COM_INTEROP
+			[return: MarshalAs(UnmanagedType.Currency)]
+#endif
 
-		public decimal ValorInss { get; set; }
+			#endregion COM_INTEROP
 
-		public decimal ValorIr { get; set; }
+			get;
+			set;
+		}
 
-		public decimal ValorCsll { get; set; }
+		public decimal ValorCofins
+		{
+			#region COM_INTEROP
+
+#if COM_INTEROP
+			[return: MarshalAs(UnmanagedType.Currency)]
+#endif
+
+			#endregion COM_INTEROP
+
+			get;
+			set;
+		}
+
+		public decimal ValorInss
+		{
+			#region COM_INTEROP
+
+#if COM_INTEROP
+			[return: MarshalAs(UnmanagedType.Currency)]
+#endif
+
+			#endregion COM_INTEROP
+
+			get;
+			set;
+		}
+
+		public decimal ValorIr
+		{
+			#region COM_INTEROP
+
+#if COM_INTEROP
+			[return: MarshalAs(UnmanagedType.Currency)]
+#endif
+
+			#endregion COM_INTEROP
+
+			get;
+			set;
+		}
+
+		public decimal ValorCsll
+		{
+			#region COM_INTEROP
+
+#if COM_INTEROP
+			[return: MarshalAs(UnmanagedType.Currency)]
+#endif
+
+			#endregion COM_INTEROP
+
+			get;
+			set;
+		}
 
 		public string CodServ { get; set; }
 
@@ -96,10 +296,34 @@ namespace ACBr.Net.NFSe.Nota
 
 		public string Unidade { get; set; }
 
-		public decimal AlicotaIssst { get; set; }
+		public decimal AlicotaIssst
+		{
+			#region COM_INTEROP
 
-		public decimal ValorIssst { get; set; }
+#if COM_INTEROP
+			[return: MarshalAs(UnmanagedType.Currency)]
+#endif
 
-        #endregion Propriedades
-    }
+			#endregion COM_INTEROP
+
+			get;
+			set;
+		}
+
+		public decimal ValorIssst
+		{
+			#region COM_INTEROP
+
+#if COM_INTEROP
+			[return: MarshalAs(UnmanagedType.Currency)]
+#endif
+
+			#endregion COM_INTEROP
+
+			get;
+			set;
+		}
+
+		#endregion Propriedades
+	}
 }

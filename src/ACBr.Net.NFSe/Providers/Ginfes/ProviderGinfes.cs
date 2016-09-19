@@ -215,7 +215,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 			if (formatoXml == LoadXmlFormato.NFSe)
 			{
-				ret.Competencia = rootDoc.ElementAnyNs("Competencia")?.GetValue<string>() ?? string.Empty;
+				ret.Competencia = rootDoc.ElementAnyNs("Competencia")?.GetValue<DateTime>() ?? DateTime.MinValue;
 				ret.RpsSubstituido.NumeroNfse = rootDoc.ElementAnyNs("NfseSubstituida")?.GetValue<string>() ?? string.Empty;
 				ret.OutrasInformacoes = rootDoc.ElementAnyNs("OutrasInformacoes")?.GetValue<string>() ?? string.Empty;
 			}
@@ -251,7 +251,9 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 				ret.Servico.CodigoMunicipio = rootServico.ElementAnyNs("CodigoMunicipio")?.GetValue<string>() ?? string.Empty;
 			}
 			if (formatoXml == LoadXmlFormato.NFSe)
-				ret.ValorCredito = rootDoc.ElementAnyNs("ValorCredito")?.GetValue<Decimal>() ?? 0;
+			{
+				ret.ValorCredito = rootDoc.ElementAnyNs("ValorCredito")?.GetValue<decimal>() ?? 0;
+			}
 
 			if (formatoXml == LoadXmlFormato.NFSe)
 			{
@@ -308,8 +310,10 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 					if (rootTomadorIdentificacaoCpfCnpj != null)
 					{
 						ret.Tomador.CpfCnpj = rootTomadorIdentificacaoCpfCnpj.ElementAnyNs("Cpf")?.GetValue<string>() ?? string.Empty;
-						if (String.IsNullOrWhiteSpace(ret.Tomador.CpfCnpj))
+						if (ret.Tomador.CpfCnpj.IsEmpty())
+						{
 							ret.Tomador.CpfCnpj = rootTomadorIdentificacaoCpfCnpj.ElementAnyNs("Cnpj")?.GetValue<string>() ?? string.Empty;
+						}
 					}
 					ret.Tomador.InscricaoMunicipal = rootTomadorIdentificacao.ElementAnyNs("InscricaoMunicipal")?.GetValue<string>() ?? string.Empty;
 				}
@@ -481,10 +485,10 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			var xmlDoc = new XDocument(new XDeclaration("1.0", "UTF-8", null));
 
 			XNamespace ns = "http://www.ginfes.com.br/tipos_v03.xsd";
-			var compNfse = new XElement("CompNfse", new XAttribute(XNamespace.Xmlns + "ns3", ns));
+			var compNfse = new XElement("CompNfse", new XAttribute(XNamespace.Xmlns + "ns4", ns));
 			xmlDoc.Add(compNfse);
 
-			var nfse = new XElement(ns + "Nfse", new XAttribute(XNamespace.Xmlns + "ns4", ns));
+			var nfse = new XElement(ns + "Nfse");
 			compNfse.Add(nfse);
 
 			var infNfse = new XElement(ns + "InfNfse", new XAttribute("Id", nota.IdentificacaoNFSe.Numero));
@@ -506,7 +510,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			infNfse.AddChild(AdicionarTag(TipoCampo.Int, "", "RegimeEspecialTributacao", ns, 1, 1, Ocorrencia.NaoObrigatoria, regimeEspecialTributacao));
 			infNfse.AddChild(AdicionarTag(TipoCampo.Int, "", "OptanteSimplesNacional", ns, 1, 1, Ocorrencia.Obrigatoria, optanteSimplesNacional));
 			infNfse.AddChild(AdicionarTag(TipoCampo.Int, "", "IncentivadorCultural", ns, 1, 1, Ocorrencia.Obrigatoria, incentivadorCultural));
-			infNfse.AddChild(AdicionarTag(TipoCampo.Int, "", "Competencia", ns, 6, 6, Ocorrencia.Obrigatoria, nota.Competencia));
+			infNfse.AddChild(AdicionarTag(TipoCampo.Dat, "", "Competencia", ns, 6, 6, Ocorrencia.Obrigatoria, nota.Competencia));
 
 			if (!string.IsNullOrWhiteSpace(nota.RpsSubstituido.NumeroRps))
 			{
@@ -699,7 +703,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			xmlLote.Append($"<tipos:InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
 			xmlLote.Append($"<tipos:QuantidadeRps>{notas.Count}</tipos:QuantidadeRps>");
 			xmlLote.Append("<tipos:ListaRps>");
-			xmlLote.Append(xmlLoteRps.ToString());
+			xmlLote.Append(xmlLoteRps);
 			xmlLote.Append("</tipos:ListaRps>");
 			xmlLote.Append("</LoteRps>");
 			xmlLote.Append("</EnviarLoteRpsEnvio>");

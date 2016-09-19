@@ -35,6 +35,7 @@ using ACBr.Net.Core.Generics;
 using ACBr.Net.DFe.Core.Document;
 using ACBr.Net.NFSe.Configuracao;
 using System;
+using PropertyChanged;
 
 #region COM Interop Attributes
 
@@ -54,10 +55,12 @@ namespace ACBr.Net.NFSe.Nota
 
 	[ComVisible(true)]
 	[Guid("6E7C0D03-9D0F-4C00-8940-E5329BB4F9D4")]
+	[ClassInterface(ClassInterfaceType.None)]
 #endif
 
 	#endregion COM Interop Attributes
 
+	[ImplementPropertyChanged]
 	public sealed class NotaFiscal : GenericClone<NotaFiscal>
 	{
 		#region Fields
@@ -146,11 +149,23 @@ namespace ACBr.Net.NFSe.Nota
 
 		public string Protocolo { get; set; }
 
-		public string Competencia { get; set; }
+		public DateTime Competencia { get; set; }
 
 		public string OutrasInformacoes { get; set; }
 
-		public decimal ValorCredito { get; set; }
+		public decimal ValorCredito
+		{
+			#region COM_INTEROP
+
+#if COM_INTEROP
+			[return: MarshalAs(UnmanagedType.Currency)]
+#endif
+
+			#endregion COM_INTEROP
+
+			get;
+			set;
+		}
 
 		public TipoEmissao TipoEmissao { get; set; }
 

@@ -30,6 +30,7 @@
 // ***********************************************************************
 
 using ACBr.Net.Core.Generics;
+using PropertyChanged;
 
 #region COM Interop Attributes
 
@@ -49,10 +50,12 @@ namespace ACBr.Net.NFSe.Nota
 
 	[ComVisible(true)]
 	[Guid("BC8A32FD-064D-4D23-A1F3-A01DFC253C27")]
+	[ClassInterface(ClassInterfaceType.None)]
 #endif
 
 	#endregion COM Interop Attributes
 
+	[ImplementPropertyChanged]
 	public sealed class DadosPrestador : GenericClone<DadosPrestador>
 	{
 		#region Constructors
