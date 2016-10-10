@@ -656,7 +656,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 				cancInfConfirmacao.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataHora", ns, 20, 20, Ocorrencia.Obrigatoria, nota.Cancelamento.DataHora));
 			}
 
-			return xmlDoc.AsString(identado, showDeclaration, Encoding.UTF8);
+			return xmlDoc.Root.AsString(identado, showDeclaration, Encoding.UTF8);
 		}
 
 		public override RetornoWebservice Enviar(int lote, NotaFiscalCollection notas)
@@ -1409,7 +1409,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 				conCivil.AddChild(AdicionarTag(TipoCampo.Str, "", "Art", ns, 1, 15, Ocorrencia.Obrigatoria, nota.ConstrucaoCivil.Art));
 			}
 
-			return xmlDoc.AsString(identado, showDeclaration, Encoding.UTF8);
+			return xmlDoc.Root.AsString(identado, showDeclaration, Encoding.UTF8);
 		}
 
 		private IGinfesServiceClient GetCliente(TipoUrl tipo)

@@ -1,5 +1,4 @@
 ﻿using ACBr.Net.NFSe.Configuracao;
-using ACBr.Net.NFSe.Interfaces;
 using ACBr.Net.NFSe.Nota;
 using ACBr.Net.NFSe.Providers;
 using System;
@@ -7,12 +6,14 @@ using System;
 #region COM Interop Attributes
 
 #if COM_INTEROP
+
 using System.Runtime.InteropServices;
+
 #endif
 
 #endregion COM Interop Attributes
 
-namespace ACBr.Net.NFSe
+namespace ACBr.Net.NFSe.Interfaces
 {
 	#region COM Interop Attributes
 

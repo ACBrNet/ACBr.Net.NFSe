@@ -30,9 +30,9 @@
 // ***********************************************************************
 
 using ACBr.Net.DFe.Core.Collection;
+using PropertyChanged;
 using System.Collections;
 using System.Collections.Generic;
-using PropertyChanged;
 
 #region COM Interop Attributes
 
@@ -84,11 +84,11 @@ namespace ACBr.Net.NFSe.Nota
 		{
 			get
 			{
-				return List[index];
+				return base[index];
 			}
 			set
 			{
-				List[index] = value;
+				base[index] = value;
 			}
 		}
 
@@ -117,20 +117,20 @@ namespace ACBr.Net.NFSe.Nota
 #endif
 		{
 #if COM_INTEROP
-			return (IDictionaryEnumerator)(List.GetEnumerator() as IEnumerator);
+			return (IDictionaryEnumerator)(GetEnumerator() as IEnumerator);
 #else
-			return List.GetEnumerator();
+			return GetEnumerator();
 #endif
 		}
 
 		IEnumerator<Parcelas> IEnumerable<Parcelas>.GetEnumerator()
 		{
-			return List.GetEnumerator();
+			return GetEnumerator();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			return List.GetEnumerator();
+			return GetEnumerator();
 		}
 
 		#endregion IEnumerable<Parcelas>

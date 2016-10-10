@@ -30,33 +30,18 @@
 // ***********************************************************************
 
 using ACBr.Net.Core.Generics;
+using ACBr.Net.NFSe.Interfaces;
 using PropertyChanged;
-
-#region COM Interop Attributes
-
-#if COM_INTEROP
-
 using System.Runtime.InteropServices;
-
-#endif
-
-#endregion COM Interop Attributes
 
 namespace ACBr.Net.NFSe.Nota
 {
-	#region COM Interop Attributes
-
-#if COM_INTEROP
-
 	[ComVisible(true)]
 	[Guid("BC8A32FD-064D-4D23-A1F3-A01DFC253C27")]
-	[ClassInterface(ClassInterfaceType.None)]
-#endif
-
-	#endregion COM Interop Attributes
-
+	[ComDefaultInterface(typeof(IDadosPrestador))]
+	[ClassInterface(ClassInterfaceType.AutoDual)]
 	[ImplementPropertyChanged]
-	public sealed class DadosPrestador : GenericClone<DadosPrestador>
+	public sealed class DadosPrestador : GenericClone<DadosPrestador>, IDadosPrestador
 	{
 		#region Constructors
 

@@ -337,7 +337,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			if (nota.Servico.Deducoes.Count > 0)
 				rpsTag.AddChild(GerarDeducoes(nota.Servico.Deducoes));
 
-			return xmldoc.AsString(identado, showDeclaration, Encoding.UTF8);
+			return xmldoc.Root.AsString(identado, showDeclaration, Encoding.UTF8);
 		}
 
 		public override string GetXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
@@ -424,7 +424,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			if (nota.Servico.Deducoes.Count > 0)
 				notaTag.AddChild(GerarDeducoes(nota.Servico.Deducoes));
 
-			return xmldoc.AsString(identado, showDeclaration, Encoding.UTF8);
+			return xmldoc.Root.AsString(identado, showDeclaration, Encoding.UTF8);
 		}
 
 		public override RetornoWebservice Enviar(int lote, NotaFiscalCollection notas)
@@ -1011,7 +1011,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var notasXml = xmlRet.ElementAnyNs("Notas");
 			if (notasXml != null && notasXml.HasElements)
 			{
-				notas.AddRange(notasXml.ElementsAnyNs("Nota").Select(element => LoadXml(element.OuterXml())).ToArray());
+				notas.AddRange(notasXml.ElementsAnyNs("Nota").Select(element => LoadXml(element.AsString())).ToArray());
 			}
 
 			return retornoWebservice;
@@ -1112,7 +1112,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var notasXml = xmlRet.ElementAnyNs("NotasConsultadas");
 			if (notasXml != null && notasXml.HasElements)
 			{
-				retNotas = notasXml.ElementsAnyNs("Nota").Select(element => LoadXml(element.OuterXml())).ToArray();
+				retNotas = notasXml.ElementsAnyNs("Nota").Select(element => LoadXml(element.AsString())).ToArray();
 			}
 
 			if (!retNotas.Any()) return retornoWebservice;

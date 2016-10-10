@@ -34,19 +34,19 @@ using ACBr.Net.Core.Exceptions;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core.Collection;
 using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Interfaces;
 using ACBr.Net.NFSe.Providers;
+using PropertyChanged;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml.Linq;
-using PropertyChanged;
 
 #region COM Interop Attributes
 
 #if COM_INTEROP
 
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 #endif
@@ -61,13 +61,14 @@ namespace ACBr.Net.NFSe.Nota
 
 	[ComVisible(true)]
 	[Guid("898CE868-8D47-4C28-9912-48464685188A")]
-	[ClassInterface(ClassInterfaceType.None)]
+	[ComDefaultInterface(typeof(INotaFiscalCollection))]
+	[ClassInterface(ClassInterfaceType.AutoDual)]
 #endif
 
 	#endregion COM Interop Attributes
 
 	[ImplementPropertyChanged]
-	public sealed class NotaFiscalCollection : DFeCollection<NotaFiscal>, IEnumerable<NotaFiscal>
+	public sealed class NotaFiscalCollection : DFeCollection<NotaFiscal>, IEnumerable<NotaFiscal>, INotaFiscalCollection
 	{
 		#region Fields
 
@@ -92,24 +93,15 @@ namespace ACBr.Net.NFSe.Nota
 
 		#region Propriedades
 
-		#region COM Interop Attributes
-
-#if COM_INTEROP
-
-		[IndexerName("GetItem")]
-#endif
-
-		#endregion COM Interop Attributes
-
 		public new NotaFiscal this[int index]
 		{
 			get
 			{
-				return List[index];
+				return base[index];
 			}
 			set
 			{
-				List[index] = value;
+				base[index] = value;
 			}
 		}
 
@@ -220,28 +212,23 @@ namespace ACBr.Net.NFSe.Nota
 
 #if COM_INTEROP
 
-		[DispId(-4)]
-		public IDictionaryEnumerator GetEnumerator()
+		public IEnumerator GetEnumerator()
 #else
 
 		public IEnumerator<NotaFiscal> GetEnumerator()
 #endif
 		{
-#if COM_INTEROP
-			return (IDictionaryEnumerator)(List.GetEnumerator() as IEnumerator);
-#else
-			return List.GetEnumerator();
-#endif
+			return GetEnumerator();
 		}
 
 		IEnumerator<NotaFiscal> IEnumerable<NotaFiscal>.GetEnumerator()
 		{
-			return List.GetEnumerator();
+			return GetEnumerator();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			return List.GetEnumerator();
+			return GetEnumerator();
 		}
 
 		#endregion IEnumerable<NotaFiscal>

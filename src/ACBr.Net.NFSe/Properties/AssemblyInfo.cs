@@ -6,8 +6,8 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 #if COM_INTEROP
 [assembly: AssemblyTitle("ACBr.Net.NFSe")]
-[assembly: AssemblyDescription("ACBrNFSe Library")]
-[assembly: AssemblyProduct("ACBr.Net NFSe ActiveX")]
+[assembly: AssemblyDescription("ACBrNFSe ActiveX")]
+[assembly: AssemblyProduct("ACBr.Net NFSe")]
 [assembly: TypeLibVersion(109, 23)]
 #else
 [assembly: AssemblyTitle("ACBr.Net.NFSe")]
@@ -19,7 +19,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("ACBr.Net")]
 [assembly: AssemblyCopyright("Copyright © Grupo ACBr.Net 2014 - 2016")]
 [assembly: AssemblyTrademark("Grupo ACBr.Net https://acbrnet.github.io")]
-[assembly: AssemblyKeyFile(@"../../../acbr.net.snk")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from

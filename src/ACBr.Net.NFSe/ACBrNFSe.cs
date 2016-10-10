@@ -58,6 +58,7 @@ namespace ACBr.Net.NFSe
 	[ComVisible(true)]
 	[Guid("842C5505-4E4B-4843-933D-42D23A522417")]
 	[ComSourceInterfaces(typeof(IACBrNFSe))]
+	[ClassInterface(ClassInterfaceType.AutoDual)]
 #endif
 
 	#endregion COM Interop Attributes
