@@ -32,29 +32,8 @@
 using ACBr.Net.Core.Generics;
 using PropertyChanged;
 
-#region COM Interop Attributes
-
-#if COM_INTEROP
-
-using System.Runtime.InteropServices;
-
-#endif
-
-#endregion COM Interop Attributes
-
 namespace ACBr.Net.NFSe.Nota
 {
-	#region COM Interop Attributes
-
-#if COM_INTEROP
-
-	[ComVisible(true)]
-	[Guid("9BFC382F-1F94-42E9-8682-17334451F769")]
-	[ClassInterface(ClassInterfaceType.None)]
-#endif
-
-	#endregion COM Interop Attributes
-
 	[ImplementPropertyChanged]
 	public sealed class Deducao : GenericClone<Deducao>
 	{
@@ -96,56 +75,20 @@ namespace ACBr.Net.NFSe.Nota
 		/// Gets or sets the valor total referencia.
 		/// </summary>
 		/// <value>The valor total referencia.</value>
-		public decimal ValorTotalReferencia
-		{
-			#region COM_INTEROP
+		public decimal ValorTotalReferencia { get; set; }
 
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
+        /// <summary>
+        /// Gets or sets the percentual deduzir.
+        /// </summary>
+        /// <value>The percentual deduzir.</value>
+        public decimal PercentualDeduzir { get; set; }
 
-			#endregion COM_INTEROP
+        /// <summary>
+        /// Gets or sets the valor deduzir.
+        /// </summary>
+        /// <value>The valor deduzir.</value>
+        public decimal ValorDeduzir { get; set; }
 
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Gets or sets the percentual deduzir.
-		/// </summary>
-		/// <value>The percentual deduzir.</value>
-		public decimal PercentualDeduzir
-		{
-			#region COM_INTEROP
-
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
-
-			#endregion COM_INTEROP
-
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Gets or sets the valor deduzir.
-		/// </summary>
-		/// <value>The valor deduzir.</value>
-		public decimal ValorDeduzir
-		{
-			#region COM_INTEROP
-
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
-
-			#endregion COM_INTEROP
-
-			get;
-			set;
-		}
-
-		#endregion Propriedades
-	}
+        #endregion Propriedades
+    }
 }

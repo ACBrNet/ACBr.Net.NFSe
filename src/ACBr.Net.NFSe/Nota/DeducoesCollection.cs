@@ -34,30 +34,8 @@ using PropertyChanged;
 using System.Collections;
 using System.Collections.Generic;
 
-#region COM Interop Attributes
-
-#if COM_INTEROP
-
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-
-#endif
-
-#endregion COM Interop Attributes
-
 namespace ACBr.Net.NFSe.Nota
 {
-	#region COM Interop Attributes
-
-#if COM_INTEROP
-
-	[ComVisible(true)]
-	[Guid("FA945536-3B91-466F-BBA0-E7EFEC4728B6")]
-	[ClassInterface(ClassInterfaceType.None)]
-#endif
-
-	#endregion COM Interop Attributes
-
 	[ImplementPropertyChanged]
 	public sealed class DeducoesCollection : DFeCollection<Deducao>, IEnumerable<Deducao>
 	{
@@ -70,15 +48,6 @@ namespace ACBr.Net.NFSe.Nota
 		#endregion Contructors
 
 		#region Propriedades
-
-		#region COM Interop Attributes
-
-#if COM_INTEROP
-
-		[IndexerName("GetItem")]
-#endif
-
-		#endregion COM Interop Attributes
 
 		public new Deducao this[int index]
 		{
@@ -106,21 +75,9 @@ namespace ACBr.Net.NFSe.Nota
 		#endregion Methods
 
 		#region IEnumerable<Deducao>
-
-#if COM_INTEROP
-
-		[DispId(-4)]
-		public IDictionaryEnumerator GetEnumerator()
-#else
-
 		public IEnumerator<Deducao> GetEnumerator()
-#endif
-		{
-#if COM_INTEROP
-			return (IDictionaryEnumerator)(GetEnumerator() as IEnumerator);
-#else
+        {
 			return GetEnumerator();
-#endif
 		}
 
 		IEnumerator<Deducao> IEnumerable<Deducao>.GetEnumerator()

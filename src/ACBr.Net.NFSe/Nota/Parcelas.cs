@@ -33,29 +33,8 @@ using ACBr.Net.Core.Generics;
 using System;
 using PropertyChanged;
 
-#region COM Interop Attributes
-
-#if COM_INTEROP
-
-using System.Runtime.InteropServices;
-
-#endif
-
-#endregion COM Interop Attributes
-
 namespace ACBr.Net.NFSe.Nota
 {
-	#region COM Interop Attributes
-
-#if COM_INTEROP
-
-	[ComVisible(true)]
-	[Guid("AE6E970B-8E7D-4C86-BCF7-C6F769D8B712")]
-	[ClassInterface(ClassInterfaceType.None)]
-#endif
-
-	#endregion COM Interop Attributes
-
 	[ImplementPropertyChanged]
 	public sealed class Parcelas : GenericClone<Parcelas>
 	{
@@ -73,20 +52,8 @@ namespace ACBr.Net.NFSe.Nota
 
 		public DateTime DataVencimento { get; set; }
 
-		public decimal Valor
-		{
-			#region COM_INTEROP
+		public decimal Valor { get; set; }
 
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
-
-			#endregion COM_INTEROP
-
-			get;
-			set;
-		}
-
-		#endregion Propriedades
-	}
+        #endregion Propriedades
+    }
 }
