@@ -36,28 +36,8 @@ using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 
-#region COM Interop Attributes
-
-#if COM_INTEROP
-
-using System.Runtime.InteropServices;
-
-#endif
-
-#endregion COM Interop Attributes
-
 namespace ACBr.Net.NFSe.Configuracao
 {
-	#region COM Interop Attributes
-
-#if COM_INTEROP
-
-	[ComVisible(true)]
-	[Guid("5E13A04F-441F-4EA1-A7B9-942EB444A565")]
-#endif
-
-	#endregion COM Interop Attributes
-
 	public sealed class CfgGeral : DFeGeralConfigBase
 	{
 		#region Fields

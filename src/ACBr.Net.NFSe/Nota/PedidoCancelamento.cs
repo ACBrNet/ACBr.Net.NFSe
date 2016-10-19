@@ -33,29 +33,8 @@ using ACBr.Net.Core.Generics;
 using ACBr.Net.DFe.Core.Document;
 using PropertyChanged;
 
-#region COM Interop Attributes
-
-#if COM_INTEROP
-
-using System.Runtime.InteropServices;
-
-#endif
-
-#endregion COM Interop Attributes
-
 namespace ACBr.Net.NFSe.Nota
 {
-	#region COM Interop Attributes
-
-#if COM_INTEROP
-
-	[ComVisible(true)]
-	[Guid("B4712E86-6641-4451-A5BE-8932B402A136")]
-	[ClassInterface(ClassInterfaceType.None)]
-#endif
-
-	#endregion COM Interop Attributes
-
 	[ImplementPropertyChanged]
 	public sealed class PedidoCancelamento : GenericClone<PedidoCancelamento>
 	{

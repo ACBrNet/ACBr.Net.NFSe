@@ -34,30 +34,8 @@ using PropertyChanged;
 using System.Collections;
 using System.Collections.Generic;
 
-#region COM Interop Attributes
-
-#if COM_INTEROP
-
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-
-#endif
-
-#endregion COM Interop Attributes
-
 namespace ACBr.Net.NFSe.Nota
 {
-	#region COM Interop Attributes
-
-#if COM_INTEROP
-
-	[ComVisible(true)]
-	[Guid("EB1A054A-833A-4220-937A-A8DA44AB3E07")]
-	[ClassInterface(ClassInterfaceType.None)]
-#endif
-
-	#endregion COM Interop Attributes
-
 	[ImplementPropertyChanged]
 	public sealed class ParcelasCollection : DFeCollection<Parcelas>, IEnumerable<Parcelas>
 	{
@@ -70,15 +48,6 @@ namespace ACBr.Net.NFSe.Nota
 		#endregion Contructors
 
 		#region Propriedades
-
-		#region COM Interop Attributes
-
-#if COM_INTEROP
-
-		[IndexerName("GetItem")]
-#endif
-
-		#endregion COM Interop Attributes
 
 		public new Parcelas this[int index]
 		{
@@ -106,21 +75,9 @@ namespace ACBr.Net.NFSe.Nota
 		#endregion Methods
 
 		#region IEnumerable<Parcelas>
-
-#if COM_INTEROP
-
-		[DispId(-4)]
-		public IDictionaryEnumerator GetEnumerator()
-#else
-
 		public IEnumerator<Parcelas> GetEnumerator()
-#endif
 		{
-#if COM_INTEROP
-			return (IDictionaryEnumerator)(GetEnumerator() as IEnumerator);
-#else
 			return GetEnumerator();
-#endif
 		}
 
 		IEnumerator<Parcelas> IEnumerable<Parcelas>.GetEnumerator()

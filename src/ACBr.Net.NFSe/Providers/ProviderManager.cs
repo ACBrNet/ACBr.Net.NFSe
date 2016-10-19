@@ -42,27 +42,8 @@ using System.IO.Compression;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 
-#region COM Interop Attributes
-
-#if COM_INTEROP
-
-using System.Runtime.InteropServices;
-
-#endif
-
-#endregion COM Interop Attributes
-
 namespace ACBr.Net.NFSe.Providers
 {
-	#region COM Interop Attributes
-
-#if COM_INTEROP
-
-	[ComVisible(false)]
-#endif
-
-	#endregion COM Interop Attributes
-
 	public static class ProviderManager
 	{
 		#region Constructors

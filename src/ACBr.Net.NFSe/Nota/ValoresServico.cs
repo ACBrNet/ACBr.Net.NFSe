@@ -32,29 +32,8 @@
 using ACBr.Net.Core.Generics;
 using PropertyChanged;
 
-#region COM Interop Attributes
-
-#if COM_INTEROP
-
-using System.Runtime.InteropServices;
-
-#endif
-
-#endregion COM Interop Attributes
-
 namespace ACBr.Net.NFSe.Nota
 {
-	#region COM Interop Attributes
-
-#if COM_INTEROP
-
-	[ComVisible(true)]
-	[Guid("94D5A33C-8307-4D56-83EB-9FC26BCBD8F1")]
-	[ClassInterface(ClassInterfaceType.None)]
-#endif
-
-	#endregion COM Interop Attributes
-
 	[ImplementPropertyChanged]
 	public sealed class ValoresServico : GenericClone<ValoresServico>
 	{
@@ -69,305 +48,53 @@ namespace ACBr.Net.NFSe.Nota
 
 		#region Propriedades
 
-		public decimal ValorServicos
-		{
-			#region COM_INTEROP
+		public decimal ValorServicos { get; set; }
 
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
+        public decimal ValorDeducoes { get; set; }
 
-			#endregion COM_INTEROP
+        public decimal ValorPis { get; set; }
 
-			get;
-			set;
-		}
+        public decimal ValorCofins { get; set; }
 
-		public decimal ValorDeducoes
-		{
-			#region COM_INTEROP
+        public decimal ValorInss { get; set; }
 
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
+        public decimal ValorIr { get; set; }
 
-			#endregion COM_INTEROP
+        public decimal ValorCsll { get; set; }
 
-			get;
-			set;
-		}
+        public SituacaoTributaria IssRetido { get; set; }
 
-		public decimal ValorPis
-		{
-			#region COM_INTEROP
+		public decimal ValorIss { get; set; }
 
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
+        public decimal OutrasRetencoes { get; set; }
 
-			#endregion COM_INTEROP
+        public decimal BaseCalculo { get; set; }
 
-			get;
-			set;
-		}
+        public decimal Aliquota { get; set; }
 
-		public decimal ValorCofins
-		{
-			#region COM_INTEROP
+        public decimal AliquotaPis { get; set; }
 
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
+        public decimal AliquotaCofins { get; set; }
 
-			#endregion COM_INTEROP
+        public decimal AliquotaInss { get; set; }
 
-			get;
-			set;
-		}
+        public decimal AliquotaIR { get; set; }
 
-		public decimal ValorInss
-		{
-			#region COM_INTEROP
+        public decimal AliquotaCsll { get; set; }
 
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
+        public decimal ValorLiquidoNfse { get; set; }
 
-			#endregion COM_INTEROP
+        public decimal ValorIssRetido { get; set; }
 
-			get;
-			set;
-		}
+        public decimal DescontoCondicionado { get; set; }
 
-		public decimal ValorIr
-		{
-			#region COM_INTEROP
+        public decimal DescontoIncondicionado { get; set; }
 
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
+        public string JustificativaDeducao { get; set; }
 
-			#endregion COM_INTEROP
+		public decimal ValorOutrasRetencoes { get; set; }
 
-			get;
-			set;
-		}
-
-		public decimal ValorCsll
-		{
-			#region COM_INTEROP
-
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
-
-			#endregion COM_INTEROP
-
-			get;
-			set;
-		}
-
-		public SituacaoTributaria IssRetido { get; set; }
-
-		public decimal ValorIss
-		{
-			#region COM_INTEROP
-
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
-
-			#endregion COM_INTEROP
-
-			get;
-			set;
-		}
-
-		public decimal OutrasRetencoes
-		{
-			#region COM_INTEROP
-
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
-
-			#endregion COM_INTEROP
-
-			get;
-			set;
-		}
-
-		public decimal BaseCalculo
-		{
-			#region COM_INTEROP
-
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
-
-			#endregion COM_INTEROP
-
-			get;
-			set;
-		}
-
-		public decimal Aliquota
-		{
-			#region COM_INTEROP
-
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
-
-			#endregion COM_INTEROP
-
-			get;
-			set;
-		}
-
-		public decimal AliquotaPis
-		{
-			#region COM_INTEROP
-
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
-
-			#endregion COM_INTEROP
-
-			get;
-			set;
-		}
-
-		public decimal AliquotaCofins
-		{
-			#region COM_INTEROP
-
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
-
-			#endregion COM_INTEROP
-
-			get;
-			set;
-		}
-
-		public decimal AliquotaInss
-		{
-			#region COM_INTEROP
-
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
-
-			#endregion COM_INTEROP
-
-			get;
-			set;
-		}
-
-		public decimal AliquotaIR
-		{
-			#region COM_INTEROP
-
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
-
-			#endregion COM_INTEROP
-
-			get;
-			set;
-		}
-
-		public decimal AliquotaCsll
-		{
-			#region COM_INTEROP
-
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
-
-			#endregion COM_INTEROP
-
-			get;
-			set;
-		}
-
-		public decimal ValorLiquidoNfse
-		{
-			#region COM_INTEROP
-
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
-
-			#endregion COM_INTEROP
-
-			get;
-			set;
-		}
-
-		public decimal ValorIssRetido
-		{
-			#region COM_INTEROP
-
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
-
-			#endregion COM_INTEROP
-
-			get;
-			set;
-		}
-
-		public decimal DescontoCondicionado
-		{
-			#region COM_INTEROP
-
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
-
-			#endregion COM_INTEROP
-
-			get;
-			set;
-		}
-
-		public decimal DescontoIncondicionado
-		{
-			#region COM_INTEROP
-
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
-
-			#endregion COM_INTEROP
-
-			get;
-			set;
-		}
-
-		public string JustificativaDeducao { get; set; }
-
-		public decimal ValorOutrasRetencoes
-		{
-			#region COM_INTEROP
-
-#if COM_INTEROP
-			[return: MarshalAs(UnmanagedType.Currency)]
-#endif
-
-			#endregion COM_INTEROP
-
-			get;
-			set;
-		}
-
-		public string DescricaoOutrasRetencoes { get; set; }
+        public string DescricaoOutrasRetencoes { get; set; }
 
 		#endregion Propriedades
 	}

@@ -32,28 +32,8 @@
 using ACBr.Net.DFe.Core.Common;
 using System.ComponentModel;
 
-#region COM Interop Attributes
-
-#if COM_INTEROP
-
-using System.Runtime.InteropServices;
-
-#endif
-
-#endregion COM Interop Attributes
-
 namespace ACBr.Net.NFSe.Configuracao
 {
-	#region COM Interop Attributes
-
-#if COM_INTEROP
-
-	[ComVisible(true)]
-	[Guid("C629DC12-C44C-4342-BFD8-415E7CE30829")]
-#endif
-
-	#endregion COM Interop Attributes
-
 	public sealed class CfgWebServices : DFeWebserviceConfigBase
 	{
 		#region Constructor

@@ -32,29 +32,8 @@
 using ACBr.Net.Core.Generics;
 using PropertyChanged;
 
-#region COM Interop Attributes
-
-#if COM_INTEROP
-
-using System.Runtime.InteropServices;
-
-#endif
-
-#endregion COM Interop Attributes
-
 namespace ACBr.Net.NFSe.Nota
 {
-	#region COM Interop Attributes
-
-#if COM_INTEROP
-
-	[ComVisible(true)]
-	[Guid("7679D2A8-91CB-4164-802E-70D5881CE8FB")]
-	[ClassInterface(ClassInterfaceType.None)]
-#endif
-
-	#endregion COM Interop Attributes
-
 	[ImplementPropertyChanged]
 	public sealed class DadosIntermediario : GenericClone<DadosIntermediario>
 	{

@@ -3,29 +3,8 @@ using ACBr.Net.NFSe.Nota;
 using ACBr.Net.NFSe.Providers;
 using System;
 
-#region COM Interop Attributes
-
-#if COM_INTEROP
-
-using System.Runtime.InteropServices;
-
-#endif
-
-#endregion COM Interop Attributes
-
 namespace ACBr.Net.NFSe.Interfaces
 {
-	#region COM Interop Attributes
-
-#if COM_INTEROP
-
-	[ComVisible(true)]
-	[Guid("16145F89-1243-46EB-8628-26885CFC3DBC")]
-	[InterfaceType(ComInterfaceType.InterfaceIsDual)]
-#endif
-
-	#endregion COM Interop Attributes
-
 	public interface IACBrNFSe
 	{
 		ConfiguracoesNFSe Configuracoes { get; }
