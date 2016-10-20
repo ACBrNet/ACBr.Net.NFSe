@@ -43,194 +43,147 @@ using System.IO;
 using System.Text;
 using System.Xml.Linq;
 
-#region COM Interop Attributes
-
-#if COM_INTEROP
-
-using System.Runtime.InteropServices;
-
-#endif
-
-#endregion COM Interop Attributes
-
 namespace ACBr.Net.NFSe.Nota
 {
-	#region COM Interop Attributes
+    [ImplementPropertyChanged]
+    public sealed class NotaFiscalCollection : DFeCollection<NotaFiscal>
+    {
+        #region Fields
 
-#if COM_INTEROP
+        private ConfiguracoesNFSe config;
 
-	[ComVisible(true)]
-	[Guid("898CE868-8D47-4C28-9912-48464685188A")]
-	[ComDefaultInterface(typeof(INotaFiscalCollection))]
-	[ClassInterface(ClassInterfaceType.AutoDual)]
-#endif
+        #endregion Fields
 
-	#endregion COM Interop Attributes
+        #region Constructor
 
-	[ImplementPropertyChanged]
-	public sealed class NotaFiscalCollection : DFeCollection<NotaFiscal>, IEnumerable<NotaFiscal>, INotaFiscalCollection
-	{
-		#region Fields
+        /// <summary>
+        /// Inicializa uma nova instacia da classe <see cref="NotaFiscalCollection" />.
+        /// </summary>
+        /// <param name="config">The configuration.</param>
+        public NotaFiscalCollection(ConfiguracoesNFSe config)
+        {
+            Guard.Against<ACBrException>(config == null, "Configurações não podem ser nulas");
 
-		private ConfiguracoesNFSe config;
+            this.config = config;
+        }
 
-		#endregion Fields
+        #endregion Constructor
 
-		#region Constructor
+        #region Propriedades
 
-		/// <summary>
-		/// Inicializa uma nova instacia da classe <see cref="NotaFiscalCollection" />.
-		/// </summary>
-		/// <param name="config">The configuration.</param>
-		public NotaFiscalCollection(ConfiguracoesNFSe config)
-		{
-			Guard.Against<ACBrException>(config == null, "Configurações não podem ser nulas");
+        public new NotaFiscal this[int index]
+        {
+            get
+            {
+                return base[index];
+            }
+            set
+            {
+                base[index] = value;
+            }
+        }
 
-			this.config = config;
-		}
+        #endregion Propriedades
 
-		#endregion Constructor
+        #region Methods
 
-		#region Propriedades
+        /// <summary>
+        /// Adiciona uma nova nota fiscal na coleção.
+        /// </summary>
+        /// <returns>T.</returns>
+        public override NotaFiscal AddNew()
+        {
+            var nota = new NotaFiscal(config);
+            Add(nota);
+            return nota;
+        }
 
-		public new NotaFiscal this[int index]
-		{
-			get
-			{
-				return base[index];
-			}
-			set
-			{
-				base[index] = value;
-			}
-		}
+        /// <summary>
+        /// Carrega a NFSe/RPS do arquivo.
+        /// </summary>
+        /// <param name="xml">caminho do arquivo XML ou string com o XML.</param>
+        /// <param name="encoding">encoding do XML.</param>
+        /// <returns>NotaFiscal carregada.</returns>
+        public NotaFiscal Load(string xml, Encoding encoding = null)
+        {
+            var provider = ProviderManager.GetProvider(config);
+            var nota = provider.LoadXml(xml, encoding);
+            Add(nota);
+            return nota;
+        }
 
-		#endregion Propriedades
+        /// <summary>
+        /// Carrega a NFSe/RPS do xml.
+        /// </summary>
+        /// <param name="stream">Stream do XML.</param>
+        /// <returns>NotaFiscal carregada.</returns>
+        public NotaFiscal Load(Stream stream)
+        {
+            var provider = ProviderManager.GetProvider(config);
+            var nota = provider.LoadXml(stream);
+            Add(nota);
+            return nota;
+        }
 
-		#region Methods
+        /// <summary>
+        /// Carrega a NFSe/RPS do XMLDocument.
+        /// </summary>
+        /// <param name="xml">XMLDocument da NFSe/RPS.</param>
+        /// <returns>NotaFiscal carregada.</returns>
+        public NotaFiscal Load(XDocument xml)
+        {
+            var provider = ProviderManager.GetProvider(config);
+            var nota = provider.LoadXml(xml);
+            Add(nota);
+            return nota;
+        }
 
-		/// <summary>
-		/// Adiciona uma nova nota fiscal na coleção.
-		/// </summary>
-		/// <returns>T.</returns>
-		public override NotaFiscal AddNew()
-		{
-			var nota = new NotaFiscal(config);
-			Add(nota);
-			return nota;
-		}
+        /// <summary>
+        /// Salvar o xml da Rps/NFSe no determinado arquivo
+        /// </summary>
+        /// <param name="nota">A nota para salvar</param>
+        /// <param name="path">Caminho onde sera salvo o arquivo.</param>
+        /// <returns></returns>
+        public void Save(NotaFiscal nota, string path)
+        {
+            var provider = ProviderManager.GetProvider(config);
+            var file = nota.IdentificacaoNFSe.Numero.IsEmpty() ? $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml" :
+                                                                 $"NFSe-{nota.IdentificacaoNFSe.Chave}-{nota.IdentificacaoNFSe.Numero}.xml";
 
-		/// <summary>
-		/// Carrega a NFSe/RPS do arquivo.
-		/// </summary>
-		/// <param name="xml">caminho do arquivo XML ou string com o XML.</param>
-		/// <param name="encoding">encoding do XML.</param>
-		/// <returns>NotaFiscal carregada.</returns>
-		public NotaFiscal Load(string xml, Encoding encoding = null)
-		{
-			var provider = ProviderManager.GetProvider(config);
-			var nota = provider.LoadXml(xml, encoding);
-			Add(nota);
-			return nota;
-		}
+            var xmlNota = nota.IdentificacaoNFSe.Numero.IsEmpty() ? provider.GetXmlRps(nota) : provider.GetXmlNFSe(nota);
 
-		/// <summary>
-		/// Carrega a NFSe/RPS do xml.
-		/// </summary>
-		/// <param name="stream">Stream do XML.</param>
-		/// <returns>NotaFiscal carregada.</returns>
-		public NotaFiscal Load(Stream stream)
-		{
-			var provider = ProviderManager.GetProvider(config);
-			var nota = provider.LoadXml(stream);
-			Add(nota);
-			return nota;
-		}
+            path = Path.Combine(path, file);
 
-		/// <summary>
-		/// Carrega a NFSe/RPS do XMLDocument.
-		/// </summary>
-		/// <param name="xml">XMLDocument da NFSe/RPS.</param>
-		/// <returns>NotaFiscal carregada.</returns>
-		public NotaFiscal Load(XDocument xml)
-		{
-			var provider = ProviderManager.GetProvider(config);
-			var nota = provider.LoadXml(xml);
-			Add(nota);
-			return nota;
-		}
+            var doc = XDocument.Parse(xmlNota);
+            doc.Save(path, SaveOptions.OmitDuplicateNamespaces);
+        }
 
-		/// <summary>
-		/// Salvar o xml da Rps/NFSe no determinado arquivo
-		/// </summary>
-		/// <param name="nota">A nota para salvar</param>
-		/// <param name="path">Caminho onde sera salvo o arquivo.</param>
-		/// <returns></returns>
-		public void Save(NotaFiscal nota, string path)
-		{
-			var provider = ProviderManager.GetProvider(config);
-			var file = nota.IdentificacaoNFSe.Numero.IsEmpty() ? $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml" :
-																 $"NFSe-{nota.IdentificacaoNFSe.Chave}-{nota.IdentificacaoNFSe.Numero}.xml";
+        /// <summary>
+        /// Salvar o xml da Rps/NFSe no determinado arquivo
+        /// </summary>
+        /// <param name="nota">A nota para salvar</param>
+        /// <param name="stream">Stream onde sera salvo o xml</param>
+        /// <returns></returns>
+        public void Save(NotaFiscal nota, Stream stream)
+        {
+            var provider = ProviderManager.GetProvider(config);
+            var xmlNota = nota.IdentificacaoNFSe.Numero.IsEmpty() ? provider.GetXmlRps(nota) : provider.GetXmlNFSe(nota);
 
-			var xmlNota = nota.IdentificacaoNFSe.Numero.IsEmpty() ? provider.GetXmlRps(nota) : provider.GetXmlNFSe(nota);
+            var doc = XDocument.Parse(xmlNota);
+            doc.Save(stream, SaveOptions.OmitDuplicateNamespaces);
+        }
 
-			path = Path.Combine(path, file);
+        /// <summary>
+        /// Gera o Xml Da Rps
+        /// </summary>
+        /// <param name="nota"></param>
+        /// <returns></returns>
+        public string GetXml(NotaFiscal nota)
+        {
+            var provider = ProviderManager.GetProvider(config);
+            return nota.IdentificacaoNFSe.Numero.IsEmpty() ? provider.GetXmlRps(nota) : provider.GetXmlNFSe(nota);
+        }
 
-			var doc = XDocument.Parse(xmlNota);
-			doc.Save(path, SaveOptions.OmitDuplicateNamespaces);
-		}
-
-		/// <summary>
-		/// Salvar o xml da Rps/NFSe no determinado arquivo
-		/// </summary>
-		/// <param name="nota">A nota para salvar</param>
-		/// <param name="stream">Stream onde sera salvo o xml</param>
-		/// <returns></returns>
-		public void Save(NotaFiscal nota, Stream stream)
-		{
-			var provider = ProviderManager.GetProvider(config);
-			var xmlNota = nota.IdentificacaoNFSe.Numero.IsEmpty() ? provider.GetXmlRps(nota) : provider.GetXmlNFSe(nota);
-
-			var doc = XDocument.Parse(xmlNota);
-			doc.Save(stream, SaveOptions.OmitDuplicateNamespaces);
-		}
-
-		/// <summary>
-		/// Gera o Xml Da Rps
-		/// </summary>
-		/// <param name="nota"></param>
-		/// <returns></returns>
-		public string GetXml(NotaFiscal nota)
-		{
-			var provider = ProviderManager.GetProvider(config);
-			return nota.IdentificacaoNFSe.Numero.IsEmpty() ? provider.GetXmlRps(nota) : provider.GetXmlNFSe(nota);
-		}
-
-		#endregion Methods
-
-		#region IEnumerable<NotaFiscal>
-
-#if COM_INTEROP
-
-		public IEnumerator GetEnumerator()
-#else
-
-		public IEnumerator<NotaFiscal> GetEnumerator()
-#endif
-		{
-			return GetEnumerator();
-		}
-
-		IEnumerator<NotaFiscal> IEnumerable<NotaFiscal>.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
-
-		#endregion IEnumerable<NotaFiscal>
-	}
+        #endregion Methods
+    }
 }

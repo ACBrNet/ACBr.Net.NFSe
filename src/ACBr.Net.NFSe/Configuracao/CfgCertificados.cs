@@ -31,28 +31,8 @@
 
 using ACBr.Net.DFe.Core.Common;
 
-#region COM Interop Attributes
-
-#if COM_INTEROP
-
-using System.Runtime.InteropServices;
-
-#endif
-
-#endregion COM Interop Attributes
-
 namespace ACBr.Net.NFSe.Configuracao
 {
-	#region COM Interop Attributes
-
-#if COM_INTEROP
-
-	[ComVisible(true)]
-	[Guid("E21FFED7-2B87-4AAC-A541-45279E264691")]
-#endif
-
-	#endregion COM Interop Attributes
-
 	public sealed class CfgCertificados : DFeCertificadosConfigBase
 	{
 		#region Constructor

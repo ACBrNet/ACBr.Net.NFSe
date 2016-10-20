@@ -31,28 +31,8 @@
 
 using ACBr.Net.NFSe.Nota;
 
-#region COM Interop Attributes
-
-#if COM_INTEROP
-
-using System.Runtime.InteropServices;
-
-#endif
-
-#endregion COM Interop Attributes
-
 namespace ACBr.Net.NFSe.Configuracao
 {
-	#region COM Interop Attributes
-
-#if COM_INTEROP
-	[ComVisible(true)]
-	[Guid("DE003CB2-9758-4A38-9C13-5D76388FF657")]
-	[ClassInterface(ClassInterfaceType.AutoDual)]
-#endif
-
-	#endregion COM Interop Attributes
-
 	public sealed class ConfiguracoesNFSe
 	{
 		#region Constructor

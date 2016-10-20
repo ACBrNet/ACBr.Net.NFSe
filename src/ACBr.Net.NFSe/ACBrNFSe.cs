@@ -39,30 +39,8 @@ using ACBr.Net.NFSe.Providers;
 using System;
 using System.ComponentModel;
 
-#region COM Interop Attributes
-
-#if COM_INTEROP
-
-using System.Runtime.InteropServices;
-
-#endif
-
-#endregion COM Interop Attributes
-
 namespace ACBr.Net.NFSe
 {
-	#region COM Interop Attributes
-
-#if COM_INTEROP
-
-	[ComVisible(true)]
-	[Guid("842C5505-4E4B-4843-933D-42D23A522417")]
-	[ComSourceInterfaces(typeof(IACBrNFSe))]
-	[ClassInterface(ClassInterfaceType.AutoDual)]
-#endif
-
-	#endregion COM Interop Attributes
-
 	[ToolboxItem(true)]
 	// ReSharper disable once InconsistentNaming
 	public sealed class ACBrNFSe : ACBrComponent, IACBrNFSe
