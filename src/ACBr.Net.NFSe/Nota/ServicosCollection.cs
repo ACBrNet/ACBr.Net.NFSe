@@ -31,13 +31,11 @@
 
 using ACBr.Net.DFe.Core.Collection;
 using PropertyChanged;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace ACBr.Net.NFSe.Nota
 {
 	[ImplementPropertyChanged]
-	public sealed class ServicosCollection : DFeCollection<Servico>, IEnumerable<Servico>
+	public sealed class ServicosCollection : DFeCollection<Servico>
 	{
 		#region Constructors
 
@@ -46,22 +44,6 @@ namespace ACBr.Net.NFSe.Nota
 		}
 
 		#endregion Constructors
-
-		#region Propriedades
-
-		public new Servico this[int index]
-		{
-			get
-			{
-				return base[index];
-			}
-			set
-			{
-				base[index] = value;
-			}
-		}
-
-		#endregion Propriedades
 
 		#region Methods
 
@@ -73,23 +55,5 @@ namespace ACBr.Net.NFSe.Nota
 		}
 
 		#endregion Methods
-
-		#region IEnumerable<Servico>
-		public IEnumerator<Servico> GetEnumerator()
-		{
-			return GetEnumerator();
-		}
-
-		IEnumerator<Servico> IEnumerable<Servico>.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
-
-		#endregion IEnumerable<Servico>
 	}
 }

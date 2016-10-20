@@ -31,13 +31,11 @@
 
 using ACBr.Net.DFe.Core.Collection;
 using PropertyChanged;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace ACBr.Net.NFSe.Nota
 {
 	[ImplementPropertyChanged]
-	public sealed class DeducoesCollection : DFeCollection<Deducao>, IEnumerable<Deducao>
+	public sealed class DeducoesCollection : DFeCollection<Deducao>
 	{
 		#region Contructors
 
@@ -46,22 +44,6 @@ namespace ACBr.Net.NFSe.Nota
 		}
 
 		#endregion Contructors
-
-		#region Propriedades
-
-		public new Deducao this[int index]
-		{
-			get
-			{
-				return base[index];
-			}
-			set
-			{
-				base[index] = value;
-			}
-		}
-
-		#endregion Propriedades
 
 		#region Methods
 
@@ -73,23 +55,5 @@ namespace ACBr.Net.NFSe.Nota
 		}
 
 		#endregion Methods
-
-		#region IEnumerable<Deducao>
-		public IEnumerator<Deducao> GetEnumerator()
-        {
-			return GetEnumerator();
-		}
-
-		IEnumerator<Deducao> IEnumerable<Deducao>.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
-
-		#endregion IEnumerable<Deducao>
 	}
 }

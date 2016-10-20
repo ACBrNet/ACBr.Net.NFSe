@@ -4,7 +4,7 @@
 // Created          : 01-31-2016
 //
 // Last Modified By : RFTD
-// Last Modified On : 04-20-2015
+// Last Modified On : 10-20-2016
 // ***********************************************************************
 // <copyright file="ACBrNFSe.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -37,11 +37,9 @@ using ACBr.Net.NFSe.Interfaces;
 using ACBr.Net.NFSe.Nota;
 using ACBr.Net.NFSe.Providers;
 using System;
-using System.ComponentModel;
 
 namespace ACBr.Net.NFSe
 {
-	[ToolboxItem(true)]
 	// ReSharper disable once InconsistentNaming
 	public sealed class ACBrNFSe : ACBrComponent, IACBrNFSe
 	{
@@ -81,8 +79,8 @@ namespace ACBr.Net.NFSe
 			Guard.Against<ACBrException>(NotasFiscais.Count > 50,
 				$"ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS) excedido.{Environment.NewLine}" +
 				$"Quantidade atual: {NotasFiscais.Count}");
-			var provider = ProviderManager.GetProvider(Configuracoes);
 
+			var provider = ProviderManager.GetProvider(Configuracoes);
 			var ret = sincrono ? provider.EnviarSincrono(lote, NotasFiscais) : provider.Enviar(lote, NotasFiscais);
 
 			if (ret.Sucesso && DaNfSe != null && imprimir)
