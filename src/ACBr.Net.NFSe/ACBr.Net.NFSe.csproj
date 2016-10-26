@@ -81,6 +81,7 @@
     <Compile Include="ACBrNFSe.cs">
       <SubType>ACBr.Net</SubType>
     </Compile>
+    <Compile Include="ACBrNFSeProxy.cs" />
     <Compile Include="Configuracao\CfgArquivos.cs" />
     <Compile Include="Configuracao\CfgCertificados.cs" />
     <Compile Include="Configuracao\CfgGeral.cs" />
