@@ -187,7 +187,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 				}
 			}
 
-			// Regime Especial de Tributaçao
+			// Incentivador Culturalstr
 			switch (rootDoc.ElementAnyNs("IncentivadorCultural")?.GetValue<int>())
 			{
 				case 1:
@@ -807,30 +807,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 			retornoWebservice.NumeroLote = xmlRet.Root?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
 			retornoWebservice.Situacao = xmlRet.Root?.ElementAnyNs("Situacao")?.GetValue<string>() ?? "0";
-			switch (retornoWebservice.Situacao)
-			{
-				case "1":
-					retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Situação de lote de RPS: 1 – Não Recebido" });
-					break;
-
-				case "2":
-					retornoWebservice.Alertas.Add(new Evento { Codigo = "0", Descricao = "Situação de lote de RPS: 2 – Não Processado" });
-					retornoWebservice.Sucesso = true;
-					break;
-
-				case "3":
-					retornoWebservice.Alertas.Add(new Evento { Codigo = "0", Descricao = "Situação de lote de RPS: 3 – Processado com Erro" });
-					retornoWebservice.Sucesso = true;
-					break;
-
-				case "4":
-					retornoWebservice.Sucesso = true;
-					break;
-
-				default:
-					retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Situação de lote de RPS indefinida." });
-					break;
-			}
+            retornoWebservice.Sucesso = true;
 			return retornoWebservice;
 		}
 
@@ -1329,8 +1306,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			valores.AddChild(AdicionarTag(TipoCampo.De2, "", "OutrasRetencoes", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.OutrasRetencoes));
 			valores.AddChild(AdicionarTag(TipoCampo.De2, "", "BaseCalculo", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.BaseCalculo));
 			// Valor Percentual - Exemplos: 1% => 0.01   /   25,5% => 0.255   /   100% => 1
-			valores.AddChild(AdicionarTag(TipoCampo.De4, "", "Aliquota", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.Aliquota));
-			valores.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorLiquidoNfse", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.ValorLiquidoNfse));
+			valores.AddChild(AdicionarTag(TipoCampo.De4, "", "Aliquota", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.Aliquota/100));  // Valor Percentual - Exemplos: 1% => 0.01   /   25,5% => 0.255   /   100% => 1
+            valores.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorLiquidoNfse", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.ValorLiquidoNfse));
 			valores.AddChild(AdicionarTag(TipoCampo.De2, "", "DescontoIncondicionado", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.DescontoIncondicionado));
 			valores.AddChild(AdicionarTag(TipoCampo.De2, "", "DescontoCondicionado", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.DescontoCondicionado));
 
