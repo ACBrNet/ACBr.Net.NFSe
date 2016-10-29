@@ -656,7 +656,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 				cancInfConfirmacao.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataHora", ns, 20, 20, Ocorrencia.Obrigatoria, nota.Cancelamento.DataHora));
 			}
 
-			return xmlDoc.Root.AsString(identado, showDeclaration, Encoding.UTF8);
+			return xmlDoc.AsString(identado, showDeclaration, Encoding.UTF8);
 		}
 
 		public override RetornoWebservice Enviar(int lote, NotaFiscalCollection notas)
@@ -807,7 +807,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 			retornoWebservice.NumeroLote = xmlRet.Root?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
 			retornoWebservice.Situacao = xmlRet.Root?.ElementAnyNs("Situacao")?.GetValue<string>() ?? "0";
-            retornoWebservice.Sucesso = true;
+			retornoWebservice.Sucesso = true;
 			return retornoWebservice;
 		}
 
@@ -1306,8 +1306,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			valores.AddChild(AdicionarTag(TipoCampo.De2, "", "OutrasRetencoes", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.OutrasRetencoes));
 			valores.AddChild(AdicionarTag(TipoCampo.De2, "", "BaseCalculo", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.BaseCalculo));
 			// Valor Percentual - Exemplos: 1% => 0.01   /   25,5% => 0.255   /   100% => 1
-			valores.AddChild(AdicionarTag(TipoCampo.De4, "", "Aliquota", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.Aliquota/100));  // Valor Percentual - Exemplos: 1% => 0.01   /   25,5% => 0.255   /   100% => 1
-            valores.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorLiquidoNfse", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.ValorLiquidoNfse));
+			valores.AddChild(AdicionarTag(TipoCampo.De4, "", "Aliquota", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.Aliquota / 100));  // Valor Percentual - Exemplos: 1% => 0.01   /   25,5% => 0.255   /   100% => 1
+			valores.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorLiquidoNfse", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.ValorLiquidoNfse));
 			valores.AddChild(AdicionarTag(TipoCampo.De2, "", "DescontoIncondicionado", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.DescontoIncondicionado));
 			valores.AddChild(AdicionarTag(TipoCampo.De2, "", "DescontoCondicionado", ns, 1, 15, Ocorrencia.SeDiferenteDeZero, nota.Servico.Valores.DescontoCondicionado));
 
@@ -1386,13 +1386,13 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 				conCivil.AddChild(AdicionarTag(TipoCampo.Str, "", "Art", ns, 1, 15, Ocorrencia.Obrigatoria, nota.ConstrucaoCivil.Art));
 			}
 
-			return xmlDoc.Root.AsString(identado, showDeclaration, Encoding.UTF8);
+			return xmlDoc.AsString(identado, showDeclaration, Encoding.UTF8);
 		}
 
 		private IGinfesServiceClient GetCliente(TipoUrl tipo)
 		{
 			var url = GetUrl(tipo);
-			if (Config.WebServices.Ambiente == TipoAmbiente.Homologacao)
+			if (Config.WebServices.Ambiente == DFeTipoAmbiente.Homologacao)
 			{
 				return new GinfesHomServiceClient(url, TimeOut, Certificado);
 			}

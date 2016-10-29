@@ -44,7 +44,7 @@ namespace ACBr.Net.NFSe.Nota
 		{
 			Id = 0;
 			IdentificacaoNFSe = new IdeNFSe();
-			Signature = new Signature();
+			Signature = new DFeSignature();
 		}
 
 		#endregion Constructors
@@ -57,7 +57,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		public string CodigoCancelamento { get; set; }
 
-		public Signature Signature { get; }
+		public DFeSignature Signature { get; }
 
 		#endregion Propriedades
 	}

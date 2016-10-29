@@ -43,7 +43,7 @@ namespace ACBr.Net.NFSe.Configuracao
 		/// </summary>
 		internal CfgWebServices()
 		{
-			Ambiente = TipoAmbiente.Homologacao;
+			Ambiente = DFeTipoAmbiente.Homologacao;
 			Visualizar = false;
 			AjustaAguardaConsultaRet = false;
 			AguardarConsultaRet = 1;

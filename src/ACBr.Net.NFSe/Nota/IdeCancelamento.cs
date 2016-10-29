@@ -31,8 +31,8 @@
 
 using ACBr.Net.Core.Generics;
 using ACBr.Net.DFe.Core.Document;
-using System;
 using PropertyChanged;
+using System;
 
 namespace ACBr.Net.NFSe.Nota
 {
@@ -45,7 +45,7 @@ namespace ACBr.Net.NFSe.Nota
 		{
 			Id = 0;
 			Pedido = new PedidoCancelamento();
-			Signature = new Signature();
+			Signature = new DFeSignature();
 			DataHora = DateTime.Now;
 		}
 
@@ -61,7 +61,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		public DateTime DataHora { get; set; }
 
-		public Signature Signature { get; }
+		public DFeSignature Signature { get; }
 
 		#endregion Propriedades
 	}

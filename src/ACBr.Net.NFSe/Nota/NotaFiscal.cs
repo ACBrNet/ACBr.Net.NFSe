@@ -34,8 +34,8 @@ using ACBr.Net.Core.Exceptions;
 using ACBr.Net.Core.Generics;
 using ACBr.Net.DFe.Core.Document;
 using ACBr.Net.NFSe.Configuracao;
-using System;
 using PropertyChanged;
+using System;
 
 namespace ACBr.Net.NFSe.Nota
 {
@@ -70,7 +70,7 @@ namespace ACBr.Net.NFSe.Nota
 			ConstrucaoCivil = new DadosConstrucaoCivil();
 			Pagamento = new DadosPagamento();
 			OrgaoGerador = new IdeOrgaoGerador();
-			Signature = new Signature();
+			Signature = new DFeSignature();
 			Cancelamento = new IdeCancelamento();
 			Transportadora = new DadosTransportadora();
 			Emails = new EmailCollection();
@@ -134,7 +134,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		public decimal ValorCredito { get; set; }
 
-        public TipoEmissao TipoEmissao { get; set; }
+		public TipoEmissao TipoEmissao { get; set; }
 
 		public TipoEmpreitadaGlobal EmpreitadaGlobal { get; set; }
 
@@ -142,7 +142,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		public string Assinatura { get; set; }
 
-		public Signature Signature { get; set; }
+		public DFeSignature Signature { get; set; }
 
 		#endregion Propriedades
 	}

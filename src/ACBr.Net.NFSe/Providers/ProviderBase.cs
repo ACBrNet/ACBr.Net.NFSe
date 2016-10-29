@@ -311,7 +311,7 @@ namespace ACBr.Net.NFSe.Providers
 		{
 			switch (Config.WebServices.Ambiente)
 			{
-				case TipoAmbiente.Producao:
+				case DFeTipoAmbiente.Producao:
 					return Municipio.UrlProducao[url];
 
 				default:

@@ -23,7 +23,7 @@ namespace ACBr.Net.NFSe.Test
 
 			dados.Position = 0;
 			var xml = XDocument.Load(dados);
-			var rpsOriginal = xml.Root.AsString(true);
+			var rpsOriginal = xml.AsString(true);
 
 			Assert.True(rpsGerada == rpsOriginal, "Erro na Geração do Xml da Rps");
 		}
@@ -44,7 +44,7 @@ namespace ACBr.Net.NFSe.Test
 
 			dados.Position = 0;
 			var xml = XDocument.Load(dados);
-			var nfseOriginal = xml.Root.AsString(true);
+			var nfseOriginal = xml.AsString(true);
 
 			Assert.True(nfseGerada == nfseOriginal, "Erro na Geração do Xml da NFSe");
 		}

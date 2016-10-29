@@ -21,7 +21,7 @@ namespace ACBr.Net.NFSe.Test
 
 			//webservices
 			//Configure os dados da cidade e do Certificado aqui
-			acbrNFSe.Configuracoes.WebServices.Ambiente = TipoAmbiente.Homologacao;
+			acbrNFSe.Configuracoes.WebServices.Ambiente = DFeTipoAmbiente.Homologacao;
 			acbrNFSe.Configuracoes.WebServices.CodMunicipio = 3543402;
 
 			acbrNFSe.Configuracoes.Certificados.Certificado = "4E009FA5F9CABB8F";
