@@ -429,13 +429,8 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 		public override RetornoWebservice Enviar(int lote, NotaFiscalCollection notas)
 		{
-			var retornoWebservice = new RetornoWebservice()
+            var retornoWebservice = new RetornoWebservice()
 			{
-				Sucesso = false,
-				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
-				CodCidade = Config.WebServices.CodMunicipio,
-				DataLote = DateTime.Now,
-				NumeroLote = "0",
 				Assincrono = true
 			};
 
@@ -489,9 +484,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var cabeçalho = xmlRet.ElementAnyNs("Cabecalho");
 
 			retornoWebservice.Sucesso = cabeçalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
-			retornoWebservice.CodCidade = cabeçalho?.ElementAnyNs("CodCidade")?.GetValue<int>() ?? 0;
 			retornoWebservice.NumeroLote = cabeçalho?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
-			retornoWebservice.CpfCnpjRemetente = cabeçalho?.ElementAnyNs("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
 			retornoWebservice.DataLote = cabeçalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
 			var erros = xmlRet.ElementAnyNs("Erros");
@@ -513,15 +506,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 		public override RetornoWebservice EnviarSincrono(int lote, NotaFiscalCollection notas)
 		{
-			var retornoWebservice = new RetornoWebservice
-			{
-				Sucesso = false,
-				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
-				CodCidade = Config.WebServices.CodMunicipio,
-				DataLote = DateTime.Now,
-				NumeroLote = "0",
-				Assincrono = false
-			};
+            var retornoWebservice = new RetornoWebservice();
 
 			var rpsOrg = notas.OrderBy(x => x.IdentificacaoRps.DataEmissao);
 			var valorTotal = notas.Sum(nota => nota.Servico.Valores.ValorServicos);
@@ -574,9 +559,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var cabeçalho = xmlRet.ElementAnyNs("Cabecalho");
 
 			retornoWebservice.Sucesso = cabeçalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
-			retornoWebservice.CodCidade = cabeçalho?.ElementAnyNs("CodCidade")?.GetValue<int>() ?? 0;
 			retornoWebservice.NumeroLote = cabeçalho?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
-			retornoWebservice.CpfCnpjRemetente = cabeçalho?.ElementAnyNs("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
 			retornoWebservice.DataLote = cabeçalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
 			var erros = xmlRet.ElementAnyNs("Erros");
@@ -614,15 +597,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 		public override RetornoWebservice CancelaNFSe(int lote, NotaFiscalCollection notas)
 		{
-			var retornoWebservice = new RetornoWebservice
-			{
-				Sucesso = false,
-				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
-				CodCidade = Config.WebServices.CodMunicipio,
-				DataLote = DateTime.Now,
-				NumeroLote = "0",
-				Assincrono = false
-			};
+            var retornoWebservice = new RetornoWebservice();
 
 			var loteCancelamento = new StringBuilder();
 			loteCancelamento.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -679,9 +654,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var cabeçalho = xmlRet.ElementAnyNs("Cabecalho");
 
 			retornoWebservice.Sucesso = cabeçalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
-			retornoWebservice.CodCidade = cabeçalho?.ElementAnyNs("CodCidade")?.GetValue<int>() ?? 0;
 			retornoWebservice.NumeroLote = cabeçalho?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
-			retornoWebservice.CpfCnpjRemetente = cabeçalho?.ElementAnyNs("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
 			retornoWebservice.DataLote = cabeçalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
 			var erros = xmlRet.ElementAnyNs("Erros");
@@ -714,15 +687,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 		public override RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas)
 		{
-			var retornoWebservice = new RetornoWebservice
-			{
-				Sucesso = false,
-				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
-				CodCidade = Config.WebServices.CodMunicipio,
-				DataLote = DateTime.Now,
-				NumeroLote = "0",
-				Assincrono = false
-			};
+            var retornoWebservice = new RetornoWebservice();
 
 			var loteCancelamento = new StringBuilder();
 			loteCancelamento.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -774,9 +739,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var cabeçalho = xmlRet.ElementAnyNs("Cabecalho");
 
 			retornoWebservice.Sucesso = cabeçalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
-			retornoWebservice.CodCidade = cabeçalho?.ElementAnyNs("CodCidade")?.GetValue<int>() ?? 0;
 			retornoWebservice.NumeroLote = cabeçalho?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
-			retornoWebservice.CpfCnpjRemetente = cabeçalho?.ElementAnyNs("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
 			retornoWebservice.DataLote = cabeçalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
 			var erros = xmlRet.ElementAnyNs("Erros");
@@ -807,17 +770,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 		public override RetornoWebservice ConsultarLoteRps(string protocolo, int lote, NotaFiscalCollection notas)
 		{
-			var retornoWebservice = new RetornoWebservice()
-			{
-				Sucesso = false,
-				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
-				CodCidade = Config.WebServices.CodMunicipio,
-				DataLote = DateTime.Now,
-				NumeroLote = "0",
-				Assincrono = false
-			};
+            var retornoWebservice = new RetornoWebservice();
 
-			var loteBuilder = new StringBuilder();
+            var loteBuilder = new StringBuilder();
 			loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			loteBuilder.Append("<ns1:ReqConsultaLote xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote  http://localhost:8080/WsNFe2/xsd/ReqConsultaLote.xsd\">");
 			loteBuilder.Append("<Cabecalho>");
@@ -855,9 +810,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var cabeçalho = xmlRet.ElementAnyNs("Cabecalho");
 
 			retornoWebservice.Sucesso = cabeçalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
-			retornoWebservice.CodCidade = cabeçalho?.ElementAnyNs("CodCidade")?.GetValue<int>() ?? 0;
 			retornoWebservice.NumeroLote = cabeçalho?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
-			retornoWebservice.CpfCnpjRemetente = cabeçalho?.ElementAnyNs("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
 			retornoWebservice.DataLote = cabeçalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
 			var erros = xmlRet.ElementAnyNs("Erros");
@@ -887,17 +840,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 		public override RetornoWebservice ConsultarSequencialRps(string serie)
 		{
-			var retornoWebservice = new RetornoWebservice()
-			{
-				Sucesso = false,
-				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
-				CodCidade = Config.WebServices.CodMunicipio,
-				DataLote = DateTime.Now,
-				NumeroLote = "0",
-				Assincrono = false
-			};
+            var retornoWebservice = new RetornoWebservice();
 
-			var lote = new StringBuilder();
+            var lote = new StringBuilder();
 			lote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			lote.Append("<ns1:ConsultaSeqRps xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ConsultaSeqRps.xsd\">");
 			lote.Append("<Cabecalho>");
@@ -936,9 +881,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var cabeçalho = xmlRet.ElementAnyNs("Cabecalho");
 
 			retornoWebservice.Sucesso = true;
-			retornoWebservice.CodCidade = cabeçalho?.ElementAnyNs("CodCidade")?.GetValue<int>() ?? 0;
 			retornoWebservice.NumeroUltimoRps = cabeçalho?.ElementAnyNs("NroUltimoRps")?.GetValue<string>() ?? string.Empty;
-			retornoWebservice.CpfCnpjRemetente = cabeçalho?.ElementAnyNs("CPFCNPJRemetente")?.GetValue<string>() ?? string.Empty;
 
 			var erros = xmlRet.ElementAnyNs("Erros");
 			retornoWebservice.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));
@@ -952,17 +895,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 		public override RetornoWebservice ConsultaNFSe(DateTime? inicio, DateTime? fim, string numeroNfse, int pagina, string cnpjTomador,
 			string imTomador, string nomeInter, string cnpjInter, string imInter, string serie, NotaFiscalCollection notas)
 		{
-			var retornoWebservice = new RetornoWebservice()
-			{
-				Sucesso = false,
-				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
-				CodCidade = Config.WebServices.CodMunicipio,
-				DataLote = DateTime.Now,
-				NumeroLote = "0",
-				Assincrono = false
-			};
+            var retornoWebservice = new RetornoWebservice();
 
-			var lote = new StringBuilder();
+            var lote = new StringBuilder();
 			lote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			lote.Append(
 				"<ns1:ReqConsultaNotas xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqConsultaNotas.xsd\">");
@@ -1019,17 +954,9 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
 		public override RetornoWebservice ConsultaNFSeRps(string numero, string serie, TipoRps tipo, NotaFiscalCollection notas)
 		{
-			var retornoWebservice = new RetornoWebservice()
-			{
-				Sucesso = false,
-				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
-				CodCidade = Config.WebServices.CodMunicipio,
-				DataLote = DateTime.Now,
-				NumeroLote = "0",
-				Assincrono = false
-			};
+            var retornoWebservice = new RetornoWebservice();
 
-			var lote = new StringBuilder();
+            var lote = new StringBuilder();
 			lote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			lote.Append("<ns1:ReqConsultaNFSeRPS xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqConsultaNFSeRPS.xsd\">");
 			lote.Append("<Cabecalho>");
