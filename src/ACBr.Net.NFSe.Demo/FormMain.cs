@@ -97,8 +97,9 @@ namespace ACBr.Net.NFSe.Demo
 				if (path.IsEmpty()) return;
 
 				var municipios = listView1.Items.Cast<ListViewItem>().Select(x => (MunicipioNFSe)x.Tag);
-				ProviderManager.Municipios.AddRange(municipios);
-				ProviderManager.Save(Path.Combine(path, "Municipios.nfse"));
+                ProviderManager.Municipios.Clear();
+                ProviderManager.Municipios.AddRange(municipios);
+                ProviderManager.Save(Path.Combine(path, "Municipios.nfse"));
 			});
 		}
 

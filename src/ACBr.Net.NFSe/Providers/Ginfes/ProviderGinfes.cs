@@ -661,33 +661,20 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 		public override RetornoWebservice Enviar(int lote, NotaFiscalCollection notas)
 		{
-			var retornoWebservice = new RetornoWebservice
-			{
-				Sucesso = false,
-				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
-				CodCidade = Config.WebServices.CodMunicipio,
-				DataLote = DateTime.Now,
-				NumeroLote = "0",
-				Protocolo = "",
-				Assincrono = true
-			};
+            var retornoWebservice = new RetornoWebservice();
 
 			if (lote == 0)
-			{
 				retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Lote não informado." });
-			}
 
-			if (notas.Count == 0)
-			{
+            if (notas.Count == 0)
 				retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "RPS não informado." });
-			}
-
-			if (retornoWebservice.Erros.Count > 0) return retornoWebservice;
+			
+			if (retornoWebservice.Erros.Count > 0)
+                return retornoWebservice;
 
 			var xmlLoteRps = new StringBuilder();
 
-			// ReSharper disable once SuggestVarOrType_SimpleTypes
-			foreach (NotaFiscal nota in notas)
+			foreach (var nota in notas)
 			{
 				var xmlRps = GetXmlRps(nota, false, false, true);
 				xmlLoteRps.Append(xmlRps);
@@ -756,18 +743,10 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 		public override RetornoWebservice ConsultarSituacao(int lote, string protocolo)
 		{
-			var retornoWebservice = new RetornoWebservice()
-			{
-				Sucesso = false,
-				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
-				CodCidade = Config.WebServices.CodMunicipio,
-				DataLote = DateTime.Now,
-				NumeroLote = "0",
-				Assincrono = true
-			};
+            var retornoWebservice = new RetornoWebservice();
 
-			// Monta mensagem de envio
-			var loteBuilder = new StringBuilder();
+            // Monta mensagem de envio
+            var loteBuilder = new StringBuilder();
 			loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			loteBuilder.Append("<ConsultarSituacaoLoteRpsEnvio xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\" xmlns=\"http://www.ginfes.com.br/servico_consultar_situacao_lote_rps_envio_v03.xsd\">");
 			loteBuilder.Append("<Prestador>");
@@ -813,17 +792,9 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 		public override RetornoWebservice ConsultarLoteRps(string protocolo, int lote, NotaFiscalCollection notas)
 		{
-			var retornoWebservice = new RetornoWebservice()
-			{
-				Sucesso = false,
-				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
-				CodCidade = Config.WebServices.CodMunicipio,
-				DataLote = DateTime.Now,
-				NumeroLote = "0",
-				Assincrono = true
-			};
+            var retornoWebservice = new RetornoWebservice();
 
-			var loteBuilder = new StringBuilder();
+            var loteBuilder = new StringBuilder();
 			loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			loteBuilder.Append("<ConsultarLoteRpsEnvio xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\" xmlns=\"http://www.ginfes.com.br/servico_consultar_lote_rps_envio_v03.xsd\">");
 			loteBuilder.Append("<Prestador>");
@@ -897,17 +868,9 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 		public override RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas)
 		{
-			var retornoWebservice = new RetornoWebservice
-			{
-				Sucesso = false,
-				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
-				CodCidade = Config.WebServices.CodMunicipio,
-				DataLote = DateTime.Now,
-				NumeroLote = "0",
-				Assincrono = false
-			};
+            var retornoWebservice = new RetornoWebservice();
 
-			if (string.IsNullOrWhiteSpace(numeroNFSe))
+            if (string.IsNullOrWhiteSpace(numeroNFSe))
 			{
 				retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Número da NFSe não informado para cancelamento." });
 				return retornoWebservice;
@@ -986,17 +949,9 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 		public override RetornoWebservice ConsultaNFSeRps(string numero, string serie, TipoRps tipo, NotaFiscalCollection notas)
 		{
-			var retornoWebservice = new RetornoWebservice()
-			{
-				Sucesso = false,
-				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
-				CodCidade = Config.WebServices.CodMunicipio,
-				DataLote = DateTime.Now,
-				NumeroLote = "0",
-				Assincrono = false
-			};
+            var retornoWebservice = new RetornoWebservice();
 
-			if (string.IsNullOrWhiteSpace(numero))
+            if (string.IsNullOrWhiteSpace(numero))
 			{
 				retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Número da NFSe não informado para cancelamento." });
 				return retornoWebservice;
@@ -1061,17 +1016,9 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 		public override RetornoWebservice ConsultaNFSe(DateTime? inicio, DateTime? fim, string numeroNfse, int pagina, string cnpjTomador,
 			string imTomador, string nomeInter, string cnpjInter, string imInter, string serie, NotaFiscalCollection notas)
 		{
-			var retornoWebservice = new RetornoWebservice()
-			{
-				Sucesso = false,
-				CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
-				CodCidade = Config.WebServices.CodMunicipio,
-				DataLote = DateTime.Now,
-				NumeroLote = "0",
-				Assincrono = false
-			};
+            var retornoWebservice = new RetornoWebservice();
 
-			var loteBuilder = new StringBuilder();
+            var loteBuilder = new StringBuilder();
 			loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			loteBuilder.Append("<ConsultarNfseEnvio xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\" xmlns=\"http://www.ginfes.com.br/servico_consultar_nfse_rps_envio_v03.xsd\">");
 			loteBuilder.Append("<Prestador>");

@@ -37,50 +37,19 @@ namespace ACBr.Net.NFSe.Providers
 {
 	public class RetornoWebservice
 	{
-		#region Constructor
-
-		internal RetornoWebservice()
-		{
-			DataLote = DateTime.Now;
-			NotasFiscais = new List<NotaFiscal>();
-			Erros = new List<Evento>();
-			Alertas = new List<Evento>();
-		}
-
-		#endregion Constructor
-
-		#region Propriedades
-
-		public int CodCidade { get; set; }
-
-		public bool Sucesso { get; set; }
-
-		public string Situacao { get; set; }
-
-		public string Protocolo { get; set; }
-
-		public string NumeroLote { get; set; }
-
-		public string NumeroUltimoRps { get; set; }
-
-		public string CpfCnpjRemetente { get; set; }
-
-		public DateTime DataLote { get; set; }
-
-		public long Versao { get; set; }
-
-		public bool Assincrono { get; set; }
-
-		public List<NotaFiscal> NotasFiscais { get; }
-
-		public List<Evento> Alertas { get; }
-
-		public List<Evento> Erros { get; }
-
-		public string XmlEnvio { get; set; }
-
-		public string XmlRetorno { get; set; }
-
-		#endregion Propriedades
-	}
+        #region Propriedades
+        public bool Sucesso { get; set; } = false;
+        public string Situacao { get; set; } = "";
+        public string Protocolo { get; set; } = "";
+        public string NumeroLote { get; set; } = "";
+		public string NumeroUltimoRps { get; set; } = "";
+        public DateTime DataLote { get; set; } = DateTime.Now;
+        public bool Assincrono { get; set; } = false;
+		public List<NotaFiscal> NotasFiscais { get; } = new List<NotaFiscal>();
+        public List<Evento> Alertas { get; } = new List<Evento>();
+        public List<Evento> Erros { get; } = new List<Evento>();
+        public string XmlEnvio { get; set; } = "";
+		public string XmlRetorno { get; set; } = "";
+        #endregion Propriedades
+    }
 }

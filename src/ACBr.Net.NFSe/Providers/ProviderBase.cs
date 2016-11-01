@@ -602,11 +602,6 @@ namespace ACBr.Net.NFSe.Providers
 			{
 				var retLote = new RetornoWebservice
 				{
-					Sucesso = false,
-					CpfCnpjRemetente = Config.PrestadorPadrao.CpfCnpj,
-					CodCidade = Config.WebServices.CodMunicipio,
-					DataLote = DateTime.Now,
-					NumeroLote = "0",
 					Assincrono = true,
 					XmlEnvio = xml
 				};
