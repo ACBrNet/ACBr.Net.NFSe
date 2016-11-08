@@ -13,20 +13,40 @@ namespace ACBr.Net.NFSe
     [ComVisible(true)]
     public class ACBrNFSeProxy
     {
-        readonly public string Versao = "ACBr.Net.NFSe 1.02";
-        private ACBrNFSe ACBrBFSe = new ACBrNFSe();
+        readonly public string Versao = "ACBr.Net.NFSe 1.04";
+        private ACBrNFSe oACBrNFSe = new ACBrNFSe();
         private NotaFiscal NFSe;
         public RetornoWebservice MensagemRetorno;
 
         #region Setup do Componente
+        public bool SetupArquivos(bool salvar, string pathLote, string pathRps, string pathNFSe, ref string mensagemAlerta, ref string mensagemErro)
+        {
+            try
+            {
+                oACBrNFSe.Configuracoes.Arquivos.Salvar = salvar;
+                oACBrNFSe.Configuracoes.Arquivos.PathLote = pathLote;
+                oACBrNFSe.Configuracoes.Arquivos.PathNFSe = pathNFSe;
+                oACBrNFSe.Configuracoes.Arquivos.PathRps = pathRps;
+            }
+            catch (Exception ex)
+            {
+                while (ex != null)
+                {
+                    mensagemErro += ex.Message + Environment.NewLine;
+                    ex = ex.InnerException;
+                }
+                return false;
+            }
+            return true;
+        }
         public bool SetupWebService(int codigoMunicipio, int tipoAmbiente, string certificado, string senha, ref string mensagemAlerta, ref string mensagemErro)
         {
             try
             {
-                ACBrBFSe.Configuracoes.WebServices.CodMunicipio = codigoMunicipio;
-                ACBrBFSe.Configuracoes.WebServices.Ambiente = (DFe.Core.Common.TipoAmbiente)tipoAmbiente;
-                ACBrBFSe.Configuracoes.Certificados.Certificado = certificado;
-                ACBrBFSe.Configuracoes.Certificados.Senha = senha;
+                oACBrNFSe.Configuracoes.WebServices.CodMunicipio = codigoMunicipio;
+                oACBrNFSe.Configuracoes.WebServices.Ambiente = (DFe.Core.Common.DFeTipoAmbiente)tipoAmbiente;
+                oACBrNFSe.Configuracoes.Certificados.Certificado = certificado;
+                oACBrNFSe.Configuracoes.Certificados.Senha = senha;
             }
             catch (Exception ex)
             {
@@ -44,29 +64,30 @@ namespace ACBr.Net.NFSe
                                    string razaoSocial, string nomeFantasia,
                                    string tipoLogradouro, string logradouro, string numero, string complemento, string bairro,
                                    string codigoMunicipio, string nomeMunicipio, string uf, string cep,
-                                   string telefone, string email, ref string mensagemAlerta, ref string mensagemErro)
+                                   string ddd, string telefone, string email, ref string mensagemAlerta, ref string mensagemErro)
         {
             try
             {
-                ACBrBFSe.Configuracoes.PrestadorPadrao.CpfCnpj = cpfCnpj;
-                ACBrBFSe.Configuracoes.PrestadorPadrao.InscricaoMunicipal = inscricaoMunicipal;
-                ACBrBFSe.Configuracoes.PrestadorPadrao.RazaoSocial = razaoSocial;
-                ACBrBFSe.Configuracoes.PrestadorPadrao.NomeFantasia = nomeFantasia;
+                oACBrNFSe.Configuracoes.PrestadorPadrao.CpfCnpj = cpfCnpj;
+                oACBrNFSe.Configuracoes.PrestadorPadrao.InscricaoMunicipal = inscricaoMunicipal;
+                oACBrNFSe.Configuracoes.PrestadorPadrao.RazaoSocial = razaoSocial;
+                oACBrNFSe.Configuracoes.PrestadorPadrao.NomeFantasia = nomeFantasia;
 
-                ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.TipoLogradouro = tipoLogradouro;
-                ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.Logradouro = logradouro;
-                ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.Numero = numero;
-                ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.Complemento = complemento;
-                ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.Bairro = bairro;
-                ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.CodigoMunicipio = codigoMunicipio;
-                ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.Municipio = nomeMunicipio;
-                ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.Uf = uf;
-                ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.Cep = cep;
-                ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.CodigoPais = 1058;
-                ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.Pais = "BRASIL";
+                oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.TipoLogradouro = tipoLogradouro;
+                oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.Logradouro = logradouro;
+                oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.Numero = numero;
+                oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.Complemento = complemento;
+                oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.Bairro = bairro;
+                oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.CodigoMunicipio = codigoMunicipio;
+                oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.Municipio = nomeMunicipio;
+                oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.Uf = uf;
+                oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.Cep = cep;
+                oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.CodigoPais = 1058;
+                oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.Pais = "BRASIL";
 
-                ACBrBFSe.Configuracoes.PrestadorPadrao.DadosContato.Telefone = telefone;
-                ACBrBFSe.Configuracoes.PrestadorPadrao.DadosContato.Email = email;
+                oACBrNFSe.Configuracoes.PrestadorPadrao.DadosContato.DDD = ddd;
+                oACBrNFSe.Configuracoes.PrestadorPadrao.DadosContato.Telefone = telefone;
+                oACBrNFSe.Configuracoes.PrestadorPadrao.DadosContato.Email = email;
             }
             catch (Exception ex)
             {
@@ -82,7 +103,7 @@ namespace ACBr.Net.NFSe
 
         public bool Finalizar(ref string mensagemAlerta, ref string mensagemErro)
         {
-            ACBrBFSe.Dispose();
+            oACBrNFSe.Dispose();
             return true;
         }
         #endregion Setup do Componente
@@ -94,7 +115,7 @@ namespace ACBr.Net.NFSe
         {
             try
             {
-                NFSe = ACBrBFSe.NotasFiscais.AddNew();
+                NFSe = oACBrNFSe.NotasFiscais.AddNew();
                 NFSe.IdentificacaoRps.Numero = numeroRPS;
                 NFSe.IdentificacaoRps.Serie = serieRPS;
                 NFSe.IdentificacaoRps.Tipo = (TipoRps)tipoRPS;
@@ -110,23 +131,24 @@ namespace ACBr.Net.NFSe
                 NFSe.RegimeEspecialTributacao = (RegimeEspecialTributacao)regimeEspecialTributacao;
                 NFSe.IncentivadorCultural = (NFSeSimNao)incentivadorCultural;
                 // Por padrão, já define os dados do prestador, utilizando os dados do prestador padrão
-                NFSe.Prestador.CpfCnpj = ACBrBFSe.Configuracoes.PrestadorPadrao.CpfCnpj;
-                NFSe.Prestador.InscricaoMunicipal = ACBrBFSe.Configuracoes.PrestadorPadrao.InscricaoMunicipal;
-                NFSe.Prestador.RazaoSocial = ACBrBFSe.Configuracoes.PrestadorPadrao.RazaoSocial;
-                NFSe.Prestador.NomeFantasia = ACBrBFSe.Configuracoes.PrestadorPadrao.NomeFantasia;
-                NFSe.Prestador.Endereco.TipoLogradouro = ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.TipoLogradouro;
-                NFSe.Prestador.Endereco.Logradouro = ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.Logradouro;
-                NFSe.Prestador.Endereco.Numero = ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.Numero;
-                NFSe.Prestador.Endereco.Complemento = ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.Complemento;
-                NFSe.Prestador.Endereco.Bairro = ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.Bairro;
-                NFSe.Prestador.Endereco.CodigoMunicipio = ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.CodigoMunicipio;
-                NFSe.Prestador.Endereco.Municipio = ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.Municipio;
-                NFSe.Prestador.Endereco.Uf = ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.Uf;
-                NFSe.Prestador.Endereco.Cep = ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.Cep;
-                NFSe.Prestador.Endereco.CodigoPais = ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.CodigoPais;
-                NFSe.Prestador.Endereco.Pais = ACBrBFSe.Configuracoes.PrestadorPadrao.Endereco.Pais;
-                NFSe.Prestador.DadosContato.Telefone = ACBrBFSe.Configuracoes.PrestadorPadrao.DadosContato.Telefone;
-                NFSe.Prestador.DadosContato.Email = ACBrBFSe.Configuracoes.PrestadorPadrao.DadosContato.Email;
+                NFSe.Prestador.CpfCnpj = oACBrNFSe.Configuracoes.PrestadorPadrao.CpfCnpj;
+                NFSe.Prestador.InscricaoMunicipal = oACBrNFSe.Configuracoes.PrestadorPadrao.InscricaoMunicipal;
+                NFSe.Prestador.RazaoSocial = oACBrNFSe.Configuracoes.PrestadorPadrao.RazaoSocial;
+                NFSe.Prestador.NomeFantasia = oACBrNFSe.Configuracoes.PrestadorPadrao.NomeFantasia;
+                NFSe.Prestador.Endereco.TipoLogradouro = oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.TipoLogradouro;
+                NFSe.Prestador.Endereco.Logradouro = oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.Logradouro;
+                NFSe.Prestador.Endereco.Numero = oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.Numero;
+                NFSe.Prestador.Endereco.Complemento = oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.Complemento;
+                NFSe.Prestador.Endereco.Bairro = oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.Bairro;
+                NFSe.Prestador.Endereco.CodigoMunicipio = oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.CodigoMunicipio;
+                NFSe.Prestador.Endereco.Municipio = oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.Municipio;
+                NFSe.Prestador.Endereco.Uf = oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.Uf;
+                NFSe.Prestador.Endereco.Cep = oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.Cep;
+                NFSe.Prestador.Endereco.CodigoPais = oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.CodigoPais;
+                NFSe.Prestador.Endereco.Pais = oACBrNFSe.Configuracoes.PrestadorPadrao.Endereco.Pais;
+                NFSe.Prestador.DadosContato.DDD = oACBrNFSe.Configuracoes.PrestadorPadrao.DadosContato.DDD;
+                NFSe.Prestador.DadosContato.Telefone = oACBrNFSe.Configuracoes.PrestadorPadrao.DadosContato.Telefone;
+                NFSe.Prestador.DadosContato.Email = oACBrNFSe.Configuracoes.PrestadorPadrao.DadosContato.Email;
             }
             catch (Exception ex)
             {
@@ -202,7 +224,7 @@ namespace ACBr.Net.NFSe
                               string razaoSocial, string nomeFantasia,
                               string tipoLogradouro, string logradouro, string numero, string complemento, string bairro,
                               string codigoMunicipio, string nomeMunicipio, string uf, string cep,
-                              string telefone, string email, ref string mensagemAlerta, ref string mensagemErro)
+                              string ddd, string telefone, string email, ref string mensagemAlerta, ref string mensagemErro)
         {
             try
             {
@@ -223,6 +245,7 @@ namespace ACBr.Net.NFSe
                 NFSe.Prestador.Endereco.CodigoPais = 1058;
                 NFSe.Prestador.Endereco.Pais = "BRASIL";
 
+                NFSe.Prestador.DadosContato.DDD = ddd;
                 NFSe.Prestador.DadosContato.Telefone = telefone;
                 NFSe.Prestador.DadosContato.Email = email;
             }
@@ -241,7 +264,7 @@ namespace ACBr.Net.NFSe
                               string razaoSocial,
                               string tipoLogradouro, string logradouro, string numero, string complemento, string bairro,
                               string codigoMunicipio, string nomeMunicipio, string uf, string cep,
-                              string telefone, string email, ref string mensagemAlerta, ref string mensagemErro)
+                              string ddd, string telefone, string email, ref string mensagemAlerta, ref string mensagemErro)
         {
             try
             {
@@ -261,6 +284,7 @@ namespace ACBr.Net.NFSe
                 NFSe.Tomador.Endereco.CodigoPais = 1058;
                 NFSe.Tomador.Endereco.Pais = "BRASIL";
 
+                NFSe.Tomador.DadosContato.DDD = ddd;
                 NFSe.Tomador.DadosContato.Telefone = telefone;
                 NFSe.Tomador.DadosContato.Email = email;
             }
@@ -339,7 +363,7 @@ namespace ACBr.Net.NFSe
         {
             try
             {
-                MensagemRetorno = ACBrBFSe.Enviar(numeroLote, sincrono, imprimir);
+                MensagemRetorno = oACBrNFSe.Enviar(numeroLote, sincrono, imprimir);
                 return TrataMensagemRetornoWebservice(ref mensagemAlerta, ref mensagemErro);
             }
             catch (Exception ex)
@@ -356,7 +380,7 @@ namespace ACBr.Net.NFSe
         {
             try
             {
-                MensagemRetorno = ACBrBFSe.ConsultarSituacao(numeroLote, protocolo);
+                MensagemRetorno = oACBrNFSe.ConsultarSituacao(numeroLote, protocolo);
                 return TrataMensagemRetornoWebservice(ref mensagemAlerta, ref mensagemErro);
             }
             catch (Exception ex)
@@ -373,7 +397,7 @@ namespace ACBr.Net.NFSe
         {
             try
             {
-                MensagemRetorno = ACBrBFSe.ConsultarLoteRps(protocolo, numeroLote);
+                MensagemRetorno = oACBrNFSe.ConsultarLoteRps(protocolo, numeroLote);
                 return TrataMensagemRetornoWebservice(ref mensagemAlerta, ref mensagemErro);
             }
             catch (Exception ex)
@@ -390,7 +414,7 @@ namespace ACBr.Net.NFSe
         {
             try
             {
-                MensagemRetorno = ACBrBFSe.CancelaNFSe(codigoCancelamento, numeroNFSe, motivoCancelamento);
+                MensagemRetorno = oACBrNFSe.CancelaNFSe(codigoCancelamento, numeroNFSe, motivoCancelamento);
                 return TrataMensagemRetornoWebservice(ref mensagemAlerta, ref mensagemErro);
             }
             catch (Exception ex)
@@ -407,7 +431,7 @@ namespace ACBr.Net.NFSe
         {
             try
             {
-                MensagemRetorno = ACBrBFSe.ConsultaNFSeRps(numeroRps, serieRps, (TipoRps)tipoRps);
+                MensagemRetorno = oACBrNFSe.ConsultaNFSeRps(numeroRps, serieRps, (TipoRps)tipoRps);
                 return TrataMensagemRetornoWebservice(ref mensagemAlerta, ref mensagemErro);
             }
             catch (Exception ex)
@@ -424,7 +448,7 @@ namespace ACBr.Net.NFSe
         {
             try
             {
-                MensagemRetorno = ACBrBFSe.ConsultaNFSe(dataInicial, dataFinal);
+                MensagemRetorno = oACBrNFSe.ConsultaNFSe(dataInicial, dataFinal);
                 return TrataMensagemRetornoWebservice(ref mensagemAlerta, ref mensagemErro);
             }
             catch (Exception ex)
@@ -444,7 +468,7 @@ namespace ACBr.Net.NFSe
         {
             try
             {
-                return ACBrBFSe.Configuracoes.Certificados.SelecionarCertificado();
+                return oACBrNFSe.Configuracoes.Certificados.SelecionarCertificado();
             }
             catch (Exception ex)
             {
@@ -458,7 +482,7 @@ namespace ACBr.Net.NFSe
         }
         #endregion Métodos de Apoio
 
-            #region Métodos privados
+        #region Métodos privados
         private bool TrataMensagemRetornoWebservice(ref string mensagemAlerta, ref string mensagemErro)
         {
             if (MensagemRetorno.Alertas.Count > 0)

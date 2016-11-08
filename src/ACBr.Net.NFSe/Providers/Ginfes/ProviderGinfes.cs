@@ -202,7 +202,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			// Situação do RPS
 			if (formatoXml == LoadXmlFormato.Rps)
 			{
-				ret.Situacao = (rootDoc.ElementAnyNs("Competencia")?.GetValue<string>() ?? string.Empty) == "2" ? SituacaoNFSeRps.Cancelado : SituacaoNFSeRps.Normal;
+				ret.Situacao = (rootDoc.ElementAnyNs("Status")?.GetValue<string>() ?? string.Empty) == "2" ? SituacaoNFSeRps.Cancelado : SituacaoNFSeRps.Normal;
 				// RPS Substituido
 				var rootRpsSubstituido = rootDoc.ElementAnyNs("RpsSubstituido");
 				if (rootRpsSubstituido != null)
@@ -283,6 +283,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 					var rootPrestadorContato = rootPrestador.ElementAnyNs("Contato");
 					if (rootPrestadorContato != null)
 					{
+                        ret.Prestador.DadosContato.DDD = "";
 						ret.Prestador.DadosContato.Telefone = rootPrestadorContato.ElementAnyNs("Telefone")?.GetValue<string>() ?? string.Empty;
 						ret.Prestador.DadosContato.Email = rootPrestadorContato.ElementAnyNs("Email")?.GetValue<string>() ?? string.Empty;
 					}
@@ -332,6 +333,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 				var rootTomadorContato = rootTomador.ElementAnyNs("Contato");
 				if (rootTomadorContato != null)
 				{
+                    ret.Tomador.DadosContato.DDD = "";
 					ret.Tomador.DadosContato.Telefone = rootTomadorContato.ElementAnyNs("Telefone")?.GetValue<string>() ?? string.Empty;
 					ret.Tomador.DadosContato.Email = rootTomadorContato.ElementAnyNs("Email")?.GetValue<string>() ?? string.Empty;
 				}
@@ -594,7 +596,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			var contato = new XElement(ns + "Contato");
 			tomador.AddChild(contato);
 
-			contato.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "Telefone", ns, 1, 11, Ocorrencia.Obrigatoria, nota.Tomador.DadosContato.Telefone));
+			contato.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "Telefone", ns, 1, 11, Ocorrencia.Obrigatoria, nota.Tomador.DadosContato.DDD + nota.Tomador.DadosContato.Telefone));
 			contato.AddChild(AdicionarTag(TipoCampo.Str, "", "Email", ns, 1, 80, Ocorrencia.Obrigatoria, nota.Tomador.DadosContato.Email));
 
 			if (!nota.Intermediario.RazaoSocial.IsEmpty())
@@ -1305,7 +1307,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 				var contato = new XElement(ns + "Contato");
 				tomador.AddChild(contato);
 
-				contato.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "Telefone", ns, 1, 11, Ocorrencia.NaoObrigatoria, nota.Tomador.DadosContato.Telefone));
+				contato.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "Telefone", ns, 1, 11, Ocorrencia.NaoObrigatoria, nota.Tomador.DadosContato.DDD + nota.Tomador.DadosContato.Telefone));
 				contato.AddChild(AdicionarTag(TipoCampo.Str, "", "Email", ns, 1, 80, Ocorrencia.NaoObrigatoria, nota.Tomador.DadosContato.Email));
 			}
 
