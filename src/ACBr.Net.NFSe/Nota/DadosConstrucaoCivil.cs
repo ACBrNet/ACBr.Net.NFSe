@@ -49,7 +49,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		public string CodigoObra { get; set; }
 
-		public string Art { get; set; }
+		public string ArtObra { get; set; }
 
 		public string LogradouroObra { get; set; }
 
@@ -61,7 +61,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		public string CepObra { get; set; }
 
-		public string CodigoMunicipioObra { get; set; }
+		public int CodigoMunicipioObra { get; set; }
 
 		public string UFObra { get; set; }
 

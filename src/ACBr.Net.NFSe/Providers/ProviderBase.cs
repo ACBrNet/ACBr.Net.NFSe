@@ -262,7 +262,7 @@ namespace ACBr.Net.NFSe.Providers
 			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}
 
-		public virtual RetornoWebservice ConsultarLoteRps(string protocolo, int lote, NotaFiscalCollection notas)
+		public virtual RetornoWebservice ConsultarLoteRps(int lote, string protocolo, NotaFiscalCollection notas)
 		{
 			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
 		}

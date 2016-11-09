@@ -22,7 +22,7 @@ namespace ACBr.Net.NFSe.Test
 			//webservices
 			//Configure os dados da cidade e do Certificado aqui
 			acbrNFSe.Configuracoes.WebServices.Ambiente = DFeTipoAmbiente.Homologacao;
-			acbrNFSe.Configuracoes.WebServices.CodMunicipio = 3543402;
+			acbrNFSe.Configuracoes.WebServices.CodigoMunicipio = 3543402;
 
 			acbrNFSe.Configuracoes.Certificados.Certificado = "4E009FA5F9CABB8F";
 			acbrNFSe.Configuracoes.Certificados.Senha = "";

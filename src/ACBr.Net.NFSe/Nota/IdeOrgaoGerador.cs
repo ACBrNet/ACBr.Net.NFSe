@@ -47,7 +47,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		#region Propriedades
 
-		public string CodigoMunicipio { get; set; }
+		public int CodigoMunicipio { get; set; }
 
 		public string Uf { get; set; }
 
