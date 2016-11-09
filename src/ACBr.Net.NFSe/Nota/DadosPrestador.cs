@@ -30,18 +30,12 @@
 // ***********************************************************************
 
 using ACBr.Net.Core.Generics;
-using ACBr.Net.NFSe.Interfaces;
 using PropertyChanged;
-using System.Runtime.InteropServices;
 
 namespace ACBr.Net.NFSe.Nota
 {
-	[ComVisible(true)]
-	[Guid("BC8A32FD-064D-4D23-A1F3-A01DFC253C27")]
-	[ComDefaultInterface(typeof(IDadosPrestador))]
-	[ClassInterface(ClassInterfaceType.AutoDual)]
 	[ImplementPropertyChanged]
-	public sealed class DadosPrestador : GenericClone<DadosPrestador>, IDadosPrestador
+	public sealed class DadosPrestador : GenericClone<DadosPrestador>
 	{
 		#region Constructors
 

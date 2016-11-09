@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>ACBr.Net.NFSe</id>
+        <version>1.0.0.0-beta1</version>
+        <title>ACBr.Net.NFSe</title>
+        <authors>Grupo ACBr.Net</authors>
+        <owners>Grupo ACBr.Net</owners>
+        <projectUrl>https://acbrnet.github.io</projectUrl>
+        <iconUrl>https://avatars2.githubusercontent.com/u/7342977?v=3&amp;s=200</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Biblioteca para geração e emissão de NFSe</description>
+        <copyright>Copyright © Grupo ACBr.Net 2014 - 2016</copyright>
+        <language>pt-BR</language>
+        <tags>ACBr ACBr.Net Automação Comercial</tags>
+        <dependencies>
+            <dependency id="ACBr.Net.Core" version="1.0.1.4-beta1" />
+            <dependency id="ACBr.Net.DFe.Core" version="1.0.1.6-beta1" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="..\bin\Release\ACBr.Net.NFSe.dll" target="lib\net40\ACBr.Net.NFSe.dll" />
+        <file src="..\bin\Release\ACBr.Net.NFSe.XML" target="lib\net40\ACBr.Net.NFSe.XML" />
+    </files>
+</package>

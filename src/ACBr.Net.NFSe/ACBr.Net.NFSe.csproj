@@ -87,9 +87,6 @@
     <Compile Include="Configuracao\CfgGeral.cs" />
     <Compile Include="Configuracao\CfgWebServices.cs" />
     <Compile Include="Configuracao\ConfiguracoesNFSe.cs" />
-    <Compile Include="Interfaces\IACBrNFSe.cs" />
-    <Compile Include="Interfaces\INotaFiscalCollection.cs" />
-    <Compile Include="Interfaces\IDadosPrestador.cs" />
     <Compile Include="Providers\Betha\BethaConsultarSituacaoLoteRpsServiceClient.cs" />
     <Compile Include="Providers\Betha\BethaCancelarNev01ServiceClient.cs" />
     <Compile Include="Providers\Betha\BethaConsultarLoteRpsServiceClient.cs" />
@@ -1192,6 +1189,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

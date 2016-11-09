@@ -41,7 +41,7 @@ using System;
 namespace ACBr.Net.NFSe
 {
 	// ReSharper disable once InconsistentNaming
-	public sealed class ACBrNFSe : ACBrComponent, IACBrNFSe
+	public sealed class ACBrNFSe : ACBrComponent
 	{
 		#region Propriedades
 
