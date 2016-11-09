@@ -66,7 +66,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		public string Discriminacao { get; set; }
 
-		public string CodigoMunicipio { get; set; }
+		public int CodigoMunicipio { get; set; }
 
 		public string Municipio { get; set; }
 

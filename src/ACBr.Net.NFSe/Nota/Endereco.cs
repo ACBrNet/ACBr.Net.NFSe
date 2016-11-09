@@ -59,7 +59,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		public string Bairro { get; set; }
 
-		public string CodigoMunicipio { get; set; }
+		public int CodigoMunicipio { get; set; }
 
 		public string Uf { get; set; }
 
