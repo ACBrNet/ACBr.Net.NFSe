@@ -112,10 +112,10 @@ namespace ACBr.Net.NFSe
 		/// <param name="lote">The lote.</param>
 		/// <returns>RetornoWebservice.</returns>
 		/// <exception cref="NotImplementedException"></exception>
-		public RetornoWebservice ConsultarLoteRps(string protocolo, int lote)
+		public RetornoWebservice ConsultarLoteRps(int lote, string protocolo)
 		{
 			var provider = ProviderManager.GetProvider(Configuracoes);
-			return provider.ConsultarLoteRps(protocolo, lote, NotasFiscais);
+			return provider.ConsultarLoteRps(lote, protocolo, NotasFiscais);
 		}
 
 		/// <summary>

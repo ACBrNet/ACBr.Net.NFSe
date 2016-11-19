@@ -164,7 +164,7 @@ namespace ACBr.Net.NFSe.Providers
 		/// <returns>Provedor NFSe.</returns>
 		public static ProviderBase GetProvider(ConfiguracoesNFSe config)
 		{
-			var municipio = Municipios.SingleOrDefault(x => x.Codigo == config.WebServices.CodMunicipio);
+			var municipio = Municipios.SingleOrDefault(x => x.Codigo == config.WebServices.CodigoMunicipio);
 			Guard.Against<ACBrException>(municipio == null, "Provedor para esta cidade não implementado ou não especificado!");
 
 			// ReSharper disable once PossibleNullReferenceException

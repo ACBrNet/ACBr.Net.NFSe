@@ -108,7 +108,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			ret.Tomador.Endereco.Complemento = root.ElementAnyNs("ComplementoEnderecoTomador").GetValue<string>();
 			ret.Tomador.Endereco.TipoBairro = root.ElementAnyNs("TipoBairroTomador").GetValue<string>();
 			ret.Tomador.Endereco.Bairro = root.ElementAnyNs("BairroTomador").GetValue<string>();
-			ret.Tomador.Endereco.CodigoMunicipio = root.ElementAnyNs("CidadeTomador").GetValue<string>();
+			ret.Tomador.Endereco.CodigoMunicipio = root.ElementAnyNs("CidadeTomador").GetValue<int>();
 			ret.Tomador.Endereco.Municipio = root.ElementAnyNs("CidadeTomadorDescricao").GetValue<string>();
 			ret.Tomador.Endereco.Cep = root.ElementAnyNs("CEPTomador").GetValue<string>();
 			ret.Tomador.DadosContato.Email = root.ElementAnyNs("EmailTomador").GetValue<string>();
@@ -136,7 +136,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			ret.Servico.CodigoCnae = root.ElementAnyNs("CodigoAtividade").GetValue<string>();
 			ret.Servico.Valores.Aliquota = root.ElementAnyNs("AliquotaAtividade").GetValue<decimal>();
 			ret.Servico.Valores.IssRetido = root.ElementAnyNs("TipoRecolhimento").GetValue<char>() == 'A' ? SituacaoTributaria.Normal : SituacaoTributaria.Retencao;
-			ret.Servico.CodigoMunicipio = root.ElementAnyNs("MunicipioPrestacao").GetValue<string>();
+			ret.Servico.CodigoMunicipio = root.ElementAnyNs("MunicipioPrestacao").GetValue<int>();
 			ret.Servico.Municipio = root.ElementAnyNs("MunicipioPrestacaoDescricao").GetValue<string>();
 
 			switch (root.ElementAnyNs("Operacao").GetValue<char>())
@@ -768,7 +768,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			return retornoWebservice;
 		}
 
-		public override RetornoWebservice ConsultarLoteRps(string protocolo, int lote, NotaFiscalCollection notas)
+		public override RetornoWebservice ConsultarLoteRps(int lote, string protocolo, NotaFiscalCollection notas)
 		{
             var retornoWebservice = new RetornoWebservice();
 

@@ -111,7 +111,7 @@ namespace ACBr.Net.NFSe
 		{
 			try
 			{
-				oACBrNFSe.Configuracoes.WebServices.CodMunicipio = codigoMunicipio;
+				oACBrNFSe.Configuracoes.WebServices.CodigoMunicipio = codigoMunicipio;
 				oACBrNFSe.Configuracoes.WebServices.Ambiente = (DFeTipoAmbiente)tipoAmbiente;
 				oACBrNFSe.Configuracoes.Certificados.Certificado = certificado;
 				oACBrNFSe.Configuracoes.Certificados.Senha = senha;
@@ -131,7 +131,7 @@ namespace ACBr.Net.NFSe
 		public bool SetupPrestador(string cpfCnpj, string inscricaoMunicipal,
 								   string razaoSocial, string nomeFantasia,
 								   string tipoLogradouro, string logradouro, string numero, string complemento, string bairro,
-								   string codigoMunicipio, string nomeMunicipio, string uf, string cep,
+								   int codigoMunicipio, string nomeMunicipio, string uf, string cep,
 								   string ddd, string telefone, string email, ref string mensagemAlerta, ref string mensagemErro)
 		{
 			try
@@ -213,7 +213,7 @@ namespace ACBr.Net.NFSe
 			return true;
 		}
 
-		public bool RPSServico(string itemListaServico, string codigoTributacaoMunicipio, string codigoCNAE, string codigoMunicipio,
+		public bool RPSServico(string itemListaServico, string codigoTributacaoMunicipio, string codigoCNAE, int codigoMunicipio,
 							   string discriminacao, ref string mensagemAlerta, ref string mensagemErro)
 		{
 			try
@@ -277,7 +277,7 @@ namespace ACBr.Net.NFSe
 		public bool RPSPrestador(string cpfCnpj, string inscricaoMunicipal,
 							  string razaoSocial, string nomeFantasia,
 							  string tipoLogradouro, string logradouro, string numero, string complemento, string bairro,
-							  string codigoMunicipio, string nomeMunicipio, string uf, string cep,
+							  int codigoMunicipio, string nomeMunicipio, string uf, string cep,
 							  string ddd, string telefone, string email, ref string mensagemAlerta, ref string mensagemErro)
 		{
 			try
@@ -318,7 +318,7 @@ namespace ACBr.Net.NFSe
 		public bool RPSTomador(string cpfCnpj, string inscricaoMunicipal,
 							  string razaoSocial,
 							  string tipoLogradouro, string logradouro, string numero, string complemento, string bairro,
-							  string codigoMunicipio, string nomeMunicipio, string uf, string cep,
+							  int codigoMunicipio, string nomeMunicipio, string uf, string cep,
 							  string ddd, string telefone, string email, ref string mensagemAlerta, ref string mensagemErro)
 		{
 			try
@@ -377,7 +377,7 @@ namespace ACBr.Net.NFSe
 			return true;
 		}
 
-		public bool RPSOrgaoGerador(string codigoMunicipio, string uf, ref string mensagemAlerta, ref string mensagemErro)
+		public bool RPSOrgaoGerador(int codigoMunicipio, string uf, ref string mensagemAlerta, ref string mensagemErro)
 		{
 			try
 			{
@@ -401,7 +401,7 @@ namespace ACBr.Net.NFSe
 			try
 			{
 				NFSe.ConstrucaoCivil.CodigoObra = codigoObra;
-				NFSe.ConstrucaoCivil.Art = artObra;
+				NFSe.ConstrucaoCivil.ArtObra = artObra;
 			}
 			catch (Exception ex)
 			{
@@ -459,7 +459,7 @@ namespace ACBr.Net.NFSe
 		{
 			try
 			{
-				MensagemRetorno = oACBrNFSe.ConsultarLoteRps(protocolo, numeroLote);
+				MensagemRetorno = oACBrNFSe.ConsultarLoteRps(numeroLote, protocolo);
 				return TrataMensagemRetornoWebservice(ref mensagemAlerta, ref mensagemErro);
 			}
 			catch (Exception ex)

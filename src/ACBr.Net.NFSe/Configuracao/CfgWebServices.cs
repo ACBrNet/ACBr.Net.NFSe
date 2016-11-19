@@ -70,7 +70,7 @@ namespace ACBr.Net.NFSe.Configuracao
 		/// </summary>
 		/// <value>The uf codigo.</value>
 		[Browsable(true)]
-		public int CodMunicipio { get; set; }
+		public int CodigoMunicipio { get; set; }
 
 		#endregion Properties
 	}
