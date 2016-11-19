@@ -1,8 +1,10 @@
 ﻿using ACBr.Net.Core;
 using ACBr.Net.DFe.Core.Common;
+using ACBr.Net.DFe.Core.Serializer;
 using ACBr.Net.NFSe.Nota;
 using ACBr.Net.NFSe.Providers;
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace ACBr.Net.NFSe
@@ -30,12 +32,52 @@ namespace ACBr.Net.NFSe
 
 		#region Propriedades
 
-		public string Versao => typeof(ACBrNFSe).Assembly.GetName().Version.ToString();
+		/// <summary>
+		/// Retorna a versão da Lib ACBr.Net.NFSe
+		/// </summary>
+		/// <value>The versao.</value>
+		public string Versao
+		{
+			get
+			{
+				var asm = typeof(ACBrNFSe).Assembly;
+				var versionInfo = FileVersionInfo.GetVersionInfo(asm.Location);
+				return versionInfo.FileVersion;
+			}
+		}
 
-		public string VersaoDFe => typeof(DFeArquivosConfigBase).Assembly.GetName().Version.ToString();
+		/// <summary>
+		/// Retorna a versão da Lib ACBr.Net.DFe.Core
+		/// </summary>
+		/// <value>The versao d fe.</value>
+		public string VersaoDFe
+		{
+			get
+			{
+				var asm = typeof(DFeSerializer).Assembly;
+				var versionInfo = FileVersionInfo.GetVersionInfo(asm.Location);
+				return versionInfo.FileVersion;
+			}
+		}
 
-		public string VersaoCore => typeof(ACBrComponent).Assembly.GetName().Version.ToString();
+		/// <summary>
+		/// Retorna a versão da Lib ACBr.Net.Core
+		/// </summary>
+		/// <value>The versao core.</value>
+		public string VersaoCore
+		{
+			get
+			{
+				var asm = typeof(ACBrComponent).Assembly;
+				var versionInfo = FileVersionInfo.GetVersionInfo(asm.Location);
+				return versionInfo.FileVersion;
+			}
+		}
 
+		/// <summary>
+		/// Retrona a mesangem de retorno do servidor.
+		/// </summary>
+		/// <value>The mensagem retorno.</value>
 		public RetornoWebservice MensagemRetorno { get; private set; }
 
 		#endregion Propriedades

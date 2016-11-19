@@ -36,7 +36,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
-	internal sealed class DSFServiceClient : DFeWebserviceBase<IDSFService>, IDSFService
+	internal sealed class DSFServiceClient : DFeServiceClientBase<IDSFService>, IDSFService
 	{
 		#region Constructor
 

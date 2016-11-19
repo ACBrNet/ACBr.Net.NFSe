@@ -36,7 +36,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace ACBr.Net.NFSe.Providers.Betha
 {
-	internal sealed class BethaConsultarNePorRpsServiceClient : DFeWebserviceBase<IBethaConsultarNePorRps>, IBethaConsultarNePorRps
+	internal sealed class BethaConsultarNePorRpsServiceClient : DFeServiceClientBase<IBethaConsultarNePorRps>, IBethaConsultarNePorRps
 	{
 		#region Constructor
 
