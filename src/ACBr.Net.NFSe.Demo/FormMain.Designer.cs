@@ -32,7 +32,7 @@
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.button14 = new System.Windows.Forms.Button();
 			this.button13 = new System.Windows.Forms.Button();
-			this.button12 = new System.Windows.Forms.Button();
+			this.btnConsultarNFSeRps = new System.Windows.Forms.Button();
 			this.button11 = new System.Windows.Forms.Button();
 			this.button10 = new System.Windows.Forms.Button();
 			this.button9 = new System.Windows.Forms.Button();
@@ -154,7 +154,7 @@
 			// 
 			this.tabPage1.Controls.Add(this.button14);
 			this.tabPage1.Controls.Add(this.button13);
-			this.tabPage1.Controls.Add(this.button12);
+			this.tabPage1.Controls.Add(this.btnConsultarNFSeRps);
 			this.tabPage1.Controls.Add(this.button11);
 			this.tabPage1.Controls.Add(this.button10);
 			this.tabPage1.Controls.Add(this.button9);
@@ -194,14 +194,15 @@
 			this.button13.Text = "Imprimir DANFSe";
 			this.button13.UseVisualStyleBackColor = true;
 			// 
-			// button12
+			// btnConsultarNFSeRps
 			// 
-			this.button12.Location = new System.Drawing.Point(665, 44);
-			this.button12.Name = "button12";
-			this.button12.Size = new System.Drawing.Size(180, 23);
-			this.button12.TabIndex = 15;
-			this.button12.Text = "Consultar NFSe por RPS";
-			this.button12.UseVisualStyleBackColor = true;
+			this.btnConsultarNFSeRps.Location = new System.Drawing.Point(665, 44);
+			this.btnConsultarNFSeRps.Name = "btnConsultarNFSeRps";
+			this.btnConsultarNFSeRps.Size = new System.Drawing.Size(180, 23);
+			this.btnConsultarNFSeRps.TabIndex = 15;
+			this.btnConsultarNFSeRps.Text = "Consultar NFSe por RPS";
+			this.btnConsultarNFSeRps.UseVisualStyleBackColor = true;
+			this.btnConsultarNFSeRps.Click += new System.EventHandler(this.btnConsultarNFSeRps_Click);
 			// 
 			// button11
 			// 
@@ -1156,7 +1157,7 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button button14;
 		private System.Windows.Forms.Button button13;
-		private System.Windows.Forms.Button button12;
+		private System.Windows.Forms.Button btnConsultarNFSeRps;
 		private System.Windows.Forms.Button button11;
 		private System.Windows.Forms.Button button10;
 		private System.Windows.Forms.Button button9;

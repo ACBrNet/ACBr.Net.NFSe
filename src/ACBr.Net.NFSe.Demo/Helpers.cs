@@ -1,4 +1,3 @@
-using System;
 using System.Configuration;
 using System.IO;
 using System.Text;
@@ -46,9 +45,7 @@ namespace ACBr.Net.NFSe.Demo
 		{
 			using (var fbd = new FolderBrowserDialog())
 			{
-				fbd.RootFolder = Environment.SpecialFolder.MyDocuments;
 				fbd.ShowNewFolderButton = true;
-
 				return fbd.ShowDialog().Equals(DialogResult.Cancel) ? string.Empty : fbd.SelectedPath;
 			}
 		}

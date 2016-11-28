@@ -1,5 +1,6 @@
 ﻿using ACBr.Net.Core.Extensions;
 using ACBr.Net.Core.Logging;
+using ACBr.Net.NFSe.Nota;
 using ACBr.Net.NFSe.Providers;
 using NLog;
 using NLog.Config;
@@ -39,6 +40,16 @@ namespace ACBr.Net.NFSe.Demo
 			ExecuteSafe(() =>
 			{
 				var ret = acbrNFSe.ConsultarSituacao(0, "10");
+				wbbDados.LoadXml(ret.XmlEnvio);
+				wbbResposta.LoadXml(ret.XmlRetorno);
+			});
+		}
+
+		private void btnConsultarNFSeRps_Click(object sender, EventArgs e)
+		{
+			ExecuteSafe(() =>
+			{
+				var ret = acbrNFSe.ConsultaNFSeRps("10", "0", TipoRps.RPS);
 				wbbDados.LoadXml(ret.XmlEnvio);
 				wbbResposta.LoadXml(ret.XmlRetorno);
 			});
@@ -97,9 +108,9 @@ namespace ACBr.Net.NFSe.Demo
 				if (path.IsEmpty()) return;
 
 				var municipios = listView1.Items.Cast<ListViewItem>().Select(x => (MunicipioNFSe)x.Tag);
-                ProviderManager.Municipios.Clear();
-                ProviderManager.Municipios.AddRange(municipios);
-                ProviderManager.Save(Path.Combine(path, "Municipios.nfse"));
+				ProviderManager.Municipios.Clear();
+				ProviderManager.Municipios.AddRange(municipios);
+				ProviderManager.Save(Path.Combine(path, "Municipios.nfse"));
 			});
 		}
 
