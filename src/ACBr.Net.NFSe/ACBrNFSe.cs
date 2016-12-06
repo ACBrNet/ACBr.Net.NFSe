@@ -37,10 +37,14 @@ using ACBr.Net.NFSe.Interfaces;
 using ACBr.Net.NFSe.Nota;
 using ACBr.Net.NFSe.Providers;
 using System;
+using System.ComponentModel;
+using System.Drawing;
 
 namespace ACBr.Net.NFSe
 {
 	// ReSharper disable once InconsistentNaming
+	[TypeConverter(typeof(ACBrExpandableObjectConverter))]
+	[ToolboxBitmap(typeof(ACBrNFSe), @"ACBr.Net.NFSe.ico.bmp")]
 	public sealed class ACBrNFSe : ACBrComponent
 	{
 		#region Propriedades
@@ -48,16 +52,19 @@ namespace ACBr.Net.NFSe
 		/// <summary>
 		/// Configurações do Componente
 		/// </summary>
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public ConfiguracoesNFSe Configuracoes { get; private set; }
 
 		/// <summary>
 		/// Componente de impressão
 		/// </summary>
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public IDANFSe DaNfSe { get; set; }
 
 		/// <summary>
 		/// Coleção de NFSe para processar e/ou processadas
 		/// </summary>
+		[Browsable(false)]
 		public NotaFiscalCollection NotasFiscais { get; private set; }
 
 		#endregion Propriedades

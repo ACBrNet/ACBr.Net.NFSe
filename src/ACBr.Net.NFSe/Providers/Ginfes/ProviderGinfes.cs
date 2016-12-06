@@ -696,9 +696,14 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			xmlLote.Append("</tipos:ListaRps>");
 			xmlLote.Append("</LoteRps>");
 			xmlLote.Append("</EnviarLoteRpsEnvio>");
-			var loteRps = xmlLote.ToString();
+			var xmlEnvio = xmlLote.ToString();
 
-			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteRps, "", "EnviarLoteRpsEnvio", Certificado);
+			if (Config.Geral.RetirarAcentos)
+			{
+				xmlEnvio = xmlEnvio.RemoveAccent();
+			}
+
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "EnviarLoteRpsEnvio", Certificado);
 
 			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-{lote}-env.xml");
 
@@ -757,7 +762,14 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			loteBuilder.Append("</Prestador>");
 			loteBuilder.Append($"<Protocolo>{protocolo}</Protocolo>");
 			loteBuilder.Append("</ConsultarSituacaoLoteRpsEnvio>");
-			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteBuilder.ToString(), "", "ConsultarSituacaoLoteRpsEnvio", Certificado);
+			var xmlEnvio = loteBuilder.ToString();
+
+			if (Config.Geral.RetirarAcentos)
+			{
+				xmlEnvio = xmlEnvio.RemoveAccent();
+			}
+
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ConsultarSituacaoLoteRpsEnvio", Certificado);
 
 			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarSituacao-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
 
@@ -805,8 +817,14 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			loteBuilder.Append("</Prestador>");
 			loteBuilder.Append($"<Protocolo>{protocolo}</Protocolo>");
 			loteBuilder.Append("</ConsultarLoteRpsEnvio>");
+			var xmlEnvio = loteBuilder.ToString();
 
-			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteBuilder.ToString(), "", "ConsultarLoteRpsEnvio", Certificado);
+			if (Config.Geral.RetirarAcentos)
+			{
+				xmlEnvio = xmlEnvio.RemoveAccent();
+			}
+
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ConsultarLoteRpsEnvio", Certificado);
 
 			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
 
@@ -893,8 +911,14 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			loteBuilder.Append("</tipos:InfPedidoCancelamento>");
 			loteBuilder.Append("</Pedido>");
 			loteBuilder.Append("</CancelarNfseEnvio>");
+			var xmlEnvio = loteBuilder.ToString();
 
-			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteBuilder.ToString(), "", "Pedido", Certificado);
+			if (Config.Geral.RetirarAcentos)
+			{
+				xmlEnvio = xmlEnvio.RemoveAccent();
+			}
+
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "Pedido", Certificado);
 
 			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CanNFSe-{numeroNFSe}-env.xml");
 
@@ -972,7 +996,14 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			loteBuilder.Append($"<tipos:InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
 			loteBuilder.Append("</Prestador>");
 			loteBuilder.Append("</ConsultarNfseRpsEnvio>");
-			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteBuilder.ToString(), "", "ConsultarNfseRpsEnvio", Certificado);
+			var xmlEnvio = loteBuilder.ToString();
+
+			if (Config.Geral.RetirarAcentos)
+			{
+				xmlEnvio = xmlEnvio.RemoveAccent();
+			}
+
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ConsultarNfseRpsEnvio", Certificado);
 
 			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConNotaRps-{numero}-env.xml");
 
@@ -1058,7 +1089,14 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			}
 
 			loteBuilder.Append("</ConsultarNfseEnvio>");
-			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteBuilder.ToString(), "", "ConsultarNfseEnvio", Certificado);
+			var xmlEnvio = loteBuilder.ToString();
+
+			if (Config.Geral.RetirarAcentos)
+			{
+				xmlEnvio = xmlEnvio.RemoveAccent();
+			}
+
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ConsultarNfseEnvio", Certificado);
 
 			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConNota-{DateTime.Now:yyyyMMddHHmmss}-{numeroNfse}-env.xml");
 
@@ -1084,8 +1122,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			// Analisa mensagem de retorno
 			var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
 			MensagemErro(retornoWebservice, xmlRet, "ConsultarNfseResposta");
-			if (retornoWebservice.Erros.Count > 0)
-				return retornoWebservice;
+
+			if (retornoWebservice.Erros.Count > 0) return retornoWebservice;
 
 			//var compNfse = xmlRet.ElementAnyNs("ConsultarNfseRpsResposta")?.ElementAnyNs("CompNfse");
 			//if (compNfse == null)

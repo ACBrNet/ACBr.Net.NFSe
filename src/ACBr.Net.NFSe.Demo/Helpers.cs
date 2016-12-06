@@ -1,6 +1,3 @@
-using System.Configuration;
-using System.IO;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ACBr.Net.NFSe.Demo
@@ -48,28 +45,6 @@ namespace ACBr.Net.NFSe.Demo
 				fbd.ShowNewFolderButton = true;
 				return fbd.ShowDialog().Equals(DialogResult.Cancel) ? string.Empty : fbd.SelectedPath;
 			}
-		}
-
-		public static Configuration GetConfiguration()
-		{
-			var configFile = Path.Combine(Application.StartupPath, "nfse.config");
-			if (!File.Exists(configFile))
-			{
-				var sb = new StringBuilder();
-				sb.AppendLine("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
-				sb.AppendLine("<configuration>");
-				sb.AppendLine("	<appSettings>");
-				sb.AppendLine("	</appSettings>");
-				sb.AppendLine("</configuration>");
-				File.WriteAllText(configFile, sb.ToString());
-			}
-
-			var configFileMap = new ExeConfigurationFileMap
-			{
-				ExeConfigFilename = Path.Combine(Application.StartupPath, "nfse.config")
-			};
-
-			return ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
 		}
 	}
 }

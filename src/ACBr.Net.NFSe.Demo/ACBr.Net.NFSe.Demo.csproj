@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ACBrConfig.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="FormEdtMunicipio.cs">
       <SubType>Form</SubType>
@@ -75,6 +76,7 @@
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers.cs" />
+    <Compile Include="InputBox.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormEdtMunicipio.resx">
