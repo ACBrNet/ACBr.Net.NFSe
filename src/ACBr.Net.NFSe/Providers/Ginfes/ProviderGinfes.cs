@@ -1023,7 +1023,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             var loteBuilder = new StringBuilder();
 			loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			loteBuilder.Append("<ConsultarNfseEnvio xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\" xmlns=\"http://www.ginfes.com.br/servico_consultar_nfse_rps_envio_v03.xsd\">");
-			loteBuilder.Append("<Prestador>");
+                            // "<ConsultarNfseEnvio xmlns = "http://www.ginfes.com.br/servico_consultar_nfse_envio_v03.xsd" xmlns: tipos = "http://www.ginfes.com.br/tipos_v03.xsd" xmlns: xsi = "http://www.w3.org/2001/XMLSchema-instance" >
+                   loteBuilder.Append("<Prestador>");
 			loteBuilder.Append($"<tipos:Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tipos:Cnpj>");
 			loteBuilder.Append($"<tipos:InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
 			loteBuilder.Append("</Prestador>");
