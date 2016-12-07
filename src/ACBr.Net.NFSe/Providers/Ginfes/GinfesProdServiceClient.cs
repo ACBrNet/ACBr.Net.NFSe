@@ -4,7 +4,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace ACBr.Net.NFSe.Providers.Ginfes
 {
-	internal sealed class GinfesProdServiceClient : DFeWebserviceBase<IGinfesProdService>, IGinfesProdService, IGinfesServiceClient
+	internal sealed class GinfesProdServiceClient : DFeServiceClientBase<IGinfesProdService>, IGinfesProdService, IGinfesServiceClient
 	{
 		#region Constructors
 

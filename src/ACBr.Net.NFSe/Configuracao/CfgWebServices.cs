@@ -29,13 +29,23 @@
 // <summary></summary>
 // ***********************************************************************
 
+using ACBr.Net.Core.Exceptions;
 using ACBr.Net.DFe.Core.Common;
+using ACBr.Net.NFSe.Providers;
+using System;
 using System.ComponentModel;
+using System.Linq;
 
 namespace ACBr.Net.NFSe.Configuracao
 {
 	public sealed class CfgWebServices : DFeWebserviceConfigBase
 	{
+		#region Fields
+
+		private int codigoMunicipio;
+
+		#endregion Fields
+
 		#region Constructor
 
 		/// <summary>
@@ -63,14 +73,26 @@ namespace ACBr.Net.NFSe.Configuracao
 		/// </summary>
 		/// <value>The uf.</value>
 		[Browsable(true)]
-		public string Municipio { get; set; }
+		public string Municipio { get; private set; }
 
 		/// <summary>
 		/// Codigo do municipio do Webservices em uso
 		/// </summary>
 		/// <value>The uf codigo.</value>
 		[Browsable(true)]
-		public int CodigoMunicipio { get; set; }
+		public int CodigoMunicipio
+		{
+			get { return codigoMunicipio; }
+			set
+			{
+				if (codigoMunicipio == value) return;
+
+				codigoMunicipio = value;
+				var municipio = ProviderManager.Municipios.SingleOrDefault(x => x.Codigo == codigoMunicipio);
+				Guard.Against<ArgumentException>(municipio == null, "Município não cadastrado.");
+				Municipio = municipio.Nome;
+			}
+		}
 
 		#endregion Properties
 	}

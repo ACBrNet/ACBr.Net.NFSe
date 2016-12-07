@@ -14,6 +14,12 @@
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <UpdateAssemblyVersion>True</UpdateAssemblyVersion>
+    <UpdateAssemblyFileVersion>True</UpdateAssemblyFileVersion>
+    <UpdateAssemblyInfoVersion>True</UpdateAssemblyInfoVersion>
+    <AssemblyVersionSettings>None.None.DateStamp.TimeStamp</AssemblyVersionSettings>
+    <AssemblyFileVersionSettings>None.None.DateStamp.TimeStamp</AssemblyFileVersionSettings>
+    <AssemblyInfoVersionSettings>None.None.DateStamp.TimeStamp</AssemblyInfoVersionSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,12 +61,12 @@
     <AssemblyOriginatorKeyFile>acbr.net.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ACBr.Net.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d3bb9130f8b775a6, processorArchitecture=MSIL">
-      <HintPath>..\packages\ACBr.Net.Core.1.0.1.4-beta1\lib\net40\ACBr.Net.Core.dll</HintPath>
+    <Reference Include="ACBr.Net.Core, Version=1.0.1.4, Culture=neutral, PublicKeyToken=d3bb9130f8b775a6, processorArchitecture=MSIL">
+      <HintPath>..\packages\ACBr.Net.Core.1.0.1.4\lib\net40\ACBr.Net.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ACBr.Net.DFe.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d3bb9130f8b775a6, processorArchitecture=MSIL">
-      <HintPath>..\packages\ACBr.Net.DFe.Core.1.0.1.6-beta1\lib\net40\ACBr.Net.DFe.Core.dll</HintPath>
+    <Reference Include="ACBr.Net.DFe.Core, Version=1.0.1.6, Culture=neutral, PublicKeyToken=d3bb9130f8b775a6, processorArchitecture=MSIL">
+      <HintPath>..\packages\ACBr.Net.DFe.Core.1.0.1.6\lib\net40\ACBr.Net.DFe.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PropertyChanged, Version=1.52.1.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
@@ -69,6 +75,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
@@ -1182,6 +1189,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
+    <EmbeddedResource Include="ico.bmp" />
     <Content Include="Schemas\Actcon\Atencao.txt" />
   </ItemGroup>
   <ItemGroup>

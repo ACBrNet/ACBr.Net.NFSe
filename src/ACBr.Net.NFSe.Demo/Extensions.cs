@@ -1,5 +1,4 @@
 using System;
-using System.Configuration;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml;
@@ -30,14 +29,6 @@ namespace ACBr.Net.NFSe.Demo
 			cmb.DataSource = Enum.GetValues(typeof(T));
 			if (valorPadrao.HasValue)
 				cmb.SelectedItem = valorPadrao.Value;
-		}
-
-		public static void AddValue(this KeyValueConfigurationCollection col, string key, string value)
-		{
-			if (col[key]?.Value != null)
-				col[key].Value = value;
-			else
-				col.Add(key, value);
 		}
 	}
 }

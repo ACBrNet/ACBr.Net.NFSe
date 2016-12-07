@@ -35,7 +35,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace ACBr.Net.NFSe.Providers.Ginfes
 {
-	internal sealed class GinfesHomServiceClient : DFeWebserviceBase<IGinfesHomService>, IGinfesHomService, IGinfesServiceClient
+	internal sealed class GinfesHomServiceClient : DFeServiceClientBase<IGinfesHomService>, IGinfesHomService, IGinfesServiceClient
 	{
 		#region Constructors
 

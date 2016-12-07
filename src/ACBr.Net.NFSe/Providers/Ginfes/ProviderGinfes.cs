@@ -283,7 +283,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 					var rootPrestadorContato = rootPrestador.ElementAnyNs("Contato");
 					if (rootPrestadorContato != null)
 					{
-                        ret.Prestador.DadosContato.DDD = "";
+						ret.Prestador.DadosContato.DDD = "";
 						ret.Prestador.DadosContato.Telefone = rootPrestadorContato.ElementAnyNs("Telefone")?.GetValue<string>() ?? string.Empty;
 						ret.Prestador.DadosContato.Email = rootPrestadorContato.ElementAnyNs("Email")?.GetValue<string>() ?? string.Empty;
 					}
@@ -333,7 +333,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 				var rootTomadorContato = rootTomador.ElementAnyNs("Contato");
 				if (rootTomadorContato != null)
 				{
-                    ret.Tomador.DadosContato.DDD = "";
+					ret.Tomador.DadosContato.DDD = "";
 					ret.Tomador.DadosContato.Telefone = rootTomadorContato.ElementAnyNs("Telefone")?.GetValue<string>() ?? string.Empty;
 					ret.Tomador.DadosContato.Email = rootTomadorContato.ElementAnyNs("Email")?.GetValue<string>() ?? string.Empty;
 				}
@@ -663,16 +663,16 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 		public override RetornoWebservice Enviar(int lote, NotaFiscalCollection notas)
 		{
-            var retornoWebservice = new RetornoWebservice();
+			var retornoWebservice = new RetornoWebservice();
 
 			if (lote == 0)
 				retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Lote não informado." });
 
-            if (notas.Count == 0)
+			if (notas.Count == 0)
 				retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "RPS não informado." });
-			
+
 			if (retornoWebservice.Erros.Count > 0)
-                return retornoWebservice;
+				return retornoWebservice;
 
 			var xmlLoteRps = new StringBuilder();
 
@@ -696,9 +696,14 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			xmlLote.Append("</tipos:ListaRps>");
 			xmlLote.Append("</LoteRps>");
 			xmlLote.Append("</EnviarLoteRpsEnvio>");
-			var loteRps = xmlLote.ToString();
+			var xmlEnvio = xmlLote.ToString();
 
-			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteRps, "", "EnviarLoteRpsEnvio", Certificado);
+			if (Config.Geral.RetirarAcentos)
+			{
+				xmlEnvio = xmlEnvio.RemoveAccent();
+			}
+
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "EnviarLoteRpsEnvio", Certificado);
 
 			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-{lote}-env.xml");
 
@@ -745,10 +750,10 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 		public override RetornoWebservice ConsultarSituacao(int lote, string protocolo)
 		{
-            var retornoWebservice = new RetornoWebservice();
+			var retornoWebservice = new RetornoWebservice();
 
-            // Monta mensagem de envio
-            var loteBuilder = new StringBuilder();
+			// Monta mensagem de envio
+			var loteBuilder = new StringBuilder();
 			loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			loteBuilder.Append("<ConsultarSituacaoLoteRpsEnvio xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\" xmlns=\"http://www.ginfes.com.br/servico_consultar_situacao_lote_rps_envio_v03.xsd\">");
 			loteBuilder.Append("<Prestador>");
@@ -757,7 +762,14 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			loteBuilder.Append("</Prestador>");
 			loteBuilder.Append($"<Protocolo>{protocolo}</Protocolo>");
 			loteBuilder.Append("</ConsultarSituacaoLoteRpsEnvio>");
-			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteBuilder.ToString(), "", "ConsultarSituacaoLoteRpsEnvio", Certificado);
+			var xmlEnvio = loteBuilder.ToString();
+
+			if (Config.Geral.RetirarAcentos)
+			{
+				xmlEnvio = xmlEnvio.RemoveAccent();
+			}
+
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ConsultarSituacaoLoteRpsEnvio", Certificado);
 
 			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarSituacao-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
 
@@ -794,9 +806,9 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 		public override RetornoWebservice ConsultarLoteRps(int lote, string protocolo, NotaFiscalCollection notas)
 		{
-            var retornoWebservice = new RetornoWebservice();
+			var retornoWebservice = new RetornoWebservice();
 
-            var loteBuilder = new StringBuilder();
+			var loteBuilder = new StringBuilder();
 			loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			loteBuilder.Append("<ConsultarLoteRpsEnvio xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\" xmlns=\"http://www.ginfes.com.br/servico_consultar_lote_rps_envio_v03.xsd\">");
 			loteBuilder.Append("<Prestador>");
@@ -805,8 +817,14 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			loteBuilder.Append("</Prestador>");
 			loteBuilder.Append($"<Protocolo>{protocolo}</Protocolo>");
 			loteBuilder.Append("</ConsultarLoteRpsEnvio>");
+			var xmlEnvio = loteBuilder.ToString();
 
-			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteBuilder.ToString(), "", "ConsultarLoteRpsEnvio", Certificado);
+			if (Config.Geral.RetirarAcentos)
+			{
+				xmlEnvio = xmlEnvio.RemoveAccent();
+			}
+
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ConsultarLoteRpsEnvio", Certificado);
 
 			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
 
@@ -870,9 +888,9 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 		public override RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas)
 		{
-            var retornoWebservice = new RetornoWebservice();
+			var retornoWebservice = new RetornoWebservice();
 
-            if (string.IsNullOrWhiteSpace(numeroNFSe))
+			if (string.IsNullOrWhiteSpace(numeroNFSe))
 			{
 				retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Número da NFSe não informado para cancelamento." });
 				return retornoWebservice;
@@ -893,8 +911,14 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			loteBuilder.Append("</tipos:InfPedidoCancelamento>");
 			loteBuilder.Append("</Pedido>");
 			loteBuilder.Append("</CancelarNfseEnvio>");
+			var xmlEnvio = loteBuilder.ToString();
 
-			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteBuilder.ToString(), "", "Pedido", Certificado);
+			if (Config.Geral.RetirarAcentos)
+			{
+				xmlEnvio = xmlEnvio.RemoveAccent();
+			}
+
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "Pedido", Certificado);
 
 			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CanNFSe-{numeroNFSe}-env.xml");
 
@@ -951,9 +975,9 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 		public override RetornoWebservice ConsultaNFSeRps(string numero, string serie, TipoRps tipo, NotaFiscalCollection notas)
 		{
-            var retornoWebservice = new RetornoWebservice();
+			var retornoWebservice = new RetornoWebservice();
 
-            if (string.IsNullOrWhiteSpace(numero))
+			if (string.IsNullOrWhiteSpace(numero))
 			{
 				retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Número da NFSe não informado para cancelamento." });
 				return retornoWebservice;
@@ -972,7 +996,14 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			loteBuilder.Append($"<tipos:InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
 			loteBuilder.Append("</Prestador>");
 			loteBuilder.Append("</ConsultarNfseRpsEnvio>");
-			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteBuilder.ToString(), "", "ConsultarNfseRpsEnvio", Certificado);
+			var xmlEnvio = loteBuilder.ToString();
+
+			if (Config.Geral.RetirarAcentos)
+			{
+				xmlEnvio = xmlEnvio.RemoveAccent();
+			}
+
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ConsultarNfseRpsEnvio", Certificado);
 
 			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConNotaRps-{numero}-env.xml");
 
@@ -1018,9 +1049,9 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 		public override RetornoWebservice ConsultaNFSe(DateTime? inicio, DateTime? fim, string numeroNfse, int pagina, string cnpjTomador,
 			string imTomador, string nomeInter, string cnpjInter, string imInter, string serie, NotaFiscalCollection notas)
 		{
-            var retornoWebservice = new RetornoWebservice();
+			var retornoWebservice = new RetornoWebservice();
 
-            var loteBuilder = new StringBuilder();
+			var loteBuilder = new StringBuilder();
 			loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			loteBuilder.Append("<ConsultarNfseEnvio xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\" xmlns=\"http://www.ginfes.com.br/servico_consultar_nfse_rps_envio_v03.xsd\">");
                             // "<ConsultarNfseEnvio xmlns = "http://www.ginfes.com.br/servico_consultar_nfse_envio_v03.xsd" xmlns: tipos = "http://www.ginfes.com.br/tipos_v03.xsd" xmlns: xsi = "http://www.w3.org/2001/XMLSchema-instance" >
@@ -1059,7 +1090,14 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			}
 
 			loteBuilder.Append("</ConsultarNfseEnvio>");
-			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(loteBuilder.ToString(), "", "ConsultarNfseEnvio", Certificado);
+			var xmlEnvio = loteBuilder.ToString();
+
+			if (Config.Geral.RetirarAcentos)
+			{
+				xmlEnvio = xmlEnvio.RemoveAccent();
+			}
+
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ConsultarNfseEnvio", Certificado);
 
 			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConNota-{DateTime.Now:yyyyMMddHHmmss}-{numeroNfse}-env.xml");
 
@@ -1085,8 +1123,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			// Analisa mensagem de retorno
 			var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
 			MensagemErro(retornoWebservice, xmlRet, "ConsultarNfseResposta");
-			if (retornoWebservice.Erros.Count > 0)
-				return retornoWebservice;
+
+			if (retornoWebservice.Erros.Count > 0) return retornoWebservice;
 
 			//var compNfse = xmlRet.ElementAnyNs("ConsultarNfseRpsResposta")?.ElementAnyNs("CompNfse");
 			//if (compNfse == null)
@@ -1342,12 +1380,17 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 		private IGinfesServiceClient GetCliente(TipoUrl tipo)
 		{
 			var url = GetUrl(tipo);
-			if (Config.WebServices.Ambiente == DFeTipoAmbiente.Homologacao)
+			switch (Config.WebServices.Ambiente)
 			{
-				return new GinfesHomServiceClient(url, TimeOut, Certificado);
-			}
+				case DFeTipoAmbiente.Homologacao:
+					return new GinfesHomServiceClient(url, TimeOut, Certificado);
 
-			return new GinfesProdServiceClient(url, TimeOut, Certificado);
+				case DFeTipoAmbiente.Producao:
+					return new GinfesProdServiceClient(url, TimeOut, Certificado);
+
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
 		}
 
 		private static string GerarCabecalho()
