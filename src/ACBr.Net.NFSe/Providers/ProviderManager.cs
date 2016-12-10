@@ -170,13 +170,23 @@ namespace ACBr.Net.NFSe.Providers
 			// ReSharper disable once PossibleNullReferenceException
 			var providerType = Providers[municipio.Provedor.ToUpper()];
 			Guard.Against<ACBrException>(providerType == null, "Provedor não encontrado!");
-			Guard.Against<ACBrException>(!typeof(ProviderBase).IsAssignableFrom(providerType), "Classe base do provedor incorreta!");
+			Guard.Against<ACBrException>(!CheckBaseType(providerType), "Classe base do provedor incorreta!");
 
 			// ReSharper disable once AssignNullToNotNullAttribute
 			return (ProviderBase)Activator.CreateInstance(providerType, config, municipio);
 		}
 
 		#endregion Public
+
+		#region Private
+
+		private static bool CheckBaseType(Type providerType)
+		{
+			return typeof(ProviderBase).IsAssignableFrom(providerType) ||
+				   typeof(ProviderABRASFV2).IsAssignableFrom(providerType);
+		}
+
+		#endregion Private
 
 		#endregion Methods
 	}

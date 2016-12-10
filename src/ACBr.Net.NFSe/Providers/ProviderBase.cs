@@ -66,7 +66,7 @@ namespace ACBr.Net.NFSe.Providers
 		{
 			NaoObrigatoria,
 			Obrigatoria,
-			SeDiferenteDeZero
+			MaiorQueZero
 		}
 
 		#endregion Internal Types
@@ -342,7 +342,7 @@ namespace ACBr.Net.NFSe.Providers
 					break;
 
 				case 14:
-					tag = AdicionarTag(TipoCampo.Str, id, tagCNPJ, 14, 14, Ocorrencia.Obrigatoria, valor, string.Empty, ns);
+					tag = AdicionarTag(TipoCampo.StrNumber, id, tagCNPJ, 14, 14, Ocorrencia.Obrigatoria, valor, string.Empty, ns);
 					if (!valor.IsCNPJ())
 						WAlerta(tagCNPJ, "CNPJ", "CNPJ", ErrMsgInvalido);
 					break;
@@ -464,7 +464,7 @@ namespace ACBr.Net.NFSe.Providers
 							decimal vDecimal;
 							if (decimal.TryParse(valor.ToString(), out vDecimal))
 							{
-								if (ocorrencia == Ocorrencia.SeDiferenteDeZero && vDecimal == 0)
+								if (ocorrencia == Ocorrencia.MaiorQueZero && vDecimal == 0)
 								{
 									estaVazio = true;
 								}
@@ -503,6 +503,28 @@ namespace ACBr.Net.NFSe.Providers
 							break;
 
 						case TipoCampo.Int:
+							int vInt;
+							if (int.TryParse(valor.ToString(), out vInt))
+							{
+								if (ocorrencia == Ocorrencia.MaiorQueZero && vInt == 0)
+								{
+									estaVazio = true;
+								}
+								else
+								{
+									conteudoProcessado = valor.ToString();
+									if (conteudoProcessado.Length < min)
+									{
+										conteudoProcessado = conteudoProcessado.ZeroFill(min);
+									}
+								}
+							}
+							else
+							{
+								estaVazio = true;
+							}
+							break;
+
 						case TipoCampo.StrNumberFill:
 							conteudoProcessado = valor.ToString();
 							if (conteudoProcessado.Length < min)
