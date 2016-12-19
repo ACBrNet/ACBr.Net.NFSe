@@ -80,13 +80,13 @@ namespace ACBr.Net.NFSe
 		/// <value>The mensagem retorno.</value>
 		public RetornoWebservice MensagemRetorno { get; private set; }
 
-        #endregion Propriedades
+		#endregion Propriedades
 
-        #region Methods
+		#region Methods
 
-        #region Setup do Componente
+		#region Setup do Componente
 
-        public bool SetupWebService(int codigoMunicipio, int tipoAmbiente, string certificado, string senha, ref string mensagemAlerta, ref string mensagemErro)
+		public bool SetupWebService(int codigoMunicipio, int tipoAmbiente, string certificado, string senha, ref string mensagemAlerta, ref string mensagemErro)
 		{
 			try
 			{
@@ -95,21 +95,21 @@ namespace ACBr.Net.NFSe
 				oACBrNFSe.Configuracoes.Certificados.Certificado = certificado;
 				oACBrNFSe.Configuracoes.Certificados.Senha = senha;
 
-                // Ajusta as particularidades de cada provedor.
-                var provider = ProviderManager.GetProvider(oACBrNFSe.Configuracoes);
-                switch (provider.Name.ToUpper())
-                {
-                    case "GINFES":
-                        // Provedor Ginfes em ambiente de Homologação não aceita acentos. (Ambiente de Produção aceita normalmente.)
-                        if (oACBrNFSe.Configuracoes.WebServices.Ambiente == DFeTipoAmbiente.Homologacao)
-                            oACBrNFSe.Configuracoes.Geral.RetirarAcentos = true;
-                        break;
-                    default:
-                        break;
-                }
+				// Ajusta as particularidades de cada provedor.
+				var provider = ProviderManager.GetProvider(oACBrNFSe.Configuracoes);
+				switch (provider.Name.ToUpper())
+				{
+					case "GINFES":
+						// Provedor Ginfes em ambiente de Homologação não aceita acentos. (Ambiente de Produção aceita normalmente.)
+						if (oACBrNFSe.Configuracoes.WebServices.Ambiente == DFeTipoAmbiente.Homologacao)
+							oACBrNFSe.Configuracoes.Geral.RetirarAcentos = true;
+						break;
 
-            }
-            catch (Exception ex)
+					default:
+						break;
+				}
+			}
+			catch (Exception ex)
 			{
 				while (ex != null)
 				{
@@ -161,28 +161,29 @@ namespace ACBr.Net.NFSe
 			}
 			return true;
 		}
-        public bool SetupArquivos(bool salvar, string pathLote, string pathRps, string pathNFSe, ref string mensagemAlerta, ref string mensagemErro)
-        {
-            try
-            {
-                oACBrNFSe.Configuracoes.Arquivos.Salvar = salvar;
-                oACBrNFSe.Configuracoes.Arquivos.PathLote = pathLote;
-                oACBrNFSe.Configuracoes.Arquivos.PathNFSe = pathNFSe;
-                oACBrNFSe.Configuracoes.Arquivos.PathRps = pathRps;
-            }
-            catch (Exception ex)
-            {
-                while (ex != null)
-                {
-                    mensagemErro += ex.Message + Environment.NewLine;
-                    ex = ex.InnerException;
-                }
-                return false;
-            }
-            return true;
-        }
 
-        public bool Finalizar(ref string mensagemAlerta, ref string mensagemErro)
+		public bool SetupArquivos(bool salvar, string pathLote, string pathRps, string pathNFSe, ref string mensagemAlerta, ref string mensagemErro)
+		{
+			try
+			{
+				oACBrNFSe.Configuracoes.Arquivos.Salvar = salvar;
+				oACBrNFSe.Configuracoes.Arquivos.PathLote = pathLote;
+				oACBrNFSe.Configuracoes.Arquivos.PathNFSe = pathNFSe;
+				oACBrNFSe.Configuracoes.Arquivos.PathRps = pathRps;
+			}
+			catch (Exception ex)
+			{
+				while (ex != null)
+				{
+					mensagemErro += ex.Message + Environment.NewLine;
+					ex = ex.InnerException;
+				}
+				return false;
+			}
+			return true;
+		}
+
+		public bool Finalizar(ref string mensagemAlerta, ref string mensagemErro)
 		{
 			oACBrNFSe.Dispose();
 			return true;
@@ -249,11 +250,13 @@ namespace ACBr.Net.NFSe
 			return true;
 		}
 
-		public bool RPSValores(decimal valorServicos, decimal valorDeducoes, decimal valorPis, decimal valorCofins,
-							   decimal valorInss, decimal valorIr, decimal valorCsll, int issRetido, decimal valorIss,
-							   decimal valorOutrasRetencoes, decimal valorBaseCalculo, decimal aliquota, decimal valorLiquidoNFSe,
-							   decimal valorIssRetido, decimal valorDescontoCondicionado, decimal valorDescontoIncondicionado,
-							   decimal valorCredito, ref string mensagemAlerta, ref string mensagemErro)
+		public bool RPSValores([MarshalAs(UnmanagedType.Currency)]decimal valorServicos, [MarshalAs(UnmanagedType.Currency)]decimal valorDeducoes,
+								[MarshalAs(UnmanagedType.Currency)]decimal valorPis, [MarshalAs(UnmanagedType.Currency)]decimal valorCofins,
+							   [MarshalAs(UnmanagedType.Currency)]decimal valorInss, [MarshalAs(UnmanagedType.Currency)]decimal valorIr, [MarshalAs(UnmanagedType.Currency)]decimal valorCsll,
+							   int issRetido, [MarshalAs(UnmanagedType.Currency)]decimal valorIss, [MarshalAs(UnmanagedType.Currency)]decimal valorOutrasRetencoes,
+							   [MarshalAs(UnmanagedType.Currency)]decimal valorBaseCalculo, [MarshalAs(UnmanagedType.Currency)]decimal aliquota, [MarshalAs(UnmanagedType.Currency)]decimal valorLiquidoNFSe,
+							   [MarshalAs(UnmanagedType.Currency)]decimal valorIssRetido, [MarshalAs(UnmanagedType.Currency)]decimal valorDescontoCondicionado, [MarshalAs(UnmanagedType.Currency)]decimal valorDescontoIncondicionado,
+							   [MarshalAs(UnmanagedType.Currency)]decimal valorCredito, ref string mensagemAlerta, ref string mensagemErro)
 		{
 			try
 			{
@@ -522,47 +525,47 @@ namespace ACBr.Net.NFSe
 			}
 		}
 
-        public bool ConsultaNFSePorPeriodo(DateTime dataInicial, DateTime dataFinal, ref string mensagemAlerta, ref string mensagemErro)
-        {
-            try
-            {
-                MensagemRetorno = oACBrNFSe.ConsultaNFSe(dataInicial, dataFinal);
-                return TrataMensagemRetornoWebservice(ref mensagemAlerta, ref mensagemErro);
-            }
-            catch (Exception ex)
-            {
-                while (ex != null)
-                {
-                    mensagemErro += ex.Message + Environment.NewLine;
-                    ex = ex.InnerException;
-                }
-                return false;
-            }
-        }
+		public bool ConsultaNFSePorPeriodo(DateTime dataInicial, DateTime dataFinal, ref string mensagemAlerta, ref string mensagemErro)
+		{
+			try
+			{
+				MensagemRetorno = oACBrNFSe.ConsultaNFSe(dataInicial, dataFinal);
+				return TrataMensagemRetornoWebservice(ref mensagemAlerta, ref mensagemErro);
+			}
+			catch (Exception ex)
+			{
+				while (ex != null)
+				{
+					mensagemErro += ex.Message + Environment.NewLine;
+					ex = ex.InnerException;
+				}
+				return false;
+			}
+		}
 
-        public bool ConsultaNFSePorNumero(string numeroNotaFiscal, string serieNotaFiscal, ref string mensagemAlerta, ref string mensagemErro)
-        {
-            try
-            {
-                MensagemRetorno = oACBrNFSe.ConsultaNFSe(null, null, numeroNotaFiscal, 0, "", "", "", "", "", serieNotaFiscal);
-                return TrataMensagemRetornoWebservice(ref mensagemAlerta, ref mensagemErro);
-            }
-            catch (Exception ex)
-            {
-                while (ex != null)
-                {
-                    mensagemErro += ex.Message + Environment.NewLine;
-                    ex = ex.InnerException;
-                }
-                return false;
-            }
-        }
+		public bool ConsultaNFSePorNumero(string numeroNotaFiscal, string serieNotaFiscal, ref string mensagemAlerta, ref string mensagemErro)
+		{
+			try
+			{
+				MensagemRetorno = oACBrNFSe.ConsultaNFSe(null, null, numeroNotaFiscal, 0, "", "", "", "", "", serieNotaFiscal);
+				return TrataMensagemRetornoWebservice(ref mensagemAlerta, ref mensagemErro);
+			}
+			catch (Exception ex)
+			{
+				while (ex != null)
+				{
+					mensagemErro += ex.Message + Environment.NewLine;
+					ex = ex.InnerException;
+				}
+				return false;
+			}
+		}
 
-        #endregion Webservices
+		#endregion Webservices
 
-        #region Métodos de Apoio
+		#region Métodos de Apoio
 
-        public string SelecionarCertificado(ref string mensagemAlerta, ref string mensagemErro)
+		public string SelecionarCertificado(ref string mensagemAlerta, ref string mensagemErro)
 		{
 			try
 			{
