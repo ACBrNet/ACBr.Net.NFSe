@@ -89,7 +89,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			var root = xml.ElementAnyNs("Nota") ?? xml.ElementAnyNs("RPS");
 			Guard.Against<XmlException>(root == null, "Xml de Nota/RPS invalida.");
 
-			var ret = new NotaFiscal(Config, false);
+			var ret = new NotaFiscal();
 
 			// Prestador
 			ret.Prestador.InscricaoMunicipal = root.ElementAnyNs("InscricaoMunicipalPrestador").GetValue<string>();

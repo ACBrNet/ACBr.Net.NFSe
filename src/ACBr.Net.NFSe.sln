@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBr.Net.NFSe.Demo", "ACBr.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBr.Net.NFSe.Test", "ACBr.Net.NFSe.Test\ACBr.Net.NFSe.Test.csproj", "{CB70B488-3A8C-4119-A4F0-FFE467DBC7BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBr.Net.NFSe.Proxy.Json", "ACBr.Net.NFSe.Proxy.Json\ACBr.Net.NFSe.Proxy.Json.csproj", "{C18BA390-9433-40E8-9313-B492547ABC99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{CB70B488-3A8C-4119-A4F0-FFE467DBC7BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB70B488-3A8C-4119-A4F0-FFE467DBC7BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB70B488-3A8C-4119-A4F0-FFE467DBC7BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C18BA390-9433-40E8-9313-B492547ABC99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C18BA390-9433-40E8-9313-B492547ABC99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C18BA390-9433-40E8-9313-B492547ABC99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C18BA390-9433-40E8-9313-B492547ABC99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
