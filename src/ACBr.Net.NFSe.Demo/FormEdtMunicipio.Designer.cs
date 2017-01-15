@@ -545,7 +545,8 @@
 			this.cmbProvedor.FormattingEnabled = true;
 			this.cmbProvedor.Items.AddRange(new object[] {
             "DSF",
-            "Ginfes"});
+            "Ginfes",
+            "WebISS"});
 			this.cmbProvedor.Location = new System.Drawing.Point(581, 25);
 			this.cmbProvedor.Name = "cmbProvedor";
 			this.cmbProvedor.Size = new System.Drawing.Size(121, 21);

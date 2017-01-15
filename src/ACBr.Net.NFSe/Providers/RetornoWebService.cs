@@ -32,24 +32,48 @@
 using ACBr.Net.NFSe.Nota;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace ACBr.Net.NFSe.Providers
 {
+	[ComVisible(true)]
+	[ProgId(nameof(RetornoWebservice))]
+	[ClassInterface(ClassInterfaceType.AutoDual)]
 	public class RetornoWebservice
 	{
-        #region Propriedades
-        public bool Sucesso { get; set; } = false;
-        public string Situacao { get; set; } = "";
-        public string Protocolo { get; set; } = "";
-        public string NumeroLote { get; set; } = "";
+		#region Propriedades
+
+		/// <summary>
+		/// Informa se a comunicação ocorreu com sucesso ou não.
+		/// </summary>
+		/// <value><c>true</c> se não teve erro, senão <c>false</c>.</value>
+		public bool Sucesso { get; set; } = false;
+
+		public string Situacao { get; set; } = "";
+
+		public string Protocolo { get; set; } = "";
+
+		public string NumeroLote { get; set; } = "";
+
 		public string NumeroUltimoRps { get; set; } = "";
-        public DateTime DataLote { get; set; } = DateTime.Now;
-        public bool Assincrono { get; set; } = false;
+
+		public DateTime DataLote { get; set; } = DateTime.Now;
+
+		public bool Assincrono { get; set; } = false;
+
+		[ComVisible(false)]
 		public List<NotaFiscal> NotasFiscais { get; } = new List<NotaFiscal>();
-        public List<Evento> Alertas { get; } = new List<Evento>();
-        public List<Evento> Erros { get; } = new List<Evento>();
-        public string XmlEnvio { get; set; } = "";
+
+		[ComVisible(false)]
+		public List<Evento> Alertas { get; } = new List<Evento>();
+
+		[ComVisible(false)]
+		public List<Evento> Erros { get; } = new List<Evento>();
+
+		public string XmlEnvio { get; set; } = "";
+
 		public string XmlRetorno { get; set; } = "";
-        #endregion Propriedades
-    }
+
+		#endregion Propriedades
+	}
 }

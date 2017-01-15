@@ -979,7 +979,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
 			if (string.IsNullOrWhiteSpace(numero))
 			{
-				retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Número da NFSe não informado para cancelamento." });
+				retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Número da NFSe não informado para a consulta." });
 				return retornoWebservice;
 			}
 
@@ -1040,7 +1040,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			}
 
 			// Carrega a nota fiscal na coleção de Notas Fiscais
-			notas.Load(compNfse.ToString());
+			var nota = LoadXml(compNfse.AsString());
+			notas.Add(nota);
 
 			retornoWebservice.Sucesso = true;
 			return retornoWebservice;
@@ -1111,7 +1112,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			// Recebe mensagem de retorno
 			try
 			{
-				var cliente = GetCliente(TipoUrl.ConsultaNFSeRps);
+				var cliente = GetCliente(TipoUrl.ConsultaNFSe);
 				var cabecalho = GerarCabecalho();
 				retornoWebservice.XmlRetorno = cliente.ConsultarNfse(cabecalho, retornoWebservice.XmlEnvio);
 			}
@@ -1140,7 +1141,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 			foreach (var compNfse in listaNfse.ElementsAnyNs("CompNfse"))
 			{
 				// Carrega a nota fiscal na coleção de Notas Fiscais
-				notas.Load(compNfse.ToString());
+				var nota = LoadXml(compNfse.AsString());
+				notas.Add(nota);
 			}
 
 			retornoWebservice.Sucesso = true;
@@ -1368,7 +1370,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 				var intServicoCpfCnpj = new XElement(ns + "CpfCnpj");
 				intServico.AddChild(intServicoCpfCnpj);
 
-				cpfCnpj.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Intermediario.CpfCnpj, ns));
+				intServicoCpfCnpj.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Intermediario.CpfCnpj, ns));
 
 				intServico.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "InscricaoMunicipal", ns, 1, 15, 0, nota.Intermediario.InscricaoMunicipal));
 			}

@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 08-17-2016
+// Created          : 01-13-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 08-17-2016
+// Last Modified On : 01-13-2017
 // ***********************************************************************
-// <copyright file="TipoUrl.cs" company="ACBr.Net">
+// <copyright file="IABRASFClient.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -31,17 +31,18 @@
 
 namespace ACBr.Net.NFSe.Providers
 {
-	public enum TipoUrl
+	public interface IABRASFClient
 	{
-		Enviar,
-		EnviarSincrono,
-		ConsultarSituacao,
-		ConsultarLoteRps,
-		ConsultarSequencialRps,
-		ConsultaNFSeRps,
-		ConsultaNFSe,
-		CancelaNFSe,
-		SubstituirNFSe,
-		GerarNFSe
+		string RecepcionarLoteRps(string cabec, string msg);
+
+		string ConsultarSituacaoLoteRps(string cabec, string msg);
+
+		string ConsultarNfsePorRps(string cabec, string msg);
+
+		string ConsultarNfse(string cabec, string msg);
+
+		string ConsultarLoteRps(string cabec, string msg);
+
+		string CancelarNfse(string cabec, string msg);
 	}
 }

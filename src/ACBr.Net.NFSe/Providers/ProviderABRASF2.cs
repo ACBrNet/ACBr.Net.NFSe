@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 12-08-2016
 // ***********************************************************************
-// <copyright file="ProviderABRASFV2.cs" company="ACBr.Net">
+// <copyright file="ProviderABRASF2.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -40,19 +40,19 @@ namespace ACBr.Net.NFSe.Providers
 {
 	// ReSharper disable once InconsistentNaming
 	/// <summary>
-	/// Class ProviderABRASFV2.
+	/// Classe base para trabalhar com provedores que usam o padrão ABRASF V2
 	/// </summary>
 	/// <seealso cref="ACBr.Net.NFSe.Providers.ProviderBase" />
-	public abstract class ProviderABRASFV2 : ProviderBase
+	public abstract class ProviderABRASF2 : ProviderBase
 	{
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ProviderABRASFV2"/> class.
+		/// Initializes a new instance of the <see cref="ProviderABRASF2"/> class.
 		/// </summary>
 		/// <param name="config">The configuration.</param>
 		/// <param name="municipio">The municipio.</param>
-		protected ProviderABRASFV2(ConfiguracoesNFSe config, MunicipioNFSe municipio) : base(config, municipio)
+		protected ProviderABRASF2(ConfiguracoesNFSe config, MunicipioNFSe municipio) : base(config, municipio)
 		{
 			Name = "ABRASFv2";
 		}
@@ -256,10 +256,10 @@ namespace ACBr.Net.NFSe.Providers
 			var ideIntermediario = new XElement("IdentificacaoIntermediario");
 			intermediario.Add(ideIntermediario);
 
-			var cpfCnpjTomador = new XElement("CpfCnpj");
-			ideIntermediario.Add(cpfCnpjTomador);
+			var cpfCnpj = new XElement("CpfCnpj");
+			ideIntermediario.Add(cpfCnpj);
 
-			cpfCnpjTomador.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Intermediario.CpfCnpj));
+			cpfCnpj.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Intermediario.CpfCnpj));
 
 			ideIntermediario.AddChild(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipal", 1, 15, Ocorrencia.NaoObrigatoria,
 				nota.Intermediario.InscricaoMunicipal));
@@ -371,6 +371,20 @@ namespace ACBr.Net.NFSe.Providers
 		}
 
 		#endregion NFSe
+
+		#region Protected Methods
+
+		protected virtual string GetNamespace()
+		{
+			return "http://www.abrasf.org.br/nfse";
+		}
+
+		protected virtual string GetSchema(TipoUrl tipo)
+		{
+			return "nfse.xsd";
+		}
+
+		#endregion Protected Methods
 
 		#endregion Methods
 	}

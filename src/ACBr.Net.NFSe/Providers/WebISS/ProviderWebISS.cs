@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 08-17-2016
+// Created          : 01-13-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 08-17-2016
+// Last Modified On : 01-13-2017
 // ***********************************************************************
-// <copyright file="TipoUrl.cs" company="ACBr.Net">
+// <copyright file="ProviderWebISS.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,19 +29,51 @@
 // <summary></summary>
 // ***********************************************************************
 
-namespace ACBr.Net.NFSe.Providers
+using System;
+using ACBr.Net.NFSe.Configuracao;
+
+namespace ACBr.Net.NFSe.Providers.WebISS
 {
-	public enum TipoUrl
+	// ReSharper disable once InconsistentNaming
+	internal sealed class ProviderWebISS : ProviderABRASF
 	{
-		Enviar,
-		EnviarSincrono,
-		ConsultarSituacao,
-		ConsultarLoteRps,
-		ConsultarSequencialRps,
-		ConsultaNFSeRps,
-		ConsultaNFSe,
-		CancelaNFSe,
-		SubstituirNFSe,
-		GerarNFSe
+		#region Constructors
+
+		public ProviderWebISS(ConfiguracoesNFSe config, MunicipioNFSe municipio) : base(config, municipio)
+		{
+			Name = "WebISS";
+		}
+
+		#endregion Constructors
+
+		#region Methods
+
+		protected override IABRASFClient GetClient(TipoUrl tipo)
+		{
+			var url = GetUrl(tipo);
+			return new WebISSSServiceClient(url, TimeOut, Certificado);
+		}
+
+		protected override string GetNamespace()
+		{
+			return "http://tempuri.org/";
+		}
+
+		protected override string GetSchema(TipoUrl tipo)
+		{
+			switch (tipo)
+			{
+				case TipoUrl.Enviar: return "servico_enviar_lote_rps_envio.xsd";
+				case TipoUrl.ConsultarSituacao: return "servico_consultar_situacao_lote_rps_envio.xsd";
+				case TipoUrl.ConsultarLoteRps: return "servico_consultar_lote_rps_envio.xsd";
+				case TipoUrl.ConsultaNFSeRps: return "servico_consultar_nfse_rps_envio.xsd";
+				case TipoUrl.ConsultaNFSe: return "servico_consultar_nfse_envio.xsd";
+				case TipoUrl.CancelaNFSe: return "servico_cancelar_nfse_envio.xsd";
+				case TipoUrl.GerarNFSe: return "servico_gerar_nfse_envio.xsd";
+				default: throw new ArgumentOutOfRangeException(nameof(tipo), tipo, @"Valor incorreto ou serviço não suportado.");
+			}
+		}
+
+		#endregion Methods
 	}
 }

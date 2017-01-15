@@ -106,7 +106,9 @@
     <Compile Include="Providers\Betha\IBethaConsultarLoteRps.cs" />
     <Compile Include="Providers\Betha\IBethaCancelarNEV01.cs" />
     <Compile Include="Providers\Betha\IBethaRecepcionarLoteRps.cs" />
-    <Compile Include="Providers\ProviderABRASFV2.cs" />
+    <Compile Include="Providers\IABRASFClient.cs" />
+    <Compile Include="Providers\ProviderABRASF.cs" />
+    <Compile Include="Providers\ProviderABRASF2.cs" />
     <Compile Include="Providers\Betha\ProviderBetha.cs" />
     <Compile Include="Providers\DSF\CancelarRequest.cs" />
     <Compile Include="Providers\DSF\CancelarResponse.cs" />
@@ -188,6 +190,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Providers\WebISS\IWebISSServiceClient.cs" />
+    <Compile Include="Providers\WebISS\ProviderWebISS.cs" />
+    <Compile Include="Providers\WebISS\WebISSSServiceClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="acbr.net.snk" />
@@ -1198,6 +1203,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

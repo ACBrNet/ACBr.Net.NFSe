@@ -35,6 +35,7 @@ using ACBr.Net.Core.Extensions;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Providers.DSF;
 using ACBr.Net.NFSe.Providers.Ginfes;
+using ACBr.Net.NFSe.Providers.WebISS;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -55,7 +56,8 @@ namespace ACBr.Net.NFSe.Providers
 			{
 				{"DSF", typeof(ProviderDSF)},
 				{"ISSDSF", typeof(ProviderDSF)},
-				{"GINFES", typeof(ProviderGinfes)}
+				{"GINFES", typeof(ProviderGinfes)},
+				{"WEBISS", typeof(ProviderWebISS)}
 			};
 
 			Load();
@@ -183,7 +185,7 @@ namespace ACBr.Net.NFSe.Providers
 		private static bool CheckBaseType(Type providerType)
 		{
 			return typeof(ProviderBase).IsAssignableFrom(providerType) ||
-				   typeof(ProviderABRASFV2).IsAssignableFrom(providerType);
+				   typeof(ProviderABRASF2).IsAssignableFrom(providerType);
 		}
 
 		#endregion Private

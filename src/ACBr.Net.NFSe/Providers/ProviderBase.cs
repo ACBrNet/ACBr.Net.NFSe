@@ -153,6 +153,10 @@ namespace ACBr.Net.NFSe.Providers
 
 		#region Propriedades
 
+		/// <summary>
+		/// Gets or sets the name.
+		/// </summary>
+		/// <value>The name.</value>
 		public string Name { get; protected set; }
 
 		/// <summary>
