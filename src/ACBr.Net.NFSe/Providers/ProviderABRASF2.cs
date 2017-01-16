@@ -293,7 +293,9 @@ namespace ACBr.Net.NFSe.Providers
 
 		protected virtual XElement GenerateNFSe(NotaFiscal nota)
 		{
+			var compNfse = new XElement("CompNfse");
 			var nfse = new XElement("Nfse", new XAttribute("versao", "2.00"));
+			compNfse.Add(nfse);
 
 			var infNfse = new XElement("InfNfse", new XAttribute("Id", $"{nota.IdentificacaoNFSe.Numero.OnlyNumbers()}"));
 			nfse.AddChild(infNfse);
@@ -348,7 +350,7 @@ namespace ACBr.Net.NFSe.Providers
 			var declaracao = GenerateDeclaracaoServicoNFSe(nota);
 			infNfse.AddChild(declaracao);
 
-			return nfse;
+			return compNfse;
 		}
 
 		protected virtual XElement GenerateValoresNFse(NotaFiscal nota)
