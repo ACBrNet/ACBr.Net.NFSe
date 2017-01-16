@@ -31,8 +31,6 @@
 
 using System;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
@@ -42,9 +40,6 @@ using ACBr.Net.DFe.Core;
 using ACBr.Net.DFe.Core.Serializer;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
-using KeyInfo = ACBr.Net.DFe.Core.Document.KeyInfo;
-using Reference = ACBr.Net.DFe.Core.Document.Reference;
-using Transform = ACBr.Net.DFe.Core.Document.Transform;
 
 namespace ACBr.Net.NFSe.Providers
 {
@@ -497,7 +492,7 @@ namespace ACBr.Net.NFSe.Providers
 			var situacao = nota.Situacao == SituacaoNFSeRps.Normal ? "1" : "2";
 
 			var rps = new XElement("Rps");
-			var infoRps = new XElement("InfRps", new XAttribute("Id", $"RPS{nota.IdentificacaoRps.Numero}"));
+			var infoRps = new XElement("InfRps", new XAttribute("Id", $"R{nota.IdentificacaoRps.Numero}"));
 			rps.Add(infoRps);
 
 			var ideRps = new XElement("IdentificacaoRps");
@@ -1031,7 +1026,7 @@ namespace ACBr.Net.NFSe.Providers
 			var xmlLote = new StringBuilder();
 			xmlLote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			xmlLote.Append($"<EnviarLoteRpsEnvio xmlns=\"{GetNamespace()}\">");
-			xmlLote.Append($"<LoteRps Id=\"Lote{lote}\">");
+			xmlLote.Append($"<LoteRps Id=\"L{lote}\">");
 			xmlLote.Append($"<NumeroLote>{lote}</NumeroLote>");
 			xmlLote.Append($"<Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>");
 			xmlLote.Append($"<InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
@@ -1239,7 +1234,7 @@ namespace ACBr.Net.NFSe.Providers
 			loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			loteBuilder.Append($"<CancelarNfseEnvio xmlns=\"{GetNamespace()}\">");
 			loteBuilder.Append("<Pedido>");
-			loteBuilder.Append($"<InfPedidoCancelamento Id=\"{numeroNFSe}\">");
+			loteBuilder.Append($"<InfPedidoCancelamento Id=\"N{numeroNFSe}\">");
 			loteBuilder.Append("<IdentificacaoNfse>");
 			loteBuilder.Append($"<Numero>{numeroNFSe}</Numero>");
 			loteBuilder.Append($"<Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>");
@@ -1257,7 +1252,7 @@ namespace ACBr.Net.NFSe.Providers
 				xmlEnvio = xmlEnvio.RemoveAccent();
 			}
 
-			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "Pedido", Certificado);
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "InfPedidoCancelamento", "Pedido", Certificado);
 
 			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CanNFSe-{numeroNFSe}-env.xml");
 
