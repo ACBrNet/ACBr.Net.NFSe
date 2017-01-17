@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 08-17-2016
+// Created          : 01-16-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 08-17-2016
+// Last Modified On : 01-16-2017
 // ***********************************************************************
-// <copyright file="TipoUrl.cs" company="ACBr.Net">
+// <copyright file="ConsultarSituacaoLoteRpsResponse.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,18 +29,23 @@
 // <summary></summary>
 // ***********************************************************************
 
-namespace ACBr.Net.NFSe.Providers
+using System.ServiceModel;
+
+namespace ACBr.Net.NFSe.Providers.PortoAlegre
 {
-	public enum TipoUrl
+	[MessageContract(WrapperName = "ConsultarSituacaoLoteRpsResponse", WrapperNamespace = "http://ws.bhiss.pbh.gov.br", IsWrapped = true)]
+	internal sealed class ConsultarSituacaoLoteRpsResponse
 	{
-		Enviar,
-		EnviarSincrono,
-		ConsultarSituacao,
-		ConsultarLoteRps,
-		ConsultarSequencialRps,
-		ConsultaNFSeRps,
-		ConsultaNFSe,
-		CancelaNFSe,
-		SubstituirNFSe
+		[MessageBodyMember(Namespace = "", Order = 0)]
+		public string outputXML;
+
+		public ConsultarSituacaoLoteRpsResponse()
+		{
+		}
+
+		public ConsultarSituacaoLoteRpsResponse(string outputXML)
+		{
+			this.outputXML = outputXML;
+		}
 	}
 }

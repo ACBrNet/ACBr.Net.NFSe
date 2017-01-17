@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 08-17-2016
+// Created          : 01-16-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 08-17-2016
+// Last Modified On : 01-16-2017
 // ***********************************************************************
-// <copyright file="TipoUrl.cs" company="ACBr.Net">
+// <copyright file="ProviderPortoAlegre.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,18 +29,45 @@
 // <summary></summary>
 // ***********************************************************************
 
-namespace ACBr.Net.NFSe.Providers
+using System;
+using System.Linq;
+using System.Text;
+using System.Xml.Linq;
+using ACBr.Net.Core.Extensions;
+using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Nota;
+
+namespace ACBr.Net.NFSe.Providers.PortoAlegre
 {
-	public enum TipoUrl
+	internal sealed class ProviderPortoAlegre : ProviderABRASF
 	{
-		Enviar,
-		EnviarSincrono,
-		ConsultarSituacao,
-		ConsultarLoteRps,
-		ConsultarSequencialRps,
-		ConsultaNFSeRps,
-		ConsultaNFSe,
-		CancelaNFSe,
-		SubstituirNFSe
+		#region Constructors
+
+		public ProviderPortoAlegre(ConfiguracoesNFSe config, MunicipioNFSe municipio) : base(config, municipio)
+		{
+			Name = "Porto Alegre";
+		}
+
+		#endregion Constructors
+
+		#region Methods
+
+		protected override IABRASFClient GetClient(TipoUrl tipo)
+		{
+			var url = GetUrl(tipo);
+			return new PortoAlegreServiceClient(url, TimeOut, Certificado);
+		}
+
+		protected override string GetNamespace()
+		{
+			return "http://www.abrasf.org.br/nfse.xsd";
+		}
+
+		protected override string GetSchema(TipoUrl tipo)
+		{
+			return "nfse_v20_08_2015.xsd";
+		}
+
+		#endregion Methods
 	}
 }

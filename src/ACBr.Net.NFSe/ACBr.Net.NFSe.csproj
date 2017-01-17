@@ -108,6 +108,25 @@
     <Compile Include="Providers\Betha\IBethaCancelarNEV01.cs" />
     <Compile Include="Providers\Betha\IBethaRecepcionarLoteRps.cs" />
     <Compile Include="Providers\IABRASFClient.cs" />
+    <Compile Include="Providers\PortoAlegre\CancelarNfseRequest.cs" />
+    <Compile Include="Providers\PortoAlegre\CancelarNfseResponse.cs" />
+    <Compile Include="Providers\PortoAlegre\ConsultarLoteRpsRequest.cs" />
+    <Compile Include="Providers\PortoAlegre\ConsultarLoteRpsResponse.cs" />
+    <Compile Include="Providers\PortoAlegre\ConsultarNfsePorFaixaRequest.cs" />
+    <Compile Include="Providers\PortoAlegre\ConsultarNfsePorFaixaResponse.cs" />
+    <Compile Include="Providers\PortoAlegre\ConsultarNfsePorRpsRequest.cs" />
+    <Compile Include="Providers\PortoAlegre\ConsultarNfsePorRpsResponse.cs" />
+    <Compile Include="Providers\PortoAlegre\ConsultarNfseRequest.cs" />
+    <Compile Include="Providers\PortoAlegre\ConsultarNfseResponse.cs" />
+    <Compile Include="Providers\PortoAlegre\ConsultarSituacaoLoteRpsRequest.cs" />
+    <Compile Include="Providers\PortoAlegre\ConsultarSituacaoLoteRpsResponse.cs" />
+    <Compile Include="Providers\PortoAlegre\GerarNfseRequest.cs" />
+    <Compile Include="Providers\PortoAlegre\GerarNfseResponse.cs" />
+    <Compile Include="Providers\PortoAlegre\IPortoAlegreServiceClient.cs" />
+    <Compile Include="Providers\PortoAlegre\ProviderPortoAlegre.cs" />
+    <Compile Include="Providers\PortoAlegre\RecepcionarLoteRpsRequest.cs" />
+    <Compile Include="Providers\PortoAlegre\RecepcionarLoteRpsResponse.cs" />
+    <Compile Include="Providers\PortoAlegre\PortoAlegreServiceClient.cs" />
     <Compile Include="Providers\ProviderABRASF.cs" />
     <Compile Include="Providers\ProviderABRASF2.cs" />
     <Compile Include="Providers\Betha\ProviderBetha.cs" />
@@ -777,6 +796,14 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Schemas\Porto Alegre\nfse_v20_08_2015.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\Porto Alegre\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Schemas\Prodata\nfse.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1204,9 +1231,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

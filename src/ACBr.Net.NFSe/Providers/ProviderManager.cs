@@ -42,6 +42,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using ACBr.Net.NFSe.Providers.PortoAlegre;
 
 namespace ACBr.Net.NFSe.Providers
 {
@@ -57,7 +58,8 @@ namespace ACBr.Net.NFSe.Providers
 				{"DSF", typeof(ProviderDSF)},
 				{"ISSDSF", typeof(ProviderDSF)},
 				{"GINFES", typeof(ProviderGinfes)},
-				{"WEBISS", typeof(ProviderWebISS)}
+				{"WEBISS", typeof(ProviderWebISS)},
+				{"PORTO ALEGRE", typeof(ProviderPortoAlegre)}
 			};
 
 			Load();

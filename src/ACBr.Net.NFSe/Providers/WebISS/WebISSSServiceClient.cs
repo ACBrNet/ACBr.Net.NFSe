@@ -79,6 +79,11 @@ namespace ACBr.Net.NFSe.Providers.WebISS
 			return ((IWebISSServiceClient)this).CancelarNfse(cabec, msg);
 		}
 
+		public string GerarNfse(string cabec, string msg)
+		{
+			throw new NotImplementedException();
+		}
+
 		#region Interface Methods
 
 		string IWebISSServiceClient.RecepcionarLoteRps(string cabec, string msg)

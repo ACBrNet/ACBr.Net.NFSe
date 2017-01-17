@@ -31,6 +31,7 @@
 
 using System;
 using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Nota;
 
 namespace ACBr.Net.NFSe.Providers.WebISS
 {
@@ -48,6 +49,11 @@ namespace ACBr.Net.NFSe.Providers.WebISS
 
 		#region Methods
 
+		public override RetornoWebservice EnviarSincrono(int lote, NotaFiscalCollection notas)
+		{
+			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
+		}
+
 		protected override IABRASFClient GetClient(TipoUrl tipo)
 		{
 			var url = GetUrl(tipo);
@@ -64,12 +70,12 @@ namespace ACBr.Net.NFSe.Providers.WebISS
 			switch (tipo)
 			{
 				case TipoUrl.Enviar: return "servico_enviar_lote_rps_envio.xsd";
+				case TipoUrl.EnviarSincrono: return "servico_gerar_nfse_envio.xsd";
 				case TipoUrl.ConsultarSituacao: return "servico_consultar_situacao_lote_rps_envio.xsd";
 				case TipoUrl.ConsultarLoteRps: return "servico_consultar_lote_rps_envio.xsd";
 				case TipoUrl.ConsultaNFSeRps: return "servico_consultar_nfse_rps_envio.xsd";
 				case TipoUrl.ConsultaNFSe: return "servico_consultar_nfse_envio.xsd";
 				case TipoUrl.CancelaNFSe: return "servico_cancelar_nfse_envio.xsd";
-				case TipoUrl.GerarNFSe: return "servico_gerar_nfse_envio.xsd";
 				default: throw new ArgumentOutOfRangeException(nameof(tipo), tipo, @"Valor incorreto ou serviço não suportado.");
 			}
 		}

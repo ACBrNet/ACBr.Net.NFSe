@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 08-17-2016
+// Created          : 01-16-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 08-17-2016
+// Last Modified On : 01-16-2017
 // ***********************************************************************
-// <copyright file="TipoUrl.cs" company="ACBr.Net">
+// <copyright file="CancelarNfseRequest.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,18 +29,23 @@
 // <summary></summary>
 // ***********************************************************************
 
-namespace ACBr.Net.NFSe.Providers
+using System.ServiceModel;
+
+namespace ACBr.Net.NFSe.Providers.PortoAlegre
 {
-	public enum TipoUrl
+	[MessageContract(WrapperName = "CancelarNfseResponse", WrapperNamespace = "http://ws.bhiss.pbh.gov.br", IsWrapped = true)]
+	internal sealed class CancelarNfseResponse
 	{
-		Enviar,
-		EnviarSincrono,
-		ConsultarSituacao,
-		ConsultarLoteRps,
-		ConsultarSequencialRps,
-		ConsultaNFSeRps,
-		ConsultaNFSe,
-		CancelaNFSe,
-		SubstituirNFSe
+		[MessageBodyMemberAttribute(Namespace = "", Order = 0)]
+		public string outputXML;
+
+		public CancelarNfseResponse()
+		{
+		}
+
+		public CancelarNfseResponse(string outputXML)
+		{
+			this.outputXML = outputXML;
+		}
 	}
 }
