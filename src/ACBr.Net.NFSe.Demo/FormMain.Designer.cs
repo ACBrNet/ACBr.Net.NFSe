@@ -246,6 +246,7 @@
 			this.btnCancelarNFSe.TabIndex = 12;
 			this.btnCancelarNFSe.Text = "Cancelar NFSe";
 			this.btnCancelarNFSe.UseVisualStyleBackColor = true;
+			this.btnCancelarNFSe.Click += new System.EventHandler(this.btnCancelarNFSe_Click);
 			// 
 			// btnConsultarLote
 			// 

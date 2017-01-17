@@ -80,10 +80,10 @@ namespace ACBr.Net.NFSe.Demo
 			ExecuteSafe(() =>
 			{
 				var numero = 10;
-				InputBox.Show("Numero Lote", "Digite o numero do lote.", ref numero);
+				if (InputBox.Show("Numero Lote", "Digite o numero do lote.", ref numero).Equals(DialogResult.Cancel)) return;
 
 				var protocolo = "0";
-				InputBox.Show("Numero do Protocolo", "Digite o numero do protocolo.", ref protocolo);
+				if (InputBox.Show("Numero do Protocolo", "Digite o numero do protocolo.", ref protocolo).Equals(DialogResult.Cancel)) return;
 
 				var ret = acbrNFSe.ConsultarLoteRps(numero, protocolo);
 				wbbDados.LoadXml(ret.XmlEnvio);
@@ -96,12 +96,31 @@ namespace ACBr.Net.NFSe.Demo
 			ExecuteSafe(() =>
 			{
 				var numero = "10";
-				InputBox.Show("Numero da RPS", "Digite o numero da RPS.", ref numero);
+				if (InputBox.Show("Numero da RPS", "Digite o numero da RPS.", ref numero).Equals(DialogResult.Cancel)) return;
 
 				var serie = "0";
-				InputBox.Show("Serie da RPS", "Digite o numero da serie da RPS.", ref serie);
+				if (InputBox.Show("Serie da RPS", "Digite o numero da serie da RPS.", ref serie).Equals(DialogResult.Cancel)) return;
 
 				var ret = acbrNFSe.ConsultaNFSeRps(numero, serie, TipoRps.RPS);
+				wbbDados.LoadXml(ret.XmlEnvio);
+				wbbResposta.LoadXml(ret.XmlRetorno);
+			});
+		}
+
+		private void btnCancelarNFSe_Click(object sender, EventArgs e)
+		{
+			ExecuteSafe(() =>
+			{
+				var codigo = "0001";
+				if (InputBox.Show("Código de cancelamento", "Código de cancelamento.", ref codigo).Equals(DialogResult.Cancel)) return;
+
+				var serie = "0";
+				if (InputBox.Show("Numero NFSe", "Digite o numero da NFSe.", ref serie).Equals(DialogResult.Cancel)) return;
+
+				var motivo = "";
+				if (InputBox.Show("Motivo Cancelamento", "Digite o motivo do cancelamento.", ref motivo).Equals(DialogResult.Cancel)) return;
+
+				var ret = acbrNFSe.CancelaNFSe(codigo, serie, motivo);
 				wbbDados.LoadXml(ret.XmlEnvio);
 				wbbResposta.LoadXml(ret.XmlRetorno);
 			});
