@@ -45,6 +45,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Xml.Linq;
+using ACBr.Net.DFe.Core.Document;
 
 namespace ACBr.Net.NFSe.Providers
 {
@@ -321,6 +322,35 @@ namespace ACBr.Net.NFSe.Providers
 				default:
 					return Municipio.UrlHomologacao[url];
 			}
+		}
+
+		/// <summary>
+		/// Retornar o XML da assinatura ou nulo caso não tenha nada.
+		/// </summary>
+		/// <param name="signature">The signature.</param>
+		/// <returns>XElement.</returns>
+		protected XElement WriteSignature(DFeSignature signature)
+		{
+			if (signature.SignatureValue.IsEmpty() || signature.SignedInfo.Reference.DigestValue.IsEmpty() ||
+				signature.KeyInfo.X509Data.X509Certificate.IsEmpty())
+				return null;
+
+			var ms = new MemoryStream();
+			var serializer = DFeSerializer.CreateSerializer<DFeSignature>();
+			if (!serializer.Serialize(signature, ms)) return null;
+
+			return XElement.Load(ms);
+		}
+
+		/// <summary>
+		/// Carrega a assinatura do Xml.
+		/// </summary>
+		/// <param name="element">The element.</param>
+		/// <returns>DFeSignature.</returns>
+		protected DFeSignature LoadSignature(XElement element)
+		{
+			var serializer = DFeSerializer.CreateSerializer<DFeSignature>();
+			return serializer.Deserialize(element.ToString());
 		}
 
 		/// <summary>
@@ -616,7 +646,6 @@ namespace ACBr.Net.NFSe.Providers
 		/// Valida o XML de acordo com o schema.
 		/// </summary>
 		/// <param name="xml">A mensagem XML que deve ser verificada.</param>
-		/// <param name="provedor">O provedor.</param>
 		/// <param name="schema">O schema que será usado na verificação.</param>
 		/// <returns>Se estiver tudo OK retorna null, caso contrário as mensagens de alertas e erros.</returns>
 		protected RetornoWebservice ValidarSchema(string xml, string schema)
@@ -624,23 +653,21 @@ namespace ACBr.Net.NFSe.Providers
 			schema = Path.Combine(Config.Geral.PathSchemas, Name, schema);
 			string[] errosSchema;
 			string[] alertasSchema;
-			if (!CertificadoDigital.ValidarXml(xml, schema, out errosSchema, out alertasSchema))
+			if (CertificadoDigital.ValidarXml(xml, schema, out errosSchema, out alertasSchema)) return null;
+
+			var retLote = new RetornoWebservice
 			{
-				var retLote = new RetornoWebservice
-				{
-					Assincrono = true,
-					XmlEnvio = xml
-				};
+				Assincrono = true,
+				XmlEnvio = xml
+			};
 
-				foreach (var erro in errosSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
-					retLote.Erros.Add(erro);
+			foreach (var erro in errosSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
+				retLote.Erros.Add(erro);
 
-				foreach (var alerta in alertasSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
-					retLote.Alertas.Add(alerta);
+			foreach (var alerta in alertasSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
+				retLote.Alertas.Add(alerta);
 
-				return retLote;
-			}
-			return null;
+			return retLote;
 		}
 
 		/// <summary>
@@ -696,6 +723,9 @@ namespace ACBr.Net.NFSe.Providers
 				case TipoArquivo.NFSe:
 					nomeArquivo = Path.Combine(Config.Arquivos.GetPathNFSe(data ?? DateTime.Today), nomeArquivo);
 					break;
+
+				default:
+					throw new ArgumentOutOfRangeException(nameof(tipo), tipo, null);
 			}
 
 			File.WriteAllText(nomeArquivo, conteudoArquivo, Encoding.UTF8);

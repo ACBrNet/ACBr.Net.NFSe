@@ -61,7 +61,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		public DateTime DataHora { get; set; }
 
-		public DFeSignature Signature { get; }
+		public DFeSignature Signature { get; internal set; }
 
 		#endregion Propriedades
 	}

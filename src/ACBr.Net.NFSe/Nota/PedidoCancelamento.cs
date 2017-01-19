@@ -57,7 +57,7 @@ namespace ACBr.Net.NFSe.Nota
 
 		public string CodigoCancelamento { get; set; }
 
-		public DFeSignature Signature { get; }
+		public DFeSignature Signature { get; internal set; }
 
 		#endregion Propriedades
 	}
