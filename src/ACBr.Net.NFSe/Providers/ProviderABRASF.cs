@@ -73,6 +73,7 @@ namespace ACBr.Net.NFSe.Providers
 
 			XElement rootDoc;
 			XElement rootCanc = null;
+			XElement rootSub = null;
 
 			var isRps = false;
 			var isNFSe = false;
@@ -82,7 +83,8 @@ namespace ACBr.Net.NFSe.Providers
 			{
 				isNFSe = true;
 				rootDoc = rootGrupo.ElementAnyNs("Nfse")?.ElementAnyNs("InfNfse");
-				rootCanc = rootGrupo.ElementAnyNs("NfseCancelamento")?.ElementAnyNs("Confirmacao");
+				rootCanc = rootGrupo.ElementAnyNs("NfseCancelamento");
+				rootCanc = rootGrupo.ElementAnyNs("NfseCancelamento");
 			}
 			else
 			{
@@ -378,10 +380,16 @@ namespace ACBr.Net.NFSe.Providers
 			if (rootCanc != null)
 			{
 				ret.Situacao = SituacaoNFSeRps.Cancelado;
-				ret.Cancelamento.Pedido.CodigoCancelamento = rootCanc.ElementAnyNs("Pedido").ElementAnyNs("InfPedidoCancelamento")?.ElementAnyNs("CodigoCancelamento")?.GetValue<string>() ?? string.Empty;
-				ret.Cancelamento.DataHora = rootCanc.ElementAnyNs("DataHoraCancelamento")?.GetValue<DateTime>() ?? DateTime.MinValue;
-				ret.Cancelamento.Signature = LoadSignature(rootGrupo.ElementAnyNs("NfseCancelamento").ElementAnyNs("Signature"));
-				ret.Cancelamento.Pedido.Signature = LoadSignature(rootCanc.ElementAnyNs("Pedido").ElementAnyNs("Signature"));
+				ret.Cancelamento.Pedido.CodigoCancelamento = rootCanc.ElementAnyNs("Confirmacao").ElementAnyNs("Pedido").ElementAnyNs("InfPedidoCancelamento")?.ElementAnyNs("CodigoCancelamento")?.GetValue<string>() ?? string.Empty;
+				ret.Cancelamento.DataHora = rootCanc.ElementAnyNs("Confirmacao").ElementAnyNs("DataHoraCancelamento")?.GetValue<DateTime>() ?? DateTime.MinValue;
+				ret.Cancelamento.Signature = LoadSignature(rootCanc.ElementAnyNs("Signature"));
+				ret.Cancelamento.Pedido.Signature = LoadSignature(rootCanc.ElementAnyNs("Confirmacao").ElementAnyNs("Pedido").ElementAnyNs("Signature"));
+			}
+
+			if (rootSub != null)
+			{
+				ret.RpsSubstituido.NFSeSubstituidora = rootSub.ElementAnyNs("SubstituicaoNfse").ElementAnyNs("NfseSubstituidora").GetValue<string>();
+				ret.RpsSubstituido.Signature = LoadSignature(rootSub.ElementAnyNs("SubstituicaoNfse").ElementAnyNs("Signature"));
 			}
 
 			return ret;
@@ -680,7 +688,13 @@ namespace ACBr.Net.NFSe.Providers
 		public override string GetXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
 		{
 			var xmlDoc = new XDocument(new XDeclaration("1.0", "UTF-8", null));
-			xmlDoc.AddChild(GenerateNFSe(nota));
+			var compNfse = new XElement("CompNfse");
+
+			compNfse.AddChild(GenerateNFSe(nota));
+			compNfse.AddChild(GenerateNFSeCancelamento(nota));
+			compNfse.AddChild(GenerateNFSeSubstituicao(nota));
+
+			xmlDoc.AddChild(compNfse);
 			return xmlDoc.AsString(identado, showDeclaration);
 		}
 
@@ -773,9 +787,7 @@ namespace ACBr.Net.NFSe.Providers
 				optanteSimplesNacional = "2";
 			}
 
-			var compNfse = new XElement("CompNfse");
 			var nfse = new XElement("Nfse");
-			compNfse.Add(nfse);
 
 			var infNfse = new XElement("InfNfse", new XAttribute("Id", nota.IdentificacaoNFSe.Numero));
 			nfse.Add(infNfse);
@@ -839,15 +851,57 @@ namespace ACBr.Net.NFSe.Providers
 				orgGerador.AddChild(AdicionarTag(TipoCampo.Str, "", "Uf", 2, 2, Ocorrencia.NaoObrigatoria, nota.OrgaoGerador.Uf));
 			}
 
-			if (nota.Situacao == SituacaoNFSeRps.Cancelado)
-			{
-				var cancelamento = GenerateCancelamento(nota);
-				compNfse.AddChild(cancelamento);
-			}
-
 			nfse.AddChild(WriteSignature(nota.Signature));
 
-			return compNfse;
+			return nfse;
+		}
+
+		protected virtual XElement GenerateNFSeCancelamento(NotaFiscal nota)
+		{
+			if (nota.Situacao != SituacaoNFSeRps.Cancelado) return null;
+
+			var nfSeCancelamento = new XElement("NfseCancelamento");
+
+			var confirmacao = new XElement("Confirmacao");
+			nfSeCancelamento.AddChild(confirmacao);
+
+			confirmacao.AddChild(WriteSignature(nota.Cancelamento.Signature));
+
+			var pedido = new XElement("Pedido", new XAttribute("Id", nota.Cancelamento.Id));
+			confirmacao.AddChild(pedido);
+
+			var infPedidoCancelamento = new XElement("InfPedidoCancelamento", new XAttribute("Id", nota.Cancelamento.Id));
+			pedido.AddChild(infPedidoCancelamento);
+
+			var identificacaoNfse = new XElement("IdentificacaoNfse");
+			infPedidoCancelamento.AddChild(identificacaoNfse);
+
+			identificacaoNfse.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "Numero", 1, 15, Ocorrencia.Obrigatoria, nota.Cancelamento.Pedido.IdentificacaoNFSe.Numero));
+			identificacaoNfse.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Prestador.CpfCnpj.ZeroFill(14)));
+			identificacaoNfse.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "InscricaoMunicipal", 1, 15, Ocorrencia.Obrigatoria, nota.Prestador.InscricaoMunicipal));
+			identificacaoNfse.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "CodigoMunicipio", 1, 7, Ocorrencia.Obrigatoria, nota.Prestador.Endereco.CodigoMunicipio));
+
+			infPedidoCancelamento.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "CodigoCancelamento", 1, 4, Ocorrencia.Obrigatoria, nota.Cancelamento.Pedido.CodigoCancelamento));
+
+			pedido.AddChild(WriteSignature(nota.Cancelamento.Pedido.Signature));
+
+			confirmacao.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataHoraCancelamento", 20, 20, Ocorrencia.Obrigatoria, nota.Cancelamento.DataHora));
+
+			return nfSeCancelamento;
+		}
+
+		protected virtual XElement GenerateNFSeSubstituicao(NotaFiscal nota)
+		{
+			if (nota.RpsSubstituido.NFSeSubstituidora.IsEmpty()) return null;
+
+			var substituidora = new XElement("NfseSubstituicao");
+			var substituicaoNfse = new XElement("SubstituicaoNfse", new XAttribute("Id", nota.RpsSubstituido.Id));
+			substituidora.AddChild(substituicaoNfse);
+
+			substituicaoNfse.AddChild(AdicionarTag(TipoCampo.Int, "", "NfseSubstituidora", 1, 15, Ocorrencia.Obrigatoria, nota.RpsSubstituido.NFSeSubstituidora));
+			substituicaoNfse.AddChild(WriteSignature(nota.RpsSubstituido.Signature));
+
+			return substituidora;
 		}
 
 		protected virtual XElement GenerateServicosValoresNFSe(NotaFiscal nota)
@@ -976,38 +1030,6 @@ namespace ACBr.Net.NFSe.Providers
 			construcao.AddChild(AdicionarTag(TipoCampo.Str, "", "Art", 1, 15, Ocorrencia.Obrigatoria, nota.ConstrucaoCivil.ArtObra));
 
 			return construcao;
-		}
-
-		protected virtual XElement GenerateCancelamento(NotaFiscal nota)
-		{
-			var cancelamento = new XElement("NfseCancelamento");
-
-			var cancConfirmacao = new XElement("Confirmacao");
-			cancelamento.AddChild(cancConfirmacao);
-
-			cancConfirmacao.AddChild(WriteSignature(nota.Cancelamento.Signature));
-
-			var cancPedido = new XElement("Pedido");
-			cancConfirmacao.AddChild(cancPedido);
-
-			cancPedido.AddChild(WriteSignature(nota.Cancelamento.Pedido.Signature));
-
-			var cancInfPedido = new XElement("InfPedidoCancelamento", new XAttribute("Id", ""));
-			cancPedido.AddChild(cancInfPedido);
-
-			var cancIdNfSe = new XElement("IdentificacaoNfse");
-			cancInfPedido.AddChild(cancIdNfSe);
-
-			cancIdNfSe.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "Numero", 1, 15, Ocorrencia.Obrigatoria, nota.Cancelamento.Pedido.IdentificacaoNFSe.Numero));
-			cancIdNfSe.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Prestador.CpfCnpj.ZeroFill(14)));
-			cancIdNfSe.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "InscricaoMunicipal", 1, 15, Ocorrencia.Obrigatoria, nota.Prestador.InscricaoMunicipal));
-			cancIdNfSe.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "CodigoMunicipio", 1, 7, Ocorrencia.Obrigatoria, nota.Prestador.Endereco.CodigoMunicipio));
-
-			cancInfPedido.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "CodigoCancelamento", 1, 4, Ocorrencia.Obrigatoria, nota.Cancelamento.Pedido.CodigoCancelamento));
-
-			cancConfirmacao.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataHoraCancelamento", 20, 20, Ocorrencia.Obrigatoria, nota.Cancelamento.DataHora));
-
-			return cancelamento;
 		}
 
 		#endregion NFSe

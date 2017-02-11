@@ -32,7 +32,6 @@
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core.Common;
 using ACBr.Net.NFSe.Providers;
-using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 
@@ -54,7 +53,6 @@ namespace ACBr.Net.NFSe.Configuracao
 		internal CfgGeral()
 		{
 			Salvar = false;
-			AtualizarXmlCancelado = false;
 
 			var path = Path.GetDirectoryName(Assembly.GetCallingAssembly().Location);
 			if (!path.IsEmpty())
@@ -72,10 +70,6 @@ namespace ACBr.Net.NFSe.Configuracao
 		#endregion Constructor
 
 		#region Properties
-
-		[Browsable(true)]
-		[DefaultValue(false)]
-		public bool AtualizarXmlCancelado { get; set; }
 
 		public string ArquivoMunicipios
 		{

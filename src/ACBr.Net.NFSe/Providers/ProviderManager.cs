@@ -187,6 +187,7 @@ namespace ACBr.Net.NFSe.Providers
 		private static bool CheckBaseType(Type providerType)
 		{
 			return typeof(ProviderBase).IsAssignableFrom(providerType) ||
+				   typeof(ProviderABRASF).IsAssignableFrom(providerType) ||
 				   typeof(ProviderABRASF2).IsAssignableFrom(providerType);
 		}
 

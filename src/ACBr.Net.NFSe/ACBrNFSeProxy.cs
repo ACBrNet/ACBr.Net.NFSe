@@ -35,7 +35,7 @@ namespace ACBr.Net.NFSe
 		/// <summary>
 		/// Retorna a versão da Lib ACBr.Net.NFSe
 		/// </summary>
-		/// <value>The versao.</value>
+		/// <value>Versão.</value>
 		public string Versao
 		{
 			get
@@ -49,7 +49,7 @@ namespace ACBr.Net.NFSe
 		/// <summary>
 		/// Retorna a versão da Lib ACBr.Net.DFe.Core
 		/// </summary>
-		/// <value>The versao d fe.</value>
+		/// <value>Versão.</value>
 		public string VersaoDFe
 		{
 			get
@@ -63,7 +63,7 @@ namespace ACBr.Net.NFSe
 		/// <summary>
 		/// Retorna a versão da Lib ACBr.Net.Core
 		/// </summary>
-		/// <value>The versao core.</value>
+		/// <value>Versão.</value>
 		public string VersaoCore
 		{
 			get
@@ -75,7 +75,7 @@ namespace ACBr.Net.NFSe
 		}
 
 		/// <summary>
-		/// Retrona a mesangem de retorno do servidor.
+		/// Retorna a mesangem de retorno do servidor.
 		/// </summary>
 		/// <value>The mensagem retorno.</value>
 		public RetornoWebservice MensagemRetorno { get; private set; }
@@ -170,6 +170,24 @@ namespace ACBr.Net.NFSe
 				oACBrNFSe.Configuracoes.Arquivos.PathLote = pathLote;
 				oACBrNFSe.Configuracoes.Arquivos.PathNFSe = pathNFSe;
 				oACBrNFSe.Configuracoes.Arquivos.PathRps = pathRps;
+			}
+			catch (Exception ex)
+			{
+				while (ex != null)
+				{
+					mensagemErro += ex.Message + Environment.NewLine;
+					ex = ex.InnerException;
+				}
+				return false;
+			}
+			return true;
+		}
+
+		public bool SetMunicipiosPath(string pathMunicipios, ref string mensagemErro)
+		{
+			try
+			{
+				oACBrNFSe.Configuracoes.Geral.ArquivoMunicipios = pathMunicipios;
 			}
 			catch (Exception ex)
 			{

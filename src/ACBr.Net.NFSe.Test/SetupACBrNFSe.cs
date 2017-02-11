@@ -16,7 +16,6 @@ namespace ACBr.Net.NFSe.Test
 
 			//Salvar os arquivos
 			acbrNFSe.Configuracoes.Geral.Salvar = true;
-			acbrNFSe.Configuracoes.Geral.AtualizarXmlCancelado = true;
 			acbrNFSe.Configuracoes.Arquivos.Salvar = true;
 
 			//webservices

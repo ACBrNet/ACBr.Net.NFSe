@@ -31,6 +31,8 @@
 
 using ACBr.Net.Core.Generics;
 using System;
+using System.Security.Cryptography.Xml;
+using ACBr.Net.DFe.Core.Document;
 using PropertyChanged;
 
 namespace ACBr.Net.NFSe.Nota
@@ -48,11 +50,17 @@ namespace ACBr.Net.NFSe.Nota
 			NumeroRps = string.Empty;
 			NumeroNfse = string.Empty;
 			Serie = string.Empty;
+			NFSeSubstituidora = string.Empty;
+			Tipo = TipoRps.RPS;
+			DataEmissaoNfseSubstituida = null;
+			Signature = new DFeSignature();
 		}
 
 		#endregion Constructor
 
 		#region Propriedades
+
+		public int Id { get; set; }
 
 		/// <summary>
 		/// Gets or sets the numero.
@@ -82,9 +90,19 @@ namespace ACBr.Net.NFSe.Nota
 		/// Gets or sets the data emissao nf se substituida.
 		/// </summary>
 		/// <value>The data emissao nf se substituida.</value>
-		public DateTime DataEmissaoNfseSubstituida { get; set; }
+		public DateTime? DataEmissaoNfseSubstituida { get; set; }
 
+		/// <summary>
+		/// Gets or sets the nf se substituidora.
+		/// </summary>
+		/// <value>The nf se substituidora.</value>
 		public string NFSeSubstituidora { get; set; }
+
+		/// <summary>
+		/// Gets the signature.
+		/// </summary>
+		/// <value>The signature.</value>
+		public DFeSignature Signature { get; internal set; }
 
 		#endregion Propriedades
 	}

@@ -287,18 +287,89 @@ namespace ACBr.Net.NFSe.Providers
 		public override string GetXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
 		{
 			var xmlDoc = new XDocument(new XDeclaration("1.0", "UTF-8", null));
-			xmlDoc.AddChild(GenerateNFSe(nota));
+			var compNfse = new XElement("CompNfse");
+
+			compNfse.AddChild(GenerateNFSe(nota));
+			compNfse.AddChild(GenerateNFSeCancelamento(nota));
+			compNfse.AddChild(GenerateNFSeSubstituicao(nota));
+
+			xmlDoc.AddChild(compNfse);
 			return xmlDoc.AsString(identado, showDeclaration);
 		}
 
 		protected virtual XElement GenerateNFSe(NotaFiscal nota)
 		{
-			var compNfse = new XElement("CompNfse");
 			var nfse = new XElement("Nfse", new XAttribute("versao", "2.00"));
-			compNfse.Add(nfse);
 
-			var infNfse = new XElement("InfNfse", new XAttribute("Id", $"{nota.IdentificacaoNFSe.Numero.OnlyNumbers()}"));
+			var infNfse = GetInfoNFSe(nota);
 			nfse.AddChild(infNfse);
+
+			var valores = GenerateValoresNFse(nota);
+			infNfse.AddChild(valores);
+
+			infNfse.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorCredito", 1, 15, Ocorrencia.MaiorQueZero, nota.ValorCredito));
+
+			var endereco = GetEnderecoPrestador(nota);
+			infNfse.AddChild(endereco);
+
+			var orgao = GetOrgaoGerador(nota);
+			infNfse.AddChild(orgao);
+
+			var declaracao = GenerateDeclaracaoServicoNFSe(nota);
+			infNfse.AddChild(declaracao);
+
+			return nfse;
+		}
+
+		protected virtual XElement GenerateNFSeCancelamento(NotaFiscal nota)
+		{
+			if (nota.Situacao != SituacaoNFSeRps.Cancelado) return null;
+
+			var cancelamento = new XElement("NfseCancelamento", new XAttribute("Versão", "2.00"));
+
+			var cancConfirmacao = new XElement("Confirmacao", new XAttribute("Id", nota.Cancelamento.Id));
+			cancelamento.AddChild(cancConfirmacao);
+
+			var cancPedido = new XElement("Pedido");
+			cancConfirmacao.AddChild(cancPedido);
+
+			var cancInfPedido = new XElement("InfPedidoCancelamento", new XAttribute("Id", nota.Cancelamento.Id));
+			cancPedido.AddChild(cancInfPedido);
+
+			var cancIdNfSe = new XElement("IdentificacaoNfse");
+			cancInfPedido.AddChild(cancIdNfSe);
+
+			cancIdNfSe.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "Numero", 1, 15, Ocorrencia.Obrigatoria, nota.Cancelamento.Pedido.IdentificacaoNFSe.Numero));
+			cancIdNfSe.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Prestador.CpfCnpj.ZeroFill(14)));
+			cancIdNfSe.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "InscricaoMunicipal", 1, 15, Ocorrencia.Obrigatoria, nota.Prestador.InscricaoMunicipal));
+			cancIdNfSe.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "CodigoMunicipio", 1, 7, Ocorrencia.Obrigatoria, nota.Prestador.Endereco.CodigoMunicipio));
+
+			cancInfPedido.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "CodigoCancelamento", 1, 4, Ocorrencia.Obrigatoria, nota.Cancelamento.Pedido.CodigoCancelamento));
+
+			cancPedido.AddChild(WriteSignature(nota.Cancelamento.Pedido.Signature));
+
+			cancConfirmacao.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataHora", 20, 20, Ocorrencia.Obrigatoria, nota.Cancelamento.DataHora));
+
+			return cancelamento;
+		}
+
+		protected virtual XElement GenerateNFSeSubstituicao(NotaFiscal nota)
+		{
+			if (nota.RpsSubstituido.NFSeSubstituidora.IsEmpty()) return null;
+
+			var substituidora = new XElement("NfseSubstituicao", new XAttribute("Versão", "2.00"));
+			var subNFSe = new XElement("SubstituicaoNfse", new XAttribute("Id", nota.RpsSubstituido.Id));
+			substituidora.AddChild(subNFSe);
+
+			subNFSe.AddChild(AdicionarTag(TipoCampo.Int, "", "NfseSubstituidora", 1, 15, Ocorrencia.Obrigatoria, nota.RpsSubstituido.NFSeSubstituidora));
+			subNFSe.AddChild(WriteSignature(nota.RpsSubstituido.Signature));
+
+			return substituidora;
+		}
+
+		protected virtual XElement GetInfoNFSe(NotaFiscal nota)
+		{
+			var infNfse = new XElement("InfNfse", new XAttribute("Id", $"{nota.IdentificacaoNFSe.Numero.OnlyNumbers()}"));
 
 			infNfse.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "Numero", 1, 15, Ocorrencia.Obrigatoria, nota.IdentificacaoNFSe.Numero));
 			infNfse.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoVerificacao", 1, 5, Ocorrencia.Obrigatoria, nota.IdentificacaoNFSe.Chave));
@@ -307,11 +378,11 @@ namespace ACBr.Net.NFSe.Providers
 			infNfse.AddChild(AdicionarTag(TipoCampo.Str, "", "NfseSubstituida", 1, 15, Ocorrencia.NaoObrigatoria, nota.RpsSubstituido.NumeroNfse));
 			infNfse.AddChild(AdicionarTag(TipoCampo.Str, "", "OutrasInformacoes", 1, 255, Ocorrencia.NaoObrigatoria, nota.OutrasInformacoes));
 
-			var valores = GenerateValoresNFse(nota);
-			infNfse.AddChild(valores);
+			return infNfse;
+		}
 
-			infNfse.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorCredito", 1, 15, Ocorrencia.MaiorQueZero, nota.ValorCredito));
-
+		protected virtual XElement GetEnderecoPrestador(NotaFiscal nota)
+		{
 			if (!nota.Prestador.Endereco.Logradouro.IsEmpty() ||
 				!nota.Prestador.Endereco.Numero.IsEmpty() ||
 				!nota.Prestador.Endereco.Complemento.IsEmpty() ||
@@ -322,35 +393,30 @@ namespace ACBr.Net.NFSe.Providers
 				!nota.Prestador.Endereco.Cep.IsEmpty())
 			{
 				var endereco = new XElement("EnderecoPrestadorServico");
-				infNfse.Add(endereco);
 
-				endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Endereco", 1, 125, Ocorrencia.NaoObrigatoria,
-					nota.Prestador.Endereco.Logradouro));
-				endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Numero", 1, 10, Ocorrencia.NaoObrigatoria,
-					nota.Prestador.Endereco.Numero));
-				endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Complemento", 1, 60, Ocorrencia.NaoObrigatoria,
-					nota.Prestador.Endereco.Complemento));
-				endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Bairro", 1, 60, Ocorrencia.NaoObrigatoria,
-					nota.Prestador.Endereco.Bairro));
-				endereco.AddChild(AdicionarTag(TipoCampo.Int, "", "CodigoMunicipio", 7, 7, Ocorrencia.MaiorQueZero,
-					nota.Prestador.Endereco.CodigoMunicipio));
+				endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Endereco", 1, 125, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Logradouro));
+				endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Numero", 1, 10, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Numero));
+				endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Complemento", 1, 60, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Complemento));
+				endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Bairro", 1, 60, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Bairro));
+				endereco.AddChild(AdicionarTag(TipoCampo.Int, "", "CodigoMunicipio", 7, 7, Ocorrencia.MaiorQueZero, nota.Prestador.Endereco.CodigoMunicipio));
 				endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Uf", 2, 2, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Uf));
-				endereco.AddChild(AdicionarTag(TipoCampo.Int, "", "CodigoPais", 4, 4, Ocorrencia.MaiorQueZero,
-					nota.Prestador.Endereco.CodigoPais));
-				endereco.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "Cep", 8, 8, Ocorrencia.NaoObrigatoria,
-					nota.Prestador.Endereco.Cep));
+				endereco.AddChild(AdicionarTag(TipoCampo.Int, "", "CodigoPais", 4, 4, Ocorrencia.MaiorQueZero, nota.Prestador.Endereco.CodigoPais));
+				endereco.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "Cep", 8, 8, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Cep));
+
+				return endereco;
 			}
 
+			return null;
+		}
+
+		protected virtual XElement GetOrgaoGerador(NotaFiscal nota)
+		{
 			var orgao = new XElement("OrgaoGerador");
-			infNfse.Add(orgao);
 
 			orgao.AddChild(AdicionarTag(TipoCampo.Int, "", "CodigoMunicipio", 1, 20, Ocorrencia.Obrigatoria, nota.OrgaoGerador.CodigoMunicipio));
 			orgao.AddChild(AdicionarTag(TipoCampo.Str, "", "Uf", 2, 2, Ocorrencia.Obrigatoria, nota.OrgaoGerador.Uf));
 
-			var declaracao = GenerateDeclaracaoServicoNFSe(nota);
-			infNfse.AddChild(declaracao);
-
-			return compNfse;
+			return orgao;
 		}
 
 		protected virtual XElement GenerateValoresNFse(NotaFiscal nota)

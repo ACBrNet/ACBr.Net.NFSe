@@ -31,7 +31,6 @@
 
 using System;
 using System.Security.Cryptography.X509Certificates;
-using System.Xml;
 using ACBr.Net.DFe.Core.Service;
 
 namespace ACBr.Net.NFSe.Providers.WebISS
