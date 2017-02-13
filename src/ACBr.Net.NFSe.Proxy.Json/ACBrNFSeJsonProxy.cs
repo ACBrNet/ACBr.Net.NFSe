@@ -198,6 +198,24 @@ namespace ACBr.Net.NFSe.Proxy.Json
 			return true;
 		}
 
+		public bool SetMunicipiosPath(string pathMunicipios, ref string mensagemErro)
+		{
+			try
+			{
+				oACBrNFSe.Configuracoes.Geral.ArquivoMunicipios = pathMunicipios;
+			}
+			catch (Exception ex)
+			{
+				while (ex != null)
+				{
+					mensagemErro += ex.Message + Environment.NewLine;
+					ex = ex.InnerException;
+				}
+				return false;
+			}
+			return true;
+		}
+
 		public bool Finalizar(ref string mensagemAlerta, ref string mensagemErro)
 		{
 			oACBrNFSe.Dispose();

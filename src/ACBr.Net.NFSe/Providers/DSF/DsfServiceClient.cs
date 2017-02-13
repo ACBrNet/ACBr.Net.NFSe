@@ -32,7 +32,6 @@
 using ACBr.Net.DFe.Core.Service;
 using System;
 using System.ComponentModel;
-using System.Security.Cryptography.X509Certificates;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
@@ -40,7 +39,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 	{
 		#region Constructor
 
-		public DSFServiceClient(string url, TimeSpan? timeOut = null, X509Certificate2 certificado = null) : base(url, timeOut, certificado)
+		public DSFServiceClient(string url, TimeSpan? timeOut = null) : base(url, timeOut)
 		{
 		}
 

@@ -65,7 +65,7 @@ namespace ACBr.Net.NFSe.Providers
 
 		#region Methods
 
-		#region Xml
+		#region LoadXml
 
 		public override NotaFiscal LoadXml(XDocument xml)
 		{
@@ -395,7 +395,7 @@ namespace ACBr.Net.NFSe.Providers
 			return ret;
 		}
 
-		#endregion Xml
+		#endregion LoadXml
 
 		#region RPS
 
@@ -1073,7 +1073,7 @@ namespace ACBr.Net.NFSe.Providers
 				xmlEnvio = xmlEnvio.RemoveAccent();
 			}
 
-			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXmlTodos(xmlEnvio, "InfRps", "Rps", Certificado);
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXmlTodos(xmlEnvio, "Rps", "InfRps", "Rps", Certificado);
 			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(retornoWebservice.XmlEnvio, "LoteRps", "EnviarLoteRpsEnvio", Certificado);
 
 			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-{lote}-env.xml");
@@ -1153,7 +1153,7 @@ namespace ACBr.Net.NFSe.Providers
 				xmlEnvio = xmlEnvio.RemoveAccent();
 			}
 
-			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXmlTodos(xmlEnvio, "InfRps", "Rps", Certificado);
+			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXmlTodos(xmlEnvio, "Rps", "InfRps", "Rps", Certificado);
 			retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(retornoWebservice.XmlEnvio, "LoteRps", "GerarNfseEnvio", Certificado);
 
 			GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-{lote}-env.xml");

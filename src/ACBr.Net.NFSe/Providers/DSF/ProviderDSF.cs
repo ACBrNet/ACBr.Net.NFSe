@@ -470,7 +470,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 				return retSchema;
 
 			var url = GetUrl(TipoUrl.Enviar);
-			var cliente = new DSFServiceClient(url, TimeOut, Certificado);
+			var cliente = new DSFServiceClient(url, TimeOut);
 
 			try
 			{
@@ -550,7 +550,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 				return retSchema;
 
 			var url = GetUrl(TipoUrl.Enviar);
-			var cliente = new DSFServiceClient(url, TimeOut, Certificado);
+			var cliente = new DSFServiceClient(url, TimeOut);
 
 			try
 			{
@@ -650,7 +650,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 				return retSchema;
 
 			var url = GetUrl(TipoUrl.CancelaNFSe);
-			var cliente = new DSFServiceClient(url, TimeOut, Certificado);
+			var cliente = new DSFServiceClient(url, TimeOut);
 
 			try
 			{
@@ -740,7 +740,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 				return retSchema;
 
 			var url = GetUrl(TipoUrl.CancelaNFSe);
-			var cliente = new DSFServiceClient(url, TimeOut, Certificado);
+			var cliente = new DSFServiceClient(url, TimeOut);
 
 			try
 			{
@@ -819,7 +819,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			try
 			{
 				var url = GetUrl(TipoUrl.ConsultarLoteRps);
-				var cliente = new DSFServiceClient(url, TimeOut, Certificado);
+				var cliente = new DSFServiceClient(url, TimeOut);
 
 				retornoWebservice.XmlRetorno = cliente.ConsultarLote(retornoWebservice.XmlEnvio);
 			}
@@ -896,7 +896,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			try
 			{
 				var url = GetUrl(TipoUrl.ConsultarLoteRps);
-				var cliente = new DSFServiceClient(url, TimeOut, Certificado);
+				var cliente = new DSFServiceClient(url, TimeOut);
 
 				retornoWebservice.XmlRetorno = cliente.ConsultarLote(retornoWebservice.XmlEnvio);
 			}
@@ -960,7 +960,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			try
 			{
 				var url = GetUrl(TipoUrl.ConsultaNFSe);
-				var cliente = new DSFServiceClient(url, TimeOut, Certificado);
+				var cliente = new DSFServiceClient(url, TimeOut);
 
 				retornoWebservice.XmlRetorno = cliente.ConsultarNFSe(retornoWebservice.XmlEnvio);
 			}
@@ -1053,7 +1053,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			try
 			{
 				var url = GetUrl(TipoUrl.ConsultaNFSeRps);
-				var cliente = new DSFServiceClient(url, TimeOut, Certificado);
+				var cliente = new DSFServiceClient(url, TimeOut);
 
 				retornoWebservice.XmlRetorno = cliente.ConsultarNFSeRps(retornoWebservice.XmlEnvio);
 			}
@@ -1147,7 +1147,8 @@ namespace ACBr.Net.NFSe.Providers.DSF
 			foreach (var evento in eventos.ElementsAnyNs(nome))
 			{
 				var item = new Evento();
-				if (tipo.IsIn(TipoEvento.Erros, TipoEvento.Alertas))
+
+				if (tipo != TipoEvento.ListNFSeRps)
 				{
 					item.Codigo = evento.ElementAnyNs("Codigo")?.GetValue<string>() ?? string.Empty;
 					item.Descricao = evento.ElementAnyNs("Descricao")?.GetValue<string>() ?? string.Empty;

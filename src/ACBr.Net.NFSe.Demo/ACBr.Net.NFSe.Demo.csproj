@@ -36,12 +36,12 @@
       <HintPath>..\packages\ACBr.Net.Core.1.0.1.5\lib\net40\ACBr.Net.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ACBr.Net.DFe.Core, Version=1.0.1.10, Culture=neutral, PublicKeyToken=d3bb9130f8b775a6, processorArchitecture=MSIL">
-      <HintPath>..\packages\ACBr.Net.DFe.Core.1.0.1.10\lib\net40\ACBr.Net.DFe.Core.dll</HintPath>
+    <Reference Include="ACBr.Net.DFe.Core, Version=1.0.2.1, Culture=neutral, PublicKeyToken=d3bb9130f8b775a6, processorArchitecture=MSIL">
+      <HintPath>..\packages\ACBr.Net.DFe.Core.1.0.2.1\lib\net40\ACBr.Net.DFe.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.4.1\lib\net40\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.4.2\lib\net40\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">

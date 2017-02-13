@@ -61,14 +61,14 @@ namespace ACBr.Net.NFSe.Providers
 
 		#region Methods
 
-		#region Load
+		#region LoadXml
 
 		public override NotaFiscal LoadXml(XDocument xml)
 		{
 			throw new NotImplementedException("LoadXml");
 		}
 
-		#endregion Load
+		#endregion LoadXml
 
 		#region RPS
 
