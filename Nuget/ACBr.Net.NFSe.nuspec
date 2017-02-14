@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
     <metadata>
         <id>ACBr.Net.NFSe</id>
         <version>1.0.0.0-beta2</version>
@@ -15,10 +15,45 @@
         <tags>ACBr ACBr.Net Automação Comercial</tags>
         <dependencies>
             <dependency id="ACBr.Net.Core" version="1.0.1.5" />
-            <dependency id="ACBr.Net.DFe.Core" version="1.0.2.0" />
+            <dependency id="ACBr.Net.DFe.Core" version="1.0.2.1" />
         </dependencies>
     </metadata>
     <files>
+        <file src="..\src\ACBr.Net.NFSe\Schemas\ABRASFv1\nfse.xsd" target="content\Schemas\ABRASFv1\nfse.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\ABRASFv1\xmldsig-core-schema_v01.xsd" target="content\Schemas\ABRASFv1\xmldsig-core-schema_v01.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\ABRASFv2\nfse.xsd" target="content\Schemas\ABRASFv2\nfse.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\ABRASFv2\xmldsig-core-schema20020212.xsd" target="content\Schemas\ABRASFv2\xmldsig-core-schema20020212.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\DSF\ConsultaSeqRps.xsd" target="content\Schemas\DSF\ConsultaSeqRps.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\DSF\ReqCancelamentoNFSe.xsd" target="content\Schemas\DSF\ReqCancelamentoNFSe.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\DSF\ReqConsultaLote.xsd" target="content\Schemas\DSF\ReqConsultaLote.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\DSF\ReqConsultaNFSeRPS.xsd" target="content\Schemas\DSF\ReqConsultaNFSeRPS.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\DSF\ReqConsultaNotas.xsd" target="content\Schemas\DSF\ReqConsultaNotas.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\DSF\ReqEnvioLoteRPS.xsd" target="content\Schemas\DSF\ReqEnvioLoteRPS.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\DSF\RetornoCancelamentoNFSe.xsd" target="content\Schemas\DSF\RetornoCancelamentoNFSe.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\DSF\RetornoConsultaLote.xsd" target="content\Schemas\DSF\RetornoConsultaLote.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\DSF\RetornoConsultaNFSeRPS.xsd" target="content\Schemas\DSF\RetornoConsultaNFSeRPS.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\DSF\RetornoConsultaNotas.xsd" target="content\Schemas\DSF\RetornoConsultaNotas.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\DSF\RetornoConsultaSeqRps.xsd" target="content\Schemas\DSF\RetornoConsultaSeqRps.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\DSF\RetornoEnvioLoteRPS.xsd" target="content\Schemas\DSF\RetornoEnvioLoteRPS.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\DSF\Tipos.xsd" target="content\Schemas\DSF\Tipos.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\DSF\xmldsig-core-schema_v1.01.xsd" target="content\Schemas\DSF\xmldsig-core-schema_v1.01.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\Ginfes\cabecalho_v03.xsd" target="content\Schemas\Ginfes\cabecalho_v03.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\Ginfes\servico_cancelar_nfse_envio_v03.xsd" target="content\Schemas\Ginfes\servico_cancelar_nfse_envio_v03.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\Ginfes\servico_cancelar_nfse_resposta_v03.xsd" target="content\Schemas\Ginfes\servico_cancelar_nfse_resposta_v03.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\Ginfes\servico_consultar_lote_rps_envio_v03.xsd" target="content\Schemas\Ginfes\servico_consultar_lote_rps_envio_v03.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\Ginfes\servico_consultar_lote_rps_resposta_v03.xsd" target="content\Schemas\Ginfes\servico_consultar_lote_rps_resposta_v03.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\Ginfes\servico_consultar_nfse_envio_v03.xsd" target="content\Schemas\Ginfes\servico_consultar_nfse_envio_v03.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\Ginfes\servico_consultar_nfse_resposta_v03.xsd" target="content\Schemas\Ginfes\servico_consultar_nfse_resposta_v03.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\Ginfes\servico_consultar_nfse_rps_envio_v03.xsd" target="content\Schemas\Ginfes\servico_consultar_nfse_rps_envio_v03.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\Ginfes\servico_consultar_nfse_rps_resposta_v03.xsd" target="content\Schemas\Ginfes\servico_consultar_nfse_rps_resposta_v03.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\Ginfes\servico_consultar_situacao_lote_rps_envio_v03.xsd" target="content\Schemas\Ginfes\servico_consultar_situacao_lote_rps_envio_v03.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\Ginfes\servico_consultar_situacao_lote_rps_resposta_v03.xsd" target="content\Schemas\Ginfes\servico_consultar_situacao_lote_rps_resposta_v03.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\Ginfes\servico_enviar_lote_rps_envio_v03.xsd" target="content\Schemas\Ginfes\servico_enviar_lote_rps_envio_v03.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\Ginfes\servico_enviar_lote_rps_resposta_v03.xsd" target="content\Schemas\Ginfes\servico_enviar_lote_rps_resposta_v03.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\Ginfes\tipos_v03.xsd" target="content\Schemas\Ginfes\tipos_v03.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\Ginfes\xmldsig-core-schema20020212_v03.xsd" target="content\Schemas\Ginfes\xmldsig-core-schema20020212_v03.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\Porto Alegre\nfse_v20_08_2015.xsd" target="content\Schemas\Porto Alegre\nfse_v20_08_2015.xsd" />
+        <file src="..\src\ACBr.Net.NFSe\Schemas\Porto Alegre\xmldsig-core-schema20020212.xsd" target="content\Schemas\Porto Alegre\xmldsig-core-schema20020212.xsd" />
         <file src="..\bin\Release\ACBr.Net.NFSe.dll" target="lib\net40\ACBr.Net.NFSe.dll" />
         <file src="..\bin\Release\ACBr.Net.NFSe.XML" target="lib\net40\ACBr.Net.NFSe.XML" />
     </files>
