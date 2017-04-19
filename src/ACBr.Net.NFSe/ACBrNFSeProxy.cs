@@ -6,6 +6,7 @@ using ACBr.Net.NFSe.Providers;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace ACBr.Net.NFSe
 {
@@ -28,29 +29,41 @@ namespace ACBr.Net.NFSe
 			oACBrNFSe = new ACBrNFSe();
 		}
 
-		#endregion Constructors
+        #endregion Constructors
 
-		#region Propriedades
+        #region Propriedades
 
-		/// <summary>
-		/// Retorna a versão da Lib ACBr.Net.NFSe
-		/// </summary>
-		/// <value>Versão.</value>
-		public string Versao
-		{
-			get
-			{
-				var asm = typeof(ACBrNFSe).Assembly;
-				var versionInfo = FileVersionInfo.GetVersionInfo(asm.Location);
-				return versionInfo.FileVersion;
-			}
-		}
+        /// <summary>
+        /// Retorna a versão da Lib ACBr.Net.NFSe
+        /// </summary>
+        /// <value>Versão.</value>
+        public string VersaoProxy
+        {
+            get
+            {
+                return "1.170322.1325"; // 1.AAMMDD.HHMM
+            }
+        }
 
-		/// <summary>
-		/// Retorna a versão da Lib ACBr.Net.DFe.Core
-		/// </summary>
-		/// <value>Versão.</value>
-		public string VersaoDFe
+        /// <summary>
+        /// Retorna a versão da Lib ACBr.Net.NFSe
+        /// </summary>
+        /// <value>Versão.</value>
+        public string VersaoNFSe
+        {
+            get
+            {
+                var asm = typeof(ACBrNFSe).Assembly;
+                var versionInfo = FileVersionInfo.GetVersionInfo(asm.Location);
+                return versionInfo.FileVersion;
+            }
+        }
+
+        /// <summary>
+        /// Retorna a versão da Lib ACBr.Net.DFe.Core
+        /// </summary>
+        /// <value>Versão.</value>
+        public string VersaoDFe
 		{
 			get
 			{
@@ -449,6 +462,15 @@ namespace ACBr.Net.NFSe
 			return true;
 		}
 
+        public string RPSGetXML()
+        {
+            var xml = new StringBuilder();
+            foreach (var nota in oACBrNFSe.NotasFiscais)
+            {
+                xml.Append(oACBrNFSe.NotasFiscais.GetXml(nota));
+            }
+            return xml.ToString();
+        }
 		#endregion Métodos para montar o RPS
 
 		#region Webservices
