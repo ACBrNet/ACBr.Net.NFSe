@@ -54,7 +54,7 @@ namespace ACBr.Net.NFSe.Configuracao
 		{
 			Salvar = false;
 
-			var path = Path.GetDirectoryName(Assembly.GetCallingAssembly().Location);
+			var path = Assembly.GetExecutingAssembly().GetPath();
 			if (!path.IsEmpty())
 			{
 				PathSchemas = Path.Combine(path, "Schemas");

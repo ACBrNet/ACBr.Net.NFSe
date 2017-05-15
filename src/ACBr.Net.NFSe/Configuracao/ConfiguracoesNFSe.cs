@@ -29,10 +29,13 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System.ComponentModel;
+using ACBr.Net.Core;
 using ACBr.Net.NFSe.Nota;
 
 namespace ACBr.Net.NFSe.Configuracao
 {
+	[TypeConverter(typeof(ACBrExpandableObjectConverter))]
 	public sealed class ConfiguracoesNFSe
 	{
 		#region Constructor
@@ -53,18 +56,23 @@ namespace ACBr.Net.NFSe.Configuracao
 
 		#region Properties
 
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public CfgGeral Geral { get; }
 
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public CfgArquivos Arquivos { get; }
 
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public CfgCertificados Certificados { get; }
 
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public CfgWebServices WebServices { get; }
 
 		/// <summary>
 		/// Gets the prestado padrão.
 		/// </summary>
 		/// <value>The prestado padrão.</value>
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public DadosPrestador PrestadorPadrao { get; set; }
 
 		#endregion Properties

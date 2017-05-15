@@ -33,9 +33,13 @@ using ACBr.Net.DFe.Core.Common;
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Reflection;
+using ACBr.Net.Core;
+using ACBr.Net.Core.Extensions;
 
 namespace ACBr.Net.NFSe.Configuracao
 {
+	[TypeConverter(typeof(ACBrExpandableObjectConverter))]
 	public sealed class CfgArquivos : DFeArquivosConfigBase
 	{
 		#region Constructor
@@ -50,9 +54,20 @@ namespace ACBr.Net.NFSe.Configuracao
 			AdicionarLiteral = false;
 			EmissaoPathNFSe = false;
 			PastaMensal = false;
-			PathNFSe = string.Empty;
-			PathLote = string.Empty;
-			PathRps = string.Empty;
+
+			var path = Assembly.GetExecutingAssembly().GetPath();
+			if (!path.IsEmpty())
+			{
+				PathNFSe = Path.Combine(path, "NFSe");
+				PathLote = Path.Combine(path, "Lote");
+				PathRps = Path.Combine(path, "RPS");
+			}
+			else
+			{
+				PathNFSe = string.Empty;
+				PathLote = string.Empty;
+				PathRps = string.Empty;
+			}
 		}
 
 		#endregion Constructor

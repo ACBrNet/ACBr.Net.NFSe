@@ -36,10 +36,10 @@ namespace ACBr.Net.NFSe.Providers.PortoAlegre
 	[MessageContract(WrapperName = "ConsultarLoteRpsRequest", WrapperNamespace = "http://ws.bhiss.pbh.gov.br", IsWrapped = true)]
 	internal sealed class ConsultarLoteRpsRequest
 	{
-		[MessageBodyMemberAttribute(Namespace = "", Order = 0)]
+		[MessageBodyMember(Namespace = "", Order = 0)]
 		public string nfseCabecMsg;
 
-		[MessageBodyMemberAttribute(Namespace = "", Order = 1)]
+		[MessageBodyMember(Namespace = "", Order = 1)]
 		public string nfseDadosMsg;
 
 		public ConsultarLoteRpsRequest()

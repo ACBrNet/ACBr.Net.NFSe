@@ -36,7 +36,7 @@ namespace ACBr.Net.NFSe.Providers.PortoAlegre
 	[MessageContract(WrapperName = "ConsultarNfsePorFaixaResponse", WrapperNamespace = "http://ws.bhiss.pbh.gov.br", IsWrapped = true)]
 	internal sealed class ConsultarNfsePorFaixaResponse
 	{
-		[MessageBodyMemberAttribute(Namespace = "", Order = 0)]
+		[MessageBodyMember(Namespace = "", Order = 0)]
 		public string outputXML;
 
 		public ConsultarNfsePorFaixaResponse()

@@ -35,9 +35,11 @@ using ACBr.Net.NFSe.Providers;
 using System;
 using System.ComponentModel;
 using System.Linq;
+using ACBr.Net.Core;
 
 namespace ACBr.Net.NFSe.Configuracao
 {
+	[TypeConverter(typeof(ACBrExpandableObjectConverter))]
 	public sealed class CfgWebServices : DFeWebserviceConfigBase
 	{
 		#region Fields

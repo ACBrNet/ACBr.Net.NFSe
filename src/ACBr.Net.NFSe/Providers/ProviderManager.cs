@@ -4,7 +4,7 @@
 // Created          : 01-31-2016
 //
 // Last Modified By : RFTD
-// Last Modified On : 06-07-2016
+// Last Modified On : 05-15-2017
 // ***********************************************************************
 // <copyright file="ProviderManager.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -47,6 +47,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ACBr.Net.NFSe.Providers
 {
+	/// <summary>
+	/// Classe responsável por criar uma nova instancia do provedor
+	/// </summary>
 	public static class ProviderManager
 	{
 		#region Constructors
@@ -59,10 +62,10 @@ namespace ACBr.Net.NFSe.Providers
 				{"DSF", typeof(ProviderDSF)},
 				{"ISSDSF", typeof(ProviderDSF)},
 				{"GINFES", typeof(ProviderGinfes)},
-                {"PORTO ALEGRE", typeof(ProviderPortoAlegre)},
-                {"SÃO PAULO", typeof(ProviderSaoPaulo)},
-                {"WEBISS", typeof(ProviderWebISS)}
-            };
+				{"PORTO ALEGRE", typeof(ProviderPortoAlegre)},
+				{"SÃO PAULO", typeof(ProviderSaoPaulo)},
+				{"WEBISS", typeof(ProviderWebISS)}
+			};
 
 			Load();
 		}

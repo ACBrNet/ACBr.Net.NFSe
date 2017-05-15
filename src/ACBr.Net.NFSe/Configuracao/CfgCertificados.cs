@@ -29,10 +29,13 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System.ComponentModel;
+using ACBr.Net.Core;
 using ACBr.Net.DFe.Core.Common;
 
 namespace ACBr.Net.NFSe.Configuracao
 {
+	[TypeConverter(typeof(ACBrExpandableObjectConverter))]
 	public sealed class CfgCertificados : DFeCertificadosConfigBase
 	{
 		#region Constructor

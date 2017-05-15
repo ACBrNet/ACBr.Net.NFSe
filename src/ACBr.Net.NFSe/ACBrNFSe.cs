@@ -44,7 +44,7 @@ namespace ACBr.Net.NFSe
 {
 	// ReSharper disable once InconsistentNaming
 	[TypeConverter(typeof(ACBrExpandableObjectConverter))]
-	[ToolboxBitmap(typeof(ACBrNFSe), @"ACBr.Net.NFSe.ico.bmp")]
+	[ToolboxBitmap(typeof(ACBrNFSe), @"ACBr.Net.NFSe.ACBrNFSe.bmp")]
 	public sealed class ACBrNFSe : ACBrComponent
 	{
 		#region Propriedades
@@ -58,7 +58,7 @@ namespace ACBr.Net.NFSe
 		/// <summary>
 		/// Componente de impressão
 		/// </summary>
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+		[Browsable(false)]
 		public IDANFSe DaNfSe { get; set; }
 
 		/// <summary>

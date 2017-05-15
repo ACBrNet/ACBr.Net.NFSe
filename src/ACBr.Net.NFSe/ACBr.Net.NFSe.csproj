@@ -95,6 +95,7 @@
     <Compile Include="Configuracao\CfgGeral.cs" />
     <Compile Include="Configuracao\CfgWebServices.cs" />
     <Compile Include="Configuracao\ConfiguracoesNFSe.cs" />
+    <Compile Include="Nota\DadosMateriais.cs" />
     <Compile Include="Providers\Betha\BethaConsultarSituacaoLoteRpsServiceClient.cs" />
     <Compile Include="Providers\Betha\BethaCancelarNev01ServiceClient.cs" />
     <Compile Include="Providers\Betha\BethaConsultarLoteRpsServiceClient.cs" />
@@ -154,6 +155,29 @@
     <Compile Include="Providers\MunicipioNFSe.cs" />
     <Compile Include="Providers\Evento.cs" />
     <Compile Include="Providers\RetornoWebService.cs" />
+    <Compile Include="Providers\SaoPaulo\CancelamentoNFeRequest.cs" />
+    <Compile Include="Providers\SaoPaulo\CancelamentoNFeResponse.cs" />
+    <Compile Include="Providers\SaoPaulo\ConsultaCNPJRequest.cs" />
+    <Compile Include="Providers\SaoPaulo\ConsultaCNPJResponse.cs" />
+    <Compile Include="Providers\SaoPaulo\ConsultaInformacoesLoteRequest.cs" />
+    <Compile Include="Providers\SaoPaulo\ConsultaInformacoesLoteResponse.cs" />
+    <Compile Include="Providers\SaoPaulo\ConsultaLoteRequest.cs" />
+    <Compile Include="Providers\SaoPaulo\ConsultaLoteResponse.cs" />
+    <Compile Include="Providers\SaoPaulo\ConsultaNFeEmitidasRequest.cs" />
+    <Compile Include="Providers\SaoPaulo\ConsultaNFeEmitidasResponse.cs" />
+    <Compile Include="Providers\SaoPaulo\ConsultaNFeRecebidasRequest.cs" />
+    <Compile Include="Providers\SaoPaulo\ConsultaNFeRecebidasResponse.cs" />
+    <Compile Include="Providers\SaoPaulo\ConsultaNFeRequest.cs" />
+    <Compile Include="Providers\SaoPaulo\ConsultaNFeResponse.cs" />
+    <Compile Include="Providers\SaoPaulo\EnvioLoteRPSRequest.cs" />
+    <Compile Include="Providers\SaoPaulo\EnvioLoteRPSResponse.cs" />
+    <Compile Include="Providers\SaoPaulo\EnvioRPSRequest.cs" />
+    <Compile Include="Providers\SaoPaulo\EnvioRPSResponse.cs" />
+    <Compile Include="Providers\SaoPaulo\ISaoPauloServiceClient.cs" />
+    <Compile Include="Providers\SaoPaulo\ProviderSaoPaulo.cs" />
+    <Compile Include="Providers\SaoPaulo\SaoPauloServiceClient.cs" />
+    <Compile Include="Providers\SaoPaulo\TesteEnvioLoteRPSRequest.cs" />
+    <Compile Include="Providers\SaoPaulo\TesteEnvioLoteRPSResponse.cs" />
     <Compile Include="Providers\TipoUrl.cs" />
     <Compile Include="Eventos\OnErrorEventArgs.cs" />
     <Compile Include="Nota\IdeRpsSubtituida.cs" />
@@ -1004,75 +1028,79 @@
     <None Include="Schemas\SpeedGov\xmldsig-core-schema20020212_v1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Schemas\SP\PedidoCancelamentoNFe_v01.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Schemas\SP\PedidoConsultaCNPJ_v01.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Schemas\SP\PedidoConsultaLote_v01.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Schemas\SP\PedidoConsultaNFePeriodo_v01.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Schemas\SP\PedidoConsultaNFe_v01.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Schemas\SP\PedidoEnvioLoteRPS_v01.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Schemas\SP\PedidoEnvioRPS_v01.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Schemas\SP\PedidoInformacoesLote_v01.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Schemas\SP\RetornoCancelamentoNFe_v01.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Schemas\SP\RetornoConsultaCNPJ_v01.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Schemas\SP\RetornoConsulta_v01.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Schemas\SP\RetornoEnvioLoteRPS_v01.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Schemas\SP\RetornoEnvioRPS_v01.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Schemas\SP\RetornoInformacoesLote_v01.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Schemas\SP\TiposNFe_v01.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Schemas\SP\xmldsig-core-schema_v01.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Schemas\SystemPro\nfse.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Schemas\SystemPro\xmldsig-core-schema20020212.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\São Paulo\PedidoCancelamentoLote_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\São Paulo\PedidoCancelamentoNFe_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\São Paulo\PedidoConsultaCNPJ_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\São Paulo\PedidoConsultaLote_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\São Paulo\PedidoConsultaNFePeriodo_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\São Paulo\PedidoConsultaNFe_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\São Paulo\PedidoEnvioLoteRPS_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\São Paulo\PedidoEnvioRPS_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\São Paulo\PedidoInformacoesLote_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\São Paulo\RetornoCancelamentoNFe_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\São Paulo\RetornoConsultaCNPJ_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\São Paulo\RetornoConsulta_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\São Paulo\RetornoEnvioLoteRPS_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\São Paulo\RetornoEnvioRPS_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\São Paulo\RetornoInformacoesLote_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\São Paulo\TiposNFe_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\São Paulo\xmldsig-core-schema_v01.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Schemas\Tecnos\CancelarNfseEnvio.xsd">
       <SubType>Designer</SubType>
@@ -1223,8 +1251,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
-    <EmbeddedResource Include="ico.bmp" />
     <Content Include="Schemas\Actcon\Atencao.txt" />
+    <Content Include="ACBrNFSe.bmp" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
