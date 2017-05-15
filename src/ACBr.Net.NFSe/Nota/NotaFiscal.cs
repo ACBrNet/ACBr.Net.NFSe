@@ -52,6 +52,7 @@ namespace ACBr.Net.NFSe.Nota
 			Tomador = new DadosTomador();
 			Intermediario = new DadosIntermediario();
 			ConstrucaoCivil = new DadosConstrucaoCivil();
+            Material = new DadosMateriais();
 			Pagamento = new DadosPagamento();
 			OrgaoGerador = new IdeOrgaoGerador();
 			Signature = new DFeSignature();
@@ -94,7 +95,9 @@ namespace ACBr.Net.NFSe.Nota
 
 		public DadosConstrucaoCivil ConstrucaoCivil { get; }
 
-		public DadosTransportadora Transportadora { get; }
+        public DadosMateriais Material { get; set; }
+
+        public DadosTransportadora Transportadora { get; }
 
 		public DadosPagamento Pagamento { get; }
 
@@ -112,7 +115,6 @@ namespace ACBr.Net.NFSe.Nota
 
 		public SituacaoNFSeRps Situacao { get; set; }
 
-		public NFSeSimNao DeducaoMateriais { get; set; }
 
 		public TipoLocalServico LocalServico { get; set; }
 
