@@ -69,11 +69,11 @@ namespace ACBr.Net.NFSe.Nota
 
 		public string XPaisObra { get; set; }
 
-		public string NCei { get; set; }
+		public string CodigoCEI { get; set; }
 
-		public string NProj { get; set; }
+		public string Projeto { get; set; }
 
-		public string NMatri { get; set; }
+		public string Matricula { get; set; }
 
 		#endregion Propriedades
 	}

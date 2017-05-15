@@ -36,13 +36,14 @@ using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Providers.DSF;
 using ACBr.Net.NFSe.Providers.Ginfes;
 using ACBr.Net.NFSe.Providers.WebISS;
+using ACBr.Net.NFSe.Providers.PortoAlegre;
+using ACBr.Net.NFSe.Providers.SaoPaulo;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using ACBr.Net.NFSe.Providers.PortoAlegre;
 
 namespace ACBr.Net.NFSe.Providers
 {
@@ -58,9 +59,10 @@ namespace ACBr.Net.NFSe.Providers
 				{"DSF", typeof(ProviderDSF)},
 				{"ISSDSF", typeof(ProviderDSF)},
 				{"GINFES", typeof(ProviderGinfes)},
-				{"WEBISS", typeof(ProviderWebISS)},
-				{"PORTO ALEGRE", typeof(ProviderPortoAlegre)}
-			};
+                {"PORTO ALEGRE", typeof(ProviderPortoAlegre)},
+                {"SÃO PAULO", typeof(ProviderSaoPaulo)},
+                {"WEBISS", typeof(ProviderWebISS)}
+            };
 
 			Load();
 		}

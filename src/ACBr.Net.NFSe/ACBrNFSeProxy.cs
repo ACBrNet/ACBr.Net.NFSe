@@ -6,6 +6,7 @@ using ACBr.Net.NFSe.Providers;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace ACBr.Net.NFSe
 {
@@ -28,29 +29,41 @@ namespace ACBr.Net.NFSe
 			oACBrNFSe = new ACBrNFSe();
 		}
 
-		#endregion Constructors
+        #endregion Constructors
 
-		#region Propriedades
+        #region Propriedades
 
-		/// <summary>
-		/// Retorna a versão da Lib ACBr.Net.NFSe
-		/// </summary>
-		/// <value>Versão.</value>
-		public string Versao
-		{
-			get
-			{
-				var asm = typeof(ACBrNFSe).Assembly;
-				var versionInfo = FileVersionInfo.GetVersionInfo(asm.Location);
-				return versionInfo.FileVersion;
-			}
-		}
+        /// <summary>
+        /// Retorna a versão da Lib ACBr.Net.NFSe
+        /// </summary>
+        /// <value>Versão.</value>
+        public string VersaoProxy
+        {
+            get
+            {
+                return "1.170515.1303"; // 1.AAMMDD.HHMM
+            }
+        }
 
-		/// <summary>
-		/// Retorna a versão da Lib ACBr.Net.DFe.Core
-		/// </summary>
-		/// <value>Versão.</value>
-		public string VersaoDFe
+        /// <summary>
+        /// Retorna a versão da Lib ACBr.Net.NFSe
+        /// </summary>
+        /// <value>Versão.</value>
+        public string VersaoNFSe
+        {
+            get
+            {
+                var asm = typeof(ACBrNFSe).Assembly;
+                var versionInfo = FileVersionInfo.GetVersionInfo(asm.Location);
+                return versionInfo.FileVersion;
+            }
+        }
+
+        /// <summary>
+        /// Retorna a versão da Lib ACBr.Net.DFe.Core
+        /// </summary>
+        /// <value>Versão.</value>
+        public string VersaoDFe
 		{
 			get
 			{
@@ -213,7 +226,7 @@ namespace ACBr.Net.NFSe
 
 		public bool RPS(string numeroRPS, string serieRPS, int tipoRPS, DateTime dataEmissaoRPS, int situacaoRPS,
 						string numeroRPSSubstituido, string serieRPSSubstituido, int tipoRPSSubstituido,
-						int naturezaOperacao, int regimeEspecialTributacao, int incentivadorCultural, ref string mensagemAlerta, ref string mensagemErro)
+						int naturezaOperacao, int tipoTributacao, int regimeEspecialTributacao, int incentivadorCultural, ref string mensagemAlerta, ref string mensagemErro)
 		{
 			try
 			{
@@ -230,7 +243,8 @@ namespace ACBr.Net.NFSe
 					NFSe.RpsSubstituido.Tipo = (TipoRps)tipoRPSSubstituido;
 				}
 				NFSe.NaturezaOperacao = (NaturezaOperacao)naturezaOperacao;
-				NFSe.RegimeEspecialTributacao = (RegimeEspecialTributacao)regimeEspecialTributacao;
+                NFSe.TipoTributacao = (TipoTributacao)tipoTributacao;
+                NFSe.RegimeEspecialTributacao = (RegimeEspecialTributacao)regimeEspecialTributacao;
 				NFSe.IncentivadorCultural = (NFSeSimNao)incentivadorCultural;
 			}
 			catch (Exception ex)
@@ -274,7 +288,9 @@ namespace ACBr.Net.NFSe
 							   int issRetido, [MarshalAs(UnmanagedType.Currency)]decimal valorIss, [MarshalAs(UnmanagedType.Currency)]decimal valorOutrasRetencoes,
 							   [MarshalAs(UnmanagedType.Currency)]decimal valorBaseCalculo, [MarshalAs(UnmanagedType.Currency)]decimal aliquota, [MarshalAs(UnmanagedType.Currency)]decimal valorLiquidoNFSe,
 							   [MarshalAs(UnmanagedType.Currency)]decimal valorIssRetido, [MarshalAs(UnmanagedType.Currency)]decimal valorDescontoCondicionado, [MarshalAs(UnmanagedType.Currency)]decimal valorDescontoIncondicionado,
-							   [MarshalAs(UnmanagedType.Currency)]decimal valorCredito, ref string mensagemAlerta, ref string mensagemErro)
+							   [MarshalAs(UnmanagedType.Currency)]decimal valorCredito,
+                               [MarshalAs(UnmanagedType.Currency)]decimal aliquotaCargaTributaria, [MarshalAs(UnmanagedType.Currency)]decimal valorCargaTributaria, string fonteCargaTributaria,
+                               ref string mensagemAlerta, ref string mensagemErro)
 		{
 			try
 			{
@@ -295,8 +311,11 @@ namespace ACBr.Net.NFSe
 				NFSe.Servico.Valores.DescontoCondicionado = valorDescontoCondicionado;
 				NFSe.Servico.Valores.DescontoIncondicionado = valorDescontoIncondicionado;
 				NFSe.ValorCredito = valorCredito;
-			}
-			catch (Exception ex)
+                NFSe.Servico.Valores.AliquotaCargaTributaria = aliquotaCargaTributaria;
+                NFSe.Servico.Valores.ValorCargaTributaria = valorCargaTributaria;
+                NFSe.Servico.Valores.FonteCargaTributaria = fonteCargaTributaria;
+            }
+            catch (Exception ex)
 			{
 				while (ex != null)
 				{
@@ -449,6 +468,29 @@ namespace ACBr.Net.NFSe
 			return true;
 		}
 
+        public string RPSGetXML(ref string mensagemAlerta, ref string mensagemErro)
+        {
+            mensagemAlerta = "";
+            mensagemErro = "";
+            try
+            {
+                var xml = new StringBuilder();
+                foreach (var nota in oACBrNFSe.NotasFiscais)
+                {
+                    xml.Append(oACBrNFSe.NotasFiscais.GetXml(nota));
+                }
+                return xml.ToString();
+            }
+            catch (Exception ex)
+            {
+                while (ex != null)
+                {
+                    mensagemErro += ex.Message + Environment.NewLine;
+                    ex = ex.InnerException;
+                }
+            }
+            return mensagemErro;
+        }
 		#endregion Métodos para montar o RPS
 
 		#region Webservices
@@ -611,7 +653,11 @@ namespace ACBr.Net.NFSe
 				var builderAlertas = new System.Text.StringBuilder();
 				foreach (var alerta in MensagemRetorno.Alertas)
 				{
-					builderAlertas.Append("[" + alerta.Codigo.ToString() + "] " + alerta.Descricao + " / " + alerta.Correcao);
+                    if (!String.IsNullOrWhiteSpace(alerta.IdentificacaoRps.Numero))
+                        builderAlertas.Append("RPS: " + alerta.IdentificacaoRps.Numero);
+                    if (!String.IsNullOrWhiteSpace(alerta.IdentificacaoNfse.Numero))
+                        builderAlertas.Append("NFSe: " + alerta.IdentificacaoNfse.Numero);
+                    builderAlertas.Append("[" + alerta.Codigo.ToString() + "] " + alerta.Descricao + " / " + alerta.Correcao);
 				}
 				if (builderAlertas.Length > 0)
 				{
@@ -623,7 +669,11 @@ namespace ACBr.Net.NFSe
 				var builderErros = new System.Text.StringBuilder();
 				foreach (var erro in MensagemRetorno.Erros)
 				{
-					builderErros.Append("[" + erro.Codigo.ToString() + "] " + erro.Descricao + " / " + erro.Correcao);
+                    if (!String.IsNullOrWhiteSpace(erro.IdentificacaoRps.Numero))
+                        builderErros.Append("RPS: " + erro.IdentificacaoRps.Numero);
+                    if (!String.IsNullOrWhiteSpace(erro.IdentificacaoNfse.Numero))
+                        builderErros.Append("NFSe: " + erro.IdentificacaoNfse.Numero);
+                    builderErros.Append("[" + erro.Codigo.ToString() + "] " + erro.Descricao + " / " + erro.Correcao);
 				}
 				if (builderErros.Length == 0 & MensagemRetorno.Sucesso == false)
 				{

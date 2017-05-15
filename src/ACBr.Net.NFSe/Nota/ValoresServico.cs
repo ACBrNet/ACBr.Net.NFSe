@@ -96,6 +96,10 @@ namespace ACBr.Net.NFSe.Nota
 
         public string DescricaoOutrasRetencoes { get; set; }
 
-		#endregion Propriedades
-	}
+        public decimal ValorCargaTributaria { get; set; }
+        public decimal AliquotaCargaTributaria { get; set; }
+        public string FonteCargaTributaria { get; set; }
+
+        #endregion Propriedades
+    }
 }
