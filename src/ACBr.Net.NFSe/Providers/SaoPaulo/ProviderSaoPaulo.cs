@@ -436,10 +436,19 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
 
 			// Hash Cancelamento
 			var hash = Config.PrestadorPadrao.InscricaoMunicipal.ZeroFill(8) + numeroNFSe.ZeroFill(12);
-			var rsa = (RSACryptoServiceProvider)Certificado.PrivateKey;
-			var hashBytes = Encoding.ASCII.GetBytes(hash);
-			byte[] signData = rsa.SignData(hashBytes, new SHA1CryptoServiceProvider());
-			var hashAssinado = Convert.ToBase64String(signData);
+
+            var hashAssinado = "";
+            var rsa = (RSACryptoServiceProvider)Certificado.PrivateKey;
+            try
+            {
+                var hashBytes = Encoding.ASCII.GetBytes(hash);
+                byte[] signData = rsa.SignData(hashBytes, new SHA1CryptoServiceProvider());
+                hashAssinado = Convert.ToBase64String(signData);
+            }
+            finally
+            {
+                rsa.Dispose();
+            }
 
 			var loteBuilder = new StringBuilder();
 			loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -868,7 +877,6 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
 			}
 
 			var rsa = (RSACryptoServiceProvider)Certificado.PrivateKey;
-
 			try
 			{
 				var hashBytes = Encoding.ASCII.GetBytes(hash);
