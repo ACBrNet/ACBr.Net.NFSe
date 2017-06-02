@@ -237,8 +237,8 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
 			loteBuilder.Append($"<dtInicio>{notas.Min(x => x.IdentificacaoRps.DataEmissao):yyyy-MM-dd}</dtInicio>");
 			loteBuilder.Append($"<dtFim>{notas.Max(x => x.IdentificacaoRps.DataEmissao):yyyy-MM-dd}</dtFim>");
 			loteBuilder.Append($"<QtdRPS>{notas.Count}</QtdRPS>");
-			loteBuilder.Append($"<ValorTotalServicos>{notas.Sum(x => x.Servico.Valores.ValorServicos)}</ValorTotalServicos>");
-			loteBuilder.Append($"<ValorTotalDeducoes>{notas.Sum(x => x.Servico.Valores.ValorDeducoes)}</ValorTotalDeducoes>");
+			loteBuilder.Append($"<ValorTotalServicos>{notas.Sum(x => x.Servico.Valores.ValorServicos):0.00}</ValorTotalServicos>".Replace(",","."));
+			loteBuilder.Append($"<ValorTotalDeducoes>{notas.Sum(x => x.Servico.Valores.ValorDeducoes):0.00}</ValorTotalDeducoes>".Replace(",", "."));
 			loteBuilder.Append("</Cabecalho>");
 			loteBuilder.Append(xmlRPS);
 			loteBuilder.Append("</PedidoEnvioLoteRPS>");
@@ -642,8 +642,8 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
 			rps.Add(tomadorCpfCnpj);
 			tomadorCpfCnpj.AddChild(AdicionarTagCNPJCPF("", "CPF", "CNPJ", nota.Tomador.CpfCnpj));
 
-			rps.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "InscricaoMunicipal", 1, 8, Ocorrencia.NaoObrigatoria, nota.Tomador.InscricaoMunicipal));
-			rps.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "InscricaoEstadual", 1, 19, Ocorrencia.NaoObrigatoria, nota.Tomador.InscricaoEstadual));
+			rps.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "InscricaoMunicipalTomador", 1, 8, Ocorrencia.NaoObrigatoria, nota.Tomador.InscricaoMunicipal));
+			rps.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "InscricaoEstadualTomador", 1, 19, Ocorrencia.NaoObrigatoria, nota.Tomador.InscricaoEstadual));
 			rps.AddChild(AdicionarTag(TipoCampo.Str, "", "RazaoSocialTomador", 1, 115, Ocorrencia.NaoObrigatoria, nota.Tomador.RazaoSocial));
 
 			if (!nota.Tomador.Endereco.Logradouro.IsEmpty())
@@ -850,8 +850,8 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
 						  tipoTributacao +
 						  situacao +
 						  issRetido +
-						  (nota.Servico.Valores.ValorServicos * 100).ToString().PadLeft(15, '0') +
-						  (nota.Servico.Valores.ValorDeducoes * 100).ToString().PadLeft(15, '0') +
+						  Convert.ToInt32(nota.Servico.Valores.ValorServicos * 100).ToString().PadLeft(15, '0') +
+                          Convert.ToInt32(nota.Servico.Valores.ValorDeducoes * 100).ToString().PadLeft(15, '0') +
 						  nota.Servico.ItemListaServico.PadLeft(5, '0') +
 						  indCpfCnpjTomador +
 						  nota.Tomador.CpfCnpj.PadLeft(14, '0');
@@ -876,17 +876,19 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
 					   issRetidoIntermediario;
 			}
 
-			var rsa = (RSACryptoServiceProvider)Certificado.PrivateKey;
+            var hashAssinado = "";
+            var rsa = (RSACryptoServiceProvider)Certificado.PrivateKey;
 			try
 			{
 				var hashBytes = Encoding.ASCII.GetBytes(hash);
 				byte[] signData = rsa.SignData(hashBytes, new SHA1CryptoServiceProvider());
-				return Convert.ToBase64String(signData);
+                hashAssinado = Convert.ToBase64String(signData);
 			}
 			finally
 			{
 				rsa.Dispose();
 			}
+            return hashAssinado;
 		}
 
 		private static void MensagemErro(RetornoWebservice retornoWs, XContainer xmlRet, string xmlTag)
