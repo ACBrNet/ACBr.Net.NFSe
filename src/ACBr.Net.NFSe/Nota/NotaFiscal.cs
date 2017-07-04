@@ -115,7 +115,6 @@ namespace ACBr.Net.NFSe.Nota
 
 		public SituacaoNFSeRps Situacao { get; set; }
 
-
 		public TipoLocalServico LocalServico { get; set; }
 
 		public string NumeroLote { get; set; }

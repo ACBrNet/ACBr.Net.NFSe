@@ -45,10 +45,10 @@ namespace ACBr.Net.NFSe.Configuracao
 		/// </summary>
 		public ConfiguracoesNFSe()
 		{
-			Geral = new CfgGeral();
-			Arquivos = new CfgArquivos(this);
-			Certificados = new CfgCertificados();
-			WebServices = new CfgWebServices();
+			Geral = new NFSeConfigGeral();
+			Arquivos = new NFSeConfigArquivos(this);
+			Certificados = new NFSeConfigCertificados();
+			WebServices = new NFSeConfigWebServices();
 			PrestadorPadrao = new DadosPrestador();
 		}
 
@@ -57,16 +57,16 @@ namespace ACBr.Net.NFSe.Configuracao
 		#region Properties
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public CfgGeral Geral { get; }
+		public NFSeConfigGeral Geral { get; }
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public CfgArquivos Arquivos { get; }
+		public NFSeConfigArquivos Arquivos { get; }
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public CfgCertificados Certificados { get; }
+		public NFSeConfigCertificados Certificados { get; }
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public CfgWebServices WebServices { get; }
+		public NFSeConfigWebServices WebServices { get; }
 
 		/// <summary>
 		/// Gets the prestado padrão.

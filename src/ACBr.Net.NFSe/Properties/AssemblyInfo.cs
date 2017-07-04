@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("ACBr.Net NFSe")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ACBr.Net")]
-[assembly: AssemblyCopyright("Copyright © Grupo ACBr.Net 2014 - 2016")]
+[assembly: AssemblyCopyright("Copyright © Grupo ACBr.Net 2014 - 2017")]
 [assembly: AssemblyTrademark("Grupo ACBr.Net https://acbrnet.github.io")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -29,6 +29,5 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.17135")]
-[assembly: AssemblyVersion("1.0.17135")]
-[assembly: AssemblyFileVersion("1.0.17135.2043")]
+[assembly: AssemblyVersion("1.0.17185.0228")]
+[assembly: AssemblyFileVersion("1.0.17185.0228")]

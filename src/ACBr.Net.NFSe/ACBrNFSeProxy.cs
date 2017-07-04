@@ -109,17 +109,16 @@ namespace ACBr.Net.NFSe
                 oACBrNFSe.Configuracoes.Certificados.Senha = senha;
 
                 // Ajusta as particularidades de cada provedor.
-                var provider = ProviderManager.GetProvider(oACBrNFSe.Configuracoes);
-                switch (provider.Name.ToUpper())
+                using (var provider = ProviderManager.GetProvider(oACBrNFSe.Configuracoes))
                 {
-                    case "GINFES":
-                        // Provedor Ginfes em ambiente de Homologação não aceita acentos. (Ambiente de Produção aceita normalmente.)
-                        if (oACBrNFSe.Configuracoes.WebServices.Ambiente == DFeTipoAmbiente.Homologacao)
-                            oACBrNFSe.Configuracoes.Geral.RetirarAcentos = true;
-                        break;
-
-                    default:
-                        break;
+                    switch (provider.Name.ToUpper())
+                    {
+                        case "GINFES":
+                            // Provedor Ginfes em ambiente de Homologação não aceita acentos. (Ambiente de Produção aceita normalmente.)
+                            if (oACBrNFSe.Configuracoes.WebServices.Ambiente == DFeTipoAmbiente.Homologacao)
+                                oACBrNFSe.Configuracoes.Geral.RetirarAcentos = true;
+                            break;
+                    }
                 }
             }
             catch (Exception ex)
@@ -498,6 +497,7 @@ namespace ACBr.Net.NFSe
             }
             return mensagemErro;
         }
+
         #endregion Métodos para montar o RPS
 
         #region Webservices

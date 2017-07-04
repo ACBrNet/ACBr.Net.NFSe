@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 06-07-2016
 // ***********************************************************************
-// <copyright file="CfgCertificados.cs" company="ACBr.Net">
+// <copyright file="NFSeConfigCertificados.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -35,18 +35,18 @@ using ACBr.Net.DFe.Core.Common;
 
 namespace ACBr.Net.NFSe.Configuracao
 {
-	[TypeConverter(typeof(ACBrExpandableObjectConverter))]
-	public sealed class CfgCertificados : DFeCertificadosConfigBase
-	{
-		#region Constructor
+    [TypeConverter(typeof(ACBrExpandableObjectConverter))]
+    public sealed class NFSeConfigCertificados : DFeCertificadosConfigBase
+    {
+        #region Constructor
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="CfgCertificados"/> class.
-		/// </summary>
-		internal CfgCertificados()
-		{
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NFSeConfigCertificados"/> class.
+        /// </summary>
+        internal NFSeConfigCertificados()
+        {
+        }
 
-		#endregion Constructor
-	}
+        #endregion Constructor
+    }
 }

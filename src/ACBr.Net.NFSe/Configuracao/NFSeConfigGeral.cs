@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 06-07-2016
 // ***********************************************************************
-// <copyright file="CfgWebServices.cs" company="ACBr.Net">
+// <copyright file="NFSeConfigGeral.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,73 +29,64 @@
 // <summary></summary>
 // ***********************************************************************
 
-using ACBr.Net.Core.Exceptions;
+using System.ComponentModel;
+using ACBr.Net.Core;
+using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core.Common;
 using ACBr.Net.NFSe.Providers;
-using System;
-using System.ComponentModel;
-using System.Linq;
-using ACBr.Net.Core;
+using System.IO;
+using System.Reflection;
 
 namespace ACBr.Net.NFSe.Configuracao
 {
-	[TypeConverter(typeof(ACBrExpandableObjectConverter))]
-	public sealed class CfgWebServices : DFeWebserviceConfigBase
-	{
-		#region Fields
+    [TypeConverter(typeof(ACBrExpandableObjectConverter))]
+    public sealed class NFSeConfigGeral : DFeGeralConfigBase
+    {
+        #region Fields
 
-		private int codigoMunicipio;
+        private string arquivoMunicipios;
 
-		#endregion Fields
+        #endregion Fields
 
-		#region Constructor
+        #region Constructor
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="CfgWebServices"/> class.
-		/// </summary>
-		internal CfgWebServices()
-		{
-			Ambiente = DFeTipoAmbiente.Homologacao;
-			Visualizar = false;
-			AjustaAguardaConsultaRet = false;
-			AguardarConsultaRet = 1;
-			Tentativas = 3;
-			ProxyHost = string.Empty;
-			ProxyPass = string.Empty;
-			ProxyPort = string.Empty;
-			ProxyUser = string.Empty;
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NFSeConfigGeral"/> class.
+        /// </summary>
+        internal NFSeConfigGeral()
+        {
+            Salvar = false;
 
-		#endregion Constructor
+            var path = Assembly.GetExecutingAssembly().GetPath();
+            if (!path.IsEmpty())
+            {
+                PathSchemas = Path.Combine(path, "Schemas");
+                PathSalvar = Path.Combine(path, "XmlNFSe");
+            }
 
-		#region Properties
+            ExibirErroSchema = false;
+            RetirarAcentos = false;
+            FormatoAlerta = "TAG:%TAG% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.";
+            arquivoMunicipios = string.Empty;
+        }
 
-		/// <summary>
-		/// Uf do webservice em uso
-		/// </summary>
-		/// <value>The uf.</value>
-		[Browsable(true)]
-		public string Municipio { get; private set; }
+        #endregion Constructor
 
-		/// <summary>
-		/// Codigo do municipio do Webservices em uso
-		/// </summary>
-		/// <value>The uf codigo.</value>
-		[Browsable(true)]
-		public int CodigoMunicipio
-		{
-			get { return codigoMunicipio; }
-			set
-			{
-				if (codigoMunicipio == value) return;
+        #region Properties
 
-				codigoMunicipio = value;
-				var municipio = ProviderManager.Municipios.SingleOrDefault(x => x.Codigo == codigoMunicipio);
-				Guard.Against<ArgumentException>(municipio == null, "Município não cadastrado.");
-				Municipio = municipio.Nome;
-			}
-		}
+        public string ArquivoMunicipios
+        {
+            get
+            {
+                return arquivoMunicipios;
+            }
+            set
+            {
+                arquivoMunicipios = value;
+                ProviderManager.Load(arquivoMunicipios);
+            }
+        }
 
-		#endregion Properties
-	}
+        #endregion Properties
+    }
 }

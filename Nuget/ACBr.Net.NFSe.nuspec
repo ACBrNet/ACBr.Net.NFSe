@@ -2,20 +2,27 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
     <metadata>
         <id>ACBr.Net.NFSe</id>
-        <version>1.0.0.0-beta2</version>
+        <version>1.0.0.0-beta3</version>
         <title>ACBr.Net.NFSe</title>
         <authors>Grupo ACBr.Net</authors>
         <owners>Grupo ACBr.Net</owners>
         <projectUrl>https://acbrnet.github.io</projectUrl>
         <iconUrl>https://avatars2.githubusercontent.com/u/7342977?v=3&amp;s=200</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Biblioteca para geração e emissão de NFSe</description>
-        <copyright>Copyright © Grupo ACBr.Net 2014 - 2016</copyright>
+        <description>Biblioteca para emissão e trasmissão de NFSe.
+
+**Provedores Implementados**
+- Ginfes.
+- DSF.
+- WebISS.
+- São Paulo.
+- Porto Alegre (Em Implementação).</description>
+        <copyright>Copyright © Grupo ACBr.Net 2014 - 2017</copyright>
         <language>pt-BR</language>
         <tags>ACBr ACBr.Net Automação Comercial</tags>
         <dependencies>
-            <dependency id="ACBr.Net.Core" version="1.0.1.5" />
-            <dependency id="ACBr.Net.DFe.Core" version="1.0.2.1" />
+            <dependency id="ACBr.Net.Core" version="1.0.1.7" />
+            <dependency id="ACBr.Net.DFe.Core" version="1.0.2.3" />
         </dependencies>
     </metadata>
     <files>
@@ -54,6 +61,23 @@
         <file src="..\src\ACBr.Net.NFSe\Schemas\Ginfes\xmldsig-core-schema20020212_v03.xsd" target="content\Schemas\Ginfes\xmldsig-core-schema20020212_v03.xsd" />
         <file src="..\src\ACBr.Net.NFSe\Schemas\Porto Alegre\nfse_v20_08_2015.xsd" target="content\Schemas\Porto Alegre\nfse_v20_08_2015.xsd" />
         <file src="..\src\ACBr.Net.NFSe\Schemas\Porto Alegre\xmldsig-core-schema20020212.xsd" target="content\Schemas\Porto Alegre\xmldsig-core-schema20020212.xsd" />
+        <file src="..\bin\Release\Schemas\São Paulo\PedidoCancelamentoLote_v01.xsd" target="content\Schemas\São Paulo\PedidoCancelamentoLote_v01.xsd" />
+        <file src="..\bin\Release\Schemas\São Paulo\PedidoCancelamentoNFe_v01.xsd" target="content\Schemas\São Paulo\PedidoCancelamentoNFe_v01.xsd" />
+        <file src="..\bin\Release\Schemas\São Paulo\PedidoConsultaCNPJ_v01.xsd" target="content\Schemas\São Paulo\PedidoConsultaCNPJ_v01.xsd" />
+        <file src="..\bin\Release\Schemas\São Paulo\PedidoConsultaLote_v01.xsd" target="content\Schemas\São Paulo\PedidoConsultaLote_v01.xsd" />
+        <file src="..\bin\Release\Schemas\São Paulo\PedidoConsultaNFePeriodo_v01.xsd" target="content\Schemas\São Paulo\PedidoConsultaNFePeriodo_v01.xsd" />
+        <file src="..\bin\Release\Schemas\São Paulo\PedidoConsultaNFe_v01.xsd" target="content\Schemas\São Paulo\PedidoConsultaNFe_v01.xsd" />
+        <file src="..\bin\Release\Schemas\São Paulo\PedidoEnvioLoteRPS_v01.xsd" target="content\Schemas\São Paulo\PedidoEnvioLoteRPS_v01.xsd" />
+        <file src="..\bin\Release\Schemas\São Paulo\PedidoEnvioRPS_v01.xsd" target="content\Schemas\São Paulo\PedidoEnvioRPS_v01.xsd" />
+        <file src="..\bin\Release\Schemas\São Paulo\PedidoInformacoesLote_v01.xsd" target="content\Schemas\São Paulo\PedidoInformacoesLote_v01.xsd" />
+        <file src="..\bin\Release\Schemas\São Paulo\RetornoCancelamentoNFe_v01.xsd" target="content\Schemas\São Paulo\RetornoCancelamentoNFe_v01.xsd" />
+        <file src="..\bin\Release\Schemas\São Paulo\RetornoConsultaCNPJ_v01.xsd" target="content\Schemas\São Paulo\RetornoConsultaCNPJ_v01.xsd" />
+        <file src="..\bin\Release\Schemas\São Paulo\RetornoConsulta_v01.xsd" target="content\Schemas\São Paulo\RetornoConsulta_v01.xsd" />
+        <file src="..\bin\Release\Schemas\São Paulo\RetornoEnvioLoteRPS_v01.xsd" target="content\Schemas\São Paulo\RetornoEnvioLoteRPS_v01.xsd" />
+        <file src="..\bin\Release\Schemas\São Paulo\RetornoEnvioRPS_v01.xsd" target="content\Schemas\São Paulo\RetornoEnvioRPS_v01.xsd" />
+        <file src="..\bin\Release\Schemas\São Paulo\RetornoInformacoesLote_v01.xsd" target="content\Schemas\São Paulo\RetornoInformacoesLote_v01.xsd" />
+        <file src="..\bin\Release\Schemas\São Paulo\TiposNFe_v01.xsd" target="content\Schemas\São Paulo\TiposNFe_v01.xsd" />
+        <file src="..\bin\Release\Schemas\São Paulo\xmldsig-core-schema_v01.xsd" target="content\Schemas\São Paulo\xmldsig-core-schema_v01.xsd" />
         <file src="..\bin\Release\ACBr.Net.NFSe.dll" target="lib\net40\ACBr.Net.NFSe.dll" />
         <file src="..\bin\Release\ACBr.Net.NFSe.XML" target="lib\net40\ACBr.Net.NFSe.XML" />
     </files>

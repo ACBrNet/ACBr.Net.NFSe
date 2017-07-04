@@ -47,157 +47,156 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ACBr.Net.NFSe.Providers
 {
-	/// <summary>
-	/// Classe responsável por criar uma nova instancia do provedor
-	/// </summary>
-	public static class ProviderManager
-	{
-		#region Constructors
+    /// <summary>
+    /// Classe responsável por criar uma nova instancia do provedor
+    /// </summary>
+    public static class ProviderManager
+    {
+        #region Constructors
 
-		static ProviderManager()
-		{
-			Municipios = new List<MunicipioNFSe>();
-			Providers = new Dictionary<string, Type>
-			{
-				{"DSF", typeof(ProviderDSF)},
-				{"ISSDSF", typeof(ProviderDSF)},
-				{"GINFES", typeof(ProviderGinfes)},
-				{"PORTO ALEGRE", typeof(ProviderPortoAlegre)},
-				{"SÃO PAULO", typeof(ProviderSaoPaulo)},
-				{"WEBISS", typeof(ProviderWebISS)}
-			};
+        static ProviderManager()
+        {
+            Municipios = new List<MunicipioNFSe>();
+            Providers = new Dictionary<string, Type>
+            {
+                {"DSF", typeof(ProviderDSF)},
+                {"ISSDSF", typeof(ProviderDSF)},
+                {"GINFES", typeof(ProviderGinfes)},
+                {"PORTO ALEGRE", typeof(ProviderPortoAlegre)},
+                {"SÃO PAULO", typeof(ProviderSaoPaulo)},
+                {"WEBISS", typeof(ProviderWebISS)}
+            };
 
-			Load();
-		}
+            Load();
+        }
 
-		#endregion Constructors
+        #endregion Constructors
 
-		#region Propriedades
+        #region Propriedades
 
-		/// <summary>
-		/// Municipios cadastrados no ACBrNFSe
-		/// </summary>
-		/// <value>Os municipios</value>
-		public static List<MunicipioNFSe> Municipios { get; }
+        /// <summary>
+        /// Municipios cadastrados no ACBrNFSe
+        /// </summary>
+        /// <value>Os municipios</value>
+        public static List<MunicipioNFSe> Municipios { get; }
 
-		/// <summary>
-		/// Provedores cadastrados no ACBrNFSe
-		/// </summary>
-		/// <value>Os provedores</value>
-		public static Dictionary<string, Type> Providers { get; }
+        /// <summary>
+        /// Provedores cadastrados no ACBrNFSe
+        /// </summary>
+        /// <value>Os provedores</value>
+        public static Dictionary<string, Type> Providers { get; }
 
-		#endregion Propriedades
+        #endregion Propriedades
 
-		#region Methods
+        #region Methods
 
-		#region Public
+        #region Public
 
-		/// <summary>
-		/// Salva o arquivo de cidades.
-		/// </summary>
-		/// <param name="path">Caminho para salvar o arquivo</param>
-		public static void Save(string path = "Municipios.nfse")
-		{
-			Guard.Against<ArgumentNullException>(path == null, "Path invalido.");
+        /// <summary>
+        /// Salva o arquivo de cidades.
+        /// </summary>
+        /// <param name="path">Caminho para salvar o arquivo</param>
+        public static void Save(string path = "Municipios.nfse")
+        {
+            Guard.Against<ArgumentNullException>(path == null, "Path invalido.");
 
-			if (File.Exists(path))
-				File.Delete(path);
+            if (File.Exists(path)) File.Delete(path);
 
-			using (var fileStream = new FileStream(path, FileMode.CreateNew))
-			{
-				Save(fileStream);
-			}
-		}
+            using (var fileStream = new FileStream(path, FileMode.CreateNew))
+            {
+                Save(fileStream);
+            }
+        }
 
-		/// <summary>
-		/// Salva o arquivo de cidades.
-		/// </summary>
-		/// <param name="stream">O stream.</param>
-		public static void Save(Stream stream)
-		{
-			using (var zip = new GZipStream(stream, CompressionMode.Compress))
-			{
-				var formatter = new BinaryFormatter();
-				formatter.Serialize(zip, Municipios.ToArray());
-			}
-		}
+        /// <summary>
+        /// Salva o arquivo de cidades.
+        /// </summary>
+        /// <param name="stream">O stream.</param>
+        public static void Save(Stream stream)
+        {
+            using (var zip = new GZipStream(stream, CompressionMode.Compress))
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(zip, Municipios.ToArray());
+            }
+        }
 
-		/// <summary>
-		/// Carrega o arquivo de cidades.
-		/// </summary>
-		/// <param name="path">The path.</param>
-		/// <param name="clean">if set to <c>true</c> [clean].</param>
-		public static void Load(string path = "", bool clean = true)
-		{
-			byte[] buffer = null;
-			if (path.IsEmpty())
-			{
-				buffer = Properties.Resources.Municipios;
-			}
-			else if (File.Exists(path))
-			{
-				buffer = File.ReadAllBytes(path);
-			}
+        /// <summary>
+        /// Carrega o arquivo de cidades.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <param name="clean">if set to <c>true</c> [clean].</param>
+        public static void Load(string path = "", bool clean = true)
+        {
+            byte[] buffer = null;
+            if (path.IsEmpty())
+            {
+                buffer = Properties.Resources.Municipios;
+            }
+            else if (File.Exists(path))
+            {
+                buffer = File.ReadAllBytes(path);
+            }
 
-			Guard.Against<ArgumentException>(buffer == null, "Arquivo de cidades não encontrado");
+            Guard.Against<ArgumentException>(buffer == null, "Arquivo de cidades não encontrado");
 
-			using (var stream = new MemoryStream(buffer))
-			{
-				Load(stream, clean);
-			}
-		}
+            using (var stream = new MemoryStream(buffer))
+            {
+                Load(stream, clean);
+            }
+        }
 
-		/// <summary>
-		/// Carrega o arquivo de cidades.
-		/// </summary>
-		/// <param name="stream">The stream.</param>
-		/// <param name="clean">if set to <c>true</c> [clean].</param>
-		public static void Load(Stream stream, bool clean = true)
-		{
-			Guard.Against<ArgumentException>(stream == null, "Arquivo de cidades não encontrado");
+        /// <summary>
+        /// Carrega o arquivo de cidades.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <param name="clean">if set to <c>true</c> [clean].</param>
+        public static void Load(Stream stream, bool clean = true)
+        {
+            Guard.Against<ArgumentException>(stream == null, "Arquivo de cidades não encontrado");
 
-			using (var zip = new GZipStream(stream, CompressionMode.Decompress))
-			{
-				var formatter = new BinaryFormatter();
-				var cidades = (MunicipioNFSe[])formatter.Deserialize(zip);
+            using (var zip = new GZipStream(stream, CompressionMode.Decompress))
+            {
+                var formatter = new BinaryFormatter();
+                var cidades = (MunicipioNFSe[])formatter.Deserialize(zip);
 
-				if (clean) Municipios.Clear();
-				Municipios.AddRange(cidades);
-			}
-		}
+                if (clean) Municipios.Clear();
+                Municipios.AddRange(cidades);
+            }
+        }
 
-		/// <summary>
-		/// Retorna o provedor para o municipio nas configurações informadas.
-		/// </summary>
-		/// <param name="config">A configuração.</param>
-		/// <returns>Provedor NFSe.</returns>
-		public static ProviderBase GetProvider(ConfiguracoesNFSe config)
-		{
-			var municipio = Municipios.SingleOrDefault(x => x.Codigo == config.WebServices.CodigoMunicipio);
-			Guard.Against<ACBrException>(municipio == null, "Provedor para esta cidade não implementado ou não especificado!");
+        /// <summary>
+        /// Retorna o provedor para o municipio nas configurações informadas.
+        /// </summary>
+        /// <param name="config">A configuração.</param>
+        /// <returns>Provedor NFSe.</returns>
+        public static ProviderBase GetProvider(ConfiguracoesNFSe config)
+        {
+            var municipio = Municipios.SingleOrDefault(x => x.Codigo == config.WebServices.CodigoMunicipio);
+            Guard.Against<ACBrException>(municipio == null, "Provedor para esta cidade não implementado ou não especificado!");
 
-			// ReSharper disable once PossibleNullReferenceException
-			var providerType = Providers[municipio.Provedor.ToUpper()];
-			Guard.Against<ACBrException>(providerType == null, "Provedor não encontrado!");
-			Guard.Against<ACBrException>(!CheckBaseType(providerType), "Classe base do provedor incorreta!");
+            // ReSharper disable once PossibleNullReferenceException
+            var providerType = Providers[municipio.Provedor.ToUpper()];
+            Guard.Against<ACBrException>(providerType == null, "Provedor não encontrado!");
+            Guard.Against<ACBrException>(!CheckBaseType(providerType), "Classe base do provedor incorreta!");
 
-			// ReSharper disable once AssignNullToNotNullAttribute
-			return (ProviderBase)Activator.CreateInstance(providerType, config, municipio);
-		}
+            // ReSharper disable once AssignNullToNotNullAttribute
+            return (ProviderBase)Activator.CreateInstance(providerType, config, municipio);
+        }
 
-		#endregion Public
+        #endregion Public
 
-		#region Private
+        #region Private
 
-		private static bool CheckBaseType(Type providerType)
-		{
-			return typeof(ProviderBase).IsAssignableFrom(providerType) ||
-				   typeof(ProviderABRASF).IsAssignableFrom(providerType) ||
-				   typeof(ProviderABRASF2).IsAssignableFrom(providerType);
-		}
+        private static bool CheckBaseType(Type providerType)
+        {
+            return typeof(ProviderBase).IsAssignableFrom(providerType) ||
+                   typeof(ProviderABRASF).IsAssignableFrom(providerType) ||
+                   typeof(ProviderABRASF2).IsAssignableFrom(providerType);
+        }
 
-		#endregion Private
+        #endregion Private
 
-		#endregion Methods
-	}
+        #endregion Methods
+    }
 }

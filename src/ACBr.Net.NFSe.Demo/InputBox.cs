@@ -30,9 +30,10 @@ namespace ACBr.Net.NFSe.Demo
 			buttonCancel.DialogResult = DialogResult.Cancel;
 
 			var graph = form.CreateGraphics();
-			var size = graph.MeasureString(promptText, textBox.Font);
+			var size = graph.MeasureString(promptText, label.Font);
 
 			label.SetBounds(9, 20, 372, 13);
+			label.SetBounds(12, 36 + (int)size.Height, 372, 20);
 			textBox.SetBounds(12, 36 + (int)size.Height, 372, 20);
 			buttonOk.SetBounds(228, 72, 75, 23);
 			buttonCancel.SetBounds(309, 72, 75, 23);
@@ -56,7 +57,7 @@ namespace ACBr.Net.NFSe.Demo
 
 			try
 			{
-				if (typeof(T).IsEnum || (typeof(T).IsGenericType && typeof(T).GetGenericArguments()[0].IsEnum))
+				if (typeof(T).IsEnum || typeof(T).IsGenericType && typeof(T).GetGenericArguments()[0].IsEnum)
 				{
 					value = (T)Enum.Parse(typeof(T), textBox.Text);
 				}
