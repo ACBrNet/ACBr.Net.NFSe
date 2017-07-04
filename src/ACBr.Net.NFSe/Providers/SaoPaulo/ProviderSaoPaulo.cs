@@ -440,16 +440,9 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
 
             var hashAssinado = "";
             var rsa = (RSACryptoServiceProvider)Certificado.PrivateKey;
-            try
-            {
-                var hashBytes = Encoding.ASCII.GetBytes(hash);
-                byte[] signData = rsa.SignData(hashBytes, new SHA1CryptoServiceProvider());
-                hashAssinado = Convert.ToBase64String(signData);
-            }
-            finally
-            {
-                rsa.Dispose();
-            }
+            var hashBytes = Encoding.ASCII.GetBytes(hash);
+            byte[] signData = rsa.SignData(hashBytes, new SHA1CryptoServiceProvider());
+            hashAssinado = Convert.ToBase64String(signData);
 
             var loteBuilder = new StringBuilder();
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
