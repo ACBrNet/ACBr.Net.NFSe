@@ -238,8 +238,8 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
             loteBuilder.Append($"<dtInicio>{notas.Min(x => x.IdentificacaoRps.DataEmissao):yyyy-MM-dd}</dtInicio>");
             loteBuilder.Append($"<dtFim>{notas.Max(x => x.IdentificacaoRps.DataEmissao):yyyy-MM-dd}</dtFim>");
             loteBuilder.Append($"<QtdRPS>{notas.Count}</QtdRPS>");
-            loteBuilder.Append(string.Format(CultureInfo.InvariantCulture, "<ValorTotalServicos>{0:N2}</ValorTotalServicos>", notas.Sum(x => x.Servico.Valores.ValorServicos)));
-            loteBuilder.Append(string.Format(CultureInfo.InvariantCulture, "<ValorTotalDeducoes>{0:N2}</ValorTotalDeducoes>", notas.Sum(x => x.Servico.Valores.ValorDeducoes)));
+            loteBuilder.Append(string.Format(CultureInfo.InvariantCulture, "<ValorTotalServicos>{0:0.00}</ValorTotalServicos>", notas.Sum(x => x.Servico.Valores.ValorServicos)));
+            loteBuilder.Append(string.Format(CultureInfo.InvariantCulture, "<ValorTotalDeducoes>{0:0.00}</ValorTotalDeducoes>", notas.Sum(x => x.Servico.Valores.ValorDeducoes)));
             loteBuilder.Append("</Cabecalho>");
             loteBuilder.Append(xmlRPS);
             loteBuilder.Append("</PedidoEnvioLoteRPS>");
@@ -636,8 +636,8 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
             rps.Add(tomadorCpfCnpj);
             tomadorCpfCnpj.AddChild(AdicionarTagCNPJCPF("", "CPF", "CNPJ", nota.Tomador.CpfCnpj));
 
-            rps.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "InscricaoMunicipal", 1, 8, Ocorrencia.NaoObrigatoria, nota.Tomador.InscricaoMunicipal));
-            rps.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "InscricaoEstadual", 1, 19, Ocorrencia.NaoObrigatoria, nota.Tomador.InscricaoEstadual));
+            rps.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "InscricaoMunicipalTomador", 1, 8, Ocorrencia.NaoObrigatoria, nota.Tomador.InscricaoMunicipal));
+            rps.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "InscricaoEstadualTomador", 1, 19, Ocorrencia.NaoObrigatoria, nota.Tomador.InscricaoEstadual));
             rps.AddChild(AdicionarTag(TipoCampo.Str, "", "RazaoSocialTomador", 1, 115, Ocorrencia.NaoObrigatoria, nota.Tomador.RazaoSocial));
 
             if (!nota.Tomador.Endereco.Logradouro.IsEmpty())

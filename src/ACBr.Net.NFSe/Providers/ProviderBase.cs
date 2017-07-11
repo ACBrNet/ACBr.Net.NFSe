@@ -75,6 +75,7 @@ namespace ACBr.Net.NFSe.Providers
         #region Fields
 
         private X509Certificate2 certificado;
+        private bool disposed;
 
         #endregion Fields
 
@@ -747,18 +748,29 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Dispose
 
+        /// <inheritdoc />
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Implement IDisposable Interface.
+        /// </summary>
+        /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
+            if (disposed) return;
+
             if (disposing)
             {
-                certificado?.Reset();
+                //
             }
+
+            certificado?.Reset();
+            certificado = null;
+            disposed = true;
         }
 
         #endregion Dispose
