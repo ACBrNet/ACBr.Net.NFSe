@@ -94,18 +94,6 @@
     <Compile Include="Configuracao\NFSeConfigWebServices.cs" />
     <Compile Include="Configuracao\ConfiguracoesNFSe.cs" />
     <Compile Include="Nota\DadosMateriais.cs" />
-    <Compile Include="Providers\Betha\BethaConsultarSituacaoLoteRpsServiceClient.cs" />
-    <Compile Include="Providers\Betha\BethaCancelarNev01ServiceClient.cs" />
-    <Compile Include="Providers\Betha\BethaConsultarLoteRpsServiceClient.cs" />
-    <Compile Include="Providers\Betha\BethaConsultarNeServiceClient.cs" />
-    <Compile Include="Providers\Betha\BethaConsultarNePorRpsServiceClient.cs" />
-    <Compile Include="Providers\Betha\BethaRecepcionarLoteRpsServiceClient.cs" />
-    <Compile Include="Providers\Betha\IBethaConsultarSituacaoLoteRps.cs" />
-    <Compile Include="Providers\Betha\IBethaConsultarNePorRps.cs" />
-    <Compile Include="Providers\Betha\IBethaConsultarNe.cs" />
-    <Compile Include="Providers\Betha\IBethaConsultarLoteRps.cs" />
-    <Compile Include="Providers\Betha\IBethaCancelarNEV01.cs" />
-    <Compile Include="Providers\Betha\IBethaRecepcionarLoteRps.cs" />
     <Compile Include="Providers\IABRASFClient.cs" />
     <Compile Include="Providers\PortoAlegre\CancelarNfseRequest.cs" />
     <Compile Include="Providers\PortoAlegre\CancelarNfseResponse.cs" />
@@ -128,7 +116,6 @@
     <Compile Include="Providers\PortoAlegre\PortoAlegreServiceClient.cs" />
     <Compile Include="Providers\ProviderABRASF.cs" />
     <Compile Include="Providers\ProviderABRASF2.cs" />
-    <Compile Include="Providers\Betha\ProviderBetha.cs" />
     <Compile Include="Providers\DSF\CancelarRequest.cs" />
     <Compile Include="Providers\DSF\CancelarResponse.cs" />
     <Compile Include="Providers\DSF\ConsultarLoteRequest.cs" />
@@ -152,6 +139,7 @@
     <Compile Include="Providers\Ginfes\ProviderGinfes.cs" />
     <Compile Include="Providers\MunicipioNFSe.cs" />
     <Compile Include="Providers\Evento.cs" />
+    <Compile Include="Providers\ProviderExtensions.cs" />
     <Compile Include="Providers\RetornoWebService.cs" />
     <Compile Include="Providers\SaoPaulo\CancelamentoNFeRequest.cs" />
     <Compile Include="Providers\SaoPaulo\CancelamentoNFeResponse.cs" />

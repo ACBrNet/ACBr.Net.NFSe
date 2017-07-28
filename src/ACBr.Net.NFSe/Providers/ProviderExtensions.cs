@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 07-28-2016
+// Created          : 07-28-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 07-28-2016
+// Last Modified On : 07-28-2017
 // ***********************************************************************
-// <copyright file="BethaConsultarLoteRpsServiceClient.cs" company="ACBr.Net">
+// <copyright file="ProviderExtensions.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,31 +29,18 @@
 // <summary></summary>
 // ***********************************************************************
 
-using ACBr.Net.DFe.Core.Service;
-using System;
-using System.ComponentModel;
-using System.Security.Cryptography.X509Certificates;
+using System.Xml.Linq;
+using ACBr.Net.Core.Extensions;
 
-namespace ACBr.Net.NFSe.Providers.Betha
+namespace ACBr.Net.NFSe.Providers
 {
-	internal sealed class BethaConsultarLoteRpsServiceClient : DFeServiceClientBase<IBethaConsultarLoteRps>, IBethaConsultarLoteRps
-	{
-		#region Constructor
+    internal static class ProviderExtensions
+    {
+        public static string GetCPF_CNPJ(this XElement element)
+        {
+            if (element == null) return string.Empty;
 
-		public BethaConsultarLoteRpsServiceClient(string url, TimeSpan? timeOut = null, X509Certificate2 certificado = null) : base(url, timeOut, certificado)
-		{
-		}
-
-		#endregion Constructor
-
-		#region Methods
-
-		[EditorBrowsable(EditorBrowsableState.Advanced)]
-		string IBethaConsultarLoteRps.ConsultarLoteRpsEnvio(string request)
-		{
-			return base.Channel.ConsultarLoteRpsEnvio(request);
-		}
-
-		#endregion Methods
-	}
+            return (element.ElementAnyNs("Cnpj")?.GetValue<string>() ?? element.ElementAnyNs("Cpf")?.GetValue<string>()) ?? string.Empty;
+        }
+    }
 }

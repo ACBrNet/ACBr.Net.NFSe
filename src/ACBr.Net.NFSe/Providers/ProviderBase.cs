@@ -363,6 +363,8 @@ namespace ACBr.Net.NFSe.Providers
         /// <returns>DFeSignature.</returns>
         protected DFeSignature LoadSignature(XElement element)
         {
+            if (element == null) return new DFeSignature();
+
             var serializer = DFeSerializer.CreateSerializer<DFeSignature>();
             return serializer.Deserialize(element.ToString());
         }
