@@ -33,11 +33,13 @@ using ACBr.Net.Core;
 using ACBr.Net.Core.Exceptions;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Providers.Betha2;
 using ACBr.Net.NFSe.Providers.DSF;
 using ACBr.Net.NFSe.Providers.Ginfes;
 using ACBr.Net.NFSe.Providers.WebISS;
 using ACBr.Net.NFSe.Providers.PortoAlegre;
 using ACBr.Net.NFSe.Providers.SaoPaulo;
+using ACBr.Net.NFSe.Providers.NotaCarioca;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -56,15 +58,16 @@ namespace ACBr.Net.NFSe.Providers
 
         static ProviderManager()
         {
-            Municipios = new List<MunicipioNFSe>();
-            Providers = new Dictionary<string, Type>
+            Municipios = new List<ACBrMunicipioNFSe>();
+            Providers = new Dictionary<NFSeProvider, Type>
             {
-                {"DSF", typeof(ProviderDSF)},
-                {"ISSDSF", typeof(ProviderDSF)},
-                {"GINFES", typeof(ProviderGinfes)},
-                {"PORTO ALEGRE", typeof(ProviderPortoAlegre)},
-                {"SÃO PAULO", typeof(ProviderSaoPaulo)},
-                {"WEBISS", typeof(ProviderWebISS)}
+                {NFSeProvider.Betha2, typeof(ProviderBetha2)},
+                {NFSeProvider.DSF, typeof(ProviderDSF)},
+                {NFSeProvider.Ginfes, typeof(ProviderGinfes)},
+                {NFSeProvider.PortoAlegre, typeof(ProviderPortoAlegre)},
+                {NFSeProvider.SaoPaulo, typeof(ProviderSaoPaulo)},
+                {NFSeProvider.WebIss, typeof(ProviderWebISS)},
+                {NFSeProvider.NotaCarioca, typeof(ProviderNotaCarioca)}
             };
 
             Load();
@@ -78,13 +81,13 @@ namespace ACBr.Net.NFSe.Providers
         /// Municipios cadastrados no ACBrNFSe
         /// </summary>
         /// <value>Os municipios</value>
-        public static List<MunicipioNFSe> Municipios { get; }
+        public static List<ACBrMunicipioNFSe> Municipios { get; }
 
         /// <summary>
         /// Provedores cadastrados no ACBrNFSe
         /// </summary>
         /// <value>Os provedores</value>
-        public static Dictionary<string, Type> Providers { get; }
+        public static Dictionary<NFSeProvider, Type> Providers { get; }
 
         #endregion Propriedades
 
@@ -158,7 +161,7 @@ namespace ACBr.Net.NFSe.Providers
             using (var zip = new GZipStream(stream, CompressionMode.Decompress))
             {
                 var formatter = new BinaryFormatter();
-                var cidades = (MunicipioNFSe[])formatter.Deserialize(zip);
+                var cidades = (ACBrMunicipioNFSe[])formatter.Deserialize(zip);
 
                 if (clean) Municipios.Clear();
                 Municipios.AddRange(cidades);
@@ -176,7 +179,7 @@ namespace ACBr.Net.NFSe.Providers
             Guard.Against<ACBrException>(municipio == null, "Provedor para esta cidade não implementado ou não especificado!");
 
             // ReSharper disable once PossibleNullReferenceException
-            var providerType = Providers[municipio.Provedor.ToUpper()];
+            var providerType = Providers[0];
             Guard.Against<ACBrException>(providerType == null, "Provedor não encontrado!");
             Guard.Against<ACBrException>(!CheckBaseType(providerType), "Classe base do provedor incorreta!");
 

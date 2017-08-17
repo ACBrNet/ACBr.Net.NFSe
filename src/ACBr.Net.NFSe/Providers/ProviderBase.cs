@@ -148,7 +148,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <summary>
         /// Initializes a new instance of the <see cref="ProviderBase"/> class.
         /// </summary>
-        protected ProviderBase(ConfiguracoesNFSe config, MunicipioNFSe municipio)
+        protected ProviderBase(ConfiguracoesNFSe config, ACBrMunicipioNFSe municipio)
         {
             Name = "Base";
             ListaDeAlertas = new List<string>();
@@ -194,7 +194,7 @@ namespace ACBr.Net.NFSe.Providers
 
         public ConfiguracoesNFSe Config { get; }
 
-        public MunicipioNFSe Municipio { get; }
+        public ACBrMunicipioNFSe Municipio { get; }
 
         public TimeSpan? TimeOut
         {
@@ -216,6 +216,12 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Public
 
+        /// <summary>
+        /// Carrega o xml da NFSe/Rps.
+        /// </summary>
+        /// <param name="xml">Local do arquivo Xml</param>
+        /// <param name="encoding">Enconde para utilizar na leitura do arquivo</param>
+        /// <returns></returns>
         public NotaFiscal LoadXml(string xml, Encoding encoding = null)
         {
             Guard.Against<ArgumentNullException>(xml.IsEmpty(), "Xml não pode ser vazio ou nulo");
@@ -243,6 +249,11 @@ namespace ACBr.Net.NFSe.Providers
             return LoadXml(doc);
         }
 
+        /// <summary>
+        /// Carrega o xml da NFSe/Rps.
+        /// </summary>
+        /// <param name="stream">Stream contendo os dados do arquivo xml.</param>
+        /// <returns></returns>
         public NotaFiscal LoadXml(Stream stream)
         {
             Guard.Against<ArgumentNullException>(stream == null, "Stream não pode ser nulo !");
@@ -251,36 +262,86 @@ namespace ACBr.Net.NFSe.Providers
             return LoadXml(doc);
         }
 
+        /// <summary>
+        /// Carrega o xml da NFSe/Rps.
+        /// </summary>
+        /// <param name="xml">Classe XDocument com um xml carregado.</param>
+        /// <returns></returns>
         public virtual NotaFiscal LoadXml(XDocument xml)
         {
             throw new NotImplementedException("LoadXml");
         }
 
+        /// <summary>
+        /// Retorna o xml da Rps em formato string.
+        /// </summary>
+        /// <param name="nota"></param>
+        /// <param name="identado"></param>
+        /// <param name="showDeclaration"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public virtual string GetXmlRps(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
         {
             throw new NotImplementedException("GetXmlRps");
         }
 
+        /// <summary>
+        /// Retorna o xml da NFSe em formato string.
+        /// </summary>
+        /// <param name="nota"></param>
+        /// <param name="identado"></param>
+        /// <param name="showDeclaration"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public virtual string GetXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
         {
             throw new NotImplementedException("GetXmlNFSe");
         }
 
+        /// <summary>
+        /// Enviar coleção de Rps para o provedor de forma assincrona.
+        /// </summary>
+        /// <param name="lote"></param>
+        /// <param name="notas"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public virtual RetornoWebservice Enviar(int lote, NotaFiscalCollection notas)
         {
             throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
+        /// <summary>
+        /// Enviar coleção de Rps para o provedor de forma sincrona.
+        /// </summary>
+        /// <param name="lote"></param>
+        /// <param name="notas"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public virtual RetornoWebservice EnviarSincrono(int lote, NotaFiscalCollection notas)
         {
             throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
+        /// <summary>
+        /// Consulta a situação do lote.
+        /// </summary>
+        /// <param name="lote"></param>
+        /// <param name="protocolo"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public virtual RetornoWebservice ConsultarSituacao(int lote, string protocolo)
         {
             throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
+        /// <summary>
+        /// Consultar o lote de rps.
+        /// </summary>
+        /// <param name="lote"></param>
+        /// <param name="protocolo"></param>
+        /// <param name="notas"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public virtual RetornoWebservice ConsultarLoteRps(int lote, string protocolo, NotaFiscalCollection notas)
         {
             throw new NotImplementedException("Função não implementada/suportada neste Provedor !");

@@ -59,7 +59,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
         #region Constructors
 
-        public ProviderGinfes(ConfiguracoesNFSe config, MunicipioNFSe municipio) : base(config, municipio)
+        public ProviderGinfes(ConfiguracoesNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
         {
             Name = "Ginfes";
         }

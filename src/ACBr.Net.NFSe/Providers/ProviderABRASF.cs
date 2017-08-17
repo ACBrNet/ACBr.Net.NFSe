@@ -56,7 +56,7 @@ namespace ACBr.Net.NFSe.Providers
         /// </summary>
         /// <param name="config">The configuration.</param>
         /// <param name="municipio">The municipio.</param>
-        protected ProviderABRASF(ConfiguracoesNFSe config, MunicipioNFSe municipio) : base(config, municipio)
+        protected ProviderABRASF(ConfiguracoesNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
         {
             Name = "ABRASFv1";
         }
@@ -1516,14 +1516,14 @@ namespace ACBr.Net.NFSe.Providers
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             loteBuilder.Append($"<ConsultarNfseEnvio xmlns=\"{GetNamespace()}\">");
             loteBuilder.Append("<Prestador>");
-            loteBuilder.Append($"<Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tipos:Cnpj>");
+            loteBuilder.Append($"<Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>");
             loteBuilder.Append($"<InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
             loteBuilder.Append("</Prestador>");
 
             if (!numeroNfse.IsEmpty())
                 loteBuilder.Append($"<NumeroNfse>{numeroNfse}</NumeroNfse>");
 
-            if (inicio.HasValue & fim.HasValue)
+            if (inicio.HasValue && fim.HasValue)
             {
                 loteBuilder.Append("<PeriodoEmissao>");
                 loteBuilder.Append($"<DataInicial>{inicio:yyyy-MM-dd}</DataInicial>");
@@ -1531,19 +1531,26 @@ namespace ACBr.Net.NFSe.Providers
                 loteBuilder.Append("</PeriodoEmissao>");
             }
 
-            if (!cnpjTomador.IsEmpty() & !imTomador.IsEmpty())
+            if (!cnpjTomador.IsEmpty() || !imTomador.IsEmpty())
             {
                 loteBuilder.Append("<Tomador>");
-                loteBuilder.Append($"<CpfCnpj>{cnpjTomador.ZeroFill(14)}</CpfCnpj>");
-                loteBuilder.Append($"<InscricaoMunicipal>{imTomador}</InscricaoMunicipal>");
+                loteBuilder.Append("<CpfCnpj>");
+                loteBuilder.Append(cnpjTomador.IsCNPJ()
+                    ? $"<Cnpj>{cnpjTomador.ZeroFill(14)}</Cnpj>"
+                    : $"<Cpf>{cnpjTomador.ZeroFill(11)}</Cpf>");
+                loteBuilder.Append("</CpfCnpj>");
+                if (!imTomador.IsEmpty()) loteBuilder.Append($"<InscricaoMunicipal>{imTomador}</InscricaoMunicipal>");
                 loteBuilder.Append("</Tomador>");
             }
 
-            if (!nomeInter.IsEmpty() & !cnpjInter.IsEmpty())
+            if (!nomeInter.IsEmpty() && !cnpjInter.IsEmpty())
             {
                 loteBuilder.Append("<IntermediarioServico>");
                 loteBuilder.Append($"<RazaoSocial>{nomeInter}</RazaoSocial>");
-                loteBuilder.Append($"<CpfCnpj>{cnpjInter.ZeroFill(14)}</CpfCnpj>");
+                loteBuilder.Append(cnpjInter.IsCNPJ()
+                    ? $"<Cnpj>{cnpjInter.ZeroFill(14)}</Cnpj>"
+                    : $"<Cpf>{cnpjInter.ZeroFill(11)}</Cpf>");
+                loteBuilder.Append("</CpfCnpj>");
                 if (!imInter.IsEmpty()) loteBuilder.Append($"<InscricaoMunicipal>{imInter}</InscricaoMunicipal>");
                 loteBuilder.Append("</IntermediarioServico>");
             }

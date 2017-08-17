@@ -50,7 +50,7 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
     {
         #region Constructors
 
-        public ProviderSaoPaulo(ConfiguracoesNFSe config, MunicipioNFSe municipio) : base(config, municipio)
+        public ProviderSaoPaulo(ConfiguracoesNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
         {
             Name = "São Paulo";
         }

@@ -35,51 +35,51 @@ using ACBr.Net.NFSe.Nota;
 
 namespace ACBr.Net.NFSe.Providers.WebISS
 {
-	// ReSharper disable once InconsistentNaming
-	internal sealed class ProviderWebISS : ProviderABRASF
-	{
-		#region Constructors
+    // ReSharper disable once InconsistentNaming
+    internal sealed class ProviderWebISS : ProviderABRASF
+    {
+        #region Constructors
 
-		public ProviderWebISS(ConfiguracoesNFSe config, MunicipioNFSe municipio) : base(config, municipio)
-		{
-			Name = "WebISS";
-		}
+        public ProviderWebISS(ConfiguracoesNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
+        {
+            Name = "WebISS";
+        }
 
-		#endregion Constructors
+        #endregion Constructors
 
-		#region Methods
+        #region Methods
 
-		public override RetornoWebservice EnviarSincrono(int lote, NotaFiscalCollection notas)
-		{
-			throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
-		}
+        public override RetornoWebservice EnviarSincrono(int lote, NotaFiscalCollection notas)
+        {
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
+        }
 
-		protected override IABRASFClient GetClient(TipoUrl tipo)
-		{
-			var url = GetUrl(tipo);
-			return new WebISSSServiceClient(url, TimeOut, Certificado);
-		}
+        protected override IABRASFClient GetClient(TipoUrl tipo)
+        {
+            var url = GetUrl(tipo);
+            return new WebISSSServiceClient(url, TimeOut, Certificado);
+        }
 
-		protected override string GetNamespace()
-		{
-			return "http://tempuri.org/";
-		}
+        protected override string GetNamespace()
+        {
+            return "http://tempuri.org/";
+        }
 
-		protected override string GetSchema(TipoUrl tipo)
-		{
-			switch (tipo)
-			{
-				case TipoUrl.Enviar: return "servico_enviar_lote_rps_envio.xsd";
-				case TipoUrl.EnviarSincrono: return "servico_gerar_nfse_envio.xsd";
-				case TipoUrl.ConsultarSituacao: return "servico_consultar_situacao_lote_rps_envio.xsd";
-				case TipoUrl.ConsultarLoteRps: return "servico_consultar_lote_rps_envio.xsd";
-				case TipoUrl.ConsultaNFSeRps: return "servico_consultar_nfse_rps_envio.xsd";
-				case TipoUrl.ConsultaNFSe: return "servico_consultar_nfse_envio.xsd";
-				case TipoUrl.CancelaNFSe: return "servico_cancelar_nfse_envio.xsd";
-				default: throw new ArgumentOutOfRangeException(nameof(tipo), tipo, @"Valor incorreto ou serviço não suportado.");
-			}
-		}
+        protected override string GetSchema(TipoUrl tipo)
+        {
+            switch (tipo)
+            {
+                case TipoUrl.Enviar: return "servico_enviar_lote_rps_envio.xsd";
+                case TipoUrl.EnviarSincrono: return "servico_gerar_nfse_envio.xsd";
+                case TipoUrl.ConsultarSituacao: return "servico_consultar_situacao_lote_rps_envio.xsd";
+                case TipoUrl.ConsultarLoteRps: return "servico_consultar_lote_rps_envio.xsd";
+                case TipoUrl.ConsultaNFSeRps: return "servico_consultar_nfse_rps_envio.xsd";
+                case TipoUrl.ConsultaNFSe: return "servico_consultar_nfse_envio.xsd";
+                case TipoUrl.CancelaNFSe: return "servico_cancelar_nfse_envio.xsd";
+                default: throw new ArgumentOutOfRangeException(nameof(tipo), tipo, @"Valor incorreto ou serviço não suportado.");
+            }
+        }
 
-		#endregion Methods
-	}
+        #endregion Methods
+    }
 }

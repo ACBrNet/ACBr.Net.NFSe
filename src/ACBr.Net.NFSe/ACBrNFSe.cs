@@ -4,7 +4,7 @@
 // Created          : 01-31-2016
 //
 // Last Modified By : RFTD
-// Last Modified On : 10-20-2016
+// Last Modified On : 08-06-2017
 // ***********************************************************************
 // <copyright file="ACBrNFSe.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -33,7 +33,6 @@ using ACBr.Net.Core;
 using ACBr.Net.Core.Exceptions;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.NFSe.Configuracao;
-using ACBr.Net.NFSe.Interfaces;
 using ACBr.Net.NFSe.Nota;
 using ACBr.Net.NFSe.Providers;
 using System;
@@ -59,7 +58,7 @@ namespace ACBr.Net.NFSe
         /// Componente de impressão
         /// </summary>
         [Browsable(false)]
-        public IDANFSe DaNfSe { get; set; }
+        public ACBrDANFSeBase DaNfSe { get; set; }
 
         /// <summary>
         /// Coleção de NFSe para processar e/ou processadas
