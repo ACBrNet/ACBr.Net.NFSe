@@ -9,4 +9,6 @@ Biblioteca para emissão e trasmissão de NFSe.
 - DSF.
 - WebISS.
 - São Paulo.
-- Porto Alegre (Em Implementação)
+- Porto Alegre.
+- Betha v2 (Em Teste)
+- Nota Carioca (Em Teste)
