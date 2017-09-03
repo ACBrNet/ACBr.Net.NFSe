@@ -179,7 +179,7 @@ namespace ACBr.Net.NFSe.Providers
             Guard.Against<ACBrException>(municipio == null, "Provedor para esta cidade não implementado ou não especificado!");
 
             // ReSharper disable once PossibleNullReferenceException
-            var providerType = Providers[0];
+            var providerType = Providers[municipio.Provedor];
             Guard.Against<ACBrException>(providerType == null, "Provedor não encontrado!");
             Guard.Against<ACBrException>(!CheckBaseType(providerType), "Classe base do provedor incorreta!");
 

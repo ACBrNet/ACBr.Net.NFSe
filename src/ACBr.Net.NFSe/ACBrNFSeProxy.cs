@@ -44,7 +44,7 @@ namespace ACBr.Net.NFSe
 {
     [ComVisible(true)]
     [ProgId(nameof(ACBrNFSeProxy))]
-    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [ClassInterface(ClassInterfaceType.AutoDispatch)]
     public class ACBrNFSeProxy
     {
         #region Fields
