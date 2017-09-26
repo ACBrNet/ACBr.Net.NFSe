@@ -31,20 +31,20 @@
 
 namespace ACBr.Net.NFSe.Providers
 {
-	public interface IABRASFClient
-	{
-		string RecepcionarLoteRps(string cabec, string msg);
+    public interface IABRASFClient
+    {
+        string RecepcionarLoteRps(string cabec, string msg);
 
-		string ConsultarSituacaoLoteRps(string cabec, string msg);
+        string ConsultarSituacaoLoteRps(string cabec, string msg);
 
-		string ConsultarNfsePorRps(string cabec, string msg);
+        string ConsultarNfsePorRps(string cabec, string msg);
 
-		string ConsultarNfse(string cabec, string msg);
+        string ConsultarNfse(string cabec, string msg);
 
-		string ConsultarLoteRps(string cabec, string msg);
+        string ConsultarLoteRps(string cabec, string msg);
 
-		string CancelarNfse(string cabec, string msg);
+        string CancelarNfse(string cabec, string msg);
 
-		string GerarNfse(string cabec, string msg);
-	}
+        string GerarNfse(string cabec, string msg);
+    }
 }

@@ -6,81 +6,82 @@ using System.IO;
 
 namespace ACBr.Net
 {
-	public class ACBrConfig
-	{
-		#region Fields
+    public class ACBrConfig
+    {
+        #region Fields
 
-		private readonly Configuration config;
+        private readonly Configuration config;
 
-		#endregion Fields
+        #endregion Fields
 
-		#region Constructors
+        #region Constructors
 
-		private ACBrConfig(Configuration config)
-		{
-			this.config = config;
-		}
+        private ACBrConfig(Configuration config)
+        {
+            this.config = config;
+        }
 
-		#endregion Constructors
+        #endregion Constructors
 
-		#region Methods
+        #region Methods
 
-		public void Set(string setting, object value)
-		{
-			var valor = string.Format(CultureInfo.InvariantCulture, "{0}", value);
+        public void Set(string setting, object value)
+        {
+            var valor = string.Format(CultureInfo.InvariantCulture, "{0}", value);
 
-			if (config.AppSettings.Settings[setting]?.Value != null)
-				config.AppSettings.Settings[setting].Value = valor;
-			else
-				config.AppSettings.Settings.Add(setting, valor);
-		}
+            if (config.AppSettings.Settings[setting]?.Value != null)
+                config.AppSettings.Settings[setting].Value = valor;
+            else
+                config.AppSettings.Settings.Add(setting, valor);
+        }
 
-		public T Get<T>(string setting, T defaultValue)
-		{
-			var value = config.AppSettings.Settings[setting]?.Value;
-			if (value.IsEmpty()) return defaultValue;
+        public T Get<T>(string setting, T defaultValue)
+        {
+            var type = typeof(T);
+            var value = config.AppSettings.Settings[setting]?.Value;
+            if (value.IsEmpty()) return defaultValue;
 
-			try
-			{
-				if (typeof(T).IsEnum || (typeof(T).IsGenericType && typeof(T).GetGenericArguments()[0].IsEnum))
-				{
-					return (T)Enum.Parse(typeof(T), value);
-				}
+            try
+            {
+                if (type.IsEnum || type.IsGenericType && type.GetGenericArguments()[0].IsEnum)
+                {
+                    return (T)Enum.Parse(type, value);
+                }
 
-				return (T)Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
-			}
-			catch (Exception)
-			{
-				return defaultValue;
-			}
-		}
+                return (T)Convert.ChangeType(value, type, CultureInfo.InvariantCulture);
+            }
+            catch (Exception)
+            {
+                return defaultValue;
+            }
+        }
 
-		public void Save()
-		{
-			config.Save(ConfigurationSaveMode.Minimal, true);
-		}
+        public void Save()
+        {
+            config.Save(ConfigurationSaveMode.Minimal, true);
+        }
 
-		public static ACBrConfig CreateOrLoad(string fileName = "acbr.config")
-		{
-			if (!File.Exists(fileName))
-			{
-				var config = "<?xml version='1.0' encoding='utf-8' ?>" + Environment.NewLine +
-							 "<configuration>" + Environment.NewLine +
-							 "    <appSettings>" + Environment.NewLine +
-							 "    </appSettings>" + Environment.NewLine +
-							 "</configuration>";
-				File.WriteAllText(fileName, config);
-			}
+        public static ACBrConfig CreateOrLoad(string fileName = "acbr.config")
+        {
+            if (!File.Exists(fileName))
+            {
+                var config = "<?xml version='1.0' encoding='utf-8' ?>" + Environment.NewLine +
+                             "<configuration>" + Environment.NewLine +
+                             "    <appSettings>" + Environment.NewLine +
+                             "    </appSettings>" + Environment.NewLine +
+                             "</configuration>";
+                File.WriteAllText(fileName, config);
+            }
 
-			var configFileMap = new ExeConfigurationFileMap
-			{
-				ExeConfigFilename = fileName
-			};
+            var configFileMap = new ExeConfigurationFileMap
+            {
+                ExeConfigFilename = fileName
+            };
 
-			var configuration = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
-			return new ACBrConfig(configuration);
-		}
+            var configuration = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
+            return new ACBrConfig(configuration);
+        }
 
-		#endregion Methods
-	}
+        #endregion Methods
+    }
 }

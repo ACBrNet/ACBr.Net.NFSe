@@ -61,16 +61,14 @@
     <AssemblyOriginatorKeyFile>acbr.net.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ACBr.Net.Core, Version=1.0.1.5, Culture=neutral, PublicKeyToken=d3bb9130f8b775a6, processorArchitecture=MSIL">
-      <HintPath>..\packages\ACBr.Net.Core.1.0.1.5\lib\net40\ACBr.Net.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="ACBr.Net.Core, Version=1.0.1.8, Culture=neutral, PublicKeyToken=d3bb9130f8b775a6, processorArchitecture=MSIL">
+      <HintPath>..\packages\ACBr.Net.Core.1.0.1.8\lib\net40\ACBr.Net.Core.dll</HintPath>
     </Reference>
-    <Reference Include="ACBr.Net.DFe.Core, Version=1.0.2.1, Culture=neutral, PublicKeyToken=d3bb9130f8b775a6, processorArchitecture=MSIL">
-      <HintPath>..\packages\ACBr.Net.DFe.Core.1.0.2.1\lib\net40\ACBr.Net.DFe.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="ACBr.Net.DFe.Core, Version=1.0.2.4, Culture=neutral, PublicKeyToken=d3bb9130f8b775a6, processorArchitecture=MSIL">
+      <HintPath>..\packages\ACBr.Net.DFe.Core.1.0.2.4\lib\net40\ACBr.Net.DFe.Core.dll</HintPath>
     </Reference>
-    <Reference Include="PropertyChanged, Version=1.52.1.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
-      <HintPath>..\packages\PropertyChanged.Fody.1.52.1\Lib\portable-net4+sl4+wp8+win8+wpa81+MonoAndroid16+MonoTouch40\PropertyChanged.dll</HintPath>
+    <Reference Include="PropertyChanged, Version=1.53.0.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>..\packages\PropertyChanged.Fody.1.53.0\Lib\portable-net4+sl4+wp8+win8+wpa81+MonoAndroid16+MonoTouch40\PropertyChanged.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -90,25 +88,60 @@
       <SubType>ACBr.Net</SubType>
     </Compile>
     <Compile Include="ACBrNFSeProxy.cs" />
-    <Compile Include="Configuracao\CfgArquivos.cs" />
-    <Compile Include="Configuracao\CfgCertificados.cs" />
-    <Compile Include="Configuracao\CfgGeral.cs" />
-    <Compile Include="Configuracao\CfgWebServices.cs" />
+    <Compile Include="Configuracao\NFSeConfigArquivos.cs" />
+    <Compile Include="Configuracao\NFSeConfigCertificados.cs" />
+    <Compile Include="Configuracao\NFSeConfigGeral.cs" />
+    <Compile Include="Configuracao\NFSeConfigWebServices.cs" />
     <Compile Include="Configuracao\ConfiguracoesNFSe.cs" />
     <Compile Include="Nota\DadosMateriais.cs" />
-    <Compile Include="Providers\Betha\BethaConsultarSituacaoLoteRpsServiceClient.cs" />
-    <Compile Include="Providers\Betha\BethaCancelarNev01ServiceClient.cs" />
-    <Compile Include="Providers\Betha\BethaConsultarLoteRpsServiceClient.cs" />
-    <Compile Include="Providers\Betha\BethaConsultarNeServiceClient.cs" />
-    <Compile Include="Providers\Betha\BethaConsultarNePorRpsServiceClient.cs" />
-    <Compile Include="Providers\Betha\BethaRecepcionarLoteRpsServiceClient.cs" />
-    <Compile Include="Providers\Betha\IBethaConsultarSituacaoLoteRps.cs" />
-    <Compile Include="Providers\Betha\IBethaConsultarNePorRps.cs" />
-    <Compile Include="Providers\Betha\IBethaConsultarNe.cs" />
-    <Compile Include="Providers\Betha\IBethaConsultarLoteRps.cs" />
-    <Compile Include="Providers\Betha\IBethaCancelarNEV01.cs" />
-    <Compile Include="Providers\Betha\IBethaRecepcionarLoteRps.cs" />
+    <Compile Include="Providers\ACBrMunicipioNFSe.cs" />
+    <Compile Include="Providers\Betha2\Betha2ServiceClient.cs" />
+    <Compile Include="Providers\Betha2\CancelarNfse.cs" />
+    <Compile Include="Providers\Betha2\ConsultarLoteRpsRequest.cs" />
+    <Compile Include="Providers\Betha2\ConsultarLoteRpsResponse.cs" />
+    <Compile Include="Providers\Betha2\ConsultarNfseFaixaRequest.cs" />
+    <Compile Include="Providers\Betha2\ConsultarNfseFaixaResponse.cs" />
+    <Compile Include="Providers\Betha2\ConsultarNfsePorRpsRequest.cs" />
+    <Compile Include="Providers\Betha2\ConsultarNfsePorRpsResponse.cs" />
+    <Compile Include="Providers\Betha2\ConsultarNfseServicoPrestadoRequest.cs" />
+    <Compile Include="Providers\Betha2\ConsultarNfseServicoPrestadoResponse.cs" />
+    <Compile Include="Providers\Betha2\ConsultarNfseServicoTomadoRequest.cs" />
+    <Compile Include="Providers\Betha2\ConsultarNfseServicoTomadoResponse.cs" />
+    <Compile Include="Providers\Betha2\GerarNfseRequest.cs" />
+    <Compile Include="Providers\Betha2\RecepcionarLoteRpsRequest.cs" />
+    <Compile Include="Providers\Betha2\RecepcionarLoteRpsResponse.cs" />
+    <Compile Include="Providers\Betha2\RecepcionarLoteRpsSincronoRequest.cs" />
+    <Compile Include="Providers\Betha2\RecepcionarLoteRpsSincronoResponse.cs" />
+    <Compile Include="Providers\Betha2\ResponseBase.cs" />
+    <Compile Include="Providers\Betha2\CancelarNfseResponse.cs" />
+    <Compile Include="Providers\Betha2\IBetha2Service.cs" />
+    <Compile Include="Providers\Betha2\ProviderBetha2.cs" />
+    <Compile Include="Providers\Betha2\GerarNfseResponse.cs" />
+    <Compile Include="Providers\Betha2\RequestBase.cs" />
+    <Compile Include="Providers\Betha2\SubstituirNfseRequest.cs" />
+    <Compile Include="Providers\Betha2\SubstituirNfseResponse.cs" />
+    <Compile Include="Providers\IABRASF2Client.cs" />
     <Compile Include="Providers\IABRASFClient.cs" />
+    <Compile Include="Providers\NFSeProvider.cs" />
+    <Compile Include="Providers\NotaCarioca\CancelarNfseRequest.cs" />
+    <Compile Include="Providers\NotaCarioca\CancelarNfseResponse.cs" />
+    <Compile Include="Providers\NotaCarioca\ConsultarLoteRpsRequest.cs" />
+    <Compile Include="Providers\NotaCarioca\ConsultarLoteRpsResponse.cs" />
+    <Compile Include="Providers\NotaCarioca\ConsultarNfsePorRpsRequest.cs" />
+    <Compile Include="Providers\NotaCarioca\ConsultarNfsePorRpsResponse.cs" />
+    <Compile Include="Providers\NotaCarioca\ConsultarNfseRequest.cs" />
+    <Compile Include="Providers\NotaCarioca\ConsultarNfseResponse.cs" />
+    <Compile Include="Providers\NotaCarioca\ConsultarSituacaoLoteRpsRequest.cs" />
+    <Compile Include="Providers\NotaCarioca\ConsultarSituacaoLoteRpsResponse.cs" />
+    <Compile Include="Providers\NotaCarioca\GerarNfseRequest.cs" />
+    <Compile Include="Providers\NotaCarioca\GerarNfseResponse.cs" />
+    <Compile Include="Providers\NotaCarioca\INotaCariocaServiceClient.cs" />
+    <Compile Include="Providers\NotaCarioca\ProviderNotaCarioca.cs" />
+    <Compile Include="Providers\NotaCarioca\RecepcionarLoteRpsRequest.cs" />
+    <Compile Include="Providers\NotaCarioca\RecepcionarLoteRpsResponse.cs" />
+    <Compile Include="Providers\NotaCarioca\RequestBase.cs" />
+    <Compile Include="Providers\NotaCarioca\ResponseBase.cs" />
+    <Compile Include="Providers\NotaCarioca\NotaCariocaServiceClient.cs" />
     <Compile Include="Providers\PortoAlegre\CancelarNfseRequest.cs" />
     <Compile Include="Providers\PortoAlegre\CancelarNfseResponse.cs" />
     <Compile Include="Providers\PortoAlegre\ConsultarLoteRpsRequest.cs" />
@@ -130,7 +163,6 @@
     <Compile Include="Providers\PortoAlegre\PortoAlegreServiceClient.cs" />
     <Compile Include="Providers\ProviderABRASF.cs" />
     <Compile Include="Providers\ProviderABRASF2.cs" />
-    <Compile Include="Providers\Betha\ProviderBetha.cs" />
     <Compile Include="Providers\DSF\CancelarRequest.cs" />
     <Compile Include="Providers\DSF\CancelarResponse.cs" />
     <Compile Include="Providers\DSF\ConsultarLoteRequest.cs" />
@@ -152,8 +184,8 @@
     <Compile Include="Providers\Ginfes\GinfesHomServiceClient.cs" />
     <Compile Include="Providers\Ginfes\IGinfesServiceClient.cs" />
     <Compile Include="Providers\Ginfes\ProviderGinfes.cs" />
-    <Compile Include="Providers\MunicipioNFSe.cs" />
     <Compile Include="Providers\Evento.cs" />
+    <Compile Include="Providers\ProviderExtensions.cs" />
     <Compile Include="Providers\RetornoWebService.cs" />
     <Compile Include="Providers\SaoPaulo\CancelamentoNFeRequest.cs" />
     <Compile Include="Providers\SaoPaulo\CancelamentoNFeResponse.cs" />
@@ -179,11 +211,13 @@
     <Compile Include="Providers\SaoPaulo\TesteEnvioLoteRPSRequest.cs" />
     <Compile Include="Providers\SaoPaulo\TesteEnvioLoteRPSResponse.cs" />
     <Compile Include="Providers\TipoUrl.cs" />
-    <Compile Include="Eventos\OnErrorEventArgs.cs" />
+    <Compile Include="OnErrorEventArgs.cs" />
     <Compile Include="Nota\IdeRpsSubtituida.cs" />
     <Compile Include="Providers\ProviderBase.cs" />
     <Compile Include="Providers\DSF\ProviderDSF.cs" />
-    <Compile Include="Interfaces\IDANFSe.cs" />
+    <Compile Include="ACBrDANFSeBase.cs">
+      <SubType>ACBr.Net</SubType>
+    </Compile>
     <Compile Include="Nota\FormaPagamento.cs" />
     <Compile Include="Nota\DadosPagamento.cs" />
     <Compile Include="Nota\IdeCancelamento.cs" />
@@ -240,7 +274,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="acbr.net.snk" />
-    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Resources\Municipios.nfse" />
     <None Include="Schemas\4R\nfse.xsd">
@@ -874,15 +907,15 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Schemas\RJ\tipos_nfse_v01.xsd">
+    <None Include="Schemas\Nota Carioca\tipos_nfse_v01.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Schemas\RJ\tipos_nfse_v01_old.xsd">
+    <None Include="Schemas\Nota Carioca\tipos_nfse_v01_old.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Schemas\RJ\xmldsig-core-schema_v01.xsd">
+    <None Include="Schemas\Nota Carioca\xmldsig-core-schema_v01.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -908,7 +941,55 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Schemas\SimpliSS\nfse_1.xsd">
+    <None Include="Schemas\SimpliSS\nfse_3.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SimpliSS\servico_cancelar_nfse_envio.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SimpliSS\servico_cancelar_nfse_resposta.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SimpliSS\servico_consultar_lote_rps_envio.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SimpliSS\servico_consultar_lote_rps_resposta.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SimpliSS\servico_consultar_nfse_envio.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SimpliSS\servico_consultar_nfse_resposta.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SimpliSS\servico_consultar_nfse_rps_envio.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SimpliSS\servico_consultar_nfse_rps_resposta.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SimpliSS\servico_consultar_situacao_lote_rps_envio.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SimpliSS\servico_consultar_situacao_lote_rps_resposta.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SimpliSS\servico_enviar_lote_rps_envio.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemas\SimpliSS\servico_enviar_lote_rps_resposta.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -1250,7 +1331,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FodyWeavers.xml" />
+    <None Include="FodyWeavers.xml" />
     <Content Include="Schemas\Actcon\Atencao.txt" />
     <Content Include="ACBrNFSe.bmp" />
   </ItemGroup>
@@ -1265,12 +1346,12 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
-  <Import Project="..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets" Condition="Exists('..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets')" />
+  <Import Project="..\packages\Fody.2.1.2\build\portable-net+sl+win+wpa+wp\Fody.targets" Condition="Exists('..\packages\Fody.2.1.2\build\portable-net+sl+win+wpa+wp\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+      <ErrorText>Este projeto faz referência a pacotes do NuGet que não estão presentes neste computador. Use a Restauração de Pacotes do NuGet para baixá-los.  Para obter mais informações, consulte http://go.microsoft.com/fwlink/?LinkID=322105. O arquivo ausente é {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Fody.2.1.2\build\portable-net+sl+win+wpa+wp\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.2.1.2\build\portable-net+sl+win+wpa+wp\Fody.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

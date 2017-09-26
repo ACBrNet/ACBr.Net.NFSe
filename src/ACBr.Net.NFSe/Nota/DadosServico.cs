@@ -34,58 +34,58 @@ using PropertyChanged;
 
 namespace ACBr.Net.NFSe.Nota
 {
-	[ImplementPropertyChanged]
-	public sealed class DadosServico : GenericClone<DadosServico>
-	{
-		#region Constructors
+    [ImplementPropertyChanged]
+    public sealed class DadosServico : GenericClone<DadosServico>
+    {
+        #region Constructors
 
-		internal DadosServico()
-		{
-			Valores = new ValoresServico();
-			ItemListaServico = string.Empty;
-			CodigoCnae = string.Empty;
-			CodigoTributacaoMunicipio = string.Empty;
-			Discriminacao = string.Empty;
-			NumeroProcesso = string.Empty;
-			ExigibilidadeIss = ExigibilidadeIss.Exigivel;
-			ItensServico = new ServicosCollection();
-			Deducoes = new DeducoesCollection();
-		}
+        internal DadosServico()
+        {
+            Valores = new ValoresServico();
+            ItemListaServico = string.Empty;
+            CodigoCnae = string.Empty;
+            CodigoTributacaoMunicipio = string.Empty;
+            Discriminacao = string.Empty;
+            NumeroProcesso = string.Empty;
+            ExigibilidadeIss = ExigibilidadeIss.Exigivel;
+            ItensServico = new ServicosCollection();
+            Deducoes = new DeducoesCollection();
+        }
 
-		#endregion Constructors
+        #endregion Constructors
 
-		#region Propriedades
+        #region Propriedades
 
-		public ValoresServico Valores { get; }
+        public ValoresServico Valores { get; }
 
-		public string ItemListaServico { get; set; }
+        public string ItemListaServico { get; set; }
 
-		public string CodigoCnae { get; set; }
+        public string CodigoCnae { get; set; }
 
-		public string CodigoTributacaoMunicipio { get; set; }
+        public string CodigoTributacaoMunicipio { get; set; }
 
-		public string Discriminacao { get; set; }
+        public string Discriminacao { get; set; }
 
-		public int CodigoMunicipio { get; set; }
+        public int CodigoMunicipio { get; set; }
 
-		public string Municipio { get; set; }
+        public string Municipio { get; set; }
 
-		public int CodigoPais { get; set; }
+        public int CodigoPais { get; set; }
 
-		public ExigibilidadeIss ExigibilidadeIss { get; set; }
+        public ExigibilidadeIss ExigibilidadeIss { get; set; }
 
-		public int MunicipioIncidencia { get; set; }
+        public int MunicipioIncidencia { get; set; }
 
-		public string NumeroProcesso { get; set; }
+        public string NumeroProcesso { get; set; }
 
-		public ServicosCollection ItensServico { get; }
+        public ServicosCollection ItensServico { get; }
 
-		public ResponsavelRetencao ResponsavelRetencao { get; set; }
+        public ResponsavelRetencao? ResponsavelRetencao { get; set; }
 
-		public string Descricao { get; set; }
+        public string Descricao { get; set; }
 
-		public DeducoesCollection Deducoes { get; }
+        public DeducoesCollection Deducoes { get; }
 
-		#endregion Propriedades
-	}
+        #endregion Propriedades
+    }
 }

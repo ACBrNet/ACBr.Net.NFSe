@@ -1,4 +1,35 @@
-﻿using ACBr.Net.Core;
+﻿// ***********************************************************************
+// Assembly         : ACBr.Net.NFSe
+// Author           : Rodolfo Duarte
+// Created          : 01-31-2016
+//
+// Last Modified By : RFTD
+// Last Modified On : 08-06-2017
+// ***********************************************************************
+// <copyright file="ACBrNFSeProxy.cs" company="ACBr.Net">
+//		        		   The MIT License (MIT)
+//	     		    Copyright (c) 2016 Grupo ACBr.Net
+//
+//	 Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//	 The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//	 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// DEALINGS IN THE SOFTWARE.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+
+using ACBr.Net.Core;
 using ACBr.Net.DFe.Core.Common;
 using ACBr.Net.DFe.Core.Serializer;
 using ACBr.Net.NFSe.Nota;
@@ -7,17 +38,18 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
+using ACBr.Net.Core.Extensions;
 
 namespace ACBr.Net.NFSe
 {
     [ComVisible(true)]
     [ProgId(nameof(ACBrNFSeProxy))]
-    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [ClassInterface(ClassInterfaceType.AutoDispatch)]
     public class ACBrNFSeProxy
     {
         #region Fields
 
-        private readonly ACBrNFSe oACBrNFSe;
+        private ACBrNFSe oACBrNFSe;
         private NotaFiscal NFSe;
 
         #endregion Fields
@@ -109,17 +141,16 @@ namespace ACBr.Net.NFSe
                 oACBrNFSe.Configuracoes.Certificados.Senha = senha;
 
                 // Ajusta as particularidades de cada provedor.
-                var provider = ProviderManager.GetProvider(oACBrNFSe.Configuracoes);
-                switch (provider.Name.ToUpper())
+                using (var provider = ProviderManager.GetProvider(oACBrNFSe.Configuracoes))
                 {
-                    case "GINFES":
-                        // Provedor Ginfes em ambiente de Homologação não aceita acentos. (Ambiente de Produção aceita normalmente.)
-                        if (oACBrNFSe.Configuracoes.WebServices.Ambiente == DFeTipoAmbiente.Homologacao)
-                            oACBrNFSe.Configuracoes.Geral.RetirarAcentos = true;
-                        break;
-
-                    default:
-                        break;
+                    switch (provider.Name.ToUpper())
+                    {
+                        case "GINFES":
+                            // Provedor Ginfes em ambiente de Homologação não aceita acentos. (Ambiente de Produção aceita normalmente.)
+                            if (oACBrNFSe.Configuracoes.WebServices.Ambiente == DFeTipoAmbiente.Homologacao)
+                                oACBrNFSe.Configuracoes.Geral.RetirarAcentos = true;
+                            break;
+                    }
                 }
             }
             catch (Exception ex)
@@ -224,6 +255,7 @@ namespace ACBr.Net.NFSe
         public bool Finalizar(ref string mensagemAlerta, ref string mensagemErro)
         {
             oACBrNFSe.Dispose();
+            oACBrNFSe = null;
             return true;
         }
 
@@ -498,6 +530,7 @@ namespace ACBr.Net.NFSe
             }
             return mensagemErro;
         }
+
         #endregion Métodos para montar o RPS
 
         #region Webservices
@@ -657,40 +690,32 @@ namespace ACBr.Net.NFSe
         {
             if (MensagemRetorno.Alertas.Count > 0)
             {
-                var builderAlertas = new System.Text.StringBuilder();
+                var builderAlertas = new StringBuilder();
                 foreach (var alerta in MensagemRetorno.Alertas)
                 {
-                    if (!String.IsNullOrWhiteSpace(alerta.IdentificacaoRps.Numero))
-                        builderAlertas.Append("RPS: " + alerta.IdentificacaoRps.Numero);
-                    if (!String.IsNullOrWhiteSpace(alerta.IdentificacaoNfse.Numero))
-                        builderAlertas.Append("NFSe: " + alerta.IdentificacaoNfse.Numero);
-                    builderAlertas.Append("[" + alerta.Codigo.ToString() + "] " + alerta.Descricao + " / " + alerta.Correcao);
+                    if (!alerta.IdentificacaoRps.Numero.IsEmpty()) builderAlertas.Append("RPS: " + alerta.IdentificacaoRps.Numero);
+                    if (!alerta.IdentificacaoNfse.Numero.IsEmpty()) builderAlertas.Append("NFSe: " + alerta.IdentificacaoNfse.Numero);
+                    builderAlertas.Append("[" + alerta.Codigo + "] " + alerta.Descricao + " / " + alerta.Correcao);
                 }
                 if (builderAlertas.Length > 0)
                 {
                     mensagemAlerta = builderAlertas.ToString();
                 }
             }
-            if (MensagemRetorno.Erros.Count > 0)
+
+            if (MensagemRetorno.Erros.Count < 1) return !MensagemRetorno.XmlRetorno.IsEmpty();
+
+            var builderErros = new StringBuilder();
+            foreach (var erro in MensagemRetorno.Erros)
             {
-                var builderErros = new System.Text.StringBuilder();
-                foreach (var erro in MensagemRetorno.Erros)
-                {
-                    if (!String.IsNullOrWhiteSpace(erro.IdentificacaoRps.Numero))
-                        builderErros.Append("RPS: " + erro.IdentificacaoRps.Numero);
-                    if (!String.IsNullOrWhiteSpace(erro.IdentificacaoNfse.Numero))
-                        builderErros.Append("NFSe: " + erro.IdentificacaoNfse.Numero);
-                    builderErros.Append("[" + erro.Codigo.ToString() + "] " + erro.Descricao + " / " + erro.Correcao);
-                }
-                if (builderErros.Length == 0 & MensagemRetorno.Sucesso == false)
-                {
-                    builderErros.Append("Ocorreu um erro não identificado.");
-                }
-                if (builderErros.Length > 0)
-                {
-                    mensagemErro = builderErros.ToString();
-                }
+                if (!erro.IdentificacaoRps.Numero.IsEmpty()) builderErros.Append("RPS: " + erro.IdentificacaoRps.Numero);
+                if (!erro.IdentificacaoNfse.Numero.IsEmpty()) builderErros.Append("NFSe: " + erro.IdentificacaoNfse.Numero);
+                builderErros.Append("[" + erro.Codigo + "] " + erro.Descricao + " / " + erro.Correcao);
             }
+
+            if (builderErros.Length == 0 & MensagemRetorno.Sucesso == false) builderErros.Append("Ocorreu um erro não identificado.");
+            if (builderErros.Length > 0) mensagemErro = builderErros.ToString();
+
             // Consideramos o retorno falso, quando não conseguimos pegar o Xml de Retorno do Webservice
             // Por exemplo:
             // FALSO: Se o usuário não digitar a senha do certificado, irá retornar falso.
@@ -698,10 +723,7 @@ namespace ACBr.Net.NFSe
             // VERDADEIRO: Mas se houve o retorno do Webservice, sempre consideraremos como verdadeiro o retorno.
             // Ainda que o webservice devolveu uma mensagem de erro, será verdadeiro pois o webservice foi consumido.
             // E neste caso, a aplicação que está consumindo o componente ACBR.NET.NFSE deve identificar a ação a ser tomada (por exemplo, corrigir os dados de um RPS enviado).
-            if (string.IsNullOrWhiteSpace(MensagemRetorno.XmlRetorno))
-                return false;
-            else
-                return true;
+            return !MensagemRetorno.XmlRetorno.IsEmpty();
         }
 
         #endregion Métodos privados

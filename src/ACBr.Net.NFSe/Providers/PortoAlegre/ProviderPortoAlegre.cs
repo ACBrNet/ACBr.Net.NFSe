@@ -37,7 +37,7 @@ namespace ACBr.Net.NFSe.Providers.PortoAlegre
 	{
 		#region Constructors
 
-		public ProviderPortoAlegre(ConfiguracoesNFSe config, MunicipioNFSe municipio) : base(config, municipio)
+		public ProviderPortoAlegre(ConfiguracoesNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
 		{
 			Name = "Porto Alegre";
 		}
