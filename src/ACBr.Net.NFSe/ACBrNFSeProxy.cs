@@ -73,7 +73,7 @@ namespace ACBr.Net.NFSe
         {
             get
             {
-                return "1.170516.1200"; // 1.AAMMDD.HHMM
+                return "1.171120.0950"; // 1.AAMMDD.HHMM
             }
         }
 

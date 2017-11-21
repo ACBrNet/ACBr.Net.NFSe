@@ -565,7 +565,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
             servico.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoTributacaoMunicipio", ns, 1, 20, Ocorrencia.NaoObrigatoria, nota.Servico.CodigoTributacaoMunicipio));
             servico.AddChild(AdicionarTag(TipoCampo.Str, "", "Discriminacao", ns, 1, 2000, Ocorrencia.Obrigatoria, nota.Servico.Discriminacao));
-            servico.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "CodigoMunicipio", ns, 1, 7, Ocorrencia.Obrigatoria, nota.Servico.CodigoMunicipio));
+            servico.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "CodigoMunicipio", ns, 1, 7, Ocorrencia.Obrigatoria, nota.Servico.CodigoMunicipio == 9999999 ? 99999 : nota.Servico.CodigoMunicipio)); // Ginfes: No IBGE, o código de cidade do exterior é 9999999, mas no Ginfes é 99999
 
             var prestador = new XElement(ns + "Prestador");
             infNfse.AddChild(prestador);
@@ -576,15 +576,21 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             var tomador = new XElement(ns + "Tomador");
             infNfse.AddChild(tomador);
 
-            var ideTomador = new XElement(ns + "IdentificacaoTomador");
-            tomador.AddChild(ideTomador);
+            if (!nota.Tomador.CpfCnpj.IsEmpty() || !nota.Tomador.InscricaoMunicipal.IsEmpty())
+            {
+                var ideTomador = new XElement(ns + "IdentificacaoTomador");
+                tomador.AddChild(ideTomador);
 
-            var cpfCnpj = new XElement(ns + "CpfCnpj");
-            ideTomador.AddChild(cpfCnpj);
+                if (!nota.Tomador.CpfCnpj.IsEmpty())
+                {
+                    var cpfCnpj = new XElement(ns + "CpfCnpj");
+                    ideTomador.AddChild(cpfCnpj);
+                    cpfCnpj.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Tomador.CpfCnpj, ns));
+                }
 
-            cpfCnpj.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Tomador.CpfCnpj, ns));
-            if (!string.IsNullOrWhiteSpace(nota.Tomador.InscricaoMunicipal))
-                ideTomador.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "InscricaoMunicipal", ns, 1, 15, Ocorrencia.NaoObrigatoria, nota.Tomador.InscricaoMunicipal));
+                if (!nota.Tomador.InscricaoMunicipal.IsEmpty())
+                    ideTomador.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "InscricaoMunicipal", ns, 1, 15, Ocorrencia.NaoObrigatoria, nota.Tomador.InscricaoMunicipal));
+            }
 
             tomador.AddChild(AdicionarTag(TipoCampo.Str, "", "RazaoSocial", ns, 1, 115, Ocorrencia.NaoObrigatoria, nota.Tomador.RazaoSocial));
             if (!nota.Tomador.Endereco.Logradouro.IsEmpty())
@@ -596,7 +602,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Numero", ns, 1, 10, Ocorrencia.Obrigatoria, nota.Tomador.Endereco.Numero));
                 endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Complemento", ns, 1, 10, Ocorrencia.NaoObrigatoria, nota.Tomador.Endereco.Complemento));
                 endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Bairro", ns, 1, 60, Ocorrencia.NaoObrigatoria, nota.Tomador.Endereco.Bairro));
-                endereco.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "CodigoMunicipio", ns, 1, 7, Ocorrencia.NaoObrigatoria, nota.Tomador.Endereco.CodigoMunicipio));
+                endereco.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "CodigoMunicipio", ns, 1, 7, Ocorrencia.NaoObrigatoria, nota.Tomador.Endereco.CodigoMunicipio == 9999999 ? 99999 : nota.Tomador.Endereco.CodigoMunicipio)); // Ginfes: No IBGE, o código de cidade do exterior é 9999999, mas no Ginfes é 99999
                 endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Uf", ns, 2, 2, Ocorrencia.NaoObrigatoria, nota.Tomador.Endereco.Uf));
                 endereco.AddChild(AdicionarTag(TipoCampo.StrNumberFill, "", "Cep", ns, 8, 8, Ocorrencia.NaoObrigatoria, nota.Tomador.Endereco.Cep));
             }
@@ -617,9 +623,10 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 var intServicoCpfCnpj = new XElement(ns + "CpfCnpj");
                 intServico.AddChild(intServicoCpfCnpj);
 
-                cpfCnpj.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Intermediario.CpfCnpj, ns));
+                intServicoCpfCnpj.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Intermediario.CpfCnpj, ns));
 
-                intServico.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "InscricaoMunicipal", ns, 1, 15, 0, nota.Intermediario.InscricaoMunicipal));
+                if (!nota.Intermediario.InscricaoMunicipal.IsEmpty())
+                    intServico.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "InscricaoMunicipal", ns, 1, 15, 0, nota.Intermediario.InscricaoMunicipal));
             }
 
             if (!nota.ConstrucaoCivil.CodigoObra.IsEmpty())
@@ -636,7 +643,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 var orgGerador = new XElement(ns + "OrgaoGerador");
                 infNfse.AddChild(orgGerador);
 
-                orgGerador.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "CodigoMunicipio", ns, 1, 7, Ocorrencia.NaoObrigatoria, nota.OrgaoGerador.CodigoMunicipio));
+                orgGerador.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "CodigoMunicipio", ns, 1, 7, Ocorrencia.NaoObrigatoria, nota.OrgaoGerador.CodigoMunicipio == 9999999 ? 99999 : nota.OrgaoGerador.CodigoMunicipio)); // Ginfes: No IBGE, o código de cidade do exterior é 9999999, mas no Ginfes é 99999
                 orgGerador.AddChild(AdicionarTag(TipoCampo.Str, "", "Uf", ns, 2, 2, Ocorrencia.NaoObrigatoria, nota.OrgaoGerador.Uf));
             }
 
@@ -1330,7 +1337,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
             servico.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoTributacaoMunicipio", ns, 1, 20, Ocorrencia.NaoObrigatoria, nota.Servico.CodigoTributacaoMunicipio));
             servico.AddChild(AdicionarTag(TipoCampo.Str, "", "Discriminacao", ns, 1, 2000, Ocorrencia.Obrigatoria, nota.Servico.Discriminacao));
-            servico.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "CodigoMunicipio", ns, 1, 7, Ocorrencia.Obrigatoria, nota.Servico.CodigoMunicipio));
+            servico.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "CodigoMunicipio", ns, 1, 7, Ocorrencia.Obrigatoria, nota.Servico.CodigoMunicipio == 9999999 ? 99999 : nota.Servico.CodigoMunicipio)); // Ginfes: No IBGE, o código de cidade do exterior é 9999999, mas no Ginfes é 99999
 
             var prestador = new XElement(ns + "Prestador");
             infoRps.AddChild(prestador);
@@ -1341,15 +1348,21 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             var tomador = new XElement(ns + "Tomador");
             infoRps.AddChild(tomador);
 
-            var ideTomador = new XElement(ns + "IdentificacaoTomador");
-            tomador.AddChild(ideTomador);
+            if (!nota.Tomador.CpfCnpj.IsEmpty() || !nota.Tomador.InscricaoMunicipal.IsEmpty())
+            {
+                var ideTomador = new XElement(ns + "IdentificacaoTomador");
+                tomador.AddChild(ideTomador);
 
-            var cpfCnpj = new XElement(ns + "CpfCnpj");
-            ideTomador.AddChild(cpfCnpj);
+                if (!nota.Tomador.CpfCnpj.IsEmpty())
+                {
+                    var cpfCnpj = new XElement(ns + "CpfCnpj");
+                    ideTomador.AddChild(cpfCnpj);
+                    cpfCnpj.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Tomador.CpfCnpj, ns));
+                }
 
-            cpfCnpj.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Tomador.CpfCnpj, ns));
-            if (!string.IsNullOrWhiteSpace(nota.Tomador.InscricaoMunicipal))
-                ideTomador.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "InscricaoMunicipal", ns, 1, 15, Ocorrencia.NaoObrigatoria, nota.Tomador.InscricaoMunicipal));
+                if (!string.IsNullOrWhiteSpace(nota.Tomador.InscricaoMunicipal))
+                    ideTomador.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "InscricaoMunicipal", ns, 1, 15, Ocorrencia.NaoObrigatoria, nota.Tomador.InscricaoMunicipal));
+            }
 
             tomador.AddChild(AdicionarTag(TipoCampo.Str, "", "RazaoSocial", ns, 1, 115, Ocorrencia.NaoObrigatoria, nota.Tomador.RazaoSocial));
             if (!nota.Tomador.Endereco.Logradouro.IsEmpty())
@@ -1361,7 +1374,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Numero", ns, 1, 10, Ocorrencia.Obrigatoria, nota.Tomador.Endereco.Numero));
                 endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Complemento", ns, 1, 10, Ocorrencia.NaoObrigatoria, nota.Tomador.Endereco.Complemento));
                 endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Bairro", ns, 1, 60, Ocorrencia.NaoObrigatoria, nota.Tomador.Endereco.Bairro));
-                endereco.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "CodigoMunicipio", ns, 1, 7, Ocorrencia.NaoObrigatoria, nota.Tomador.Endereco.CodigoMunicipio));
+                endereco.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "CodigoMunicipio", ns, 1, 7, Ocorrencia.NaoObrigatoria, nota.Tomador.Endereco.CodigoMunicipio == 9999999 ? 99999 : nota.Tomador.Endereco.CodigoMunicipio)); // Ginfes: No IBGE, o código de cidade do exterior é 9999999, mas no Ginfes é 99999
                 endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Uf", ns, 2, 2, Ocorrencia.NaoObrigatoria, nota.Tomador.Endereco.Uf));
                 endereco.AddChild(AdicionarTag(TipoCampo.StrNumberFill, "", "Cep", ns, 8, 8, Ocorrencia.NaoObrigatoria, nota.Tomador.Endereco.Cep));
             }
