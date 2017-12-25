@@ -542,7 +542,6 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
             valores.AddChild(AdicionarTag(TipoCampo.Int, "", "IssRetido", ns, 1, 1, Ocorrencia.Obrigatoria, issRetido));
 
-
             Ocorrencia TipoOcorrenciaValorIss = Ocorrencia.MaiorQueZero;
             if (regimeEspecialTributacao == "2")
             {
@@ -701,7 +700,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             var xmlLote = new StringBuilder();
             xmlLote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             xmlLote.Append("<EnviarLoteRpsEnvio xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\" xmlns=\"http://www.ginfes.com.br/servico_enviar_lote_rps_envio_v03.xsd\">");
-            xmlLote.Append("<LoteRps>");
+            xmlLote.Append($"<LoteRps Id=\"L{lote}\">");
             xmlLote.Append($"<tipos:NumeroLote>{lote}</tipos:NumeroLote>");
             xmlLote.Append($"<tipos:Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tipos:Cnpj>");
             xmlLote.Append($"<tipos:InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
@@ -718,7 +717,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "EnviarLoteRpsEnvio", Certificado);
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXml(xmlEnvio, "EnviarLoteRpsEnvio", "LoteRps", Certificado);
 
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-{lote}-env.xml");
 
@@ -784,7 +783,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ConsultarSituacaoLoteRpsEnvio", Certificado);
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXml(xmlEnvio, "ConsultarSituacaoLoteRpsEnvio", "", Certificado);
 
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarSituacao-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
 
@@ -839,7 +838,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ConsultarLoteRpsEnvio", Certificado);
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXml(xmlEnvio, "ConsultarLoteRpsEnvio", "", Certificado);
 
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
 
@@ -915,7 +914,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             loteBuilder.Append("<CancelarNfseEnvio xmlns=\"http://www.ginfes.com.br/servico_cancelar_nfse_envio_v03.xsd\">");
             loteBuilder.Append("<Pedido xmlns=\"\">");
-            loteBuilder.Append("<tipos:InfPedidoCancelamento Id=\"\" xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\">");
+            loteBuilder.Append($"<tipos:InfPedidoCancelamento Id=\"C{codigoCancelamento}\" xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\">");
             loteBuilder.Append("<tipos:IdentificacaoNfse>");
             loteBuilder.Append($"<tipos:Numero>{numeroNFSe}</tipos:Numero>");
             loteBuilder.Append($"<tipos:Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tipos:Cnpj>");
@@ -933,8 +932,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "Pedido", Certificado);
-
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXml(xmlEnvio, "Pedido", "InfPedidoCancelamento", Certificado);
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CanNFSe-{numeroNFSe}-env.xml");
 
             // Verifica Schema
@@ -1018,7 +1016,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ConsultarNfseRpsEnvio", Certificado);
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXml(xmlEnvio, "ConsultarNfseRpsEnvio", "", Certificado);
 
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConNotaRps-{numero}-env.xml");
 
@@ -1115,7 +1113,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ConsultarNfseEnvio", Certificado);
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXml(xmlEnvio, "ConsultarNfseEnvio", "", Certificado);
 
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConNota-{DateTime.Now:yyyyMMddHHmmss}-{numeroNfse}-env.xml");
 

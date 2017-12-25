@@ -1072,8 +1072,8 @@ namespace ACBr.Net.NFSe.Providers
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXmlTodos(xmlEnvio, "Rps", "InfRps", "Rps", Certificado);
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(retornoWebservice.XmlEnvio, "LoteRps", "EnviarLoteRpsEnvio", Certificado);
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXmlTodos(xmlEnvio, "Rps", "InfRps", Certificado);
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXml(retornoWebservice.XmlEnvio, "EnviarLoteRpsEnvio", "LoteRps", Certificado);
 
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-{lote}-env.xml");
 
@@ -1152,8 +1152,8 @@ namespace ACBr.Net.NFSe.Providers
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXmlTodos(xmlEnvio, "Rps", "InfRps", "Rps", Certificado);
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(retornoWebservice.XmlEnvio, "LoteRps", "GerarNfseEnvio", Certificado);
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXmlTodos(xmlEnvio, "Rps", "InfRps", Certificado);
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXml(retornoWebservice.XmlEnvio, "GerarNfseEnvio", "LoteRps", Certificado);
 
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-{lote}-env.xml");
 
@@ -1236,11 +1236,10 @@ namespace ACBr.Net.NFSe.Providers
 
             if (Config.Geral.RetirarAcentos)
             {
-                xmlEnvio = xmlEnvio.RemoveAccent();
+                retornoWebservice.XmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ConsultarSituacaoLoteRpsEnvio", Certificado);
-
+            retornoWebservice.XmlEnvio = xmlEnvio;
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarSituacao-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
 
             // Verifica Schema
@@ -1291,8 +1290,7 @@ namespace ACBr.Net.NFSe.Providers
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ConsultarLoteRpsEnvio", Certificado);
-
+            retornoWebservice.XmlEnvio = xmlEnvio;
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
 
             // Verifica Schema
@@ -1384,8 +1382,7 @@ namespace ACBr.Net.NFSe.Providers
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "InfPedidoCancelamento", "Pedido", Certificado);
-
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXml(xmlEnvio, "Pedido", "InfPedidoCancelamento", Certificado);
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CanNFSe-{numeroNFSe}-env.xml");
 
             // Verifica Schema
@@ -1463,8 +1460,7 @@ namespace ACBr.Net.NFSe.Providers
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ConsultarNfseRpsEnvio", Certificado);
-
+            retornoWebservice.XmlEnvio = xmlEnvio;
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConNotaRps-{numero}-env.xml");
 
             // Verifica Schema
@@ -1563,8 +1559,7 @@ namespace ACBr.Net.NFSe.Providers
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ConsultarNfseEnvio", Certificado);
-
+            retornoWebservice.XmlEnvio = xmlEnvio;
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConNota-{DateTime.Now:yyyyMMddHHmmss}-{numeroNfse}-env.xml");
 
             // Verifica Schema

@@ -460,7 +460,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ns1:ReqEnvioLoteRPS", Certificado, true);
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXml(xmlEnvio, "ns1:ReqEnvioLoteRPS", "Lote", Certificado, true);
 
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-{lote}-env.xml");
 
@@ -540,7 +540,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ns1:ReqEnvioLoteRPS", Certificado, true);
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXml(xmlEnvio, "ns1:ReqEnvioLoteRPS", "Lote", Certificado, true);
 
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-{lote}-env.xml");
 
@@ -640,7 +640,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ReqCancelamentoNFSe", Certificado, true);
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXml(xmlEnvio, "ns1:ReqCancelamentoNFSe", "Lote", Certificado, true);
 
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CanNFSe-{loteCancelamento}-env.xml");
 
@@ -730,7 +730,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ReqCancelamentoNFSe", Certificado, true);
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXml(xmlEnvio, "ns1:ReqCancelamentoNFSe", "Lote", Certificado, true);
 
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CanNFSe-{loteCancelamento}-env.xml");
 
@@ -949,7 +949,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ns1:ReqConsultaNotas", Certificado, true);
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXml(xmlEnvio, "ns1:ReqConsultaNotas", "Cabecalho", Certificado, true);
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConNota-{inicio:yyyyMMdd}-{fim:yyyyMMdd}-env.xml");
 
             // Verifica Schema
@@ -1042,7 +1042,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "", "ns1:ReqConsultaNFSeRPS", Certificado, true);
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXml(xmlEnvio, "ns1:ReqConsultaNFSeRPS", "Lote", Certificado, true);
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConNotaRps-{numero}-env.xml");
 
             // Verifica Schema

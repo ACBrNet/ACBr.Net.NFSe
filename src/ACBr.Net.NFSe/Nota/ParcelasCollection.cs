@@ -31,65 +31,45 @@
 
 using ACBr.Net.DFe.Core.Collection;
 using PropertyChanged;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace ACBr.Net.NFSe.Nota
 {
-	[ImplementPropertyChanged]
-	public sealed class ParcelasCollection : DFeCollection<Parcelas>, IEnumerable<Parcelas>
-	{
-		#region Contructors
+    [ImplementPropertyChanged]
+    public sealed class ParcelasCollection : DFeCollection<Parcelas>
+    {
+        #region Contructors
 
-		internal ParcelasCollection()
-		{
-		}
+        internal ParcelasCollection()
+        {
+        }
 
-		#endregion Contructors
+        #endregion Contructors
 
-		#region Propriedades
+        #region Propriedades
 
-		public new Parcelas this[int index]
-		{
-			get
-			{
-				return base[index];
-			}
-			set
-			{
-				base[index] = value;
-			}
-		}
+        public new Parcelas this[int index]
+        {
+            get
+            {
+                return base[index];
+            }
+            set
+            {
+                base[index] = value;
+            }
+        }
 
-		#endregion Propriedades
+        #endregion Propriedades
 
-		#region Methods
+        #region Methods
 
-		public override Parcelas AddNew()
-		{
-			var ret = new Parcelas();
-			Add(ret);
-			return ret;
-		}
+        public override Parcelas AddNew()
+        {
+            var ret = new Parcelas();
+            Add(ret);
+            return ret;
+        }
 
-		#endregion Methods
-
-		#region IEnumerable<Parcelas>
-		public IEnumerator<Parcelas> GetEnumerator()
-		{
-			return GetEnumerator();
-		}
-
-		IEnumerator<Parcelas> IEnumerable<Parcelas>.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
-
-		#endregion IEnumerable<Parcelas>
-	}
+        #endregion Methods
+    }
 }

@@ -53,7 +53,7 @@ namespace ACBr.Net.NFSe.Demo
             {
                 GerarRps();
 
-                var numero = 10;
+                var numero = 1;
                 if (InputBox.Show("Numero Lote", "Digite o numero do lote.", ref numero).Equals(DialogResult.Cancel)) return;
 
                 var ret = acbrNFSe.Enviar(numero);

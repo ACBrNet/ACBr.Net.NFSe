@@ -47,7 +47,7 @@ namespace ACBr.Net.NFSe.Providers
     /// <summary>
     /// Classe base para trabalhar com provedores que usam o padrão ABRASF V2
     /// </summary>
-    /// <seealso cref="ACBr.Net.NFSe.Providers.ProviderBase" />
+    /// <seealso cref="ProviderBase" />
     public abstract class ProviderABRASF2 : ProviderBase
     {
         #region Constructors
@@ -723,7 +723,6 @@ namespace ACBr.Net.NFSe.Providers
             foreach (var nota in notas)
             {
                 var xmlRps = GetXmlRps(nota, false, false);
-                xmlLoteRps.Append(xmlRps);
                 GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
             }
 
@@ -751,8 +750,8 @@ namespace ACBr.Net.NFSe.Providers
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXmlTodos(xmlEnvio, "Rps", "InfDeclaracaoPrestacaoServico", "Rps", Certificado);
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(retornoWebservice.XmlEnvio, "LoteRps", "EnviarLoteRpsEnvio", Certificado);
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXmlTodos(xmlEnvio, "Rps", "InfDeclaracaoPrestacaoServico", Certificado);
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXml(retornoWebservice.XmlEnvio, "EnviarLoteRpsEnvio", "LoteRps", Certificado);
 
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-{lote}-env.xml");
 
@@ -805,7 +804,7 @@ namespace ACBr.Net.NFSe.Providers
             foreach (var nota in notas)
             {
                 var xmlRps = GetXmlRps(nota, false, false);
-                xmlLoteRps.Append(xmlRps);
+                xmlLoteRps.Append(XmlSha1Signing.AssinarXml(xmlRps, "Rps", "InfDeclaracaoPrestacaoServico", Certificado));
                 GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
             }
 
@@ -833,8 +832,7 @@ namespace ACBr.Net.NFSe.Providers
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXmlTodos(xmlEnvio, "Rps", "InfDeclaracaoPrestacaoServico", "Rps", Certificado);
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(retornoWebservice.XmlEnvio, "LoteRps", "EnviarLoteRpsSincronoEnvio", Certificado);
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXml(retornoWebservice.XmlEnvio, "EnviarLoteRpsSincronoEnvio", "LoteRps", Certificado);
 
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-{lote}-env.xml");
 
@@ -926,7 +924,6 @@ namespace ACBr.Net.NFSe.Providers
             }
 
             retornoWebservice.XmlEnvio = xmlEnvio;
-
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
 
             // Verifica Schema
@@ -1023,7 +1020,7 @@ namespace ACBr.Net.NFSe.Providers
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "InfPedidoCancelamento", "Pedido", Certificado);
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXml(xmlEnvio, "Pedido", "InfPedidoCancelamento", Certificado);
 
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CanNFSe-{numeroNFSe}-env.xml");
 
@@ -1108,7 +1105,6 @@ namespace ACBr.Net.NFSe.Providers
             }
 
             retornoWebservice.XmlEnvio = xmlEnvio;
-
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConNotaRps-{numero}-env.xml");
 
             // Verifica Schema
@@ -1296,10 +1292,10 @@ namespace ACBr.Net.NFSe.Providers
             loteBuilder.Append($"<SubstituirNfseEnvio xmlns=\"{GetNamespace()}\">");
             loteBuilder.Append($"<SubstituicaoNfse Id=\"SB{codigoCancelamento}\">");
 
-            loteBuilder.Append(CertificadoDigital.AssinarXml(pedidoCancelamento.ToString(), "InfPedidoCancelamento", "Pedido", Certificado));
+            loteBuilder.Append(XmlSha1Signing.AssinarXml(pedidoCancelamento.ToString(), "Pedido", "InfPedidoCancelamento", Certificado));
 
             var xmlRps = GetXmlRps(notas[0], false, false);
-            loteBuilder.Append(xmlRps);
+            loteBuilder.Append(XmlSha1Signing.AssinarXml(xmlRps, "Rps", "InfDeclaracaoPrestacaoServico", Certificado));
             GravarRpsEmDisco(xmlRps, $"Rps-{notas[0].IdentificacaoRps.DataEmissao:yyyyMMdd}-{notas[0].IdentificacaoRps.Numero}.xml", notas[0].IdentificacaoRps.DataEmissao);
 
             loteBuilder.Append("<SubstituicaoNfse>");
@@ -1313,7 +1309,7 @@ namespace ACBr.Net.NFSe.Providers
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = CertificadoDigital.AssinarXml(xmlEnvio, "SubstituicaoNfse", "SubstituirNfseEnvio", Certificado);
+            retornoWebservice.XmlEnvio = XmlSha1Signing.AssinarXml(xmlEnvio, "SubstituirNfseEnvio", "SubstituicaoNfse", Certificado);
 
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"SubsNFSe-{numeroNFSe}-env.xml");
 

@@ -729,7 +729,7 @@ namespace ACBr.Net.NFSe.Providers
             schema = Path.Combine(Config.Geral.PathSchemas, Name, schema);
             string[] errosSchema;
             string[] alertasSchema;
-            if (CertificadoDigital.ValidarXml(xml, schema, out errosSchema, out alertasSchema)) return null;
+            if (XmlSchemaValidation.ValidarXml(xml, schema, out errosSchema, out alertasSchema)) return null;
 
             var retLote = new RetornoWebservice
             {
