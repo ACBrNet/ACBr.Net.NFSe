@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 01-13-2017
 // ***********************************************************************
-// <copyright file="IWebISSServiceClient.cs" company="ACBr.Net">
+// <copyright file="IWebIssServiceClient.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -33,26 +33,26 @@ using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.WebISS
 {
-	[ServiceContract]
-	// ReSharper disable once InconsistentNaming
-	internal interface IWebISSServiceClient
-	{
-		[OperationContract(Action = "http://tempuri.org/INfseServices/RecepcionarLoteRps", ReplyAction = "http://tempuri.org/INfseServices/RecepcionarLoteRpsResponse")]
-		string RecepcionarLoteRps([MessageParameter(Name = "cabec")]string cabec, [MessageParameter(Name = "msg")]string msg);
+    [ServiceContract]
+    // ReSharper disable once InconsistentNaming
+    internal interface IWebIssServiceClient
+    {
+        [OperationContract(Action = "http://tempuri.org/INfseServices/RecepcionarLoteRps", ReplyAction = "http://tempuri.org/INfseServices/RecepcionarLoteRpsResponse")]
+        string RecepcionarLoteRps([MessageParameter(Name = "cabec")]string cabec, [MessageParameter(Name = "msg")]string msg);
 
-		[OperationContract(Action = "http://tempuri.org/INfseServices/ConsultarSituacaoLoteRps", ReplyAction = "http://tempuri.org/INfseServices/ConsultarSituacaoLoteRpsResponse")]
-		string ConsultarSituacaoLoteRps([MessageParameter(Name = "cabec")]string cabec, [MessageParameter(Name = "msg")]string msg);
+        [OperationContract(Action = "http://tempuri.org/INfseServices/ConsultarSituacaoLoteRps", ReplyAction = "http://tempuri.org/INfseServices/ConsultarSituacaoLoteRpsResponse")]
+        string ConsultarSituacaoLoteRps([MessageParameter(Name = "cabec")]string cabec, [MessageParameter(Name = "msg")]string msg);
 
-		[OperationContract(Action = "http://tempuri.org/INfseServices/ConsultarNfsePorRps", ReplyAction = "http://tempuri.org/INfseServices/ConsultarNfsePorRpsResponse")]
-		string ConsultarNfsePorRps([MessageParameter(Name = "cabec")]string cabec, [MessageParameter(Name = "msg")]string msg);
+        [OperationContract(Action = "http://tempuri.org/INfseServices/ConsultarNfsePorRps", ReplyAction = "http://tempuri.org/INfseServices/ConsultarNfsePorRpsResponse")]
+        string ConsultarNfsePorRps([MessageParameter(Name = "cabec")]string cabec, [MessageParameter(Name = "msg")]string msg);
 
-		[OperationContract(Action = "http://tempuri.org/INfseServices/ConsultarNfse", ReplyAction = "http://tempuri.org/INfseServices/ConsultarNfseResponse")]
-		string ConsultarNfse([MessageParameter(Name = "cabec")]string cabec, [MessageParameter(Name = "msg")]string msg);
+        [OperationContract(Action = "http://tempuri.org/INfseServices/ConsultarNfse", ReplyAction = "http://tempuri.org/INfseServices/ConsultarNfseResponse")]
+        string ConsultarNfse([MessageParameter(Name = "cabec")]string cabec, [MessageParameter(Name = "msg")]string msg);
 
-		[OperationContract(Action = "http://tempuri.org/INfseServices/ConsultarLoteRps", ReplyAction = "http://tempuri.org/INfseServices/ConsultarLoteRpsResponse")]
-		string ConsultarLoteRps([MessageParameter(Name = "cabec")]string cabec, [MessageParameter(Name = "msg")]string msg);
+        [OperationContract(Action = "http://tempuri.org/INfseServices/ConsultarLoteRps", ReplyAction = "http://tempuri.org/INfseServices/ConsultarLoteRpsResponse")]
+        string ConsultarLoteRps([MessageParameter(Name = "cabec")]string cabec, [MessageParameter(Name = "msg")]string msg);
 
-		[OperationContract(Action = "http://tempuri.org/INfseServices/CancelarNfse", ReplyAction = "http://tempuri.org/INfseServices/CancelarNfseResponse")]
-		string CancelarNfse([MessageParameter(Name = "cabec")]string cabec, [MessageParameter(Name = "msg")]string msg);
-	}
+        [OperationContract(Action = "http://tempuri.org/INfseServices/CancelarNfse", ReplyAction = "http://tempuri.org/INfseServices/CancelarNfseResponse")]
+        string CancelarNfse([MessageParameter(Name = "cabec")]string cabec, [MessageParameter(Name = "msg")]string msg);
+    }
 }

@@ -29,11 +29,13 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.NotaCarioca
 {
-    internal abstract class RequestBase
+    [Serializable]
+    public abstract class RequestBase
     {
         #region Constructors
 

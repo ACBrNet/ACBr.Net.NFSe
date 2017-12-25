@@ -51,7 +51,7 @@ namespace ACBr.Net.NFSe.Providers.NotaCarioca
         protected override IABRASFClient GetClient(TipoUrl tipo)
         {
             var url = GetUrl(tipo);
-            return new WebISSSServiceClient(url, TimeOut, Certificado);
+            return new WebIssServiceClient(url, TimeOut, Certificado);
         }
 
         protected override string GetNamespace()

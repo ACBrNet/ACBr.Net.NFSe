@@ -33,19 +33,20 @@ using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.PortoAlegre
 {
-	[MessageContract(WrapperName = "ConsultarNfseResponse", WrapperNamespace = "http://ws.bhiss.pbh.gov.br", IsWrapped = true)]
-	internal sealed class ConsultarNfseResponse
-	{
-		[MessageBodyMember(Namespace = "", Order = 0)]
-		public string outputXML;
+    [MessageContract(WrapperName = "ConsultarNfseResponse", WrapperNamespace = "http://ws.bhiss.pbh.gov.br", IsWrapped = true)]
+    public sealed class ConsultarNfseResponse : ResponseBase
+    {
+        #region Constructors
 
-		public ConsultarNfseResponse()
-		{
-		}
+        public ConsultarNfseResponse()
+        {
+        }
 
-		public ConsultarNfseResponse(string outputXML)
-		{
-			this.outputXML = outputXML;
-		}
-	}
+        public ConsultarNfseResponse(string outputXML)
+        {
+            this.outputXML = outputXML;
+        }
+
+        #endregion Constructors
+    }
 }

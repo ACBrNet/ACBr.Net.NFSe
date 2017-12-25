@@ -142,6 +142,8 @@
     <Compile Include="Providers\NotaCarioca\RequestBase.cs" />
     <Compile Include="Providers\NotaCarioca\ResponseBase.cs" />
     <Compile Include="Providers\NotaCarioca\NotaCariocaServiceClient.cs" />
+    <Compile Include="Providers\PortoAlegre\RequestBase.cs" />
+    <Compile Include="Providers\PortoAlegre\ResponseBase.cs" />
     <Compile Include="Providers\PortoAlegre\CancelarNfseRequest.cs" />
     <Compile Include="Providers\PortoAlegre\CancelarNfseResponse.cs" />
     <Compile Include="Providers\PortoAlegre\ConsultarLoteRpsRequest.cs" />
@@ -268,12 +270,38 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Providers\WebISS\IWebISSServiceClient.cs" />
-    <Compile Include="Providers\WebISS\ProviderWebISS.cs" />
-    <Compile Include="Providers\WebISS\WebISSSServiceClient.cs" />
+    <Compile Include="Providers\WebIss2\CancelarNfseResponse.cs" />
+    <Compile Include="Providers\WebIss2\ConsultarLoteRpsRequest.cs" />
+    <Compile Include="Providers\WebIss2\ConsultarLoteRpsResponse.cs" />
+    <Compile Include="Providers\WebIss2\ConsultarNfsePorFaixaRequest.cs" />
+    <Compile Include="Providers\WebIss2\ConsultarNfsePorFaixaResponse.cs" />
+    <Compile Include="Providers\WebIss2\ConsultarNfsePorRpsRequest.cs" />
+    <Compile Include="Providers\WebIss2\ConsultarNfsePorRpsResponse.cs" />
+    <Compile Include="Providers\WebIss2\ConsultarNfseServicoPrestadoRequest.cs" />
+    <Compile Include="Providers\WebIss2\ConsultarNfseServicoPrestadoResponse.cs" />
+    <Compile Include="Providers\WebIss2\ConsultarNfseServicoTomadoRequest.cs" />
+    <Compile Include="Providers\WebIss2\ConsultarNfseServicoTomadoResponse.cs" />
+    <Compile Include="Providers\WebIss2\GerarNfseRequest.cs" />
+    <Compile Include="Providers\WebIss2\GerarNfseResponse.cs" />
+    <Compile Include="Providers\WebIss2\IWebIss2ServiceClient.cs" />
+    <Compile Include="Providers\WebIss2\RecepcionarLoteRpsRequest.cs" />
+    <Compile Include="Providers\WebIss2\RecepcionarLoteRpsResponse.cs" />
+    <Compile Include="Providers\WebIss2\RecepcionarLoteRpsSincronoRequest.cs" />
+    <Compile Include="Providers\WebIss2\RecepcionarLoteRpsSincronoResponse.cs" />
+    <Compile Include="Providers\WebIss2\CancelarNfseRequest.cs" />
+    <Compile Include="Providers\WebIss2\RequestBase.cs" />
+    <Compile Include="Providers\WebIss2\ResponseBase.cs" />
+    <Compile Include="Providers\WebIss2\SubstituirNfseRequest.cs" />
+    <Compile Include="Providers\WebIss2\SubstituirNfseResponse.cs" />
+    <Compile Include="Providers\WebIss2\WebIss2ServiceClient.cs" />
+    <Compile Include="Providers\WebIss\IWebISSServiceClient.cs" />
+    <Compile Include="Providers\WebIss2\ProviderWebISS2.cs" />
+    <Compile Include="Providers\WebIss\ProviderWebISS.cs" />
+    <Compile Include="Providers\WebIss\WebIssServiceClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="acbr.net.snk" />
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Resources\Municipios.nfse" />
     <None Include="Schemas\4R\nfse.xsd">
@@ -1259,6 +1287,12 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Schemas\Vitoria\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\WebISS2\nfse v2 02.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\WebISS2\xmldsig-core-schema20020212.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Schemas\WebISS\servico_cancelar_nfse_envio.xsd">

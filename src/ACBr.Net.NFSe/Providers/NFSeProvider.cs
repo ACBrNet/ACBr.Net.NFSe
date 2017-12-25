@@ -35,7 +35,7 @@ namespace ACBr.Net.NFSe.Providers
 {
     public enum NFSeProvider
     {
-        [Description("Betha 2")]
+        [Description("Betha v2")]
         Betha2,
 
         DSF,
@@ -49,6 +49,9 @@ namespace ACBr.Net.NFSe.Providers
         SaoPaulo,
 
         WebIss,
+
+        [Description("WebIss v2")]
+        WebIss2,
 
         [Description("Nota Carioca")]
         NotaCarioca

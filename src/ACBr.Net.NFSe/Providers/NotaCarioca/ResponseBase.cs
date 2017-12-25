@@ -33,7 +33,7 @@ using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.NotaCarioca
 {
-    internal abstract class ResponseBase
+    public abstract class ResponseBase
     {
         #region Constructors
 

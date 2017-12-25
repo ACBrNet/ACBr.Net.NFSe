@@ -46,6 +46,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using ACBr.Net.NFSe.Providers.WebISS2;
 
 namespace ACBr.Net.NFSe.Providers
 {
@@ -66,7 +67,8 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.Ginfes, typeof(ProviderGinfes)},
                 {NFSeProvider.PortoAlegre, typeof(ProviderPortoAlegre)},
                 {NFSeProvider.SaoPaulo, typeof(ProviderSaoPaulo)},
-                {NFSeProvider.WebIss, typeof(ProviderWebISS)},
+                {NFSeProvider.WebIss, typeof(ProviderWebIss)},
+                {NFSeProvider.WebIss2, typeof(ProviderWebIss2)},
                 {NFSeProvider.NotaCarioca, typeof(ProviderNotaCarioca)}
             };
 

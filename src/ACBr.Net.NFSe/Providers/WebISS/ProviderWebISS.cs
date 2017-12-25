@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 01-13-2017
 // ***********************************************************************
-// <copyright file="ProviderWebISS.cs" company="ACBr.Net">
+// <copyright file="ProviderWebIss.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -36,11 +36,11 @@ using ACBr.Net.NFSe.Nota;
 namespace ACBr.Net.NFSe.Providers.WebISS
 {
     // ReSharper disable once InconsistentNaming
-    internal sealed class ProviderWebISS : ProviderABRASF
+    internal sealed class ProviderWebIss : ProviderABRASF
     {
         #region Constructors
 
-        public ProviderWebISS(ConfiguracoesNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
+        public ProviderWebIss(ConfiguracoesNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
         {
             Name = "WebISS";
         }
@@ -57,7 +57,7 @@ namespace ACBr.Net.NFSe.Providers.WebISS
         protected override IABRASFClient GetClient(TipoUrl tipo)
         {
             var url = GetUrl(tipo);
-            return new WebISSSServiceClient(url, TimeOut, Certificado);
+            return new WebIssServiceClient(url, TimeOut, Certificado);
         }
 
         protected override string GetNamespace()
