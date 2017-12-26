@@ -1054,7 +1054,7 @@ namespace ACBr.Net.NFSe.Providers
 
             var xmlLote = new StringBuilder();
             xmlLote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            xmlLote.Append($"<EnviarLoteRpsEnvio xmlns=\"{GetNamespace()}\">");
+            xmlLote.Append($"<EnviarLoteRpsEnvio {GetNamespace()}>");
             xmlLote.Append($"<LoteRps Id=\"L{lote}\">");
             xmlLote.Append($"<NumeroLote>{lote}</NumeroLote>");
             xmlLote.Append($"<Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>");
@@ -1132,9 +1132,11 @@ namespace ACBr.Net.NFSe.Providers
                 GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
             }
 
+            var ns = GetNamespace();
+
             var xmlLote = new StringBuilder();
             xmlLote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            xmlLote.Append($"<GerarNfseEnvio xmlns=\"{GetNamespace()}\">");
+            xmlLote.Append($"<GerarNfseEnvio {GetNamespace()}>");
             xmlLote.Append($"<LoteRps Id=\"L{lote}\">");
             xmlLote.Append($"<NumeroLote>{lote}</NumeroLote>");
             xmlLote.Append($"<Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>");
@@ -1223,9 +1225,10 @@ namespace ACBr.Net.NFSe.Providers
             var retornoWebservice = new RetornoWebservice();
 
             // Monta mensagem de envio
+            var ns = GetNamespace();
             var loteBuilder = new StringBuilder();
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            loteBuilder.Append($"<ConsultarSituacaoLoteRpsEnvio xmlns=\"{GetNamespace()}\">");
+            loteBuilder.Append($"<ConsultarSituacaoLoteRpsEnvio {GetNamespace()}>");
             loteBuilder.Append("<Prestador>");
             loteBuilder.Append($"<Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>");
             loteBuilder.Append($"<InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
@@ -1276,7 +1279,7 @@ namespace ACBr.Net.NFSe.Providers
 
             var loteBuilder = new StringBuilder();
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            loteBuilder.Append($"<ConsultarLoteRpsEnvio xmlns=\"{GetNamespace()}\">");
+            loteBuilder.Append($"<ConsultarLoteRpsEnvio {GetNamespace()}>");
             loteBuilder.Append("<Prestador>");
             loteBuilder.Append($"<Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>");
             loteBuilder.Append($"<InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
@@ -1362,7 +1365,7 @@ namespace ACBr.Net.NFSe.Providers
 
             var loteBuilder = new StringBuilder();
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            loteBuilder.Append($"<CancelarNfseEnvio xmlns=\"{GetNamespace()}\">");
+            loteBuilder.Append($"<CancelarNfseEnvio {GetNamespace()}>");
             loteBuilder.Append("<Pedido>");
             loteBuilder.Append($"<InfPedidoCancelamento Id=\"N{numeroNFSe}\">");
             loteBuilder.Append("<IdentificacaoNfse>");
@@ -1442,7 +1445,7 @@ namespace ACBr.Net.NFSe.Providers
 
             var loteBuilder = new StringBuilder();
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            loteBuilder.Append($"<ConsultarNfseRpsEnvio xmlns=\"{GetNamespace()}\">");
+            loteBuilder.Append($"<ConsultarNfseRpsEnvio {GetNamespace()}>");
             loteBuilder.Append("<IdentificacaoRps>");
             loteBuilder.Append($"<Numero>{numero}</Numero>");
             loteBuilder.Append($"<Serie>{serie}</Serie>");
@@ -1510,7 +1513,7 @@ namespace ACBr.Net.NFSe.Providers
 
             var loteBuilder = new StringBuilder();
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            loteBuilder.Append($"<ConsultarNfseEnvio xmlns=\"{GetNamespace()}\">");
+            loteBuilder.Append($"<ConsultarNfseEnvio {GetNamespace()}>");
             loteBuilder.Append("<Prestador>");
             loteBuilder.Append($"<Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>");
             loteBuilder.Append($"<InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
@@ -1615,7 +1618,7 @@ namespace ACBr.Net.NFSe.Providers
 
         protected virtual string GetNamespace()
         {
-            return "http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd";
+            return "xmlns=\"http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd\"";
         }
 
         protected virtual string GetSchema(TipoUrl tipo)

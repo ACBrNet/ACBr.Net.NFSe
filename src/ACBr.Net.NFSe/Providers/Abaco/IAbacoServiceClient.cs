@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 07-28-2017
+// Created          : 12-26-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 07-28-2017
+// Last Modified On : 12-26-2017
 // ***********************************************************************
-// <copyright file="ProviderBetha2.cs" company="ACBr.Net">
+// <copyright file="IAbacoServiceClient.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,48 +29,29 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
-using ACBr.Net.NFSe.Configuracao;
+using System.ServiceModel;
 
-namespace ACBr.Net.NFSe.Providers.Betha2
+namespace ACBr.Net.NFSe.Providers.Abaco
 {
-    internal sealed class ProviderBetha2 : ProviderABRASF2
+    [ServiceContract(Namespace = "http://www.e-nfs.com.br")]
+    public interface IAbacoServiceClient
     {
-        #region Constructors
+        [OperationContract(Action = "http://www.e-nfs.com.braction/ARECEPCIONARLOTERPS.Execute", ReplyAction = "*")]
+        RecepcionarLoteResponse RecepcionarLote(RecepcionarLoteRequest request);
 
-        public ProviderBetha2(ConfiguracoesNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
-        {
-            Name = "Betha";
-        }
+        [OperationContract(Action = "http://www.e-nfs.com.braction/ACONSULTARSITUACAOLOTERPS.Execute", ReplyAction = "*")]
+        ConsultarSituacaoLoteResponse ConsultarSituacaoLote(ConsultarSituacaoLoteRequest request);
 
-        #endregion Constructors
+        [OperationContract(Action = "http://www.e-nfs.com.braction/ACONSULTARLOTERPS.Execute", ReplyAction = "*")]
+        ConsultarLoteResponse ConsultarLote(ConsultarLoteRequest request);
 
-        #region Methods
+        [OperationContract(Action = "http://www.e-nfs.com.braction/ACONSULTARNFSEPORRPS.Execute", ReplyAction = "*")]
+        ConsultarNfsePorRpsResponse ConsultarNfsePorRps(ConsultarNfsePorRpsRequest request);
 
-        #region Protected Methods
+        [OperationContract(Action = "http://www.e-nfs.com.braction/ACONSULTARNFSE.Execute", ReplyAction = "*")]
+        ConsultarNfseResponse ConsultarNfse(ConsultarNfseRequest request);
 
-        protected override IABRASF2Client GetClient(TipoUrl tipo)
-        {
-            return new Betha2ServiceClient(GetUrl(tipo), TimeOut);
-        }
-
-        protected override string GetSchema(TipoUrl tipo)
-        {
-            return "nfse_v202.xsd";
-        }
-
-        protected override string GetNamespace()
-        {
-            return "xmlns=\"http://www.betha.com.br/e-nota-contribuinte-ws\"";
-        }
-
-        protected override string GerarCabecalho()
-        {
-            return $"<cabecalho versao=\"2.02\" xmlns=\"http://www.betha.com.br/e-nota-contribuinte-ws\">{Environment.NewLine}<versaoDados>2.02</versaoDados>{Environment.NewLine}</cabecalho>";
-        }
-
-        #endregion Protected Methods
-
-        #endregion Methods
+        [OperationContract(Action = "http://www.e-nfs.com.braction/ACANCELARNFSE.Execute", ReplyAction = "*")]
+        CancelarNfseResponse CancelarNfse(CancelarNfseRequest request);
     }
 }

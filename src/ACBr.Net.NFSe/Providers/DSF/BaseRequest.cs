@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 19-08-2016
 // ***********************************************************************
-// <copyright file="EnviarRequest.cs" company="ACBr.Net">
+// <copyright file="BaseRequest.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -33,12 +33,10 @@ using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
-	[MessageContract(WrapperName = "enviar", WrapperNamespace = "http://proces.wsnfe2.dsfnet.com.br", IsWrapped = true)]
-	internal class EnviarRequest : BaseRequest
-	{
-		public EnviarRequest(string mensagemXml)
-		{
-			MensagemXml = mensagemXml;
-		}
-	}
+    [MessageContract]
+    internal class BaseRequest
+    {
+        [MessageBodyMember(Name = "mensagemXml", Namespace = "", Order = 0)]
+        public string MensagemXml;
+    }
 }

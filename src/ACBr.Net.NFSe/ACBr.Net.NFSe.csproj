@@ -93,7 +93,25 @@
     <Compile Include="Configuracao\NFSeConfigGeral.cs" />
     <Compile Include="Configuracao\NFSeConfigWebServices.cs" />
     <Compile Include="Configuracao\ConfiguracoesNFSe.cs" />
+    <Compile Include="DANFSeFiltro.cs" />
     <Compile Include="Nota\DadosMateriais.cs" />
+    <Compile Include="Providers\Abaco\AbacoServiceClient.cs" />
+    <Compile Include="Providers\Abaco\CancelarNfseRequest.cs" />
+    <Compile Include="Providers\Abaco\CancelarNfseResponse.cs" />
+    <Compile Include="Providers\Abaco\ConsultarLoteRequest.cs" />
+    <Compile Include="Providers\Abaco\ConsultarLoteResponse.cs" />
+    <Compile Include="Providers\Abaco\ConsultarNfsePorRpsRequest.cs" />
+    <Compile Include="Providers\Abaco\ConsultarNfsePorRpsResponse.cs" />
+    <Compile Include="Providers\Abaco\ConsultarNfseRequest.cs" />
+    <Compile Include="Providers\Abaco\ConsultarNfseResponse.cs" />
+    <Compile Include="Providers\Abaco\ConsultarSituacaoLoteRequest.cs" />
+    <Compile Include="Providers\Abaco\ConsultarSituacaoLoteResponse.cs" />
+    <Compile Include="Providers\Abaco\ProviderAbaco.cs" />
+    <Compile Include="Providers\Abaco\RecepcionarLoteResponse.cs" />
+    <Compile Include="Providers\Abaco\IAbacoServiceClient.cs" />
+    <Compile Include="Providers\Abaco\RecepcionarLoteRequest.cs" />
+    <Compile Include="Providers\Abaco\RequestBase.cs" />
+    <Compile Include="Providers\Abaco\ResponseBase.cs" />
     <Compile Include="Providers\ACBrMunicipioNFSe.cs" />
     <Compile Include="Providers\Betha2\Betha2ServiceClient.cs" />
     <Compile Include="Providers\Betha2\CancelarNfse.cs" />
@@ -175,7 +193,7 @@
     <Compile Include="Providers\DSF\ConsultarNotaResponse.cs" />
     <Compile Include="Providers\DSF\ConsultarSequencialRpsRequest.cs" />
     <Compile Include="Providers\DSF\ConsultarSequencialRpsResponse.cs" />
-    <Compile Include="Providers\DSF\DSFBaseRequest.cs" />
+    <Compile Include="Providers\DSF\BaseRequest.cs" />
     <Compile Include="Providers\DSF\EnviarRequest.cs" />
     <Compile Include="Providers\DSF\EnviarResponse.cs" />
     <Compile Include="Providers\DSF\EnviarSincronoRequest.cs" />
@@ -298,6 +316,7 @@
     <Compile Include="Providers\WebIss2\ProviderWebISS2.cs" />
     <Compile Include="Providers\WebIss\ProviderWebISS.cs" />
     <Compile Include="Providers\WebIss\WebIssServiceClient.cs" />
+    <Compile Include="LayoutImpressao.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="acbr.net.snk" />

@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 19-08-2016
+// Created          : 12-26-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 19-08-2016
+// Last Modified On : 12-26-2017
 // ***********************************************************************
-// <copyright file="EnviarRequest.cs" company="ACBr.Net">
+// <copyright file="DANFSeFiltro.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,16 +29,12 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ServiceModel;
-
-namespace ACBr.Net.NFSe.Providers.DSF
+namespace ACBr.Net.NFSe
 {
-	[MessageContract(WrapperName = "enviar", WrapperNamespace = "http://proces.wsnfe2.dsfnet.com.br", IsWrapped = true)]
-	internal class EnviarRequest : BaseRequest
-	{
-		public EnviarRequest(string mensagemXml)
-		{
-			MensagemXml = mensagemXml;
-		}
-	}
+    public enum DANFSeFiltro
+    {
+        Nenhum,
+        PDF,
+        HTML
+    }
 }

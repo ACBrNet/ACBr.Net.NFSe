@@ -1,12 +1,12 @@
-// ***********************************************************************
+﻿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 19-08-2016
+// Created          : 12-26-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 19-08-2016
+// Last Modified On : 12-26-2017
 // ***********************************************************************
-// <copyright file="EnviarRequest.cs" company="ACBr.Net">
+// <copyright file="ProviderAbaco.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,16 +29,46 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ServiceModel;
+using System;
+using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Nota;
 
-namespace ACBr.Net.NFSe.Providers.DSF
+namespace ACBr.Net.NFSe.Providers.Abaco
 {
-	[MessageContract(WrapperName = "enviar", WrapperNamespace = "http://proces.wsnfe2.dsfnet.com.br", IsWrapped = true)]
-	internal class EnviarRequest : BaseRequest
-	{
-		public EnviarRequest(string mensagemXml)
-		{
-			MensagemXml = mensagemXml;
-		}
-	}
+    internal sealed class ProviderAbaco : ProviderABRASF
+    {
+        #region Constructors
+
+        public ProviderAbaco(ConfiguracoesNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
+        {
+            Name = "Abaco";
+        }
+
+        #endregion Constructors
+
+        #region Methods
+
+        public override RetornoWebservice EnviarSincrono(int lote, NotaFiscalCollection notas)
+        {
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
+        }
+
+        protected override string GetNamespace()
+        {
+            return string.Empty;
+        }
+
+        protected override IABRASFClient GetClient(TipoUrl tipo)
+        {
+            var url = GetUrl(tipo);
+            return new AbacoServiceClient(url, TimeOut, Certificado);
+        }
+
+        protected override string GetSchema(TipoUrl tipo)
+        {
+            return "nfse_v2010.xsd";
+        }
+
+        #endregion Methods
+    }
 }

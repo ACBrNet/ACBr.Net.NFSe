@@ -28,21 +28,20 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.ComponentModel;
+
 using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
-	[EditorBrowsable(EditorBrowsableState.Advanced)]
-	[MessageContract(WrapperName = "consultarNotaResponse", IsWrapped = true)]
-	internal class ConsultarNotaResponse
-	{
-		public ConsultarNotaResponse(string consultarNotaReturn)
-		{
-			Return = consultarNotaReturn;
-		}
+    [MessageContract(WrapperName = "consultarNotaResponse", IsWrapped = true)]
+    internal class ConsultarNotaResponse
+    {
+        public ConsultarNotaResponse(string consultarNotaReturn)
+        {
+            Return = consultarNotaReturn;
+        }
 
-		[MessageBodyMember(Name = "consultarNotaReturn", Namespace = "", Order = 0)]
-		public string Return;
-	}
+        [MessageBodyMember(Name = "consultarNotaReturn", Namespace = "", Order = 0)]
+        public string Return;
+    }
 }

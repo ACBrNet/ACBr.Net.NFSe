@@ -30,6 +30,7 @@
 // ***********************************************************************
 
 using System.ComponentModel;
+using System.Drawing;
 using ACBr.Net.Core;
 
 namespace ACBr.Net.NFSe
@@ -39,6 +40,12 @@ namespace ACBr.Net.NFSe
     /// </summary>
     public abstract class ACBrDANFSeBase : ACBrComponent
     {
+        #region Fields
+
+        private ACBrNFSe parent;
+
+        #endregion Fields
+
         #region Properties
 
         /// <summary>
@@ -46,19 +53,49 @@ namespace ACBr.Net.NFSe
         /// </summary>
         /// <value>The parent.</value>
         [Browsable(false)]
-        public ACBrNFSe Parent { get; internal set; }
+        public ACBrNFSe Parent
+        {
+            get { return parent; }
+            set
+            {
+                parent = value;
+                if (parent.DANFSe != this)
+                    parent.DANFSe = this;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the logo empresa.
         /// </summary>
         /// <value>The logo empresa.</value>
-        public string LogoEmpresa { get; set; }
+        public Image LogoEmpresa { get; set; }
 
         /// <summary>
         /// Gets or sets the logo empresa.
         /// </summary>
         /// <value>The logo empresa.</value>
-        public string LogoPrefeitura { get; set; }
+        public Image LogoPrefeitura { get; set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public LayoutImpressao Layout { get; set; }
+
+        public DANFSeFiltro Filtro { get; set; }
+
+        public bool MostrarPreview { get; set; }
+
+        public bool MostrarSetup { get; set; }
+
+        public string PrinterName { get; set; }
+
+        public int NumeroCopias { get; set; }
+
+        public string NomeArquivo { get; set; }
+
+        public string SoftwareHouse { get; set; }
+
+        public string Site { get; set; }
 
         #endregion Properties
 

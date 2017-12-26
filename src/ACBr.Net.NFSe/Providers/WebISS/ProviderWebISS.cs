@@ -62,7 +62,7 @@ namespace ACBr.Net.NFSe.Providers.WebISS
 
         protected override string GetNamespace()
         {
-            return "http://tempuri.org/";
+            return "xmlns=\"http://tempuri.org/\"";
         }
 
         protected override string GetSchema(TipoUrl tipo)

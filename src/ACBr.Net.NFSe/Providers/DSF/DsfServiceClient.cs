@@ -31,152 +31,144 @@
 
 using ACBr.Net.DFe.Core.Service;
 using System;
-using System.ComponentModel;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
-	internal sealed class DSFServiceClient : DFeServiceClientBase<IDSFService>, IDSFService
-	{
-		#region Constructor
+    internal sealed class DSFServiceClient : DFeServiceClientBase<IDSFService>, IDSFService
+    {
+        #region Constructor
 
-		public DSFServiceClient(string url, TimeSpan? timeOut = null) : base(url, timeOut)
-		{
-		}
+        public DSFServiceClient(string url, TimeSpan? timeOut = null) : base(url, timeOut)
+        {
+        }
 
-		#endregion Constructor
+        #endregion Constructor
 
-		#region Methods
+        #region Methods
 
-		/// <summary>
-		/// Consultars the sequencial RPS.
-		/// </summary>
-		/// <param name="mensagemXml">The mensagem XML.</param>
-		/// <returns>System.String.</returns>
-		public string ConsultarSequencialRps(string mensagemXml)
-		{
-			var request = new ConsultarSequencialRpsRequest(mensagemXml);
-			var retVal = ((IDSFService)this).consultarSequencialRps(request);
-			return retVal.Return;
-		}
+        /// <summary>
+        /// Consultars the sequencial RPS.
+        /// </summary>
+        /// <param name="mensagemXml">The mensagem XML.</param>
+        /// <returns>System.String.</returns>
+        public string ConsultarSequencialRps(string mensagemXml)
+        {
+            var request = new ConsultarSequencialRpsRequest(mensagemXml);
+            var retVal = ((IDSFService)this).consultarSequencialRps(request);
+            return retVal.Return;
+        }
 
-		/// <summary>
-		/// Enviars the sincrono.
-		/// </summary>
-		/// <param name="mensagemXml">The mensagem XML.</param>
-		/// <returns>System.String.</returns>
-		public string EnviarSincrono(string mensagemXml)
-		{
-			var request = new EnviarSincronoRequest(mensagemXml);
-			var retVal = ((IDSFService)this).enviarSincrono(request);
-			return retVal.Return;
-		}
+        /// <summary>
+        /// Enviars the sincrono.
+        /// </summary>
+        /// <param name="mensagemXml">The mensagem XML.</param>
+        /// <returns>System.String.</returns>
+        public string EnviarSincrono(string mensagemXml)
+        {
+            var request = new EnviarSincronoRequest(mensagemXml);
+            var retVal = ((IDSFService)this).enviarSincrono(request);
+            return retVal.Return;
+        }
 
-		/// <summary>
-		/// Enviars the specified mensagem XML.
-		/// </summary>
-		/// <param name="mensagemXml">The mensagem XML.</param>
-		/// <returns>System.String.</returns>
-		public string Enviar(string mensagemXml)
-		{
-			var request = new EnviarRequest(mensagemXml);
-			var retVal = ((IDSFService)this).enviar(request);
-			return retVal.Return;
-		}
+        /// <summary>
+        /// Enviars the specified mensagem XML.
+        /// </summary>
+        /// <param name="mensagemXml">The mensagem XML.</param>
+        /// <returns>System.String.</returns>
+        public string Enviar(string mensagemXml)
+        {
+            var request = new EnviarRequest(mensagemXml);
+            var retVal = ((IDSFService)this).enviar(request);
+            return retVal.Return;
+        }
 
-		/// <summary>
-		/// Consultars the lote.
-		/// </summary>
-		/// <param name="mensagemXml">The mensagem XML.</param>
-		/// <returns>System.String.</returns>
-		public string ConsultarLote(string mensagemXml)
-		{
-			var request = new ConsultarLoteRequest(mensagemXml);
-			var retVal = ((IDSFService)this).consultarLote(request);
-			return retVal.Return;
-		}
+        /// <summary>
+        /// Consultars the lote.
+        /// </summary>
+        /// <param name="mensagemXml">The mensagem XML.</param>
+        /// <returns>System.String.</returns>
+        public string ConsultarLote(string mensagemXml)
+        {
+            var request = new ConsultarLoteRequest(mensagemXml);
+            var retVal = ((IDSFService)this).consultarLote(request);
+            return retVal.Return;
+        }
 
-		/// <summary>
-		/// Consultars the nota.
-		/// </summary>
-		/// <param name="mensagemXml">The mensagem XML.</param>
-		/// <returns>System.String.</returns>
-		public string ConsultarNFSe(string mensagemXml)
-		{
-			var request = new ConsultarNotaRequest(mensagemXml);
-			var retVal = ((IDSFService)this).consultarNota(request);
-			return retVal.Return;
-		}
+        /// <summary>
+        /// Consultars the nota.
+        /// </summary>
+        /// <param name="mensagemXml">The mensagem XML.</param>
+        /// <returns>System.String.</returns>
+        public string ConsultarNFSe(string mensagemXml)
+        {
+            var request = new ConsultarNotaRequest(mensagemXml);
+            var retVal = ((IDSFService)this).consultarNota(request);
+            return retVal.Return;
+        }
 
-		/// <summary>
-		/// Cancelars the specified mensagem XML.
-		/// </summary>
-		/// <param name="mensagemXml">The mensagem XML.</param>
-		/// <returns>System.String.</returns>
-		public string Cancelar(string mensagemXml)
-		{
-			var request = new CancelarRequest(mensagemXml);
-			var retVal = ((IDSFService)this).cancelar(request);
-			return retVal.Return;
-		}
+        /// <summary>
+        /// Cancelars the specified mensagem XML.
+        /// </summary>
+        /// <param name="mensagemXml">The mensagem XML.</param>
+        /// <returns>System.String.</returns>
+        public string Cancelar(string mensagemXml)
+        {
+            var request = new CancelarRequest(mensagemXml);
+            var retVal = ((IDSFService)this).cancelar(request);
+            return retVal.Return;
+        }
 
-		/// <summary>
-		/// Consultars the nf se RPS.
-		/// </summary>
-		/// <param name="mensagemXml">The mensagem XML.</param>
-		/// <returns>System.String.</returns>
-		public string ConsultarNFSeRps(string mensagemXml)
-		{
-			var request = new ConsultarNFSeRpsRequest(mensagemXml);
-			var retVal = ((IDSFService)this).consultarNFSeRps(request);
-			return retVal.Return;
-		}
+        /// <summary>
+        /// Consultars the nf se RPS.
+        /// </summary>
+        /// <param name="mensagemXml">The mensagem XML.</param>
+        /// <returns>System.String.</returns>
+        public string ConsultarNFSeRps(string mensagemXml)
+        {
+            var request = new ConsultarNFSeRpsRequest(mensagemXml);
+            var retVal = ((IDSFService)this).consultarNFSeRps(request);
+            return retVal.Return;
+        }
 
-		#region Interface Methods
+        #region Interface Methods
 
-		[EditorBrowsable(EditorBrowsableState.Advanced)]
-		ConsultarSequencialRpsResponse IDSFService.consultarSequencialRps(ConsultarSequencialRpsRequest request)
-		{
-			return Channel.consultarSequencialRps(request);
-		}
+        ConsultarSequencialRpsResponse IDSFService.consultarSequencialRps(ConsultarSequencialRpsRequest request)
+        {
+            return Channel.consultarSequencialRps(request);
+        }
 
-		[EditorBrowsable(EditorBrowsableState.Advanced)]
-		EnviarSincronoResponse IDSFService.enviarSincrono(EnviarSincronoRequest request)
-		{
-			return Channel.enviarSincrono(request);
-		}
+        EnviarSincronoResponse IDSFService.enviarSincrono(EnviarSincronoRequest request)
+        {
+            return Channel.enviarSincrono(request);
+        }
 
-		[EditorBrowsable(EditorBrowsableState.Advanced)]
-		EnviarResponse IDSFService.enviar(EnviarRequest request)
-		{
-			return Channel.enviar(request);
-		}
+        EnviarResponse IDSFService.enviar(EnviarRequest request)
+        {
+            return Channel.enviar(request);
+        }
 
-		[EditorBrowsable(EditorBrowsableState.Advanced)]
-		ConsultarLoteResponse IDSFService.consultarLote(ConsultarLoteRequest request)
-		{
-			return Channel.consultarLote(request);
-		}
+        ConsultarLoteResponse IDSFService.consultarLote(ConsultarLoteRequest request)
+        {
+            return Channel.consultarLote(request);
+        }
 
-		[EditorBrowsable(EditorBrowsableState.Advanced)]
-		ConsultarNotaResponse IDSFService.consultarNota(ConsultarNotaRequest request)
-		{
-			return Channel.consultarNota(request);
-		}
+        ConsultarNotaResponse IDSFService.consultarNota(ConsultarNotaRequest request)
+        {
+            return Channel.consultarNota(request);
+        }
 
-		[EditorBrowsable(EditorBrowsableState.Advanced)]
-		CancelarResponse IDSFService.cancelar(CancelarRequest request)
-		{
-			return Channel.cancelar(request);
-		}
+        CancelarResponse IDSFService.cancelar(CancelarRequest request)
+        {
+            return Channel.cancelar(request);
+        }
 
-		[EditorBrowsable(EditorBrowsableState.Advanced)]
-		ConsultarNFSeRpsResponse IDSFService.consultarNFSeRps(ConsultarNFSeRpsRequest request)
-		{
-			return Channel.consultarNFSeRps(request);
-		}
+        ConsultarNFSeRpsResponse IDSFService.consultarNFSeRps(ConsultarNFSeRpsRequest request)
+        {
+            return Channel.consultarNFSeRps(request);
+        }
 
-		#endregion Interface Methods
+        #endregion Interface Methods
 
-		#endregion Methods
-	}
+        #endregion Methods
+    }
 }

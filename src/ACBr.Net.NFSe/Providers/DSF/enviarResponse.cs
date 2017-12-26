@@ -29,21 +29,19 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ComponentModel;
 using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
-	[EditorBrowsable(EditorBrowsableState.Advanced)]
-	[MessageContract(WrapperName = "enviarResponse", IsWrapped = true)]
-	internal class EnviarResponse
-	{
-		public EnviarResponse(string enviarReturn)
-		{
-			this.Return = enviarReturn;
-		}
+    [MessageContract(WrapperName = "enviarResponse", IsWrapped = true)]
+    internal class EnviarResponse
+    {
+        public EnviarResponse(string enviarReturn)
+        {
+            this.Return = enviarReturn;
+        }
 
-		[MessageBodyMember(Name = "enviarReturn", Namespace = "", Order = 0)]
-		public string Return;
-	}
+        [MessageBodyMember(Name = "enviarReturn", Namespace = "", Order = 0)]
+        public string Return;
+    }
 }

@@ -29,18 +29,16 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ComponentModel;
 using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
-	[EditorBrowsable(EditorBrowsableState.Advanced)]
-	[MessageContract(WrapperName = "consultarNota", WrapperNamespace = "http://proces.wsnfe2.dsfnet.com.br", IsWrapped = true)]
-	internal class ConsultarNotaRequest : DSFBaseRequest
-	{
-		public ConsultarNotaRequest(string mensagemXml)
-		{
-			MensagemXml = mensagemXml;
-		}
-	}
+    [MessageContract(WrapperName = "consultarNota", WrapperNamespace = "http://proces.wsnfe2.dsfnet.com.br", IsWrapped = true)]
+    internal class ConsultarNotaRequest : BaseRequest
+    {
+        public ConsultarNotaRequest(string mensagemXml)
+        {
+            MensagemXml = mensagemXml;
+        }
+    }
 }

@@ -33,20 +33,21 @@ using ACBr.Net.Core;
 using ACBr.Net.Core.Exceptions;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Providers.Abaco;
 using ACBr.Net.NFSe.Providers.Betha2;
 using ACBr.Net.NFSe.Providers.DSF;
 using ACBr.Net.NFSe.Providers.Ginfes;
-using ACBr.Net.NFSe.Providers.WebISS;
+using ACBr.Net.NFSe.Providers.NotaCarioca;
 using ACBr.Net.NFSe.Providers.PortoAlegre;
 using ACBr.Net.NFSe.Providers.SaoPaulo;
-using ACBr.Net.NFSe.Providers.NotaCarioca;
+using ACBr.Net.NFSe.Providers.WebISS;
+using ACBr.Net.NFSe.Providers.WebISS2;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using ACBr.Net.NFSe.Providers.WebISS2;
 
 namespace ACBr.Net.NFSe.Providers
 {
@@ -62,14 +63,15 @@ namespace ACBr.Net.NFSe.Providers
             Municipios = new List<ACBrMunicipioNFSe>();
             Providers = new Dictionary<NFSeProvider, Type>
             {
+                {NFSeProvider.Abaco, typeof(ProviderAbaco)},
                 {NFSeProvider.Betha2, typeof(ProviderBetha2)},
                 {NFSeProvider.DSF, typeof(ProviderDSF)},
                 {NFSeProvider.Ginfes, typeof(ProviderGinfes)},
+                {NFSeProvider.NotaCarioca, typeof(ProviderNotaCarioca)},
                 {NFSeProvider.PortoAlegre, typeof(ProviderPortoAlegre)},
                 {NFSeProvider.SaoPaulo, typeof(ProviderSaoPaulo)},
                 {NFSeProvider.WebIss, typeof(ProviderWebIss)},
-                {NFSeProvider.WebIss2, typeof(ProviderWebIss2)},
-                {NFSeProvider.NotaCarioca, typeof(ProviderNotaCarioca)}
+                {NFSeProvider.WebIss2, typeof(ProviderWebIss2)}
             };
 
             Load();

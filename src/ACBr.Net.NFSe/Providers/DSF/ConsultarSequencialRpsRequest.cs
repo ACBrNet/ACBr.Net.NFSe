@@ -29,18 +29,16 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ComponentModel;
 using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
-	[EditorBrowsable(EditorBrowsableState.Advanced)]
-	[MessageContract(WrapperName = "consultarSequencialRps", WrapperNamespace = "http://proces.wsnfe2.dsfnet.com.br", IsWrapped = true)]
-	internal class ConsultarSequencialRpsRequest : DSFBaseRequest
-	{
-		public ConsultarSequencialRpsRequest(string mensagemXml)
-		{
-			MensagemXml = mensagemXml;
-		}
-	}
+    [MessageContract(WrapperName = "consultarSequencialRps", WrapperNamespace = "http://proces.wsnfe2.dsfnet.com.br", IsWrapped = true)]
+    internal class ConsultarSequencialRpsRequest : BaseRequest
+    {
+        public ConsultarSequencialRpsRequest(string mensagemXml)
+        {
+            MensagemXml = mensagemXml;
+        }
+    }
 }

@@ -29,21 +29,19 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ComponentModel;
 using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
-	[EditorBrowsable(EditorBrowsableState.Advanced)]
-	[MessageContract(WrapperName = "consultarNFSeRpsResponse", IsWrapped = true)]
-	internal class ConsultarNFSeRpsResponse
-	{
-		public ConsultarNFSeRpsResponse(string consultarNFSeRpsReturn)
-		{
-			Return = consultarNFSeRpsReturn;
-		}
+    [MessageContract(WrapperName = "consultarNFSeRpsResponse", IsWrapped = true)]
+    internal class ConsultarNFSeRpsResponse
+    {
+        public ConsultarNFSeRpsResponse(string consultarNFSeRpsReturn)
+        {
+            Return = consultarNFSeRpsReturn;
+        }
 
-		[MessageBodyMember(Name = "consultarNFSeRpsReturn", Namespace = "", Order = 0)]
-		public string Return;
-	}
+        [MessageBodyMember(Name = "consultarNFSeRpsReturn", Namespace = "", Order = 0)]
+        public string Return;
+    }
 }

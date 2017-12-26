@@ -55,7 +55,7 @@ namespace ACBr.Net.NFSe.Providers.WebISS2
 
         protected override string GetNamespace()
         {
-            return "http://www.abrasf.org.br/nfse.xsd";
+            return "xmlns=\"http://www.abrasf.org.br/nfse.xsd\"";
         }
 
         protected override string GetSchema(TipoUrl tipo)

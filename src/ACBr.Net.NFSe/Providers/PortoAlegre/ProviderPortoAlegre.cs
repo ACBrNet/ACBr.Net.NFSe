@@ -33,35 +33,35 @@ using ACBr.Net.NFSe.Configuracao;
 
 namespace ACBr.Net.NFSe.Providers.PortoAlegre
 {
-	internal sealed class ProviderPortoAlegre : ProviderABRASF
-	{
-		#region Constructors
+    internal sealed class ProviderPortoAlegre : ProviderABRASF
+    {
+        #region Constructors
 
-		public ProviderPortoAlegre(ConfiguracoesNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
-		{
-			Name = "Porto Alegre";
-		}
+        public ProviderPortoAlegre(ConfiguracoesNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
+        {
+            Name = "Porto Alegre";
+        }
 
-		#endregion Constructors
+        #endregion Constructors
 
-		#region Methods
+        #region Methods
 
-		protected override IABRASFClient GetClient(TipoUrl tipo)
-		{
-			var url = GetUrl(tipo);
-			return new PortoAlegreServiceClient(url, TimeOut, Certificado);
-		}
+        protected override IABRASFClient GetClient(TipoUrl tipo)
+        {
+            var url = GetUrl(tipo);
+            return new PortoAlegreServiceClient(url, TimeOut, Certificado);
+        }
 
-		protected override string GetNamespace()
-		{
-			return "http://www.abrasf.org.br/nfse.xsd";
-		}
+        protected override string GetNamespace()
+        {
+            return "xmlns=\"http://www.abrasf.org.br/nfse.xsd\"";
+        }
 
-		protected override string GetSchema(TipoUrl tipo)
-		{
-			return "nfse_v20_08_2015.xsd";
-		}
+        protected override string GetSchema(TipoUrl tipo)
+        {
+            return "nfse_v20_08_2015.xsd";
+        }
 
-		#endregion Methods
-	}
+        #endregion Methods
+    }
 }

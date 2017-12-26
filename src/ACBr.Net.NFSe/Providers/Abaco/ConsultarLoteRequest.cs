@@ -1,12 +1,12 @@
-// ***********************************************************************
+﻿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 19-08-2016
+// Created          : 12-26-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 19-08-2016
+// Last Modified On : 12-26-2017
 // ***********************************************************************
-// <copyright file="EnviarRequest.cs" company="ACBr.Net">
+// <copyright file="ConsultarLoteRequest.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -31,14 +31,23 @@
 
 using System.ServiceModel;
 
-namespace ACBr.Net.NFSe.Providers.DSF
+namespace ACBr.Net.NFSe.Providers.Abaco
 {
-	[MessageContract(WrapperName = "enviar", WrapperNamespace = "http://proces.wsnfe2.dsfnet.com.br", IsWrapped = true)]
-	internal class EnviarRequest : BaseRequest
-	{
-		public EnviarRequest(string mensagemXml)
-		{
-			MensagemXml = mensagemXml;
-		}
-	}
+    [MessageContract(WrapperName = "ConsultarLoteRps.Execute", WrapperNamespace = "http://www.e-nfs.com.br", IsWrapped = true)]
+    public sealed class ConsultarLoteRequest : RequestBase
+    {
+        #region Constructors
+
+        public ConsultarLoteRequest()
+        {
+        }
+
+        public ConsultarLoteRequest(string Nfsecabecmsg, string Nfsedadosmsg)
+        {
+            this.Nfsecabecmsg = Nfsecabecmsg;
+            this.Nfsedadosmsg = Nfsedadosmsg;
+        }
+
+        #endregion Constructors
+    }
 }

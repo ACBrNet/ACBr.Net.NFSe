@@ -35,6 +35,8 @@ namespace ACBr.Net.NFSe.Providers
 {
     public enum NFSeProvider
     {
+        Abaco,
+
         [Description("Betha v2")]
         Betha2,
 

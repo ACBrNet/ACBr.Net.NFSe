@@ -58,7 +58,7 @@ namespace ACBr.Net.NFSe
         /// Componente de impressão
         /// </summary>
         [Browsable(false)]
-        public ACBrDANFSeBase DaNfSe { get; set; }
+        public ACBrDANFSeBase DANFSe { get; set; }
 
         /// <summary>
         /// Coleção de NFSe para processar e/ou processadas
@@ -90,8 +90,8 @@ namespace ACBr.Net.NFSe
             {
                 var ret = sincrono ? provider.EnviarSincrono(lote, NotasFiscais) : provider.Enviar(lote, NotasFiscais);
 
-                if (ret.Sucesso && DaNfSe != null && imprimir)
-                    DaNfSe.Imprimir();
+                if (ret.Sucesso && DANFSe != null && imprimir)
+                    DANFSe.Imprimir();
 
                 return ret;
             }

@@ -29,18 +29,16 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ComponentModel;
 using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
-	[EditorBrowsable(EditorBrowsableState.Advanced)]
-	[MessageContract(WrapperName = "enviarSincrono", WrapperNamespace = "http://proces.wsnfe2.dsfnet.com.br", IsWrapped = true)]
-	internal class EnviarSincronoRequest : DSFBaseRequest
-	{
-		public EnviarSincronoRequest(string mensagemXml)
-		{
-			MensagemXml = mensagemXml;
-		}
-	}
+    [MessageContract(WrapperName = "enviarSincrono", WrapperNamespace = "http://proces.wsnfe2.dsfnet.com.br", IsWrapped = true)]
+    internal class EnviarSincronoRequest : BaseRequest
+    {
+        public EnviarSincronoRequest(string mensagemXml)
+        {
+            MensagemXml = mensagemXml;
+        }
+    }
 }

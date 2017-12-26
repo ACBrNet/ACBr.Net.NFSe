@@ -56,7 +56,7 @@ namespace ACBr.Net.NFSe.Providers.NotaCarioca
 
         protected override string GetNamespace()
         {
-            return "http://notacarioca.rio.gov.br/";
+            return "xmlns=\"http://notacarioca.rio.gov.br/\"";
         }
 
         protected override string GetSchema(TipoUrl tipo)
