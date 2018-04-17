@@ -66,6 +66,7 @@
             this.txtCodSiafi = new System.Windows.Forms.TextBox();
             this.txtCodCidade = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.txtUf = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.cmbCidades = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -134,7 +135,6 @@
             this.cmhProvedor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.txtUf = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl3.SuspendLayout();
@@ -322,6 +322,7 @@
             this.btnGerarRps.TabIndex = 4;
             this.btnGerarRps.Text = "Gerar RPS";
             this.btnGerarRps.UseVisualStyleBackColor = true;
+            this.btnGerarRps.Click += new System.EventHandler(this.btnGerarRps_Click);
             // 
             // tabControl3
             // 
@@ -580,6 +581,16 @@
             this.label6.Size = new System.Drawing.Size(21, 13);
             this.label6.TabIndex = 40;
             this.label6.Text = "UF";
+            // 
+            // txtUf
+            // 
+            this.txtUf.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.txtUf.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.txtUf.Location = new System.Drawing.Point(221, 262);
+            this.txtUf.Name = "txtUf";
+            this.txtUf.ReadOnly = true;
+            this.txtUf.Size = new System.Drawing.Size(41, 20);
+            this.txtUf.TabIndex = 39;
             // 
             // label5
             // 
@@ -1221,16 +1232,6 @@
             // 
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(0, 17);
-            // 
-            // txtUf
-            // 
-            this.txtUf.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.txtUf.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.txtUf.Location = new System.Drawing.Point(221, 262);
-            this.txtUf.Name = "txtUf";
-            this.txtUf.ReadOnly = true;
-            this.txtUf.Size = new System.Drawing.Size(41, 20);
-            this.txtUf.TabIndex = 39;
             // 
             // FormMain
             // 

@@ -10,12 +10,9 @@ using NLog.Windows.Forms;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 
 namespace ACBr.Net.NFSe.Demo
 {
@@ -45,6 +42,11 @@ namespace ACBr.Net.NFSe.Demo
         private void btnSalvarConfig_Click(object sender, EventArgs e)
         {
             SaveConfig();
+        }
+
+        private void btnGerarRps_Click(object sender, EventArgs e)
+        {
+            GerarRps();
         }
 
         private void btnGerarEnviarLoteRps_Click(object sender, EventArgs e)

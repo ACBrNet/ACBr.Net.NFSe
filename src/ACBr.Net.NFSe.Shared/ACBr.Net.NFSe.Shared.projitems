@@ -1,0 +1,906 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>6637c494-9544-4844-86e7-65d99d12c0f0</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>ACBr.Net.NFSe.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ACBrDANFSeBase.cs">
+      <SubType>ACBr.Net</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ACBrNFSe.cs">
+      <SubType>ACBr.Net</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Configuracao\ConfigNFSe.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Configuracao\ConfigArquivosNFSe.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Configuracao\ConfigCertificadosNFSe.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Configuracao\ConfigGeralNFSe.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Configuracao\ConfigWebServicesNFSe.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Configuracao\NFSeVersao.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Configuracao\SchemaNFSe.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DANFSeFiltro.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LayoutImpressao.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\DadosConstrucaoCivil.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\DadosContato.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\DadosIntermediario.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\DadosMateriais.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\DadosPagamento.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\DadosPrestador.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\DadosServico.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\DadosTomador.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\DadosTransportadora.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\Deducao.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\DeducaoPor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\DeducoesCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\EmailCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\EmailItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\Endereco.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\ExigibilidadeIss.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\FormaPagamento.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\IdeCancelamento.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\IdeNFSe.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\IdeOrgaoGerador.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\IdeRps.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\IdeRpsSubtituida.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\NaturezaOperacao.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\NfseFrete.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\NFSeSimNao.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\NotaFiscal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\NotaFiscalCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\Parcelas.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\ParcelasCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\PedidoCancelamento.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\RegimeEspecialTributacao.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\ResponsavelRetencao.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\Servico.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\ServicosCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\SituacaoNFSeRps.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\SituacaoTributaria.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\TipoDeducao.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\TipoEmissao.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\TipoEmpreitadaGlobal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\TipoLocalServico.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\TipoRps.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\TipoTributacao.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Nota\ValoresServico.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OnErrorEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\AbacoServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\CancelarNfseRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\CancelarNfseResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\ConsultarLoteRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\ConsultarLoteResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\ConsultarNfsePorRpsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\ConsultarNfsePorRpsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\ConsultarNfseRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\ConsultarNfseResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\ConsultarSituacaoLoteRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\ConsultarSituacaoLoteResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\IAbacoServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\ProviderAbaco.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\RecepcionarLoteRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\RecepcionarLoteResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\RequestBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\ResponseBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\ACBrMunicipioNFSe.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\Betha2ServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\CancelarNfse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\CancelarNfseResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\ConsultarLoteRpsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\ConsultarLoteRpsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\ConsultarNfseFaixaRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\ConsultarNfseFaixaResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\ConsultarNfsePorRpsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\ConsultarNfsePorRpsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\ConsultarNfseServicoPrestadoRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\ConsultarNfseServicoPrestadoResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\ConsultarNfseServicoTomadoRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\ConsultarNfseServicoTomadoResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\GerarNfseRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\GerarNfseResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\IBetha2Service.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\ProviderBetha2.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\RecepcionarLoteRpsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\RecepcionarLoteRpsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\RecepcionarLoteRpsSincronoRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\RecepcionarLoteRpsSincronoResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\RequestBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\ResponseBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\SubstituirNfseRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\SubstituirNfseResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\DSF\BaseRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\DSF\CancelarRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\DSF\CancelarResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\DSF\ConsultarLoteRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\DSF\ConsultarLoteResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\DSF\ConsultarNFSeRpsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\DSF\ConsultarNFSeRpsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\DSF\ConsultarNotaRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\DSF\ConsultarNotaResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\DSF\ConsultarSequencialRpsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\DSF\ConsultarSequencialRpsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\DSF\DSFServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\DSF\EnviarRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\DSF\EnviarResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\DSF\EnviarSincronoRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\DSF\EnviarSincronoResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\DSF\IDSFService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\DSF\ProviderDSF.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Evento.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\FissLex\IFissLexServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\FissLex\ProviderFissLex.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\FissLex\RecepcionarLoteRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\FissLex\RecepcionarLoteResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Ginfes\GinfesHomServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Ginfes\GinfesProdServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Ginfes\IGinfesHomService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Ginfes\IGinfesProdService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Ginfes\IGinfesServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Ginfes\ProviderGinfes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\IABRASF2Client.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\IABRASFClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NFSeProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NotaCarioca\CancelarNfseRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NotaCarioca\CancelarNfseResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NotaCarioca\ConsultarLoteRpsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NotaCarioca\ConsultarLoteRpsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NotaCarioca\ConsultarNfsePorRpsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NotaCarioca\ConsultarNfsePorRpsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NotaCarioca\ConsultarNfseRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NotaCarioca\ConsultarNfseResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NotaCarioca\ConsultarSituacaoLoteRpsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NotaCarioca\ConsultarSituacaoLoteRpsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NotaCarioca\GerarNfseRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NotaCarioca\GerarNfseResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NotaCarioca\INotaCariocaServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NotaCarioca\NotaCariocaServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NotaCarioca\ProviderNotaCarioca.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NotaCarioca\RecepcionarLoteRpsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NotaCarioca\RecepcionarLoteRpsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NotaCarioca\RequestBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NotaCarioca\ResponseBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\CancelarNfseRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\CancelarNfseResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\ConsultarLoteRpsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\ConsultarLoteRpsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\ConsultarNfsePorFaixaRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\ConsultarNfsePorFaixaResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\ConsultarNfsePorRpsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\ConsultarNfsePorRpsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\ConsultarNfseRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\ConsultarNfseResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\ConsultarSituacaoLoteRpsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\ConsultarSituacaoLoteRpsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\GerarNfseRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\GerarNfseResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\IPortoAlegreServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\PortoAlegreServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\ProviderPortoAlegre.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\RecepcionarLoteRpsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\RecepcionarLoteRpsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\RequestBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\PortoAlegre\ResponseBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\ProviderABRASF.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\ProviderABRASF2.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\ProviderBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\ProviderExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\ProviderManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\RetornoWebService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\CancelamentoNFeRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\CancelamentoNFeResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\ConsultaCNPJRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\ConsultaCNPJResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\ConsultaInformacoesLoteRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\ConsultaInformacoesLoteResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\ConsultaLoteRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\ConsultaLoteResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\ConsultaNFeEmitidasRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\ConsultaNFeEmitidasResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\ConsultaNFeRecebidasRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\ConsultaNFeRecebidasResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\ConsultaNFeRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\ConsultaNFeResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\EnvioLoteRPSRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\EnvioLoteRPSResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\EnvioRPSRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\EnvioRPSResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\ISaoPauloServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\ProviderSaoPaulo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\SaoPauloServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\TesteEnvioLoteRPSRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SaoPaulo\TesteEnvioLoteRPSResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\TipoUrl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\CancelarNfseRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\CancelarNfseRequestBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\CancelarNfseResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\CancelarNfseResponseBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\ConsultarLoteRpsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\ConsultarLoteRpsRequestBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\ConsultarLoteRpsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\ConsultarLoteRpsResponseBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\ConsultarNfseFaixaRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\ConsultarNfseFaixaRequestBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\ConsultarNfseFaixaResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\ConsultarNfseFaixaResponseBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\ConsultarNfsePorRpsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\ConsultarNfsePorRpsRequestBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\ConsultarNfsePorRpsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\ConsultarNfsePorRpsResponseBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\ConsultarNfseServicoPrestadoRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\ConsultarNfseServicoPrestadoRequestBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\ConsultarNfseServicoPrestadoResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\ConsultarNfseServicoPrestadoResponseBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\ConsultarNfseServicoTomadoRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\ConsultarNfseServicoTomadoRequestBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\ConsultarNfseServicoTomadoResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\ConsultarNfseServicoTomadoResponseBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\GerarNfseRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\GerarNfseRequestBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\GerarNfseResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\GerarNfseResponseBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\IVitoriaServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\RecepcionarLoteRpsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\RecepcionarLoteRpsRequestBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\RecepcionarLoteRpsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\RecepcionarLoteRpsResponseBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\RecepcionarLoteRpsSincronoRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\RecepcionarLoteRpsSincronoRequestBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\RecepcionarLoteRpsSincronoResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\RecepcionarLoteRpsSincronoResponseBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\SubstituirNfseRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\SubstituirNfseRequestBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\SubstituirNfseResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Vitoria\SubstituirNfseResponseBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\CancelarNfseRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\CancelarNfseResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\ConsultarLoteRpsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\ConsultarLoteRpsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\ConsultarNfsePorFaixaRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\ConsultarNfsePorFaixaResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\ConsultarNfsePorRpsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\ConsultarNfsePorRpsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\ConsultarNfseServicoPrestadoRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\ConsultarNfseServicoPrestadoResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\ConsultarNfseServicoTomadoRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\ConsultarNfseServicoTomadoResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\GerarNfseRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\GerarNfseResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\IWebIss2ServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\ProviderWebISS2.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\RecepcionarLoteRpsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\RecepcionarLoteRpsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\RecepcionarLoteRpsSincronoRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\RecepcionarLoteRpsSincronoResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\RequestBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\ResponseBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\SubstituirNfseRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\SubstituirNfseResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss2\WebIss2ServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss\IWebISSServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss\ProviderWebISS.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\WebIss\WebIssServiceClient.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\Municipios.nfse" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\4R\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\4R\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Abaco\nfse_v2010.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Abaco\xmldsig-core-schema20020212.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ABase\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ABase\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ABRASFv1\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ABRASFv1\xmldsig-core-schema_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ABRASFv2\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ABRASFv2\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Actcon\Hom_nfse_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Actcon\Hom_nfse_v201.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Actcon\prod_nfse_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Actcon\Prod_nfse_v201.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Agili\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\AMTEC\nfse_gyn_v02.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\AMTEC\xmldsig-core-schema20020212.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\nfse_v202.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\xmldsig-core-schema20020212.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betim\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\BHISS\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\BHISS\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\BH\nfse.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\BH\xmldsig-core-schema20020212.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Blumenau\PedidoCancelamentoLote_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Blumenau\PedidoCancelamentoNFe_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Blumenau\PedidoConsultaCNPJ_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Blumenau\PedidoConsultaLote_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Blumenau\PedidoConsultaNFePeriodo_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Blumenau\PedidoConsultaNFe_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Blumenau\PedidoEnvioLoteRPS_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Blumenau\PedidoEnvioRPS_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Blumenau\PedidoInformacoesLote_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Blumenau\RetornoCancelamentoNFe_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Blumenau\RetornoConsultaCNPJ_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Blumenau\RetornoConsulta_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Blumenau\RetornoEnvioLoteRPS_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Blumenau\RetornoEnvioRPS_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Blumenau\RetornoInformacoesLote_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Blumenau\TiposNFe_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Blumenau\xmldsig-core-schema_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Coplan\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Coplan\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Curitiba\nfse.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Curitiba\xmldsig-core-schema20020212.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\DBSeller\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\DBSeller\xmldsig-core-schema.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\DigiFred\nfse_v02.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\DigiFred\xmldsig-core-schema_v02.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\DSF\ConsultaSeqRps.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\DSF\ReqCancelamentoNFSe.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\DSF\ReqConsultaLote.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\DSF\ReqConsultaNFSeRPS.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\DSF\ReqConsultaNotas.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\DSF\ReqEnvioLoteRPS.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\DSF\RetornoCancelamentoNFSe.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\DSF\RetornoConsultaLote.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\DSF\RetornoConsultaNFSeRPS.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\DSF\RetornoConsultaNotas.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\DSF\RetornoConsultaSeqRps.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\DSF\RetornoEnvioLoteRPS.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\DSF\Tipos.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\DSF\xmldsig-core-schema_v1.01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\EL\el-nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\EL\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Equiplano\esCancelarNfseEnvio_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Equiplano\esCancelarNfseResposta_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Equiplano\esConsultarLoteRpsEnvio_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Equiplano\esConsultarLoteRpsResposta_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Equiplano\esConsultarNfseEnvio_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Equiplano\esConsultarNfsePorRpsEnvio_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Equiplano\esConsultarNfsePorRpsResposta_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Equiplano\esConsultarNfseResposta_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Equiplano\esConsultarSituacaoLoteRpsEnvio_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Equiplano\esConsultarSituacaoLoteRpsResposta_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Equiplano\esRecepcionarLoteRpsEnvio_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Equiplano\esRecepcionarLoteRpsResposta_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Equiplano\TiposEsnfs_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Equiplano\xmldsig-core-schema_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\EReceita\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\EReceita\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\FintelISS\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\FintelISS\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Fiorilli\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Fiorilli\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\FissLex\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\FissLex\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Ginfes\cabecalho_v03.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Ginfes\servico_cancelar_nfse_envio_v03.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Ginfes\servico_cancelar_nfse_resposta_v03.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Ginfes\servico_consultar_lote_rps_envio_v03.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Ginfes\servico_consultar_lote_rps_resposta_v03.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Ginfes\servico_consultar_nfse_envio_v03.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Ginfes\servico_consultar_nfse_resposta_v03.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Ginfes\servico_consultar_nfse_rps_envio_v03.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Ginfes\servico_consultar_nfse_rps_resposta_v03.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Ginfes\servico_consultar_situacao_lote_rps_envio_v03.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Ginfes\servico_consultar_situacao_lote_rps_resposta_v03.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Ginfes\servico_enviar_lote_rps_envio_v03.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Ginfes\servico_enviar_lote_rps_resposta_v03.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Ginfes\tipos_v03.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Ginfes\xmldsig-core-schema20020212_v03.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Goiania\nfse_gyn_v02.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Goiania\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\GovBR\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\GovBR\servico_cancelar_nfse_envio.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\GovBR\servico_cancelar_nfse_resposta.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\GovBR\servico_consultar_lote_rps_envio.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\GovBR\servico_consultar_lote_rps_resposta.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\GovBR\servico_consultar_nfse_envio.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\GovBR\servico_consultar_nfse_resposta.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\GovBR\servico_consultar_nfse_rps_envio.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\GovBR\servico_consultar_nfse_rps_resposta.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\GovBR\servico_consultar_situacao_lote_rps_envio.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\GovBR\servico_consultar_situacao_lote_rps_resposta.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\GovBR\servico_enviar_lote_rps_envio.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\GovBR\servico_enviar_lote_rps_resposta.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\GovBR\tipos_complexos.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\GovBR\tipos_simples.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\GovBR\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\GovDigital\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\GovDigital\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Infisc\nfse-v11.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Infisc\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Infisc\xmldsig-core-schema_v1.01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSCuritiba\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSCuritiba\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSDigital\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSDigital\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSe\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSe\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSIntel\nfse.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSIntel\xmldsig-core-schema20020212.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSNET\servico_cancelar_nfse_envio.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSNET\servico_cancelar_nfse_resposta.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSNET\servico_consultar_lote_rps_envio.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSNET\servico_consultar_lote_rps_resposta.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSNET\servico_consultar_nfse_envio.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSNET\servico_consultar_nfse_resposta.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSNET\servico_consultar_nfse_rps_envio.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSNET\servico_consultar_nfse_rps_resposta.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSNET\servico_consultar_situacao_lote_rps_envio.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSNET\servico_consultar_situacao_lote_rps_resposta.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSNET\servico_enviar_lote_rps_envio.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSNET\servico_enviar_lote_rps_resposta.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSNET\tipos_complexos.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSNET\tipos_simples.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSNET\xmldsig-core-schema20020212.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Lexsom\nfse.XSD" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Lexsom\xmldsig-core-schema20020212.XSD" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Link3\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Link3\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Mitra\rps_importacao_manual.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Mitra\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Natal\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Natal\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NEAInformatica\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NEAInformatica\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Nota Carioca\tipos_nfse_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Nota Carioca\tipos_nfse_v01_old.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Nota Carioca\xmldsig-core-schema_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NotaInteligente\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NotaInteligente\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\PontaGrossa_v2\nfse.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\PontaGrossa_v2\xmldsig-core-schema20020212.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Porto Alegre\nfse_v20_08_2015.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Porto Alegre\xmldsig-core-schema20020212.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Prodata\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Prodata\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Prodemge\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Prodemge\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Pronimv2\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Pronimv2\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Pronim\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Pronim\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Publica\schema_nfse_v03.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Publica\xmldsig-core-schema20020212.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\PVH\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\PVH\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Recife\tipos_nfse_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Recife\xmldsig-core-schema20020212.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Saatri\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Saatri\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Salvador\DadosComplementares.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Salvador\nfse.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Salvador\ServicosComplementares.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Salvador\xmldsig-core-schema20020212.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SimpliSS\nfse_3.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SimpliSS\servico_cancelar_nfse_envio.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SimpliSS\servico_cancelar_nfse_resposta.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SimpliSS\servico_consultar_lote_rps_envio.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SimpliSS\servico_consultar_lote_rps_resposta.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SimpliSS\servico_consultar_nfse_envio.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SimpliSS\servico_consultar_nfse_resposta.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SimpliSS\servico_consultar_nfse_rps_envio.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SimpliSS\servico_consultar_nfse_rps_resposta.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SimpliSS\servico_consultar_situacao_lote_rps_envio.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SimpliSS\servico_consultar_situacao_lote_rps_resposta.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SimpliSS\servico_enviar_lote_rps_envio.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SimpliSS\servico_enviar_lote_rps_resposta.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SimpliSS\xmldsig-core-schema20020212.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SisPMJP\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SisPMJP\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Sistemas4R\nfse_v2.0.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Sistemas4R\xmldsig-core-schema20020212.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SJP\cabecalho_v03.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SJP\servico_cancelar_nfse_envio_v03.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SJP\servico_cancelar_nfse_resposta_v03.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SJP\servico_consultar_lote_rps_envio_v03.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SJP\servico_consultar_lote_rps_resposta_v03.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SJP\servico_consultar_nfse_envio_v03.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SJP\servico_consultar_nfse_resposta_v03.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SJP\servico_consultar_nfse_rps_envio_v03.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SJP\servico_consultar_nfse_rps_resposta_v03.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SJP\servico_consultar_situacao_lote_rps_envio_v03.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SJP\servico_consultar_situacao_lote_rps_resposta_v03.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SJP\servico_enviar_lote_rps_envio_v03.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SJP\servico_enviar_lote_rps_resposta_v03.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SJP\tipos_v03.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SJP\xmldsig-core-schema20020212_v03.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SolBR\nfse.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SolBR\xmldsig-core-schema20020212.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SpeedGov\cabecalho_v1.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SpeedGov\cancelar_nfse_envio_v1.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SpeedGov\cancelar_nfse_resposta_v1.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SpeedGov\consultar_lote_rps_envio_v1.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SpeedGov\consultar_lote_rps_resposta_v1.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SpeedGov\consultar_nfse_envio_v1.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SpeedGov\consultar_nfse_resposta_v1.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SpeedGov\consultar_nfse_rps_envio_v1.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SpeedGov\consultar_nfse_rps_resposta_v1.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SpeedGov\consultar_situacao_lote_rps_envio_v1.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SpeedGov\consultar_situacao_lote_rps_resposta_v1.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SpeedGov\enviar_lote_rps_envio_v1.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SpeedGov\enviar_lote_rps_resposta_v1.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SpeedGov\tipos_v1.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SpeedGov\xmldsig-core-schema20020212_v1.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SystemPro\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SystemPro\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\São Paulo\PedidoCancelamentoLote_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\São Paulo\PedidoCancelamentoNFe_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\São Paulo\PedidoConsultaCNPJ_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\São Paulo\PedidoConsultaLote_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\São Paulo\PedidoConsultaNFePeriodo_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\São Paulo\PedidoConsultaNFe_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\São Paulo\PedidoEnvioLoteRPS_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\São Paulo\PedidoEnvioRPS_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\São Paulo\PedidoInformacoesLote_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\São Paulo\RetornoCancelamentoNFe_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\São Paulo\RetornoConsultaCNPJ_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\São Paulo\RetornoConsulta_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\São Paulo\RetornoEnvioLoteRPS_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\São Paulo\RetornoEnvioRPS_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\São Paulo\RetornoInformacoesLote_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\São Paulo\TiposNFe_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\São Paulo\xmldsig-core-schema_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Tecnos\CancelarNfseEnvio.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Tecnos\CancelarNfseResposta.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Tecnos\ConsultarLoteRpsEnvio.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Tecnos\ConsultarLoteRpsResposta.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Tecnos\ConsultarNfseFaixaEnvio.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Tecnos\ConsultarNfseFaixaResposta.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Tecnos\ConsultarNfseRpsEnvio.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Tecnos\ConsultarNfseRpsResposta.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Tecnos\ConsultarNfseServicoPrestadoEnvio.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Tecnos\ConsultarNfseServicoPrestadoResposta.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Tecnos\ConsultarSequenciaLoteNotaRPSEnvio.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Tecnos\ConsultarSequenciaLoteNotaRPSResposta.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Tecnos\EnviarLoteRpsSincronoResposta.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Tecnos\EnvioLoteRpsSincronoEnvio.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Tecnos\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Thema\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Thema\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Tinus\nfsetinus.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Tinus\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Tiplan\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Tiplan\nfse_municipal_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Tiplan\xmldsig-core-schema_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Virtual\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Virtual\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Vitoria\nfse v2 01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Vitoria\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\WebISS2\nfse v2 02.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\WebISS2\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\WebISS\servico_cancelar_nfse_envio.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\WebISS\servico_cancelar_nfse_resposta.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\WebISS\servico_consultar_lote_rps_envio.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\WebISS\servico_consultar_lote_rps_resposta.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\WebISS\servico_consultar_nfse_envio.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\WebISS\servico_consultar_nfse_resposta.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\WebISS\servico_consultar_nfse_rps_envio.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\WebISS\servico_consultar_nfse_rps_resposta.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\WebISS\servico_consultar_situacao_lote_rps_envio.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\WebISS\servico_consultar_situacao_lote_rps_resposta.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\WebISS\servico_enviar_lote_rps_envio.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\WebISS\servico_enviar_lote_rps_resposta.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\WebISS\servico_gerar_nfse_envio.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\WebISS\servico_gerar_nfse_resposta.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\WebISS\tipos_complexos.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\WebISS\tipos_simples.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\WebISS\xmldsig-core-schema20020212.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)ACBrNFSe.bmp" />
+    <Content Include="$(MSBuildThisFileDirectory)Schemas\Actcon\Atencao.txt" />
+  </ItemGroup>
+</Project>

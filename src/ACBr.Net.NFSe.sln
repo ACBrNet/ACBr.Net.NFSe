@@ -1,17 +1,24 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBr.Net.NFSe", "ACBr.Net.NFSe\ACBr.Net.NFSe.csproj", "{0EF298CA-A045-47E2-91AD-5C211E793C3B}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ACBr.Net.NFSe.Shared", "ACBr.Net.NFSe.Shared\ACBr.Net.NFSe.Shared.shproj", "{6637C494-9544-4844-86E7-65D99D12C0F0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{5F2D5256-AC85-4E6F-A8AB-EBA27576D3D2}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBr.Net.NFSe.Demo", "ACBr.Net.NFSe.Demo\ACBr.Net.NFSe.Demo.csproj", "{507A1588-D006-445C-B729-3F1D3A5CE803}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBr.Net.NFSe.Test", "ACBr.Net.NFSe.Test\ACBr.Net.NFSe.Test.csproj", "{CB70B488-3A8C-4119-A4F0-FFE467DBC7BA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBr.Net.NFSe.Proxy.Json", "ACBr.Net.NFSe.Proxy.Json\ACBr.Net.NFSe.Proxy.Json.csproj", "{C18BA390-9433-40E8-9313-B492547ABC99}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBr.Net.NFSe.Proxy", "ACBr.Net.NFSe.Proxy\ACBr.Net.NFSe.Proxy.csproj", "{C18BA390-9433-40E8-9313-B492547ABC99}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		ACBr.Net.NFSe.Shared\ACBr.Net.NFSe.Shared.projitems*{0ef298ca-a045-47e2-91ad-5c211e793c3b}*SharedItemsImports = 4
+		ACBr.Net.NFSe.Shared\ACBr.Net.NFSe.Shared.projitems*{6637c494-9544-4844-86e7-65d99d12c0f0}*SharedItemsImports = 13
+		ACBr.Net.NFSe.Shared\ACBr.Net.NFSe.Shared.projitems*{c18ba390-9433-40e8-9313-b492547abc99}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -25,10 +32,6 @@ Global
 		{507A1588-D006-445C-B729-3F1D3A5CE803}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{507A1588-D006-445C-B729-3F1D3A5CE803}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{507A1588-D006-445C-B729-3F1D3A5CE803}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CB70B488-3A8C-4119-A4F0-FFE467DBC7BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CB70B488-3A8C-4119-A4F0-FFE467DBC7BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CB70B488-3A8C-4119-A4F0-FFE467DBC7BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CB70B488-3A8C-4119-A4F0-FFE467DBC7BA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C18BA390-9433-40E8-9313-B492547ABC99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C18BA390-9433-40E8-9313-B492547ABC99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C18BA390-9433-40E8-9313-B492547ABC99}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -36,5 +39,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0EF298CA-A045-47E2-91AD-5C211E793C3B} = {5F2D5256-AC85-4E6F-A8AB-EBA27576D3D2}
+		{C18BA390-9433-40E8-9313-B492547ABC99} = {5F2D5256-AC85-4E6F-A8AB-EBA27576D3D2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {599C9E21-8398-497F-9D1B-2FA3228EA632}
 	EndGlobalSection
 EndGlobal
