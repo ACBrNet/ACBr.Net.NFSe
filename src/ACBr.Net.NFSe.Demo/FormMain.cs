@@ -192,6 +192,7 @@ namespace ACBr.Net.NFSe.Demo
                 if (path.IsEmpty()) return;
 
                 var municipios = lstMunicipios.Items.Cast<ListViewItem>().Select(x => (ACBrMunicipioNFSe)x.Tag);
+
                 ProviderManager.Municipios.Clear();
                 ProviderManager.Municipios.AddRange(municipios);
                 ProviderManager.Save(Path.Combine(path, "Municipios.nfse"));
@@ -325,7 +326,7 @@ namespace ACBr.Net.NFSe.Demo
 
         private void txtSchemas_TextChanged(object sender, EventArgs e)
         {
-            acbrNFSe.Configuracoes.Geral.PathSchemas = txtSchemas.Text;
+            acbrNFSe.Configuracoes.Arquivos.PathSchemas = txtSchemas.Text;
         }
 
         private void chkSalvarArquivos_CheckedChanged(object sender, EventArgs e)
@@ -335,12 +336,12 @@ namespace ACBr.Net.NFSe.Demo
 
         private void txtArquivoCidades_Click(object sender, EventArgs e)
         {
-            acbrNFSe.Configuracoes.Geral.ArquivoMunicipios = txtArquivoCidades.Text;
+            acbrNFSe.Configuracoes.Arquivos.ArquivoServicos = txtArquivoCidades.Text;
         }
 
         private void txtPathXml_TextChanged(object sender, EventArgs e)
         {
-            acbrNFSe.Configuracoes.Geral.PathSalvar = txtPathXml.Text;
+            acbrNFSe.Configuracoes.Arquivos.PathSalvar = txtPathXml.Text;
         }
 
         private void txtArquivoCidades_TextChanged(object sender, EventArgs e)

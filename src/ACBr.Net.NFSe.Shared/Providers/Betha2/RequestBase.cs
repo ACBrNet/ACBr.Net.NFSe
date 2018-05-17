@@ -30,21 +30,20 @@
 // ***********************************************************************
 
 using System;
-using System.Xml.Schema;
-using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 namespace ACBr.Net.NFSe.Providers.Betha2
 {
     [Serializable]
-    [XmlType(Namespace = "http://www.betha.com.br/e-nota-contribuinte-ws")]
+    [DataContract(Namespace = "http://www.betha.com.br/e-nota-contribuinte-ws")]
     public sealed class RequestBase
     {
         #region Properties
 
-        [XmlElement("nfseCabecMsg", Form = XmlSchemaForm.Unqualified, Order = 0)]
+        [DataMember(Name = "nfseCabecMsg", Order = 0)]
         public string Cabecalho { get; set; }
 
-        [XmlElement("nfseDadosMsg", Form = XmlSchemaForm.Unqualified, Order = 1)]
+        [DataMember(Name = "nfseDadosMsg", Order = 1)]
         public string Mensagem { get; set; }
 
         #endregion Properties

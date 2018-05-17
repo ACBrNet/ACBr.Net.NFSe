@@ -29,10 +29,12 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
+    [Serializable]
     [MessageContract]
     internal class BaseRequest
     {

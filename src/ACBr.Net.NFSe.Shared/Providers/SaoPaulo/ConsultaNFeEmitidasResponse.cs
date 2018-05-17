@@ -33,19 +33,27 @@ using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.SaoPaulo
 {
-	[MessageContract(WrapperName = "ConsultaNFeEmitidasResponse", WrapperNamespace = "http://www.prefeitura.sp.gov.br/nfe", IsWrapped = true)]
-	public sealed class ConsultaNFeEmitidasResponse
-	{
-		[MessageBodyMember(Namespace = "http://www.prefeitura.sp.gov.br/nfe", Order = 0)]
-		public string RetornoXML;
+    [MessageContract(WrapperName = "ConsultaNFeEmitidasResponse", WrapperNamespace = "http://www.prefeitura.sp.gov.br/nfe", IsWrapped = true)]
+    internal sealed class ConsultaNFeEmitidasResponse
+    {
+        #region Constructors
 
-		public ConsultaNFeEmitidasResponse()
-		{
-		}
+        public ConsultaNFeEmitidasResponse()
+        {
+        }
 
-		public ConsultaNFeEmitidasResponse(string RetornoXML)
-		{
-			this.RetornoXML = RetornoXML;
-		}
-	}
+        public ConsultaNFeEmitidasResponse(string RetornoXML)
+        {
+            this.RetornoXML = RetornoXML;
+        }
+
+        #endregion Constructors
+
+        #region Properties
+
+        [MessageBodyMember(Namespace = "http://www.prefeitura.sp.gov.br/nfe", Order = 0)]
+        public string RetornoXML;
+
+        #endregion Properties
+    }
 }

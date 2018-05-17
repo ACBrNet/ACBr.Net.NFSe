@@ -34,7 +34,7 @@ using System.ServiceModel;
 namespace ACBr.Net.NFSe.Providers.FissLex
 {
     [ServiceContract(Namespace = "FISS-LEX")]
-    public interface IFissLexServiceClient
+    internal interface IFissLexServiceClient
     {
         [OperationContract(Action = "FISS-LEXaction/AWS_RECEPCIONARLOTERPS.Execute", ReplyAction = "*")]
         RecepcionarLoteResponse RecepcionarLote(RecepcionarLoteRequest request);

@@ -47,7 +47,7 @@ namespace ACBr.Net.NFSe.Providers.Betha2
 
         #region Methods
 
-        public string CancelarNfse(string cabec, string msg)
+        public string CancelarNFSe(string cabec, string msg)
         {
             var cancelarNfseRequest = new CancelarNfseRequest
             {
@@ -62,7 +62,7 @@ namespace ACBr.Net.NFSe.Providers.Betha2
             return ret.Response.Retorno;
         }
 
-        public string SubstituirNfse(string cabec, string msg)
+        public string SubstituirNFSe(string cabec, string msg)
         {
             var substituirNfseRequest = new SubstituirNfseRequest
             {
@@ -92,7 +92,7 @@ namespace ACBr.Net.NFSe.Providers.Betha2
             return ret.Response.Retorno;
         }
 
-        public string ConsultarNfseFaixa(string cabec, string msg)
+        public string ConsultarNFSeFaixa(string cabec, string msg)
         {
             var consultarNfseFaixaRequest = new ConsultarNfseFaixaRequest()
             {
@@ -107,7 +107,7 @@ namespace ACBr.Net.NFSe.Providers.Betha2
             return ret.Response.Retorno;
         }
 
-        public string ConsultarNfseServicoTomado(string cabec, string msg)
+        public string ConsultarNFSeServicoTomado(string cabec, string msg)
         {
             var consultarNfseServicoTomadoRequest = new ConsultarNfseServicoTomadoRequest()
             {
@@ -122,7 +122,7 @@ namespace ACBr.Net.NFSe.Providers.Betha2
             return ret.Response.Retorno;
         }
 
-        public string ConsultarNfsePorRps(string cabec, string msg)
+        public string ConsultarNFSePorRps(string cabec, string msg)
         {
             var consultarNfsePorRpsRequest = new ConsultarNfsePorRpsRequest()
             {
@@ -137,7 +137,7 @@ namespace ACBr.Net.NFSe.Providers.Betha2
             return ret.Response.Retorno;
         }
 
-        public string ConsultarNfseServicoPrestado(string cabec, string msg)
+        public string ConsultarNFSeServicoPrestado(string cabec, string msg)
         {
             var consultarNfseServicoPrestadoRequest = new ConsultarNfseServicoPrestadoRequest()
             {

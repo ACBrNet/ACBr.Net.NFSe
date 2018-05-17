@@ -33,7 +33,7 @@ namespace ACBr.Net.NFSe
 {
     public enum LayoutImpressao
     {
-        Padrao,
+        ABRASF,
         DSF,
         Ginfes
     }

@@ -34,7 +34,7 @@ using System.ServiceModel;
 namespace ACBr.Net.NFSe.Providers.WebISS2
 {
     [ServiceContract(Namespace = "http://nfse.abrasf.org.br")]
-    public interface IWebIss2ServiceClient
+    internal interface IWebIss2ServiceClient
     {
         [OperationContract(Action = "http://nfse.abrasf.org.br/CancelarNfse", ReplyAction = "*")]
         CancelarNfseResponse CancelarNfse(CancelarNfseRequest request);

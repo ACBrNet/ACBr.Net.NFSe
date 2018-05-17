@@ -35,7 +35,8 @@ using System.ServiceModel;
 namespace ACBr.Net.NFSe.Providers.NotaCarioca
 {
     [Serializable]
-    public abstract class RequestBase
+    [MessageContract]
+    internal abstract class RequestBase
     {
         #region Constructors
 

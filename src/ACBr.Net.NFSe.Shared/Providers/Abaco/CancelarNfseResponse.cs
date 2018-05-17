@@ -34,7 +34,7 @@ using System.ServiceModel;
 namespace ACBr.Net.NFSe.Providers.Abaco
 {
     [MessageContract(WrapperName = "CancelarNfse.ExecuteResponse", WrapperNamespace = "http://www.e-nfs.com.br", IsWrapped = true)]
-    public sealed class CancelarNfseResponse : ResponseBase
+    internal sealed class CancelarNfseResponse : ResponseBase
     {
         #region Constructors
 

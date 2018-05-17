@@ -34,7 +34,7 @@ using System.ServiceModel;
 namespace ACBr.Net.NFSe.Providers.NotaCarioca
 {
     [MessageContract(WrapperName = "CancelarNfseResponse", WrapperNamespace = "http://notacarioca.rio.gov.br/", IsWrapped = true)]
-    public sealed class CancelarNfseResponse : ResponseBase
+    internal sealed class CancelarNfseResponse : ResponseBase
     {
         #region Constructors
 

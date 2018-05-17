@@ -34,7 +34,7 @@ using System.ServiceModel;
 namespace ACBr.Net.NFSe.Providers.PortoAlegre
 {
     [MessageContract(WrapperName = "ConsultarNfsePorRpsResponse", WrapperNamespace = "http://ws.bhiss.pbh.gov.br", IsWrapped = true)]
-    public sealed class ConsultarNfsePorRpsResponse : ResponseBase
+    internal sealed class ConsultarNfsePorRpsResponse : ResponseBase
     {
         #region Constructors
 

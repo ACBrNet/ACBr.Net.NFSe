@@ -30,12 +30,13 @@
 // ***********************************************************************
 
 using System;
-using System.Collections.Generic;
+using System.Runtime.Serialization;
 using ACBr.Net.DFe.Core.Common;
 
 namespace ACBr.Net.NFSe.Providers
 {
     [Serializable]
+    [DataContract(Name = "Municipio", Namespace = "")]
     public sealed class ACBrMunicipioNFSe
     {
         #region Constructors
@@ -45,7 +46,7 @@ namespace ACBr.Net.NFSe.Providers
         /// </summary>
         public ACBrMunicipioNFSe()
         {
-            UrlHomologacao = new Dictionary<TipoUrl, string>(9)
+            UrlHomologacao = new NFSeUrlDictionary(9)
             {
                 { TipoUrl.Enviar, string.Empty },
                 { TipoUrl.EnviarSincrono, string.Empty },
@@ -58,7 +59,7 @@ namespace ACBr.Net.NFSe.Providers
                 { TipoUrl.SubstituirNFSe, string.Empty}
             };
 
-            UrlProducao = new Dictionary<TipoUrl, string>(9)
+            UrlProducao = new NFSeUrlDictionary(9)
             {
                 { TipoUrl.Enviar, string.Empty },
                 { TipoUrl.EnviarSincrono, string.Empty },
@@ -80,6 +81,7 @@ namespace ACBr.Net.NFSe.Providers
         /// Define ou retorna o codigo IBGE do municipio
         /// </summary>
         /// <value>The codigo.</value>
+        [DataMember]
         public int Codigo { get; set; }
 
         /// <summary>
@@ -87,24 +89,28 @@ namespace ACBr.Net.NFSe.Providers
         /// Obrigatorio para municipios com provedor DSF.
         /// </summary>
         /// <value>The codigo siafi.</value>
+        [DataMember]
         public int CodigoSiafi { get; set; }
 
         /// <summary>
         /// Define ou retorna o nome do municipio
         /// </summary>
         /// <value>The nome.</value>
+        [DataMember]
         public string Nome { get; set; }
 
         /// <summary>
         /// Define ou retorna a UF do municipio.
         /// </summary>
         /// <value>The uf.</value>
+        [DataMember]
         public DFeSiglaUF UF { get; set; }
 
         /// <summary>
         /// Define ou retorna o provedor de NFSe.
         /// </summary>
         /// <value>The provedor.</value>
+        [DataMember]
         public NFSeProvider Provedor { get; set; }
 
         /// <summary>
@@ -112,19 +118,22 @@ namespace ACBr.Net.NFSe.Providers
         /// Para validação em alguns provedores
         /// </summary>
         /// <value>The tamanho im.</value>
+        [DataMember]
         public int TamanhoIm { get; set; }
 
         /// <summary>
         /// Lista de url de homologação dos serviços.
         /// </summary>
         /// <value>The URL homologacao.</value>
-        public Dictionary<TipoUrl, string> UrlHomologacao { get; set; }
+        [DataMember]
+        public NFSeUrlDictionary UrlHomologacao { get; set; }
 
         /// <summary>
         /// Lista de url de produção dos serviços.
         /// </summary>
         /// <value>The URL producao.</value>
-        public Dictionary<TipoUrl, string> UrlProducao { get; set; }
+        [DataMember]
+        public NFSeUrlDictionary UrlProducao { get; set; }
 
         #endregion Propriedades
     }

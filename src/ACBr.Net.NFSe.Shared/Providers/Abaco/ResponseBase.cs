@@ -29,12 +29,14 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.Abaco
 {
+    [Serializable]
     [MessageContract]
-    public abstract class ResponseBase
+    internal abstract class ResponseBase
     {
         #region Properties
 

@@ -45,9 +45,9 @@ using ACBr.Net.NFSe.Providers.WebISS2;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 namespace ACBr.Net.NFSe.Providers
@@ -57,12 +57,6 @@ namespace ACBr.Net.NFSe.Providers
     /// </summary>
     public static class ProviderManager
     {
-        #region Fields
-
-        private static XmlSerializer xmlSerializer;
-
-        #endregion Fields
-
         #region Constructors
 
         static ProviderManager()
@@ -126,13 +120,11 @@ namespace ACBr.Net.NFSe.Providers
         /// Salva o arquivo de cidades.
         /// </summary>
         /// <param name="stream">O stream.</param>
+        /// <param name="compress"></param>
         public static void Save(Stream stream)
         {
-            using (var zip = new GZipStream(stream, CompressionMode.Compress))
-            {
-                var formatter = GetSerializer();
-                formatter.Serialize(zip, Municipios.ToArray());
-            }
+            var formatter = new DataContractSerializer(typeof(MunicipiosNFSe));
+            formatter.WriteObject(stream, new MunicipiosNFSe { Municipios = Municipios.ToArray() });
         }
 
         /// <summary>
@@ -146,7 +138,7 @@ namespace ACBr.Net.NFSe.Providers
             if (path.IsEmpty())
             {
                 var assembly = Assembly.GetExecutingAssembly();
-                using (var stream = assembly.GetManifestResourceStream("ACBr.Net.NFSe.Municipios.nfse"))
+                using (var stream = assembly.GetManifestResourceStream("ACBr.Net.NFSe.Resources.Municipios.nfse"))
                 {
                     if (stream != null)
                     {
@@ -177,14 +169,11 @@ namespace ACBr.Net.NFSe.Providers
         {
             Guard.Against<ArgumentException>(stream == null, "Arquivo de cidades não encontrado");
 
-            using (var zip = new GZipStream(stream, CompressionMode.Decompress))
-            {
-                var formatter = GetSerializer();
-                var cidades = (ACBrMunicipioNFSe[])formatter.Deserialize(zip);
+            var formatter = new DataContractSerializer(typeof(MunicipiosNFSe));
+            var municipiosNFSe = (MunicipiosNFSe)formatter.ReadObject(stream);
 
-                if (clean) Municipios.Clear();
-                Municipios.AddRange(cidades);
-            }
+            if (clean) Municipios.Clear();
+            Municipios.AddRange(municipiosNFSe.Municipios);
         }
 
         /// <summary>
@@ -209,11 +198,6 @@ namespace ACBr.Net.NFSe.Providers
         #endregion Public
 
         #region Private
-
-        private static XmlSerializer GetSerializer()
-        {
-            return xmlSerializer ?? (xmlSerializer = new XmlSerializer(typeof(ACBrMunicipioNFSe)));
-        }
 
         private static bool CheckBaseType(Type providerType)
         {

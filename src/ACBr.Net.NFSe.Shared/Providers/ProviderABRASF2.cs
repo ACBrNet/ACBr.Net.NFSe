@@ -1036,7 +1036,7 @@ namespace ACBr.Net.NFSe.Providers
             {
                 var cliente = GetClient(TipoUrl.CancelaNFSe);
                 var cabecalho = GerarCabecalho();
-                retornoWebservice.XmlRetorno = cliente.CancelarNfse(cabecalho, retornoWebservice.XmlEnvio);
+                retornoWebservice.XmlRetorno = cliente.CancelarNFSe(cabecalho, retornoWebservice.XmlEnvio);
             }
             catch (Exception ex)
             {
@@ -1120,7 +1120,7 @@ namespace ACBr.Net.NFSe.Providers
             {
                 var cliente = GetClient(TipoUrl.ConsultaNFSeRps);
                 var cabecalho = GerarCabecalho();
-                retornoWebservice.XmlRetorno = cliente.ConsultarNfsePorRps(cabecalho, retornoWebservice.XmlEnvio);
+                retornoWebservice.XmlRetorno = cliente.ConsultarNFSePorRps(cabecalho, retornoWebservice.XmlEnvio);
             }
             catch (Exception ex)
             {
@@ -1226,7 +1226,7 @@ namespace ACBr.Net.NFSe.Providers
             {
                 var cliente = GetClient(TipoUrl.ConsultaNFSe);
                 var cabecalho = GerarCabecalho();
-                retornoWebservice.XmlRetorno = cliente.ConsultarNfseServicoPrestado(cabecalho, retornoWebservice.XmlEnvio);
+                retornoWebservice.XmlRetorno = cliente.ConsultarNFSeServicoPrestado(cabecalho, retornoWebservice.XmlEnvio);
             }
             catch (Exception ex)
             {
@@ -1325,7 +1325,7 @@ namespace ACBr.Net.NFSe.Providers
             {
                 var cliente = GetClient(TipoUrl.SubstituirNFSe);
                 var cabecalho = GerarCabecalho();
-                retornoWebservice.XmlRetorno = cliente.SubstituirNfse(cabecalho, retornoWebservice.XmlEnvio);
+                retornoWebservice.XmlRetorno = cliente.SubstituirNFSe(cabecalho, retornoWebservice.XmlEnvio);
             }
             catch (Exception ex)
             {

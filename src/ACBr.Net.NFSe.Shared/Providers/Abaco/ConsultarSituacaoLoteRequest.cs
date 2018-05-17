@@ -34,7 +34,7 @@ using System.ServiceModel;
 namespace ACBr.Net.NFSe.Providers.Abaco
 {
     [MessageContract(WrapperName = "ConsultarSituacaoLoteRps.Execute", WrapperNamespace = "http://www.e-nfs.com.br", IsWrapped = true)]
-    public sealed class ConsultarSituacaoLoteRequest : RequestBase
+    internal sealed class ConsultarSituacaoLoteRequest : RequestBase
     {
         #region Constructors
 

@@ -33,23 +33,31 @@ using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.SaoPaulo
 {
-	[MessageContract(WrapperName = "CancelamentoNFeRequest", WrapperNamespace = "http://www.prefeitura.sp.gov.br/nfe", IsWrapped = true)]
-	public sealed class CancelamentoNFeRequest
-	{
-		[MessageBodyMember(Namespace = "http://www.prefeitura.sp.gov.br/nfe", Order = 0)]
-		public int VersaoSchema;
+    [MessageContract(WrapperName = "CancelamentoNFeRequest", WrapperNamespace = "http://www.prefeitura.sp.gov.br/nfe", IsWrapped = true)]
+    internal sealed class CancelamentoNFeRequest
+    {
+        #region Constructors
 
-		[MessageBodyMember(Namespace = "http://www.prefeitura.sp.gov.br/nfe", Order = 1)]
-		public string MensagemXML;
+        public CancelamentoNFeRequest()
+        {
+        }
 
-		public CancelamentoNFeRequest()
-		{
-		}
+        public CancelamentoNFeRequest(int VersaoSchema, string MensagemXML)
+        {
+            this.VersaoSchema = VersaoSchema;
+            this.MensagemXML = MensagemXML;
+        }
 
-		public CancelamentoNFeRequest(int VersaoSchema, string MensagemXML)
-		{
-			this.VersaoSchema = VersaoSchema;
-			this.MensagemXML = MensagemXML;
-		}
-	}
+        #endregion Constructors
+
+        #region Properties
+
+        [MessageBodyMember(Namespace = "http://www.prefeitura.sp.gov.br/nfe", Order = 0)]
+        public int VersaoSchema;
+
+        [MessageBodyMember(Namespace = "http://www.prefeitura.sp.gov.br/nfe", Order = 1)]
+        public string MensagemXML;
+
+        #endregion Properties
+    }
 }

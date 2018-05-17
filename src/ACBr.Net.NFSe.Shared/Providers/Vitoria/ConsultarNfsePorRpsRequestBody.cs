@@ -34,7 +34,7 @@ using System.Runtime.Serialization;
 namespace ACBr.Net.NFSe.Providers.Vitoria
 {
     [DataContract(Namespace = "http://www.abrasf.org.br/nfse.xsd")]
-    public sealed class ConsultarNfsePorRpsRequestBody
+    internal sealed class ConsultarNfsePorRpsRequestBody
     {
         #region Constructors
 

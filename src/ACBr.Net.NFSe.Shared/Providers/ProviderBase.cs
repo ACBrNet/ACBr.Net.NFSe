@@ -521,8 +521,7 @@ namespace ACBr.Net.NFSe.Providers
 
                         case TipoCampo.Dat:
                         case TipoCampo.DatCFe:
-                            DateTime data;
-                            if (DateTime.TryParse(valor.ToString(), out data))
+                            if (DateTime.TryParse(valor.ToString(), out var data))
                             {
                                 conteudoProcessado = data.ToString(tipo == TipoCampo.DatCFe ? "yyyyMMdd" : "yyyy-MM-dd");
                             }
@@ -534,8 +533,7 @@ namespace ACBr.Net.NFSe.Providers
 
                         case TipoCampo.Hor:
                         case TipoCampo.HorCFe:
-                            DateTime hora;
-                            if (DateTime.TryParse(valor.ToString(), out hora))
+                            if (DateTime.TryParse(valor.ToString(), out var hora))
                             {
                                 conteudoProcessado = hora.ToString(tipo == TipoCampo.HorCFe ? "HHmmss" : "HH:mm:ss");
                             }
@@ -546,16 +544,14 @@ namespace ACBr.Net.NFSe.Providers
                             break;
 
                         case TipoCampo.DatHor:
-                            DateTime dthora;
-                            if (DateTime.TryParse(valor.ToString(), out dthora))
+                            if (DateTime.TryParse(valor.ToString(), out var dthora))
                                 conteudoProcessado = dthora.ToString("s");
                             else
                                 estaVazio = true;
                             break;
 
                         case TipoCampo.DatHorTz:
-                            DateTime dthoratz;
-                            if (DateTime.TryParse(valor.ToString(), out dthoratz))
+                            if (DateTime.TryParse(valor.ToString(), out var dthoratz))
                             {
                                 conteudoProcessado = dthoratz.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'sszzz");
                             }
@@ -571,8 +567,7 @@ namespace ACBr.Net.NFSe.Providers
                         case TipoCampo.De6:
                         case TipoCampo.De10:
                             var numberFormat = CultureInfo.InvariantCulture.NumberFormat;
-                            decimal vDecimal;
-                            if (decimal.TryParse(valor.ToString(), out vDecimal))
+                            if (decimal.TryParse(valor.ToString(), out var vDecimal))
                             {
                                 if (ocorrencia == Ocorrencia.MaiorQueZero && vDecimal == 0)
                                 {
@@ -613,8 +608,7 @@ namespace ACBr.Net.NFSe.Providers
                             break;
 
                         case TipoCampo.Int:
-                            int vInt;
-                            if (int.TryParse(valor.ToString(), out vInt))
+                            if (int.TryParse(valor.ToString(), out var vInt))
                             {
                                 if (ocorrencia == Ocorrencia.MaiorQueZero && vInt == 0)
                                 {

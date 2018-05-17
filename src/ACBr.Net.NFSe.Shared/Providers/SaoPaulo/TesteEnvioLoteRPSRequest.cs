@@ -33,23 +33,31 @@ using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.SaoPaulo
 {
-	[MessageContract(WrapperName = "TesteEnvioLoteRPSRequest", WrapperNamespace = "http://www.prefeitura.sp.gov.br/nfe", IsWrapped = true)]
-	public sealed class TesteEnvioLoteRPSRequest
-	{
-		[MessageBodyMember(Namespace = "http://www.prefeitura.sp.gov.br/nfe", Order = 0)]
-		public int VersaoSchema;
+    [MessageContract(WrapperName = "TesteEnvioLoteRPSRequest", WrapperNamespace = "http://www.prefeitura.sp.gov.br/nfe", IsWrapped = true)]
+    internal sealed class TesteEnvioLoteRPSRequest
+    {
+        #region Constructors
 
-		[MessageBodyMember(Namespace = "http://www.prefeitura.sp.gov.br/nfe", Order = 1)]
-		public string MensagemXML;
+        public TesteEnvioLoteRPSRequest()
+        {
+        }
 
-		public TesteEnvioLoteRPSRequest()
-		{
-		}
+        public TesteEnvioLoteRPSRequest(int VersaoSchema, string MensagemXML)
+        {
+            this.VersaoSchema = VersaoSchema;
+            this.MensagemXML = MensagemXML;
+        }
 
-		public TesteEnvioLoteRPSRequest(int VersaoSchema, string MensagemXML)
-		{
-			this.VersaoSchema = VersaoSchema;
-			this.MensagemXML = MensagemXML;
-		}
-	}
+        #endregion Constructors
+
+        #region Properties
+
+        [MessageBodyMember(Namespace = "http://www.prefeitura.sp.gov.br/nfe", Order = 0)]
+        public int VersaoSchema;
+
+        [MessageBodyMember(Namespace = "http://www.prefeitura.sp.gov.br/nfe", Order = 1)]
+        public string MensagemXML;
+
+        #endregion Properties
+    }
 }

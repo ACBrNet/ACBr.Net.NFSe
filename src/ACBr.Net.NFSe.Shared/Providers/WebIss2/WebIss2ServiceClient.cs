@@ -61,28 +61,28 @@ namespace ACBr.Net.NFSe.Providers.WebISS2
             return ret.outputXML;
         }
 
-        public string ConsultarNfsePorRps(string cabec, string msg)
+        public string ConsultarNFSePorRps(string cabec, string msg)
         {
             var request = new ConsultarNfsePorRpsRequest(cabec, msg);
             var ret = ((IWebIss2ServiceClient)this).ConsultarNfsePorRps(request);
             return ret.outputXML;
         }
 
-        public string ConsultarNfseFaixa(string cabec, string msg)
+        public string ConsultarNFSeFaixa(string cabec, string msg)
         {
             var request = new ConsultarNfsePorFaixaRequest(cabec, msg);
             var ret = ((IWebIss2ServiceClient)this).ConsultarNfsePorFaixa(request);
             return ret.outputXML;
         }
 
-        public string ConsultarNfseServicoTomado(string cabec, string msg)
+        public string ConsultarNFSeServicoTomado(string cabec, string msg)
         {
             var request = new ConsultarNfseServicoTomadoRequest(cabec, msg);
             var ret = ((IWebIss2ServiceClient)this).ConsultarNfseServicoTomado(request);
             return ret.outputXML;
         }
 
-        public string ConsultarNfseServicoPrestado(string cabec, string msg)
+        public string ConsultarNFSeServicoPrestado(string cabec, string msg)
         {
             var request = new ConsultarNfseServicoPrestadoRequest(cabec, msg);
             var ret = ((IWebIss2ServiceClient)this).ConsultarNfseServicoPrestado(request);
@@ -96,14 +96,14 @@ namespace ACBr.Net.NFSe.Providers.WebISS2
             return ret.outputXML;
         }
 
-        public string CancelarNfse(string cabec, string msg)
+        public string CancelarNFSe(string cabec, string msg)
         {
             var request = new CancelarNfseRequest(cabec, msg);
             var ret = ((IWebIss2ServiceClient)this).CancelarNfse(request);
             return ret.outputXML;
         }
 
-        public string SubstituirNfse(string cabec, string msg)
+        public string SubstituirNFSe(string cabec, string msg)
         {
             var request = new SubstituirNfseRequest(cabec, msg);
             var ret = ((IWebIss2ServiceClient)this).SubstituirNfse(request);

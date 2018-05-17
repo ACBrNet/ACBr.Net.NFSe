@@ -29,12 +29,14 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.PortoAlegre
 {
+    [Serializable]
     [MessageContract]
-    public abstract class RequestBase
+    internal abstract class RequestBase
     {
         #region Properties
 

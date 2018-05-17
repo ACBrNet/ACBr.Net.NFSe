@@ -62,14 +62,14 @@ namespace ACBr.Net.NFSe.Providers.NotaCarioca
             return ret.Response;
         }
 
-        public string ConsultarNfsePorRps(string cabec, string msg)
+        public string ConsultarNFSePorRps(string cabec, string msg)
         {
             var request = new ConsultarNfsePorRpsRequest(msg);
             var ret = Channel.ConsultarNfsePorRps(request);
             return ret.Response;
         }
 
-        public string ConsultarNfse(string cabec, string msg)
+        public string ConsultarNFSe(string cabec, string msg)
         {
             var request = new ConsultarNfseRequest(msg);
             var ret = Channel.ConsultarNfse(request);
@@ -83,7 +83,7 @@ namespace ACBr.Net.NFSe.Providers.NotaCarioca
             return ret.Response;
         }
 
-        public string CancelarNfse(string cabec, string msg)
+        public string CancelarNFSe(string cabec, string msg)
         {
             var request = new CancelarNfseRequest(msg);
             var ret = Channel.CancelarNfse(request);

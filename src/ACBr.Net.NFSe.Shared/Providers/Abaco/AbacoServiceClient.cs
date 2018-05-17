@@ -61,14 +61,14 @@ namespace ACBr.Net.NFSe.Providers.Abaco
             return ret.Outputxml;
         }
 
-        public string ConsultarNfsePorRps(string cabec, string msg)
+        public string ConsultarNFSePorRps(string cabec, string msg)
         {
             var request = new ConsultarNfsePorRpsRequest(cabec, msg);
             var ret = ((IAbacoServiceClient)this).ConsultarNfsePorRps(request);
             return ret.Outputxml;
         }
 
-        public string ConsultarNfse(string cabec, string msg)
+        public string ConsultarNFSe(string cabec, string msg)
         {
             var request = new ConsultarNfseRequest(cabec, msg);
             var ret = ((IAbacoServiceClient)this).ConsultarNfse(request);
@@ -82,7 +82,7 @@ namespace ACBr.Net.NFSe.Providers.Abaco
             return ret.Outputxml;
         }
 
-        public string CancelarNfse(string cabec, string msg)
+        public string CancelarNFSe(string cabec, string msg)
         {
             var request = new CancelarNfseRequest(cabec, msg);
             var ret = ((IAbacoServiceClient)this).CancelarNfse(request);

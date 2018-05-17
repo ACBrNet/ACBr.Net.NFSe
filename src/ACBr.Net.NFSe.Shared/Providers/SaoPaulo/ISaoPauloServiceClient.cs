@@ -33,37 +33,37 @@ using System.ServiceModel;
 
 namespace ACBr.Net.NFSe.Providers.SaoPaulo
 {
-	[ServiceContract(Namespace = "http://www.prefeitura.sp.gov.br/nfe", ConfigurationName = "Providers.SaoPaulo.LoteNFeSoap")]
-	public interface ISaoPauloServiceClient
-	{
-		[OperationContract(Action = "http://www.prefeitura.sp.gov.br/nfe/ws/envioRPS", ReplyAction = "*")]
-		EnvioRPSResponse EnvioRPS(EnvioRPSRequest request);
+    [ServiceContract(Namespace = "http://www.prefeitura.sp.gov.br/nfe", ConfigurationName = "Providers.SaoPaulo.LoteNFeSoap")]
+    internal interface ISaoPauloServiceClient
+    {
+        [OperationContract(Action = "http://www.prefeitura.sp.gov.br/nfe/ws/envioRPS", ReplyAction = "*")]
+        EnvioRPSResponse EnvioRPS(EnvioRPSRequest request);
 
-		[OperationContract(Action = "http://www.prefeitura.sp.gov.br/nfe/ws/envioLoteRPS", ReplyAction = "*")]
-		EnvioLoteRPSResponse EnvioLoteRPS(EnvioLoteRPSRequest request);
+        [OperationContract(Action = "http://www.prefeitura.sp.gov.br/nfe/ws/envioLoteRPS", ReplyAction = "*")]
+        EnvioLoteRPSResponse EnvioLoteRPS(EnvioLoteRPSRequest request);
 
-		[OperationContract(Action = "http://www.prefeitura.sp.gov.br/nfe/ws/testeenvio", ReplyAction = "*")]
-		TesteEnvioLoteRPSResponse TesteEnvioLoteRPS(TesteEnvioLoteRPSRequest request);
+        [OperationContract(Action = "http://www.prefeitura.sp.gov.br/nfe/ws/testeenvio", ReplyAction = "*")]
+        TesteEnvioLoteRPSResponse TesteEnvioLoteRPS(TesteEnvioLoteRPSRequest request);
 
-		[OperationContract(Action = "http://www.prefeitura.sp.gov.br/nfe/ws/cancelamentoNFe", ReplyAction = "*")]
-		CancelamentoNFeResponse CancelamentoNFe(CancelamentoNFeRequest request);
+        [OperationContract(Action = "http://www.prefeitura.sp.gov.br/nfe/ws/cancelamentoNFe", ReplyAction = "*")]
+        CancelamentoNFeResponse CancelamentoNFe(CancelamentoNFeRequest request);
 
-		[OperationContract(Action = "http://www.prefeitura.sp.gov.br/nfe/ws/consultaNFe", ReplyAction = "*")]
-		ConsultaNFeResponse ConsultaNFe(ConsultaNFeRequest request);
+        [OperationContract(Action = "http://www.prefeitura.sp.gov.br/nfe/ws/consultaNFe", ReplyAction = "*")]
+        ConsultaNFeResponse ConsultaNFe(ConsultaNFeRequest request);
 
-		[OperationContract(Action = "http://www.prefeitura.sp.gov.br/nfe/ws/consultaNFeRecebidas", ReplyAction = "*")]
-		ConsultaNFeRecebidasResponse ConsultaNFeRecebidas(ConsultaNFeRecebidasRequest request);
+        [OperationContract(Action = "http://www.prefeitura.sp.gov.br/nfe/ws/consultaNFeRecebidas", ReplyAction = "*")]
+        ConsultaNFeRecebidasResponse ConsultaNFeRecebidas(ConsultaNFeRecebidasRequest request);
 
-		[OperationContract(Action = "http://www.prefeitura.sp.gov.br/nfe/ws/consultaNFeEmitidas", ReplyAction = "*")]
-		ConsultaNFeEmitidasResponse ConsultaNFeEmitidas(ConsultaNFeEmitidasRequest request);
+        [OperationContract(Action = "http://www.prefeitura.sp.gov.br/nfe/ws/consultaNFeEmitidas", ReplyAction = "*")]
+        ConsultaNFeEmitidasResponse ConsultaNFeEmitidas(ConsultaNFeEmitidasRequest request);
 
-		[OperationContract(Action = "http://www.prefeitura.sp.gov.br/nfe/ws/consultaLote", ReplyAction = "*")]
-		ConsultaLoteResponse ConsultaLote(ConsultaLoteRequest request);
+        [OperationContract(Action = "http://www.prefeitura.sp.gov.br/nfe/ws/consultaLote", ReplyAction = "*")]
+        ConsultaLoteResponse ConsultaLote(ConsultaLoteRequest request);
 
-		[OperationContract(Action = "http://www.prefeitura.sp.gov.br/nfe/ws/consultaInformacoesLote", ReplyAction = "*")]
-		ConsultaInformacoesLoteResponse ConsultaInformacoesLote(ConsultaInformacoesLoteRequest request);
+        [OperationContract(Action = "http://www.prefeitura.sp.gov.br/nfe/ws/consultaInformacoesLote", ReplyAction = "*")]
+        ConsultaInformacoesLoteResponse ConsultaInformacoesLote(ConsultaInformacoesLoteRequest request);
 
-		[OperationContract(Action = "http://www.prefeitura.sp.gov.br/nfe/ws/consultaCNPJ", ReplyAction = "*")]
-		ConsultaCNPJResponse ConsultaCNPJ(ConsultaCNPJRequest request);
-	}
+        [OperationContract(Action = "http://www.prefeitura.sp.gov.br/nfe/ws/consultaCNPJ", ReplyAction = "*")]
+        ConsultaCNPJResponse ConsultaCNPJ(ConsultaCNPJRequest request);
+    }
 }

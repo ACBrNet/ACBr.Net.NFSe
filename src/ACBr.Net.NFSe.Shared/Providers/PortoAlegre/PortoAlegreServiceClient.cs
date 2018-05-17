@@ -47,7 +47,7 @@ namespace ACBr.Net.NFSe.Providers.PortoAlegre
 
 		#region Methods
 
-		public string CancelarNfse(string nfseCabecMsg, string nfseDadosMsg)
+		public string CancelarNFSe(string nfseCabecMsg, string nfseDadosMsg)
 		{
 			var inValue = new CancelarNfseRequest(nfseCabecMsg, nfseDadosMsg);
 			var retVal = ((IPortoAlegreServiceClient)this).CancelarNfse(inValue);
@@ -61,7 +61,7 @@ namespace ACBr.Net.NFSe.Providers.PortoAlegre
 			return retVal.outputXML;
 		}
 
-		public string ConsultarNfse(string nfseCabecMsg, string nfseDadosMsg)
+		public string ConsultarNFSe(string nfseCabecMsg, string nfseDadosMsg)
 		{
 			var inValue = new ConsultarNfseRequest(nfseCabecMsg, nfseDadosMsg);
 			var retVal = ((IPortoAlegreServiceClient)this).ConsultarNfse(inValue);
@@ -75,7 +75,7 @@ namespace ACBr.Net.NFSe.Providers.PortoAlegre
 			return retVal.outputXML;
 		}
 
-		public string ConsultarNfsePorRps(string nfseCabecMsg, string nfseDadosMsg)
+		public string ConsultarNFSePorRps(string nfseCabecMsg, string nfseDadosMsg)
 		{
 			var inValue = new ConsultarNfsePorRpsRequest(nfseCabecMsg, nfseDadosMsg);
 			var retVal = ((IPortoAlegreServiceClient)this).ConsultarNfsePorRps(inValue);

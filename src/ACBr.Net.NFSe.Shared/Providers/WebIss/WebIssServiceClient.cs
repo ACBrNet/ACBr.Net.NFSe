@@ -58,12 +58,12 @@ namespace ACBr.Net.NFSe.Providers.WebISS
             return ((IWebIssServiceClient)this).ConsultarSituacaoLoteRps(cabec, msg);
         }
 
-        public string ConsultarNfsePorRps(string cabec, string msg)
+        public string ConsultarNFSePorRps(string cabec, string msg)
         {
             return ((IWebIssServiceClient)this).ConsultarNfsePorRps(cabec, msg);
         }
 
-        public string ConsultarNfse(string cabec, string msg)
+        public string ConsultarNFSe(string cabec, string msg)
         {
             return ((IWebIssServiceClient)this).ConsultarNfse(cabec, msg);
         }
@@ -73,7 +73,7 @@ namespace ACBr.Net.NFSe.Providers.WebISS
             return ((IWebIssServiceClient)this).ConsultarLoteRps(cabec, msg);
         }
 
-        public string CancelarNfse(string cabec, string msg)
+        public string CancelarNFSe(string cabec, string msg)
         {
             return ((IWebIssServiceClient)this).CancelarNfse(cabec, msg);
         }

@@ -34,7 +34,7 @@ using System.ServiceModel;
 namespace ACBr.Net.NFSe.Providers.Vitoria
 {
     [MessageContract(IsWrapped = false)]
-    public sealed class ConsultarNfseServicoTomadoRequest
+    internal sealed class ConsultarNfseServicoTomadoRequest
     {
         #region Constructors
 

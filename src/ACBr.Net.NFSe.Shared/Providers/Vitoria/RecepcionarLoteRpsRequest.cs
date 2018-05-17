@@ -34,7 +34,7 @@ using System.ServiceModel;
 namespace ACBr.Net.NFSe.Providers.Vitoria
 {
     [MessageContract(IsWrapped = false)]
-    public sealed class RecepcionarLoteRpsRequest
+    internal sealed class RecepcionarLoteRpsRequest
     {
         #region Constructors
 

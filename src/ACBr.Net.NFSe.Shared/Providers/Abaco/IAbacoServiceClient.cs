@@ -34,7 +34,7 @@ using System.ServiceModel;
 namespace ACBr.Net.NFSe.Providers.Abaco
 {
     [ServiceContract(Namespace = "http://www.e-nfs.com.br")]
-    public interface IAbacoServiceClient
+    internal interface IAbacoServiceClient
     {
         [OperationContract(Action = "http://www.e-nfs.com.braction/ARECEPCIONARLOTERPS.Execute", ReplyAction = "*")]
         RecepcionarLoteResponse RecepcionarLote(RecepcionarLoteRequest request);

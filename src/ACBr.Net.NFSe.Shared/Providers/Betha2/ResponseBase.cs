@@ -30,16 +30,17 @@
 // ***********************************************************************
 
 using System;
+using System.Runtime.Serialization;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
 namespace ACBr.Net.NFSe.Providers.Betha2
 {
     [Serializable]
-    [XmlType(Namespace = "http://www.betha.com.br/e-nota-contribuinte-ws")]
+    [DataContract(Namespace = "http://www.betha.com.br/e-nota-contribuinte-ws")]
     public sealed class ResponseBase
     {
-        [XmlElement(ElementName = "return", Form = XmlSchemaForm.Unqualified, Order = 0)]
+        [DataMember(Name = "return", Order = 0)]
         public string Retorno { get; set; }
     }
 }

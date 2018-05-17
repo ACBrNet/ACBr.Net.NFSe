@@ -34,7 +34,7 @@ using System.ServiceModel;
 namespace ACBr.Net.NFSe.Providers.WebISS2
 {
     [MessageContract(WrapperName = "RecepcionarLoteRpsResponse", WrapperNamespace = "http://nfse.abrasf.org.br", IsWrapped = true)]
-    public sealed class RecepcionarLoteRpsResponse : ResponseBase
+    internal sealed class RecepcionarLoteRpsResponse : ResponseBase
     {
         #region Constructors
 

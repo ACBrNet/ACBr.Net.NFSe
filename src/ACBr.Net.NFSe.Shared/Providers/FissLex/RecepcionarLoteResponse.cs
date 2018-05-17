@@ -34,7 +34,7 @@ using System.ServiceModel;
 namespace ACBr.Net.NFSe.Providers.FissLex
 {
     [MessageContract(WrapperName = "WS_RecepcionarLoteRps.ExecuteResponse", WrapperNamespace = "FISS-LEX", IsWrapped = true)]
-    public sealed class RecepcionarLoteResponse
+    internal sealed class RecepcionarLoteResponse
     {
         #region Constructors
 

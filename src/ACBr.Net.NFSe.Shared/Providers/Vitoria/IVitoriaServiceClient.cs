@@ -34,7 +34,7 @@ using System.ServiceModel;
 namespace ACBr.Net.NFSe.Providers.Vitoria
 {
     [ServiceContract(Namespace = "http://www.abrasf.org.br/nfse.xsd")]
-    public interface IVitoriaServiceClient
+    internal interface IVitoriaServiceClient
     {
         [OperationContract(Action = "http://www.abrasf.org.br/nfse.xsd/RecepcionarLoteRps", ReplyAction = "*")]
         RecepcionarLoteRpsResponse RecepcionarLoteRps(RecepcionarLoteRpsRequest request);

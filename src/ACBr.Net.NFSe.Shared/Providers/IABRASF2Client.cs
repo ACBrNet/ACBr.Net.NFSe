@@ -37,18 +37,18 @@ namespace ACBr.Net.NFSe.Providers
 
         string RecepcionarLoteRpsSincrono(string cabec, string msg);
 
-        string ConsultarNfsePorRps(string cabec, string msg);
+        string ConsultarNFSePorRps(string cabec, string msg);
 
-        string ConsultarNfseFaixa(string cabec, string msg);
+        string ConsultarNFSeFaixa(string cabec, string msg);
 
-        string ConsultarNfseServicoTomado(string cabec, string msg);
+        string ConsultarNFSeServicoTomado(string cabec, string msg);
 
-        string ConsultarNfseServicoPrestado(string cabec, string msg);
+        string ConsultarNFSeServicoPrestado(string cabec, string msg);
 
         string ConsultarLoteRps(string cabec, string msg);
 
-        string CancelarNfse(string cabec, string msg);
+        string CancelarNFSe(string cabec, string msg);
 
-        string SubstituirNfse(string cabec, string msg);
+        string SubstituirNFSe(string cabec, string msg);
     }
 }

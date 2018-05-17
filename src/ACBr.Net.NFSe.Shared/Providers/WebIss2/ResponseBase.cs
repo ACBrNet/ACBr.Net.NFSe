@@ -34,7 +34,7 @@ using System.ServiceModel;
 namespace ACBr.Net.NFSe.Providers.WebISS2
 {
     [MessageContract]
-    public abstract class ResponseBase
+    internal abstract class ResponseBase
     {
         #region Properties
 

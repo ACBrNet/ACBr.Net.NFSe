@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 01-31-2016
+// Created          : 05-16-2018
 //
 // Last Modified By : RFTD
-// Last Modified On : 01-06-2015
+// Last Modified On : 05-16-2018
 // ***********************************************************************
-// <copyright file="OnErrorEventArgs.cs" company="ACBr.Net">
+// <copyright file="SubstituirNFSeRequest.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,36 +29,31 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
+using System.ServiceModel;
 
-namespace ACBr.Net.NFSe
+namespace ACBr.Net.NFSe.Providers.Coplan
 {
-    /// <summary>
-    /// Class OnErrorEventArgs.
-    /// </summary>
-    public class OnErrorEventArgs : EventArgs
+    [MessageContract(WrapperName = "nfse_web_service.SUBSTITUIRNFSE", WrapperNamespace = "Tributario", IsWrapped = true)]
+    internal sealed class SubstituirNFSeRequest
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OnErrorEventArgs"/> class.
-        /// </summary>
-        /// <param name="msg">The MSG.</param>
-        /// <param name="e">The e.</param>
-        public OnErrorEventArgs(string msg, Exception e)
+        #region Constructors
+
+        public SubstituirNFSeRequest()
         {
-            Erro = e;
-            Mensagem = msg;
         }
 
-        /// <summary>
-        /// Gets the erro.
-        /// </summary>
-        /// <value>The erro.</value>
-        public Exception Erro { get; private set; }
+        public SubstituirNFSeRequest(RequestBase request)
+        {
+            this.Request = request;
+        }
 
-        /// <summary>
-        /// Gets the mensagem.
-        /// </summary>
-        /// <value>The mensagem.</value>
-        public string Mensagem { get; private set; }
+        #endregion Constructors
+
+        #region Properties
+
+        [MessageBodyMember(Name = "Substituirnfserequest", Namespace = "Tributario", Order = 0)]
+        public RequestBase Request;
+
+        #endregion Properties
     }
 }

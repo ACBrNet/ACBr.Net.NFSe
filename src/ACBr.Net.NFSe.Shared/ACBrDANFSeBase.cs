@@ -32,6 +32,12 @@
 using System.ComponentModel;
 using ACBr.Net.Core;
 
+#if !NETSTANDARD2_0
+
+using System.Drawing;
+
+#endif
+
 namespace ACBr.Net.NFSe
 {
     /// <summary>
@@ -60,9 +66,15 @@ namespace ACBr.Net.NFSe
             }
         }
 
+#if !NETSTANDARD2_0
+        public Image LogoEmpresa { get; set; }
+
+        public Image LogoPrefeitura { get; set; }
+#else
         public byte[] LogoEmpresa { get; set; }
 
         public byte[] LogoPrefeitura { get; set; }
+#endif
 
         public LayoutImpressao Layout { get; set; }
 

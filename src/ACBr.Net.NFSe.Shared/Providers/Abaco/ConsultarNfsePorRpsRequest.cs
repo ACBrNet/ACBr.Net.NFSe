@@ -34,7 +34,7 @@ using System.ServiceModel;
 namespace ACBr.Net.NFSe.Providers.Abaco
 {
     [MessageContract(WrapperName = "ConsultarNfsePorRps.Execute", WrapperNamespace = "http://www.e-nfs.com.br", IsWrapped = true)]
-    public sealed class ConsultarNfsePorRpsRequest : RequestBase
+    internal sealed class ConsultarNfsePorRpsRequest : RequestBase
     {
         #region Constructors
 

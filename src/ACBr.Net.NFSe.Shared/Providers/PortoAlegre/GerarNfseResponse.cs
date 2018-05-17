@@ -34,7 +34,7 @@ using System.ServiceModel;
 namespace ACBr.Net.NFSe.Providers.PortoAlegre
 {
     [MessageContract(WrapperName = "GerarNfseResponse", WrapperNamespace = "http://ws.bhiss.pbh.gov.br", IsWrapped = true)]
-    public sealed class GerarNfseResponse : ResponseBase
+    internal sealed class GerarNfseResponse : ResponseBase
     {
         #region Constructors
 

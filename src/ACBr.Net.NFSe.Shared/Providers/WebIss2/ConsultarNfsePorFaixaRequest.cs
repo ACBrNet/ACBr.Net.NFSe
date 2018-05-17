@@ -34,7 +34,7 @@ using System.ServiceModel;
 namespace ACBr.Net.NFSe.Providers.WebISS2
 {
     [MessageContract(WrapperName = "ConsultarNfsePorFaixaRequest", WrapperNamespace = "http://nfse.abrasf.org.br", IsWrapped = true)]
-    public sealed class ConsultarNfsePorFaixaRequest : RequestBase
+    internal sealed class ConsultarNfsePorFaixaRequest : RequestBase
     {
         #region Constructors
 
