@@ -1352,7 +1352,7 @@
 		</xsd:complexType>
 	</xsd:element>
 
-	<xsd:element name="CompNfse" type="tcCompNfse" />
+        <xsd:element name="CompNfse" type="tcCompNfse"/>
 
 		<!-- definition of complex elements (webservice) -->
 		

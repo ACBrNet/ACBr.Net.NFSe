@@ -323,10 +323,21 @@
     <None Include="$(MSBuildThisFileDirectory)Schemas\ABRASFv1\xmldsig-core-schema_v01.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\ABRASFv2\nfse.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\ABRASFv2\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Actcon2\Hom_nfse_v201.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Actcon2\nfse_v201_hom_GovernadorValadares.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Actcon2\nfse_v201_pro_GovernadorValadares.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Actcon2\nfse_v202.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Actcon2\nfse_v202_h.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Actcon2\nfse_v202_hom_JuizdeFora.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Actcon2\nfse_v202_hom_SeteLagoas.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Actcon2\nfse_v202_pro_JuizdeFora.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Actcon2\nfse_v202_pro_SeteLagoas.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Actcon2\Prod_nfse_v201.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Actcon\Hom_nfse_v01.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Actcon\Hom_nfse_v201.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Actcon\prod_nfse_v01.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Actcon\Prod_nfse_v201.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Agili2\XSDAgili.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Agili\nfse.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\AMTEC\nfse_gyn_v02.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -334,12 +345,32 @@
     <None Include="$(MSBuildThisFileDirectory)Schemas\AMTEC\xmldsig-core-schema20020212.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\nfse_v202.xsd">
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Asten\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Asten\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Belford\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Belford\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha2\nfse_v202.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\xmldsig-core-schema20020212.xsd">
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha2\xmldsig-core-schema20020212.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\nfse_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_cancelar_nfse_envio_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_cancelar_nfse_resposta_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_lote_rps_envio_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_lote_rps_resposta_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_nfse_envio_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_nfse_resposta_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_nfse_rps_envio_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_nfse_rps_resposta_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_situacao_lote_rps_envio_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_situacao_lote_rps_resposta_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_enviar_lote_rps_envio_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_enviar_lote_rps_resposta_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\TiposNFe_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\xmldsig-core-schema.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\xmldsig-core-schema_v01.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Betim\nfse.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\BHISS\nfse.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\BHISS\xmldsig-core-schema20020212.xsd" />
@@ -400,8 +431,26 @@
     <None Include="$(MSBuildThisFileDirectory)Schemas\Blumenau\xmldsig-core-schema_v01.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Centi\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Centi\xmldsig-core-schema20020212.xsd.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\CIGA\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\CIGA\xmldsig-core-schema20020212.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Coplan\nfse.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Coplan\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\CTA\ConsultaSeqRps.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\CTA\ReqCancelamentoNFSe.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\CTA\ReqConsultaLote.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\CTA\ReqConsultaNFSeRPS.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\CTA\ReqConsultaNotas.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\CTA\ReqEnvioLoteRPS.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\CTA\RetornoCancelamentoNFSe.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\CTA\RetornoConsultaLote.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\CTA\RetornoConsultaNFSeRPS.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\CTA\RetornoConsultaNotas.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\CTA\RetornoConsultaSeqRps.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\CTA\RetornoEnvioLoteRPS.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\CTA\Tipos.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\CTA\xmldsig-core-schema_v1.01.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Curitiba\nfse.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -458,6 +507,8 @@
     <None Include="$(MSBuildThisFileDirectory)Schemas\DSF\xmldsig-core-schema_v1.01.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\EL2\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\EL2\xmldsig-core-schema20020212.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\EL\el-nfse.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\EL\xmldsig-core-schema20020212.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Equiplano\esCancelarNfseEnvio_v01.xsd">
@@ -510,6 +561,8 @@
     <None Include="$(MSBuildThisFileDirectory)Schemas\Fiorilli\xmldsig-core-schema20020212.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\FissLex\nfse.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\FissLex\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Friburgo\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Friburgo\xmldsig-core-schema20020212.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Ginfes\cabecalho_v03.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -590,6 +643,8 @@
     <None Include="$(MSBuildThisFileDirectory)Schemas\ISSIntel\xmldsig-core-schema20020212.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSJoinville\nfse_v2-04_editado.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\ISSJoinville\xmldsig-core-schema.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\ISSNET\servico_cancelar_nfse_envio.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -639,6 +694,8 @@
     <None Include="$(MSBuildThisFileDirectory)Schemas\Lexsom\xmldsig-core-schema20020212.XSD" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Link3\nfse.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Link3\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Megasoft\nfse_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Megasoft\xmldsig-core-schema20020212.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Mitra\rps_importacao_manual.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Mitra\xmldsig-core-schema20020212.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Natal\nfse.xsd" />
@@ -654,6 +711,23 @@
     <None Include="$(MSBuildThisFileDirectory)Schemas\Nota Carioca\xmldsig-core-schema_v01.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NotaBlu\PedidoCancelamentoLote_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NotaBlu\PedidoCancelamentoNFe_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NotaBlu\PedidoConsultaCNPJ_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NotaBlu\PedidoConsultaLote_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NotaBlu\PedidoConsultaNFePeriodo_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NotaBlu\PedidoConsultaNFe_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NotaBlu\PedidoEnvioLoteRPS_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NotaBlu\PedidoEnvioRPS_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NotaBlu\PedidoInformacoesLote_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NotaBlu\RetornoCancelamentoNFe_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NotaBlu\RetornoConsultaCNPJ_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NotaBlu\RetornoConsulta_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NotaBlu\RetornoEnvioLoteRPS_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NotaBlu\RetornoEnvioRPS_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NotaBlu\RetornoInformacoesLote_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NotaBlu\TiposNFe_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\NotaBlu\xmldsig-core-schema_v01.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\NotaInteligente\nfse.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\NotaInteligente\xmldsig-core-schema20020212.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\PontaGrossa_v2\nfse.xsd">
@@ -692,6 +766,8 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)Schemas\Saatri\nfse.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Saatri\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SafeWeb\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SafeWeb\xmldsig-core-schema20020212.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Salvador\DadosComplementares.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -704,6 +780,12 @@
     <None Include="$(MSBuildThisFileDirectory)Schemas\Salvador\xmldsig-core-schema20020212.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SH3\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SH3\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Siam\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Siam\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SIAPNet\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SIAPNet\xmldsig-core-schema20020212.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\SimpliSS\nfse_3.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -769,6 +851,8 @@
     <None Include="$(MSBuildThisFileDirectory)Schemas\SJP\servico_enviar_lote_rps_resposta_v03.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\SJP\tipos_v03.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\SJP\xmldsig-core-schema20020212_v03.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SmarAPDABRASF\nfse.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\SmarAPDABRASF\xmldsig-core-schema20020212.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\SolBR\nfse.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -865,6 +949,8 @@
     <None Include="$(MSBuildThisFileDirectory)Schemas\Tiplan\nfse.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Tiplan\nfse_municipal_v01.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Tiplan\xmldsig-core-schema_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\VersaTecnologia\nfse_v201.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\VersaTecnologia\xmldsig-core-schema20020212.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Virtual\nfse.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Virtual\xmldsig-core-schema20020212.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Vitoria\nfse v2 01.xsd" />
@@ -924,6 +1010,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Schemas\Actcon2\Atencao.txt" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)ACBrNFSe.bmp" />
     <Content Include="$(MSBuildThisFileDirectory)Schemas\Actcon\Atencao.txt" />
   </ItemGroup>
