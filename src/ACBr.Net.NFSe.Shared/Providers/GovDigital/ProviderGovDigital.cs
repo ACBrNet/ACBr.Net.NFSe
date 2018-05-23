@@ -1,12 +1,12 @@
-// ***********************************************************************
+ï»¿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 07-30-2017
+// Created          : 05-22-2018
 //
 // Last Modified By : RFTD
-// Last Modified On : 07-30-2017
+// Last Modified On : 05-22-2018
 // ***********************************************************************
-// <copyright file="NFSeProvider.cs" company="ACBr.Net">
+// <copyright file="IGovDigitalService.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,37 +29,49 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ComponentModel;
+using System;
+using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Providers;
 
-namespace ACBr.Net.NFSe.Providers
+namespace ACBr.Net.NFSe.GovDigital
 {
-    public enum NFSeProvider
+    internal sealed class ProviderGovDigital : ProviderABRASF2
     {
-        Abaco,
+        #region Constructors
 
-        [Description("Betha v2")]
-        Betha2,
+        public ProviderGovDigital(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
+        {
+            Name = "GovDigital";
+        }
 
-        DSF,
+        #endregion Constructors
 
-        Ginfes,
+        #region Methods
 
-        [Description("Porto Alegre")]
-        PortoAlegre,
+        #region Protected Methods
 
-        [Description("São Paulo")]
-        SaoPaulo,
+        protected override IABRASF2Client GetClient(TipoUrl tipo)
+        {
+            return new GovDigitalServiceClient(GetUrl(tipo), TimeOut);
+        }
 
-        WebIss,
+        protected override string GetSchema(TipoUrl tipo)
+        {
+            return "nfse.xsd";
+        }
 
-        [Description("WebIss v2")]
-        WebIss2,
+        protected override string GetNamespace()
+        {
+            return "xmlns=\"http://www.abrasf.org.br/nfse.xsd\"";
+        }
 
-        [Description("Nota Carioca")]
-        NotaCarioca,
+        protected override string GerarCabecalho()
+        {
+            return $"<cabecalho versao=\"2.02\" xmlns=\"http://www.abrasf.org.br/nfse.xsd\">{Environment.NewLine}<versaoDados>2.02</versaoDados>{Environment.NewLine}</cabecalho>";
+        }
 
-        Coplan,
+        #endregion Protected Methods
 
-        GovDigital
+        #endregion Methods
     }
 }

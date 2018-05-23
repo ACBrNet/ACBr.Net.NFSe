@@ -4,7 +4,7 @@
 // Created          : 01-31-2016
 //
 // Last Modified By : RFTD
-// Last Modified On : 05-15-2017
+// Last Modified On : 05-22-2018
 // ***********************************************************************
 // <copyright file="ProviderManager.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -48,7 +48,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Xml.Serialization;
+using ACBr.Net.NFSe.GovDigital;
+using ACBr.Net.NFSe.Providers.Coplan;
 
 namespace ACBr.Net.NFSe.Providers
 {
@@ -66,8 +67,10 @@ namespace ACBr.Net.NFSe.Providers
             {
                 {NFSeProvider.Abaco, typeof(ProviderAbaco)},
                 {NFSeProvider.Betha2, typeof(ProviderBetha2)},
+                {NFSeProvider.Coplan, typeof(ProviderCoplan)},
                 {NFSeProvider.DSF, typeof(ProviderDSF)},
                 {NFSeProvider.Ginfes, typeof(ProviderGinfes)},
+                {NFSeProvider.GovDigital, typeof(ProviderGovDigital)},
                 {NFSeProvider.NotaCarioca, typeof(ProviderNotaCarioca)},
                 {NFSeProvider.PortoAlegre, typeof(ProviderPortoAlegre)},
                 {NFSeProvider.SaoPaulo, typeof(ProviderSaoPaulo)},

@@ -1,12 +1,12 @@
-// ***********************************************************************
+ï»¿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 07-30-2017
+// Created          : 05-22-2018
 //
 // Last Modified By : RFTD
-// Last Modified On : 07-30-2017
+// Last Modified On : 05-22-2018
 // ***********************************************************************
-// <copyright file="NFSeProvider.cs" company="ACBr.Net">
+// <copyright file="RequestBase.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,37 +29,21 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ComponentModel;
+using System.ServiceModel;
 
-namespace ACBr.Net.NFSe.Providers
+namespace ACBr.Net.NFSe.GovDigital
 {
-    public enum NFSeProvider
+    [MessageContract]
+    internal abstract class RequestBase
     {
-        Abaco,
+        #region Properties
 
-        [Description("Betha v2")]
-        Betha2,
+        [MessageBodyMember(Name = "nfseCabecMsg", Namespace = "", Order = 0)]
+        public string Cabecalho;
 
-        DSF,
+        [MessageBodyMember(Name = "nfseDadosMsg", Namespace = "", Order = 1)]
+        public string Mensagem;
 
-        Ginfes,
-
-        [Description("Porto Alegre")]
-        PortoAlegre,
-
-        [Description("São Paulo")]
-        SaoPaulo,
-
-        WebIss,
-
-        [Description("WebIss v2")]
-        WebIss2,
-
-        [Description("Nota Carioca")]
-        NotaCarioca,
-
-        Coplan,
-
-        GovDigital
+        #endregion Properties
     }
 }
