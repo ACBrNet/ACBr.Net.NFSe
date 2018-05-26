@@ -127,7 +127,7 @@ namespace ACBr.Net.NFSe.Providers
         public static void Save(Stream stream)
         {
             var formatter = new DataContractSerializer(typeof(MunicipiosNFSe));
-            formatter.WriteObject(stream, new MunicipiosNFSe { Municipios = Municipios.ToArray() });
+            formatter.WriteObject(stream, new MunicipiosNFSe { Municipios = Municipios.OrderBy(x => x.Nome).ToArray() });
         }
 
         /// <summary>
