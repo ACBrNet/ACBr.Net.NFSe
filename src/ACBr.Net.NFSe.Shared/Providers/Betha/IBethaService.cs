@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 05-22-2018
 // ***********************************************************************
-// <copyright file="RecepcionarLoteRpsSincronoResponse.cs" company="ACBr.Net">
+// <copyright file="IBethaService.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -31,22 +31,12 @@
 
 using System.ServiceModel;
 
-namespace ACBr.Net.NFSe.Providers.GovDigital
+namespace ACBr.Net.NFSe.Providers.Betha
 {
-    [MessageContract(WrapperName = "RecepcionarLoteRpsSincronoResponse", WrapperNamespace = "http://nfse.abrasf.org.br", IsWrapped = true)]
-    internal sealed class RecepcionarLoteRpsSincronoResponse : ResponseBase
+    [ServiceContract(Namespace = "http://www.betha.com.br/e-nota-contribuinte-ws")]
+    internal interface IBethaService
     {
-        #region Constructors
-
-        public RecepcionarLoteRpsSincronoResponse()
-        {
-        }
-
-        public RecepcionarLoteRpsSincronoResponse(string outputXML)
-        {
-            this.Response = outputXML;
-        }
-
-        #endregion Constructors
+        [OperationContract(Action = "", ReplyAction = "*")]
+        string EnviarLoteRpsEnvio(string request);
     }
 }

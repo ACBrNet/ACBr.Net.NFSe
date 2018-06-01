@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 05-22-2018
 // ***********************************************************************
-// <copyright file="RecepcionarLoteRpsSincronoResponse.cs" company="ACBr.Net">
+// <copyright file="BethaServiceClient.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,24 +29,59 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ServiceModel;
+using System;
+using System.Security.Cryptography.X509Certificates;
+using ACBr.Net.DFe.Core.Service;
 
-namespace ACBr.Net.NFSe.Providers.GovDigital
+namespace ACBr.Net.NFSe.Providers.Betha
 {
-    [MessageContract(WrapperName = "RecepcionarLoteRpsSincronoResponse", WrapperNamespace = "http://nfse.abrasf.org.br", IsWrapped = true)]
-    internal sealed class RecepcionarLoteRpsSincronoResponse : ResponseBase
+    internal sealed class BethaServiceClient : DFeServiceClientBase<IBethaService>, IABRASFClient
     {
         #region Constructors
 
-        public RecepcionarLoteRpsSincronoResponse()
+        public BethaServiceClient(string url, TimeSpan? timeOut = null, X509Certificate2 certificado = null) : base(url, timeOut, certificado)
         {
-        }
-
-        public RecepcionarLoteRpsSincronoResponse(string outputXML)
-        {
-            this.Response = outputXML;
         }
 
         #endregion Constructors
+
+        #region Methods
+
+        public string RecepcionarLoteRps(string cabec, string msg)
+        {
+            return Channel.EnviarLoteRpsEnvio(msg);
+        }
+
+        public string ConsultarSituacaoLoteRps(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ConsultarNFSePorRps(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ConsultarNFSe(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ConsultarLoteRps(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string CancelarNFSe(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarNfse(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion Methods
     }
 }

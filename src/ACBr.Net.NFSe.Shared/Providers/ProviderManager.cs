@@ -4,11 +4,11 @@
 // Created          : 01-31-2016
 //
 // Last Modified By : RFTD
-// Last Modified On : 05-22-2018
+// Last Modified On : 06-01-2018
 // ***********************************************************************
 // <copyright file="ProviderManager.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
-//	     		    Copyright (c) 2016 Grupo ACBr.Net
+//	     		    Copyright (c) 2016-2018 Grupo ACBr.Net
 //
 //	 Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the "Software"),
@@ -34,9 +34,12 @@ using ACBr.Net.Core.Exceptions;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Providers.Abaco;
+using ACBr.Net.NFSe.Providers.Betha;
 using ACBr.Net.NFSe.Providers.Betha2;
+using ACBr.Net.NFSe.Providers.Coplan;
 using ACBr.Net.NFSe.Providers.DSF;
 using ACBr.Net.NFSe.Providers.Ginfes;
+using ACBr.Net.NFSe.Providers.GovDigital;
 using ACBr.Net.NFSe.Providers.NotaCarioca;
 using ACBr.Net.NFSe.Providers.PortoAlegre;
 using ACBr.Net.NFSe.Providers.SaoPaulo;
@@ -48,8 +51,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using ACBr.Net.NFSe.GovDigital;
-using ACBr.Net.NFSe.Providers.Coplan;
 
 namespace ACBr.Net.NFSe.Providers
 {
@@ -66,6 +67,7 @@ namespace ACBr.Net.NFSe.Providers
             Providers = new Dictionary<NFSeProvider, Type>
             {
                 {NFSeProvider.Abaco, typeof(ProviderAbaco)},
+                {NFSeProvider.Betha, typeof(ProviderBetha)},
                 {NFSeProvider.Betha2, typeof(ProviderBetha2)},
                 {NFSeProvider.Coplan, typeof(ProviderCoplan)},
                 {NFSeProvider.DSF, typeof(ProviderDSF)},

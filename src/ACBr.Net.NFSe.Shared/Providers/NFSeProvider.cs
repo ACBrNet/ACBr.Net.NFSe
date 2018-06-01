@@ -33,33 +33,35 @@ using System.ComponentModel;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    public enum NFSeProvider
+    public enum NFSeProvider : byte
     {
-        Abaco,
+        Abaco = 0,
+
+        Betha = 1,
 
         [Description("Betha v2")]
-        Betha2,
+        Betha2 = 2,
 
-        DSF,
+        Coplan = 3,
 
-        Ginfes,
+        DSF = 4,
 
-        [Description("Porto Alegre")]
-        PortoAlegre,
+        Ginfes = 5,
 
-        [Description("São Paulo")]
-        SaoPaulo,
-
-        WebIss,
-
-        [Description("WebIss v2")]
-        WebIss2,
+        GovDigital = 6,
 
         [Description("Nota Carioca")]
-        NotaCarioca,
+        NotaCarioca = 7,
 
-        Coplan,
+        [Description("Porto Alegre")]
+        PortoAlegre = 8,
 
-        GovDigital
+        [Description("São Paulo")]
+        SaoPaulo = 9,
+
+        WebIss = 10,
+
+        [Description("WebIss v2")]
+        WebIss2 = 11
     }
 }

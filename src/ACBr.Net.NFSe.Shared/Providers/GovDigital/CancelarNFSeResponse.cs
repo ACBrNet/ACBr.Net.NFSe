@@ -31,7 +31,7 @@
 
 using System.ServiceModel;
 
-namespace ACBr.Net.NFSe.GovDigital
+namespace ACBr.Net.NFSe.Providers.GovDigital
 {
     [MessageContract(WrapperName = "CancelarNfseResponse", WrapperNamespace = "http://nfse.abrasf.org.br", IsWrapped = true)]
     internal sealed class CancelarNFSeResponse : ResponseBase

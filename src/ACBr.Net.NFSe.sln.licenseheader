@@ -1,14 +1,16 @@
-﻿// ***********************************************************************
-// Assembly         : ACBr.Net.NFSe
-// Author           : RFTD
-// Created          : 05-22-2018
-//
-// Last Modified By : RFTD
-// Last Modified On : 05-22-2018
+extensions: designer.cs generated.cs
+extensions: .cs .cpp .h
 // ***********************************************************************
-// <copyright file="RecepcionarLoteRpsSincronoResponse.cs" company="ACBr.Net">
-//		        		   The MIT License (MIT)
-//	     		    Copyright (c) 2016 Grupo ACBr.Net
+// Assembly         : %Project%
+// Author           : %UserName%
+// Created          : %CreationMonth%-%CreationDay%-%CreationYear%
+//
+// Last Modified By : %UserName%
+// Last Modified On : %CurrentMonth%-%CurrentDay%-%CurrentYear%
+// ***********************************************************************
+// <copyright file="%FileName%" company="ACBr.Net">
+//		        	   The MIT License (MIT)
+//	     		Copyright (c) 2016-%CurrentYear% Grupo ACBr.Net
 //
 //	 Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the "Software"),
@@ -28,25 +30,13 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
-using System.ServiceModel;
-
-namespace ACBr.Net.NFSe.Providers.GovDigital
-{
-    [MessageContract(WrapperName = "RecepcionarLoteRpsSincronoResponse", WrapperNamespace = "http://nfse.abrasf.org.br", IsWrapped = true)]
-    internal sealed class RecepcionarLoteRpsSincronoResponse : ResponseBase
-    {
-        #region Constructors
-
-        public RecepcionarLoteRpsSincronoResponse()
-        {
-        }
-
-        public RecepcionarLoteRpsSincronoResponse(string outputXML)
-        {
-            this.Response = outputXML;
-        }
-
-        #endregion Constructors
-    }
-}
+extensions: .aspx .ascx
+<%-- 
+Copyright (c) 2011 rubicon IT GmbH
+--%>
+extensions: .vb
+'Sample license text.
+extensions:  .xml .config .xsd
+<!--
+Sample license text.
+-->

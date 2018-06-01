@@ -84,6 +84,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\RecepcionarLoteResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\RequestBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\ResponseBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha\BethaServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha\IBethaService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha\ProviderBetha.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Coplan\CancelarNFSeRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Coplan\CancelarNFSeResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Coplan\ConsultarLoteRpsRequest.cs" />

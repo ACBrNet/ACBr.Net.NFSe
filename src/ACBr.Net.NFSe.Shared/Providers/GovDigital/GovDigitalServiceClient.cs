@@ -32,9 +32,8 @@
 using System;
 using System.Security.Cryptography.X509Certificates;
 using ACBr.Net.DFe.Core.Service;
-using ACBr.Net.NFSe.Providers;
 
-namespace ACBr.Net.NFSe.GovDigital
+namespace ACBr.Net.NFSe.Providers.GovDigital
 {
     internal sealed class GovDigitalServiceClient : DFeServiceClientBase<IGovDigitalService>, IABRASF2Client
     {

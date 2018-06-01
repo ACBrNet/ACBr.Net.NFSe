@@ -31,7 +31,7 @@
 
 using System.ServiceModel;
 
-namespace ACBr.Net.NFSe.GovDigital
+namespace ACBr.Net.NFSe.Providers.GovDigital
 {
     [ServiceContract(Namespace = "http://nfse.abrasf.org.br")]
     internal interface IGovDigitalService

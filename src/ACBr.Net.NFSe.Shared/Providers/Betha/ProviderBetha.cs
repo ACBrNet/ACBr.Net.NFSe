@@ -6,7 +6,7 @@
 // Last Modified By : RFTD
 // Last Modified On : 05-22-2018
 // ***********************************************************************
-// <copyright file="IGovDigitalService.cs" company="ACBr.Net">
+// <copyright file="ProviderBetha.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -31,45 +31,52 @@
 
 using System;
 using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Nota;
 
-namespace ACBr.Net.NFSe.Providers.GovDigital
+namespace ACBr.Net.NFSe.Providers.Betha
 {
-    internal sealed class ProviderGovDigital : ProviderABRASF2
+    internal sealed class ProviderBetha : ProviderABRASF
     {
         #region Constructors
 
-        public ProviderGovDigital(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
+        public ProviderBetha(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
         {
-            Name = "GovDigital";
+            Name = "Betha";
         }
 
         #endregion Constructors
 
         #region Methods
 
-        #region Protected Methods
-
-        protected override IABRASF2Client GetClient(TipoUrl tipo)
+        public override RetornoWebservice EnviarSincrono(int lote, NotaFiscalCollection notas)
         {
-            return new GovDigitalServiceClient(GetUrl(tipo), TimeOut);
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
-        protected override string GetSchema(TipoUrl tipo)
+        protected override IABRASFClient GetClient(TipoUrl tipo)
         {
-            return "nfse.xsd";
+            var url = GetUrl(tipo);
+            return new BethaServiceClient(url, TimeOut, Certificado);
         }
 
         protected override string GetNamespace()
         {
-            return "xmlns=\"http://www.abrasf.org.br/nfse.xsd\"";
+            return "xmlns=\"http://www.betha.com.br/e-nota-contribuinte-ws\"";
         }
 
-        protected override string GerarCabecalho()
+        protected override string GetSchema(TipoUrl tipo)
         {
-            return $"<cabecalho versao=\"2.02\" xmlns=\"http://www.abrasf.org.br/nfse.xsd\">{Environment.NewLine}<versaoDados>2.02</versaoDados>{Environment.NewLine}</cabecalho>";
+            switch (tipo)
+            {
+                case TipoUrl.Enviar: return "servico_enviar_lote_rps_envio_v01.xsd";
+                case TipoUrl.ConsultarSituacao: return "servico_consultar_situacao_lote_rps_envio_v01.xsd";
+                case TipoUrl.ConsultarLoteRps: return "servico_consultar_lote_rps_envio_v01.xsd";
+                case TipoUrl.ConsultaNFSeRps: return "servico_consultar_nfse_rps_envio_v01.xsd";
+                case TipoUrl.ConsultaNFSe: return "servico_consultar_nfse_envio_v01.xsd";
+                case TipoUrl.CancelaNFSe: return "servico_cancelar_nfse_envio_v01.xsd";
+                default: throw new ArgumentOutOfRangeException(nameof(tipo), tipo, @"Valor incorreto ou serviço não suportado.");
+            }
         }
-
-        #endregion Protected Methods
 
         #endregion Methods
     }
