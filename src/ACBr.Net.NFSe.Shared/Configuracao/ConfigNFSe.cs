@@ -37,7 +37,7 @@ using ACBr.Net.NFSe.Nota;
 namespace ACBr.Net.NFSe.Configuracao
 {
     [TypeConverter(typeof(ACBrExpandableObjectConverter))]
-    public sealed class ConfigNFSe : DFeConfigBase<ACBrNFSe, ConfigGeralNFSe, NFSeVersao, ConfigWebServicesNFSe, ConfigCertificadosNFSe, ConfigArquivosNFSe, SchemaNFSe>
+    public sealed class ConfigNFSe : DFeConfigBase<ACBrNFSe, ConfigGeralNFSe, ConfigWebServicesNFSe, ConfigCertificadosNFSe, ConfigArquivosNFSe>
     {
         #region Constructor
 

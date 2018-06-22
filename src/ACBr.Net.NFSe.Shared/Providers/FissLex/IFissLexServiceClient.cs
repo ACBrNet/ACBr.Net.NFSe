@@ -34,9 +34,16 @@ using System.ServiceModel;
 namespace ACBr.Net.NFSe.Providers.FissLex
 {
     [ServiceContract(Namespace = "FISS-LEX")]
-    internal interface IFissLexServiceClient
+    internal interface IFissLexRecepcionarLoteServiceClient
     {
-        [OperationContract(Action = "FISS-LEXaction/AWS_RECEPCIONARLOTERPS.Execute", ReplyAction = "*")]
-        RecepcionarLoteResponse RecepcionarLote(RecepcionarLoteRequest request);
+        [OperationContract(Name = "Execute", Action = "FISS-LEXaction/AWS_RECEPCIONARLOTERPS.Execute", ReplyAction = "*")]
+        string RecepcionarLote(string request);
+    }
+
+    [ServiceContract(Namespace = "FISS-LEX")]
+    internal interface IFissLexConsultarLoteRpsServiceClient
+    {
+        [OperationContract(Name = "Execute", Action = "FISS-LEXaction/AWS_CONSULTALOTERPS.Execute", ReplyAction = "*")]
+        string ConsultarLoteRps(string request);
     }
 }

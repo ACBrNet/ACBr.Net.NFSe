@@ -41,7 +41,7 @@ using ACBr.Net.NFSe.Providers;
 namespace ACBr.Net.NFSe.Configuracao
 {
     [TypeConverter(typeof(ACBrExpandableObjectConverter))]
-    public sealed class ConfigArquivosNFSe : DFeArquivosConfigBase<ACBrNFSe, SchemaNFSe>
+    public sealed class ConfigArquivosNFSe : DFeArquivosConfigBase<ACBrNFSe>
     {
         #region Constructor
 
@@ -126,12 +126,6 @@ namespace ACBr.Net.NFSe.Configuracao
         protected override void ArquivoServicoChange()
         {
             ProviderManager.Load(ArquivoServicos);
-        }
-
-        /// <inheritdoc />
-        public override string GetSchema(SchemaNFSe schema)
-        {
-            return string.Empty;
         }
 
         #endregion Methods

@@ -38,6 +38,7 @@ using ACBr.Net.NFSe.Providers.Betha;
 using ACBr.Net.NFSe.Providers.Betha2;
 using ACBr.Net.NFSe.Providers.Coplan;
 using ACBr.Net.NFSe.Providers.DSF;
+using ACBr.Net.NFSe.Providers.FissLex;
 using ACBr.Net.NFSe.Providers.Ginfes;
 using ACBr.Net.NFSe.Providers.GovDigital;
 using ACBr.Net.NFSe.Providers.NotaCarioca;
@@ -71,6 +72,7 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.Betha2, typeof(ProviderBetha2)},
                 {NFSeProvider.Coplan, typeof(ProviderCoplan)},
                 {NFSeProvider.DSF, typeof(ProviderDSF)},
+                {NFSeProvider.FissLex, typeof(ProviderFissLex)},
                 {NFSeProvider.Ginfes, typeof(ProviderGinfes)},
                 {NFSeProvider.GovDigital, typeof(ProviderGovDigital)},
                 {NFSeProvider.NotaCarioca, typeof(ProviderNotaCarioca)},

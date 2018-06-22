@@ -110,6 +110,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Coplan\RequestBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Coplan\SubstituirNFSeRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Coplan\SubstituirNFSeResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\FissLex\FissLexServiceClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\GovDigital\CancelarNFSeRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\GovDigital\CancelarNFSeResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\GovDigital\ConsultarLoteRpsRequest.cs" />
@@ -184,8 +185,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Evento.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\FissLex\IFissLexServiceClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\FissLex\ProviderFissLex.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Providers\FissLex\RecepcionarLoteRequest.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Providers\FissLex\RecepcionarLoteResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Ginfes\GinfesHomServiceClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Ginfes\GinfesProdServiceClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Ginfes\IGinfesHomService.cs" />
@@ -585,10 +584,18 @@
     <None Include="$(MSBuildThisFileDirectory)Schemas\EReceita\xmldsig-core-schema20020212.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\FintelISS\nfse.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\FintelISS\xmldsig-core-schema20020212.xsd" />
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Fiorilli\nfse.xsd" />
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Fiorilli\xmldsig-core-schema20020212.xsd" />
-    <None Include="$(MSBuildThisFileDirectory)Schemas\FissLex\nfse.xsd" />
-    <None Include="$(MSBuildThisFileDirectory)Schemas\FissLex\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Fiorilli\nfse.xsd">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Fiorilli\xmldsig-core-schema20020212.xsd">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\FissLex\nfse.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\FissLex\xmldsig-core-schema20020212.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="$(MSBuildThisFileDirectory)Schemas\Friburgo\nfse.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Friburgo\xmldsig-core-schema20020212.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Ginfes\cabecalho_v03.xsd">

@@ -46,6 +46,8 @@ namespace ACBr.Net.NFSe.Providers
 
         DSF = 4,
 
+        FissLex = 12,
+
         Ginfes = 5,
 
         GovDigital = 6,

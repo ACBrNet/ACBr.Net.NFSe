@@ -36,12 +36,12 @@ using ACBr.Net.DFe.Core.Common;
 namespace ACBr.Net.NFSe.Configuracao
 {
     [TypeConverter(typeof(ACBrExpandableObjectConverter))]
-    public sealed class ConfigGeralNFSe : DFeGeralConfigBase<ACBrNFSe, NFSeVersao>
+    public sealed class ConfigGeralNFSe : DFeGeralConfigBase<ACBrNFSe>
     {
         #region Constructor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NFSeConfigGeral"/> class.
+        /// Initializes a new instance of the <see cref="ConfigGeralNFSe"/> class.
         /// </summary>
         internal ConfigGeralNFSe(ACBrNFSe parent) : base(parent)
         {

@@ -31,7 +31,6 @@
 
 using System;
 using System.Runtime.Serialization;
-using System.Xml.Serialization;
 
 namespace ACBr.Net.NFSe.Providers
 {
