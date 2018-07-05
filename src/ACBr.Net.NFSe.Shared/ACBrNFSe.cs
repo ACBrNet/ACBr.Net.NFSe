@@ -4,7 +4,7 @@
 // Created          : 01-31-2016
 //
 // Last Modified By : RFTD
-// Last Modified On : 08-06-2017
+// Last Modified On : 07-05-2018
 // ***********************************************************************
 // <copyright file="ACBrNFSe.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -37,6 +37,8 @@ using ACBr.Net.NFSe.Nota;
 using ACBr.Net.NFSe.Providers;
 using System;
 using System.ComponentModel;
+using System.Net;
+using ACBr.Net.Core.Logging;
 
 #if !NETSTANDARD2_0
 
@@ -52,8 +54,14 @@ namespace ACBr.Net.NFSe
 
     [ToolboxBitmap(typeof(ACBrNFSe), "ACBr.Net.NFSe.ACBrNFSe.bmp")]
 #endif
-    public sealed class ACBrNFSe : ACBrComponent
+    public sealed class ACBrNFSe : ACBrComponent, IACBrLog
     {
+        #region Fields
+
+        private SecurityProtocolType protocolType;
+
+        #endregion Fields
+
         #region Propriedades
 
         /// <summary>
@@ -94,14 +102,31 @@ namespace ACBr.Net.NFSe
                 $"ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS) excedido.{Environment.NewLine}" +
                 $"Quantidade atual: {NotasFiscais.Count}");
 
-            using (var provider = ProviderManager.GetProvider(Configuracoes))
+            var oldProtocol = ServicePointManager.SecurityProtocol;
+
+            try
             {
-                var ret = sincrono ? provider.EnviarSincrono(lote, NotasFiscais) : provider.Enviar(lote, NotasFiscais);
+                ServicePointManager.SecurityProtocol = protocolType;
+                using (var provider = ProviderManager.GetProvider(Configuracoes))
+                {
+                    var ret = sincrono
+                        ? provider.EnviarSincrono(lote, NotasFiscais)
+                        : provider.Enviar(lote, NotasFiscais);
 
-                if (ret.Sucesso && DANFSe != null && imprimir)
-                    DANFSe.Imprimir();
+                    if (ret.Sucesso && DANFSe != null && imprimir)
+                        DANFSe.Imprimir();
 
-                return ret;
+                    return ret;
+                }
+            }
+            catch (Exception exception)
+            {
+                this.Log().Error("[Enviar]", exception);
+                throw;
+            }
+            finally
+            {
+                ServicePointManager.SecurityProtocol = oldProtocol;
             }
         }
 
@@ -115,9 +140,26 @@ namespace ACBr.Net.NFSe
         /// <returns>RetornoWebservice.</returns>
         public RetornoWebservice ConsultarSituacao(int lote, string protocolo = "")
         {
-            using (var provider = ProviderManager.GetProvider(Configuracoes))
+            Guard.Against<ArgumentException>(lote < 1, "Lote não pode ser Zero ou negativo.");
+
+            var oldProtocol = ServicePointManager.SecurityProtocol;
+
+            try
             {
-                return provider.ConsultarSituacao(lote, protocolo);
+                ServicePointManager.SecurityProtocol = protocolType;
+                using (var provider = ProviderManager.GetProvider(Configuracoes))
+                {
+                    return provider.ConsultarSituacao(lote, protocolo);
+                }
+            }
+            catch (Exception exception)
+            {
+                this.Log().Error("[ConsultarSituacao]", exception);
+                throw;
+            }
+            finally
+            {
+                ServicePointManager.SecurityProtocol = oldProtocol;
             }
         }
 
@@ -132,9 +174,24 @@ namespace ACBr.Net.NFSe
         /// <exception cref="NotImplementedException"></exception>
         public RetornoWebservice ConsultarLoteRps(int lote, string protocolo)
         {
-            using (var provider = ProviderManager.GetProvider(Configuracoes))
+            var oldProtocol = ServicePointManager.SecurityProtocol;
+
+            try
             {
-                return provider.ConsultarLoteRps(lote, protocolo, NotasFiscais);
+                ServicePointManager.SecurityProtocol = protocolType;
+                using (var provider = ProviderManager.GetProvider(Configuracoes))
+                {
+                    return provider.ConsultarLoteRps(lote, protocolo, NotasFiscais);
+                }
+            }
+            catch (Exception exception)
+            {
+                this.Log().Error("[ConsultarLoteRps]", exception);
+                throw;
+            }
+            finally
+            {
+                ServicePointManager.SecurityProtocol = oldProtocol;
             }
         }
 
@@ -148,9 +205,26 @@ namespace ACBr.Net.NFSe
         /// <exception cref="NotImplementedException"></exception>
         public RetornoWebservice ConsultarSequencialRps(string serie)
         {
-            using (var provider = ProviderManager.GetProvider(Configuracoes))
+            Guard.Against<ArgumentNullException>(serie.IsEmpty(), "Serie não pode ser vazia ou nulo.");
+
+            var oldProtocol = ServicePointManager.SecurityProtocol;
+
+            try
             {
-                return provider.ConsultarSequencialRps(serie);
+                ServicePointManager.SecurityProtocol = protocolType;
+                using (var provider = ProviderManager.GetProvider(Configuracoes))
+                {
+                    return provider.ConsultarSequencialRps(serie);
+                }
+            }
+            catch (Exception exception)
+            {
+                this.Log().Error("[ConsultarSequencialRps]", exception);
+                throw;
+            }
+            finally
+            {
+                ServicePointManager.SecurityProtocol = oldProtocol;
             }
         }
 
@@ -166,9 +240,24 @@ namespace ACBr.Net.NFSe
         /// <exception cref="NotImplementedException"></exception>
         public RetornoWebservice ConsultaNFSeRps(string numero, string serie, TipoRps tipo)
         {
-            using (var provider = ProviderManager.GetProvider(Configuracoes))
+            var oldProtocol = ServicePointManager.SecurityProtocol;
+
+            try
             {
-                return provider.ConsultaNFSeRps(numero, serie, tipo, NotasFiscais);
+                ServicePointManager.SecurityProtocol = protocolType;
+                using (var provider = ProviderManager.GetProvider(Configuracoes))
+                {
+                    return provider.ConsultaNFSeRps(numero, serie, tipo, NotasFiscais);
+                }
+            }
+            catch (Exception exception)
+            {
+                this.Log().Error("[ConsultaNFSeRps]", exception);
+                throw;
+            }
+            finally
+            {
+                ServicePointManager.SecurityProtocol = oldProtocol;
             }
         }
 
@@ -194,10 +283,25 @@ namespace ACBr.Net.NFSe
         {
             Guard.Against<ACBrException>(inicio?.Date > fim?.Date, "A data inicial não pode ser maior que a data final.");
 
-            using (var provider = ProviderManager.GetProvider(Configuracoes))
+            var oldProtocol = ServicePointManager.SecurityProtocol;
+
+            try
             {
-                return provider.ConsultaNFSe(inicio, fim, numeroNfse, pagina, cnpjTomador,
-                    imTomador, nomeInter, cnpjInter, imInter, serie, NotasFiscais);
+                ServicePointManager.SecurityProtocol = protocolType;
+                using (var provider = ProviderManager.GetProvider(Configuracoes))
+                {
+                    return provider.ConsultaNFSe(inicio, fim, numeroNfse, pagina, cnpjTomador,
+                        imTomador, nomeInter, cnpjInter, imInter, serie, NotasFiscais);
+                }
+            }
+            catch (Exception exception)
+            {
+                this.Log().Error("[ConsultaNFSe]", exception);
+                throw;
+            }
+            finally
+            {
+                ServicePointManager.SecurityProtocol = oldProtocol;
             }
         }
 
@@ -212,9 +316,24 @@ namespace ACBr.Net.NFSe
         /// <returns>RetornoWebservice.</returns>
         public RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo)
         {
-            using (var provider = ProviderManager.GetProvider(Configuracoes))
+            var oldProtocol = ServicePointManager.SecurityProtocol;
+
+            try
             {
-                return provider.CancelaNFSe(codigoCancelamento, numeroNFSe, motivo, NotasFiscais);
+                ServicePointManager.SecurityProtocol = protocolType;
+                using (var provider = ProviderManager.GetProvider(Configuracoes))
+                {
+                    return provider.CancelaNFSe(codigoCancelamento, numeroNFSe, motivo, NotasFiscais);
+                }
+            }
+            catch (Exception exception)
+            {
+                this.Log().Error("[CancelaNFSe]", exception);
+                throw;
+            }
+            finally
+            {
+                ServicePointManager.SecurityProtocol = oldProtocol;
             }
         }
 
@@ -228,11 +347,26 @@ namespace ACBr.Net.NFSe
         /// <returns>RetornoWebservice.</returns>
         public RetornoWebservice CancelaNFSe(int lote)
         {
-            Guard.Against<ArgumentException>(NotasFiscais.Count < 1, "ERRO: Nenhuma NFS-e carregada ao componente");
+            var oldProtocol = ServicePointManager.SecurityProtocol;
 
-            using (var provider = ProviderManager.GetProvider(Configuracoes))
+            try
             {
-                return provider.CancelaNFSe(lote, NotasFiscais);
+                ServicePointManager.SecurityProtocol = protocolType;
+                Guard.Against<ArgumentException>(NotasFiscais.Count < 1, "ERRO: Nenhuma NFS-e carregada ao componente");
+
+                using (var provider = ProviderManager.GetProvider(Configuracoes))
+                {
+                    return provider.CancelaNFSe(lote, NotasFiscais);
+                }
+            }
+            catch (Exception exception)
+            {
+                this.Log().Error("[CancelaNFSe]", exception);
+                throw;
+            }
+            finally
+            {
+                ServicePointManager.SecurityProtocol = oldProtocol;
             }
         }
 
@@ -251,9 +385,24 @@ namespace ACBr.Net.NFSe
             Guard.Against<ArgumentException>(numeroNFSe.IsEmpty(), "ERRO: Numero da NFS-e não informada");
             Guard.Against<ArgumentException>(NotasFiscais.Count < 1, "ERRO: Nenhuma RPS carregada ao componente");
 
-            using (var provider = ProviderManager.GetProvider(Configuracoes))
+            var oldProtocol = ServicePointManager.SecurityProtocol;
+
+            try
             {
-                return provider.SubstituirNFSe(codigoCancelamento, numeroNFSe, motivo, NotasFiscais);
+                ServicePointManager.SecurityProtocol = protocolType;
+                using (var provider = ProviderManager.GetProvider(Configuracoes))
+                {
+                    return provider.SubstituirNFSe(codigoCancelamento, numeroNFSe, motivo, NotasFiscais);
+                }
+            }
+            catch (Exception exception)
+            {
+                this.Log().Error("[SubstituirNFSe]", exception);
+                throw;
+            }
+            finally
+            {
+                ServicePointManager.SecurityProtocol = oldProtocol;
             }
         }
 
@@ -284,6 +433,8 @@ namespace ACBr.Net.NFSe
         {
             Configuracoes = new ConfigNFSe(this);
             NotasFiscais = new NotaFiscalCollection(Configuracoes);
+            protocolType = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls |
+                           SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
         }
 
         /// <summary>
