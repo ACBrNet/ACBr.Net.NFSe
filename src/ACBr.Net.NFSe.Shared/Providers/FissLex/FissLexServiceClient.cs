@@ -31,6 +31,7 @@
 using ACBr.Net.DFe.Core.Service;
 using System;
 using System.Security.Cryptography.X509Certificates;
+using System.Xml;
 
 namespace ACBr.Net.NFSe.Providers.FissLex
 {
@@ -53,7 +54,7 @@ namespace ACBr.Net.NFSe.Providers.FissLex
 
         public string ConsultarSituacaoLoteRps(string cabec, string msg)
         {
-            return Channel.ConsultarLoteRps(msg);
+            throw new NotImplementedException();
         }
 
         public string ConsultarNFSePorRps(string cabec, string msg)
@@ -68,7 +69,14 @@ namespace ACBr.Net.NFSe.Providers.FissLex
 
         public string ConsultarLoteRps(string cabec, string msg)
         {
-            throw new NotImplementedException();
+            msg = msg.Replace("ConsultarLoteRpsEnvio", "Consultarloterpsenvio");
+
+            var doc = new XmlDocument();
+            doc.LoadXml(msg);
+
+            var request = new ConsultarLoteRpsRequest(doc.DocumentElement);
+            var ret = Channel.ConsultarLoteRps(request);
+            return ret.Consultarloterpsresposta;
         }
 
         public string CancelarNFSe(string cabec, string msg)

@@ -104,22 +104,24 @@ namespace ACBr.Net.NFSe.Configuracao
 
         #region Methods
 
-        public string GetPathNFSe(DateTime data, string cnpj = "")
+        public string GetPathSoap(DateTime data, string cnpj = "")
         {
-            var dir = string.IsNullOrEmpty(PathNFSe.Trim()) ? PathSalvar : PathNFSe;
-            return GetPath(dir, "NFSe", cnpj, data, "NFSe");
+            return GetPath(PathNFSe, "SOAP", cnpj, data);
         }
 
-        public string GetPathLote(string cnpj = "")
+        public string GetPathNFSe(DateTime data, string cnpj = "")
         {
-            var dir = string.IsNullOrEmpty(PathLote.Trim()) ? PathSalvar : PathLote;
-            return GetPath(dir, "Lote", cnpj); ;
+            return GetPath(PathNFSe, "NFSe", cnpj, data, "NFSe");
+        }
+
+        public string GetPathLote(DateTime data, string cnpj = "")
+        {
+            return GetPath(PathLote, "Lote", cnpj, data);
         }
 
         public string GetPathRps(DateTime data, string cnpj = "")
         {
-            var dir = string.IsNullOrEmpty(PathRps.Trim()) ? PathSalvar : PathRps;
-            return GetPath(dir, "Rps", cnpj, data, "Rps");
+            return GetPath(PathRps, "Rps", cnpj, data, "Rps");
         }
 
         /// <inheritdoc />

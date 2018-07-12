@@ -29,7 +29,9 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.Xml;
 
 namespace ACBr.Net.NFSe.Providers.FissLex
 {
@@ -44,6 +46,42 @@ namespace ACBr.Net.NFSe.Providers.FissLex
     internal interface IFissLexConsultarLoteRpsServiceClient
     {
         [OperationContract(Name = "Execute", Action = "FISS-LEXaction/AWS_CONSULTALOTERPS.Execute", ReplyAction = "*")]
-        string ConsultarLoteRps(string request);
+        ExecuteResponse ConsultarLoteRps(ConsultarLoteRpsRequest request);
+    }
+
+    [MessageContract(WrapperName = "WS_ConsultaLoteRps.Execute", WrapperNamespace = "FISS-LEX", IsWrapped = true)]
+    internal sealed class ConsultarLoteRpsRequest
+    {
+        public ConsultarLoteRpsRequest()
+        {
+        }
+
+        public ConsultarLoteRpsRequest(XmlElement request)
+        {
+            Request = request;
+        }
+
+        [MessageBodyMember(Name = "Consultarloterpsenvio", Namespace = "FISS-LEX", Order = 0)]
+        public XmlElement Request;
+    }
+
+    [MessageContract(WrapperName = "WS_ConsultaLoteRps.ExecuteResponse", WrapperNamespace = "FISS-LEX", IsWrapped = true)]
+    internal sealed class ExecuteResponse
+    {
+        [MessageBodyMember(Name = "Consultarloterpsresposta", Namespace = "FISS-LEX", Order = 0)]
+        public string Consultarloterpsresposta;
+
+        [MessageBodyMember(Name = "Listamensagemretorno", Namespace = "FISS-LEX", Order = 1)]
+        public XmlNode[] Listamensagemretorno;
+
+        public ExecuteResponse()
+        {
+        }
+
+        public ExecuteResponse(string Consultarloterpsresposta, XmlNode[] Listamensagemretorno)
+        {
+            this.Consultarloterpsresposta = Consultarloterpsresposta;
+            this.Listamensagemretorno = Listamensagemretorno;
+        }
     }
 }

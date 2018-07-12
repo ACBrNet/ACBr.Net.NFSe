@@ -4,7 +4,7 @@
 // Created          : 12-24-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 12-24-2017
+// Last Modified On : 07-11-2018
 // ***********************************************************************
 // <copyright file="WebIss2ServiceClient.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -30,16 +30,14 @@
 // ***********************************************************************
 
 using System;
-using System.Security.Cryptography.X509Certificates;
-using ACBr.Net.DFe.Core.Service;
 
 namespace ACBr.Net.NFSe.Providers.WebISS2
 {
-    internal sealed class WebIss2ServiceClient : DFeServiceClientBase<IWebIss2ServiceClient>, IWebIss2ServiceClient, IABRASF2Client
+    internal sealed class WebIss2ServiceClient : NFSeServiceClient<IWebIss2ServiceClient>, IABRASF2Client
     {
         #region Constructors
 
-        public WebIss2ServiceClient(string url, TimeSpan? timeOut = null, X509Certificate2 certificado = null) : base(url, timeOut, certificado)
+        public WebIss2ServiceClient(ProviderWebIss2 provider, TipoUrl tipoUrl) : base(provider, tipoUrl)
         {
         }
 
@@ -50,120 +48,66 @@ namespace ACBr.Net.NFSe.Providers.WebISS2
         public string RecepcionarLoteRps(string cabec, string msg)
         {
             var request = new RecepcionarLoteRpsRequest(cabec, msg);
-            var ret = ((IWebIss2ServiceClient)this).RecepcionarLoteRps(request);
+            var ret = Channel.RecepcionarLoteRps(request);
             return ret.outputXML;
         }
 
         public string RecepcionarLoteRpsSincrono(string cabec, string msg)
         {
             var request = new RecepcionarLoteRpsSincronoRequest(cabec, msg);
-            var ret = ((IWebIss2ServiceClient)this).RecepcionarLoteRpsSincrono(request);
+            var ret = Channel.RecepcionarLoteRpsSincrono(request);
             return ret.outputXML;
         }
 
         public string ConsultarNFSePorRps(string cabec, string msg)
         {
             var request = new ConsultarNfsePorRpsRequest(cabec, msg);
-            var ret = ((IWebIss2ServiceClient)this).ConsultarNfsePorRps(request);
+            var ret = Channel.ConsultarNfsePorRps(request);
             return ret.outputXML;
         }
 
         public string ConsultarNFSeFaixa(string cabec, string msg)
         {
             var request = new ConsultarNfsePorFaixaRequest(cabec, msg);
-            var ret = ((IWebIss2ServiceClient)this).ConsultarNfsePorFaixa(request);
+            var ret = Channel.ConsultarNfsePorFaixa(request);
             return ret.outputXML;
         }
 
         public string ConsultarNFSeServicoTomado(string cabec, string msg)
         {
             var request = new ConsultarNfseServicoTomadoRequest(cabec, msg);
-            var ret = ((IWebIss2ServiceClient)this).ConsultarNfseServicoTomado(request);
+            var ret = Channel.ConsultarNfseServicoTomado(request);
             return ret.outputXML;
         }
 
         public string ConsultarNFSeServicoPrestado(string cabec, string msg)
         {
             var request = new ConsultarNfseServicoPrestadoRequest(cabec, msg);
-            var ret = ((IWebIss2ServiceClient)this).ConsultarNfseServicoPrestado(request);
+            var ret = Channel.ConsultarNfseServicoPrestado(request);
             return ret.outputXML;
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
         {
             var request = new ConsultarLoteRpsRequest(cabec, msg);
-            var ret = ((IWebIss2ServiceClient)this).ConsultarLoteRps(request);
+            var ret = Channel.ConsultarLoteRps(request);
             return ret.outputXML;
         }
 
         public string CancelarNFSe(string cabec, string msg)
         {
             var request = new CancelarNfseRequest(cabec, msg);
-            var ret = ((IWebIss2ServiceClient)this).CancelarNfse(request);
+            var ret = Channel.CancelarNfse(request);
             return ret.outputXML;
         }
 
         public string SubstituirNFSe(string cabec, string msg)
         {
             var request = new SubstituirNfseRequest(cabec, msg);
-            var ret = ((IWebIss2ServiceClient)this).SubstituirNfse(request);
+            var ret = Channel.SubstituirNfse(request);
             return ret.outputXML;
         }
 
         #endregion Methods
-
-        #region Interface Methods
-
-        CancelarNfseResponse IWebIss2ServiceClient.CancelarNfse(CancelarNfseRequest request)
-        {
-            return Channel.CancelarNfse(request);
-        }
-
-        ConsultarLoteRpsResponse IWebIss2ServiceClient.ConsultarLoteRps(ConsultarLoteRpsRequest request)
-        {
-            return Channel.ConsultarLoteRps(request);
-        }
-
-        ConsultarNfseServicoPrestadoResponse IWebIss2ServiceClient.ConsultarNfseServicoPrestado(ConsultarNfseServicoPrestadoRequest request)
-        {
-            return Channel.ConsultarNfseServicoPrestado(request);
-        }
-
-        ConsultarNfseServicoTomadoResponse IWebIss2ServiceClient.ConsultarNfseServicoTomado(ConsultarNfseServicoTomadoRequest request)
-        {
-            return Channel.ConsultarNfseServicoTomado(request);
-        }
-
-        ConsultarNfsePorFaixaResponse IWebIss2ServiceClient.ConsultarNfsePorFaixa(ConsultarNfsePorFaixaRequest request)
-        {
-            return Channel.ConsultarNfsePorFaixa(request);
-        }
-
-        ConsultarNfsePorRpsResponse IWebIss2ServiceClient.ConsultarNfsePorRps(ConsultarNfsePorRpsRequest request)
-        {
-            return Channel.ConsultarNfsePorRps(request);
-        }
-
-        RecepcionarLoteRpsResponse IWebIss2ServiceClient.RecepcionarLoteRps(RecepcionarLoteRpsRequest request)
-        {
-            return Channel.RecepcionarLoteRps(request);
-        }
-
-        GerarNfseResponse IWebIss2ServiceClient.GerarNfse(GerarNfseRequest request)
-        {
-            return Channel.GerarNfse(request);
-        }
-
-        SubstituirNfseResponse IWebIss2ServiceClient.SubstituirNfse(SubstituirNfseRequest request)
-        {
-            return Channel.SubstituirNfse(request);
-        }
-
-        RecepcionarLoteRpsSincronoResponse IWebIss2ServiceClient.RecepcionarLoteRpsSincrono(RecepcionarLoteRpsSincronoRequest request)
-        {
-            return Channel.RecepcionarLoteRpsSincrono(request);
-        }
-
-        #endregion Interface Methods
     }
 }

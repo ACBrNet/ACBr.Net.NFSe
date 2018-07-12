@@ -734,11 +734,11 @@ namespace ACBr.Net.NFSe.Providers
             xmlLote.Append($"<LoteRps Id=\"L{lote}\" versao=\"2.02\">");
             xmlLote.Append($"<NumeroLote>{lote}</NumeroLote>");
             xmlLote.Append("<CpfCnpj>");
-            xmlLote.Append(Config.PrestadorPadrao.CpfCnpj.IsCNPJ()
-                ? $"<Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
-                : $"<Cpf>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
+            xmlLote.Append(Configuracoes.PrestadorPadrao.CpfCnpj.IsCNPJ()
+                ? $"<Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
+                : $"<Cpf>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
             xmlLote.Append("</CpfCnpj>");
-            if (!Config.PrestadorPadrao.InscricaoMunicipal.IsEmpty()) xmlLote.Append($"<InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
+            if (!Configuracoes.PrestadorPadrao.InscricaoMunicipal.IsEmpty()) xmlLote.Append($"<InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
             xmlLote.Append($"<QuantidadeRps>{notas.Count}</QuantidadeRps>");
             xmlLote.Append("<ListaRps>");
             xmlLote.Append(xmlLoteRps);
@@ -747,7 +747,7 @@ namespace ACBr.Net.NFSe.Providers
             xmlLote.Append("</EnviarLoteRpsEnvio>");
             var xmlEnvio = xmlLote.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -816,11 +816,11 @@ namespace ACBr.Net.NFSe.Providers
             xmlLote.Append($"<LoteRps Id=\"L{lote}\" versao=\"2.02\">");
             xmlLote.Append($"<NumeroLote>{lote}</NumeroLote>");
             xmlLote.Append("<CpfCnpj>");
-            xmlLote.Append(Config.PrestadorPadrao.CpfCnpj.IsCNPJ()
-                ? $"<Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
-                : $"<Cpf>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
+            xmlLote.Append(Configuracoes.PrestadorPadrao.CpfCnpj.IsCNPJ()
+                ? $"<Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
+                : $"<Cpf>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
             xmlLote.Append("</CpfCnpj>");
-            if (!Config.PrestadorPadrao.InscricaoMunicipal.IsEmpty()) xmlLote.Append($"<InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
+            if (!Configuracoes.PrestadorPadrao.InscricaoMunicipal.IsEmpty()) xmlLote.Append($"<InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
             xmlLote.Append($"<QuantidadeRps>{notas.Count}</QuantidadeRps>");
             xmlLote.Append("<ListaRps>");
             xmlLote.Append(xmlLoteRps);
@@ -829,7 +829,7 @@ namespace ACBr.Net.NFSe.Providers
             xmlLote.Append("</EnviarLoteRpsSincronoEnvio>");
             var xmlEnvio = xmlLote.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -908,20 +908,20 @@ namespace ACBr.Net.NFSe.Providers
 
             var loteBuilder = new StringBuilder();
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            loteBuilder.Append($"<ConsultarLoteRpsEnvio {GetNamespace()}>");
+            loteBuilder.Append($"<ConsultarLoteRpsEnvio {GetNamespace()} >");
             loteBuilder.Append("<Prestador>");
             loteBuilder.Append("<CpfCnpj>");
-            loteBuilder.Append(Config.PrestadorPadrao.CpfCnpj.IsCNPJ()
-                ? $"<Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
-                : $"<Cpf>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
+            loteBuilder.Append(Configuracoes.PrestadorPadrao.CpfCnpj.IsCNPJ()
+                ? $"<Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
+                : $"<Cpf>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
             loteBuilder.Append("</CpfCnpj>");
-            if (!Config.PrestadorPadrao.InscricaoMunicipal.IsEmpty()) loteBuilder.Append($"<InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
+            if (!Configuracoes.PrestadorPadrao.InscricaoMunicipal.IsEmpty()) loteBuilder.Append($"<InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
             loteBuilder.Append("</Prestador>");
             loteBuilder.Append($"<Protocolo>{protocolo}</Protocolo>");
             loteBuilder.Append("</ConsultarLoteRpsEnvio>");
             var xmlEnvio = loteBuilder.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -1005,12 +1005,12 @@ namespace ACBr.Net.NFSe.Providers
             loteBuilder.Append("<IdentificacaoNfse>");
             loteBuilder.Append($"<Numero>{numeroNFSe}</Numero>");
             loteBuilder.Append("<CpfCnpj>");
-            loteBuilder.Append(Config.PrestadorPadrao.CpfCnpj.IsCNPJ()
-                ? $"<Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
-                : $"<Cpf>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
+            loteBuilder.Append(Configuracoes.PrestadorPadrao.CpfCnpj.IsCNPJ()
+                ? $"<Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
+                : $"<Cpf>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
             loteBuilder.Append("</CpfCnpj>");
-            if (!Config.PrestadorPadrao.InscricaoMunicipal.IsEmpty()) loteBuilder.Append($"<InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
-            loteBuilder.Append($"<CodigoMunicipio>{Config.PrestadorPadrao.Endereco.CodigoMunicipio}</CodigoMunicipio>");
+            if (!Configuracoes.PrestadorPadrao.InscricaoMunicipal.IsEmpty()) loteBuilder.Append($"<InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
+            loteBuilder.Append($"<CodigoMunicipio>{Configuracoes.PrestadorPadrao.Endereco.CodigoMunicipio}</CodigoMunicipio>");
             loteBuilder.Append("</IdentificacaoNfse>");
             loteBuilder.Append($"<CodigoCancelamento>{codigoCancelamento}</CodigoCancelamento>");
             loteBuilder.Append("</InfPedidoCancelamento>");
@@ -1018,7 +1018,7 @@ namespace ACBr.Net.NFSe.Providers
             loteBuilder.Append("</CancelarNfseEnvio>");
             var xmlEnvio = loteBuilder.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -1093,16 +1093,16 @@ namespace ACBr.Net.NFSe.Providers
             loteBuilder.Append("</IdentificacaoRps>");
             loteBuilder.Append("<Prestador>");
             loteBuilder.Append("<CpfCnpj>");
-            loteBuilder.Append(Config.PrestadorPadrao.CpfCnpj.IsCNPJ()
-                ? $"<Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
-                : $"<Cpf>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
+            loteBuilder.Append(Configuracoes.PrestadorPadrao.CpfCnpj.IsCNPJ()
+                ? $"<Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
+                : $"<Cpf>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
             loteBuilder.Append("</CpfCnpj>");
-            if (!Config.PrestadorPadrao.InscricaoMunicipal.IsEmpty()) loteBuilder.Append($"<InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
+            if (!Configuracoes.PrestadorPadrao.InscricaoMunicipal.IsEmpty()) loteBuilder.Append($"<InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
             loteBuilder.Append("</Prestador>");
             loteBuilder.Append("</ConsultarNfseRpsEnvio>");
             var xmlEnvio = loteBuilder.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -1160,11 +1160,11 @@ namespace ACBr.Net.NFSe.Providers
             loteBuilder.Append($"<ConsultarNfseServicoPrestadoEnvio {GetNamespace()}>");
             loteBuilder.Append("<Prestador>");
             loteBuilder.Append("<CpfCnpj>");
-            loteBuilder.Append(Config.PrestadorPadrao.CpfCnpj.IsCNPJ()
-                ? $"<Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
-                : $"<Cpf>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
+            loteBuilder.Append(Configuracoes.PrestadorPadrao.CpfCnpj.IsCNPJ()
+                ? $"<Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
+                : $"<Cpf>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
             loteBuilder.Append("</CpfCnpj>");
-            if (!Config.PrestadorPadrao.InscricaoMunicipal.IsEmpty()) loteBuilder.Append($"<InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
+            if (!Configuracoes.PrestadorPadrao.InscricaoMunicipal.IsEmpty()) loteBuilder.Append($"<InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
             loteBuilder.Append("</Prestador>");
 
             if (!numeroNfse.IsEmpty())
@@ -1207,7 +1207,7 @@ namespace ACBr.Net.NFSe.Providers
             loteBuilder.Append("</ConsultarNfseServicoPrestadoEnvio>");
             var xmlEnvio = loteBuilder.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -1279,12 +1279,12 @@ namespace ACBr.Net.NFSe.Providers
             pedidoCancelamento.Append("<IdentificacaoNfse>");
             pedidoCancelamento.Append($"<Numero>{numeroNFSe}</Numero>");
             pedidoCancelamento.Append("<CpfCnpj>");
-            pedidoCancelamento.Append(Config.PrestadorPadrao.CpfCnpj.IsCNPJ()
-                ? $"<Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
-                : $"<Cpf>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
+            pedidoCancelamento.Append(Configuracoes.PrestadorPadrao.CpfCnpj.IsCNPJ()
+                ? $"<Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
+                : $"<Cpf>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
             pedidoCancelamento.Append("</CpfCnpj>");
-            if (!Config.PrestadorPadrao.InscricaoMunicipal.IsEmpty()) pedidoCancelamento.Append($"<InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
-            pedidoCancelamento.Append($"<CodigoMunicipio>{Config.PrestadorPadrao.Endereco.CodigoMunicipio}</CodigoMunicipio>");
+            if (!Configuracoes.PrestadorPadrao.InscricaoMunicipal.IsEmpty()) pedidoCancelamento.Append($"<InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
+            pedidoCancelamento.Append($"<CodigoMunicipio>{Configuracoes.PrestadorPadrao.Endereco.CodigoMunicipio}</CodigoMunicipio>");
             pedidoCancelamento.Append("</IdentificacaoNfse>");
             pedidoCancelamento.Append($"<CodigoCancelamento>{codigoCancelamento}</CodigoCancelamento>");
             pedidoCancelamento.Append("</InfPedidoCancelamento>");
@@ -1307,7 +1307,7 @@ namespace ACBr.Net.NFSe.Providers
 
             var xmlEnvio = loteBuilder.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }

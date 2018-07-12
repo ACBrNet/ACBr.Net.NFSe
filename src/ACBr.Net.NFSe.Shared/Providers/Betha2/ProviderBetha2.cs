@@ -51,7 +51,7 @@ namespace ACBr.Net.NFSe.Providers.Betha2
 
         protected override IABRASF2Client GetClient(TipoUrl tipo)
         {
-            return new Betha2ServiceClient(GetUrl(tipo), TimeOut);
+            return new Betha2ServiceClient(this, tipo);
         }
 
         protected override string GetSchema(TipoUrl tipo)

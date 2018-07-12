@@ -4,7 +4,7 @@
 // Created          : 05-16-2018
 //
 // Last Modified By : RFTD
-// Last Modified On : 05-16-2018
+// Last Modified On : 07-11-2018
 // ***********************************************************************
 // <copyright file="CoplanServiceClient.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -30,17 +30,14 @@
 // ***********************************************************************
 
 using System;
-using System.Security.Cryptography.X509Certificates;
-using ACBr.Net.DFe.Core.Service;
 
 namespace ACBr.Net.NFSe.Providers.Coplan
 {
-    internal sealed class CoplanServiceClient : DFeServiceClientBase<ICoplanService>, IABRASF2Client
+    internal sealed class CoplanServiceClient : NFSeServiceClient<ICoplanService>, IABRASF2Client
     {
         #region Constructors
 
-        public CoplanServiceClient(string url, TimeSpan? timeOut = null, X509Certificate2 certificado = null) : base(
-            url, timeOut, certificado)
+        public CoplanServiceClient(ProviderCoplan provider, TipoUrl tipoUrl) : base(provider, tipoUrl)
         {
         }
 

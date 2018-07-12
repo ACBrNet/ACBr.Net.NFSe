@@ -4,7 +4,7 @@
 // Created          : 05-15-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 05-15-2017
+// Last Modified On : 07-11-2018
 // ***********************************************************************
 // <copyright file="ProviderSaoPaulo.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -388,7 +388,7 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             loteBuilder.Append("<PedidoEnvioLoteRPS xmlns=\"http://www.prefeitura.sp.gov.br/nfe\" xmlns:xsi = \"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd = \"http://www.w3.org/2001/XMLSchema\">");
             loteBuilder.Append("<Cabecalho xmlns=\"\" Versao=\"1\">");
-            loteBuilder.Append($"<CPFCNPJRemetente><CNPJ>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CNPJ></CPFCNPJRemetente>");
+            loteBuilder.Append($"<CPFCNPJRemetente><CNPJ>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CNPJ></CPFCNPJRemetente>");
             loteBuilder.Append($"<transacao>true</transacao>");
             loteBuilder.Append($"<dtInicio>{notas.Min(x => x.IdentificacaoRps.DataEmissao):yyyy-MM-dd}</dtInicio>");
             loteBuilder.Append($"<dtFim>{notas.Max(x => x.IdentificacaoRps.DataEmissao):yyyy-MM-dd}</dtFim>");
@@ -400,7 +400,7 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
             loteBuilder.Append("</PedidoEnvioLoteRPS>");
             var xmlEnvio = loteBuilder.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -417,7 +417,7 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
             try
             {
                 var cliente = GetCliente(TipoUrl.Enviar);
-                retornoWebservice.XmlRetorno = Config.WebServices.Ambiente == DFeTipoAmbiente.Homologacao ? cliente.TesteEnvioLoteRPS(retornoWebservice.XmlEnvio) :
+                retornoWebservice.XmlRetorno = Configuracoes.WebServices.Ambiente == DFeTipoAmbiente.Homologacao ? cliente.TesteEnvioLoteRPS(retornoWebservice.XmlEnvio) :
                     cliente.EnvioLoteRPS(retornoWebservice.XmlEnvio);
             }
             catch (Exception ex)
@@ -456,14 +456,14 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             loteBuilder.Append("<PedidoInformacoesLote xmlns=\"http://www.prefeitura.sp.gov.br/nfe\" xmlns:xsi = \"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd = \"http://www.w3.org/2001/XMLSchema\">");
             loteBuilder.Append("<Cabecalho xmlns=\"\" Versao=\"1\">");
-            loteBuilder.Append($"<CPFCNPJRemetente><CNPJ>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CNPJ></CPFCNPJRemetente>");
+            loteBuilder.Append($"<CPFCNPJRemetente><CNPJ>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CNPJ></CPFCNPJRemetente>");
             loteBuilder.Append($"<NumeroLote>{lote}</NumeroLote>");
-            loteBuilder.Append($"<InscricaoPrestador>{Config.PrestadorPadrao.InscricaoMunicipal.ZeroFill(8)}</InscricaoPrestador>");
+            loteBuilder.Append($"<InscricaoPrestador>{Configuracoes.PrestadorPadrao.InscricaoMunicipal.ZeroFill(8)}</InscricaoPrestador>");
             loteBuilder.Append("</Cabecalho>");
             loteBuilder.Append("</PedidoInformacoesLote>");
             var xmlEnvio = loteBuilder.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -508,13 +508,13 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             loteBuilder.Append("<PedidoConsultaLote xmlns=\"http://www.prefeitura.sp.gov.br/nfe\" xmlns:xsi = \"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd = \"http://www.w3.org/2001/XMLSchema\">");
             loteBuilder.Append("<Cabecalho xmlns=\"\" Versao=\"1\">");
-            loteBuilder.Append($"<CPFCNPJRemetente><CNPJ>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CNPJ></CPFCNPJRemetente>");
+            loteBuilder.Append($"<CPFCNPJRemetente><CNPJ>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CNPJ></CPFCNPJRemetente>");
             loteBuilder.Append($"<NumeroLote>{lote}</NumeroLote>");
             loteBuilder.Append("</Cabecalho>");
             loteBuilder.Append("</PedidoConsultaLote>");
             var xmlEnvio = loteBuilder.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -589,7 +589,7 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
             }
 
             // Hash Cancelamento
-            var hash = Config.PrestadorPadrao.InscricaoMunicipal.ZeroFill(8) + numeroNFSe.ZeroFill(12);
+            var hash = Configuracoes.PrestadorPadrao.InscricaoMunicipal.ZeroFill(8) + numeroNFSe.ZeroFill(12);
 
             var hashAssinado = "";
             var rsa = (RSACryptoServiceProvider)Certificado.PrivateKey;
@@ -601,12 +601,12 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             loteBuilder.Append("<PedidoCancelamentoNFe xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"http://www.prefeitura.sp.gov.br/nfe\">");
             loteBuilder.Append("<Cabecalho xmlns=\"\" Versao=\"1\">");
-            loteBuilder.Append($"<CPFCNPJRemetente><CNPJ>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CNPJ></CPFCNPJRemetente>");
+            loteBuilder.Append($"<CPFCNPJRemetente><CNPJ>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CNPJ></CPFCNPJRemetente>");
             loteBuilder.Append($"<transacao>true</transacao>");
             loteBuilder.Append("</Cabecalho>");
             loteBuilder.Append("<Detalhe xmlns=\"\">");
             loteBuilder.Append("<ChaveNFe>");
-            loteBuilder.Append($"<InscricaoPrestador>{Config.PrestadorPadrao.InscricaoMunicipal.ZeroFill(8)}</InscricaoPrestador>");
+            loteBuilder.Append($"<InscricaoPrestador>{Configuracoes.PrestadorPadrao.InscricaoMunicipal.ZeroFill(8)}</InscricaoPrestador>");
             loteBuilder.Append($"<NumeroNFe>{numeroNFSe}</NumeroNFe>");
             loteBuilder.Append("</ChaveNFe>");
             loteBuilder.Append($"<AssinaturaCancelamento>{hashAssinado}</AssinaturaCancelamento>");
@@ -614,7 +614,7 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
             loteBuilder.Append("</PedidoCancelamentoNFe>");
             var xmlEnvio = loteBuilder.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -686,8 +686,7 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
 
         private SaoPauloServiceClient GetCliente(TipoUrl tipo)
         {
-            var url = GetUrl(tipo);
-            return new SaoPauloServiceClient(url, TimeOut, Certificado);
+            return new SaoPauloServiceClient(this, tipo);
         }
 
         private RetornoWebservice ConsultarRpsNfseSP(string numeroRPS, string serieRPS, string numeroNFSe, NotaFiscalCollection notas)
@@ -704,14 +703,14 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             loteBuilder.Append("<p1:PedidoConsultaNFe xmlns:p1=\"http://www.prefeitura.sp.gov.br/nfe\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");
             loteBuilder.Append("<Cabecalho Versao=\"1\">");
-            loteBuilder.Append($"<CPFCNPJRemetente><CNPJ>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CNPJ></CPFCNPJRemetente>");
+            loteBuilder.Append($"<CPFCNPJRemetente><CNPJ>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CNPJ></CPFCNPJRemetente>");
             loteBuilder.Append("</Cabecalho>");
             loteBuilder.Append("<Detalhe>");
             if (!string.IsNullOrWhiteSpace(numeroRPS))
             {
                 // RPS
                 loteBuilder.Append("<ChaveRPS>");
-                loteBuilder.Append($"<InscricaoPrestador>{Config.PrestadorPadrao.InscricaoMunicipal.ZeroFill(8)}</InscricaoPrestador>");
+                loteBuilder.Append($"<InscricaoPrestador>{Configuracoes.PrestadorPadrao.InscricaoMunicipal.ZeroFill(8)}</InscricaoPrestador>");
                 loteBuilder.Append($"<SerieRPS>{serieRPS}</SerieRPS>");
                 loteBuilder.Append($"<NumeroRPS>{numeroRPS}</NumeroRPS>");
                 loteBuilder.Append("</ChaveRPS>");
@@ -720,7 +719,7 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
             {
                 // NFSe
                 loteBuilder.Append("<ChaveNFe>");
-                loteBuilder.Append($"<InscricaoPrestador>{Config.PrestadorPadrao.InscricaoMunicipal.ZeroFill(8)}</InscricaoPrestador>");
+                loteBuilder.Append($"<InscricaoPrestador>{Configuracoes.PrestadorPadrao.InscricaoMunicipal.ZeroFill(8)}</InscricaoPrestador>");
                 loteBuilder.Append($"<NumeroNFe>{numeroNFSe}</NumeroNFe>");
                 loteBuilder.Append("</ChaveNFe>");
             }
@@ -728,7 +727,7 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
             loteBuilder.Append("</p1:PedidoConsultaNFe>");
             var xmlEnvio = loteBuilder.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }

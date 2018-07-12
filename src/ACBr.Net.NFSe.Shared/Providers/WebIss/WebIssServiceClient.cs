@@ -4,7 +4,7 @@
 // Created          : 01-13-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 01-13-2017
+// Last Modified On : 07-11-2018
 // ***********************************************************************
 // <copyright file="WebIssServiceClient.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -30,17 +30,15 @@
 // ***********************************************************************
 
 using System;
-using System.Security.Cryptography.X509Certificates;
-using ACBr.Net.DFe.Core.Service;
 
 namespace ACBr.Net.NFSe.Providers.WebISS
 {
     // ReSharper disable once InconsistentNaming
-    internal sealed class WebIssServiceClient : DFeServiceClientBase<IWebIssServiceClient>, IWebIssServiceClient, IABRASFClient
+    internal sealed class WebIssServiceClient : NFSeServiceClient<IWebIssServiceClient>, IABRASFClient
     {
         #region Constructors
 
-        public WebIssServiceClient(string url, TimeSpan? timeOut = null, X509Certificate2 certificado = null) : base(url, timeOut, certificado)
+        public WebIssServiceClient(ProviderWebIss provider, TipoUrl tipoUrl) : base(provider, tipoUrl)
         {
         }
 
@@ -50,72 +48,38 @@ namespace ACBr.Net.NFSe.Providers.WebISS
 
         public string RecepcionarLoteRps(string cabec, string msg)
         {
-            return ((IWebIssServiceClient)this).RecepcionarLoteRps(cabec, msg);
+            return Channel.RecepcionarLoteRps(cabec, msg);
         }
 
         public string ConsultarSituacaoLoteRps(string cabec, string msg)
         {
-            return ((IWebIssServiceClient)this).ConsultarSituacaoLoteRps(cabec, msg);
+            return Channel.ConsultarSituacaoLoteRps(cabec, msg);
         }
 
         public string ConsultarNFSePorRps(string cabec, string msg)
         {
-            return ((IWebIssServiceClient)this).ConsultarNfsePorRps(cabec, msg);
+            return Channel.ConsultarNfsePorRps(cabec, msg);
         }
 
         public string ConsultarNFSe(string cabec, string msg)
         {
-            return ((IWebIssServiceClient)this).ConsultarNfse(cabec, msg);
+            return Channel.ConsultarNfse(cabec, msg);
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
         {
-            return ((IWebIssServiceClient)this).ConsultarLoteRps(cabec, msg);
+            return Channel.ConsultarLoteRps(cabec, msg);
         }
 
         public string CancelarNFSe(string cabec, string msg)
         {
-            return ((IWebIssServiceClient)this).CancelarNfse(cabec, msg);
+            return Channel.CancelarNfse(cabec, msg);
         }
 
         public string GerarNfse(string cabec, string msg)
         {
             throw new NotImplementedException();
         }
-
-        #region Interface Methods
-
-        string IWebIssServiceClient.RecepcionarLoteRps(string cabec, string msg)
-        {
-            return Channel.RecepcionarLoteRps(cabec, msg);
-        }
-
-        string IWebIssServiceClient.ConsultarSituacaoLoteRps(string cabec, string msg)
-        {
-            return Channel.ConsultarSituacaoLoteRps(cabec, msg);
-        }
-
-        string IWebIssServiceClient.ConsultarNfsePorRps(string cabec, string msg)
-        {
-            return Channel.ConsultarNfsePorRps(cabec, msg);
-        }
-
-        string IWebIssServiceClient.ConsultarNfse(string cabec, string msg)
-        {
-            return Channel.ConsultarNfse(cabec, msg);
-        }
-
-        string IWebIssServiceClient.ConsultarLoteRps(string cabec, string msg)
-        {
-            return Channel.ConsultarLoteRps(cabec, msg);
-        }
-
-        string IWebIssServiceClient.CancelarNfse(string cabec, string msg)
-        {
-            return Channel.CancelarNfse(cabec, msg);
-        }
-
-        #endregion Interface Methods
 
         #endregion Methods
     }

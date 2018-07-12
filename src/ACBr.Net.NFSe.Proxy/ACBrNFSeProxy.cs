@@ -210,17 +210,14 @@ namespace ACBr.Net.NFSe
         {
             try
             {
+                oACBrNFSe.Configuracoes.Geral.Salvar = salvar;
                 oACBrNFSe.Configuracoes.Arquivos.Salvar = salvar;
-                if (pathSchemas != string.Empty)
-                    oACBrNFSe.Configuracoes.Arquivos.PathSchemas = pathSchemas;
-                if (pathSalvar != string.Empty)
-                    oACBrNFSe.Configuracoes.Arquivos.PathSalvar = pathSalvar;
-                if (pathLote != string.Empty)
-                    oACBrNFSe.Configuracoes.Arquivos.PathLote = pathLote;
-                if (pathNFSe != string.Empty)
-                    oACBrNFSe.Configuracoes.Arquivos.PathNFSe = pathNFSe;
-                if (pathRps != string.Empty)
-                    oACBrNFSe.Configuracoes.Arquivos.PathRps = pathRps;
+                oACBrNFSe.Configuracoes.WebServices.Salvar = salvar;
+                oACBrNFSe.Configuracoes.Arquivos.PathSchemas = pathSchemas;
+                oACBrNFSe.Configuracoes.Arquivos.PathSalvar = pathSalvar;
+                oACBrNFSe.Configuracoes.Arquivos.PathLote = pathLote;
+                oACBrNFSe.Configuracoes.Arquivos.PathNFSe = pathNFSe;
+                oACBrNFSe.Configuracoes.Arquivos.PathRps = pathRps;
             }
             catch (Exception ex)
             {

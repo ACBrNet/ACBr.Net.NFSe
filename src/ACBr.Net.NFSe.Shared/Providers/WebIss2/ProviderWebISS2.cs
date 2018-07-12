@@ -4,7 +4,7 @@
 // Created          : 12-24-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 12-24-2017
+// Last Modified On : 07-11-2018
 // ***********************************************************************
 // <copyright file="ProviderWebIss2.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -49,8 +49,7 @@ namespace ACBr.Net.NFSe.Providers.WebISS2
 
         protected override IABRASF2Client GetClient(TipoUrl tipo)
         {
-            var url = GetUrl(tipo);
-            return new WebIss2ServiceClient(url, TimeOut, Certificado);
+            return new WebIss2ServiceClient(this, tipo);
         }
 
         protected override string GetNamespace()

@@ -30,16 +30,14 @@
 // ***********************************************************************
 
 using System;
-using System.Security.Cryptography.X509Certificates;
-using ACBr.Net.DFe.Core.Service;
 
 namespace ACBr.Net.NFSe.Providers.Abaco
 {
-    internal sealed class AbacoServiceClient : DFeServiceClientBase<IAbacoServiceClient>, IABRASFClient, IAbacoServiceClient
+    internal sealed class AbacoServiceClient : NFSeServiceClient<IAbacoServiceClient>, IABRASFClient, IAbacoServiceClient
     {
         #region Constructors
 
-        public AbacoServiceClient(string url, TimeSpan? timeOut = null, X509Certificate2 certificado = null) : base(url, timeOut, certificado)
+        public AbacoServiceClient(ProviderAbaco provider, TipoUrl tipoUrl) : base(provider, tipoUrl)
         {
         }
 

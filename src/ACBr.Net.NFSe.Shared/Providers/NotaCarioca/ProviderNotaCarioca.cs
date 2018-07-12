@@ -4,7 +4,7 @@
 // Created          : 08-16-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 08-16-2017
+// Last Modified On : 07-11-2018
 // ***********************************************************************
 // <copyright file="ProviderNotaCarioca.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -30,7 +30,6 @@
 // ***********************************************************************
 
 using ACBr.Net.NFSe.Configuracao;
-using ACBr.Net.NFSe.Providers.WebISS;
 
 namespace ACBr.Net.NFSe.Providers.NotaCarioca
 {
@@ -50,8 +49,7 @@ namespace ACBr.Net.NFSe.Providers.NotaCarioca
 
         protected override IABRASFClient GetClient(TipoUrl tipo)
         {
-            var url = GetUrl(tipo);
-            return new WebIssServiceClient(url, TimeOut, Certificado);
+            return new NotaCariocaServiceClient(this, tipo);
         }
 
         protected override string GetNamespace()

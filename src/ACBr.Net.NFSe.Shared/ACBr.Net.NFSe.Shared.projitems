@@ -137,6 +137,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Providers\GovDigital\SubstituirNFSeRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\GovDigital\SubstituirNFSeResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\MunicipiosNFSe.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NFSeServiceClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\NFSeUrlDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\ACBrMunicipioNFSe.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\Betha2ServiceClient.cs" />

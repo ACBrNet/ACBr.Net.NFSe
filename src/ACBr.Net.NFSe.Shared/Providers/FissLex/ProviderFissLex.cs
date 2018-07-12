@@ -86,7 +86,7 @@ namespace ACBr.Net.NFSe.Providers.FissLex
 
         protected override string GetNamespace()
         {
-            return "xmlns=\"http://www.abrasf.org.br/nfse.xsd\"";
+            return "xmlns=\"FISS-LEX\"";
         }
 
         protected override string GetSchema(TipoUrl tipo)

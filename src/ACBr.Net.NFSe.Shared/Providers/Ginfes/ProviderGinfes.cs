@@ -4,7 +4,7 @@
 // Created          : 28-07-2016
 //
 // Last Modified By : RFTD
-// Last Modified On : 19-08-2016
+// Last Modified On : 07-11-2018
 // ***********************************************************************
 // <copyright file="ProviderGinfes.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -702,8 +702,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             xmlLote.Append("<EnviarLoteRpsEnvio xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\" xmlns=\"http://www.ginfes.com.br/servico_enviar_lote_rps_envio_v03.xsd\">");
             xmlLote.Append($"<LoteRps Id=\"L{lote}\">");
             xmlLote.Append($"<tipos:NumeroLote>{lote}</tipos:NumeroLote>");
-            xmlLote.Append($"<tipos:Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tipos:Cnpj>");
-            xmlLote.Append($"<tipos:InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
+            xmlLote.Append($"<tipos:Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tipos:Cnpj>");
+            xmlLote.Append($"<tipos:InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
             xmlLote.Append($"<tipos:QuantidadeRps>{notas.Count}</tipos:QuantidadeRps>");
             xmlLote.Append("<tipos:ListaRps>");
             xmlLote.Append(xmlLoteRps);
@@ -712,7 +712,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             xmlLote.Append("</EnviarLoteRpsEnvio>");
             var xmlEnvio = xmlLote.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -771,14 +771,14 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             loteBuilder.Append("<ConsultarSituacaoLoteRpsEnvio xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\" xmlns=\"http://www.ginfes.com.br/servico_consultar_situacao_lote_rps_envio_v03.xsd\">");
             loteBuilder.Append("<Prestador>");
-            loteBuilder.Append($"<tipos:Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tipos:Cnpj>");
-            loteBuilder.Append($"<tipos:InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
+            loteBuilder.Append($"<tipos:Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tipos:Cnpj>");
+            loteBuilder.Append($"<tipos:InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
             loteBuilder.Append("</Prestador>");
             loteBuilder.Append($"<Protocolo>{protocolo}</Protocolo>");
             loteBuilder.Append("</ConsultarSituacaoLoteRpsEnvio>");
             var xmlEnvio = loteBuilder.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -826,14 +826,14 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             loteBuilder.Append("<ConsultarLoteRpsEnvio xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\" xmlns=\"http://www.ginfes.com.br/servico_consultar_lote_rps_envio_v03.xsd\">");
             loteBuilder.Append("<Prestador>");
-            loteBuilder.Append($"<tipos:Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tipos:Cnpj>");
-            loteBuilder.Append($"<tipos:InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
+            loteBuilder.Append($"<tipos:Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tipos:Cnpj>");
+            loteBuilder.Append($"<tipos:InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
             loteBuilder.Append("</Prestador>");
             loteBuilder.Append($"<Protocolo>{protocolo}</Protocolo>");
             loteBuilder.Append("</ConsultarLoteRpsEnvio>");
             var xmlEnvio = loteBuilder.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -917,9 +917,9 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             loteBuilder.Append($"<tipos:InfPedidoCancelamento Id=\"C{codigoCancelamento}\" xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\">");
             loteBuilder.Append("<tipos:IdentificacaoNfse>");
             loteBuilder.Append($"<tipos:Numero>{numeroNFSe}</tipos:Numero>");
-            loteBuilder.Append($"<tipos:Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tipos:Cnpj>");
-            loteBuilder.Append($"<tipos:InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
-            loteBuilder.Append($"<tipos:CodigoMunicipio>{Config.PrestadorPadrao.Endereco.CodigoMunicipio}</tipos:CodigoMunicipio>");
+            loteBuilder.Append($"<tipos:Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tipos:Cnpj>");
+            loteBuilder.Append($"<tipos:InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
+            loteBuilder.Append($"<tipos:CodigoMunicipio>{Configuracoes.PrestadorPadrao.Endereco.CodigoMunicipio}</tipos:CodigoMunicipio>");
             loteBuilder.Append("</tipos:IdentificacaoNfse>");
             loteBuilder.Append($"<tipos:CodigoCancelamento>{codigoCancelamento}</tipos:CodigoCancelamento>");
             loteBuilder.Append("</tipos:InfPedidoCancelamento>");
@@ -927,7 +927,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             loteBuilder.Append("</CancelarNfseEnvio>");
             var xmlEnvio = loteBuilder.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -1005,13 +1005,13 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             loteBuilder.Append($"<tipos:Tipo>{(int)tipo + 1}</tipos:Tipo>");
             loteBuilder.Append("</IdentificacaoRps>");
             loteBuilder.Append("<Prestador>");
-            loteBuilder.Append($"<tipos:Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tipos:Cnpj>");
-            loteBuilder.Append($"<tipos:InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
+            loteBuilder.Append($"<tipos:Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tipos:Cnpj>");
+            loteBuilder.Append($"<tipos:InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
             loteBuilder.Append("</Prestador>");
             loteBuilder.Append("</ConsultarNfseRpsEnvio>");
             var xmlEnvio = loteBuilder.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -1072,8 +1072,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             // Sugestão do Ginfes:
             loteBuilder.Append("<ConsultarNfseEnvio xmlns=\"http://www.ginfes.com.br/servico_consultar_nfse_envio_v03.xsd\" xmlns:tipos=\"http://www.ginfes.com.br/tipos_v03.xsd\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");
             loteBuilder.Append("<Prestador>");
-            loteBuilder.Append($"<tipos:Cnpj>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tipos:Cnpj>");
-            loteBuilder.Append($"<tipos:InscricaoMunicipal>{Config.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
+            loteBuilder.Append($"<tipos:Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tipos:Cnpj>");
+            loteBuilder.Append($"<tipos:InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</tipos:InscricaoMunicipal>");
             loteBuilder.Append("</Prestador>");
 
             if (!numeroNfse.IsEmpty())
@@ -1108,7 +1108,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             loteBuilder.Append("</ConsultarNfseEnvio>");
             var xmlEnvio = loteBuilder.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -1415,14 +1415,13 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
 
         private IGinfesServiceClient GetCliente(TipoUrl tipo)
         {
-            var url = GetUrl(tipo);
-            switch (Config.WebServices.Ambiente)
+            switch (Configuracoes.WebServices.Ambiente)
             {
                 case DFeTipoAmbiente.Homologacao:
-                    return new GinfesHomServiceClient(url, TimeOut, Certificado);
+                    return new GinfesHomServiceClient(this, tipo);
 
                 case DFeTipoAmbiente.Producao:
-                    return new GinfesProdServiceClient(url, TimeOut, Certificado);
+                    return new GinfesProdServiceClient(this, tipo);
 
                 default:
                     throw new ArgumentOutOfRangeException();
