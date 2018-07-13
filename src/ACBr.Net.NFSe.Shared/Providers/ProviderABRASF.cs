@@ -1278,7 +1278,6 @@ namespace ACBr.Net.NFSe.Providers
             var retornoWebservice = new RetornoWebservice();
 
             var loteBuilder = new StringBuilder();
-            loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             loteBuilder.Append($"<ConsultarLoteRpsEnvio {GetNamespace()}>");
             loteBuilder.Append("<Prestador>");
             loteBuilder.Append($"<Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>");
