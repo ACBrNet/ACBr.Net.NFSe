@@ -932,7 +932,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(xmlEnvio, "Pedido", "InfPedidoCancelamento", Certificado);
+            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(xmlEnvio, "Pedido", "", Certificado);
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CanNFSe-{numeroNFSe}-env.xml");
 
             // Verifica Schema

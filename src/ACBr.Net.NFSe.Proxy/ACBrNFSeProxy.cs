@@ -73,7 +73,7 @@ namespace ACBr.Net.NFSe
         {
             get
             {
-                return "1.171120.0950"; // 1.AAMMDD.HHMM
+                return "1.180713.2048"; // 1.AAMMDD.HHMM
             }
         }
 
@@ -206,21 +206,22 @@ namespace ACBr.Net.NFSe
             return true;
         }
 
-        public bool SetupArquivos(bool salvar, string pathSchemas, string pathSalvar, string pathLote, string pathRps, string pathNFSe, ref string mensagemAlerta, ref string mensagemErro)
+        public bool SetupArquivos(string pathSchemas, bool salvar, string pathSalvar, ref string mensagemAlerta, ref string mensagemErro)
         {
             try
             {
+                oACBrNFSe.Configuracoes.Geral.Salvar = salvar;
                 oACBrNFSe.Configuracoes.Arquivos.Salvar = salvar;
+                oACBrNFSe.Configuracoes.WebServices.Salvar = salvar;
                 if (pathSchemas != string.Empty)
                     oACBrNFSe.Configuracoes.Arquivos.PathSchemas = pathSchemas;
                 if (pathSalvar != string.Empty)
+                {
                     oACBrNFSe.Configuracoes.Arquivos.PathSalvar = pathSalvar;
-                if (pathLote != string.Empty)
-                    oACBrNFSe.Configuracoes.Arquivos.PathLote = pathLote;
-                if (pathNFSe != string.Empty)
-                    oACBrNFSe.Configuracoes.Arquivos.PathNFSe = pathNFSe;
-                if (pathRps != string.Empty)
-                    oACBrNFSe.Configuracoes.Arquivos.PathRps = pathRps;
+                    oACBrNFSe.Configuracoes.Arquivos.PathLote = pathSalvar;
+                    oACBrNFSe.Configuracoes.Arquivos.PathNFSe = pathSalvar;
+                    oACBrNFSe.Configuracoes.Arquivos.PathRps = pathSalvar;
+                }
             }
             catch (Exception ex)
             {
