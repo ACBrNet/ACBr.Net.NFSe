@@ -153,7 +153,7 @@ namespace ACBr.Net.NFSe.Providers
             Name = "Base";
             ListaDeAlertas = new List<string>();
             FormatoAlerta = "TAG:%TAG% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.";
-            Config = config;
+            Configuracoes = config;
             Municipio = municipio;
         }
 
@@ -192,7 +192,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <value><c>true</c> if [retirar acentos]; otherwise, <c>false</c>.</value>
         public bool RetirarAcentos { get; set; }
 
-        public ConfigNFSe Config { get; }
+        public ConfigNFSe Configuracoes { get; }
 
         public ACBrMunicipioNFSe Municipio { get; }
 
@@ -201,14 +201,14 @@ namespace ACBr.Net.NFSe.Providers
             get
             {
                 TimeSpan? timeOut = null;
-                if (Config.WebServices.AjustaAguardaConsultaRet)
-                    timeOut = TimeSpan.FromSeconds((int)Config.WebServices.AguardarConsultaRet);
+                if (Configuracoes.WebServices.AjustaAguardaConsultaRet)
+                    timeOut = TimeSpan.FromSeconds((int)Configuracoes.WebServices.AguardarConsultaRet);
 
                 return timeOut;
             }
         }
 
-        public X509Certificate2 Certificado => certificado ?? (certificado = Config.Certificados.ObterCertificado());
+        public X509Certificate2 Certificado => certificado ?? (certificado = Configuracoes.Certificados.ObterCertificado());
 
         #endregion Propriedades
 
@@ -387,9 +387,9 @@ namespace ACBr.Net.NFSe.Providers
         /// </summary>
         /// <param name="url">The URL.</param>
         /// <returns>System.String.</returns>
-        protected string GetUrl(TipoUrl url)
+        internal string GetUrl(TipoUrl url)
         {
-            switch (Config.WebServices.Ambiente)
+            switch (Configuracoes.WebServices.Ambiente)
             {
                 case DFeTipoAmbiente.Producao:
                     return Municipio.UrlProducao[url];
@@ -720,7 +720,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <returns>Se estiver tudo OK retorna null, caso contrário as mensagens de alertas e erros.</returns>
         protected RetornoWebservice ValidarSchema(string xml, string schema)
         {
-            schema = Path.Combine(Config.Arquivos.PathSchemas, Name, schema);
+            schema = Path.Combine(Configuracoes.Arquivos.PathSchemas, Name, schema);
             if (XmlSchemaValidation.ValidarXml(xml, schema, out var errosSchema, out var alertasSchema)) return null;
 
             var retLote = new RetornoWebservice
@@ -746,7 +746,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="data"></param>
         protected void GravarRpsEmDisco(string conteudoArquivo, string nomeArquivo, DateTime data)
         {
-            if (Config.Arquivos.Salvar == false) return;
+            if (Configuracoes.Arquivos.Salvar == false) return;
 
             GravarArquivoEmDisco(TipoArquivo.Rps, conteudoArquivo, nomeArquivo);
         }
@@ -759,7 +759,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="data"></param>
         protected void GravarNFSeEmDisco(string conteudoArquivo, string nomeArquivo, DateTime data)
         {
-            if (Config.Arquivos.Salvar == false) return;
+            if (Configuracoes.Arquivos.Salvar == false) return;
 
             GravarArquivoEmDisco(TipoArquivo.NFSe, conteudoArquivo, nomeArquivo);
         }
@@ -771,7 +771,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="nomeArquivo"></param>
         protected void GravarArquivoEmDisco(string conteudoArquivo, string nomeArquivo)
         {
-            if (Config.Geral.Salvar == false) return;
+            if (Configuracoes.Geral.Salvar == false) return;
 
             GravarArquivoEmDisco(TipoArquivo.Webservice, conteudoArquivo, nomeArquivo);
         }
@@ -781,15 +781,15 @@ namespace ACBr.Net.NFSe.Providers
             switch (tipo)
             {
                 case TipoArquivo.Webservice:
-                    nomeArquivo = Path.Combine(Config.Arquivos.GetPathLote(), nomeArquivo);
+                    nomeArquivo = Path.Combine(Configuracoes.Arquivos.GetPathLote(data ?? DateTime.Today, Configuracoes.PrestadorPadrao.CpfCnpj), nomeArquivo);
                     break;
 
                 case TipoArquivo.Rps:
-                    nomeArquivo = Path.Combine(Config.Arquivos.GetPathRps(data ?? DateTime.Today), nomeArquivo);
+                    nomeArquivo = Path.Combine(Configuracoes.Arquivos.GetPathRps(data ?? DateTime.Today, Configuracoes.PrestadorPadrao.CpfCnpj), nomeArquivo);
                     break;
 
                 case TipoArquivo.NFSe:
-                    nomeArquivo = Path.Combine(Config.Arquivos.GetPathNFSe(data ?? DateTime.Today), nomeArquivo);
+                    nomeArquivo = Path.Combine(Configuracoes.Arquivos.GetPathNFSe(data ?? DateTime.Today, Configuracoes.PrestadorPadrao.CpfCnpj), nomeArquivo);
                     break;
 
                 default:

@@ -4,7 +4,7 @@
 // Created          : 08-16-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 08-16-2017
+// Last Modified On : 07-11-2018
 // ***********************************************************************
 // <copyright file="NotaCariocaServiceClient.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -29,18 +29,14 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
-using System.Security.Cryptography.X509Certificates;
-using ACBr.Net.DFe.Core.Service;
-
 namespace ACBr.Net.NFSe.Providers.NotaCarioca
 {
     // ReSharper disable once InconsistentNaming
-    internal sealed class NotaCariocaServiceClient : DFeServiceClientBase<INotaCariocaServiceClient>, IABRASFClient
+    internal sealed class NotaCariocaServiceClient : NFSeServiceClient<INotaCariocaServiceClient>, IABRASFClient
     {
         #region Constructors
 
-        public NotaCariocaServiceClient(string url, TimeSpan? timeOut = null, X509Certificate2 certificado = null) : base(url, timeOut, certificado)
+        public NotaCariocaServiceClient(ProviderNotaCarioca provider, TipoUrl tipoUrl) : base(provider, tipoUrl)
         {
         }
 

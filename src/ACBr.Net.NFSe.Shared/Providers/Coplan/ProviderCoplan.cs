@@ -4,7 +4,7 @@
 // Created          : 05-16-2018
 //
 // Last Modified By : RFTD
-// Last Modified On : 05-16-2018
+// Last Modified On : 07-11-2018
 // ***********************************************************************
 // <copyright file="ProviderCoplan.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -51,7 +51,7 @@ namespace ACBr.Net.NFSe.Providers.Coplan
 
         protected override IABRASF2Client GetClient(TipoUrl tipo)
         {
-            return new CoplanServiceClient(GetUrl(tipo), TimeOut);
+            return new CoplanServiceClient(this, tipo);
         }
 
         protected override string GetSchema(TipoUrl tipo)

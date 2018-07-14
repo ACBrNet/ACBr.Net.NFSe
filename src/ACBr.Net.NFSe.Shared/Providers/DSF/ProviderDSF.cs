@@ -4,7 +4,7 @@
 // Created          : 10-02-2014
 //
 // Last Modified By : RFTD
-// Last Modified On : 10-02-2014
+// Last Modified On : 07-11-2018
 // ***********************************************************************
 // <copyright file="ProviderDSF.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -438,16 +438,11 @@ namespace ACBr.Net.NFSe.Providers.DSF
             var valorTotal = notas.Sum(nota => nota.Servico.Valores.ValorServicos);
             var deducaoTotal = notas.Sum(nota => nota.Servico.Valores.ValorDeducoes);
 
-            var xmlEnvio = GerarEnvEnvio();
-            xmlEnvio = xmlEnvio.SafeReplace("%DTINICIO%", rpsOrg.First().IdentificacaoRps.DataEmissao.ToString("yyyy-MM-dd"));
-            xmlEnvio = xmlEnvio.SafeReplace("%DTFIM%", rpsOrg.Last().IdentificacaoRps.DataEmissao.ToString("yyyy-MM-dd"));
-            xmlEnvio = xmlEnvio.SafeReplace("%TOTALRPS%", notas.Count.ToString());
-            xmlEnvio = xmlEnvio.SafeReplace("%TOTALVALOR%", $"{valorTotal:0.00}");
-            xmlEnvio = xmlEnvio.SafeReplace("%TOTALDEDUCAO%", $"{deducaoTotal:0.00}");
-            xmlEnvio = xmlEnvio.SafeReplace("%LOTE%", lote.ToString());
+            var xmlEnvio = GerarEnvEnvio(rpsOrg.First().IdentificacaoRps.DataEmissao,
+                rpsOrg.Last().IdentificacaoRps.DataEmissao, notas.Count, valorTotal, deducaoTotal, lote.ToString());
 
             var xmlNotas = new StringBuilder();
-            foreach (NotaFiscal nota in notas)
+            foreach (var nota in notas)
             {
                 var xmlRps = GetXmlRps(nota, false, false);
                 xmlNotas.Append(xmlRps);
@@ -455,7 +450,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
             }
 
             xmlEnvio = xmlEnvio.SafeReplace("%NOTAS%", xmlNotas.ToString());
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -466,15 +461,14 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
             // Verifica Schema
             var retSchema = ValidarSchema(xmlEnvio, "ReqEnvioLoteRPS.xsd");
-            if (retSchema != null)
-                return retSchema;
-
-            var url = GetUrl(TipoUrl.Enviar);
-            var cliente = new DSFServiceClient(url, TimeOut);
+            if (retSchema != null) return retSchema;
 
             try
             {
-                retornoWebservice.XmlRetorno = cliente.Enviar(xmlEnvio);
+                using (var cliente = GetClient(TipoUrl.Enviar))
+                {
+                    retornoWebservice.XmlRetorno = cliente.Enviar(xmlEnvio);
+                }
             }
             catch (Exception ex)
             {
@@ -516,13 +510,8 @@ namespace ACBr.Net.NFSe.Providers.DSF
             var valorTotal = notas.Sum(nota => nota.Servico.Valores.ValorServicos);
             var deducaoTotal = notas.Sum(nota => nota.Servico.Valores.ValorDeducoes);
 
-            var xmlEnvio = GerarEnvEnvio();
-            xmlEnvio = xmlEnvio.SafeReplace("%DTINICIO%", rpsOrg.First().IdentificacaoRps.DataEmissao.ToString("yyyy-MM-dd"));
-            xmlEnvio = xmlEnvio.SafeReplace("%DTFIM%", rpsOrg.Last().IdentificacaoRps.DataEmissao.ToString("yyyy-MM-dd"));
-            xmlEnvio = xmlEnvio.SafeReplace("%TOTALRPS%", notas.Count.ToString());
-            xmlEnvio = xmlEnvio.SafeReplace("%TOTALVALOR%", $"{valorTotal:0.00}");
-            xmlEnvio = xmlEnvio.SafeReplace("%TOTALDEDUCAO%", $"{deducaoTotal:0.00}");
-            xmlEnvio = xmlEnvio.SafeReplace("%LOTE%", lote.ToString());
+            var xmlEnvio = GerarEnvEnvio(rpsOrg.First().IdentificacaoRps.DataEmissao,
+                rpsOrg.Last().IdentificacaoRps.DataEmissao, notas.Count, valorTotal, deducaoTotal, lote.ToString());
 
             var xmlNotas = new StringBuilder();
 
@@ -535,7 +524,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
             }
 
             xmlEnvio = xmlEnvio.SafeReplace("%NOTAS%", xmlNotas.ToString());
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -549,12 +538,12 @@ namespace ACBr.Net.NFSe.Providers.DSF
             if (retSchema != null)
                 return retSchema;
 
-            var url = GetUrl(TipoUrl.Enviar);
-            var cliente = new DSFServiceClient(url, TimeOut);
-
             try
             {
-                retornoWebservice.XmlRetorno = cliente.EnviarSincrono(xmlEnvio);
+                using (var cliente = GetClient(TipoUrl.EnviarSincrono))
+                {
+                    retornoWebservice.XmlRetorno = cliente.EnviarSincrono(xmlEnvio);
+                }
             }
             catch (Exception ex)
             {
@@ -613,7 +602,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
             loteCancelamento.Append("<ns1:ReqCancelamentoNFSe xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqCancelamentoNFSe.xsd\">");
             loteCancelamento.Append("<Cabecalho>");
             loteCancelamento.Append($"<CodCidade>{Municipio.CodigoSiafi}</CodCidade>");
-            loteCancelamento.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CpfCnpj.OnlyNumbers().ZeroFill(14)}</CPFCNPJRemetente>");
+            loteCancelamento.Append($"<CPFCNPJRemetente>{Configuracoes.PrestadorPadrao.CpfCnpj.OnlyNumbers().ZeroFill(14)}</CPFCNPJRemetente>");
             loteCancelamento.Append("<transacao>true</transacao>");
             loteCancelamento.Append("<Versao>1</Versao>");
             loteCancelamento.Append("</Cabecalho>");
@@ -635,7 +624,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
             loteCancelamento.Append("</ns1:ReqCancelamentoNFSe>");
 
             var xmlEnvio = loteCancelamento.ToString();
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -649,12 +638,12 @@ namespace ACBr.Net.NFSe.Providers.DSF
             if (retSchema != null)
                 return retSchema;
 
-            var url = GetUrl(TipoUrl.CancelaNFSe);
-            var cliente = new DSFServiceClient(url, TimeOut);
-
             try
             {
-                retornoWebservice.XmlRetorno = cliente.Cancelar(xmlEnvio);
+                using (var cliente = GetClient(TipoUrl.CancelaNFSe))
+                {
+                    retornoWebservice.XmlRetorno = cliente.Cancelar(xmlEnvio);
+                }
             }
             catch (Exception ex)
             {
@@ -708,14 +697,14 @@ namespace ACBr.Net.NFSe.Providers.DSF
             loteCancelamento.Append("<ns1:ReqCancelamentoNFSe xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqCancelamentoNFSe.xsd\">");
             loteCancelamento.Append("<Cabecalho>");
             loteCancelamento.Append($"<CodCidade>{Municipio.CodigoSiafi}</CodCidade>");
-            loteCancelamento.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CpfCnpj.OnlyNumbers().ZeroFill(14)}</CPFCNPJRemetente>");
+            loteCancelamento.Append($"<CPFCNPJRemetente>{Configuracoes.PrestadorPadrao.CpfCnpj.OnlyNumbers().ZeroFill(14)}</CPFCNPJRemetente>");
             loteCancelamento.Append("<transacao>true</transacao>");
             loteCancelamento.Append("<Versao>1</Versao>");
             loteCancelamento.Append("</Cabecalho>");
             loteCancelamento.Append("<Lote Id=\"lote:1\">"); //Checar se o numero do lote é necessario ou pode ser sempre o mesmo.
 
             loteCancelamento.Append($"<Nota Id=\"nota:{numeroNFSe}\">");
-            loteCancelamento.Append($"<InscricaoMunicipalPrestador>{Config.PrestadorPadrao.InscricaoMunicipal.OnlyNumbers()}</InscricaoMunicipalPrestador>");
+            loteCancelamento.Append($"<InscricaoMunicipalPrestador>{Configuracoes.PrestadorPadrao.InscricaoMunicipal.OnlyNumbers()}</InscricaoMunicipalPrestador>");
             loteCancelamento.Append($"<NumeroNota>{numeroNFSe}</NumeroNota>");
             loteCancelamento.Append($"<CodigoVerificacao>{codigoCancelamento}</CodigoVerificacao>");
             loteCancelamento.Append($"<MotivoCancelamento>{motivo}</MotivoCancelamento>");
@@ -725,7 +714,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
             loteCancelamento.Append("</ns1:ReqCancelamentoNFSe>");
 
             var xmlEnvio = loteCancelamento.ToString();
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -739,12 +728,12 @@ namespace ACBr.Net.NFSe.Providers.DSF
             if (retSchema != null)
                 return retSchema;
 
-            var url = GetUrl(TipoUrl.CancelaNFSe);
-            var cliente = new DSFServiceClient(url, TimeOut);
-
             try
             {
-                retornoWebservice.XmlRetorno = cliente.Cancelar(xmlEnvio);
+                using (var cliente = GetClient(TipoUrl.CancelaNFSe))
+                {
+                    retornoWebservice.XmlRetorno = cliente.Cancelar(xmlEnvio);
+                }
             }
             catch (Exception ex)
             {
@@ -796,14 +785,14 @@ namespace ACBr.Net.NFSe.Providers.DSF
             loteBuilder.Append("<ns1:ReqConsultaLote xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote  http://localhost:8080/WsNFe2/xsd/ReqConsultaLote.xsd\">");
             loteBuilder.Append("<Cabecalho>");
             loteBuilder.Append($"<CodCidade>{Municipio.CodigoSiafi}</CodCidade>");
-            loteBuilder.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CPFCNPJRemetente>");
+            loteBuilder.Append($"<CPFCNPJRemetente>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CPFCNPJRemetente>");
             loteBuilder.Append("<Versao>1</Versao>");
             loteBuilder.Append($"<NumeroLote>{lote}</NumeroLote>");
             loteBuilder.Append("</Cabecalho>");
             loteBuilder.Append("</ns1:ReqConsultaLote>");
             var xmlEnvio = loteBuilder.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -818,10 +807,10 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
             try
             {
-                var url = GetUrl(TipoUrl.ConsultarLoteRps);
-                var cliente = new DSFServiceClient(url, TimeOut);
-
-                retornoWebservice.XmlRetorno = cliente.ConsultarLote(retornoWebservice.XmlEnvio);
+                using (var cliente = GetClient(TipoUrl.ConsultarLoteRps))
+                {
+                    retornoWebservice.XmlRetorno = cliente.ConsultarLote(retornoWebservice.XmlEnvio);
+                }
             }
             catch (Exception ex)
             {
@@ -872,15 +861,15 @@ namespace ACBr.Net.NFSe.Providers.DSF
             lote.Append("<ns1:ConsultaSeqRps xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ConsultaSeqRps.xsd\">");
             lote.Append("<Cabecalho>");
             lote.Append($"<CodCid>{Municipio.CodigoSiafi}</CodCid>");
-            lote.Append($"<IMPrestador>{Config.PrestadorPadrao.InscricaoMunicipal.ZeroFill(Municipio.TamanhoIm)}</IMPrestador>");
-            lote.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CPFCNPJRemetente>");
+            lote.Append($"<IMPrestador>{Configuracoes.PrestadorPadrao.InscricaoMunicipal.ZeroFill(Municipio.TamanhoIm)}</IMPrestador>");
+            lote.Append($"<CPFCNPJRemetente>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CPFCNPJRemetente>");
             lote.Append($"<SeriePrestacao>{serie}</SeriePrestacao>");
             lote.Append("<Versao>1</Versao>");
             lote.Append("</Cabecalho>");
             lote.Append("</ns1:ConsultaSeqRps>");
             var xmlEnvio = lote.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -895,10 +884,10 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
             try
             {
-                var url = GetUrl(TipoUrl.ConsultarLoteRps);
-                var cliente = new DSFServiceClient(url, TimeOut);
-
-                retornoWebservice.XmlRetorno = cliente.ConsultarLote(retornoWebservice.XmlEnvio);
+                using (var cliente = GetClient(TipoUrl.ConsultarSequencialRps))
+                {
+                    retornoWebservice.XmlRetorno = cliente.ConsultarLote(retornoWebservice.XmlEnvio);
+                }
             }
             catch (Exception ex)
             {
@@ -934,8 +923,8 @@ namespace ACBr.Net.NFSe.Providers.DSF
                 "<ns1:ReqConsultaNotas xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqConsultaNotas.xsd\">");
             lote.Append("<Cabecalho Id=\"Consulta:notas\">");
             lote.Append($"<CodCidade>{Municipio.CodigoSiafi}</CodCidade>");
-            lote.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CPFCNPJRemetente>");
-            lote.Append($"<InscricaoMunicipalPrestador>{Config.PrestadorPadrao.InscricaoMunicipal.ZeroFill(Municipio.TamanhoIm)}</InscricaoMunicipalPrestador>");
+            lote.Append($"<CPFCNPJRemetente>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CPFCNPJRemetente>");
+            lote.Append($"<InscricaoMunicipalPrestador>{Configuracoes.PrestadorPadrao.InscricaoMunicipal.ZeroFill(Municipio.TamanhoIm)}</InscricaoMunicipalPrestador>");
             lote.Append($"<dtInicio>{inicio:yyyy-MM-dd}</dtInicio>");
             lote.Append($"<dtFim>{fim:yyyy-MM-dd}</dtFim>");
             lote.Append($"<NotaInicial>{numeroNfse}</NotaInicial>");
@@ -944,7 +933,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
             lote.Append("</ns1:ReqConsultaNotas>");
             var xmlEnvio = lote.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -959,10 +948,10 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
             try
             {
-                var url = GetUrl(TipoUrl.ConsultaNFSe);
-                var cliente = new DSFServiceClient(url, TimeOut);
-
-                retornoWebservice.XmlRetorno = cliente.ConsultarNFSe(retornoWebservice.XmlEnvio);
+                using (var cliente = GetClient(TipoUrl.ConsultaNFSe))
+                {
+                    retornoWebservice.XmlRetorno = cliente.ConsultarNFSe(retornoWebservice.XmlEnvio);
+                }
             }
             catch (Exception ex)
             {
@@ -997,7 +986,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
             lote.Append("<ns1:ReqConsultaNFSeRPS xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqConsultaNFSeRPS.xsd\">");
             lote.Append("<Cabecalho>");
             lote.Append($"<CodCidade>{Municipio.CodigoSiafi}</CodCidade>");
-            lote.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CpfCnpj.OnlyNumbers().ZeroFill(14)}</CPFCNPJRemetente>");
+            lote.Append($"<CPFCNPJRemetente>{Configuracoes.PrestadorPadrao.CpfCnpj.OnlyNumbers().ZeroFill(14)}</CPFCNPJRemetente>");
             lote.Append("<transacao>true</transacao>");
             lote.Append("<Versao>1</Versao>");
             lote.Append("</Cabecalho>");
@@ -1038,7 +1027,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
             lote.Append("</ns1:ReqConsultaNFSeRPS>");
             var xmlEnvio = lote.ToString();
 
-            if (Config.Geral.RetirarAcentos)
+            if (Configuracoes.Geral.RetirarAcentos)
             {
                 xmlEnvio = xmlEnvio.RemoveAccent();
             }
@@ -1052,10 +1041,10 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
             try
             {
-                var url = GetUrl(TipoUrl.ConsultaNFSeRps);
-                var cliente = new DSFServiceClient(url, TimeOut);
-
-                retornoWebservice.XmlRetorno = cliente.ConsultarNFSeRps(retornoWebservice.XmlEnvio);
+                using (var cliente = GetClient(TipoUrl.ConsultaNFSeRps))
+                {
+                    retornoWebservice.XmlRetorno = cliente.ConsultarNFSeRps(retornoWebservice.XmlEnvio);
+                }
             }
             catch (Exception ex)
             {
@@ -1094,25 +1083,30 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
         #region Private
 
-        private string GerarEnvEnvio()
+        private DSFServiceClient GetClient(TipoUrl tipo)
+        {
+            return new DSFServiceClient(this, tipo);
+        }
+
+        private string GerarEnvEnvio(DateTime dataIni, DateTime dataFim, int total, decimal valorTotal, decimal valorDeducao, string lote)
         {
             var xmlLote = new StringBuilder();
             xmlLote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             xmlLote.Append("<ns1:ReqEnvioLoteRPS xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqEnvioLoteRPS.xsd\">");
             xmlLote.Append("<Cabecalho>");
             xmlLote.Append($"<CodCidade>{Municipio.CodigoSiafi}</CodCidade>");
-            xmlLote.Append($"<CPFCNPJRemetente>{Config.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CPFCNPJRemetente>");
-            xmlLote.Append($"<RazaoSocialRemetente>{Config.PrestadorPadrao.RazaoSocial}</RazaoSocialRemetente>");
+            xmlLote.Append($"<CPFCNPJRemetente>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CPFCNPJRemetente>");
+            xmlLote.Append($"<RazaoSocialRemetente>{Configuracoes.PrestadorPadrao.RazaoSocial}</RazaoSocialRemetente>");
             xmlLote.Append("<transacao/>");
-            xmlLote.Append("<dtInicio>%DTINICIO%</dtInicio>");
-            xmlLote.Append("<dtFim>%DTFIM%</dtFim>");
-            xmlLote.Append("<QtdRPS>%TOTALRPS%</QtdRPS>");
-            xmlLote.Append("<ValorTotalServicos>%TOTALVALOR%</ValorTotalServicos>");
-            xmlLote.Append("<ValorTotalDeducoes>%TOTALDEDUCAO%</ValorTotalDeducoes>");
+            xmlLote.Append($"<dtInicio>{dataIni:yyyy-MM-dd}</dtInicio>");
+            xmlLote.Append($"<dtFim>{dataFim:yyyy-MM-dd}</dtFim>");
+            xmlLote.Append($"<QtdRPS>{total}</QtdRPS>");
+            xmlLote.Append($"<ValorTotalServicos>{valorTotal:0.00}</ValorTotalServicos>");
+            xmlLote.Append($"<ValorTotalDeducoes>{valorDeducao:0.00}</ValorTotalDeducoes>");
             xmlLote.Append("<Versao>1</Versao>");
             xmlLote.Append("<MetodoEnvio>WS</MetodoEnvio>");
             xmlLote.Append("</Cabecalho>");
-            xmlLote.Append("<Lote Id=\"lote:%LOTE%\">");
+            xmlLote.Append($"<Lote Id=\"lote:{lote}\">");
             xmlLote.Append("%NOTAS%");
             xmlLote.Append("</Lote>");
             xmlLote.Append("</ns1:ReqEnvioLoteRPS>");

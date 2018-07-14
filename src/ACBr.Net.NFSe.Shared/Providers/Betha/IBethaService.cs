@@ -30,13 +30,63 @@
 // ***********************************************************************
 
 using System.ServiceModel;
+using System.Xml;
 
 namespace ACBr.Net.NFSe.Providers.Betha
 {
     [ServiceContract(Namespace = "http://www.betha.com.br/e-nota-contribuinte-ws")]
     internal interface IBethaService
     {
+        [XmlSerializerFormat(SupportFaults = true)]
         [OperationContract(Action = "", ReplyAction = "*")]
-        string EnviarLoteRpsEnvio(string request);
+        EnviarLoteRpsEnvioResponse EnviarLoteRpsEnvio(EnviarLoteRpsEnvioRequest request);
+    }
+
+    [MessageContract(IsWrapped = false)]
+    internal sealed class EnviarLoteRpsEnvioRequest
+    {
+        #region Constructors
+
+        public EnviarLoteRpsEnvioRequest()
+        {
+        }
+
+        public EnviarLoteRpsEnvioRequest(XmlNode request)
+        {
+            this.Request = request;
+        }
+
+        #endregion Constructors
+
+        #region Properties
+
+        [MessageBodyMember(Name = "EnviarLoteRpsEnvio", Namespace = "http://www.betha.com.br/e-nota-contribuinte-ws", Order = 0)]
+        public XmlNode Request { get; set; }
+
+        #endregion Properties
+    }
+
+    [MessageContract(IsWrapped = false)]
+    internal sealed class EnviarLoteRpsEnvioResponse
+    {
+        #region Constructors
+
+        public EnviarLoteRpsEnvioResponse()
+        {
+        }
+
+        public EnviarLoteRpsEnvioResponse(string result)
+        {
+            this.Result = result;
+        }
+
+        #endregion Constructors
+
+        #region Properties
+
+        [MessageBodyMember(Name = "EnviarLoteRpsEnvioResponse", Namespace = "http://www.betha.com.br/e-nota-contribuinte-ws", Order = 0)]
+        public string Result { get; set; }
+
+        #endregion Properties
     }
 }

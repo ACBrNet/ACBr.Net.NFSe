@@ -31,6 +31,7 @@
 
 using System;
 using System.Security.Cryptography.X509Certificates;
+using System.Xml;
 using ACBr.Net.DFe.Core.Service;
 
 namespace ACBr.Net.NFSe.Providers.Betha
@@ -49,7 +50,12 @@ namespace ACBr.Net.NFSe.Providers.Betha
 
         public string RecepcionarLoteRps(string cabec, string msg)
         {
-            return Channel.EnviarLoteRpsEnvio(msg);
+            var doc = new XmlDocument();
+            doc.LoadXml(msg);
+
+            var request = new EnviarLoteRpsEnvioRequest(doc);
+            var ret = Channel.EnviarLoteRpsEnvio(request);
+            return ret.Result;
         }
 
         public string ConsultarSituacaoLoteRps(string cabec, string msg)

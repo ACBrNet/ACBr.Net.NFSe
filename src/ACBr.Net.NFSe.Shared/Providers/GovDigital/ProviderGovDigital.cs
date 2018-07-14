@@ -4,7 +4,7 @@
 // Created          : 05-22-2018
 //
 // Last Modified By : RFTD
-// Last Modified On : 05-22-2018
+// Last Modified On : 07-11-2018
 // ***********************************************************************
 // <copyright file="IGovDigitalService.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -51,7 +51,7 @@ namespace ACBr.Net.NFSe.Providers.GovDigital
 
         protected override IABRASF2Client GetClient(TipoUrl tipo)
         {
-            return new GovDigitalServiceClient(GetUrl(tipo), TimeOut);
+            return new GovDigitalServiceClient(this, tipo);
         }
 
         protected override string GetSchema(TipoUrl tipo)

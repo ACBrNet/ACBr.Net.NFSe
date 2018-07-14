@@ -50,43 +50,12 @@ namespace ACBr.Net.NFSe.Providers.FissLex
 
         protected override IABRASFClient GetClient(TipoUrl tipo)
         {
-            var url = GetUrl(tipo);
-            switch (tipo)
-            {
-                case TipoUrl.Enviar:
-                    throw new NotImplementedException();
-
-                case TipoUrl.EnviarSincrono:
-                    throw new NotImplementedException();
-
-                case TipoUrl.ConsultarSituacao:
-                    throw new NotImplementedException();
-
-                case TipoUrl.ConsultarLoteRps:
-                    return new FissLexConsultarLoteRpsServiceClient(url, TimeOut, Certificado);
-
-                case TipoUrl.ConsultarSequencialRps:
-                    throw new NotImplementedException();
-
-                case TipoUrl.ConsultaNFSeRps:
-                    throw new NotImplementedException();
-
-                case TipoUrl.ConsultaNFSe:
-                    throw new NotImplementedException();
-
-                case TipoUrl.CancelaNFSe:
-                    throw new NotImplementedException();
-
-                case TipoUrl.SubstituirNFSe: throw new NotImplementedException();
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(tipo), tipo, null);
-            }
+            return new FissLexServiceClient(this, tipo);
         }
 
         protected override string GetNamespace()
         {
-            return "xmlns=\"http://www.abrasf.org.br/nfse.xsd\"";
+            return "";
         }
 
         protected override string GetSchema(TipoUrl tipo)

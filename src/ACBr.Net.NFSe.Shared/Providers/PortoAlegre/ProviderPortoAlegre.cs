@@ -4,7 +4,7 @@
 // Created          : 01-16-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 01-16-2017
+// Last Modified On : 07-11-2018
 // ***********************************************************************
 // <copyright file="ProviderPortoAlegre.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -48,8 +48,7 @@ namespace ACBr.Net.NFSe.Providers.PortoAlegre
 
         protected override IABRASFClient GetClient(TipoUrl tipo)
         {
-            var url = GetUrl(tipo);
-            return new PortoAlegreServiceClient(url, TimeOut, Certificado);
+            return new PortoAlegreServiceClient(this, tipo);
         }
 
         protected override string GetNamespace()

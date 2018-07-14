@@ -4,7 +4,7 @@
 // Created          : 05-22-2018
 //
 // Last Modified By : RFTD
-// Last Modified On : 05-22-2018
+// Last Modified On : 07-11-2018
 // ***********************************************************************
 // <copyright file="GovDigitalServiceClient.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -29,18 +29,13 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
-using System.Security.Cryptography.X509Certificates;
-using ACBr.Net.DFe.Core.Service;
-
 namespace ACBr.Net.NFSe.Providers.GovDigital
 {
-    internal sealed class GovDigitalServiceClient : DFeServiceClientBase<IGovDigitalService>, IABRASF2Client
+    internal sealed class GovDigitalServiceClient : NFSeServiceClient<IGovDigitalService>, IABRASF2Client
     {
         #region Constructors
 
-        public GovDigitalServiceClient(string url, TimeSpan? timeOut = null, X509Certificate2 certificado = null) : base(
-            url, timeOut, certificado)
+        public GovDigitalServiceClient(ProviderGovDigital provider, TipoUrl tipoUrl) : base(provider, tipoUrl)
         {
         }
 

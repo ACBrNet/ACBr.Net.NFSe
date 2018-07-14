@@ -137,6 +137,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Providers\GovDigital\SubstituirNFSeRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\GovDigital\SubstituirNFSeResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\MunicipiosNFSe.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NFSeRequestServiceClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\NFSeServiceClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\NFSeUrlDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\ACBrMunicipioNFSe.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha2\Betha2ServiceClient.cs" />
@@ -183,7 +185,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Providers\DSF\IDSFService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\DSF\ProviderDSF.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Evento.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Providers\FissLex\IFissLexServiceClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\FissLex\ProviderFissLex.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Ginfes\GinfesHomServiceClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Ginfes\GinfesProdServiceClient.cs" />

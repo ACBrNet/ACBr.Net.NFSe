@@ -4,7 +4,7 @@
 // Created          : 10-08-2014
 //
 // Last Modified By : RFTD
-// Last Modified On : 19-08-2016
+// Last Modified On : 07-11-2018
 // ***********************************************************************
 // <copyright file="DSFServiceClient.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -29,16 +29,15 @@
 // <summary></summary>
 // ***********************************************************************
 
-using ACBr.Net.DFe.Core.Service;
 using System;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
-    internal sealed class DSFServiceClient : DFeServiceClientBase<IDSFService>, IDSFService
+    internal sealed class DSFServiceClient : NFSeServiceClient<IDSFService>, IDSFService
     {
         #region Constructor
 
-        public DSFServiceClient(string url, TimeSpan? timeOut = null) : base(url, timeOut)
+        public DSFServiceClient(ProviderBase provider, TipoUrl tipoUrl) : base(provider, tipoUrl, null)
         {
         }
 

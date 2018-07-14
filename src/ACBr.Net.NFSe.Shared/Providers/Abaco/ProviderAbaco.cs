@@ -50,7 +50,7 @@ namespace ACBr.Net.NFSe.Providers.Abaco
 
         public override RetornoWebservice EnviarSincrono(int lote, NotaFiscalCollection notas)
         {
-            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor.");
         }
 
         protected override string GetNamespace()
@@ -60,8 +60,7 @@ namespace ACBr.Net.NFSe.Providers.Abaco
 
         protected override IABRASFClient GetClient(TipoUrl tipo)
         {
-            var url = GetUrl(tipo);
-            return new AbacoServiceClient(url, TimeOut, Certificado);
+            return new AbacoServiceClient(this, tipo);
         }
 
         protected override string GetSchema(TipoUrl tipo)

@@ -35,11 +35,11 @@ using ACBr.Net.DFe.Core.Service;
 
 namespace ACBr.Net.NFSe.Providers.Betha2
 {
-    internal sealed class Betha2ServiceClient : DFeServiceClientBase<IBetha2Service>, IABRASF2Client
+    internal sealed class Betha2ServiceClient : NFSeServiceClient<IBetha2Service>, IABRASF2Client
     {
         #region Constructors
 
-        public Betha2ServiceClient(string url, TimeSpan? timeOut = null, X509Certificate2 certificado = null) : base(url, timeOut, certificado)
+        public Betha2ServiceClient(ProviderBetha2 provider, TipoUrl tipoUrl) : base(provider, tipoUrl)
         {
         }
 
