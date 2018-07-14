@@ -90,7 +90,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="nameSpace"></param>
         /// <param name="header"></param>
         /// <returns></returns>
-        protected MessageHeader CreateHeader(string name, string nameSpace, string header)
+        protected MessageHeader CreateHeader(string header, string name, string nameSpace = "")
         {
             var xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(header);

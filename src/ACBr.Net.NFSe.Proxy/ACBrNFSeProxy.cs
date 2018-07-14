@@ -215,9 +215,9 @@ namespace ACBr.Net.NFSe
                 oACBrNFSe.Configuracoes.WebServices.Salvar = salvar;
                 oACBrNFSe.Configuracoes.Arquivos.PathSchemas = pathSchemas;
                 oACBrNFSe.Configuracoes.Arquivos.PathSalvar = pathSalvar;
-                oACBrNFSe.Configuracoes.Arquivos.PathLote = pathLote;
-                oACBrNFSe.Configuracoes.Arquivos.PathNFSe = pathNFSe;
-                oACBrNFSe.Configuracoes.Arquivos.PathRps = pathRps;
+                oACBrNFSe.Configuracoes.Arquivos.PathLote = string.Empty;
+                oACBrNFSe.Configuracoes.Arquivos.PathNFSe = string.Empty;
+                oACBrNFSe.Configuracoes.Arquivos.PathRps = string.Empty;
             }
             catch (Exception ex)
             {

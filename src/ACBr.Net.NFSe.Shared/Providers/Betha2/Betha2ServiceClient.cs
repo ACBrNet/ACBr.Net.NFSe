@@ -29,10 +29,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
-using System.Security.Cryptography.X509Certificates;
-using ACBr.Net.DFe.Core.Service;
-
 namespace ACBr.Net.NFSe.Providers.Betha2
 {
     internal sealed class Betha2ServiceClient : NFSeServiceClient<IBetha2Service>, IABRASF2Client

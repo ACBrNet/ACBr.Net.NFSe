@@ -31,6 +31,7 @@
 
 using System.ComponentModel;
 using ACBr.Net.Core;
+using ACBr.Net.Core.Logging;
 
 #if !NETSTANDARD2_0
 
@@ -44,7 +45,7 @@ namespace ACBr.Net.NFSe
     /// Classe base para impressão de DANFSe
     /// </summary>
     [TypeConverter(typeof(ACBrExpandableObjectConverter))]
-    public abstract class ACBrDANFSeBase : ACBrComponent
+    public abstract class ACBrDANFSeBase : ACBrComponent, IACBrLog
     {
         #region Fields
 

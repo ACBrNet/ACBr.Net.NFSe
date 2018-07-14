@@ -47,49 +47,31 @@ namespace ACBr.Net.NFSe.Providers.FissLex
 
         public string RecepcionarLoteRps(string cabec, string msg)
         {
-            msg = $"<WS_RecepcionarLoteRps.Execute xmlns:fiss=\"FISS-LEX\">{msg}</WS_RecepcionarLoteRps.Execute>";
-            msg = msg.Replace("EnviarLoteRpsEnvio", "fiss:Enviarloterpsenvio");
-
             return Execute("FISS-LEXaction/AWS_RECEPCIONARLOTERPS.Execute", msg);
         }
 
         public string ConsultarSituacaoLoteRps(string cabec, string msg)
         {
-            msg = $"<WS_ConsultarSituacaoLoteRps.Execute xmlns:fiss=\"FISS-LEX\">{msg}</WS_ConsultarSituacaoLoteRps.Execute>";
-            msg = msg.Replace("ConsultarSituacaoLoteRpsEnvio", "fiss:Consultarsituacaoloterpsenvio");
-
             return Execute("FISS-LEXaction/AWS_CONSULTARSITUACAOLOTERPS.Execute", msg);
         }
 
         public string ConsultarNFSePorRps(string cabec, string msg)
         {
-            msg = $"<WS_ConsultaNfsePorRps.Execute xmlns:fiss=\"FISS-LEX\">{msg}</WS_ConsultaNfsePorRps.Execute>";
-            msg = msg.Replace("ConsultarNfseRpsEnvio", "fiss:Consultarnfserpsenvio");
-
             return Execute("FISS-LEXaction/AWS_CONSULTANFSEPORRPS.Execute", msg);
         }
 
         public string ConsultarNFSe(string cabec, string msg)
         {
-            msg = $"<WS_ConsultaNfse.Execute xmlns:fiss=\"FISS-LEX\">{msg}</WS_ConsultaNfse.Execute>";
-            msg = msg.Replace("ConsultarNfseEnvio", "fiss:Consultarnfseenvio");
-
             return Execute("FISS-LEXaction/AWS_CONSULTANFSE.Execute", msg);
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
         {
-            msg = $"<WS_ConsultaLoteRps.Execute xmlns:fiss=\"FISS-LEX\">{msg}</WS_ConsultaLoteRps.Execute>";
-            msg = msg.Replace("ConsultarLoteRpsEnvio", "fiss:Consultarloterpsenvio");
-
-            return Execute("FISS-LEXaction/AWS_RECEPCIONARLOTERPS.Execute", msg);
+            return Execute("FISS-LEXaction/AWS_CONSULTALOTERPS.Execute", msg);
         }
 
         public string CancelarNFSe(string cabec, string msg)
         {
-            msg = $"<WS_CancelarNfse.Execute xmlns:fiss=\"FISS-LEX\">{msg}</WS_CancelarNfse.Execute>";
-            msg = msg.Replace("CancelarNfseEnvio", "fiss:Cancelarnfseenvio");
-
             return Execute("FISS-LEXaction/AWS_CANCELARNFSE.Execute", msg);
         }
 

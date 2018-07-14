@@ -33,7 +33,7 @@ using System;
 
 namespace ACBr.Net.NFSe.Providers.Abaco
 {
-    internal sealed class AbacoServiceClient : NFSeServiceClient<IAbacoServiceClient>, IABRASFClient, IAbacoServiceClient
+    internal sealed class AbacoServiceClient : NFSeServiceClient<IAbacoServiceClient>, IABRASFClient
     {
         #region Constructors
 
@@ -48,83 +48,44 @@ namespace ACBr.Net.NFSe.Providers.Abaco
         public string RecepcionarLoteRps(string cabec, string msg)
         {
             var request = new RecepcionarLoteRequest(cabec, msg);
-            var ret = ((IAbacoServiceClient)this).RecepcionarLote(request);
+            var ret = Channel.RecepcionarLote(request);
             return ret.Outputxml;
         }
 
         public string ConsultarSituacaoLoteRps(string cabec, string msg)
         {
             var request = new ConsultarSituacaoLoteRequest(cabec, msg);
-            var ret = ((IAbacoServiceClient)this).ConsultarSituacaoLote(request);
+            var ret = Channel.ConsultarSituacaoLote(request);
             return ret.Outputxml;
         }
 
         public string ConsultarNFSePorRps(string cabec, string msg)
         {
             var request = new ConsultarNfsePorRpsRequest(cabec, msg);
-            var ret = ((IAbacoServiceClient)this).ConsultarNfsePorRps(request);
+            var ret = Channel.ConsultarNfsePorRps(request);
             return ret.Outputxml;
         }
 
         public string ConsultarNFSe(string cabec, string msg)
         {
             var request = new ConsultarNfseRequest(cabec, msg);
-            var ret = ((IAbacoServiceClient)this).ConsultarNfse(request);
+            var ret = Channel.ConsultarNfse(request);
             return ret.Outputxml;
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
         {
             var request = new ConsultarLoteRequest(cabec, msg);
-            var ret = ((IAbacoServiceClient)this).ConsultarLote(request);
+            var ret = Channel.ConsultarLote(request);
             return ret.Outputxml;
         }
 
         public string CancelarNFSe(string cabec, string msg)
         {
             var request = new CancelarNfseRequest(cabec, msg);
-            var ret = ((IAbacoServiceClient)this).CancelarNfse(request);
+            var ret = Channel.CancelarNfse(request);
             return ret.Outputxml;
         }
-
-        public string GerarNfse(string cabec, string msg)
-        {
-            throw new NotImplementedException();
-        }
-
-        #region Interface Methods
-
-        RecepcionarLoteResponse IAbacoServiceClient.RecepcionarLote(RecepcionarLoteRequest request)
-        {
-            return Channel.RecepcionarLote(request);
-        }
-
-        ConsultarSituacaoLoteResponse IAbacoServiceClient.ConsultarSituacaoLote(ConsultarSituacaoLoteRequest request)
-        {
-            return Channel.ConsultarSituacaoLote(request);
-        }
-
-        ConsultarLoteResponse IAbacoServiceClient.ConsultarLote(ConsultarLoteRequest request)
-        {
-            return Channel.ConsultarLote(request);
-        }
-
-        ConsultarNfsePorRpsResponse IAbacoServiceClient.ConsultarNfsePorRps(ConsultarNfsePorRpsRequest request)
-        {
-            return Channel.ConsultarNfsePorRps(request);
-        }
-
-        ConsultarNfseResponse IAbacoServiceClient.ConsultarNfse(ConsultarNfseRequest request)
-        {
-            return Channel.ConsultarNfse(request);
-        }
-
-        CancelarNfseResponse IAbacoServiceClient.CancelarNfse(CancelarNfseRequest request)
-        {
-            return Channel.CancelarNfse(request);
-        }
-
-        #endregion Interface Methods
 
         #endregion Methods
     }

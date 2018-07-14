@@ -29,9 +29,11 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
+
 namespace ACBr.Net.NFSe.Providers
 {
-    public interface IABRASFClient
+    public interface IABRASFClient : IDisposable
     {
         string RecepcionarLoteRps(string cabec, string msg);
 
@@ -44,7 +46,5 @@ namespace ACBr.Net.NFSe.Providers
         string ConsultarLoteRps(string cabec, string msg);
 
         string CancelarNFSe(string cabec, string msg);
-
-        string GerarNfse(string cabec, string msg);
     }
 }
