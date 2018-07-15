@@ -927,7 +927,7 @@ namespace ACBr.Net.NFSe.Providers
             }
 
             retornoWebservice.XmlEnvio = xmlEnvio;
-            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
+            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMddssfff}-{protocolo}-env.xml");
 
             // Verifica Schema
             var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, GetSchema(TipoUrl.ConsultarLoteRps));
@@ -945,7 +945,7 @@ namespace ACBr.Net.NFSe.Providers
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
                 return retornoWebservice;
             }
-            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{lote}-ret.xml");
+            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarLote-{DateTime.Now:yyyyMMddssfff}-{lote}-ret.xml");
 
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
@@ -1214,7 +1214,7 @@ namespace ACBr.Net.NFSe.Providers
 
             retornoWebservice.XmlEnvio = xmlEnvio;
 
-            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConNota-{DateTime.Now:yyyyMMddHHmmss}-{numeroNfse}-env.xml");
+            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConNota-{DateTime.Now:yyyyMMddssfff}-{numeroNfse}-env.xml");
 
             // Verifica Schema
             var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, GetSchema(TipoUrl.ConsultaNFSe));
@@ -1233,7 +1233,7 @@ namespace ACBr.Net.NFSe.Providers
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
                 return retornoWebservice;
             }
-            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConNota-{DateTime.Now:yyyyMMddHHmmss}-{numeroNfse}-ret.xml");
+            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConNota-{DateTime.Now:yyyyMMddssfff}-{numeroNfse}-ret.xml");
 
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);

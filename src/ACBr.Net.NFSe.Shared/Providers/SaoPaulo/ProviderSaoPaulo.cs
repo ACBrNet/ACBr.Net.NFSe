@@ -469,7 +469,7 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
             }
 
             retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(xmlEnvio, "PedidoInformacoesLote", "", Certificado);
-            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
+            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMddssfff}-{protocolo}-env.xml");
 
             // Verifica Schema
             var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, "PedidoInformacoesLote_v01.xsd");
@@ -487,7 +487,7 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
                 return retornoWebservice;
             }
-            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{lote}-ret.xml");
+            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarLote-{DateTime.Now:yyyyMMddssfff}-{lote}-ret.xml");
 
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
@@ -521,7 +521,7 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
 
             retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(xmlEnvio, "PedidoConsultaLote", "", Certificado);
 
-            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarSituacao-{DateTime.Now:yyyyMMdd}-{protocolo}-env.xml");
+            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarSituacao-{DateTime.Now:yyyyMMddssfff}-{protocolo}-env.xml");
 
             // Verifica Schema
             var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, "PedidoConsultaLote_v01.xsd");
@@ -540,7 +540,7 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
                 return retornoWebservice;
             }
 
-            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarSituacao-{DateTime.Now:yyyyMMdd}-{lote}-ret.xml");
+            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarSituacao-{DateTime.Now:yyyyMMddssfff}-{lote}-ret.xml");
 
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);

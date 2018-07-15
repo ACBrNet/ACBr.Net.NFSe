@@ -112,6 +112,16 @@ namespace ACBr.Net.NFSe.Demo
             });
         }
 
+        private void btnConsultarNFSePeriodo_Click(object sender, EventArgs e)
+        {
+            ExecuteSafe(() =>
+            {
+                var ret = acbrNFSe.ConsultaNFSe(DateTime.Today.AddDays(-7), DateTime.Today);
+                wbbDados.LoadXml(ret.XmlEnvio);
+                wbbResposta.LoadXml(ret.XmlRetorno);
+            });
+        }
+
         private void btnCancelarNFSe_Click(object sender, EventArgs e)
         {
             ExecuteSafe(() =>

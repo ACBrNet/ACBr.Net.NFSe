@@ -159,14 +159,14 @@ namespace ACBr.Net.NFSe.Providers
         protected override void BeforeSendDFeRequest(string message)
         {
             EnvelopeSoap = message;
-            GravarSoap(message, $"{DateTime.Now:yyyyMMddHHmmsszzz}_{ArquivoEnvio}_env.xml");
+            GravarSoap(message, $"{DateTime.Now:yyyyMMddssfff}_{ArquivoEnvio}_env.xml");
         }
 
         /// <inheritdoc />
         protected override void AfterReceiveDFeReply(string message)
         {
             RetornoWS = message;
-            GravarSoap(message, $"{DateTime.Now:yyyyMMddHHmmsszzz}_{ArquivoResposta}_ret.xml");
+            GravarSoap(message, $"{DateTime.Now:yyyyMMddssfff}_{ArquivoResposta}_ret.xml");
         }
 
         #endregion Methods

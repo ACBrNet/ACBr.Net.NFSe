@@ -284,6 +284,7 @@
             this.btnConsultarNFSePeriodo.TabIndex = 8;
             this.btnConsultarNFSePeriodo.Text = "Consultar NFSe por Período";
             this.btnConsultarNFSePeriodo.UseVisualStyleBackColor = true;
+            this.btnConsultarNFSePeriodo.Click += new System.EventHandler(this.btnConsultarNFSePeriodo_Click);
             // 
             // btnConsultarSituacao
             // 

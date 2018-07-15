@@ -46,5 +46,7 @@ namespace ACBr.Net.NFSe.Providers
         string ConsultarLoteRps(string cabec, string msg);
 
         string CancelarNFSe(string cabec, string msg);
+
+        string GerarNfse(string nfseCabecMsg, string nfseDadosMsg);
     }
 }

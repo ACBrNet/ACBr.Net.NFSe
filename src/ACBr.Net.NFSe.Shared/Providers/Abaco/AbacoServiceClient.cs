@@ -87,6 +87,11 @@ namespace ACBr.Net.NFSe.Providers.Abaco
             return ret.Outputxml;
         }
 
+        public string GerarNfse(string nfseCabecMsg, string nfseDadosMsg)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion Methods
     }
 }

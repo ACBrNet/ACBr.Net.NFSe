@@ -798,7 +798,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
             }
 
             retornoWebservice.XmlEnvio = xmlEnvio;
-            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMdd}-{lote}-env.xml");
+            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMddssfff}-{lote}-env.xml");
 
             // Verifica Schema
             var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, "ReqConsultaLote.xsd");
@@ -818,7 +818,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
                 return retornoWebservice;
             }
 
-            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"Consultalote-{DateTime.Now:yyyyMMdd}-{lote}-ret.xml");
+            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"Consultalote-{DateTime.Now:yyyyMMddssfff}-{lote}-ret.xml");
 
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
             var cabeçalho = xmlRet.ElementAnyNs("Cabecalho");
@@ -895,7 +895,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
                 return retornoWebservice;
             }
 
-            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"Consultalote-{DateTime.Now:yyyyMMdd}-{lote}-ret.xml");
+            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"Consultalote-{DateTime.Now:yyyyMMddssfff}-{lote}-ret.xml");
 
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
             var cabeçalho = xmlRet.ElementAnyNs("Cabecalho");

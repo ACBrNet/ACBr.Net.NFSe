@@ -65,22 +65,25 @@ namespace ACBr.Net.NFSe.Providers
         /// <returns></returns>
         protected string Execute(string action, string msg, params MessageHeader[] headers)
         {
-            var xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(msg);
-
-            var wcfMsg = Message.CreateMessage(Endpoint.Binding.MessageVersion, action, xmlDoc.DocumentElement);
-            if (headers.Any())
+            lock (serviceLock)
             {
-                foreach (var header in headers)
-                {
-                    wcfMsg.Headers.Add(header);
-                }
-            }
+                var xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(msg);
 
-            var ret = Channel.Request(wcfMsg);
-            Guard.Against<ACBrDFeException>(ret == null, "Nenhum retorno do webservice.");
-            var reader = ret.GetReaderAtBodyContents();
-            return reader.ReadOuterXml();
+                var message = Message.CreateMessage(Endpoint.Binding.MessageVersion, action, xmlDoc.DocumentElement);
+                if (headers.Any())
+                {
+                    foreach (var header in headers)
+                    {
+                        message.Headers.Add(header);
+                    }
+                }
+
+                var ret = Channel.Request(message);
+                Guard.Against<ACBrDFeException>(ret == null, "Nenhum retorno do webservice.");
+                var reader = ret.GetReaderAtBodyContents();
+                return reader.ReadOuterXml();
+            }
         }
 
         /// <summary>
