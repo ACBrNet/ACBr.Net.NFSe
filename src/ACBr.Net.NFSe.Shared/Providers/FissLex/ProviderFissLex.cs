@@ -101,8 +101,8 @@ namespace ACBr.Net.NFSe.Providers.FissLex
             retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(retornoWebservice.XmlEnvio, "EnviarLoteRpsEnvio", "LoteRps", Certificado);
 
             // Verifica Schema
-            var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, GetSchema(TipoUrl.Enviar));
-            if (retSchema != null) return retSchema;
+            ValidarSchema(retornoWebservice, GetSchema(TipoUrl.Enviar));
+            if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             retornoWebservice.XmlEnvio = "<WS_RecepcionarLoteRps.Execute xmlns:fiss=\"FISS-LEX\">" +
                                         $"<fiss:Enviarloterpsenvio>{AjustarEnvio(retornoWebservice.XmlEnvio)}</fiss:Enviarloterpsenvio>" +
@@ -189,12 +189,11 @@ namespace ACBr.Net.NFSe.Providers.FissLex
             loteBuilder.Append("</CWS_CancelarNfse.Execute>");
 
             retornoWebservice.XmlEnvio = loteBuilder.ToString();
-
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CanNFSe-{numeroNFSe}-env.xml");
 
             // Verifica Schema
-            var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, GetSchema(TipoUrl.CancelaNFSe));
-            if (retSchema != null) return retSchema;
+            ValidarSchema(retornoWebservice, GetSchema(TipoUrl.CancelaNFSe));
+            if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             // Recebe mensagem de retorno
             try
@@ -256,19 +255,18 @@ namespace ACBr.Net.NFSe.Providers.FissLex
             loteBuilder.Append($"<Protocolo>{protocolo}</Protocolo>");
             loteBuilder.Append("</fiss:Consultarsituacaoloterpsenvio>");
             loteBuilder.Append("</WS_ConsultarSituacaoLoteRps.Execute>");
-            var xmlEnvio = loteBuilder.ToString();
+            retornoWebservice.XmlEnvio = loteBuilder.ToString();
 
             if (Configuracoes.Geral.RetirarAcentos)
             {
-                retornoWebservice.XmlEnvio = xmlEnvio.RemoveAccent();
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = xmlEnvio;
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarSituacao-{DateTime.Now:yyyyMMddssfff}-{protocolo}-env.xml");
 
             // Verifica Schema
-            var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, GetSchema(TipoUrl.ConsultarSituacao));
-            if (retSchema != null) return retSchema;
+            ValidarSchema(retornoWebservice, GetSchema(TipoUrl.ConsultarSituacao));
+            if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             // Recebe mensagem de retorno
             try
@@ -311,26 +309,26 @@ namespace ACBr.Net.NFSe.Providers.FissLex
             loteBuilder.Append($"<Protocolo>{protocolo}</Protocolo>");
             loteBuilder.Append("</fiss:Consultarloterpsenvio>");
             loteBuilder.Append("</WS_ConsultaLoteRps.Execute>");
-            var xmlEnvio = loteBuilder.ToString();
+            retornoWebservice.XmlEnvio = loteBuilder.ToString();
 
             if (Configuracoes.Geral.RetirarAcentos)
             {
-                xmlEnvio = xmlEnvio.RemoveAccent();
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = xmlEnvio;
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMddssfff}-{protocolo}-env.xml");
 
             // Verifica Schema
-            var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, GetSchema(TipoUrl.ConsultarLoteRps));
-            if (retSchema != null) return retSchema;
+            ValidarSchema(retornoWebservice, GetSchema(TipoUrl.ConsultarLoteRps));
+            if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             // Recebe mensagem de retorno
             try
             {
-                var cliente = GetClient(TipoUrl.ConsultarLoteRps);
-                var cabecalho = GerarCabecalho();
-                retornoWebservice.XmlRetorno = cliente.ConsultarLoteRps(cabecalho, retornoWebservice.XmlEnvio);
+                using (var cliente = GetClient(TipoUrl.ConsultarLoteRps))
+                {
+                    retornoWebservice.XmlRetorno = cliente.ConsultarLoteRps(GerarCabecalho(), retornoWebservice.XmlEnvio);
+                }
             }
             catch (Exception ex)
             {
@@ -342,7 +340,7 @@ namespace ACBr.Net.NFSe.Providers.FissLex
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(AjustarRetorno(retornoWebservice.XmlRetorno));
             MensagemErro(retornoWebservice, xmlRet, "WS_ConsultaLoteRps.ExecuteResponse", "Listamensagemretorno", "tcMensagemRetorno");
-            if (retornoWebservice.Erros.Count > 0) return retornoWebservice;
+            if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             var rootElement = xmlRet.ElementAnyNs("WS_ConsultaLoteRps.ExecuteResponse").ElementAnyNs("Consultarloterpsresposta");
             var listaNfse = rootElement?.ElementAnyNs("ListaNfse");
@@ -402,20 +400,18 @@ namespace ACBr.Net.NFSe.Providers.FissLex
             loteBuilder.Append("</Prestador>");
             loteBuilder.Append("</fiss:Consultarnfserpsenvio>");
             loteBuilder.Append("</WS_ConsultaNfsePorRps.Execute>");
-            var xmlEnvio = loteBuilder.ToString();
+            retornoWebservice.XmlEnvio = loteBuilder.ToString();
 
             if (Configuracoes.Geral.RetirarAcentos)
             {
-                xmlEnvio = xmlEnvio.RemoveAccent();
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = xmlEnvio;
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConNotaRps-{numero}-env.xml");
 
             // Verifica Schema
-            var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, GetSchema(TipoUrl.ConsultaNFSeRps));
-            if (retSchema != null)
-                return retSchema;
+            ValidarSchema(retornoWebservice, GetSchema(TipoUrl.ConsultaNFSeRps));
+            if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             // Recebe mensagem de retorno
             try
@@ -436,8 +432,7 @@ namespace ACBr.Net.NFSe.Providers.FissLex
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(AjustarRetorno(retornoWebservice.XmlRetorno));
             MensagemErro(retornoWebservice, xmlRet, "WS_ConsultaNfsePorRps.ExecuteResponse", "Listamensagemretorno", "tcMensagemRetorno");
-            if (retornoWebservice.Erros.Count > 0)
-                return retornoWebservice;
+            if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             var elementRoot = xmlRet.ElementAnyNs("WS_ConsultaNfsePorRps.ExecuteResponse");
             var compNfse = elementRoot.ElementAnyNs("Consultarnfserpsresposta")?.ElementAnyNs("CompNfse");
@@ -506,20 +501,18 @@ namespace ACBr.Net.NFSe.Providers.FissLex
 
             loteBuilder.Append("</fiss:Consultarnfseenvio>");
             loteBuilder.Append("</WS_ConsultaNfse.Execute>");
-            var xmlEnvio = loteBuilder.ToString();
+            retornoWebservice.XmlEnvio = loteBuilder.ToString();
 
             if (Configuracoes.Geral.RetirarAcentos)
             {
-                xmlEnvio = xmlEnvio.RemoveAccent();
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = xmlEnvio;
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConNota-{DateTime.Now:yyyyMMddssfff}-{numeroNfse}-env.xml");
 
             // Verifica Schema
-            var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, GetSchema(TipoUrl.ConsultaNFSe));
-            if (retSchema != null)
-                return retSchema;
+            ValidarSchema(retornoWebservice, GetSchema(TipoUrl.ConsultaNFSe));
+            if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             // Recebe mensagem de retorno
             try

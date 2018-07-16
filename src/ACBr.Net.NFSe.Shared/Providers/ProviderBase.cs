@@ -715,27 +715,19 @@ namespace ACBr.Net.NFSe.Providers
         /// <summary>
         /// Valida o XML de acordo com o schema.
         /// </summary>
-        /// <param name="xml">A mensagem XML que deve ser verificada.</param>
+        /// <param name="retorno"></param>
         /// <param name="schema">O schema que será usado na verificação.</param>
         /// <returns>Se estiver tudo OK retorna null, caso contrário as mensagens de alertas e erros.</returns>
-        protected RetornoWebservice ValidarSchema(string xml, string schema)
+        protected void ValidarSchema(RetornoWebservice retorno, string schema)
         {
             schema = Path.Combine(Configuracoes.Arquivos.PathSchemas, Name, schema);
-            if (XmlSchemaValidation.ValidarXml(xml, schema, out var errosSchema, out var alertasSchema)) return null;
-
-            var retLote = new RetornoWebservice
-            {
-                Assincrono = true,
-                XmlEnvio = xml
-            };
+            if (XmlSchemaValidation.ValidarXml(retorno.XmlEnvio, schema, out var errosSchema, out var alertasSchema)) return;
 
             foreach (var erro in errosSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
-                retLote.Erros.Add(erro);
+                retorno.Erros.Add(erro);
 
             foreach (var alerta in alertasSchema.Select(descricao => new Evento { Codigo = "0", Descricao = descricao }))
-                retLote.Alertas.Add(alerta);
-
-            return retLote;
+                retorno.Alertas.Add(alerta);
         }
 
         /// <summary>

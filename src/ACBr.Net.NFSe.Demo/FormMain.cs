@@ -141,6 +141,21 @@ namespace ACBr.Net.NFSe.Demo
             });
         }
 
+        private void btnGerarEnviarLoteSinc_Click(object sender, EventArgs e)
+        {
+            ExecuteSafe(() =>
+            {
+                GerarRps();
+
+                var numero = 1;
+                if (InputBox.Show("Numero Lote", "Digite o numero do lote.", ref numero).Equals(DialogResult.Cancel)) return;
+
+                var ret = acbrNFSe.Enviar(numero, sincrono: true);
+                wbbDados.LoadXml(ret.XmlEnvio);
+                wbbResposta.LoadXml(ret.XmlRetorno);
+            });
+        }
+
         private void btnSelecionarSchema_Click(object sender, EventArgs e)
         {
             ExecuteSafe(() =>

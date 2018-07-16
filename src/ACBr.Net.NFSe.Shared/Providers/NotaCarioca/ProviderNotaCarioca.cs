@@ -83,8 +83,8 @@ namespace ACBr.Net.NFSe.Providers.NotaCarioca
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-sinc-{lote}-env.xml");
 
             // Verifica Schema
-            var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, GetSchema(TipoUrl.EnviarSincrono));
-            if (retSchema != null) return retSchema;
+            ValidarSchema(retornoWebservice, GetSchema(TipoUrl.EnviarSincrono));
+            if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             // Recebe mensagem de retorno
             try
@@ -104,7 +104,7 @@ namespace ACBr.Net.NFSe.Providers.NotaCarioca
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
             MensagemErro(retornoWebservice, xmlRet, "GerarNfseResposta");
-            if (retornoWebservice.Erros.Count > 0) return retornoWebservice;
+            if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             var compNfse = xmlRet.ElementAnyNs("GerarNfseResposta")?.ElementAnyNs("CompNfse");
             var nfse = compNfse.ElementAnyNs("Nfse").ElementAnyNs("InfNfse");
@@ -112,6 +112,7 @@ namespace ACBr.Net.NFSe.Providers.NotaCarioca
             var chaveNFSe = nfse.ElementAnyNs("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
             var dataNFSe = nfse.ElementAnyNs("DataEmissao")?.GetValue<DateTime>() ?? DateTime.Now;
             var numeroRps = nfse?.ElementAnyNs("IdentificacaoRps")?.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
+
             GravarNFSeEmDisco(compNfse.AsString(true), $"NFSe-{numeroNFSe}-{chaveNFSe}-.xml", dataNFSe);
 
             var nota = notas.FirstOrDefault(x => x.IdentificacaoRps.Numero == numeroRps);

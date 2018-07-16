@@ -438,7 +438,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
             var valorTotal = notas.Sum(nota => nota.Servico.Valores.ValorServicos);
             var deducaoTotal = notas.Sum(nota => nota.Servico.Valores.ValorDeducoes);
 
-            var xmlEnvio = GerarEnvEnvio(rpsOrg.First().IdentificacaoRps.DataEmissao,
+            retornoWebservice.XmlEnvio = GerarEnvEnvio(rpsOrg.First().IdentificacaoRps.DataEmissao,
                 rpsOrg.Last().IdentificacaoRps.DataEmissao, notas.Count, valorTotal, deducaoTotal, lote.ToString());
 
             var xmlNotas = new StringBuilder();
@@ -449,25 +449,24 @@ namespace ACBr.Net.NFSe.Providers.DSF
                 GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
             }
 
-            xmlEnvio = xmlEnvio.SafeReplace("%NOTAS%", xmlNotas.ToString());
+            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.SafeReplace("%NOTAS%", xmlNotas.ToString());
             if (Configuracoes.Geral.RetirarAcentos)
             {
-                xmlEnvio = xmlEnvio.RemoveAccent();
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(xmlEnvio, "ns1:ReqEnvioLoteRPS", "Lote", Certificado, true);
-
+            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(retornoWebservice.XmlEnvio, "ns1:ReqEnvioLoteRPS", "Lote", Certificado, true);
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-{lote}-env.xml");
 
             // Verifica Schema
-            var retSchema = ValidarSchema(xmlEnvio, "ReqEnvioLoteRPS.xsd");
-            if (retSchema != null) return retSchema;
+            ValidarSchema(retornoWebservice, "ReqEnvioLoteRPS.xsd");
+            if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             try
             {
                 using (var cliente = GetClient(TipoUrl.Enviar))
                 {
-                    retornoWebservice.XmlRetorno = cliente.Enviar(xmlEnvio);
+                    retornoWebservice.XmlRetorno = cliente.Enviar(retornoWebservice.XmlEnvio);
                 }
             }
             catch (Exception ex)
@@ -510,7 +509,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
             var valorTotal = notas.Sum(nota => nota.Servico.Valores.ValorServicos);
             var deducaoTotal = notas.Sum(nota => nota.Servico.Valores.ValorDeducoes);
 
-            var xmlEnvio = GerarEnvEnvio(rpsOrg.First().IdentificacaoRps.DataEmissao,
+            retornoWebservice.XmlEnvio = GerarEnvEnvio(rpsOrg.First().IdentificacaoRps.DataEmissao,
                 rpsOrg.Last().IdentificacaoRps.DataEmissao, notas.Count, valorTotal, deducaoTotal, lote.ToString());
 
             var xmlNotas = new StringBuilder();
@@ -523,26 +522,25 @@ namespace ACBr.Net.NFSe.Providers.DSF
                 GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
             }
 
-            xmlEnvio = xmlEnvio.SafeReplace("%NOTAS%", xmlNotas.ToString());
+            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.SafeReplace("%NOTAS%", xmlNotas.ToString());
             if (Configuracoes.Geral.RetirarAcentos)
             {
-                xmlEnvio = xmlEnvio.RemoveAccent();
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(xmlEnvio, "ns1:ReqEnvioLoteRPS", "Lote", Certificado, true);
+            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(retornoWebservice.XmlEnvio, "ns1:ReqEnvioLoteRPS", "Lote", Certificado, true);
 
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-{lote}-env.xml");
 
             // Verifica Schema
-            var retSchema = ValidarSchema(xmlEnvio, "ReqEnvioLoteRPS.xsd");
-            if (retSchema != null)
-                return retSchema;
+            ValidarSchema(retornoWebservice, "ReqEnvioLoteRPS.xsd");
+            if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             try
             {
                 using (var cliente = GetClient(TipoUrl.EnviarSincrono))
                 {
-                    retornoWebservice.XmlRetorno = cliente.EnviarSincrono(xmlEnvio);
+                    retornoWebservice.XmlRetorno = cliente.EnviarSincrono(retornoWebservice.XmlEnvio);
                 }
             }
             catch (Exception ex)
@@ -623,26 +621,24 @@ namespace ACBr.Net.NFSe.Providers.DSF
             loteCancelamento.Append("</Lote>");
             loteCancelamento.Append("</ns1:ReqCancelamentoNFSe>");
 
-            var xmlEnvio = loteCancelamento.ToString();
+            retornoWebservice.XmlEnvio = loteCancelamento.ToString();
             if (Configuracoes.Geral.RetirarAcentos)
             {
-                xmlEnvio = xmlEnvio.RemoveAccent();
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(xmlEnvio, "ns1:ReqCancelamentoNFSe", "Lote", Certificado, true);
-
+            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(retornoWebservice.XmlEnvio, "ns1:ReqCancelamentoNFSe", "Lote", Certificado, true);
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CanNFSe-{loteCancelamento}-env.xml");
 
             // Verifica Schema
-            var retSchema = ValidarSchema(xmlEnvio, "ReqCancelamentoNFSe.xsd");
-            if (retSchema != null)
-                return retSchema;
+            ValidarSchema(retornoWebservice, "ReqCancelamentoNFSe.xsd");
+            if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             try
             {
                 using (var cliente = GetClient(TipoUrl.CancelaNFSe))
                 {
-                    retornoWebservice.XmlRetorno = cliente.Cancelar(xmlEnvio);
+                    retornoWebservice.XmlRetorno = cliente.Cancelar(retornoWebservice.XmlEnvio);
                 }
             }
             catch (Exception ex)
@@ -713,26 +709,25 @@ namespace ACBr.Net.NFSe.Providers.DSF
             loteCancelamento.Append("</Lote>");
             loteCancelamento.Append("</ns1:ReqCancelamentoNFSe>");
 
-            var xmlEnvio = loteCancelamento.ToString();
+            retornoWebservice.XmlEnvio = loteCancelamento.ToString();
             if (Configuracoes.Geral.RetirarAcentos)
             {
-                xmlEnvio = xmlEnvio.RemoveAccent();
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(xmlEnvio, "ns1:ReqCancelamentoNFSe", "Lote", Certificado, true);
+            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(retornoWebservice.XmlEnvio, "ns1:ReqCancelamentoNFSe", "Lote", Certificado, true);
 
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CanNFSe-{loteCancelamento}-env.xml");
 
             // Verifica Schema
-            var retSchema = ValidarSchema(xmlEnvio, "ReqCancelamentoNFSe.xsd");
-            if (retSchema != null)
-                return retSchema;
+            ValidarSchema(retornoWebservice, "ReqCancelamentoNFSe.xsd");
+            if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             try
             {
                 using (var cliente = GetClient(TipoUrl.CancelaNFSe))
                 {
-                    retornoWebservice.XmlRetorno = cliente.Cancelar(xmlEnvio);
+                    retornoWebservice.XmlRetorno = cliente.Cancelar(retornoWebservice.XmlEnvio);
                 }
             }
             catch (Exception ex)
@@ -801,9 +796,8 @@ namespace ACBr.Net.NFSe.Providers.DSF
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMddssfff}-{lote}-env.xml");
 
             // Verifica Schema
-            var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, "ReqConsultaLote.xsd");
-            if (retSchema != null)
-                return retSchema;
+            ValidarSchema(retornoWebservice, "ReqConsultaLote.xsd");
+            if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             try
             {
@@ -867,20 +861,18 @@ namespace ACBr.Net.NFSe.Providers.DSF
             lote.Append("<Versao>1</Versao>");
             lote.Append("</Cabecalho>");
             lote.Append("</ns1:ConsultaSeqRps>");
-            var xmlEnvio = lote.ToString();
+            retornoWebservice.XmlEnvio = lote.ToString();
 
             if (Configuracoes.Geral.RetirarAcentos)
             {
-                xmlEnvio = xmlEnvio.RemoveAccent();
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = xmlEnvio;
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConSeqRPS-{DateTime.Now:yyyyMMMMdd}-env.xml");
 
             // Verifica Schema
-            var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, "ConsultaSeqRps.xsd");
-            if (retSchema != null)
-                return retSchema;
+            ValidarSchema(retornoWebservice, "ConsultaSeqRps.xsd");
+            if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             try
             {
@@ -931,20 +923,19 @@ namespace ACBr.Net.NFSe.Providers.DSF
             lote.Append("<Versao>1</Versao>");
             lote.Append("</Cabecalho>");
             lote.Append("</ns1:ReqConsultaNotas>");
-            var xmlEnvio = lote.ToString();
+            retornoWebservice.XmlEnvio = lote.ToString();
 
             if (Configuracoes.Geral.RetirarAcentos)
             {
-                xmlEnvio = xmlEnvio.RemoveAccent();
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
             }
 
-            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(xmlEnvio, "ns1:ReqConsultaNotas", "Cabecalho", Certificado, true);
+            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(retornoWebservice.XmlEnvio, "ns1:ReqConsultaNotas", "Cabecalho", Certificado, true);
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConNota-{inicio:yyyyMMdd}-{fim:yyyyMMdd}-env.xml");
 
             // Verifica Schema
-            var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, "ReqConsultaNotas.xsd");
-            if (retSchema != null)
-                return retSchema;
+            ValidarSchema(retornoWebservice, "ReqConsultaNotas.xsd");
+            if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             try
             {
@@ -1025,19 +1016,18 @@ namespace ACBr.Net.NFSe.Providers.DSF
 
             lote.Append("</Lote>");
             lote.Append("</ns1:ReqConsultaNFSeRPS>");
-            var xmlEnvio = lote.ToString();
+            retornoWebservice.XmlEnvio = lote.ToString();
 
             if (Configuracoes.Geral.RetirarAcentos)
             {
-                xmlEnvio = xmlEnvio.RemoveAccent();
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
             }
-            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(xmlEnvio, "ns1:ReqConsultaNFSeRPS", "Lote", Certificado, true);
+            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(retornoWebservice.XmlEnvio, "ns1:ReqConsultaNFSeRPS", "Lote", Certificado, true);
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConNotaRps-{numero}-env.xml");
 
             // Verifica Schema
-            var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, "ReqConsultaNFSeRPS.xsd");
-            if (retSchema != null)
-                return retSchema;
+            ValidarSchema(retornoWebservice, "ReqConsultaNFSeRPS.xsd");
+            if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             try
             {
