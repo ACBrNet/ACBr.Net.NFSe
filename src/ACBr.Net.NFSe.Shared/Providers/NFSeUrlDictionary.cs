@@ -37,6 +37,7 @@ using System.Xml.Serialization;
 
 namespace ACBr.Net.NFSe.Providers
 {
+    [Serializable]
     public sealed class NFSeUrlDictionary : Dictionary<TipoUrl, string>, IXmlSerializable
     {
         #region Constructors
@@ -67,7 +68,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #endregion Constructors
 
-        #region IXmlSerializable Members
+        #region Methods
 
         public XmlSchema GetSchema()
 
@@ -125,6 +126,6 @@ namespace ACBr.Net.NFSe.Providers
             }
         }
 
-        #endregion IXmlSerializable Members
+        #endregion Methods
     }
 }

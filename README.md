@@ -16,6 +16,7 @@ Biblioteca para emissão e trasmissão de NFSe.
 - São Paulo.
 - Porto Alegre (Em Teste).
 - Abaco (Em Teste).
+- Betha v1 (Em Teste).
 - Betha v2 (Em Teste).
 - Nota Carioca (Em Teste).
 - WebIss2 (Em Teste).

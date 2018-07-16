@@ -85,7 +85,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\RequestBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Abaco\ResponseBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha\BethaServiceClient.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha\IBethaService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Betha\ProviderBetha.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Coplan\CancelarNFSeRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\Coplan\CancelarNFSeResponse.cs" />
@@ -383,22 +382,54 @@
     <None Include="$(MSBuildThisFileDirectory)Schemas\Betha2\xmldsig-core-schema20020212.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\nfse_v01.xsd" />
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_cancelar_nfse_envio_v01.xsd" />
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_cancelar_nfse_resposta_v01.xsd" />
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_lote_rps_envio_v01.xsd" />
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_lote_rps_resposta_v01.xsd" />
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_nfse_envio_v01.xsd" />
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_nfse_resposta_v01.xsd" />
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_nfse_rps_envio_v01.xsd" />
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_nfse_rps_resposta_v01.xsd" />
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_situacao_lote_rps_envio_v01.xsd" />
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_situacao_lote_rps_resposta_v01.xsd" />
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_enviar_lote_rps_envio_v01.xsd" />
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_enviar_lote_rps_resposta_v01.xsd" />
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\TiposNFe_v01.xsd" />
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\xmldsig-core-schema.xsd" />
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\xmldsig-core-schema_v01.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\nfse_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_cancelar_nfse_envio_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_cancelar_nfse_resposta_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_lote_rps_envio_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_lote_rps_resposta_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_nfse_envio_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_nfse_resposta_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_nfse_rps_envio_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_nfse_rps_resposta_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_situacao_lote_rps_envio_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_consultar_situacao_lote_rps_resposta_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_enviar_lote_rps_envio_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\servico_enviar_lote_rps_resposta_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\TiposNFe_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\xmldsig-core-schema.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Betha\xmldsig-core-schema_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="$(MSBuildThisFileDirectory)Schemas\Betim\nfse.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\BHISS\nfse.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\BHISS\xmldsig-core-schema20020212.xsd" />
@@ -738,10 +769,13 @@
     <None Include="$(MSBuildThisFileDirectory)Schemas\Natal\xmldsig-core-schema20020212.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\NEAInformatica\nfse.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\NEAInformatica\xmldsig-core-schema20020212.xsd" />
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Nota Carioca\tipos_nfse_v01.xsd">
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Nota Carioca\nfse.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)Schemas\Nota Carioca\tipos_nfse_v01_old.xsd">
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Nota Carioca\nfse_pcrj_v01.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Nota Carioca\tipos_nfse_v01.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="$(MSBuildThisFileDirectory)Schemas\Nota Carioca\xmldsig-core-schema_v01.xsd">

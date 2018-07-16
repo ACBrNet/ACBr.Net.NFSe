@@ -31,16 +31,18 @@
 
 using System;
 using System.Security.Cryptography.X509Certificates;
-using System.Xml;
-using ACBr.Net.DFe.Core.Service;
 
 namespace ACBr.Net.NFSe.Providers.Betha
 {
-    internal sealed class BethaServiceClient : DFeServiceClientBase<IBethaService>, IABRASFClient
+    internal sealed class BethaServiceClient : NFSeRequestServiceClient, IABRASFClient
     {
         #region Constructors
 
-        public BethaServiceClient(string url, TimeSpan? timeOut = null, X509Certificate2 certificado = null) : base(url, timeOut, certificado)
+        public BethaServiceClient(ProviderBetha provider, TipoUrl tipoUrl) : base(provider, tipoUrl)
+        {
+        }
+
+        public BethaServiceClient(ProviderBetha provider, TipoUrl tipoUrl, X509Certificate2 certificado) : base(provider, tipoUrl, certificado)
         {
         }
 
@@ -50,37 +52,32 @@ namespace ACBr.Net.NFSe.Providers.Betha
 
         public string RecepcionarLoteRps(string cabec, string msg)
         {
-            var doc = new XmlDocument();
-            doc.LoadXml(msg);
-
-            var request = new EnviarLoteRpsEnvioRequest(doc);
-            var ret = Channel.EnviarLoteRpsEnvio(request);
-            return ret.Result;
+            return Execute("", msg);
         }
 
         public string ConsultarSituacaoLoteRps(string cabec, string msg)
         {
-            throw new NotImplementedException();
+            return Execute("", msg);
         }
 
         public string ConsultarNFSePorRps(string cabec, string msg)
         {
-            throw new NotImplementedException();
+            return Execute("", msg);
         }
 
         public string ConsultarNFSe(string cabec, string msg)
         {
-            throw new NotImplementedException();
+            return Execute("", msg);
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
         {
-            throw new NotImplementedException();
+            return Execute("", msg);
         }
 
         public string CancelarNFSe(string cabec, string msg)
         {
-            throw new NotImplementedException();
+            return Execute("", msg);
         }
 
         public string GerarNfse(string cabec, string msg)

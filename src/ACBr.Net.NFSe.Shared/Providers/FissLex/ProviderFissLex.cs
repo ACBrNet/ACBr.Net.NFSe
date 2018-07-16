@@ -290,11 +290,10 @@ namespace ACBr.Net.NFSe.Providers.FissLex
             var xmlRet = XDocument.Parse(AjustarRetorno(retornoWebservice.XmlRetorno));
             var rootElement = xmlRet.ElementAnyNs("WS_ConsultarSituacaoLoteRps.ExecuteResponse");
             MensagemErro(retornoWebservice, rootElement, "Consultarsituacaoloterpsresposta");
-            if (retornoWebservice.Erros.Count > 0) return retornoWebservice;
 
             retornoWebservice.NumeroLote = rootElement?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
             retornoWebservice.Situacao = rootElement?.ElementAnyNs("Situacao")?.GetValue<string>() ?? "0";
-            retornoWebservice.Sucesso = true;
+            retornoWebservice.Sucesso = !retornoWebservice.Erros.Any();
             return retornoWebservice;
         }
 

@@ -30,6 +30,7 @@
 // ***********************************************************************
 
 using System;
+using System.IO;
 using System.Runtime.Serialization;
 using ACBr.Net.DFe.Core.Common;
 
@@ -37,7 +38,7 @@ namespace ACBr.Net.NFSe.Providers
 {
     [Serializable]
     [DataContract(Name = "Municipio", Namespace = "")]
-    public sealed class ACBrMunicipioNFSe
+    public sealed class ACBrMunicipioNFSe : ICloneable
     {
         #region Constructors
 
@@ -136,5 +137,29 @@ namespace ACBr.Net.NFSe.Providers
         public NFSeUrlDictionary UrlProducao { get; set; }
 
         #endregion Propriedades
+
+        #region Methods
+
+        /// <summary>
+        /// Cria um novo objeto que é uma copia da instancia atual.
+        /// </summary>
+        /// <returns>T.</returns>
+        public ACBrMunicipioNFSe Clone()
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                var formatter = new DataContractSerializer(typeof(ACBrMunicipioNFSe));
+                formatter.WriteObject(memoryStream, this);
+                memoryStream.Position = 0;
+                return (ACBrMunicipioNFSe)formatter.ReadObject(memoryStream);
+            }
+        }
+
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
+
+        #endregion Methods
     }
 }

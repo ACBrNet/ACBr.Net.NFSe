@@ -4,7 +4,7 @@
 // Created          : 08-16-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 07-11-2018
+// Last Modified On : 07-16-2018
 // ***********************************************************************
 // <copyright file="ProviderNotaCarioca.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -29,7 +29,14 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
+using System.Linq;
+using System.Text;
+using System.Xml.Linq;
+using ACBr.Net.Core.Extensions;
+using ACBr.Net.DFe.Core;
 using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Nota;
 
 namespace ACBr.Net.NFSe.Providers.NotaCarioca
 {
@@ -47,19 +54,89 @@ namespace ACBr.Net.NFSe.Providers.NotaCarioca
 
         #region Methods
 
+        public override RetornoWebservice EnviarSincrono(int lote, NotaFiscalCollection notas)
+        {
+            var retornoWebservice = new RetornoWebservice();
+
+            if (lote == 0) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Lote não informado." });
+            if (notas.Count == 0) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Nenhuma RPS informada." });
+            if (notas.Count > 1) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Apenas uma RPS pode ser enviada em modo Sincrono." });
+            if (retornoWebservice.Erros.Count > 0) return retornoWebservice;
+
+            var xmlLote = new StringBuilder();
+            xmlLote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            xmlLote.Append("<GerarNfseEnvio xmlns=\"http://notacarioca.rio.gov.br/WSNacional/XSD/1/nfse_pcrj_v01.xsd\">");
+
+            var xmlRps = GetXmlRps(notas[0], false, false);
+            XmlSigning.AssinarXml(xmlRps, "Rps", "InfRps", Certificado);
+            GravarRpsEmDisco(xmlRps, $"Rps-{notas[0].IdentificacaoRps.DataEmissao:yyyyMMdd}-{notas[0].IdentificacaoRps.Numero}.xml", notas[0].IdentificacaoRps.DataEmissao);
+
+            xmlLote.Append(xmlRps);
+            xmlLote.Append("</GerarNfseEnvio>");
+            retornoWebservice.XmlEnvio = xmlLote.ToString();
+
+            if (Configuracoes.Geral.RetirarAcentos)
+            {
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
+            }
+
+            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-sinc-{lote}-env.xml");
+
+            // Verifica Schema
+            var retSchema = ValidarSchema(retornoWebservice.XmlEnvio, GetSchema(TipoUrl.EnviarSincrono));
+            if (retSchema != null) return retSchema;
+
+            // Recebe mensagem de retorno
+            try
+            {
+                using (var cliente = GetClient(TipoUrl.EnviarSincrono))
+                {
+                    retornoWebservice.XmlRetorno = cliente.GerarNfse(GerarCabecalho(), retornoWebservice.XmlEnvio);
+                }
+            }
+            catch (Exception ex)
+            {
+                retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
+                return retornoWebservice;
+            }
+            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"lote-sinc-{lote}-ret.xml");
+
+            // Analisa mensagem de retorno
+            var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
+            MensagemErro(retornoWebservice, xmlRet, "GerarNfseResposta");
+            if (retornoWebservice.Erros.Count > 0) return retornoWebservice;
+
+            var compNfse = xmlRet.ElementAnyNs("GerarNfseResposta")?.ElementAnyNs("CompNfse");
+            var nfse = compNfse.ElementAnyNs("Nfse").ElementAnyNs("InfNfse");
+            var numeroNFSe = nfse.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
+            var chaveNFSe = nfse.ElementAnyNs("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
+            var dataNFSe = nfse.ElementAnyNs("DataEmissao")?.GetValue<DateTime>() ?? DateTime.Now;
+            var numeroRps = nfse?.ElementAnyNs("IdentificacaoRps")?.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
+            GravarNFSeEmDisco(compNfse.AsString(true), $"NFSe-{numeroNFSe}-{chaveNFSe}-.xml", dataNFSe);
+
+            var nota = notas.FirstOrDefault(x => x.IdentificacaoRps.Numero == numeroRps);
+            if (nota == null)
+            {
+                notas.Load(compNfse.ToString());
+            }
+            else
+            {
+                nota.IdentificacaoNFSe.Numero = numeroNFSe;
+                nota.IdentificacaoNFSe.Chave = chaveNFSe;
+            }
+
+            retornoWebservice.Sucesso = true;
+            return retornoWebservice;
+        }
+
         protected override IABRASFClient GetClient(TipoUrl tipo)
         {
             return new NotaCariocaServiceClient(this, tipo);
         }
 
-        protected override string GetNamespace()
-        {
-            return "xmlns=\"http://notacarioca.rio.gov.br/\"";
-        }
-
         protected override string GetSchema(TipoUrl tipo)
         {
-            return "tipos_nfse_v01.xsd";
+            return "nfse_pcrj_v01.xsd";
         }
 
         #endregion Methods

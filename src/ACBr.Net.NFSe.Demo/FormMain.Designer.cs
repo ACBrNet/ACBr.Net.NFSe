@@ -135,6 +135,7 @@
             this.cmhProvedor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btnCopiar = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl3.SuspendLayout();
@@ -1112,6 +1113,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.btnCopiar);
             this.tabPage3.Controls.Add(this.btnDeletar);
             this.tabPage3.Controls.Add(this.btnAdicionar);
             this.tabPage3.Controls.Add(this.btnSalvar);
@@ -1129,7 +1131,7 @@
             // 
             this.btnDeletar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeletar.Location = new System.Drawing.Point(693, 434);
+            this.btnDeletar.Location = new System.Drawing.Point(612, 434);
             this.btnDeletar.Name = "btnDeletar";
             this.btnDeletar.Size = new System.Drawing.Size(75, 23);
             this.btnDeletar.TabIndex = 4;
@@ -1233,6 +1235,18 @@
             // 
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(0, 17);
+            // 
+            // btnCopiar
+            // 
+            this.btnCopiar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCopiar.Location = new System.Drawing.Point(693, 434);
+            this.btnCopiar.Name = "btnCopiar";
+            this.btnCopiar.Size = new System.Drawing.Size(75, 23);
+            this.btnCopiar.TabIndex = 5;
+            this.btnCopiar.Text = "Copiar";
+            this.btnCopiar.UseVisualStyleBackColor = true;
+            this.btnCopiar.Click += new System.EventHandler(this.btnCopiar_Click);
             // 
             // FormMain
             // 
@@ -1384,6 +1398,7 @@
 		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox txtUf;
+        private System.Windows.Forms.Button btnCopiar;
     }
 }
 

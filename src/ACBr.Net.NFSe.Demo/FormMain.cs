@@ -173,6 +173,21 @@ namespace ACBr.Net.NFSe.Demo
             });
         }
 
+        private void btnCopiar_Click(object sender, EventArgs e)
+        {
+            ExecuteSafe(() =>
+            {
+                if (lstMunicipios.SelectedItems.Count < 1) return;
+
+                if (MessageBox.Show(@"Você tem certeza?", @"ACBrNFSe Demo", MessageBoxButtons.YesNo).Equals(DialogResult.No)) return;
+
+                var municipio = ((ACBrMunicipioNFSe)lstMunicipios.SelectedItems[0].Tag).Clone();
+                if (FormEdtMunicipio.Editar(municipio).Equals(DialogResult.Cancel)) return;
+
+                AddMunicipio(municipio);
+            });
+        }
+
         private void btnDeletar_Click(object sender, EventArgs e)
         {
             ExecuteSafe(() =>
