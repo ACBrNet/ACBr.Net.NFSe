@@ -4,7 +4,7 @@
 // Created          : 01-13-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 01-13-2017
+// Last Modified On : 07-17-2018
 // ***********************************************************************
 // <copyright file="ProviderABRASF.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -43,7 +43,6 @@ using ACBr.Net.NFSe.Nota;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    // ReSharper disable once InconsistentNaming
     /// <summary>
     /// Classe base para trabalhar com provedores que usam o padrão ABRASF V1
     /// </summary>
@@ -398,7 +397,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region RPS
 
-        public override string GetXmlRps(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
+        public sealed override string GetXmlRps(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
         {
             var xmlDoc = new XDocument(new XDeclaration("1.0", "UTF-8", null));
             xmlDoc.Add(GenerateRps(nota));
@@ -407,47 +406,42 @@ namespace ACBr.Net.NFSe.Providers
 
         protected virtual XElement GenerateRps(NotaFiscal nota)
         {
+            var rps = new XElement("Rps");
+            var infoRps = GenerateInfoRPS(nota);
+            rps.Add(infoRps);
+
+            if (!string.IsNullOrWhiteSpace(nota.RpsSubstituido.NumeroRps))
+            {
+                infoRps.AddChild(GenerateRpsSubstituto(nota));
+            }
+
+            var servico = GenerateServicosValoresRps(nota);
+            infoRps.AddChild(servico);
+
+            var prestador = GeneratePrestadorRps(nota);
+            infoRps.AddChild(prestador);
+
+            var tomador = GenerateTomadorRps(nota);
+            infoRps.AddChild(tomador);
+
+            if (!nota.Intermediario.RazaoSocial.IsEmpty())
+            {
+                var intServico = GenerateIntermediarioRps(nota);
+                infoRps.AddChild(intServico);
+            }
+
+            if (!nota.ConstrucaoCivil.CodigoObra.IsEmpty())
+            {
+                var conCivil = GenerateConstrucaoCivilRps(nota);
+                infoRps.AddChild(conCivil);
+            }
+
+            return rps;
+        }
+
+        protected virtual XElement GenerateInfoRPS(NotaFiscal nota)
+        {
             var incentivadorCultural = nota.IncentivadorCultural == NFSeSimNao.Sim ? 1 : 2;
-
-            string tipoRps;
-            switch (nota.IdentificacaoRps.Tipo)
-            {
-                case TipoRps.RPS:
-                    tipoRps = "1";
-                    break;
-
-                case TipoRps.NFConjugada:
-                    tipoRps = "2";
-                    break;
-
-                case TipoRps.Cupom:
-                    tipoRps = "3";
-                    break;
-
-                default:
-                    tipoRps = "0";
-                    break;
-            }
-
-            string tipoRpsSubstituido;
-            switch (nota.RpsSubstituido.Tipo)
-            {
-                case TipoRps.RPS:
-                    tipoRpsSubstituido = "1";
-                    break;
-
-                case TipoRps.NFConjugada:
-                    tipoRpsSubstituido = "2";
-                    break;
-
-                case TipoRps.Cupom:
-                    tipoRpsSubstituido = "3";
-                    break;
-
-                default:
-                    tipoRpsSubstituido = "0";
-                    break;
-            }
 
             string naturezaOperacao;
             switch (nota.NaturezaOperacao)
@@ -497,17 +491,9 @@ namespace ACBr.Net.NFSe.Providers
 
             var situacao = nota.Situacao == SituacaoNFSeRps.Normal ? "1" : "2";
 
-            var rps = new XElement("Rps");
             var infoRps = new XElement("InfRps", new XAttribute("Id", $"R{nota.IdentificacaoRps.Numero}"));
-            rps.Add(infoRps);
 
-            var ideRps = new XElement("IdentificacaoRps");
-            infoRps.Add(ideRps);
-
-            ideRps.AddChild(AdicionarTag(TipoCampo.Int, "", "Numero", 1, 15, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.Numero));
-            ideRps.AddChild(AdicionarTag(TipoCampo.Int, "", "Serie", 1, 5, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.Serie));
-            ideRps.AddChild(AdicionarTag(TipoCampo.Int, "", "Tipo", 1, 1, Ocorrencia.Obrigatoria, tipoRps));
-
+            infoRps.Add(GenerateIdentificacao(nota));
             infoRps.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataEmissao", 20, 20, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.DataEmissao));
             infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "NaturezaOperacao", 1, 1, Ocorrencia.Obrigatoria, naturezaOperacao));
             infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "RegimeEspecialTributacao", 1, 1, Ocorrencia.NaoObrigatoria, regimeEspecialTributacao));
@@ -515,39 +501,68 @@ namespace ACBr.Net.NFSe.Providers
             infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "IncentivadorCultural", 1, 1, Ocorrencia.Obrigatoria, incentivadorCultural));
             infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "Status", 1, 1, Ocorrencia.Obrigatoria, situacao));
 
-            if (!string.IsNullOrWhiteSpace(nota.RpsSubstituido.NumeroRps))
+            return infoRps;
+        }
+
+        protected virtual XElement GenerateIdentificacao(NotaFiscal nota)
+        {
+            string tipoRps;
+            switch (nota.IdentificacaoRps.Tipo)
             {
-                var rpsSubstituido = new XElement("RpsSubstituido");
+                case TipoRps.RPS:
+                    tipoRps = "1";
+                    break;
 
-                rpsSubstituido.AddChild(AdicionarTag(TipoCampo.Int, "", "Numero", 1, 15, Ocorrencia.Obrigatoria, nota.RpsSubstituido.NumeroRps));
-                rpsSubstituido.AddChild(AdicionarTag(TipoCampo.Int, "", "Serie", 1, 5, Ocorrencia.Obrigatoria, nota.RpsSubstituido.Serie));
-                rpsSubstituido.AddChild(AdicionarTag(TipoCampo.Int, "", "Tipo", 1, 1, Ocorrencia.Obrigatoria, tipoRpsSubstituido));
+                case TipoRps.NFConjugada:
+                    tipoRps = "2";
+                    break;
 
-                infoRps.AddChild(rpsSubstituido);
+                case TipoRps.Cupom:
+                    tipoRps = "3";
+                    break;
+
+                default:
+                    tipoRps = "0";
+                    break;
             }
 
-            var servico = GenerateServicosValoresRps(nota);
-            infoRps.AddChild(servico);
+            var ideRps = new XElement("IdentificacaoRps");
+            ideRps.AddChild(AdicionarTag(TipoCampo.Int, "", "Numero", 1, 15, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.Numero));
+            ideRps.AddChild(AdicionarTag(TipoCampo.Int, "", "Serie", 1, 5, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.Serie));
+            ideRps.AddChild(AdicionarTag(TipoCampo.Int, "", "Tipo", 1, 1, Ocorrencia.Obrigatoria, tipoRps));
 
-            var prestador = GeneratePrestadorRps(nota);
-            infoRps.AddChild(prestador);
+            return ideRps;
+        }
 
-            var tomador = GenerateTomadorRps(nota);
-            infoRps.AddChild(tomador);
-
-            if (!nota.Intermediario.RazaoSocial.IsEmpty())
+        protected virtual XElement GenerateRpsSubstituto(NotaFiscal nota)
+        {
+            string tipoRpsSubstituido;
+            switch (nota.RpsSubstituido.Tipo)
             {
-                var intServico = GenerateIntermediarioRps(nota);
-                infoRps.AddChild(intServico);
+                case TipoRps.RPS:
+                    tipoRpsSubstituido = "1";
+                    break;
+
+                case TipoRps.NFConjugada:
+                    tipoRpsSubstituido = "2";
+                    break;
+
+                case TipoRps.Cupom:
+                    tipoRpsSubstituido = "3";
+                    break;
+
+                default:
+                    tipoRpsSubstituido = "0";
+                    break;
             }
 
-            if (!nota.ConstrucaoCivil.CodigoObra.IsEmpty())
-            {
-                var conCivil = GenerateConstrucaoCivilRps(nota);
-                infoRps.AddChild(conCivil);
-            }
+            var rpsSubstituido = new XElement("RpsSubstituido");
 
-            return rps;
+            rpsSubstituido.AddChild(AdicionarTag(TipoCampo.Int, "", "Numero", 1, 15, Ocorrencia.Obrigatoria, nota.RpsSubstituido.NumeroRps));
+            rpsSubstituido.AddChild(AdicionarTag(TipoCampo.Int, "", "Serie", 1, 5, Ocorrencia.Obrigatoria, nota.RpsSubstituido.Serie));
+            rpsSubstituido.AddChild(AdicionarTag(TipoCampo.Int, "", "Tipo", 1, 1, Ocorrencia.Obrigatoria, tipoRpsSubstituido));
+
+            return rpsSubstituido;
         }
 
         protected virtual XElement GenerateServicosValoresRps(NotaFiscal nota)
@@ -1030,6 +1045,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Services
 
+        /// <inheritdoc />
         public override RetornoWebservice Enviar(int lote, NotaFiscalCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
@@ -1048,7 +1064,6 @@ namespace ACBr.Net.NFSe.Providers
             }
 
             var xmlLote = new StringBuilder();
-            xmlLote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             xmlLote.Append($"<EnviarLoteRpsEnvio {GetNamespace()}>");
             xmlLote.Append($"<LoteRps Id=\"L{lote}\">");
             xmlLote.Append($"<NumeroLote>{lote}</NumeroLote>");
@@ -1090,28 +1105,11 @@ namespace ACBr.Net.NFSe.Providers
                 return retornoWebservice;
             }
             GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"lote-{lote}-ret.xml");
-
-            // Analisa mensagem de retorno
-            var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            MensagemErro(retornoWebservice, xmlRet, "EnviarLoteRpsResposta");
-            if (retornoWebservice.Erros.Any()) return retornoWebservice;
-
-            retornoWebservice.NumeroLote = xmlRet.Root?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
-            retornoWebservice.DataLote = xmlRet.Root?.ElementAnyNs("DataRecebimento")?.GetValue<DateTime>() ?? DateTime.MinValue;
-            retornoWebservice.Protocolo = xmlRet.Root?.ElementAnyNs("Protocolo")?.GetValue<string>() ?? string.Empty;
-            retornoWebservice.Sucesso = !retornoWebservice.NumeroLote.IsEmpty();
-
-            if (!retornoWebservice.Sucesso) return retornoWebservice;
-
-            // ReSharper disable once SuggestVarOrType_SimpleTypes
-            foreach (NotaFiscal nota in notas)
-            {
-                nota.NumeroLote = retornoWebservice.NumeroLote;
-            }
-
+            TratarRetornoEnviar(retornoWebservice, notas);
             return retornoWebservice;
         }
 
+        /// <inheritdoc />
         public override RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
@@ -1123,7 +1121,6 @@ namespace ACBr.Net.NFSe.Providers
             }
 
             var loteBuilder = new StringBuilder();
-            loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             loteBuilder.Append($"<CancelarNfseEnvio {GetNamespace()}>");
             loteBuilder.Append("<Pedido>");
             loteBuilder.Append($"<InfPedidoCancelamento Id=\"N{numeroNFSe}\">");
@@ -1165,41 +1162,18 @@ namespace ACBr.Net.NFSe.Providers
                 return retornoWebservice;
             }
             GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"CanNFSe-{numeroNFSe}-ret.xml");
-
-            // Analisa mensagem de retorno
-            var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            MensagemErro(retornoWebservice, xmlRet, "CancelarNfseResposta");
-            if (retornoWebservice.Erros.Any()) return retornoWebservice;
-
-            var confirmacaoCancelamento = xmlRet.ElementAnyNs("CancelarNfseResposta")?.ElementAnyNs("RetCancelamento")?.ElementAnyNs("NfseCancelamento")?.ElementAnyNs("Confirmacao");
-            if (confirmacaoCancelamento == null)
-            {
-                retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Confirmação do cancelamento não encontrada!" });
-                return retornoWebservice;
-            }
-
-            retornoWebservice.DataLote = confirmacaoCancelamento.ElementAnyNs("DataHora")?.GetValue<DateTime>() ?? DateTime.MinValue;
-            retornoWebservice.Sucesso = retornoWebservice.DataLote != DateTime.MinValue;
-
-            // Se a nota fiscal cancelada existir na coleção de Notas Fiscais, atualiza seu status:
-            var nota = notas.FirstOrDefault(x => x.IdentificacaoNFSe.Numero.Trim() == numeroNFSe);
-            if (nota == null) return retornoWebservice;
-
-            nota.Situacao = SituacaoNFSeRps.Cancelado;
-            nota.Cancelamento.Pedido.CodigoCancelamento = codigoCancelamento;
-            nota.Cancelamento.DataHora = confirmacaoCancelamento.ElementAnyNs("DataHora")?.GetValue<DateTime>() ?? DateTime.MinValue;
-            nota.Cancelamento.MotivoCancelamento = motivo;
-
+            TratarRetornoCancelaNFSe(retornoWebservice, notas);
             return retornoWebservice;
         }
 
+        /// <inheritdoc />
         public override RetornoWebservice ConsultarSituacao(int lote, string protocolo)
         {
             var retornoWebservice = new RetornoWebservice();
 
             // Monta mensagem de envio
             var loteBuilder = new StringBuilder();
-            loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+
             loteBuilder.Append($"<ConsultarSituacaoLoteRpsEnvio {GetNamespace()}>");
             loteBuilder.Append("<Prestador>");
             loteBuilder.Append($"<Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>");
@@ -1233,17 +1207,11 @@ namespace ACBr.Net.NFSe.Providers
                 return retornoWebservice;
             }
             GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarSituacao-{DateTime.Now:yyyyMMddssfff}-{lote}-ret.xml");
-
-            // Analisa mensagem de retorno
-            var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            MensagemErro(retornoWebservice, xmlRet, "ConsultarSituacaoLoteRpsResposta");
-
-            retornoWebservice.NumeroLote = xmlRet.Root?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
-            retornoWebservice.Situacao = xmlRet.Root?.ElementAnyNs("Situacao")?.GetValue<string>() ?? string.Empty;
-            retornoWebservice.Sucesso = !retornoWebservice.Erros.Any();
+            TratarRetornoConsultarSituacao(retornoWebservice);
             return retornoWebservice;
         }
 
+        /// <inheritdoc />
         public override RetornoWebservice ConsultarLoteRps(int lote, string protocolo, NotaFiscalCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
@@ -1282,47 +1250,13 @@ namespace ACBr.Net.NFSe.Providers
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
                 return retornoWebservice;
             }
+
             GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarLote-{DateTime.Now:yyyyMMddssfff}-{lote}-ret.xml");
-
-            // Analisa mensagem de retorno
-            var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            MensagemErro(retornoWebservice, xmlRet, "ConsultarLoteRpsResposta");
-            if (retornoWebservice.Erros.Any()) return retornoWebservice;
-
-            var retornoLote = xmlRet.ElementAnyNs("ConsultarLoteRpsResposta");
-            var listaNfse = retornoLote?.ElementAnyNs("ListaNfse");
-
-            if (listaNfse == null)
-            {
-                retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Lista de NFSe não encontrada! (ListaNfse)" });
-                return retornoWebservice;
-            }
-
-            retornoWebservice.Sucesso = true;
-
-            foreach (var compNfse in listaNfse.ElementsAnyNs("CompNfse"))
-            {
-                var nfse = compNfse.ElementAnyNs("Nfse").ElementAnyNs("InfNfse");
-                var numeroNFSe = nfse.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
-                var chaveNFSe = nfse.ElementAnyNs("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
-                var dataNFSe = nfse.ElementAnyNs("DataEmissao")?.GetValue<DateTime>() ?? DateTime.Now;
-                var numeroRps = nfse?.ElementAnyNs("IdentificacaoRps")?.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
-                GravarNFSeEmDisco(compNfse.AsString(true), $"NFSe-{numeroNFSe}-{chaveNFSe}-.xml", dataNFSe);
-
-                var nota = notas.FirstOrDefault(x => x.IdentificacaoRps.Numero == numeroRps);
-                if (nota == null)
-                {
-                    notas.Load(compNfse.ToString());
-                }
-                else
-                {
-                    nota.IdentificacaoNFSe.Numero = numeroNFSe;
-                    nota.IdentificacaoNFSe.Chave = chaveNFSe;
-                }
-            }
+            TratarRetornoConsultarLoteRps(retornoWebservice, notas);
             return retornoWebservice;
         }
 
+        /// <inheritdoc />
         public override RetornoWebservice ConsultaNFSeRps(string numero, string serie, TipoRps tipo, NotaFiscalCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
@@ -1334,7 +1268,7 @@ namespace ACBr.Net.NFSe.Providers
             }
 
             var loteBuilder = new StringBuilder();
-            loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+
             loteBuilder.Append($"<ConsultarNfseRpsEnvio {GetNamespace()}>");
             loteBuilder.Append("<IdentificacaoRps>");
             loteBuilder.Append($"<Numero>{numero}</Numero>");
@@ -1373,34 +1307,18 @@ namespace ACBr.Net.NFSe.Providers
                 return retornoWebservice;
             }
             GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConNotaRps-{numero}-ret.xml");
-
-            // Analisa mensagem de retorno
-            var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            MensagemErro(retornoWebservice, xmlRet, "ConsultarNfseRpsResposta");
-            if (retornoWebservice.Erros.Any()) return retornoWebservice;
-
-            var compNfse = xmlRet.ElementAnyNs("ConsultarNfseRpsResposta")?.ElementAnyNs("CompNfse");
-            if (compNfse == null)
-            {
-                retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Nota Fiscal não encontrada! (CompNfse)" });
-                return retornoWebservice;
-            }
-
-            // Carrega a nota fiscal na coleção de Notas Fiscais
-            var nota = LoadXml(compNfse.AsString());
-            notas.Add(nota);
-
-            retornoWebservice.Sucesso = true;
+            TratarRetornoConsultaNFSeRps(retornoWebservice, notas);
             return retornoWebservice;
         }
 
+        /// <inheritdoc />
         public override RetornoWebservice ConsultaNFSe(DateTime? inicio, DateTime? fim, string numeroNfse, int pagina, string cnpjTomador,
             string imTomador, string nomeInter, string cnpjInter, string imInter, string serie, NotaFiscalCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
 
             var loteBuilder = new StringBuilder();
-            loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+
             loteBuilder.Append($"<ConsultarNfseEnvio {GetNamespace()}>");
             loteBuilder.Append("<Prestador>");
             loteBuilder.Append($"<Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>");
@@ -1470,18 +1388,180 @@ namespace ACBr.Net.NFSe.Providers
                 return retornoWebservice;
             }
             GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConNota-{DateTime.Now:yyyyMMddssfff}-{numeroNfse}-ret.xml");
+            TratarRetornoConsultaNFSe(retornoWebservice, notas);
+            return retornoWebservice;
+        }
 
+        #endregion Services
+
+        #region Protected Methods
+
+        /// <summary>
+        /// Metodo para tratar o retorno do Enviar.
+        /// </summary>
+        /// <param name="retornoWebservice"></param>
+        /// <param name="notas"></param>
+        protected virtual void TratarRetornoEnviar(RetornoWebservice retornoWebservice, NotaFiscalCollection notas)
+        {
+            // Analisa mensagem de retorno
+            var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
+            MensagemErro(retornoWebservice, xmlRet, "EnviarLoteRpsResposta");
+            if (retornoWebservice.Erros.Any()) return;
+
+            retornoWebservice.NumeroLote = xmlRet.Root?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
+            retornoWebservice.DataLote = xmlRet.Root?.ElementAnyNs("DataRecebimento")?.GetValue<DateTime>() ?? DateTime.MinValue;
+            retornoWebservice.Protocolo = xmlRet.Root?.ElementAnyNs("Protocolo")?.GetValue<string>() ?? string.Empty;
+            retornoWebservice.Sucesso = !retornoWebservice.NumeroLote.IsEmpty();
+
+            if (!retornoWebservice.Sucesso) return;
+
+            // ReSharper disable once SuggestVarOrType_SimpleTypes
+            foreach (NotaFiscal nota in notas)
+            {
+                nota.NumeroLote = retornoWebservice.NumeroLote;
+            }
+        }
+
+        /// <summary>
+        /// Metodo para tratar o retorno do CancelaNFSe.
+        /// </summary>
+        /// <param name="retornoWebservice"></param>
+        /// <param name="notas"></param>
+        protected virtual void TratarRetornoCancelaNFSe(RetornoWebservice retornoWebservice, NotaFiscalCollection notas)
+        {
+            // Analisa mensagem de retorno
+            var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
+            MensagemErro(retornoWebservice, xmlRet, "CancelarNfseResposta");
+            if (retornoWebservice.Erros.Any()) return;
+
+            var confirmacaoCancelamento = xmlRet.ElementAnyNs("CancelarNfseResposta")?.ElementAnyNs("Cancelamento")?.ElementAnyNs("Confirmacao");
+            if (confirmacaoCancelamento == null)
+            {
+                retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Confirmação do cancelamento não encontrada!" });
+                return;
+            }
+
+            retornoWebservice.DataLote = confirmacaoCancelamento.ElementAnyNs("DataHoraCancelamento")?.GetValue<DateTime>() ?? DateTime.MinValue;
+            retornoWebservice.Sucesso = retornoWebservice.DataLote != DateTime.MinValue;
+
+            var numeroNFSe = confirmacaoCancelamento.ElementAnyNs("Pedido").ElementAnyNs("InfPedidoCancelamento")?
+                                 .ElementAnyNs("IdentificacaoNfse")?.ElementAnyNs("Numero").GetValue<string>() ?? string.Empty;
+
+            // Se a nota fiscal cancelada existir na coleção de Notas Fiscais, atualiza seu status:
+            var nota = notas.FirstOrDefault(x => x.IdentificacaoNFSe.Numero.Trim() == numeroNFSe);
+            if (nota == null) return;
+
+            nota.Situacao = SituacaoNFSeRps.Cancelado;
+            nota.Cancelamento.Pedido.CodigoCancelamento = confirmacaoCancelamento.ElementAnyNs("Pedido").ElementAnyNs("InfPedidoCancelamento")
+                                                            .ElementAnyNs("CodigoCancelamento").GetValue<string>();
+            nota.Cancelamento.DataHora = confirmacaoCancelamento.ElementAnyNs("DataHoraCancelamento")?.GetValue<DateTime>() ?? DateTime.MinValue;
+        }
+
+        /// <summary>
+        /// Metodo para tratar o retorno do ConsultarSituacao.
+        /// </summary>
+        /// <param name="retornoWebservice"></param>
+        protected virtual void TratarRetornoConsultarSituacao(RetornoWebservice retornoWebservice)
+        {
+            // Analisa mensagem de retorno
+            var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
+            MensagemErro(retornoWebservice, xmlRet, "ConsultarSituacaoLoteRpsResposta");
+
+            retornoWebservice.NumeroLote = xmlRet.Root?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
+            retornoWebservice.Situacao = xmlRet.Root?.ElementAnyNs("Situacao")?.GetValue<string>() ?? string.Empty;
+            retornoWebservice.Sucesso = !retornoWebservice.Erros.Any();
+        }
+
+        /// <summary>
+        /// Metodo para tratar o retorno do ConsultarLoteRps.
+        /// </summary>
+        /// <param name="retornoWebservice"></param>
+        /// <param name="notas"></param>
+        protected virtual void TratarRetornoConsultarLoteRps(RetornoWebservice retornoWebservice, NotaFiscalCollection notas)
+        {
+            // Analisa mensagem de retorno
+            var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
+            MensagemErro(retornoWebservice, xmlRet, "ConsultarLoteRpsResposta");
+            if (retornoWebservice.Erros.Any()) return;
+
+            var retornoLote = xmlRet.ElementAnyNs("ConsultarLoteRpsResposta");
+            var listaNfse = retornoLote?.ElementAnyNs("ListaNfse");
+
+            if (listaNfse == null)
+            {
+                retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Lista de NFSe não encontrada! (ListaNfse)" });
+                return;
+            }
+
+            retornoWebservice.Sucesso = true;
+
+            foreach (var compNfse in listaNfse.ElementsAnyNs("CompNfse"))
+            {
+                var nfse = compNfse.ElementAnyNs("Nfse").ElementAnyNs("InfNfse");
+                var numeroNFSe = nfse.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
+                var chaveNFSe = nfse.ElementAnyNs("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
+                var dataEmissao = nfse.ElementAnyNs("DataEmissao")?.GetValue<DateTime>() ?? DateTime.Now;
+                var numeroRps = nfse?.ElementAnyNs("IdentificacaoRps")?.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
+                GravarNFSeEmDisco(compNfse.AsString(true), $"NFSe-{numeroNFSe}-{chaveNFSe}-.xml", dataEmissao);
+
+                var nota = notas.FirstOrDefault(x => x.IdentificacaoRps.Numero == numeroRps);
+                if (nota == null)
+                {
+                    notas.Load(compNfse.ToString());
+                }
+                else
+                {
+                    nota.IdentificacaoNFSe.Numero = numeroNFSe;
+                    nota.IdentificacaoNFSe.Chave = chaveNFSe;
+                    nota.IdentificacaoNFSe.DataEmissao = dataEmissao;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Metodo para tratar o retorno do ConsultaNFSeRps.
+        /// </summary>
+        /// <param name="retornoWebservice"></param>
+        /// <param name="notas"></param>
+        protected virtual void TratarRetornoConsultaNFSeRps(RetornoWebservice retornoWebservice, NotaFiscalCollection notas)
+        {
+            // Analisa mensagem de retorno
+            var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
+            MensagemErro(retornoWebservice, xmlRet, "ConsultarNfseRpsResposta");
+            if (retornoWebservice.Erros.Any()) return;
+
+            var compNfse = xmlRet.ElementAnyNs("ConsultarNfseRpsResposta")?.ElementAnyNs("CompNfse");
+            if (compNfse == null)
+            {
+                retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Nota Fiscal não encontrada! (CompNfse)" });
+                return;
+            }
+
+            // Carrega a nota fiscal na coleção de Notas Fiscais
+            var nota = LoadXml(compNfse.AsString());
+            notas.Add(nota);
+
+            retornoWebservice.Sucesso = true;
+        }
+
+        /// <summary>
+        /// Metodo para tratar o retorno do ConsultaNFSe.
+        /// </summary>
+        /// <param name="retornoWebservice"></param>
+        /// <param name="notas"></param>
+        protected virtual void TratarRetornoConsultaNFSe(RetornoWebservice retornoWebservice, NotaFiscalCollection notas)
+        {
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
             MensagemErro(retornoWebservice, xmlRet, "ConsultarNfseResposta");
-            if (retornoWebservice.Erros.Any()) return retornoWebservice;
+            if (retornoWebservice.Erros.Any()) return;
 
             var retornoLote = xmlRet.ElementAnyNs("ConsultarNfseResposta");
             var listaNfse = retornoLote?.ElementAnyNs("ListaNfse");
             if (listaNfse == null)
             {
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Lista de NFSe não encontrada! (ListaNfse)" });
-                return retornoWebservice;
+                return;
             }
 
             foreach (var compNfse in listaNfse.ElementsAnyNs("CompNfse"))
@@ -1492,31 +1572,51 @@ namespace ACBr.Net.NFSe.Providers
             }
 
             retornoWebservice.Sucesso = true;
-
-            return retornoWebservice;
         }
 
-        #endregion Services
-
-        #region Protected Methods
-
+        /// <summary>
+        /// Retorna o cliente de comunicação com o webservice.
+        /// </summary>
+        /// <param name="tipo"></param>
+        /// <returns></returns>
         protected abstract IABRASFClient GetClient(TipoUrl tipo);
 
+        /// <summary>
+        /// Retorna o namespace para ser usado no Xml.
+        /// </summary>
+        /// <returns></returns>
         protected virtual string GetNamespace()
         {
             return "xmlns=\"http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd\"";
         }
 
+        /// <summary>
+        /// Retorna o schema xml para validação.
+        /// </summary>
+        /// <param name="tipo"></param>
+        /// <returns></returns>
         protected virtual string GetSchema(TipoUrl tipo)
         {
             return "nfse.xsd";
         }
 
+        /// <summary>
+        /// Retorna o cabeçalho da mensagem.
+        /// </summary>
+        /// <returns></returns>
         protected virtual string GerarCabecalho()
         {
             return $"<cabecalho versao=\"1.00\" xmlns=\"http://www.abrasf.org.br/nfse.xsd\">{Environment.NewLine}<versaoDados>1.00</versaoDados>{Environment.NewLine}</cabecalho>";
         }
 
+        /// <summary>
+        /// Processa as mensagens de retorno.
+        /// </summary>
+        /// <param name="retornoWs"></param>
+        /// <param name="xmlRet"></param>
+        /// <param name="xmlTag"></param>
+        /// <param name="elementName"></param>
+        /// <param name="messageElement"></param>
         protected virtual void MensagemErro(RetornoWebservice retornoWs, XContainer xmlRet, string xmlTag,
             string elementName = "ListaMensagemRetorno", string messageElement = "MensagemRetorno")
         {

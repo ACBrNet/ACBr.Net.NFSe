@@ -37,6 +37,7 @@ using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
+using ACBr.Net.DFe.Core.Serializer;
 
 namespace ACBr.Net.NFSe.Providers.NotaCarioca
 {
@@ -53,6 +54,71 @@ namespace ACBr.Net.NFSe.Providers.NotaCarioca
         #endregion Constructors
 
         #region Methods
+
+        protected override XElement GenerateInfoRPS(NotaFiscal nota)
+        {
+            var incentivadorCultural = nota.IncentivadorCultural == NFSeSimNao.Sim ? 1 : 2;
+
+            string naturezaOperacao;
+            switch (nota.NaturezaOperacao)
+            {
+                case NaturezaOperacao.NT01:
+                    naturezaOperacao = "1";
+                    break;
+
+                case NaturezaOperacao.NT02:
+                    naturezaOperacao = "2";
+                    break;
+
+                case NaturezaOperacao.NT03:
+                    naturezaOperacao = "3";
+                    break;
+
+                case NaturezaOperacao.NT04:
+                    naturezaOperacao = "4";
+                    break;
+
+                case NaturezaOperacao.NT05:
+                    naturezaOperacao = "5";
+                    break;
+
+                case NaturezaOperacao.NT06:
+                    naturezaOperacao = "6";
+                    break;
+
+                default:
+                    naturezaOperacao = "0";
+                    break;
+            }
+
+            string regimeEspecialTributacao;
+            string optanteSimplesNacional;
+            if (nota.RegimeEspecialTributacao == RegimeEspecialTributacao.SimplesNacional)
+            {
+                regimeEspecialTributacao = "";
+                optanteSimplesNacional = "1";
+            }
+            else
+            {
+                var regime = (int)nota.RegimeEspecialTributacao;
+                regimeEspecialTributacao = regime == 0 ? string.Empty : regime.ToString();
+                optanteSimplesNacional = "2";
+            }
+
+            var situacao = nota.Situacao == SituacaoNFSeRps.Normal ? "1" : "2";
+
+            var infoRps = new XElement("InfRps", new XAttribute("Id", $"R{nota.IdentificacaoRps.Numero}"));
+
+            infoRps.Add(GenerateIdentificacao(nota));
+            infoRps.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataEmissao", 20, 20, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.DataEmissao));
+            infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "NaturezaOperacao", 1, 1, Ocorrencia.Obrigatoria, naturezaOperacao));
+            infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "RegimeEspecialTributacao", 1, 1, Ocorrencia.NaoObrigatoria, regimeEspecialTributacao));
+            infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "OptanteSimplesNacional", 1, 1, Ocorrencia.Obrigatoria, optanteSimplesNacional));
+            infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "IncentivadorCultural", 1, 1, Ocorrencia.Obrigatoria, incentivadorCultural));
+            infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "Status", 1, 1, Ocorrencia.Obrigatoria, situacao));
+
+            return infoRps;
+        }
 
         public override RetornoWebservice EnviarSincrono(int lote, NotaFiscalCollection notas)
         {
