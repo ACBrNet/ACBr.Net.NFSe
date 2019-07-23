@@ -33,7 +33,7 @@ namespace ACBr.Net.NFSe.Demo
 
         public static void EnumDataSource<T>(this ComboBox cmb, T valorPadrao) where T : struct
         {
-            var list = (from T value in Enum.GetValues(typeof(T)) select new ItemData<T>(value)).ToList();
+            var list = (from T value in Enum.GetValues(typeof(T)) select new ItemData<T>(value.ToString(), value)).ToList();
             cmb.DataSource = list;
             cmb.SelectedItem = list.SingleOrDefault(x => x.Content.Equals(valorPadrao));
         }
