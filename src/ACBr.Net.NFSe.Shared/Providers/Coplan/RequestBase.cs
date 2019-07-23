@@ -41,10 +41,10 @@ namespace ACBr.Net.NFSe.Providers.Coplan
         #region Properties
 
         [DataMember(Name = "nfseCabecMsg", IsRequired = true, EmitDefaultValue = false)]
-        public string Cabecalho { get; set; }
+        public XmlCData Cabecalho { get; set; }
 
         [DataMember(Name = "nfseDadosMsg", IsRequired = true, EmitDefaultValue = false)]
-        public string Mensagem { get; set; }
+        public XmlCData Mensagem { get; set; }
 
         #endregion Properties
     }

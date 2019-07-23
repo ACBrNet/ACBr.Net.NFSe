@@ -26,11 +26,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ACBr.Net.Core" Version="1.2.1" />
-    <PackageReference Include="ACBr.Net.DFe.Core" Version="1.2.1.1" />
-    <PackageReference Include="PropertyChanged.Fody" Version="2.5.8" />
-    <PackageReference Include="System.ServiceModel.Http" Version="4.5.1" />
-    <PackageReference Include="System.ServiceModel.Primitives" Version="4.5.1" />
+    <PackageReference Include="ACBr.Net.Core" Version="1.2.3.3" />
+    <PackageReference Include="ACBr.Net.DFe.Core" Version="1.2.4.1" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.0.1" />
+    <PackageReference Include="System.ServiceModel.Http" Version="4.5.3" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="4.5.3" />
   </ItemGroup>
 
 </Project>

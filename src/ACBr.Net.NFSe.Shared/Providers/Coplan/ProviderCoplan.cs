@@ -59,6 +59,11 @@ namespace ACBr.Net.NFSe.Providers.Coplan
             return "nfse.xsd";
         }
 
+        protected override string GetVersao()
+        {
+            return "versao=\"2.01\"";
+        }
+
         protected override string GetNamespace()
         {
             return "xmlns=\"http://www.abrasf.org.br/nfse.xsd\"";
@@ -66,7 +71,7 @@ namespace ACBr.Net.NFSe.Providers.Coplan
 
         protected override string GerarCabecalho()
         {
-            return $"<cabecalho versao=\"2.02\" xmlns=\"http://www.abrasf.org.br/nfse.xsd\">{Environment.NewLine}<versaoDados>2.02</versaoDados>{Environment.NewLine}</cabecalho>";
+            return $"<cabecalho versao=\"2.01\" xmlns=\"http://www.abrasf.org.br/nfse.xsd\"><versaoDados>2.01</versaoDados></cabecalho>";
         }
 
         #endregion Protected Methods

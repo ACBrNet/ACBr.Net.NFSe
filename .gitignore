@@ -236,3 +236,5 @@ _Pvt_Extensions
 .fake/
 /src/*.tss
 /WSDL
+/1-env-lot-soap.xml
+/1-con-lot-soap.xml

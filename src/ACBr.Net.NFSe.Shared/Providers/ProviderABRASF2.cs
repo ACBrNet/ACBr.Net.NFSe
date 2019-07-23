@@ -34,7 +34,10 @@ using ACBr.Net.DFe.Core.Serializer;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
 using System;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.ServiceModel;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
@@ -729,9 +732,8 @@ namespace ACBr.Net.NFSe.Providers
             }
 
             var xmlLote = new StringBuilder();
-            xmlLote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             xmlLote.Append($"<EnviarLoteRpsEnvio {GetNamespace()}>");
-            xmlLote.Append($"<LoteRps Id=\"L{lote}\" versao=\"2.02\">");
+            xmlLote.Append($"<LoteRps Id=\"L{lote}\" {GetVersao()}>");
             xmlLote.Append($"<NumeroLote>{lote}</NumeroLote>");
             xmlLote.Append("<CpfCnpj>");
             xmlLote.Append(Configuracoes.PrestadorPadrao.CpfCnpj.IsCNPJ()
@@ -813,9 +815,8 @@ namespace ACBr.Net.NFSe.Providers
             }
 
             var xmlLote = new StringBuilder();
-            xmlLote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             xmlLote.Append($"<EnviarLoteRpsSincronoEnvio {GetNamespace()}>");
-            xmlLote.Append($"<LoteRps Id=\"L{lote}\" versao=\"2.02\">");
+            xmlLote.Append($"<LoteRps Id=\"L{lote}\" {GetVersao()}>");
             xmlLote.Append($"<NumeroLote>{lote}</NumeroLote>");
             xmlLote.Append("<CpfCnpj>");
             xmlLote.Append(Configuracoes.PrestadorPadrao.CpfCnpj.IsCNPJ()
@@ -911,7 +912,6 @@ namespace ACBr.Net.NFSe.Providers
             var retornoWebservice = new RetornoWebservice();
 
             var loteBuilder = new StringBuilder();
-            loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             loteBuilder.Append($"<ConsultarLoteRpsEnvio {GetNamespace()} >");
             loteBuilder.Append("<Prestador>");
             loteBuilder.Append("<CpfCnpj>");
@@ -1002,7 +1002,7 @@ namespace ACBr.Net.NFSe.Providers
             }
 
             var loteBuilder = new StringBuilder();
-            loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+
             loteBuilder.Append($"<CancelarNfseEnvio {GetNamespace()}>");
             loteBuilder.Append("<Pedido>");
             loteBuilder.Append($"<InfPedidoCancelamento Id=\"N{numeroNFSe}\">");
@@ -1090,7 +1090,6 @@ namespace ACBr.Net.NFSe.Providers
             }
 
             var loteBuilder = new StringBuilder();
-            loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             loteBuilder.Append($"<ConsultarNfseRpsEnvio {GetNamespace()}>");
             loteBuilder.Append("<IdentificacaoRps>");
             loteBuilder.Append($"<Numero>{numero}</Numero>");
@@ -1161,7 +1160,6 @@ namespace ACBr.Net.NFSe.Providers
             var retornoWebservice = new RetornoWebservice();
 
             var loteBuilder = new StringBuilder();
-            loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             loteBuilder.Append($"<ConsultarNfseServicoPrestadoEnvio {GetNamespace()}>");
             loteBuilder.Append("<Prestador>");
             loteBuilder.Append("<CpfCnpj>");
@@ -1293,7 +1291,6 @@ namespace ACBr.Net.NFSe.Providers
             pedidoCancelamento.Append("</Pedido>");
 
             var loteBuilder = new StringBuilder();
-            loteBuilder.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             loteBuilder.Append($"<SubstituirNfseEnvio {GetNamespace()}>");
             loteBuilder.Append($"<SubstituicaoNfse Id=\"SB{codigoCancelamento}\">");
 
@@ -1365,6 +1362,11 @@ namespace ACBr.Net.NFSe.Providers
 
         protected abstract IABRASF2Client GetClient(TipoUrl tipo);
 
+        protected virtual string GetVersao()
+        {
+            return "versao=\"2.02\"";
+        }
+
         protected virtual string GetNamespace()
         {
             return "xmlns=\"http://www.abrasf.org.br/nfse\"";
@@ -1377,7 +1379,7 @@ namespace ACBr.Net.NFSe.Providers
 
         protected virtual string GerarCabecalho()
         {
-            return $"<cabecalho versao=\"2.02\" {GetNamespace()}>{Environment.NewLine}<versaoDados>2.02</versaoDados>{Environment.NewLine}</cabecalho>";
+            return $"<cabecalho versao=\"2.02\" {GetNamespace()}><versaoDados>2.02</versaoDados></cabecalho>";
         }
 
         protected virtual void MensagemErro(RetornoWebservice retornoWs, XContainer xmlRet, string xmlTag)

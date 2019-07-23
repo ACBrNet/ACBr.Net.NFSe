@@ -57,8 +57,7 @@ namespace ACBr.Net.NFSe.Providers.Coplan
         [OperationContract(Action = "Tributarioaction/ANFSE_WEB_SERVICE.CONSULTARNFSEPORRPS", ReplyAction = "*")]
         ConsultarNFSePorRpsResponse ConsultarNFSePorRps(ConsultarNFSePorRpsRequest request);
 
-        [OperationContract(Action = "Tributarioaction/ANFSE_WEB_SERVICE.CONSULTARNFSESERVICOPRESTADO",
-            ReplyAction = "*")]
+        [OperationContract(Action = "Tributarioaction/ANFSE_WEB_SERVICE.CONSULTARNFSESERVICOPRESTADO", ReplyAction = "*")]
         ConsultarNFSeServicoPrestadoResponse ConsultarNFSeServicoPrestado(ConsultarNFSeServicoPrestadoRequest request);
 
         [OperationContract(Action = "Tributarioaction/ANFSE_WEB_SERVICE.SUBSTITUIRNFSE", ReplyAction = "*")]

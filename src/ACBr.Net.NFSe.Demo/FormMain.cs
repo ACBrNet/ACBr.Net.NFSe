@@ -401,13 +401,16 @@ namespace ACBr.Net.NFSe.Demo
         {
             acbrNFSe = new ACBrNFSe();
             acbrNFSe.Configuracoes.Geral.RetirarAcentos = true;
+            acbrNFSe.Configuracoes.WebServices.Salvar = true;
 
             InitializeLog();
             this.Log().Debug("Log Iniciado");
 
-            cmbAmbiente.EnumDataSource<DFeTipoAmbiente>(DFeTipoAmbiente.Homologacao);
+            cmbAmbiente.EnumDataSource(DFeTipoAmbiente.Homologacao);
             LoadData();
             LoadConfig();
+
+            base.OnShown(e);
         }
 
         #endregion Overrides

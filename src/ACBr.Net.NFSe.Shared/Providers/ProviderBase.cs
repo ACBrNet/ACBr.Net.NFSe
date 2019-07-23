@@ -84,62 +84,62 @@ namespace ACBr.Net.NFSe.Providers
         /// <summary>
         /// The er r_ ms g_ maior
         /// </summary>
-        public const string ErrMsgMaior = "Tamanho maior que o máximo permitido";
+        protected const string ErrMsgMaior = "Tamanho maior que o máximo permitido";
 
         /// <summary>
         /// The er r_ ms g_ menor
         /// </summary>
-        public const string ErrMsgMenor = "Tamanho menor que o mínimo permitido";
+        protected const string ErrMsgMenor = "Tamanho menor que o mínimo permitido";
 
         /// <summary>
         /// The er r_ ms g_ vazio
         /// </summary>
-        public const string ErrMsgVazio = "Nenhum valor informado";
+        protected const string ErrMsgVazio = "Nenhum valor informado";
 
         /// <summary>
         /// The er r_ ms g_ invalido
         /// </summary>
-        public const string ErrMsgInvalido = "Conteúdo inválido";
+        protected const string ErrMsgInvalido = "Conteúdo inválido";
 
         /// <summary>
         /// The er r_ ms g_ maxim o_ decimais
         /// </summary>
-        public const string ErrMsgMaximoDecimais = "Numero máximo de casas decimais permitidas";
+        protected const string ErrMsgMaximoDecimais = "Numero máximo de casas decimais permitidas";
 
         /// <summary>
         /// The er r_ ms g_ maio r_ maximo
         /// </summary>
-        public const string ErrMsgMaiorMaximo = "Número de ocorrências maior que o máximo permitido - Máximo ";
+        protected const string ErrMsgMaiorMaximo = "Número de ocorrências maior que o máximo permitido - Máximo ";
 
         /// <summary>
         /// The er r_ ms g_ fina l_ meno r_ inicial
         /// </summary>
-        public const string ErrMsgFinalMenorInicial = "O numero final não pode ser menor que o inicial";
+        protected const string ErrMsgFinalMenorInicial = "O numero final não pode ser menor que o inicial";
 
         /// <summary>
         /// The er r_ ms g_ arquiv o_ na o_ encontrado
         /// </summary>
-        public const string ErrMsgArquivoNaoEncontrado = "Arquivo não encontrado";
+        protected const string ErrMsgArquivoNaoEncontrado = "Arquivo não encontrado";
 
         /// <summary>
         /// The er r_ ms g_ soment e_ um
         /// </summary>
-        public const string ErrMsgSomenteUm = "Somente um campo deve ser preenchido";
+        protected const string ErrMsgSomenteUm = "Somente um campo deve ser preenchido";
 
         /// <summary>
         /// The er r_ ms g_ meno r_ minimo
         /// </summary>
-        public const string ErrMsgMenorMinimo = "Número de ocorrências menor que o mínimo permitido - Mínimo ";
+        protected const string ErrMsgMenorMinimo = "Número de ocorrências menor que o mínimo permitido - Mínimo ";
 
         /// <summary>
         /// The ds c_ CNPJ
         /// </summary>
-        public const string DscCnpj = "CNPJ(MF)";
+        protected const string DscCnpj = "CNPJ(MF)";
 
         /// <summary>
         /// The ds c_ CPF
         /// </summary>
-        public const string DscCpf = "CPF";
+        protected const string DscCpf = "CPF";
 
         #endregion Constantes
 
@@ -411,7 +411,7 @@ namespace ACBr.Net.NFSe.Providers
                 return null;
 
             var ms = new MemoryStream();
-            var serializer = DFeSerializer.CreateSerializer<DFeSignature>();
+            var serializer = DFeSerializer<DFeSignature>.CreateSerializer<DFeSignature>();
             if (!serializer.Serialize(signature, ms)) return null;
 
             return XElement.Load(ms);
@@ -426,7 +426,7 @@ namespace ACBr.Net.NFSe.Providers
         {
             if (element == null) return new DFeSignature();
 
-            var serializer = DFeSerializer.CreateSerializer<DFeSignature>();
+            var serializer = DFeSerializer<DFeSignature>.CreateSerializer<DFeSignature>();
             return serializer.Deserialize(element.ToString());
         }
 
