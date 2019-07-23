@@ -30,15 +30,29 @@
 // ***********************************************************************
 
 using System;
+using System.Net;
 
 namespace ACBr.Net.NFSe.Providers.Coplan
 {
     internal sealed class CoplanServiceClient : NFSeServiceClient<ICoplanService>, IABRASF2Client
     {
+        #region Fields
+
+        private bool expect100Continue;
+
+        #endregion Fields
+
         #region Constructors
 
         public CoplanServiceClient(ProviderCoplan provider, TipoUrl tipoUrl) : base(provider, tipoUrl)
         {
+            expect100Continue = ServicePointManager.Expect100Continue;
+            ServicePointManager.Expect100Continue = false;
+        }
+
+        ~CoplanServiceClient()
+        {
+            ServicePointManager.Expect100Continue = expect100Continue;
         }
 
         #endregion Constructors
@@ -55,7 +69,7 @@ namespace ACBr.Net.NFSe.Providers.Coplan
 
             var response = Channel.RecepcionarLoteRps(request);
 
-            return response.Response.OutputXml;
+            return response.Response.OutputXml.Trim();
         }
 
         public string RecepcionarLoteRpsSincrono(string cabec, string msg)
@@ -68,7 +82,7 @@ namespace ACBr.Net.NFSe.Providers.Coplan
 
             var response = Channel.RecepcionarLoteRpsSincrono(request);
 
-            return response.Response.OutputXml;
+            return response.Response.OutputXml.Trim();
         }
 
         public string ConsultarNFSePorRps(string cabec, string msg)
@@ -81,7 +95,7 @@ namespace ACBr.Net.NFSe.Providers.Coplan
 
             var response = Channel.ConsultarNFSePorRps(request);
 
-            return response.Response.OutputXml;
+            return response.Response.OutputXml.Trim();
         }
 
         public string ConsultarNFSeFaixa(string cabec, string msg)
@@ -94,7 +108,7 @@ namespace ACBr.Net.NFSe.Providers.Coplan
 
             var response = Channel.ConsultarNFSeFaixa(request);
 
-            return response.Response.OutputXml;
+            return response.Response.OutputXml.Trim();
         }
 
         public string ConsultarNFSeServicoTomado(string cabec, string msg)
@@ -112,7 +126,7 @@ namespace ACBr.Net.NFSe.Providers.Coplan
 
             var response = Channel.ConsultarNFSeServicoPrestado(request);
 
-            return response.Response.OutputXml;
+            return response.Response.OutputXml.Trim();
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
@@ -125,7 +139,7 @@ namespace ACBr.Net.NFSe.Providers.Coplan
 
             var response = Channel.ConsultarLoteRps(request);
 
-            return response.Response.OutputXml;
+            return response.Response.OutputXml.Trim();
         }
 
         public string CancelarNFSe(string cabec, string msg)
@@ -138,7 +152,7 @@ namespace ACBr.Net.NFSe.Providers.Coplan
 
             var response = Channel.CancelarNFSe(request);
 
-            return response.Response.OutputXml;
+            return response.Response.OutputXml.Trim();
         }
 
         public string SubstituirNFSe(string cabec, string msg)
@@ -151,7 +165,7 @@ namespace ACBr.Net.NFSe.Providers.Coplan
 
             var response = Channel.SubstituirNFSe(request);
 
-            return response.Response.OutputXml;
+            return response.Response.OutputXml.Trim();
         }
 
         #endregion Methods
