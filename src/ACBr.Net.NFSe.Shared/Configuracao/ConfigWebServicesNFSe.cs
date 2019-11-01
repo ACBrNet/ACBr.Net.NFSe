@@ -81,8 +81,8 @@ namespace ACBr.Net.NFSe.Configuracao
                 if (codigoMunicipio == value) return;
 
                 codigoMunicipio = value;
-                var municipio = ProviderManager.Municipios.SingleOrDefault(x => x.Codigo == codigoMunicipio);
-                Guard.Against<ArgumentException>(municipio == null, "MunicÌpio n„o cadastrado.");
+                var municipio = ProviderManager.Municipios.FirstOrDefault(x => x.Codigo == codigoMunicipio);
+                Guard.Against<ArgumentException>(municipio == null, "Munic√≠pio n√£o cadastrado.");
                 Municipio = municipio.Nome;
             }
         }
