@@ -47,7 +47,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Constructors
 
-        protected NFSeServiceClient(ProviderBase provider, TipoUrl tipoUrl, X509Certificate2 certificado = null) :
+        protected NFSeServiceClient(ProviderBase provider, TipoUrl tipoUrl, X509Certificate2 certificado) :
             base(provider.GetUrl(tipoUrl), provider.TimeOut, certificado)
         {
             serviceLock = new object();

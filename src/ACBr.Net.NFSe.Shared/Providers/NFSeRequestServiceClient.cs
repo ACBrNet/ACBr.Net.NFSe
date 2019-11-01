@@ -42,7 +42,7 @@ namespace ACBr.Net.NFSe.Providers
     {
         #region Constructors
 
-        protected NFSeRequestServiceClient(ProviderBase provider, TipoUrl tipoUrl, X509Certificate2 certificado = null) :
+        protected NFSeRequestServiceClient(ProviderBase provider, TipoUrl tipoUrl, X509Certificate2 certificado) :
             base(provider, tipoUrl, certificado)
         {
         }
