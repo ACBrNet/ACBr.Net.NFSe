@@ -1318,9 +1318,12 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             valores.AddChild(AdicionarTag(TipoCampo.De4, "", "Aliquota", ns, 1, 15, Ocorrencia.Obrigatoria, nota.Servico.Valores.Aliquota / 100));  // Valor Percentual - Exemplos: 1% => 0.01   /   25,5% => 0.255   /   100% => 1
             valores.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorLiquidoNfse", ns, 1, 15, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorLiquidoNfse));
             
-            if (Municipio.Codigo != 2704302)
+            //Algumas prefeituras não permitem estas TAGs
+            if (
+                Municipio.Codigo != 2704302 && //Maceió/AL
+                Municipio.Codigo != 3503208 // Araraquara/SP
+                )
             {
-                //Maceió não permite estas tags
                 valores.AddChild(AdicionarTag(TipoCampo.De2, "", "DescontoIncondicionado", ns, 1, 15, Ocorrencia.Obrigatoria, nota.Servico.Valores.DescontoIncondicionado));
                 valores.AddChild(AdicionarTag(TipoCampo.De2, "", "DescontoCondicionado", ns, 1, 15, Ocorrencia.Obrigatoria, nota.Servico.Valores.DescontoCondicionado));
             }
