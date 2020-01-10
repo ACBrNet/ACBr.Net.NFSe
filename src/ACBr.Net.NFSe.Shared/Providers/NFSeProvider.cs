@@ -64,6 +64,9 @@ namespace ACBr.Net.NFSe.Providers
         WebIss = 10,
 
         [Description("WebIss v2")]
-        WebIss2 = 11
+        WebIss2 = 11,
+
+        [Description("Belo Horizonte")]
+        BeloHorizonte = 13
     }
 }
