@@ -16,8 +16,7 @@ namespace ACBr.Net.NFSe.Providers.BeloHorizonte
 
         public ProviderBeloHorizonte(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
         {
-            Name = "Porto Alegre";//Utilizar mesmos arquivos de schema de Porto Alegre
-            //Name = "Belo Horizonte";
+            Name = "Belo Horizonte";
         }
 
         #endregion Constructors
@@ -118,7 +117,7 @@ namespace ACBr.Net.NFSe.Providers.BeloHorizonte
             {
                 nota.NumeroLote = retornoWebservice.NumeroLote;
             }
-            
+
             return retornoWebservice;
         }
 
@@ -145,7 +144,6 @@ namespace ACBr.Net.NFSe.Providers.BeloHorizonte
             ValidarSchema(retorno, GetSchema(TipoUrl.EnviarSincrono));
             return retorno;
         }
-
 
         #endregion Methods
     }

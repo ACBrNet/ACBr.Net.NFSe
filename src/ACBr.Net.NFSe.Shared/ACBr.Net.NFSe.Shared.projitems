@@ -399,6 +399,14 @@
     <None Include="$(MSBuildThisFileDirectory)Schemas\Asten\xmldsig-core-schema20020212.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Belford\nfse.xsd" />
     <None Include="$(MSBuildThisFileDirectory)Schemas\Belford\xmldsig-core-schema20020212.xsd" />
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Belo Horizonte\nfse_v20_08_2015.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Schemas\Belo Horizonte\xmldsig-core-schema20020212.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="$(MSBuildThisFileDirectory)Schemas\Betha2\nfse_v202.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
