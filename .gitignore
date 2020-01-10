@@ -238,3 +238,4 @@ _Pvt_Extensions
 /WSDL
 /1-env-lot-soap.xml
 /1-con-lot-soap.xml
+/src/*.DotSettings

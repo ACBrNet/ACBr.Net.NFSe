@@ -6,7 +6,6 @@ using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
-using ACBr.Net.NFSe.Providers;
 
 namespace ACBr.Net.NFSe.Providers.BeloHorizonte
 {
