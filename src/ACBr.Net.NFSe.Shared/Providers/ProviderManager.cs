@@ -34,6 +34,7 @@ using ACBr.Net.Core.Exceptions;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Providers.Abaco;
+using ACBr.Net.NFSe.Providers.BeloHorizonte;
 using ACBr.Net.NFSe.Providers.Betha;
 using ACBr.Net.NFSe.Providers.Betha2;
 using ACBr.Net.NFSe.Providers.Coplan;
@@ -68,6 +69,7 @@ namespace ACBr.Net.NFSe.Providers
             Providers = new Dictionary<NFSeProvider, Type>
             {
                 {NFSeProvider.Abaco, typeof(ProviderAbaco)},
+                {NFSeProvider.BeloHorizonte, typeof(ProviderBeloHorizonte)},
                 {NFSeProvider.Betha, typeof(ProviderBetha)},
                 {NFSeProvider.Betha2, typeof(ProviderBetha2)},
                 {NFSeProvider.Coplan, typeof(ProviderCoplan)},
