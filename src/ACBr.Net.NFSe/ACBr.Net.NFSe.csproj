@@ -91,10 +91,62 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-    <!--<None Include=".\Schemas\Abaco">
+    <None Include="Schemas\Abaco\*.*">
       <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>-->
+      <PackagePath>content\Schemas\Abaco</PackagePath>
+    </None>
+    <None Include="Schemas\ABRASFv1\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\ABRASFv1</PackagePath>
+    </None>
+    <None Include="Schemas\ABRASFv2\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\ABRASFv2</PackagePath>
+    </None>
+    <None Include="Schemas\Betha2\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\Betha2</PackagePath>
+    </None>
+    <None Include="Schemas\Belo Horizonte\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\Belo Horizonte</PackagePath>
+    </None>
+    <None Include="Schemas\Coplan\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\Coplan</PackagePath>
+    </None>
+    <None Include="Schemas\DSF\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\DSF</PackagePath>
+    </None>
+    <None Include="Schemas\Ginfes\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\Ginfes</PackagePath>
+    </None>
+    <None Include="Schemas\GovDigital\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\GovDigital</PackagePath>
+    </None>
+    <None Include="Schemas\Nota Carioca\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\Nota Carioca</PackagePath>
+    </None>
+    <None Include="Schemas\Porto Alegre\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\Porto Alegre</PackagePath>
+    </None>
+    <None Include="Schemas\São Paulo\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\São Paulo</PackagePath>
+    </None>
+    <None Include="Schemas\WebISS\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\WebISS</PackagePath>
+    </None>
+    <None Include="Schemas\WebISS2\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\WebISS2</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
