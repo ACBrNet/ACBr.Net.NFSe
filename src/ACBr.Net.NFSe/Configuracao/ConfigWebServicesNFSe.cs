@@ -29,7 +29,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using ACBr.Net.Core.Exceptions;
 using ACBr.Net.DFe.Core.Common;
 using ACBr.Net.NFSe.Providers;
 using System;

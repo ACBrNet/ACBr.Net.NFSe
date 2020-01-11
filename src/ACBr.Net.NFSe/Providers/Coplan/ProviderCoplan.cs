@@ -29,7 +29,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
 using ACBr.Net.NFSe.Configuracao;
 
 namespace ACBr.Net.NFSe.Providers.Coplan

@@ -31,7 +31,6 @@
 
 using System.ComponentModel;
 using ACBr.Net.Core.Generics;
-using PropertyChanged;
 
 namespace ACBr.Net.NFSe.Nota
 {

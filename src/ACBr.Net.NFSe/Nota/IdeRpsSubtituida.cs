@@ -33,7 +33,6 @@ using ACBr.Net.Core.Generics;
 using System;
 using System.ComponentModel;
 using ACBr.Net.DFe.Core.Document;
-using PropertyChanged;
 
 namespace ACBr.Net.NFSe.Nota
 {

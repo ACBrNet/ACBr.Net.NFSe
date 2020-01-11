@@ -29,7 +29,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using ACBr.Net.Core.Exceptions;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core;
 using ACBr.Net.DFe.Core.Common;
@@ -41,6 +40,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
+using ACBr.Net.Core;
 
 namespace ACBr.Net.NFSe.Providers.Ginfes
 {
@@ -1317,7 +1317,7 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             // Valor Percentual - Exemplos: 1% => 0.01   /   25,5% => 0.255   /   100% => 1
             valores.AddChild(AdicionarTag(TipoCampo.De4, "", "Aliquota", ns, 1, 15, Ocorrencia.Obrigatoria, nota.Servico.Valores.Aliquota / 100));  // Valor Percentual - Exemplos: 1% => 0.01   /   25,5% => 0.255   /   100% => 1
             valores.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorLiquidoNfse", ns, 1, 15, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorLiquidoNfse));
-            
+
             //Algumas prefeituras não permitem estas TAGs
             if (
                 Municipio.Codigo != 2704302 && //Maceió/AL

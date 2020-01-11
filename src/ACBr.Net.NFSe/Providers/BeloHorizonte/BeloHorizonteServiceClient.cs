@@ -1,6 +1,4 @@
-﻿using ACBr.Net.NFSe.Providers;
-
-namespace ACBr.Net.NFSe.Providers.BeloHorizonte
+﻿namespace ACBr.Net.NFSe.Providers.BeloHorizonte
 {
     internal sealed class BeloHorizonteServiceClient : NFSeServiceClient<IBeloHorizonteServiceClient>, IABRASFClient
     {

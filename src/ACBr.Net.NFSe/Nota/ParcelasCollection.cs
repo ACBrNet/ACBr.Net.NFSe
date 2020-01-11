@@ -30,7 +30,6 @@
 // ***********************************************************************
 
 using ACBr.Net.DFe.Core.Collection;
-using PropertyChanged;
 
 namespace ACBr.Net.NFSe.Nota
 {

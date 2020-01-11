@@ -34,14 +34,11 @@ using ACBr.Net.DFe.Core.Serializer;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
 using System;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.ServiceModel;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
-using ACBr.Net.Core.Exceptions;
+using ACBr.Net.Core;
 using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Providers

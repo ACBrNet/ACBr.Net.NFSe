@@ -29,8 +29,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
-
 namespace ACBr.Net.NFSe.Providers.DSF
 {
     internal sealed class DSFServiceClient : NFSeServiceClient<IDSFService>, IDSFService

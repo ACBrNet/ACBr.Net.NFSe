@@ -33,7 +33,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel.Channels;
 using System.Xml;
-using ACBr.Net.Core.Exceptions;
+using ACBr.Net.Core;
 using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Providers

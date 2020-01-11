@@ -6,7 +6,7 @@
     <RootNamespace>ACBr.Net.NFSe</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>acbr.net.snk</AssemblyOriginatorKeyFile>
-    <Copyright>Copyright © Grupo ACBr.Net 2014 - 2019</Copyright>
+    <Copyright>Copyright © Grupo ACBr.Net 2014 - 2020</Copyright>
     <Company>Grupo ACBr.Net</Company>
     <Authors>Rafael Dias</Authors>
     <PackageProjectUrl>https://acbrnet.github.io</PackageProjectUrl>
@@ -29,7 +29,6 @@
       - Belo Horizonte.
       - Porto Alegre (Em Teste).
       - Abaco (Em Teste).
-      - Betha v1 (Em Teste).
       - Betha v2 (Em Teste).
       - GovDigital (Em Teste).
       - FissLex (Em Teste).
@@ -71,14 +70,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ACBr.Net.Core" Version="1.2.3.3" />
-    <PackageReference Include="ACBr.Net.DFe.Core" Version="1.2.4.1" />
-    <PackageReference Include="PropertyChanged.Fody" Version="3.1.3" />
+    <PackageReference Include="ACBr.Net.Core" Version="1.2.3.5" />
+    <PackageReference Include="ACBr.Net.DFe.Core" Version="1.2.4.3" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.2.3" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="System.ServiceModel.Http" Version="4.5.3" />
-    <PackageReference Include="System.ServiceModel.Primitives" Version="4.5.3" />
+    <PackageReference Include="System.ServiceModel.Http" Version="4.7.0" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
@@ -86,6 +85,7 @@
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
 
+  <!-- Itens do pacote nuget -->
   <ItemGroup>
     <None Include="..\..\LICENSE">
       <Pack>True</Pack>
@@ -153,12 +153,12 @@
     <None Remove="Resources\Municipios.nfse" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <None Remove="ACBrNFSe.bmp" />
-  </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Include="Resources\Municipios.nfse" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+    <None Remove="ACBrNFSe.bmp" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
@@ -166,290 +166,54 @@
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <Compile Remove="ACBrNFSe.bmp" />
     <Compile Remove="ACBrNFSeProxy.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Schemas\Abaco\nfse_v2010.xsd">
+    <None Update="Schemas\Abaco\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Schemas\Abaco\xmldsig-core-schema20020212.xsd">
+    <None Update="Schemas\ABRASFv1\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Schemas\ABRASFv1\nfse.xsd">
+    <None Update="Schemas\ABRASFv2\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Schemas\ABRASFv1\xmldsig-core-schema_v01.xsd">
+    <None Update="Schemas\Belo Horizonte\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Schemas\ABRASFv2\nfse.xsd">
+    <None Update="Schemas\Betha2\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Schemas\ABRASFv2\xmldsig-core-schema20020212.xsd">
+    <None Update="Schemas\Coplan\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Schemas\Belo Horizonte\nfse_v20_08_2015.xsd">
+    <None Update="Schemas\DSF\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Schemas\Belo Horizonte\xmldsig-core-schema20020212.xsd">
+    <None Update="Schemas\Ginfes\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Schemas\Betha2\nfse_v202.xsd">
+    <None Update="Schemas\GovDigital\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Schemas\Betha2\xmldsig-core-schema20020212.xsd">
+    <None Update="Schemas\Nota Carioca\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Schemas\Coplan\nfse.xsd">
+    <None Update="Schemas\Porto Alegre\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Schemas\Coplan\xmldsig-core-schema20020212.xsd">
+    <None Update="Schemas\São Paulo\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Schemas\DSF\ConsultaSeqRps.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\DSF\ReqCancelamentoNFSe.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\DSF\ReqConsultaLote.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\DSF\ReqConsultaNFSeRPS.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\DSF\ReqConsultaNotas.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\DSF\ReqEnvioLoteRPS.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\DSF\RetornoCancelamentoNFSe.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\DSF\RetornoConsultaLote.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\DSF\RetornoConsultaNFSeRPS.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\DSF\RetornoConsultaNotas.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\DSF\RetornoConsultaSeqRps.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\DSF\RetornoEnvioLoteRPS.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\DSF\Tipos.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\DSF\xmldsig-core-schema_v1.01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\cabecalho_v03.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\servico_cancelar_nfse_envio_v02.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\servico_cancelar_nfse_envio_v03.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\servico_cancelar_nfse_resposta_v03.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\servico_consultar_lote_rps_envio_v02.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\servico_consultar_lote_rps_envio_v03.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\servico_consultar_lote_rps_resposta_v03.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\servico_consultar_nfse_envio_v02.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\servico_consultar_nfse_envio_v03.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\servico_consultar_nfse_resposta_v03.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\servico_consultar_nfse_rps_envio_v02.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\servico_consultar_nfse_rps_envio_v03.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\servico_consultar_nfse_rps_resposta_v03.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\servico_consultar_situacao_lote_rps_envio_v02.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\servico_consultar_situacao_lote_rps_envio_v03.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\servico_consultar_situacao_lote_rps_resposta_v03.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\servico_enviar_lote_rps_envio_v02.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\servico_enviar_lote_rps_envio_v03.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\servico_enviar_lote_rps_resposta_v03.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\tipos_v02.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\tipos_v03.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\xmldsig-core-schema20020212_v03.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Ginfes\xmldsig-core-schema_v02.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\GovDigital\nfse.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\GovDigital\xmldsig-core-schema20020212.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Nota Carioca\nfse.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Nota Carioca\nfse_pcrj_v01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Nota Carioca\tipos_nfse_v01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Nota Carioca\xmldsig-core-schema_v01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Porto Alegre\nfse_v20_08_2015.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Porto Alegre\xmldsig-core-schema20020212.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\São Paulo\PedidoCancelamentoLote_v01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\São Paulo\PedidoCancelamentoNFe_v01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\São Paulo\PedidoConsultaCNPJ_v01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\São Paulo\PedidoConsultaLote_v01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\São Paulo\PedidoConsultaNFePeriodo_v01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\São Paulo\PedidoConsultaNFe_v01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\São Paulo\PedidoEnvioLoteRPS_v01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\São Paulo\PedidoEnvioRPS_v01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\São Paulo\PedidoInformacoesLote_v01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\São Paulo\RetornoCancelamentoNFe_v01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\São Paulo\RetornoConsultaCNPJ_v01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\São Paulo\RetornoConsulta_v01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\São Paulo\RetornoEnvioLoteRPS_v01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\São Paulo\RetornoEnvioRPS_v01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\São Paulo\RetornoInformacoesLote_v01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\São Paulo\TiposNFe_v01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\São Paulo\xmldsig-core-schema_v01.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\WebISS2\nfse v2 02.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\WebISS2\xmldsig-core-schema20020212.xsd">
+    <None Update="Schemas\WebISS2\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\WebISS\nfse.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Schemas\WebISS\servico_cancelar_nfse_envio.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\WebISS\servico_cancelar_nfse_resposta.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\WebISS\servico_consultar_lote_rps_envio.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\WebISS\servico_consultar_lote_rps_resposta.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\WebISS\servico_consultar_nfse_envio.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\WebISS\servico_consultar_nfse_resposta.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\WebISS\servico_consultar_nfse_rps_envio.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\WebISS\servico_consultar_nfse_rps_resposta.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\WebISS\servico_consultar_situacao_lote_rps_envio.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\WebISS\servico_consultar_situacao_lote_rps_resposta.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\WebISS\servico_enviar_lote_rps_envio.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\WebISS\servico_enviar_lote_rps_resposta.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\WebISS\servico_gerar_nfse_envio.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\WebISS\servico_gerar_nfse_resposta.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\WebISS\tipos_complexos.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\WebISS\tipos_simples.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\WebISS\xmldsig-core-schema20020212.xsd">
+    <None Update="Schemas\WebISS\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

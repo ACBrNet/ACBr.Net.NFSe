@@ -29,7 +29,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using ACBr.Net.Core.Exceptions;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.Core.Logging;
 using ACBr.Net.DFe.Core;
@@ -45,6 +44,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Xml.Linq;
+using ACBr.Net.Core;
 using ACBr.Net.DFe.Core.Document;
 
 namespace ACBr.Net.NFSe.Providers

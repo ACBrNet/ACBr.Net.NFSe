@@ -31,7 +31,6 @@
 
 using ACBr.Net.Core.Generics;
 using ACBr.Net.DFe.Core.Document;
-using PropertyChanged;
 using System;
 using System.ComponentModel;
 

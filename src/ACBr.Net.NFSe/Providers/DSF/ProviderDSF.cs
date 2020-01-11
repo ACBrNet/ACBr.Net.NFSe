@@ -29,7 +29,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using ACBr.Net.Core.Exceptions;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core;
 using ACBr.Net.DFe.Core.Serializer;
@@ -41,6 +40,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
+using ACBr.Net.Core;
 
 namespace ACBr.Net.NFSe.Providers.DSF
 {
