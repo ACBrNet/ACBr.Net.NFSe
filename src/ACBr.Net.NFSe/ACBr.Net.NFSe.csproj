@@ -107,9 +107,9 @@
       <Pack>True</Pack>
       <PackagePath>content\Schemas\Betha2</PackagePath>
     </None>
-    <None Include="Schemas\Belo Horizonte\*.*">
+    <None Include="Schemas\BHISS\*.*">
       <Pack>True</Pack>
-      <PackagePath>content\Schemas\Belo Horizonte</PackagePath>
+      <PackagePath>content\Schemas\BHISS</PackagePath>
     </None>
     <None Include="Schemas\Coplan\*.*">
       <Pack>True</Pack>
@@ -180,10 +180,10 @@
     <None Update="Schemas\ABRASFv2\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Schemas\Belo Horizonte\*.*">
+    <None Update="Schemas\Betha2\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Schemas\Betha2\*.*">
+    <None Update="Schemas\BHISS\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\Coplan\*.*">
