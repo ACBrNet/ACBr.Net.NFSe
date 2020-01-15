@@ -35,9 +35,9 @@
     </Description>
     <NeutralLanguage>pt-BR</NeutralLanguage>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
-    <FileVersion>1.1.0.0</FileVersion>
-    <Version>1.1.0.0</Version>
+    <AssemblyVersion>1.1.0.1</AssemblyVersion>
+    <FileVersion>1.1.0.1</FileVersion>
+    <Version>1.1.0.1</Version>
     <DelaySign>false</DelaySign>
   </PropertyGroup>
 
@@ -72,7 +72,9 @@
   <ItemGroup>
     <PackageReference Include="ACBr.Net.Core" Version="1.2.3.5" />
     <PackageReference Include="ACBr.Net.DFe.Core" Version="1.2.4.3" />
-    <PackageReference Include="PropertyChanged.Fody" Version="3.2.3" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.2.3">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
@@ -82,7 +84,6 @@
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <Reference Include="System.Drawing" />
-    <Reference Include="System.ServiceModel" />
   </ItemGroup>
 
   <!-- Itens do pacote nuget -->
@@ -208,9 +209,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\WebISS2\*.*">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\WebISS\nfse.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\WebISS\*.*">
