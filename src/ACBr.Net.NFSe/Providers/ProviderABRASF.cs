@@ -1463,6 +1463,7 @@ namespace ACBr.Net.NFSe.Providers
             {
                 loteBuilder.Append("<IntermediarioServico>");
                 loteBuilder.Append($"<RazaoSocial>{nomeInter}</RazaoSocial>");
+                loteBuilder.Append("<CpfCnpj>");
                 loteBuilder.Append(cnpjInter.IsCNPJ()
                     ? $"<Cnpj>{cnpjInter.ZeroFill(14)}</Cnpj>"
                     : $"<Cpf>{cnpjInter.ZeroFill(11)}</Cpf>");
