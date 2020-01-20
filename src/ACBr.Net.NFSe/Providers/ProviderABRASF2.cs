@@ -909,7 +909,7 @@ namespace ACBr.Net.NFSe.Providers
             var retornoWebservice = new RetornoWebservice();
 
             var loteBuilder = new StringBuilder();
-            loteBuilder.Append($"<ConsultarLoteRpsEnvio {GetNamespace()} >");
+            loteBuilder.Append($"<ConsultarLoteRpsEnvio {GetNamespace()}>");
             loteBuilder.Append("<Prestador>");
             loteBuilder.Append("<CpfCnpj>");
             loteBuilder.Append(Configuracoes.PrestadorPadrao.CpfCnpj.IsCNPJ()

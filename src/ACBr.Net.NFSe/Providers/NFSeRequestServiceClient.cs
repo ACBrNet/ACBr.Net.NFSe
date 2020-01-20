@@ -29,6 +29,7 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel.Channels;
@@ -71,14 +72,21 @@ namespace ACBr.Net.NFSe.Providers
                 xmlDoc.LoadXml(msg);
 
                 var message = Message.CreateMessage(Endpoint.Binding.MessageVersion, action, xmlDoc.DocumentElement);
-                if (headers.Any())
+                if (!headers.Any()) return Execute(message);
+
+                foreach (var header in headers)
                 {
-                    foreach (var header in headers)
-                    {
-                        message.Headers.Add(header);
-                    }
+                    message.Headers.Add(header);
                 }
 
+                return Execute(message);
+            }
+        }
+
+        protected string Execute(Message message)
+        {
+            lock (serviceLock)
+            {
                 var ret = Channel.Request(message);
                 Guard.Against<ACBrDFeException>(ret == null, "Nenhum retorno do webservice.");
                 var reader = ret.GetReaderAtBodyContents();
