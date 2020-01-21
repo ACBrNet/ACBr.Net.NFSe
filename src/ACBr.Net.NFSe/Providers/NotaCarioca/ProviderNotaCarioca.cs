@@ -158,6 +158,8 @@ namespace ACBr.Net.NFSe.Providers.NotaCarioca
                 using (var cliente = GetClient(TipoUrl.EnviarSincrono))
                 {
                     retornoWebservice.XmlRetorno = cliente.GerarNfse(GerarCabecalho(), retornoWebservice.XmlEnvio);
+                    retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
+                    retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
             }
             catch (Exception ex)

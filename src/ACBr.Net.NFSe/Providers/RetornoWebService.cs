@@ -88,6 +88,10 @@ namespace ACBr.Net.NFSe.Providers
 
         public string XmlRetorno { get; set; } = "";
 
+        public string EnvelopeEnvio { get; set; } = "";
+
+        public string EnvelopeRetorno { get; set; } = "";
+
         #endregion Propriedades
     }
 }

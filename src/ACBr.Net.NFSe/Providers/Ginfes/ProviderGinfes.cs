@@ -731,6 +731,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 using (var cliente = GetCliente(TipoUrl.Enviar))
                 {
                     retornoWebservice.XmlRetorno = cliente.RecepcionarLoteRps(GerarCabecalho(), retornoWebservice.XmlEnvio);
+                    retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
+                    retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
             }
             catch (Exception ex)
@@ -798,6 +800,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 using (var cliente = GetCliente(TipoUrl.ConsultarSituacao))
                 {
                     retornoWebservice.XmlRetorno = cliente.ConsultarSituacao(GerarCabecalho(), retornoWebservice.XmlEnvio);
+                    retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
+                    retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
             }
             catch (Exception ex)
@@ -852,6 +856,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 using (var cliente = GetCliente(TipoUrl.ConsultarLoteRps))
                 {
                     retornoWebservice.XmlRetorno = cliente.ConsultarLoteRps(GerarCabecalho(), retornoWebservice.XmlEnvio);
+                    retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
+                    retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
             }
             catch (Exception ex)
@@ -944,6 +950,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 using (var cliente = GetCliente(TipoUrl.CancelaNFSe))
                 {
                     retornoWebservice.XmlRetorno = cliente.CancelarNfse(GerarCabecalho(), retornoWebservice.XmlEnvio);
+                    retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
+                    retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
             }
             catch (Exception ex)
@@ -1028,6 +1036,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 using (var cliente = GetCliente(TipoUrl.ConsultaNFSeRps))
                 {
                     retornoWebservice.XmlRetorno = cliente.ConsultarNfsePorRps(GerarCabecalho(), retornoWebservice.XmlEnvio);
+                    retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
+                    retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
             }
             catch (Exception ex)
@@ -1120,6 +1130,8 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
                 using (var cliente = GetCliente(TipoUrl.ConsultaNFSe))
                 {
                     retornoWebservice.XmlRetorno = cliente.ConsultarNfse(GerarCabecalho(), retornoWebservice.XmlEnvio);
+                    retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
+                    retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
             }
             catch (Exception ex)

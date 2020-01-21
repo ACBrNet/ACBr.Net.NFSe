@@ -29,12 +29,12 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
-
 namespace ACBr.Net.NFSe.Providers
 {
-    public interface IABRASFClient : IDisposable
+    public interface IABRASFClient : IServiceClient
     {
+        #region Methods
+
         string RecepcionarLoteRps(string cabec, string msg);
 
         string ConsultarSituacaoLoteRps(string cabec, string msg);
@@ -48,5 +48,7 @@ namespace ACBr.Net.NFSe.Providers
         string CancelarNFSe(string cabec, string msg);
 
         string GerarNfse(string nfseCabecMsg, string nfseDadosMsg);
+
+        #endregion Methods
     }
 }

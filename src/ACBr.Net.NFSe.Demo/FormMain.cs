@@ -20,8 +20,8 @@ namespace ACBr.Net.NFSe.Demo
     {
         #region Fields
 
-        private ACBrNFSe acbrNFSe;
-        private ACBrConfig config;
+        private readonly ACBrNFSe acbrNFSe;
+        private readonly ACBrConfig config;
 
         #endregion Fields
 
@@ -30,6 +30,7 @@ namespace ACBr.Net.NFSe.Demo
         public FormMain()
         {
             InitializeComponent();
+            acbrNFSe = new ACBrNFSe();
             config = ACBrConfig.CreateOrLoad(Path.Combine(Application.StartupPath, "nfse.config"));
         }
 
@@ -61,6 +62,7 @@ namespace ACBr.Net.NFSe.Demo
                 var ret = acbrNFSe.Enviar(numero);
                 wbbDados.LoadXml(ret.XmlEnvio);
                 wbbResposta.LoadXml(ret.XmlRetorno);
+                wbbRetorno.LoadXml(ret.EnvelopeRetorno);
             });
         }
 
@@ -77,6 +79,7 @@ namespace ACBr.Net.NFSe.Demo
                 var ret = acbrNFSe.ConsultarSituacao(numero, protocolo);
                 wbbDados.LoadXml(ret.XmlEnvio);
                 wbbResposta.LoadXml(ret.XmlRetorno);
+                wbbRetorno.LoadXml(ret.EnvelopeRetorno);
             });
         }
 
@@ -93,6 +96,7 @@ namespace ACBr.Net.NFSe.Demo
                 var ret = acbrNFSe.ConsultarLoteRps(numero, protocolo);
                 wbbDados.LoadXml(ret.XmlEnvio);
                 wbbResposta.LoadXml(ret.XmlRetorno);
+                wbbRetorno.LoadXml(ret.EnvelopeRetorno);
             });
         }
 
@@ -109,6 +113,7 @@ namespace ACBr.Net.NFSe.Demo
                 var ret = acbrNFSe.ConsultaNFSeRps(numero, serie, TipoRps.RPS);
                 wbbDados.LoadXml(ret.XmlEnvio);
                 wbbResposta.LoadXml(ret.XmlRetorno);
+                wbbRetorno.LoadXml(ret.EnvelopeRetorno);
             });
         }
 
@@ -119,6 +124,7 @@ namespace ACBr.Net.NFSe.Demo
                 var ret = acbrNFSe.ConsultaNFSe(DateTime.Today.AddDays(-7), DateTime.Today);
                 wbbDados.LoadXml(ret.XmlEnvio);
                 wbbResposta.LoadXml(ret.XmlRetorno);
+                wbbRetorno.LoadXml(ret.EnvelopeRetorno);
             });
         }
 
@@ -138,6 +144,7 @@ namespace ACBr.Net.NFSe.Demo
                 var ret = acbrNFSe.CancelaNFSe(codigo, serie, motivo);
                 wbbDados.LoadXml(ret.XmlEnvio);
                 wbbResposta.LoadXml(ret.XmlRetorno);
+                wbbRetorno.LoadXml(ret.EnvelopeRetorno);
             });
         }
 
@@ -153,6 +160,7 @@ namespace ACBr.Net.NFSe.Demo
                 var ret = acbrNFSe.Enviar(numero, sincrono: true);
                 wbbDados.LoadXml(ret.XmlEnvio);
                 wbbResposta.LoadXml(ret.XmlRetorno);
+                wbbRetorno.LoadXml(ret.EnvelopeRetorno);
             });
         }
 
@@ -399,7 +407,6 @@ namespace ACBr.Net.NFSe.Demo
 
         protected override void OnShown(EventArgs e)
         {
-            acbrNFSe = new ACBrNFSe();
             acbrNFSe.Configuracoes.Geral.RetirarAcentos = true;
             acbrNFSe.Configuracoes.WebServices.Salvar = true;
 

@@ -36,6 +36,7 @@ using System.Xml;
 using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core;
+using ACBr.Net.DFe.Core.Extensions;
 
 namespace ACBr.Net.NFSe.Providers.Betha2
 {
@@ -56,14 +57,14 @@ namespace ACBr.Net.NFSe.Providers.Betha2
             var message = new StringBuilder();
             message.Append("<e:CancelarNfse>");
             message.Append("<nfseCabecMsg>");
-            message.Append(cabec.AjustarEnvio());
+            message.Append($"<![CDATA[{cabec}]]>");
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
-            message.Append(msg.AjustarEnvio());
+            message.Append($"<![CDATA[{msg}]]>");
             message.Append("</nfseDadosMsg>");
             message.Append("</e:CancelarNfse>");
 
-            return CreateEvelope("CancelarNfseResponse", message.ToString());
+            return Execute("CancelarNfseResponse", message.ToString());
         }
 
         public string SubstituirNFSe(string cabec, string msg)
@@ -71,14 +72,14 @@ namespace ACBr.Net.NFSe.Providers.Betha2
             var message = new StringBuilder();
             message.Append("<e:SubstituirNfse>");
             message.Append("<nfseCabecMsg>");
-            message.Append(cabec.AjustarEnvio());
+            message.Append($"<![CDATA[{cabec}]]>");
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
-            message.Append(msg.AjustarEnvio());
+            message.Append($"<![CDATA[{msg}]]>");
             message.Append("</nfseDadosMsg>");
             message.Append("</e:SubstituirNfse>");
 
-            return CreateEvelope("SubstituirNfseResponse", message.ToString());
+            return Execute("SubstituirNfseResponse", message.ToString());
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
@@ -86,14 +87,14 @@ namespace ACBr.Net.NFSe.Providers.Betha2
             var message = new StringBuilder();
             message.Append("<e:ConsultarLoteRps>");
             message.Append("<nfseCabecMsg>");
-            message.Append(cabec.AjustarEnvio());
+            message.Append($"<![CDATA[{cabec}]]>");
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
-            message.Append(msg.AjustarEnvio());
+            message.Append($"<![CDATA[{msg}]]>");
             message.Append("</nfseDadosMsg>");
             message.Append("</e:ConsultarLoteRps>");
 
-            return CreateEvelope("ConsultarLoteRpsResponse", message.ToString());
+            return Execute("ConsultarLoteRpsResponse", message.ToString());
         }
 
         public string ConsultarNFSeFaixa(string cabec, string msg)
@@ -101,14 +102,14 @@ namespace ACBr.Net.NFSe.Providers.Betha2
             var message = new StringBuilder();
             message.Append("<e:ConsultarNfseFaixa>");
             message.Append("<nfseCabecMsg>");
-            message.Append(cabec.AjustarEnvio());
+            message.Append($"<![CDATA[{cabec}]]>");
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
-            message.Append(msg.AjustarEnvio());
+            message.Append($"<![CDATA[{msg}]]>");
             message.Append("</nfseDadosMsg>");
             message.Append("</e:ConsultarNfseFaixa>");
 
-            return CreateEvelope("ConsultarNfseFaixaResponse", message.ToString());
+            return Execute("ConsultarNfseFaixaResponse", message.ToString());
         }
 
         public string ConsultarNFSeServicoTomado(string cabec, string msg)
@@ -116,14 +117,14 @@ namespace ACBr.Net.NFSe.Providers.Betha2
             var message = new StringBuilder();
             message.Append("<e:ConsultarNfseServicoTomado>");
             message.Append("<nfseCabecMsg>");
-            message.Append(cabec.AjustarEnvio());
+            message.Append($"<![CDATA[{cabec}]]>");
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
-            message.Append(msg.AjustarEnvio());
+            message.Append($"<![CDATA[{msg}]]>");
             message.Append("</nfseDadosMsg>");
             message.Append("</e:ConsultarNfseServicoTomado>");
 
-            return CreateEvelope("ConsultarNfseServicoTomadoResponse", message.ToString());
+            return Execute("ConsultarNfseServicoTomadoResponse", message.ToString());
         }
 
         public string ConsultarNFSePorRps(string cabec, string msg)
@@ -131,14 +132,14 @@ namespace ACBr.Net.NFSe.Providers.Betha2
             var message = new StringBuilder();
             message.Append("<e:ConsultarNfsePorRps>");
             message.Append("<nfseCabecMsg>");
-            message.Append(cabec.AjustarEnvio());
+            message.Append($"<![CDATA[{cabec}]]>");
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
-            message.Append(msg.AjustarEnvio());
+            message.Append($"<![CDATA[{msg}]]>");
             message.Append("</nfseDadosMsg>");
             message.Append("</e:ConsultarNfsePorRps>");
 
-            return CreateEvelope("ConsultarNfsePorRpsResponse", message.ToString());
+            return Execute("ConsultarNfsePorRpsResponse", message.ToString());
         }
 
         public string ConsultarNFSeServicoPrestado(string cabec, string msg)
@@ -146,14 +147,14 @@ namespace ACBr.Net.NFSe.Providers.Betha2
             var message = new StringBuilder();
             message.Append("<e:ConsultarNfseServicoPrestado>");
             message.Append("<nfseCabecMsg>");
-            message.Append(cabec.AjustarEnvio());
+            message.Append($"<![CDATA[{cabec}]]>");
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
-            message.Append(msg.AjustarEnvio());
+            message.Append($"<![CDATA[{msg}]]>");
             message.Append("</nfseDadosMsg>");
             message.Append("</e:ConsultarNfseServicoPrestado>");
 
-            return CreateEvelope("ConsultarNfseServicoPrestadoResponse", message.ToString());
+            return Execute("ConsultarNfseServicoPrestadoResponse", message.ToString());
         }
 
         public string RecepcionarLoteRps(string cabec, string msg)
@@ -161,14 +162,14 @@ namespace ACBr.Net.NFSe.Providers.Betha2
             var message = new StringBuilder();
             message.Append("<e:RecepcionarLoteRps>");
             message.Append("<nfseCabecMsg>");
-            message.Append(cabec.AjustarEnvio());
+            message.Append($"<![CDATA[{cabec}]]>");
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
-            message.Append(msg.AjustarEnvio());
+            message.Append($"<![CDATA[{msg}]]>");
             message.Append("</nfseDadosMsg>");
             message.Append("</e:RecepcionarLoteRps>");
 
-            return CreateEvelope("RecepcionarLoteRpsResponse", message.ToString());
+            return Execute("RecepcionarLoteRpsResponse", message.ToString());
         }
 
         public string RecepcionarLoteRpsSincrono(string cabec, string msg)
@@ -176,17 +177,17 @@ namespace ACBr.Net.NFSe.Providers.Betha2
             var message = new StringBuilder();
             message.Append("<e:RecepcionarLoteRpsSincrono>");
             message.Append("<nfseCabecMsg>");
-            message.Append(cabec.AjustarEnvio());
+            message.Append($"<![CDATA[{cabec}]]>");
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
-            message.Append(msg.AjustarEnvio());
+            message.Append($"<![CDATA[{msg}]]>");
             message.Append("</nfseDadosMsg>");
             message.Append("</e:RecepcionarLoteRpsSincrono>");
 
-            return CreateEvelope("RecepcionarLoteRpsSincronoResponse", message.ToString());
+            return Execute("RecepcionarLoteRpsSincronoResponse", message.ToString());
         }
 
-        private string CreateEvelope(string responseTag, string message)
+        private string Execute(string responseTag, string message)
         {
             var envelope = new StringBuilder();
             envelope.Append("<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:e=\"http://www.betha.com.br/e-nota-contribuinte-ws\">");

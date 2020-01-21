@@ -420,6 +420,9 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
                     retornoWebservice.XmlRetorno = Configuracoes.WebServices.Ambiente == DFeTipoAmbiente.Homologacao
                         ? cliente.TesteEnvioLoteRPS(retornoWebservice.XmlEnvio)
                         : cliente.EnvioLoteRPS(retornoWebservice.XmlEnvio);
+
+                    retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
+                    retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
             }
             catch (Exception ex)
@@ -482,6 +485,8 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
                 using (var cliente = GetCliente(TipoUrl.ConsultarLoteRps))
                 {
                     retornoWebservice.XmlRetorno = cliente.ConsultaInformacoesLote(retornoWebservice.XmlEnvio);
+                    retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
+                    retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
             }
             catch (Exception ex)
@@ -534,6 +539,8 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
                 using (var cliente = GetCliente(TipoUrl.ConsultarSituacao))
                 {
                     retornoWebservice.XmlRetorno = cliente.ConsultaLote(retornoWebservice.XmlEnvio);
+                    retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
+                    retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
             }
             catch (Exception ex)
@@ -634,6 +641,8 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
                 using (var cliente = GetCliente(TipoUrl.CancelaNFSe))
                 {
                     retornoWebservice.XmlRetorno = cliente.CancelamentoNFe(retornoWebservice.XmlEnvio);
+                    retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
+                    retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
             }
             catch (Exception ex)

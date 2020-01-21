@@ -73,6 +73,8 @@ namespace ACBr.Net.NFSe.Providers.BeloHorizonte
                 using (var cliente = GetClient(TipoUrl.Enviar))
                 {
                     retornoWebservice.XmlRetorno = cliente.RecepcionarLoteRps(GerarCabecalho(), retornoWebservice.XmlEnvio);
+                    retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
+                    retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
             }
             catch (Exception ex)

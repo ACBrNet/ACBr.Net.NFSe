@@ -129,12 +129,12 @@ namespace ACBr.Net.NFSe.Providers
         /// <summary>
         ///
         /// </summary>
-        public string EnvelopeSoap { get; protected set; }
+        public string EnvelopeEnvio { get; protected set; }
 
         /// <summary>
         ///
         /// </summary>
-        public string RetornoWS { get; protected set; }
+        public string EnvelopeRetorno { get; protected set; }
 
         #endregion Properties
 
@@ -158,14 +158,14 @@ namespace ACBr.Net.NFSe.Providers
         /// <inheritdoc />
         protected override void BeforeSendDFeRequest(string message)
         {
-            EnvelopeSoap = message;
+            EnvelopeEnvio = message;
             GravarSoap(message, $"{DateTime.Now:yyyyMMddssfff}_{ArquivoEnvio}_soap_env.xml");
         }
 
         /// <inheritdoc />
         protected override void AfterReceiveDFeReply(string message)
         {
-            RetornoWS = message;
+            EnvelopeRetorno = message;
             GravarSoap(message, $"{DateTime.Now:yyyyMMddssfff}_{ArquivoResposta}_soap_ret.xml");
         }
 
