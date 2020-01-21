@@ -5,6 +5,7 @@ using System.Xml.Serialization;
 
 namespace ACBr.Net.NFSe.Providers
 {
+    /// <inheritdoc />
     [XmlSchemaProvider("GenerateSchema")]
     public sealed class XmlCData : IXmlSerializable
     {
@@ -16,6 +17,9 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Properties
 
+        /// <summary>
+        ///
+        /// </summary>
         public string Value
         {
             get => value.RemoverDeclaracaoXml();
@@ -26,16 +30,23 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
+        /// <inheritdoc />
         public XmlSchema GetSchema()
         {
             return null;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="xs"></param>
+        /// <returns></returns>
         public static XmlQualifiedName GenerateSchema(XmlSchemaSet xs)
         {
             return XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.String).QualifiedName;
         }
 
+        /// <inheritdoc />
         public void WriteXml(XmlWriter writer)
         {
             if (string.IsNullOrEmpty(Value)) return;
@@ -50,6 +61,7 @@ namespace ACBr.Net.NFSe.Providers
             }
         }
 
+        /// <inheritdoc />
         public void ReadXml(XmlReader reader)
         {
             if (reader.IsEmptyElement)
@@ -77,17 +89,28 @@ namespace ACBr.Net.NFSe.Providers
             }
         }
 
+        /// <inheritdoc />
         public override string ToString() => Value;
 
         #endregion Methods
 
         #region Operators
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static implicit operator string(XmlCData value)
         {
             return value?.Value;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static implicit operator XmlCData(string value)
         {
             return value == null ? null : new XmlCData { Value = value };

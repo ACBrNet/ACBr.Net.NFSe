@@ -29,13 +29,22 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System.IO;
+using System.ServiceModel.Channels;
+using System.Text;
+using System.Xml;
+using System.Xml.Linq;
+using ACBr.Net.Core.Extensions;
+using ACBr.Net.DFe.Core;
+using ACBr.Net.DFe.Core.Extensions;
+
 namespace ACBr.Net.NFSe.Providers.Betha2
 {
-    internal sealed class Betha2ServiceClient : NFSeServiceClient<IBetha2Service>, IABRASF2Client
+    internal sealed class Betha2ServiceClient : NFSeRequestServiceClient, IABRASF2Client
     {
         #region Constructors
 
-        public Betha2ServiceClient(ProviderBetha2 provider, TipoUrl tipoUrl) : base(provider, tipoUrl)
+        public Betha2ServiceClient(ProviderBetha2 provider, TipoUrl tipoUrl) : base(provider, tipoUrl, null)
         {
         }
 
@@ -45,137 +54,157 @@ namespace ACBr.Net.NFSe.Providers.Betha2
 
         public string CancelarNFSe(string cabec, string msg)
         {
-            var cancelarNfseRequest = new CancelarNfseRequest
-            {
-                Request = new RequestBase
-                {
-                    Cabecalho = cabec,
-                    Mensagem = msg
-                }
-            };
+            var message = new StringBuilder();
+            message.Append("<e:CancelarNfse>");
+            message.Append("<nfseCabecMsg>");
+            message.Append($"<![CDATA[{cabec}]]>");
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.Append($"<![CDATA[{msg}]]>");
+            message.Append("</nfseDadosMsg>");
+            message.Append("</e:CancelarNfse>");
 
-            var ret = Channel.CancelarNfse(cancelarNfseRequest);
-            return ret.Response.Retorno;
+            return Execute("CancelarNfseResponse", message.ToString());
         }
 
         public string SubstituirNFSe(string cabec, string msg)
         {
-            var substituirNfseRequest = new SubstituirNfseRequest
-            {
-                Request = new RequestBase
-                {
-                    Cabecalho = cabec,
-                    Mensagem = msg
-                }
-            };
+            var message = new StringBuilder();
+            message.Append("<e:SubstituirNfse>");
+            message.Append("<nfseCabecMsg>");
+            message.Append($"<![CDATA[{cabec}]]>");
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.Append($"<![CDATA[{msg}]]>");
+            message.Append("</nfseDadosMsg>");
+            message.Append("</e:SubstituirNfse>");
 
-            var ret = Channel.SubstituirNfse(substituirNfseRequest);
-            return ret.Response.Retorno;
+            return Execute("SubstituirNfseResponse", message.ToString());
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
         {
-            var consultarLoteRpsRequest = new ConsultarLoteRpsRequest
-            {
-                Request = new RequestBase
-                {
-                    Cabecalho = cabec,
-                    Mensagem = msg
-                }
-            };
+            var message = new StringBuilder();
+            message.Append("<e:ConsultarLoteRps>");
+            message.Append("<nfseCabecMsg>");
+            message.Append($"<![CDATA[{cabec}]]>");
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.Append($"<![CDATA[{msg}]]>");
+            message.Append("</nfseDadosMsg>");
+            message.Append("</e:ConsultarLoteRps>");
 
-            var ret = Channel.ConsultarLoteRps(consultarLoteRpsRequest);
-            return ret.Response.Retorno;
+            return Execute("ConsultarLoteRpsResponse", message.ToString());
         }
 
         public string ConsultarNFSeFaixa(string cabec, string msg)
         {
-            var consultarNfseFaixaRequest = new ConsultarNfseFaixaRequest()
-            {
-                Request = new RequestBase
-                {
-                    Cabecalho = cabec,
-                    Mensagem = msg
-                }
-            };
+            var message = new StringBuilder();
+            message.Append("<e:ConsultarNfseFaixa>");
+            message.Append("<nfseCabecMsg>");
+            message.Append($"<![CDATA[{cabec}]]>");
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.Append($"<![CDATA[{msg}]]>");
+            message.Append("</nfseDadosMsg>");
+            message.Append("</e:ConsultarNfseFaixa>");
 
-            var ret = Channel.ConsultarNfseFaixa(consultarNfseFaixaRequest);
-            return ret.Response.Retorno;
+            return Execute("ConsultarNfseFaixaResponse", message.ToString());
         }
 
         public string ConsultarNFSeServicoTomado(string cabec, string msg)
         {
-            var consultarNfseServicoTomadoRequest = new ConsultarNfseServicoTomadoRequest()
-            {
-                Request = new RequestBase
-                {
-                    Cabecalho = cabec,
-                    Mensagem = msg
-                }
-            };
+            var message = new StringBuilder();
+            message.Append("<e:ConsultarNfseServicoTomado>");
+            message.Append("<nfseCabecMsg>");
+            message.Append($"<![CDATA[{cabec}]]>");
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.Append($"<![CDATA[{msg}]]>");
+            message.Append("</nfseDadosMsg>");
+            message.Append("</e:ConsultarNfseServicoTomado>");
 
-            var ret = Channel.ConsultarNfseServicoTomado(consultarNfseServicoTomadoRequest);
-            return ret.Response.Retorno;
+            return Execute("ConsultarNfseServicoTomadoResponse", message.ToString());
         }
 
         public string ConsultarNFSePorRps(string cabec, string msg)
         {
-            var consultarNfsePorRpsRequest = new ConsultarNfsePorRpsRequest()
-            {
-                Request = new RequestBase
-                {
-                    Cabecalho = cabec,
-                    Mensagem = msg
-                }
-            };
+            var message = new StringBuilder();
+            message.Append("<e:ConsultarNfsePorRps>");
+            message.Append("<nfseCabecMsg>");
+            message.Append($"<![CDATA[{cabec}]]>");
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.Append($"<![CDATA[{msg}]]>");
+            message.Append("</nfseDadosMsg>");
+            message.Append("</e:ConsultarNfsePorRps>");
 
-            var ret = Channel.ConsultarNfsePorRps(consultarNfsePorRpsRequest);
-            return ret.Response.Retorno;
+            return Execute("ConsultarNfsePorRpsResponse", message.ToString());
         }
 
         public string ConsultarNFSeServicoPrestado(string cabec, string msg)
         {
-            var consultarNfseServicoPrestadoRequest = new ConsultarNfseServicoPrestadoRequest()
-            {
-                Request = new RequestBase
-                {
-                    Cabecalho = cabec,
-                    Mensagem = msg
-                }
-            };
+            var message = new StringBuilder();
+            message.Append("<e:ConsultarNfseServicoPrestado>");
+            message.Append("<nfseCabecMsg>");
+            message.Append($"<![CDATA[{cabec}]]>");
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.Append($"<![CDATA[{msg}]]>");
+            message.Append("</nfseDadosMsg>");
+            message.Append("</e:ConsultarNfseServicoPrestado>");
 
-            var ret = Channel.ConsultarNfseServicoPrestado(consultarNfseServicoPrestadoRequest);
-            return ret.Response.Retorno;
+            return Execute("ConsultarNfseServicoPrestadoResponse", message.ToString());
         }
 
         public string RecepcionarLoteRps(string cabec, string msg)
         {
-            var recepcionarLoteRpsRequest = new RecepcionarLoteRpsRequest()
-            {
-                Request = new RequestBase
-                {
-                    Cabecalho = cabec,
-                    Mensagem = msg
-                }
-            };
+            var message = new StringBuilder();
+            message.Append("<e:RecepcionarLoteRps>");
+            message.Append("<nfseCabecMsg>");
+            message.Append($"<![CDATA[{cabec}]]>");
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.Append($"<![CDATA[{msg}]]>");
+            message.Append("</nfseDadosMsg>");
+            message.Append("</e:RecepcionarLoteRps>");
 
-            var ret = Channel.RecepcionarLoteRps(recepcionarLoteRpsRequest);
-            return ret.Response.Retorno;
+            return Execute("RecepcionarLoteRpsResponse", message.ToString());
         }
 
         public string RecepcionarLoteRpsSincrono(string cabec, string msg)
         {
-            var recepcionarLoteRpsSincronoRequest = new RecepcionarLoteRpsSincronoRequest()
-            {
-                Request = new RequestBase
-                {
-                    Cabecalho = cabec,
-                    Mensagem = msg
-                }
-            };
+            var message = new StringBuilder();
+            message.Append("<e:RecepcionarLoteRpsSincrono>");
+            message.Append("<nfseCabecMsg>");
+            message.Append($"<![CDATA[{cabec}]]>");
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.Append($"<![CDATA[{msg}]]>");
+            message.Append("</nfseDadosMsg>");
+            message.Append("</e:RecepcionarLoteRpsSincrono>");
 
-            var ret = Channel.RecepcionarLoteRpsSincrono(recepcionarLoteRpsSincronoRequest);
-            return ret.Response.Retorno;
+            return Execute("RecepcionarLoteRpsSincronoResponse", message.ToString());
+        }
+
+        private string Execute(string responseTag, string message)
+        {
+            var envelope = new StringBuilder();
+            envelope.Append("<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:e=\"http://www.betha.com.br/e-nota-contribuinte-ws\">");
+            envelope.Append("<s:Body>");
+            envelope.Append(message);
+            envelope.Append("</s:Body>");
+            envelope.Append("</s:Envelope>");
+
+            var msg = Message.CreateMessage(XmlReader.Create(new StringReader(envelope.ToString())), int.MaxValue, Endpoint.Binding.MessageVersion);
+            var ret = Execute(msg);
+
+            var xmlDocument = XDocument.Parse(ret);
+            var element = xmlDocument.ElementAnyNs("Fault");
+            if (element != null)
+                throw new ACBrDFeCommunicationException(element.ElementAnyNs("faultstring").GetValue<string>());
+
+            return xmlDocument.ElementAnyNs(responseTag).ElementAnyNs("return").Value;
         }
 
         #endregion Methods

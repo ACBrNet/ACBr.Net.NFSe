@@ -33,8 +33,18 @@ using System;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    public interface IABRASF2Client : IDisposable
+    public interface IABRASF2Client : IServiceClient
     {
+        #region Properties
+
+        string EnvelopeEnvio { get; }
+
+        string EnvelopeRetorno { get; }
+
+        #endregion Properties
+
+        #region Methods
+
         string RecepcionarLoteRps(string cabec, string msg);
 
         string RecepcionarLoteRpsSincrono(string cabec, string msg);
@@ -52,5 +62,7 @@ namespace ACBr.Net.NFSe.Providers
         string CancelarNFSe(string cabec, string msg);
 
         string SubstituirNFSe(string cabec, string msg);
+
+        #endregion Methods
     }
 }

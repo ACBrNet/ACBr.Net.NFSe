@@ -66,7 +66,7 @@ namespace ACBr.Net.NFSe.Providers.Betha2
 
         protected override string GerarCabecalho()
         {
-            return $"<cabecalho versao=\"2.02\" xmlns=\"http://www.betha.com.br/e-nota-contribuinte-ws\">{Environment.NewLine}<versaoDados>2.02</versaoDados>{Environment.NewLine}</cabecalho>";
+            return $"<cabecalho versao=\"2.02\" xmlns=\"http://www.betha.com.br/e-nota-contribuinte-ws\"><versaoDados>2.02</versaoDados></cabecalho>";
         }
 
         #endregion Protected Methods
