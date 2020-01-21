@@ -29,7 +29,7 @@
 // <summary></summary>
 // ***********************************************************************
 
-namespace ACBr.Net.NFSe.Providers.Ginfes
+namespace ACBr.Net.NFSe.Providers
 {
     internal sealed class GinfesHomServiceClient : NFSeServiceClient<IGinfesHomService>, IGinfesHomService, IGinfesServiceClient
     {

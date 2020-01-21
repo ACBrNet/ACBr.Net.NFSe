@@ -38,7 +38,7 @@ using ACBr.Net.DFe.Core;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
 
-namespace ACBr.Net.NFSe.Providers.Betha
+namespace ACBr.Net.NFSe.Providers
 {
     internal sealed class ProviderBetha : ProviderABRASF
     {

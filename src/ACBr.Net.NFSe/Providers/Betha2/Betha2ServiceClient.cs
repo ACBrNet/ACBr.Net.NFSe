@@ -36,9 +36,8 @@ using System.Xml;
 using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core;
-using ACBr.Net.DFe.Core.Extensions;
 
-namespace ACBr.Net.NFSe.Providers.Betha2
+namespace ACBr.Net.NFSe.Providers
 {
     internal sealed class Betha2ServiceClient : NFSeRequestServiceClient, IABRASF2Client
     {

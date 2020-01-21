@@ -38,7 +38,7 @@ using ACBr.Net.DFe.Core;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
 
-namespace ACBr.Net.NFSe.Providers.FissLex
+namespace ACBr.Net.NFSe.Providers
 {
     // ReSharper disable once InconsistentNaming
     internal sealed class ProviderFissLex : ProviderABRASF

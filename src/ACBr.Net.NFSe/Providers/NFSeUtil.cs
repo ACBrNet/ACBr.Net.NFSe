@@ -38,8 +38,8 @@ namespace ACBr.Net.NFSe.Providers
     {
         #region Fields
 
-        private static readonly string[] escapedCharacters = { "&amp;", "&lt;", "&gt;", "&quot;", "&apos;" };
-        private static readonly string[] unescapedCharacters = { "&", "<", ">", "\"", "\'" };
+        private static readonly string[] escapedCharacters = { "&amp;", "&lt;", "&gt;" };
+        private static readonly string[] unescapedCharacters = { "&", "<", ">", };
 
         #endregion Fields
 

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ACBr.Net.NFSe.Providers.Ginfes
+﻿namespace ACBr.Net.NFSe.Providers
 {
     internal interface IGinfesServiceClient : IServiceClient
     {

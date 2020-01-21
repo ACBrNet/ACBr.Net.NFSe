@@ -32,26 +32,22 @@
 using ACBr.Net.Core;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.NFSe.Configuracao;
-using ACBr.Net.NFSe.Providers.Abaco;
-using ACBr.Net.NFSe.Providers.BeloHorizonte;
-using ACBr.Net.NFSe.Providers.Betha;
-using ACBr.Net.NFSe.Providers.Betha2;
-using ACBr.Net.NFSe.Providers.Coplan;
-using ACBr.Net.NFSe.Providers.DSF;
-using ACBr.Net.NFSe.Providers.FissLex;
-using ACBr.Net.NFSe.Providers.Ginfes;
-using ACBr.Net.NFSe.Providers.GovDigital;
-using ACBr.Net.NFSe.Providers.NotaCarioca;
-using ACBr.Net.NFSe.Providers.PortoAlegre;
-using ACBr.Net.NFSe.Providers.SaoPaulo;
-using ACBr.Net.NFSe.Providers.WebISS;
-using ACBr.Net.NFSe.Providers.WebISS2;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+using ACBr.Net.NFSe.Providers.Abaco;
+using ACBr.Net.NFSe.Providers.BeloHorizonte;
+using ACBr.Net.NFSe.Providers.Coplan;
+using ACBr.Net.NFSe.Providers.DSF;
+using ACBr.Net.NFSe.Providers.GovDigital;
+using ACBr.Net.NFSe.Providers.NotaCarioca;
+using ACBr.Net.NFSe.Providers.PortoAlegre;
+using ACBr.Net.NFSe.Providers.SaoPaulo;
+using ACBr.Net.NFSe.Providers.WebISS;
+using ACBr.Net.NFSe.Providers.WebISS2;
 
 namespace ACBr.Net.NFSe.Providers
 {
@@ -79,6 +75,7 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.NotaCarioca, typeof(ProviderNotaCarioca)},
                 {NFSeProvider.PortoAlegre, typeof(ProviderPortoAlegre)},
                 {NFSeProvider.SaoPaulo, typeof(ProviderSaoPaulo)},
+                {NFSeProvider.Vitoria, typeof(ProviderVitoria)},
                 {NFSeProvider.WebIss, typeof(ProviderWebIss)},
                 {NFSeProvider.WebIss2, typeof(ProviderWebIss2)}
             };

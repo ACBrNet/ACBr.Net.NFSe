@@ -32,7 +32,7 @@
 using System;
 using System.Security.Cryptography.X509Certificates;
 
-namespace ACBr.Net.NFSe.Providers.Betha
+namespace ACBr.Net.NFSe.Providers
 {
     internal sealed class BethaServiceClient : NFSeRequestServiceClient, IABRASFClient
     {
