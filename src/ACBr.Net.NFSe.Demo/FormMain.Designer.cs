@@ -65,8 +65,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.txtCodSiafi = new System.Windows.Forms.TextBox();
             this.txtCodCidade = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtUf = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.cmbCidades = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -508,8 +506,6 @@
             this.tabPage2.Controls.Add(this.label8);
             this.tabPage2.Controls.Add(this.txtCodSiafi);
             this.tabPage2.Controls.Add(this.txtCodCidade);
-            this.tabPage2.Controls.Add(this.label6);
-            this.tabPage2.Controls.Add(this.txtUf);
             this.tabPage2.Controls.Add(this.label5);
             this.tabPage2.Controls.Add(this.cmbCidades);
             this.tabPage2.Controls.Add(this.label3);
@@ -576,25 +572,6 @@
             this.txtCodCidade.Size = new System.Drawing.Size(125, 20);
             this.txtCodCidade.TabIndex = 42;
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(218, 246);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(21, 13);
-            this.label6.TabIndex = 40;
-            this.label6.Text = "UF";
-            // 
-            // txtUf
-            // 
-            this.txtUf.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.txtUf.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.txtUf.Location = new System.Drawing.Point(221, 262);
-            this.txtUf.Name = "txtUf";
-            this.txtUf.ReadOnly = true;
-            this.txtUf.Size = new System.Drawing.Size(41, 20);
-            this.txtUf.TabIndex = 39;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -610,7 +587,7 @@
             this.cmbCidades.FormattingEnabled = true;
             this.cmbCidades.Location = new System.Drawing.Point(6, 262);
             this.cmbCidades.Name = "cmbCidades";
-            this.cmbCidades.Size = new System.Drawing.Size(206, 21);
+            this.cmbCidades.Size = new System.Drawing.Size(256, 21);
             this.cmbCidades.TabIndex = 37;
             this.cmbCidades.SelectedValueChanged += new System.EventHandler(this.cmbCidades_SelectedValueChanged);
             // 
@@ -1199,6 +1176,7 @@
             this.lstMunicipios.Dock = System.Windows.Forms.DockStyle.Top;
             this.lstMunicipios.FullRowSelect = true;
             this.lstMunicipios.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lstMunicipios.HideSelection = false;
             this.lstMunicipios.HoverSelection = true;
             this.lstMunicipios.Location = new System.Drawing.Point(3, 3);
             this.lstMunicipios.MultiSelect = false;
@@ -1383,7 +1361,6 @@
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.TextBox txtCodSiafi;
 		private System.Windows.Forms.TextBox txtCodCidade;
-		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.ComboBox cmbCidades;
 		private System.Windows.Forms.Button btnPathXml;
@@ -1398,7 +1375,6 @@
 		private System.Windows.Forms.Label label17;
 		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox txtUf;
         private System.Windows.Forms.Button btnCopiar;
     }
 }

@@ -75,6 +75,7 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.NotaCarioca, typeof(ProviderNotaCarioca)},
                 {NFSeProvider.PortoAlegre, typeof(ProviderPortoAlegre)},
                 {NFSeProvider.SaoPaulo, typeof(ProviderSaoPaulo)},
+                {NFSeProvider.SmarAPDABRASF, typeof(ProviderSmarAPDABRASF)},
                 {NFSeProvider.Vitoria, typeof(ProviderVitoria)},
                 {NFSeProvider.WebIss, typeof(ProviderWebIss)},
                 {NFSeProvider.WebIss2, typeof(ProviderWebIss2)}

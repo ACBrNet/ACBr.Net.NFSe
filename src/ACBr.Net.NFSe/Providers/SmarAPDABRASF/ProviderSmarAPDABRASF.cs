@@ -1,12 +1,12 @@
-// ***********************************************************************
+ï»¿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 07-30-2017
+// Created          : 21-01-2020
 //
 // Last Modified By : RFTD
-// Last Modified On : 07-30-2017
+// Last Modified On : 21-01-2020
 // ***********************************************************************
-// <copyright file="NFSeProvider.cs" company="ACBr.Net">
+// <copyright file="ProviderSmarAPDABRASF.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,50 +29,47 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ComponentModel;
+using ACBr.Net.NFSe.Configuracao;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    public enum NFSeProvider : byte
+    internal sealed class ProviderSmarAPDABRASF : ProviderABRASF2
     {
-        Abaco = 0,
+        #region Constructors
 
-        Betha = 1,
+        public ProviderSmarAPDABRASF(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
+        {
+            Name = "SmarAPDABRASF";
+        }
 
-        [Description("Betha v2")]
-        Betha2 = 2,
+        #endregion Constructors
 
-        Coplan = 3,
+        #region Methods
 
-        DSF = 4,
+        #region Protected Methods
 
-        FissLex = 12,
+        protected override IABRASF2Client GetClient(TipoUrl tipo)
+        {
+            return new SmarAPDABRASFServiceClient(this, tipo, Certificado);
+        }
 
-        Ginfes = 5,
+        protected override string GetNamespace()
+        {
+            return "xmlns=\"http://www.abrasf.org.br/nfse.xsd\"";
+        }
 
-        GovDigital = 6,
+        protected override string GetSchema(TipoUrl tipo)
+        {
+            return "nfse.xsd";
+        }
 
-        [Description("Nota Carioca")]
-        NotaCarioca = 7,
+        protected override string GerarCabecalho()
+        {
+            return $"<cabecalho versao=\"2.04\" xmlns=\"http://www.abrasf.org.br/nfse.xsd\"><versaoDados>2.04</versaoDados></cabecalho>";
+        }
 
-        [Description("Porto Alegre")]
-        PortoAlegre = 8,
+        #endregion Protected Methods
 
-        [Description("São Paulo")]
-        SaoPaulo = 9,
-
-        WebIss = 10,
-
-        [Description("WebIss v2")]
-        WebIss2 = 11,
-
-        [Description("Belo Horizonte")]
-        BeloHorizonte = 13,
-
-        [Description("Vitoria")]
-        Vitoria = 14,
-
-        [Description("SmarAPD ABRASF")]
-        SmarAPDABRASF = 15
+        #endregion Methods
     }
 }
