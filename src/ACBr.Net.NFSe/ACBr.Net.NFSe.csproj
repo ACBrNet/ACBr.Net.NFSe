@@ -217,4 +217,13 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Schemas\SmarAPD\nfse.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SmarAPD\xmldsig-core-schema20020212.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

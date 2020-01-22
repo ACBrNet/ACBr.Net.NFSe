@@ -1,12 +1,12 @@
-// ***********************************************************************
+ï»¿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 07-30-2017
+// Created          : 05-22-2018
 //
 // Last Modified By : RFTD
-// Last Modified On : 07-30-2017
+// Last Modified On : 05-22-2018
 // ***********************************************************************
-// <copyright file="NFSeProvider.cs" company="ACBr.Net">
+// <copyright file="ConsultarNFSeServicoTomadoResponse.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,47 +29,24 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ComponentModel;
+using System.ServiceModel;
 
-namespace ACBr.Net.NFSe.Providers
+namespace ACBr.Net.NFSe.Providers.SmarAPD
 {
-    public enum NFSeProvider : byte
+    [MessageContract(WrapperName = "ConsultarNfseServicoTomadoResponse", WrapperNamespace = "http://nfse.abrasf.org.br", IsWrapped = true)]
+    internal sealed class ConsultarNFSeServicoTomadoResponse : ResponseBase
     {
-        Abaco = 0,
+        #region Constructors
 
-        Betha = 1,
+        public ConsultarNFSeServicoTomadoResponse()
+        {
+        }
 
-        [Description("Betha v2")]
-        Betha2 = 2,
+        public ConsultarNFSeServicoTomadoResponse(string outputXML)
+        {
+            this.Response = outputXML;
+        }
 
-        Coplan = 3,
-
-        DSF = 4,
-
-        FissLex = 12,
-
-        Ginfes = 5,
-
-        GovDigital = 6,
-
-        [Description("Nota Carioca")]
-        NotaCarioca = 7,
-
-        [Description("Porto Alegre")]
-        PortoAlegre = 8,
-
-        [Description("São Paulo")]
-        SaoPaulo = 9,
-
-        WebIss = 10,
-
-        [Description("WebIss v2")]
-        WebIss2 = 11,
-
-        [Description("Belo Horizonte")]
-        BeloHorizonte = 13,
-        
-        [Description("SmarAPD")]
-        SmarAPD = 14
+        #endregion Constructors
     }
 }

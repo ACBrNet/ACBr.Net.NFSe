@@ -1,12 +1,12 @@
-// ***********************************************************************
+ï»¿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 07-30-2017
+// Created          : 05-22-2018
 //
 // Last Modified By : RFTD
-// Last Modified On : 07-30-2017
+// Last Modified On : 05-22-2018
 // ***********************************************************************
-// <copyright file="NFSeProvider.cs" company="ACBr.Net">
+// <copyright file="RequestBase.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,47 +29,21 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ComponentModel;
+using System.ServiceModel;
 
-namespace ACBr.Net.NFSe.Providers
+namespace ACBr.Net.NFSe.Providers.SmarAPD
 {
-    public enum NFSeProvider : byte
+    [MessageContract]
+    internal abstract class RequestBase
     {
-        Abaco = 0,
+        #region Properties
 
-        Betha = 1,
+        [MessageBodyMember(Name = "nfseCabecMsg", Namespace = "", Order = 0)]
+        public string Cabecalho;
 
-        [Description("Betha v2")]
-        Betha2 = 2,
+        [MessageBodyMember(Name = "nfseDadosMsg", Namespace = "", Order = 1)]
+        public string Mensagem;
 
-        Coplan = 3,
-
-        DSF = 4,
-
-        FissLex = 12,
-
-        Ginfes = 5,
-
-        GovDigital = 6,
-
-        [Description("Nota Carioca")]
-        NotaCarioca = 7,
-
-        [Description("Porto Alegre")]
-        PortoAlegre = 8,
-
-        [Description("São Paulo")]
-        SaoPaulo = 9,
-
-        WebIss = 10,
-
-        [Description("WebIss v2")]
-        WebIss2 = 11,
-
-        [Description("Belo Horizonte")]
-        BeloHorizonte = 13,
-        
-        [Description("SmarAPD")]
-        SmarAPD = 14
+        #endregion Properties
     }
 }
