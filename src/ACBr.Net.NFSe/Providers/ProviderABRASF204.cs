@@ -148,6 +148,68 @@ namespace ACBr.Net.NFSe.Providers
 
         #region RPS
 
+        protected override XElement WriteRps(NotaFiscal nota)
+        {
+            var rootRps = new XElement("Rps");
+
+            var infServico = new XElement("InfDeclaracaoPrestacaoServico", new XAttribute("Id", $"R{nota.IdentificacaoRps.Numero.OnlyNumbers()}"));
+            rootRps.Add(infServico);
+
+            var rps = new XElement("Rps");
+            infServico.Add(rps);
+
+            rps.Add(WriteIdentificacaoRps(nota));
+
+            rps.AddChild(AdicionarTag(TipoCampo.Dat, "", "DataEmissao", 10, 10, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.DataEmissao));
+            rps.AddChild(AdicionarTag(TipoCampo.Int, "", "Status", 1, 1, Ocorrencia.Obrigatoria, (int)nota.Situacao + 1));
+
+            //rps.AddChild(WriteSubstituidoRps(nota));
+
+            infServico.AddChild(AdicionarTag(TipoCampo.Dat, "", "Competencia", 10, 10, Ocorrencia.Obrigatoria, nota.Competencia));
+
+            infServico.AddChild(WriteServicosRps(nota));
+            infServico.AddChild(WritePrestadorRps(nota));
+            infServico.AddChild(WriteTomadorRps(nota));
+            infServico.AddChild(WriteIntermediarioRps(nota));
+            infServico.AddChild(WriteConstrucaoCivilRps(nota));
+
+            if (nota.RegimeEspecialTributacao != RegimeEspecialTributacao.Nenhum)
+                infServico.AddChild(AdicionarTag(TipoCampo.Int, "", "RegimeEspecialTributacao", 1, 1, Ocorrencia.NaoObrigatoria, (int)nota.RegimeEspecialTributacao));
+
+            infServico.AddChild(AdicionarTag(TipoCampo.Int, "", "OptanteSimplesNacional", 1, 1, Ocorrencia.Obrigatoria, nota.RegimeEspecialTributacao == RegimeEspecialTributacao.SimplesNacional ? 1 : 2));
+            infServico.AddChild(AdicionarTag(TipoCampo.Int, "", "IncentivoFiscal", 1, 1, Ocorrencia.Obrigatoria, nota.IncentivadorCultural == NFSeSimNao.Sim ? 1 : 2));
+
+            return rootRps;
+        }
+
+        protected override XElement WritePrestador(NotaFiscal nota)
+        {
+            var prestador = new XElement("PrestadorServico");
+            prestador.AddChild(AdicionarTag(TipoCampo.Str, "", "RazaoSocial", 1, 150, Ocorrencia.Obrigatoria, nota.Prestador.RazaoSocial));
+            prestador.AddChild(AdicionarTag(TipoCampo.Str, "", "NomeFantasia", 1, 60, Ocorrencia.NaoObrigatoria, nota.Prestador.NomeFantasia));
+
+            var endereco = new XElement("Endereco");
+            prestador.Add(endereco);
+
+            endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Endereco", 1, 125, Ocorrencia.Obrigatoria, nota.Prestador.Endereco.Logradouro));
+            endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Numero", 1, 10, Ocorrencia.Obrigatoria, nota.Prestador.Endereco.Numero));
+            endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Complemento", 1, 60, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Complemento));
+            endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Bairro", 1, 60, Ocorrencia.Obrigatoria, nota.Prestador.Endereco.Bairro));
+            endereco.AddChild(AdicionarTag(TipoCampo.Int, "", "CodigoMunicipio", 7, 7, Ocorrencia.Obrigatoria, nota.Prestador.Endereco.CodigoMunicipio));
+            endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Uf", 2, 2, Ocorrencia.Obrigatoria, nota.Prestador.Endereco.Uf));
+            endereco.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "Cep", 8, 8, Ocorrencia.Obrigatoria, nota.Prestador.Endereco.Cep));
+
+            if (nota.Prestador.DadosContato.Email.IsEmpty() && nota.Prestador.DadosContato.Telefone.IsEmpty()) return prestador;
+
+            var contato = new XElement("Contato");
+            prestador.Add(contato);
+
+            contato.AddChild(AdicionarTag(TipoCampo.Str, "", "Telefone", 8, 8, Ocorrencia.NaoObrigatoria, nota.Prestador.DadosContato.Telefone));
+            contato.AddChild(AdicionarTag(TipoCampo.Str, "", "Email", 8, 8, Ocorrencia.NaoObrigatoria, nota.Prestador.DadosContato.Email));
+
+            return prestador;
+        }
+
         protected override XElement WriteTomadorRps(NotaFiscal nota)
         {
             if (nota.Tomador.CpfCnpj.IsEmpty()) return null;
@@ -200,39 +262,39 @@ namespace ACBr.Net.NFSe.Providers
             return tomador;
         }
 
-        #endregion RPS
-
-        #region NFSe
-
-        protected override XElement WritePrestador(NotaFiscal nota)
+        protected override XElement WriteServicosRps(NotaFiscal nota)
         {
-            var prestador = new XElement("PrestadorServico");
-            prestador.AddChild(AdicionarTag(TipoCampo.Str, "", "RazaoSocial", 1, 150, Ocorrencia.Obrigatoria, nota.Prestador.RazaoSocial));
-            prestador.AddChild(AdicionarTag(TipoCampo.Str, "", "NomeFantasia", 1, 60, Ocorrencia.NaoObrigatoria, nota.Prestador.NomeFantasia));
+            var servico = new XElement("Servico");
 
-            var endereco = new XElement("Endereco");
-            prestador.Add(endereco);
+            servico.Add(WriteValoresRps(nota));
 
-            endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Endereco", 1, 125, Ocorrencia.Obrigatoria, nota.Prestador.Endereco.Logradouro));
-            endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Numero", 1, 10, Ocorrencia.Obrigatoria, nota.Prestador.Endereco.Numero));
-            endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Complemento", 1, 60, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Complemento));
-            endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Bairro", 1, 60, Ocorrencia.Obrigatoria, nota.Prestador.Endereco.Bairro));
-            endereco.AddChild(AdicionarTag(TipoCampo.Int, "", "CodigoMunicipio", 7, 7, Ocorrencia.Obrigatoria, nota.Prestador.Endereco.CodigoMunicipio));
-            endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Uf", 2, 2, Ocorrencia.Obrigatoria, nota.Prestador.Endereco.Uf));
-            endereco.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "Cep", 8, 8, Ocorrencia.Obrigatoria, nota.Prestador.Endereco.Cep));
+            servico.AddChild(AdicionarTag(TipoCampo.Int, "", "IssRetido", 1, 1, Ocorrencia.Obrigatoria, nota.Servico.Valores.IssRetido == SituacaoTributaria.Retencao ? 1 : 2));
 
-            if (nota.Prestador.DadosContato.Email.IsEmpty() && nota.Prestador.DadosContato.Telefone.IsEmpty()) return prestador;
+            if (nota.Servico.ResponsavelRetencao.HasValue)
+                servico.AddChild(AdicionarTag(TipoCampo.Int, "", "ResponsavelRetencao", 1, 1, Ocorrencia.NaoObrigatoria, (int)nota.Servico.ResponsavelRetencao + 1));
 
-            var contato = new XElement("Contato");
-            prestador.Add(contato);
+            servico.AddChild(AdicionarTag(TipoCampo.Str, "", "ItemListaServico", 1, 5, Ocorrencia.Obrigatoria, nota.Servico.ItemListaServico));
+            servico.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoCnae", 1, 7, Ocorrencia.NaoObrigatoria, nota.Servico.CodigoCnae));
 
-            contato.AddChild(AdicionarTag(TipoCampo.Str, "", "Telefone", 8, 8, Ocorrencia.NaoObrigatoria, nota.Prestador.DadosContato.Telefone));
-            contato.AddChild(AdicionarTag(TipoCampo.Str, "", "Email", 8, 8, Ocorrencia.NaoObrigatoria, nota.Prestador.DadosContato.Email));
+            //Algumas prefeituras não permitem TAG Código de Tributacao
+            //Sertãozinho/SP
+            if (!Municipio.Codigo.IsIn(3551702))
+                servico.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoTributacaoMunicipio", 1, 20, Ocorrencia.NaoObrigatoria, nota.Servico.CodigoTributacaoMunicipio));
 
-            return prestador;
+            servico.AddChild(AdicionarTag(TipoCampo.Str, "", "Discriminacao", 1, 2000, Ocorrencia.Obrigatoria, nota.Servico.Discriminacao));
+            servico.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoMunicipio", 1, 20, Ocorrencia.Obrigatoria, nota.Servico.CodigoMunicipio));
+
+            if (nota.Tomador.EnderecoExterior.CodigoPais > 0)
+                servico.AddChild(AdicionarTag(TipoCampo.Int, "", "CodigoPais", 4, 4, Ocorrencia.NaoObrigatoria, nota.Servico.CodigoPais));
+
+            servico.AddChild(AdicionarTag(TipoCampo.Int, "", "ExigibilidadeISS", 1, 1, Ocorrencia.Obrigatoria, ((int)nota.Servico.ExigibilidadeIss) + 1));
+            servico.AddChild(AdicionarTag(TipoCampo.Int, "", "MunicipioIncidencia", 7, 7, Ocorrencia.MaiorQueZero, nota.Servico.MunicipioIncidencia));
+            servico.AddChild(AdicionarTag(TipoCampo.Str, "", "NumeroProcesso", 0, 30, Ocorrencia.NaoObrigatoria, nota.Servico.NumeroProcesso));
+
+            return servico;
         }
 
-        #endregion NFSe
+        #endregion RPS
 
         #region Services
 
@@ -970,6 +1032,25 @@ namespace ACBr.Net.NFSe.Providers
         protected override string GetNamespace()
         {
             return "xmlns=\"http://www.abrasf.org.br/nfse.xsd\"";
+        }
+
+        protected virtual void MensagemErro(RetornoWebservice retornoWs, XContainer xmlRet, string xmlTag)
+        {
+            var mensagens = xmlRet?.ElementAnyNs(xmlTag);
+            mensagens = mensagens?.ElementAnyNs("ListaMensagemRetorno") ?? mensagens?.ElementAnyNs("ListaMensagemRetornoLote");
+            if (mensagens == null) return;
+
+            foreach (var mensagem in mensagens.ElementsAnyNs("MensagemRetorno"))
+            {
+                var evento = new Evento
+                {
+                    Codigo = mensagem?.ElementAnyNs("Codigo")?.GetValue<string>() ?? string.Empty,
+                    Descricao = mensagem?.ElementAnyNs("Mensagem")?.GetValue<string>() ?? string.Empty,
+                    Correcao = mensagem?.ElementAnyNs("Correcao")?.GetValue<string>() ?? string.Empty
+                };
+
+                retornoWs.Erros.Add(evento);
+            }
         }
 
         #endregion Protected Methods
