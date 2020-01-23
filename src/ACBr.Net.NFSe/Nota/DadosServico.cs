@@ -69,6 +69,8 @@ namespace ACBr.Net.NFSe.Nota
 
         public string CodigoTributacaoMunicipio { get; set; }
 
+        public string CodigoNbs { get; set; }
+
         public string Discriminacao { get; set; }
 
         public int CodigoMunicipio { get; set; }
@@ -78,6 +80,8 @@ namespace ACBr.Net.NFSe.Nota
         public int CodigoPais { get; set; }
 
         public ExigibilidadeIss ExigibilidadeIss { get; set; }
+
+        public string IdentifNaoExigibilidade { get; set; }
 
         public int MunicipioIncidencia { get; set; }
 

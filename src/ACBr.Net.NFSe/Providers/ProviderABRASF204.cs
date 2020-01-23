@@ -148,6 +148,51 @@ namespace ACBr.Net.NFSe.Providers
 
         #region RPS
 
+        protected override XElement WriteRpsRps(NotaFiscal nota)
+        {
+            var rps = new XElement("Rps");
+
+            rps.Add(WriteIdentificacaoRps(nota));
+
+            rps.AddChild(AdicionarTag(TipoCampo.Dat, "", "DataEmissao", 10, 10, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.DataEmissao));
+            rps.AddChild(AdicionarTag(TipoCampo.Int, "", "Status", 1, 1, Ocorrencia.Obrigatoria, (int)nota.Situacao + 1));
+
+            rps.AddChild(WriteSubstituidoRps(nota));
+
+            return rps;
+        }
+
+        protected override XElement WriteServicosRps(NotaFiscal nota)
+        {
+            var servico = new XElement("Servico");
+
+            servico.Add(WriteValoresRps(nota));
+
+            servico.AddChild(AdicionarTag(TipoCampo.Int, "", "IssRetido", 1, 1, Ocorrencia.Obrigatoria, nota.Servico.Valores.IssRetido == SituacaoTributaria.Retencao ? 1 : 2));
+
+            if (nota.Servico.ResponsavelRetencao.HasValue)
+                servico.AddChild(AdicionarTag(TipoCampo.Int, "", "ResponsavelRetencao", 1, 1, Ocorrencia.NaoObrigatoria, (int)nota.Servico.ResponsavelRetencao + 1));
+
+            servico.AddChild(AdicionarTag(TipoCampo.Str, "", "ItemListaServico", 1, 5, Ocorrencia.Obrigatoria, nota.Servico.ItemListaServico));
+            servico.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoCnae", 1, 7, Ocorrencia.NaoObrigatoria, nota.Servico.CodigoCnae));
+
+            //Algumas prefeituras não permitem TAG Código de Tributacao
+            //Sertãozinho/SP
+            if (!Municipio.Codigo.IsIn(3551702))
+                servico.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoTributacaoMunicipio", 1, 20, Ocorrencia.NaoObrigatoria, nota.Servico.CodigoTributacaoMunicipio));
+
+            servico.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoNbs", 1, 9, Ocorrencia.NaoObrigatoria, nota.Servico.CodigoNbs));
+            servico.AddChild(AdicionarTag(TipoCampo.Str, "", "Discriminacao", 1, 2000, Ocorrencia.Obrigatoria, nota.Servico.Discriminacao));
+            servico.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoMunicipio", 1, 20, Ocorrencia.Obrigatoria, nota.Servico.CodigoMunicipio));
+            servico.AddChild(AdicionarTag(TipoCampo.Int, "", "CodigoPais", 4, 4, Ocorrencia.MaiorQueZero, nota.Servico.CodigoPais));
+            servico.AddChild(AdicionarTag(TipoCampo.Int, "", "ExigibilidadeISS", 1, 1, Ocorrencia.Obrigatoria, (int)nota.Servico.ExigibilidadeIss + 1));
+            servico.AddChild(AdicionarTag(TipoCampo.Str, "", "IdentifNaoExigibilidade", 1, 4, Ocorrencia.NaoObrigatoria, nota.Servico.IdentifNaoExigibilidade));
+            servico.AddChild(AdicionarTag(TipoCampo.Int, "", "MunicipioIncidencia", 7, 7, Ocorrencia.MaiorQueZero, nota.Servico.MunicipioIncidencia));
+            servico.AddChild(AdicionarTag(TipoCampo.Str, "", "NumeroProcesso", 1, 30, Ocorrencia.NaoObrigatoria, nota.Servico.NumeroProcesso));
+
+            return servico;
+        }
+
         protected override XElement WriteTomadorRps(NotaFiscal nota)
         {
             if (nota.Tomador.CpfCnpj.IsEmpty()) return null;
@@ -396,7 +441,7 @@ namespace ACBr.Net.NFSe.Providers
 
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            MensagemErro(retornoWebservice, xmlRet, "EnviarLoteRpsResposta");
+            MensagemErro(retornoWebservice, xmlRet, "EnviarLoteRpsSincronoResposta");
             if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             retornoWebservice.NumeroLote = xmlRet.Root?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
@@ -886,7 +931,6 @@ namespace ACBr.Net.NFSe.Providers
             loteBuilder.Append(XmlSigning.AssinarXml(xmlRps, "Rps", "InfDeclaracaoPrestacaoServico", Certificado));
             GravarRpsEmDisco(xmlRps, $"Rps-{notas[0].IdentificacaoRps.DataEmissao:yyyyMMdd}-{notas[0].IdentificacaoRps.Numero}.xml", notas[0].IdentificacaoRps.DataEmissao);
 
-            //loteBuilder.Append("<SubstituicaoNfse>");
             loteBuilder.Append("</SubstituicaoNfse>");
             loteBuilder.Append("</SubstituirNfseEnvio>");
 
@@ -939,10 +983,10 @@ namespace ACBr.Net.NFSe.Providers
 
             retornoWebservice.Sucesso = true;
 
-            var compNfse = nfseSubstituidora.ElementAnyNs("CompNfse");
+            notas.Load(nfseSubstituidora.ElementAnyNs("CompNfse").ToString());
+
+            var compNfse = nfseSubstituida.ElementAnyNs("CompNfse");
             var nfse = compNfse.ElementAnyNs("Nfse").ElementAnyNs("InfNfse");
-            var numeroNFSeNova = nfse.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
-            var chaveNFSe = nfse.ElementAnyNs("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
             var numeroRps = nfse.ElementAnyNs("DeclaracaoPrestacaoServico")?
                                 .ElementAnyNs("InfDeclaracaoPrestacaoServico")?
                                 .ElementAnyNs("Rps")?
@@ -950,15 +994,14 @@ namespace ACBr.Net.NFSe.Providers
                                 .ElementAnyNs("Numero").GetValue<string>() ?? string.Empty;
 
             var nota = notas.FirstOrDefault(x => x.IdentificacaoRps.Numero == numeroRps);
-            if (nota == null)
-            {
-                notas.Load(compNfse.ToString());
-            }
-            else
-            {
-                nota.IdentificacaoNFSe.Numero = numeroNFSeNova;
-                nota.IdentificacaoNFSe.Chave = chaveNFSe;
-            }
+            if (nota != null) return retornoWebservice;
+
+            nota.RpsSubstituido.NFSeSubstituidora = notas.Last().IdentificacaoNFSe.Numero;
+            nota.RpsSubstituido.DataEmissaoNfseSubstituida = notas.Last().IdentificacaoNFSe.DataEmissao;
+            nota.RpsSubstituido.Id = notas.Last().Id;
+            nota.RpsSubstituido.NumeroRps = notas.Last().IdentificacaoRps.Numero;
+            nota.RpsSubstituido.Serie = notas.Last().IdentificacaoRps.Serie;
+            nota.RpsSubstituido.Signature = notas.Last().Signature;
 
             return retornoWebservice;
         }
