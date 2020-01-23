@@ -259,7 +259,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
             return ret;
         }
 
-        public override string GetXmlRps(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
+        public override string WriteXmlRps(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
         {
             GerarCampos(nota);
 
@@ -340,7 +340,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
             return xmldoc.Root.AsString(identado, showDeclaration, Encoding.UTF8);
         }
 
-        public override string GetXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
+        public override string WriteXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
         {
             GerarCampos(nota);
 
@@ -444,7 +444,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
             var xmlNotas = new StringBuilder();
             foreach (var nota in notas)
             {
-                var xmlRps = GetXmlRps(nota, false, false);
+                var xmlRps = WriteXmlRps(nota, false, false);
                 xmlNotas.Append(xmlRps);
                 GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
             }
@@ -519,7 +519,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
             // ReSharper disable once SuggestVarOrType_SimpleTypes
             foreach (NotaFiscal nota in notas)
             {
-                var xmlRps = GetXmlRps(nota, false, false);
+                var xmlRps = WriteXmlRps(nota, false, false);
                 xmlNotas.Append(xmlRps);
                 GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
             }
@@ -588,7 +588,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
                 nota.IdentificacaoNFSe.Numero = nfse.IdentificacaoNfse.Numero;
                 nota.IdentificacaoNFSe.Chave = nfse.IdentificacaoNfse.Chave;
 
-                var xmlNFSe = GetXmlNFSe(nota);
+                var xmlNFSe = WriteXmlNFSe(nota);
                 GravarNFSeEmDisco(xmlNFSe, $"NFSe-{nota.IdentificacaoNFSe.Chave}-{nota.IdentificacaoNFSe.Numero}.xml", nota.IdentificacaoNFSe.DataEmissao);
             }
 
@@ -683,7 +683,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
                 nota.Cancelamento.MotivoCancelamento = notaCancelada.ElementAnyNs("MotivoCancelamento")?.GetValue<string>() ?? string.Empty;
                 nota.IdentificacaoNFSe.Chave = notaCancelada.ElementAnyNs("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
 
-                var xmlNFSe = GetXmlNFSe(nota);
+                var xmlNFSe = WriteXmlNFSe(nota);
                 GravarNFSeEmDisco(xmlNFSe, $"NFSe-{nota.IdentificacaoNFSe.Chave}-{nota.IdentificacaoNFSe.Numero}.xml", nota.IdentificacaoNFSe.DataEmissao);
             }
 
@@ -772,7 +772,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
                 nota.Cancelamento.MotivoCancelamento = notaCancelada.ElementAnyNs("MotivoCancelamento")?.GetValue<string>() ?? string.Empty;
                 nota.IdentificacaoNFSe.Chave = notaCancelada.ElementAnyNs("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
 
-                var xmlNFSe = GetXmlNFSe(nota);
+                var xmlNFSe = WriteXmlNFSe(nota);
                 GravarNFSeEmDisco(xmlNFSe, $"NFSe-{nota.IdentificacaoNFSe.Chave}-{nota.IdentificacaoNFSe.Numero}-Canc.xml", nota.IdentificacaoNFSe.DataEmissao);
             }
 
@@ -849,7 +849,7 @@ namespace ACBr.Net.NFSe.Providers.DSF
                 nota.IdentificacaoNFSe.Numero = nfse.ElementAnyNs("NumeroNFe")?.GetValue<string>() ?? string.Empty;
                 nota.IdentificacaoNFSe.Chave = nfse.ElementAnyNs("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
 
-                var xml = GetXmlNFSe(nota);
+                var xml = WriteXmlNFSe(nota);
                 GravarNFSeEmDisco(xml, $"NFSe-{nota.IdentificacaoNFSe.Chave}-{nota.IdentificacaoNFSe.Numero}.xml", nota.IdentificacaoNFSe.DataEmissao);
             }
 

@@ -29,10 +29,9 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
 using ACBr.Net.NFSe.Configuracao;
 
-namespace ACBr.Net.NFSe.Providers.Betha2
+namespace ACBr.Net.NFSe.Providers
 {
     internal sealed class ProviderBetha2 : ProviderABRASF2
     {

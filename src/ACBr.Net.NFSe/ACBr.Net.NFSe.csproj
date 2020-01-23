@@ -27,11 +27,13 @@
       - Coplan.
       - Nota Carioca.
       - Belo Horizonte.
-      - Porto Alegre (Em Teste).
-      - Abaco (Em Teste).
-      - Betha v2 (Em Teste).
-      - GovDigital (Em Teste).
-      - FissLex (Em Teste).
+      - Porto Alegre.
+      - Abaco.
+      - Betha (Em Testes).
+      - Betha v2 (Em Testes).
+      - GovDigital (Em Testes).
+      - FissLex (Em Testes).
+      - Vitoria (Em Testes).
     </Description>
     <NeutralLanguage>pt-BR</NeutralLanguage>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -105,6 +107,10 @@
       <Pack>True</Pack>
       <PackagePath>content\Schemas\ABRASFv2</PackagePath>
     </None>
+    <None Include="Schemas\Betha\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\Betha</PackagePath>
+    </None>
     <None Include="Schemas\Betha2\*.*">
       <Pack>True</Pack>
       <PackagePath>content\Schemas\Betha2</PackagePath>
@@ -140,6 +146,14 @@
     <None Include="Schemas\São Paulo\*.*">
       <Pack>True</Pack>
       <PackagePath>content\Schemas\São Paulo</PackagePath>
+    </None>
+    <None Include="Schemas\SmarAPDABRASF\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\SmarAPDABRASF</PackagePath>
+    </None>
+    <None Include="Schemas\Vitoria\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\Vitoria</PackagePath>
     </None>
     <None Include="Schemas\WebISS\*.*">
       <Pack>True</Pack>
@@ -182,6 +196,9 @@
     <None Update="Schemas\ABRASFv2\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Schemas\Betha\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Schemas\Betha2\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -207,6 +224,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\São Paulo\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SmarAPDABRASF\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\Vitoria\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\WebISS2\*.*">

@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 12-27-2017
+// Created          : 21-01-2020
 //
 // Last Modified By : RFTD
-// Last Modified On : 12-27-2017
+// Last Modified On : 21-01-2020
 // ***********************************************************************
-// <copyright file="ConsultarNfsePorRpsRequestBody.cs" company="ACBr.Net">
+// <copyright file="ProviderVitoria.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,31 +29,47 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.Runtime.Serialization;
+using ACBr.Net.NFSe.Configuracao;
 
-namespace ACBr.Net.NFSe.Providers.Vitoria
+namespace ACBr.Net.NFSe.Providers
 {
-    [DataContract(Namespace = "http://www.abrasf.org.br/nfse.xsd")]
-    internal sealed class ConsultarNfsePorRpsRequestBody
+    internal sealed class ProviderVitoria : ProviderABRASF2
     {
         #region Constructors
 
-        public ConsultarNfsePorRpsRequestBody()
+        public ProviderVitoria(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
         {
-        }
-
-        public ConsultarNfsePorRpsRequestBody(string mensagemXML)
-        {
-            this.mensagemXML = mensagemXML;
+            Name = "Vitoria";
         }
 
         #endregion Constructors
 
-        #region Properties
+        #region Methods
 
-        [DataMember(EmitDefaultValue = false, Order = 0)]
-        public string mensagemXML { get; set; }
+        #region Protected Methods
 
-        #endregion Properties
+        protected override IABRASF2Client GetClient(TipoUrl tipo)
+        {
+            return new VitoriaServiceClient(this, tipo, Certificado);
+        }
+
+        protected override string GetNamespace()
+        {
+            return "xmlns=\"http://www.abrasf.org.br/nfse.xsd\"";
+        }
+
+        protected override string GetSchema(TipoUrl tipo)
+        {
+            return "nfse.xsd";
+        }
+
+        protected override string GerarCabecalho()
+        {
+            return $"<cabecalho versao=\"2.01\" xmlns=\"http://www.abrasf.org.br/nfse.xsd\"><versaoDados>2.01</versaoDados></cabecalho>";
+        }
+
+        #endregion Protected Methods
+
+        #endregion Methods
     }
 }

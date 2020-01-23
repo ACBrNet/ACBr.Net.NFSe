@@ -33,13 +33,16 @@ using ACBr.Net.NFSe.Nota;
 using System;
 using System.Collections.Generic;
 
-#if COM_INTEROP
+#if NETFULL
+
 using System.Runtime.InteropServices;
+
 #endif
 
 namespace ACBr.Net.NFSe.Providers
 {
-#if COM_INTEROP
+#if NETFULL
+
     [ComVisible(true)]
     [ProgId(nameof(RetornoWebservice))]
     [ClassInterface(ClassInterfaceType.AutoDual)]
@@ -69,17 +72,20 @@ namespace ACBr.Net.NFSe.Providers
 
         public bool Assincrono { get; set; } = false;
 
-#if COM_INTEROP
+#if NETFULL
+
         [ComVisible(false)]
 #endif
         public List<NotaFiscal> NotasFiscais { get; } = new List<NotaFiscal>();
 
-#if COM_INTEROP
+#if NETFULL
+
         [ComVisible(false)]
 #endif
         public List<Evento> Alertas { get; } = new List<Evento>();
 
-#if COM_INTEROP
+#if NETFULL
+
         [ComVisible(false)]
 #endif
         public List<Evento> Erros { get; } = new List<Evento>();

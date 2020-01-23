@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : RFTD
-// Created          : 12-27-2017
+// Created          : 21-01-2020
 //
 // Last Modified By : RFTD
-// Last Modified On : 12-27-2017
+// Last Modified On : 21-01-2020
 // ***********************************************************************
-// <copyright file="ConsultarLoteRpsRequest.cs" company="ACBr.Net">
+// <copyright file="ProviderSmarAPDABRASF.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,31 +29,32 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ServiceModel;
+using ACBr.Net.NFSe.Configuracao;
 
-namespace ACBr.Net.NFSe.Providers.Vitoria
+namespace ACBr.Net.NFSe.Providers
 {
-    [MessageContract(IsWrapped = false)]
-    internal sealed class ConsultarLoteRpsRequest
+    internal sealed class ProviderSmarAPDABRASF : ProviderABRASF204
     {
         #region Constructors
 
-        public ConsultarLoteRpsRequest()
+        public ProviderSmarAPDABRASF(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
         {
-        }
-
-        public ConsultarLoteRpsRequest(ConsultarLoteRpsRequestBody Body)
-        {
-            this.Body = Body;
+            Name = "SmarAPDABRASF";
         }
 
         #endregion Constructors
 
-        #region Properties
+        #region Methods
 
-        [MessageBodyMember(Name = "ConsultarLoteRps", Namespace = "http://www.abrasf.org.br/nfse.xsd", Order = 0)]
-        public ConsultarLoteRpsRequestBody Body { get; set; }
+        #region Protected Methods
 
-        #endregion Properties
+        protected override IABRASF2Client GetClient(TipoUrl tipo)
+        {
+            return new SmarAPDABRASFServiceClient(this, tipo, Certificado);
+        }
+
+        #endregion Protected Methods
+
+        #endregion Methods
     }
 }

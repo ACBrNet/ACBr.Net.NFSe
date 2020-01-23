@@ -39,7 +39,7 @@ using System.ComponentModel;
 using System.Net;
 using ACBr.Net.Core.Logging;
 
-#if !NETSTANDARD2_0
+#if NETFULL
 
 using System.Drawing;
 
@@ -49,7 +49,7 @@ namespace ACBr.Net.NFSe
 {
     // ReSharper disable once InconsistentNaming
     [TypeConverter(typeof(ACBrExpandableObjectConverter))]
-#if !NETSTANDARD2_0
+#if NETFULL
 
     [ToolboxBitmap(typeof(ACBrNFSe), "ACBr.Net.NFSe.ACBrNFSe.bmp")]
 #endif

@@ -133,7 +133,7 @@ namespace ACBr.Net.NFSe.Providers.NotaCarioca
             xmlLote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             xmlLote.Append("<GerarNfseEnvio xmlns=\"http://notacarioca.rio.gov.br/WSNacional/XSD/1/nfse_pcrj_v01.xsd\">");
 
-            var xmlRps = GetXmlRps(notas[0], false, false);
+            var xmlRps = WriteXmlRps(notas[0], false, false);
             XmlSigning.AssinarXml(xmlRps, "Rps", "InfRps", Certificado);
             GravarRpsEmDisco(xmlRps, $"Rps-{notas[0].IdentificacaoRps.DataEmissao:yyyyMMdd}-{notas[0].IdentificacaoRps.Numero}.xml", notas[0].IdentificacaoRps.DataEmissao);
 

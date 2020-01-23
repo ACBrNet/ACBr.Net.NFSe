@@ -38,7 +38,7 @@ using ACBr.Net.DFe.Core;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
 
-namespace ACBr.Net.NFSe.Providers.Betha
+namespace ACBr.Net.NFSe.Providers
 {
     internal sealed class ProviderBetha : ProviderABRASF
     {
@@ -68,7 +68,7 @@ namespace ACBr.Net.NFSe.Providers.Betha
 
             foreach (var nota in notas)
             {
-                var xmlRps = GetXmlRps(nota, false, false);
+                var xmlRps = WriteXmlRps(nota, false, false);
                 xmlLoteRps.Append(xmlRps);
                 GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
             }

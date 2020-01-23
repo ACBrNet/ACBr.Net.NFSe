@@ -334,10 +334,9 @@ namespace ACBr.Net.NFSe.Demo
 
         private void cmbCidades_SelectedValueChanged(object sender, EventArgs e)
         {
-            var municipio = (ACBrMunicipioNFSe)cmbCidades.SelectedItem;
+            var municipio = cmbCidades.GetSelectedValue<ACBrMunicipioNFSe>();
             if (municipio == null) return;
 
-            txtUf.Text = municipio.UF.ToString();
             txtCodCidade.Text = municipio.Codigo.ToString();
             txtCodSiafi.Text = municipio.CodigoSiafi.ToString();
 
@@ -424,7 +423,7 @@ namespace ACBr.Net.NFSe.Demo
 
         private void GerarRps()
         {
-            var municipio = (ACBrMunicipioNFSe)cmbCidades.SelectedItem;
+            var municipio = cmbCidades.GetSelectedValue<ACBrMunicipioNFSe>();
             if (municipio == null) return;
 
             acbrNFSe.NotasFiscais.Clear();
@@ -530,11 +529,7 @@ namespace ACBr.Net.NFSe.Demo
 
         private void UpdateCidades()
         {
-            cmbCidades.DataSource = null;
-            cmbCidades.Items.Clear();
-            cmbCidades.DisplayMember = "Nome";
-            cmbCidades.ValueMember = "Codigo";
-            cmbCidades.DataSource = ProviderManager.Municipios;
+            cmbCidades.MunicipiosDataSource();
         }
 
         private void InitializeLog()
@@ -595,7 +590,7 @@ namespace ACBr.Net.NFSe.Demo
                 var municipio = ProviderManager.Municipios.SingleOrDefault(x => x.Codigo == codMunicipio);
                 if (municipio != null)
                 {
-                    cmbCidades.SelectedItem = municipio;
+                    cmbCidades.SetSelectedValue(municipio);
                 }
             }
 

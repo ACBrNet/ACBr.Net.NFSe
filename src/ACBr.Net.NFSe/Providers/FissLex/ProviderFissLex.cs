@@ -38,7 +38,7 @@ using ACBr.Net.DFe.Core;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
 
-namespace ACBr.Net.NFSe.Providers.FissLex
+namespace ACBr.Net.NFSe.Providers
 {
     // ReSharper disable once InconsistentNaming
     internal sealed class ProviderFissLex : ProviderABRASF
@@ -73,7 +73,7 @@ namespace ACBr.Net.NFSe.Providers.FissLex
 
             foreach (var nota in notas)
             {
-                var xmlRps = GetXmlRps(nota, false, false);
+                var xmlRps = WriteXmlRps(nota, false, false);
                 xmlLoteRps.Append(xmlRps);
                 GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
             }

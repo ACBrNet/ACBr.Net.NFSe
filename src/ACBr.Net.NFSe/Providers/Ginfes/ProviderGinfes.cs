@@ -29,20 +29,20 @@
 // <summary></summary>
 // ***********************************************************************
 
-using ACBr.Net.Core.Extensions;
-using ACBr.Net.DFe.Core;
-using ACBr.Net.DFe.Core.Common;
-using ACBr.Net.DFe.Core.Serializer;
-using ACBr.Net.NFSe.Configuracao;
-using ACBr.Net.NFSe.Nota;
 using System;
 using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using ACBr.Net.Core;
+using ACBr.Net.Core.Extensions;
+using ACBr.Net.DFe.Core;
+using ACBr.Net.DFe.Core.Common;
+using ACBr.Net.DFe.Core.Serializer;
+using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Nota;
 
-namespace ACBr.Net.NFSe.Providers.Ginfes
+namespace ACBr.Net.NFSe.Providers
 {
     internal sealed class ProviderGinfes : ProviderBase
     {
@@ -387,12 +387,12 @@ namespace ACBr.Net.NFSe.Providers.Ginfes
             return ret;
         }
 
-        public override string GetXmlRps(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
+        public override string WriteXmlRps(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
         {
             return GetXmlRps(nota, identado, showDeclaration, false);
         }
 
-        public override string GetXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
+        public override string WriteXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
         {
             var incentivadorCultural = nota.IncentivadorCultural == NFSeSimNao.Sim ? 1 : 2;
 

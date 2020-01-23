@@ -1,9 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Reflection;
+using ACBr.Net.Core;
 using ACBr.Net.Core.Extensions;
 
 namespace ACBr.Net.NFSe.Demo
 {
-    public sealed class ItemData<T> where T : struct
+    public sealed class ItemData<T>
     {
         #region Constructors
 
@@ -21,10 +24,17 @@ namespace ACBr.Net.NFSe.Demo
         {
             Content = value;
 
-            if (value is Enum)
-            {
-                Description = value.GetDescription();
-            }
+            if (!(value is Enum)) return;
+
+            var enumType = typeof(T);
+            Guard.Against(!enumType.IsEnum, "O tipo de parametro T precisa ser um enum.");
+            Guard.Against(!Enum.IsDefined(enumType, value), $"{enumType} o valor {value} não esta definido no enum.");
+
+            var field = enumType.GetField(value.ToString(), BindingFlags.Static | BindingFlags.Public);
+            if (field == null) Description = string.Empty;
+
+            var attribute = field.GetAttribute<DescriptionAttribute>();
+            Description = attribute == null ? value.ToString() : attribute.Description;
         }
 
         #endregion Constructors

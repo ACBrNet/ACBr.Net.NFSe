@@ -31,7 +31,7 @@
 
 using System;
 
-namespace ACBr.Net.NFSe.Providers.FissLex
+namespace ACBr.Net.NFSe.Providers
 {
     internal sealed class FissLexServiceClient : NFSeRequestServiceClient, IABRASFClient
     {
