@@ -397,7 +397,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region RPS
 
-        public sealed override string GetXmlRps(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
+        public sealed override string WriteXmlRps(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
         {
             var xmlDoc = new XDocument(new XDeclaration("1.0", "UTF-8", null));
             xmlDoc.Add(GenerateRps(nota));
@@ -694,7 +694,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region NFSe
 
-        public override string GetXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
+        public override string WriteXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
         {
             var xmlDoc = new XDocument(new XDeclaration("1.0", "UTF-8", null));
             var compNfse = new XElement("CompNfse");
@@ -1058,7 +1058,7 @@ namespace ACBr.Net.NFSe.Providers
 
             foreach (var nota in notas)
             {
-                var xmlRps = GetXmlRps(nota, false, false);
+                var xmlRps = WriteXmlRps(nota, false, false);
                 xmlLoteRps.Append(xmlRps);
                 GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
             }
@@ -1125,7 +1125,7 @@ namespace ACBr.Net.NFSe.Providers
 
             foreach (var nota in notas)
             {
-                var xmlRps = GetXmlRps(nota, false, false);
+                var xmlRps = WriteXmlRps(nota, false, false);
                 xmlLoteRps.Append(xmlRps);
                 GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
             }

@@ -33,7 +33,7 @@ using ACBr.Net.NFSe.Configuracao;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class ProviderSmarAPDABRASF : ProviderABRASF2
+    internal sealed class ProviderSmarAPDABRASF : ProviderABRASF204
     {
         #region Constructors
 
@@ -51,21 +51,6 @@ namespace ACBr.Net.NFSe.Providers
         protected override IABRASF2Client GetClient(TipoUrl tipo)
         {
             return new SmarAPDABRASFServiceClient(this, tipo, Certificado);
-        }
-
-        protected override string GetNamespace()
-        {
-            return "xmlns=\"http://www.abrasf.org.br/nfse.xsd\"";
-        }
-
-        protected override string GetSchema(TipoUrl tipo)
-        {
-            return "nfse.xsd";
-        }
-
-        protected override string GerarCabecalho()
-        {
-            return $"<cabecalho versao=\"2.04\" xmlns=\"http://www.abrasf.org.br/nfse.xsd\"><versaoDados>2.04</versaoDados></cabecalho>";
         }
 
         #endregion Protected Methods

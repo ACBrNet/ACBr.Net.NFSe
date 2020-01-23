@@ -1,12 +1,12 @@
 // ***********************************************************************
-// Assembly         : ACBr.Net.NFSe
+// Assembly         : ACBr.Net.NFe
 // Author           : RFTD
-// Created          : 07-28-2017
+// Created          : 23-01-2020
 //
 // Last Modified By : RFTD
-// Last Modified On : 07-28-2017
+// Last Modified On : 23-01-2020
 // ***********************************************************************
-// <copyright file="ProviderExtensions.cs" company="ACBr.Net">
+// <copyright file="EnderecoExterior.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,18 +29,33 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.Xml.Linq;
-using ACBr.Net.Core.Extensions;
+using System.ComponentModel;
+using ACBr.Net.Core.Generics;
 
-namespace ACBr.Net.NFSe.Providers
+namespace ACBr.Net.NFSe.Nota
 {
-    internal static class ProviderExtensions
+    public sealed class EnderecoExterior : GenericClone<EnderecoExterior>, INotifyPropertyChanged
     {
-        public static string GetCPF_CNPJ(this XElement element)
-        {
-            if (element == null) return string.Empty;
+        #region Events
 
-            return (element.ElementAnyNs("Cnpj")?.GetValue<string>() ?? element.ElementAnyNs("Cpf")?.GetValue<string>()) ?? string.Empty;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion Events
+
+        #region Constructor
+
+        internal EnderecoExterior()
+        {
         }
+
+        #endregion Constructor
+
+        #region Properties
+
+        public int CodigoPais { get; set; }
+
+        public string EnderecoCompleto { get; set; }
+
+        #endregion Properties
     }
 }

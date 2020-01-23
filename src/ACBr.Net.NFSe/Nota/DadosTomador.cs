@@ -4,7 +4,7 @@
 // Created          : 10-01-2014
 //
 // Last Modified By : RFTD
-// Last Modified On : 10-01-2014
+// Last Modified On : 23-01-2020
 // ***********************************************************************
 // <copyright file="DadosTomador.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -47,6 +47,7 @@ namespace ACBr.Net.NFSe.Nota
         internal DadosTomador()
         {
             Endereco = new Endereco();
+            EnderecoExterior = new EnderecoExterior();
             DadosContato = new DadosContato();
         }
 
@@ -65,6 +66,8 @@ namespace ACBr.Net.NFSe.Nota
         public string RazaoSocial { get; set; }
 
         public Endereco Endereco { get; }
+
+        public EnderecoExterior EnderecoExterior { get; }
 
         public DadosContato DadosContato { get; }
 

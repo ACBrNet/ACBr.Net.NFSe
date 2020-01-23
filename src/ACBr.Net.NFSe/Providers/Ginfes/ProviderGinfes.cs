@@ -387,12 +387,12 @@ namespace ACBr.Net.NFSe.Providers
             return ret;
         }
 
-        public override string GetXmlRps(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
+        public override string WriteXmlRps(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
         {
             return GetXmlRps(nota, identado, showDeclaration, false);
         }
 
-        public override string GetXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
+        public override string WriteXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
         {
             var incentivadorCultural = nota.IncentivadorCultural == NFSeSimNao.Sim ? 1 : 2;
 

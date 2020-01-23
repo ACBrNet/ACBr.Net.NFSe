@@ -206,7 +206,7 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
             return ret;
         }
 
-        public override string GetXmlRps(NotaFiscal nota, bool identado, bool showDeclaration)
+        public override string WriteXmlRps(NotaFiscal nota, bool identado, bool showDeclaration)
         {
             string tipoRps;
             switch (nota.IdentificacaoRps.Tipo)
@@ -377,7 +377,7 @@ namespace ACBr.Net.NFSe.Providers.SaoPaulo
             var xmlRPS = new StringBuilder();
             foreach (var nota in notas)
             {
-                var xmlRps = GetXmlRps(nota, false, false);
+                var xmlRps = WriteXmlRps(nota, false, false);
                 xmlRPS.Append(xmlRps);
                 GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
             }

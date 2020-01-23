@@ -137,8 +137,8 @@ namespace ACBr.Net.NFSe.Nota
                     : $"NFSe-{nota.IdentificacaoNFSe.Chave}-{nota.IdentificacaoNFSe.Numero}.xml";
 
                 var xmlNota = nota.IdentificacaoNFSe.Numero.IsEmpty()
-                    ? provider.GetXmlRps(nota)
-                    : provider.GetXmlNFSe(nota);
+                    ? provider.WriteXmlRps(nota)
+                    : provider.WriteXmlNFSe(nota);
 
                 path = Path.Combine(path, file);
 
@@ -158,8 +158,8 @@ namespace ACBr.Net.NFSe.Nota
             using (var provider = ProviderManager.GetProvider(config))
             {
                 var xmlNota = nota.IdentificacaoNFSe.Numero.IsEmpty()
-                    ? provider.GetXmlRps(nota)
-                    : provider.GetXmlNFSe(nota);
+                    ? provider.WriteXmlRps(nota)
+                    : provider.WriteXmlNFSe(nota);
 
                 var doc = XDocument.Parse(xmlNota);
                 doc.Save(stream, SaveOptions.OmitDuplicateNamespaces);
@@ -175,7 +175,7 @@ namespace ACBr.Net.NFSe.Nota
         {
             using (var provider = ProviderManager.GetProvider(config))
             {
-                return nota.IdentificacaoNFSe.Numero.IsEmpty() ? provider.GetXmlRps(nota) : provider.GetXmlNFSe(nota);
+                return nota.IdentificacaoNFSe.Numero.IsEmpty() ? provider.WriteXmlRps(nota) : provider.WriteXmlNFSe(nota);
             }
         }
 

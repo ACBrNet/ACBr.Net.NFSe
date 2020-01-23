@@ -30,6 +30,7 @@
 // ***********************************************************************
 
 using System;
+using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
 
 namespace ACBr.Net.NFSe.Providers
@@ -65,15 +66,11 @@ namespace ACBr.Net.NFSe.Providers
             return envio;
         }
 
-        public static string AjustarRetorno(this string retorno)
+        public static string GetCPF_CNPJ(this XElement element)
         {
-            for (var i = 0; i < escapedCharacters.Length; i++)
-            {
-                retorno = retorno.Replace(escapedCharacters[i], unescapedCharacters[i]);
-            }
-            retorno = retorno.Replace("xmlns=\"\"", "");
-            retorno = retorno.Replace("xmlns=\"FISS-LEX\"", "");
-            return retorno;
+            if (element == null) return string.Empty;
+
+            return (element.ElementAnyNs("Cnpj")?.GetValue<string>() ?? element.ElementAnyNs("Cpf")?.GetValue<string>()) ?? string.Empty;
         }
 
         #endregion Methods

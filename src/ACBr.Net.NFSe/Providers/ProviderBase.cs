@@ -280,9 +280,9 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="showDeclaration"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public virtual string GetXmlRps(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
+        public virtual string WriteXmlRps(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
         {
-            throw new NotImplementedException("GetXmlRps");
+            throw new NotImplementedException("WriteXmlRps");
         }
 
         /// <summary>
@@ -293,9 +293,9 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="showDeclaration"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public virtual string GetXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
+        public virtual string WriteXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
         {
-            throw new NotImplementedException("GetXmlNFSe");
+            throw new NotImplementedException("WriteXmlNFSe");
         }
 
         /// <summary>

@@ -130,6 +130,8 @@ namespace ACBr.Net.NFSe.Nota
 
         public string OutrasInformacoes { get; set; }
 
+        public string DescricaoCodigoTributacaoMunicípio { get; set; }
+
         public decimal ValorCredito { get; set; }
 
         public TipoEmissao TipoEmissao { get; set; }
