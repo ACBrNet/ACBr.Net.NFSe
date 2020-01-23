@@ -73,6 +73,9 @@ namespace ACBr.Net.NFSe.Providers
         Vitoria = 14,
 
         [Description("SmarAPD ABRASF")]
-        SmarAPDABRASF = 15
+        SmarAPDABRASF = 15,
+
+        [Description("Equiplano")]
+        Equiplano = 16
     }
 }
