@@ -60,6 +60,7 @@ namespace ACBr.Net.NFSe.Demo
             nudTamIM.Value = target.TamanhoIm;
             nudCodIBGE.Value = target.Codigo;
             nudCodSiafi.Value = target.CodigoSiafi;
+            nudIdEntidade.Value = target.IdEntidade;
             cmbProvedor.EnumDataSource(target.Provedor);
 
             txtPEnviar.Text = target.UrlProducao[TipoUrl.Enviar];

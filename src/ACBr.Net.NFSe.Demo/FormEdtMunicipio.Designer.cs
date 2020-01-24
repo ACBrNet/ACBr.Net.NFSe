@@ -82,6 +82,8 @@
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.cmbUf = new System.Windows.Forms.ComboBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.nudIdEntidade = new System.Windows.Forms.NumericUpDown();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -89,6 +91,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudTamIM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCodSiafi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCodIBGE)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudIdEntidade)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSalvar
@@ -124,13 +127,13 @@
             // 
             this.txtMunicipio.Location = new System.Drawing.Point(12, 25);
             this.txtMunicipio.Name = "txtMunicipio";
-            this.txtMunicipio.Size = new System.Drawing.Size(279, 20);
+            this.txtMunicipio.Size = new System.Drawing.Size(223, 20);
             this.txtMunicipio.TabIndex = 3;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(294, 9);
+            this.label2.Location = new System.Drawing.Point(238, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(21, 13);
             this.label2.TabIndex = 5;
@@ -503,26 +506,26 @@
             // 
             // nudTamIM
             // 
-            this.nudTamIM.Location = new System.Drawing.Point(360, 26);
+            this.nudTamIM.Location = new System.Drawing.Point(303, 25);
             this.nudTamIM.Name = "nudTamIM";
             this.nudTamIM.Size = new System.Drawing.Size(51, 20);
             this.nudTamIM.TabIndex = 8;
             // 
             // nudCodSiafi
             // 
-            this.nudCodSiafi.Location = new System.Drawing.Point(499, 26);
+            this.nudCodSiafi.Location = new System.Drawing.Point(442, 25);
             this.nudCodSiafi.Maximum = new decimal(new int[] {
             9999999,
             0,
             0,
             0});
             this.nudCodSiafi.Name = "nudCodSiafi";
-            this.nudCodSiafi.Size = new System.Drawing.Size(76, 20);
+            this.nudCodSiafi.Size = new System.Drawing.Size(63, 20);
             this.nudCodSiafi.TabIndex = 10;
             // 
             // nudCodIBGE
             // 
-            this.nudCodIBGE.Location = new System.Drawing.Point(417, 26);
+            this.nudCodIBGE.Location = new System.Drawing.Point(360, 25);
             this.nudCodIBGE.Maximum = new decimal(new int[] {
             99999999,
             0,
@@ -544,7 +547,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(357, 9);
+            this.label21.Location = new System.Drawing.Point(300, 8);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(46, 13);
             this.label21.TabIndex = 13;
@@ -553,7 +556,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(417, 9);
+            this.label22.Location = new System.Drawing.Point(360, 8);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(57, 13);
             this.label22.TabIndex = 14;
@@ -562,7 +565,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(496, 9);
+            this.label23.Location = new System.Drawing.Point(439, 8);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(52, 13);
             this.label23.TabIndex = 15;
@@ -587,16 +590,39 @@
             "Porto Alegre",
             "São Paulo",
             "WebISS"});
-            this.cmbUf.Location = new System.Drawing.Point(297, 25);
+            this.cmbUf.Location = new System.Drawing.Point(241, 25);
             this.cmbUf.Name = "cmbUf";
             this.cmbUf.Size = new System.Drawing.Size(56, 21);
             this.cmbUf.TabIndex = 17;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(508, 8);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(58, 13);
+            this.label25.TabIndex = 19;
+            this.label25.Text = "IdEntidade";
+            // 
+            // nudIdEntidade
+            // 
+            this.nudIdEntidade.Location = new System.Drawing.Point(511, 25);
+            this.nudIdEntidade.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.nudIdEntidade.Name = "nudIdEntidade";
+            this.nudIdEntidade.Size = new System.Drawing.Size(64, 20);
+            this.nudIdEntidade.TabIndex = 18;
             // 
             // FormEdtMunicipio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(714, 345);
+            this.Controls.Add(this.label25);
+            this.Controls.Add(this.nudIdEntidade);
             this.Controls.Add(this.cmbUf);
             this.Controls.Add(this.label24);
             this.Controls.Add(this.label23);
@@ -627,6 +653,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudTamIM)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCodSiafi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCodIBGE)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudIdEntidade)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -688,5 +715,7 @@
 		private System.Windows.Forms.Label label23;
 		private System.Windows.Forms.Label label24;
         private System.Windows.Forms.ComboBox cmbUf;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.NumericUpDown nudIdEntidade;
     }
 }

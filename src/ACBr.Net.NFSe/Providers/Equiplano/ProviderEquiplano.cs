@@ -68,7 +68,7 @@ namespace ACBr.Net.NFSe.Providers
         {
             var rps = new XElement("rps");
             rps.AddChild(new XElement("nrRps", nota.IdentificacaoRps.Numero));
-            rps.AddChild(new XElement("nrEmissorRps", 1));
+            rps.AddChild(new XElement("nrEmissorRps", nota.Prestador.NumeroEmissorRps));
 
             rps.AddChild(AdicionarTag(TipoCampo.DatHor, "", "dtEmissaoRps", 20, 20, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.DataEmissao));
             var stRps = nota.Situacao == SituacaoNFSeRps.Normal ? "1" : "2";
@@ -512,12 +512,12 @@ namespace ACBr.Net.NFSe.Providers
                 .Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
                 .Append("<es:esConsultarNfsePorRpsEnvio xmlns:es=\"http://www.equiplano.com.br/esnfs\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.equiplano.com.br/enfs esConsultarNfsePorRpsEnvio_v01.xsd\">")
                 .Append("<rps>")
-                .Append($"<nrRps>{ numero }</nrRps>")
-                .Append("<nrEmissorRps>1</nrEmissorRps>")
+                .Append($"<nrRps>{numero}</nrRps>")
+                .Append($"<nrEmissorRps>{Configuracoes.PrestadorPadrao.NumeroEmissorRps}</nrEmissorRps>")
                 .Append("</rps>")
                 .Append("<prestador>")
-                .Append($"<cnpj>{ Configuracoes.PrestadorPadrao.CpfCnpj }</cnpj>")
-                .Append($"<idEntidade>{ Municipio.IdEntidade }</idEntidade>")
+                .Append($"<cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj}</cnpj>")
+                .Append($"<idEntidade>{Municipio.IdEntidade}</idEntidade>")
                 .Append("</prestador>")
                 .Append("</es:esConsultarNfsePorRpsEnvio>")
                 .ToString();

@@ -50,6 +50,10 @@ namespace ACBr.Net.NFSe.Nota
             InscricaoMunicipal = string.Empty;
             Senha = string.Empty;
             FraseSecreta = string.Empty;
+            ChaveAcesso = string.Empty;
+            NumeroEmissorRps = string.Empty;
+            RazaoSocial = string.Empty;
+            NomeFantasia = string.Empty;
             Endereco = new Endereco();
             DadosContato = new DadosContato();
         }
@@ -67,6 +71,8 @@ namespace ACBr.Net.NFSe.Nota
         public string FraseSecreta { get; set; }
 
         public string ChaveAcesso { get; set; }
+
+        public string NumeroEmissorRps { get; set; }
 
         public string RazaoSocial { get; set; }
 
