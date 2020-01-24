@@ -29,9 +29,7 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.Net;
-
-namespace ACBr.Net.NFSe.Providers.Equiplano
+namespace ACBr.Net.NFSe.Providers
 {
     internal sealed class EquiplanoServiceClient : NFSeRequestServiceClient, IABRASFClient
     {

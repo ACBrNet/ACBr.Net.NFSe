@@ -58,7 +58,7 @@ namespace ACBr.Net.NFSe.Providers
             return posFinal < 0 ? xml : xml.Remove(posIni, (posFinal + 2) - posIni);
         }
 
-        public static void AppendEnvio(this StringBuilder sb, string dados)
+        public static StringBuilder AppendEnvio(this StringBuilder sb, string dados)
         {
             for (var i = 0; i < escapedCharacters.Length; i++)
             {
@@ -66,11 +66,23 @@ namespace ACBr.Net.NFSe.Providers
             }
 
             sb.Append(dados);
+            return sb;
         }
 
-        public static void AppendCData(this StringBuilder sb, string dados)
+        public static StringBuilder AppendCData(this StringBuilder sb, string dados)
         {
             sb.Append($"<![CDATA[{dados}]]>");
+            return sb;
+        }
+
+        public static string AjustarString(this string dados)
+        {
+            for (var i = 0; i < escapedCharacters.Length; i++)
+            {
+                dados = dados.Replace(unescapedCharacters[i], escapedCharacters[i]);
+            }
+
+            return dados;
         }
 
         public static string GetCPF_CNPJ(this XElement element)

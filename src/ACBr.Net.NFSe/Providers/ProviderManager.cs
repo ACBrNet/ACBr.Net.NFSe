@@ -68,6 +68,7 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.Betha2, typeof(ProviderBetha2)},
                 {NFSeProvider.Coplan, typeof(ProviderCoplan)},
                 {NFSeProvider.DSF, typeof(ProviderDSF)},
+                {NFSeProvider.Equiplano, typeof(ProviderEquiplano)},
                 {NFSeProvider.FissLex, typeof(ProviderFissLex)},
                 {NFSeProvider.Ginfes, typeof(ProviderGinfes)},
                 {NFSeProvider.GovDigital, typeof(ProviderGovDigital)},
