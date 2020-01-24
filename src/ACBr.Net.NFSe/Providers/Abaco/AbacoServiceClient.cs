@@ -4,7 +4,7 @@
 // Created          : 12-26-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 12-26-2017
+// Last Modified On : 23-01-2020
 // ***********************************************************************
 // <copyright file="AbacoServiceClient.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -30,10 +30,18 @@
 // ***********************************************************************
 
 using System;
+using System.IO;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
+using System.Text;
+using System.Xml;
+using System.Xml.Linq;
+using ACBr.Net.Core.Extensions;
+using ACBr.Net.DFe.Core;
 
-namespace ACBr.Net.NFSe.Providers.Abaco
+namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class AbacoServiceClient : NFSeServiceClient<IAbacoServiceClient>, IABRASFClient
+    internal sealed class AbacoServiceClient : NFSeRequestServiceClient, IABRASFClient
     {
         #region Constructors
 
@@ -47,49 +55,131 @@ namespace ACBr.Net.NFSe.Providers.Abaco
 
         public string RecepcionarLoteRps(string cabec, string msg)
         {
-            var request = new RecepcionarLoteRequest(cabec, msg);
-            var ret = Channel.RecepcionarLote(request);
-            return ret.Outputxml;
+            var message = new StringBuilder();
+            message.Append("<e:RecepcionarLoteRPS.Execute>");
+            message.Append("<e:Nfsecabecmsg>");
+            message.AppendCData(cabec);
+            message.Append("</e:Nfsecabecmsg>");
+            message.Append("<e:Nfsedadosmsg>");
+            message.AppendCData(msg);
+            message.Append("</e:Nfsedadosmsg>");
+            message.Append("</e:RecepcionarLoteRPS.Execute>");
+
+            return Execute("http://www.e-nfs.com.braction/ARECEPCIONARLOTERPS.Execute", message.ToString(), "RecepcionarLoteRPS.ExecuteResponse");
         }
 
         public string ConsultarSituacaoLoteRps(string cabec, string msg)
         {
-            var request = new ConsultarSituacaoLoteRequest(cabec, msg);
-            var ret = Channel.ConsultarSituacaoLote(request);
-            return ret.Outputxml;
+            var message = new StringBuilder();
+            message.Append("<e:ConsultarSituacaoLoteRPS.Execute>");
+            message.Append("<e:Nfsecabecmsg>");
+            message.AppendCData(cabec);
+            message.Append("</e:Nfsecabecmsg>");
+            message.Append("<e:Nfsedadosmsg>");
+            message.AppendCData(msg);
+            message.Append("</e:Nfsedadosmsg>");
+            message.Append("</e:ConsultarSituacaoLoteRPS.Execute>");
+
+            return Execute("http://www.e-nfs.com.braction/ACONSULTARSITUACAOLOTERPS.Execute", message.ToString(), "ConsultarSituacaoLoteRPS.ExecuteResponse");
         }
 
         public string ConsultarNFSePorRps(string cabec, string msg)
         {
-            var request = new ConsultarNfsePorRpsRequest(cabec, msg);
-            var ret = Channel.ConsultarNfsePorRps(request);
-            return ret.Outputxml;
+            var message = new StringBuilder();
+            message.Append("<e:ConsultarNfsePorRps.Execute>");
+            message.Append("<e:Nfsecabecmsg>");
+            message.AppendCData(cabec);
+            message.Append("</e:Nfsecabecmsg>");
+            message.Append("<e:Nfsedadosmsg>");
+            message.AppendCData(msg);
+            message.Append("</e:Nfsedadosmsg>");
+            message.Append("</e:ConsultarNfsePorRps.Execute>");
+
+            return Execute("http://www.e-nfs.com.braction/ACONSULTARNFSEPORRPS.Execute", message.ToString(), "ConsultarNfsePorRps.ExecuteResponse");
         }
 
         public string ConsultarNFSe(string cabec, string msg)
         {
-            var request = new ConsultarNfseRequest(cabec, msg);
-            var ret = Channel.ConsultarNfse(request);
-            return ret.Outputxml;
+            var message = new StringBuilder();
+            message.Append("<e:ConsultarNfse.Execute>");
+            message.Append("<e:Nfsecabecmsg>");
+            message.AppendCData(cabec);
+            message.Append("</e:Nfsecabecmsg>");
+            message.Append("<e:Nfsedadosmsg>");
+            message.AppendCData(msg);
+            message.Append("</e:Nfsedadosmsg>");
+            message.Append("</e:ConsultarNfse.Execute>");
+
+            return Execute("http://www.e-nfs.com.braction/ACONSULTARNFSE.Execute", message.ToString(), "ConsultarNfse.ExecuteResponse");
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
         {
-            var request = new ConsultarLoteRequest(cabec, msg);
-            var ret = Channel.ConsultarLote(request);
-            return ret.Outputxml;
+            var message = new StringBuilder();
+            message.Append("<e:ConsultarLoteRps.Execute>");
+            message.Append("<e:Nfsecabecmsg>");
+            message.AppendCData(cabec);
+            message.Append("</e:Nfsecabecmsg>");
+            message.Append("<e:Nfsedadosmsg>");
+            message.AppendCData(msg);
+            message.Append("</e:Nfsedadosmsg>");
+            message.Append("</e:ConsultarLoteRps.Execute>");
+
+            return Execute("http://www.e-nfs.com.braction/ACONSULTARLOTERPS.Execute", message.ToString(), "ConsultarLoteRps.ExecuteResponse");
         }
 
         public string CancelarNFSe(string cabec, string msg)
         {
-            var request = new CancelarNfseRequest(cabec, msg);
-            var ret = Channel.CancelarNfse(request);
-            return ret.Outputxml;
+            var message = new StringBuilder();
+            message.Append("<e:CancelarNfse.Execute>");
+            message.Append("<e:Nfsecabecmsg>");
+            message.AppendCData(cabec);
+            message.Append("</e:Nfsecabecmsg>");
+            message.Append("<e:Nfsedadosmsg>");
+            message.AppendCData(msg);
+            message.Append("</e:Nfsedadosmsg>");
+            message.Append("</e:CancelarNfse.Execute>");
+
+            return Execute("http://www.e-nfs.com.braction/ACANCELARNFSE.Execute", message.ToString(), "CancelarNfse.ExecuteResponse");
         }
 
         public string GerarNfse(string nfseCabecMsg, string nfseDadosMsg)
         {
             throw new NotImplementedException();
+        }
+
+        private string Execute(string soapAction, string message, string responseTag)
+        {
+            var envelope = new StringBuilder();
+            envelope.Append("<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:e=\"http://www.e-nfs.com.br\">");
+            envelope.Append("<soapenv:Header/>");
+            envelope.Append("<soapenv:Body>");
+            envelope.Append(message);
+            envelope.Append("</soapenv:Body>");
+            envelope.Append("</soapenv:Envelope>");
+
+            var msg = Message.CreateMessage(XmlReader.Create(new StringReader(envelope.ToString())), int.MaxValue, Endpoint.Binding.MessageVersion);
+            var ret = string.Empty;
+
+            using (new OperationContextScope(InnerChannel))
+            {
+                //Define a SOAPAction por ser SOAP 1.1
+                var requestMessage = new HttpRequestMessageProperty();
+                requestMessage.Headers["SOAPAction"] = soapAction;
+                OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = requestMessage;
+
+                ret = Execute(msg);
+            }
+
+            var xmlDocument = XDocument.Parse(ret);
+            var element = xmlDocument.ElementAnyNs("Fault");
+            if (element != null)
+            {
+                var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
+                throw new ACBrDFeCommunicationException(exMessage);
+            }
+
+            return xmlDocument.ElementAnyNs(responseTag).ElementAnyNs("Outputxml").Value;
         }
 
         #endregion Methods

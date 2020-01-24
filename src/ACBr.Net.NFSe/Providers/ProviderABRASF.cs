@@ -4,7 +4,7 @@
 // Created          : 01-13-2017
 //
 // Last Modified By : RFTD
-// Last Modified On : 07-17-2018
+// Last Modified On : 23-01-2020
 // ***********************************************************************
 // <copyright file="ProviderABRASF.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -400,46 +400,27 @@ namespace ACBr.Net.NFSe.Providers
         public sealed override string WriteXmlRps(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
         {
             var xmlDoc = new XDocument(new XDeclaration("1.0", "UTF-8", null));
-            xmlDoc.Add(GenerateRps(nota));
+            xmlDoc.Add(WriteRps(nota));
             return xmlDoc.AsString(identado, showDeclaration);
         }
 
-        protected virtual XElement GenerateRps(NotaFiscal nota)
+        protected virtual XElement WriteRps(NotaFiscal nota)
         {
             var rps = new XElement("Rps");
-            var infoRps = GenerateInfoRPS(nota);
+            var infoRps = WriteInfoRPS(nota);
             rps.Add(infoRps);
 
-            if (!string.IsNullOrWhiteSpace(nota.RpsSubstituido.NumeroRps))
-            {
-                infoRps.AddChild(GenerateRpsSubstituto(nota));
-            }
-
-            var servico = GenerateServicosValoresRps(nota);
-            infoRps.AddChild(servico);
-
-            var prestador = GeneratePrestadorRps(nota);
-            infoRps.AddChild(prestador);
-
-            var tomador = GenerateTomadorRps(nota);
-            infoRps.AddChild(tomador);
-
-            if (!nota.Intermediario.RazaoSocial.IsEmpty())
-            {
-                var intServico = GenerateIntermediarioRps(nota);
-                infoRps.AddChild(intServico);
-            }
-
-            if (!nota.ConstrucaoCivil.CodigoObra.IsEmpty())
-            {
-                var conCivil = GenerateConstrucaoCivilRps(nota);
-                infoRps.AddChild(conCivil);
-            }
+            infoRps.AddChild(WriteRpsSubstituto(nota));
+            infoRps.AddChild(WriteServicosValoresRps(nota));
+            infoRps.AddChild(WritePrestadorRps(nota));
+            infoRps.AddChild(WriteTomadorRps(nota));
+            infoRps.AddChild(WriteIntermediarioRps(nota));
+            infoRps.AddChild(WriteConstrucaoCivilRps(nota));
 
             return rps;
         }
 
-        protected virtual XElement GenerateInfoRPS(NotaFiscal nota)
+        protected virtual XElement WriteInfoRPS(NotaFiscal nota)
         {
             var incentivadorCultural = nota.IncentivadorCultural == NFSeSimNao.Sim ? 1 : 2;
 
@@ -493,7 +474,7 @@ namespace ACBr.Net.NFSe.Providers
 
             var infoRps = new XElement("InfRps", new XAttribute("Id", $"R{nota.IdentificacaoRps.Numero}"));
 
-            infoRps.Add(GenerateIdentificacao(nota));
+            infoRps.Add(WriteIdentificacao(nota));
             infoRps.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataEmissao", 20, 20, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.DataEmissao));
             infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "NaturezaOperacao", 1, 1, Ocorrencia.Obrigatoria, naturezaOperacao));
             infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "RegimeEspecialTributacao", 1, 1, Ocorrencia.NaoObrigatoria, regimeEspecialTributacao));
@@ -504,7 +485,7 @@ namespace ACBr.Net.NFSe.Providers
             return infoRps;
         }
 
-        protected virtual XElement GenerateIdentificacao(NotaFiscal nota)
+        protected virtual XElement WriteIdentificacao(NotaFiscal nota)
         {
             string tipoRps;
             switch (nota.IdentificacaoRps.Tipo)
@@ -534,8 +515,10 @@ namespace ACBr.Net.NFSe.Providers
             return ideRps;
         }
 
-        protected virtual XElement GenerateRpsSubstituto(NotaFiscal nota)
+        protected virtual XElement WriteRpsSubstituto(NotaFiscal nota)
         {
+            if (nota.RpsSubstituido.NumeroRps.IsEmpty()) return null;
+
             string tipoRpsSubstituido;
             switch (nota.RpsSubstituido.Tipo)
             {
@@ -565,7 +548,7 @@ namespace ACBr.Net.NFSe.Providers
             return rpsSubstituido;
         }
 
-        protected virtual XElement GenerateServicosValoresRps(NotaFiscal nota)
+        protected virtual XElement WriteServicosValoresRps(NotaFiscal nota)
         {
             var servico = new XElement("Servico");
             var valores = new XElement("Valores");
@@ -604,7 +587,7 @@ namespace ACBr.Net.NFSe.Providers
             return servico;
         }
 
-        protected virtual XElement GeneratePrestadorRps(NotaFiscal nota)
+        protected virtual XElement WritePrestadorRps(NotaFiscal nota)
         {
             var prestador = new XElement("Prestador");
             prestador.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Prestador.CpfCnpj));
@@ -613,7 +596,7 @@ namespace ACBr.Net.NFSe.Providers
             return prestador;
         }
 
-        protected virtual XElement GenerateTomadorRps(NotaFiscal nota)
+        protected virtual XElement WriteTomadorRps(NotaFiscal nota)
         {
             var tomador = new XElement("Tomador");
 
@@ -659,8 +642,10 @@ namespace ACBr.Net.NFSe.Providers
             return tomador;
         }
 
-        protected virtual XElement GenerateIntermediarioRps(NotaFiscal nota)
+        protected virtual XElement WriteIntermediarioRps(NotaFiscal nota)
         {
+            if (nota.Intermediario.RazaoSocial.IsEmpty()) return null;
+
             var intermediario = new XElement("Intermediario");
 
             var ideIntermediario = new XElement("IdentificacaoIntermediario");
@@ -680,8 +665,10 @@ namespace ACBr.Net.NFSe.Providers
             return intermediario;
         }
 
-        protected virtual XElement GenerateConstrucaoCivilRps(NotaFiscal nota)
+        protected virtual XElement WriteConstrucaoCivilRps(NotaFiscal nota)
         {
+            if (nota.ConstrucaoCivil.CodigoObra.IsEmpty()) return null;
+
             var construcao = new XElement("ConstrucaoCivil");
 
             construcao.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoObra", 1, 15, Ocorrencia.NaoObrigatoria, nota.ConstrucaoCivil.CodigoObra));
@@ -699,15 +686,15 @@ namespace ACBr.Net.NFSe.Providers
             var xmlDoc = new XDocument(new XDeclaration("1.0", "UTF-8", null));
             var compNfse = new XElement("CompNfse");
 
-            compNfse.AddChild(GenerateNFSe(nota));
-            compNfse.AddChild(GenerateNFSeCancelamento(nota));
-            compNfse.AddChild(GenerateNFSeSubstituicao(nota));
+            compNfse.AddChild(WriteNFSe(nota));
+            compNfse.AddChild(WriteNFSeCancelamento(nota));
+            compNfse.AddChild(WriteNFSeSubstituicao(nota));
 
             xmlDoc.AddChild(compNfse);
             return xmlDoc.AsString(identado, showDeclaration);
         }
 
-        protected virtual XElement GenerateNFSe(NotaFiscal nota)
+        protected virtual XElement WriteNFSe(NotaFiscal nota)
         {
             var incentivadorCultural = nota.IncentivadorCultural == NFSeSimNao.Sim ? 1 : 2;
 
@@ -830,24 +817,24 @@ namespace ACBr.Net.NFSe.Providers
                 infNfse.AddChild(rpsSubstituido);
             }
 
-            var servico = GenerateServicosValoresNFSe(nota);
+            var servico = WriteServicosValoresNFSe(nota);
             infNfse.AddChild(servico);
 
-            var prestador = GeneratePrestadorNFSe(nota);
+            var prestador = WritePrestadorNFSe(nota);
             infNfse.AddChild(prestador);
 
-            var tomador = GenerateTomadorNFSe(nota);
+            var tomador = WriteTomadorNFSe(nota);
             infNfse.AddChild(tomador);
 
             if (!nota.Intermediario.RazaoSocial.IsEmpty())
             {
-                var intServico = GenerateIntermediarioNFSe(nota);
+                var intServico = WriteIntermediarioNFSe(nota);
                 infNfse.AddChild(intServico);
             }
 
             if (!nota.ConstrucaoCivil.CodigoObra.IsEmpty())
             {
-                var conCivil = GenerateConstrucaoCivilNFSe(nota);
+                var conCivil = WriteConstrucaoCivilNFSe(nota);
                 infNfse.AddChild(conCivil);
             }
 
@@ -865,7 +852,7 @@ namespace ACBr.Net.NFSe.Providers
             return nfse;
         }
 
-        protected virtual XElement GenerateNFSeCancelamento(NotaFiscal nota)
+        protected virtual XElement WriteNFSeCancelamento(NotaFiscal nota)
         {
             if (nota.Situacao != SituacaoNFSeRps.Cancelado) return null;
 
@@ -899,7 +886,7 @@ namespace ACBr.Net.NFSe.Providers
             return nfSeCancelamento;
         }
 
-        protected virtual XElement GenerateNFSeSubstituicao(NotaFiscal nota)
+        protected virtual XElement WriteNFSeSubstituicao(NotaFiscal nota)
         {
             if (nota.RpsSubstituido.NFSeSubstituidora.IsEmpty()) return null;
 
@@ -913,7 +900,7 @@ namespace ACBr.Net.NFSe.Providers
             return substituidora;
         }
 
-        protected virtual XElement GenerateServicosValoresNFSe(NotaFiscal nota)
+        protected virtual XElement WriteServicosValoresNFSe(NotaFiscal nota)
         {
             var servico = new XElement("Servico");
             var valores = new XElement("Valores");
@@ -950,7 +937,7 @@ namespace ACBr.Net.NFSe.Providers
             return servico;
         }
 
-        protected virtual XElement GeneratePrestadorNFSe(NotaFiscal nota)
+        protected virtual XElement WritePrestadorNFSe(NotaFiscal nota)
         {
             var prestador = new XElement("Prestador");
 
@@ -964,7 +951,7 @@ namespace ACBr.Net.NFSe.Providers
             return prestador;
         }
 
-        protected virtual XElement GenerateTomadorNFSe(NotaFiscal nota)
+        protected virtual XElement WriteTomadorNFSe(NotaFiscal nota)
         {
             var tomador = new XElement("Tomador");
 
@@ -1010,7 +997,7 @@ namespace ACBr.Net.NFSe.Providers
             return tomador;
         }
 
-        protected virtual XElement GenerateIntermediarioNFSe(NotaFiscal nota)
+        protected virtual XElement WriteIntermediarioNFSe(NotaFiscal nota)
         {
             var intermediario = new XElement("Intermediario");
 
@@ -1031,7 +1018,7 @@ namespace ACBr.Net.NFSe.Providers
             return intermediario;
         }
 
-        protected virtual XElement GenerateConstrucaoCivilNFSe(NotaFiscal nota)
+        protected virtual XElement WriteConstrucaoCivilNFSe(NotaFiscal nota)
         {
             var construcao = new XElement("ConstrucaoCivil");
 

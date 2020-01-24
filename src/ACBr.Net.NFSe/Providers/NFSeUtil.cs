@@ -30,6 +30,7 @@
 // ***********************************************************************
 
 using System;
+using System.Text;
 using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
 
@@ -57,13 +58,19 @@ namespace ACBr.Net.NFSe.Providers
             return posFinal < 0 ? xml : xml.Remove(posIni, (posFinal + 2) - posIni);
         }
 
-        public static string AjustarEnvio(this string envio)
+        public static void AppendEnvio(this StringBuilder sb, string dados)
         {
             for (var i = 0; i < escapedCharacters.Length; i++)
             {
-                envio = envio.Replace(unescapedCharacters[i], escapedCharacters[i]);
+                dados = dados.Replace(unescapedCharacters[i], escapedCharacters[i]);
             }
-            return envio;
+
+            sb.Append(dados);
+        }
+
+        public static void AppendCData(this StringBuilder sb, string dados)
+        {
+            sb.Append($"<![CDATA[{dados}]]>");
         }
 
         public static string GetCPF_CNPJ(this XElement element)

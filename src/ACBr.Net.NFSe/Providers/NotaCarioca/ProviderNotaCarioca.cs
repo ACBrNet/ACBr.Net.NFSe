@@ -55,7 +55,7 @@ namespace ACBr.Net.NFSe.Providers.NotaCarioca
 
         #region Methods
 
-        protected override XElement GenerateInfoRPS(NotaFiscal nota)
+        protected override XElement WriteInfoRPS(NotaFiscal nota)
         {
             var incentivadorCultural = nota.IncentivadorCultural == NFSeSimNao.Sim ? 1 : 2;
 
@@ -109,7 +109,7 @@ namespace ACBr.Net.NFSe.Providers.NotaCarioca
 
             var infoRps = new XElement("InfRps", new XAttribute("Id", $"R{nota.IdentificacaoRps.Numero}"));
 
-            infoRps.Add(GenerateIdentificacao(nota));
+            infoRps.Add(WriteIdentificacao(nota));
             infoRps.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataEmissao", 20, 20, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.DataEmissao));
             infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "NaturezaOperacao", 1, 1, Ocorrencia.Obrigatoria, naturezaOperacao));
             infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "RegimeEspecialTributacao", 1, 1, Ocorrencia.NaoObrigatoria, regimeEspecialTributacao));

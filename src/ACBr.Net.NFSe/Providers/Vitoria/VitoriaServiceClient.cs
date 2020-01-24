@@ -62,7 +62,9 @@ namespace ACBr.Net.NFSe.Providers
         {
             var message = new StringBuilder();
             message.Append("<CancelarNfse xmlns=\"http://www.abrasf.org.br/nfse.xsd\">");
-            message.Append($"<mensagemXML>{msg.AjustarEnvio()}</mensagemXML>");
+            message.Append("<mensagemXML>");
+            message.AppendEnvio(msg);
+            message.Append("</mensagemXML>");
             message.Append("</CancelarNfse>");
 
             return Execute("CancelarNfse", message.ToString());
@@ -72,7 +74,9 @@ namespace ACBr.Net.NFSe.Providers
         {
             var message = new StringBuilder();
             message.Append("<SubstituirNfse xmlns=\"http://www.abrasf.org.br/nfse.xsd\">");
-            message.Append($"<mensagemXML>{msg.AjustarEnvio()}</mensagemXML>");
+            message.Append("<mensagemXML>");
+            message.AppendEnvio(msg);
+            message.Append("</mensagemXML>");
             message.Append("</SubstituirNfse>");
 
             return Execute("SubstituirNfse", message.ToString());
@@ -82,7 +86,9 @@ namespace ACBr.Net.NFSe.Providers
         {
             var message = new StringBuilder();
             message.Append("<ConsultarLoteRps xmlns=\"http://www.abrasf.org.br/nfse.xsd\">");
-            message.Append($"<mensagemXML>{msg.AjustarEnvio()}</mensagemXML>");
+            message.Append("<mensagemXML>");
+            message.AppendEnvio(msg);
+            message.Append("</mensagemXML>");
             message.Append("</ConsultarLoteRps>");
 
             return Execute("ConsultarLoteRps", message.ToString());
@@ -92,7 +98,9 @@ namespace ACBr.Net.NFSe.Providers
         {
             var message = new StringBuilder();
             message.Append("<ConsultarNfseFaixa xmlns=\"http://www.abrasf.org.br/nfse.xsd\">");
-            message.Append($"<mensagemXML>{msg.AjustarEnvio()}</mensagemXML>");
+            message.Append("<mensagemXML>");
+            message.AppendEnvio(msg);
+            message.Append("</mensagemXML>");
             message.Append("</ConsultarNfseFaixa>");
 
             return Execute("ConsultarNfseFaixa", message.ToString());
@@ -102,7 +110,9 @@ namespace ACBr.Net.NFSe.Providers
         {
             var message = new StringBuilder();
             message.Append("<ConsultarNfseServicoTomado xmlns=\"http://www.abrasf.org.br/nfse.xsd\">");
-            message.Append($"<mensagemXML>{msg.AjustarEnvio()}</mensagemXML>");
+            message.Append("<mensagemXML>");
+            message.AppendEnvio(msg);
+            message.Append("</mensagemXML>");
             message.Append("</ConsultarNfseServicoTomado>");
 
             return Execute("ConsultarNfseServicoTomado", message.ToString());
@@ -112,7 +122,9 @@ namespace ACBr.Net.NFSe.Providers
         {
             var message = new StringBuilder();
             message.Append("<ConsultarNfsePorRps xmlns=\"http://www.abrasf.org.br/nfse.xsd\">");
-            message.Append($"<mensagemXML>{msg.AjustarEnvio()}</mensagemXML>");
+            message.Append("<mensagemXML>");
+            message.AppendEnvio(msg);
+            message.Append("</mensagemXML>");
             message.Append("</ConsultarNfsePorRps>");
 
             return Execute("ConsultarNfsePorRps", message.ToString());
@@ -122,7 +134,9 @@ namespace ACBr.Net.NFSe.Providers
         {
             var message = new StringBuilder();
             message.Append("<ConsultarNfseServicoPrestado xmlns=\"http://www.abrasf.org.br/nfse.xsd\">");
-            message.Append($"<mensagemXML>{msg.AjustarEnvio()}</mensagemXML>");
+            message.Append("<mensagemXML>");
+            message.AppendEnvio(msg);
+            message.Append("</mensagemXML>");
             message.Append("</ConsultarNfseServicoPrestado>");
 
             return Execute("ConsultarNfseServicoPrestado", message.ToString());
@@ -132,7 +146,9 @@ namespace ACBr.Net.NFSe.Providers
         {
             var message = new StringBuilder();
             message.Append("<RecepcionarLoteRps xmlns=\"http://www.abrasf.org.br/nfse.xsd\">");
-            message.Append($"<mensagemXML>{msg.AjustarEnvio()}</mensagemXML>");
+            message.Append("<mensagemXML>");
+            message.AppendEnvio(msg);
+            message.Append("</mensagemXML>");
             message.Append("</RecepcionarLoteRps>");
 
             return Execute("RecepcionarLoteRps", message.ToString());
@@ -142,7 +158,9 @@ namespace ACBr.Net.NFSe.Providers
         {
             var message = new StringBuilder();
             message.Append("<RecepcionarLoteRpsSincrono xmlns=\"http://www.abrasf.org.br/nfse.xsd\">");
-            message.Append($"<mensagemXML>{msg.AjustarEnvio()}</mensagemXML>");
+            message.Append("<mensagemXML>");
+            message.AppendEnvio(msg);
+            message.Append("</mensagemXML>");
             message.Append("</RecepcionarLoteRpsSincrono>");
 
             return Execute("RecepcionarLoteRpsSincrono", message.ToString());

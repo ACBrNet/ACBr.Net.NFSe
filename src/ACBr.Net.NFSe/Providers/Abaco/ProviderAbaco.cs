@@ -33,7 +33,7 @@ using System;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
 
-namespace ACBr.Net.NFSe.Providers.Abaco
+namespace ACBr.Net.NFSe.Providers
 {
     internal sealed class ProviderAbaco : ProviderABRASF
     {

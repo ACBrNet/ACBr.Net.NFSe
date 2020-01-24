@@ -4,7 +4,7 @@
 // Created          : 21-01-2020
 //
 // Last Modified By : RFTD
-// Last Modified On : 21-01-2020
+// Last Modified On : 23-01-2020
 // ***********************************************************************
 // <copyright file="SmarAPDABRASFServiceClient.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -61,10 +61,10 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<e:CancelarNfseRequest>");
             message.Append("<nfseCabecMsg>");
-            message.Append($"<![CDATA[{cabec}]]>");
+            message.AppendCData(cabec);
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
-            message.Append($"<![CDATA[{msg}]]>");
+            message.AppendCData(msg);
             message.Append("</nfseDadosMsg>");
             message.Append("</e:CancelarNfseRequest>");
 
@@ -76,10 +76,10 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<e:SubstituirNfseRequest>");
             message.Append("<nfseCabecMsg>");
-            message.Append($"<![CDATA[{cabec}]]>");
+            message.AppendCData(cabec);
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
-            message.Append($"<![CDATA[{msg}]]>");
+            message.AppendCData(msg);
             message.Append("</nfseDadosMsg>");
             message.Append("</e:SubstituirNfseRequest>");
 
@@ -91,10 +91,10 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<e:ConsultarLoteRpsRequest>");
             message.Append("<nfseCabecMsg>");
-            message.Append($"<![CDATA[{cabec}]]>");
+            message.AppendCData(cabec);
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
-            message.Append($"<![CDATA[{msg}]]>");
+            message.AppendCData(msg);
             message.Append("</nfseDadosMsg>");
             message.Append("</e:ConsultarLoteRpsRequest>");
 
@@ -106,10 +106,10 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<e:ConsultarNfseFaixaRequest>");
             message.Append("<nfseCabecMsg>");
-            message.Append($"<![CDATA[{cabec}]]>");
+            message.AppendCData(cabec);
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
-            message.Append($"<![CDATA[{msg}]]>");
+            message.AppendCData(msg);
             message.Append("</nfseDadosMsg>");
             message.Append("</e:ConsultarNfseFaixaRequest>");
 
@@ -121,10 +121,10 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<e:ConsultarNfseServicoTomadoRequest>");
             message.Append("<nfseCabecMsg>");
-            message.Append($"<![CDATA[{cabec}]]>");
+            message.AppendCData(cabec);
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
-            message.Append($"<![CDATA[{msg}]]>");
+            message.AppendCData(msg);
             message.Append("</nfseDadosMsg>");
             message.Append("</e:ConsultarNfseServicoTomadoRequest>");
 
@@ -136,10 +136,10 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<e:ConsultarNfsePorRpsRequest>");
             message.Append("<nfseCabecMsg>");
-            message.Append($"<![CDATA[{cabec}]]>");
+            message.AppendCData(cabec);
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
-            message.Append($"<![CDATA[{msg}]]>");
+            message.AppendCData(msg);
             message.Append("</nfseDadosMsg>");
             message.Append("</e:ConsultarNfsePorRpsRequest>");
 
@@ -151,10 +151,10 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<e:ConsultarNfseServicoPrestadoRequest>");
             message.Append("<nfseCabecMsg>");
-            message.Append($"<![CDATA[{cabec}]]>");
+            message.AppendCData(cabec);
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
-            message.Append($"<![CDATA[{msg}]]>");
+            message.AppendCData(msg);
             message.Append("</nfseDadosMsg>");
             message.Append("</e:ConsultarNfseServicoPrestadoRequest>");
 
@@ -166,10 +166,10 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<e:RecepcionarLoteRpsRequest>");
             message.Append("<nfseCabecMsg>");
-            message.Append($"<![CDATA[{cabec}]]>");
+            message.AppendCData(cabec);
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
-            message.Append($"<![CDATA[{msg}]]>");
+            message.AppendCData(msg);
             message.Append("</nfseDadosMsg>");
             message.Append("</e:RecepcionarLoteRpsRequest>");
 
@@ -181,10 +181,10 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<e:RecepcionarLoteRpsSincronoRequest>");
             message.Append("<nfseCabecMsg>");
-            message.Append($"<![CDATA[{cabec}]]>");
+            message.AppendCData(cabec);
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
-            message.Append($"<![CDATA[{msg}]]>");
+            message.AppendCData(msg);
             message.Append("</nfseDadosMsg>");
             message.Append("</e:RecepcionarLoteRpsSincronoRequest>");
 
@@ -205,6 +205,7 @@ namespace ACBr.Net.NFSe.Providers
 
             RemoteCertificateValidationCallback validation = null;
 
+            // o certificado do servidor de homologação é invalido, override na validação do certificado do servidor.
             if (Provider.Configuracoes.WebServices.Ambiente == DFeTipoAmbiente.Homologacao)
             {
                 validation = ServicePointManager.ServerCertificateValidationCallback;
@@ -217,6 +218,7 @@ namespace ACBr.Net.NFSe.Providers
             {
                 using (new OperationContextScope(InnerChannel))
                 {
+                    //Define a SOAPAction por ser SOAP 1.1
                     var requestMessage = new HttpRequestMessageProperty();
                     requestMessage.Headers["SOAPAction"] = soapAction;
                     OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = requestMessage;
