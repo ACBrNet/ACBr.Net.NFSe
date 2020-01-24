@@ -62,6 +62,8 @@ namespace ACBr.Net.NFSe.Nota
 
         public decimal Quantidade { get; set; }
 
+        public string ItemListaServico { get; set; }
+
         public decimal ValorUnitario { get; set; }
 
         public decimal ValorTotal { get; set; }
