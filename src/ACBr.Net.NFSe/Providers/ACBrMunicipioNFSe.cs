@@ -94,6 +94,13 @@ namespace ACBr.Net.NFSe.Providers
         public int CodigoSiafi { get; set; }
 
         /// <summary>
+        /// Define ou retorna o identificador do município no provedor Equiplano
+        /// </summary>
+        /// <value>The Id Entidade.</value>
+        [DataMember]
+        public int IdEntidade { get; set; }
+
+        /// <summary>
         /// Define ou retorna o nome do municipio
         /// </summary>
         /// <value>The nome.</value>
