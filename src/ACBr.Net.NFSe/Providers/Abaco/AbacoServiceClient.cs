@@ -31,6 +31,8 @@
 
 using System;
 using System.IO;
+using System.Net;
+using System.Net.Security;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Text;
@@ -38,6 +40,7 @@ using System.Xml;
 using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core;
+using ACBr.Net.DFe.Core.Common;
 
 namespace ACBr.Net.NFSe.Providers
 {
@@ -159,16 +162,34 @@ namespace ACBr.Net.NFSe.Providers
             envelope.Append("</soapenv:Envelope>");
 
             var msg = Message.CreateMessage(XmlReader.Create(new StringReader(envelope.ToString())), int.MaxValue, Endpoint.Binding.MessageVersion);
+
+            RemoteCertificateValidationCallback validation = null;
+
+            // o certificado do servidor de homologação é invalido, override na validação do certificado do servidor.
+            if (Provider.Configuracoes.WebServices.Ambiente == DFeTipoAmbiente.Homologacao)
+            {
+                validation = ServicePointManager.ServerCertificateValidationCallback;
+                ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+            }
+
             var ret = string.Empty;
 
-            using (new OperationContextScope(InnerChannel))
+            try
             {
-                //Define a SOAPAction por ser SOAP 1.1
-                var requestMessage = new HttpRequestMessageProperty();
-                requestMessage.Headers["SOAPAction"] = soapAction;
-                OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = requestMessage;
+                using (new OperationContextScope(InnerChannel))
+                {
+                    //Define a SOAPAction por ser SOAP 1.1
+                    var requestMessage = new HttpRequestMessageProperty();
+                    requestMessage.Headers["SOAPAction"] = soapAction;
+                    OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = requestMessage;
 
-                ret = Execute(msg);
+                    ret = Execute(msg);
+                }
+            }
+            finally
+            {
+                if (Provider.Configuracoes.WebServices.Ambiente == DFeTipoAmbiente.Homologacao)
+                    ServicePointManager.ServerCertificateValidationCallback = validation;
             }
 
             var xmlDocument = XDocument.Parse(ret);

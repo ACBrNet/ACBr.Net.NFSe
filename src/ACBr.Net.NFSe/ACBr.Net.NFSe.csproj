@@ -27,19 +27,21 @@
       - Coplan.
       - Nota Carioca.
       - Belo Horizonte.
-      - Porto Alegre.
-      - Abaco.
-      - Betha (Em Testes).
-      - Betha v2 (Em Testes).
-      - GovDigital (Em Testes).
-      - FissLex (Em Testes).
+      - Equiplano.
+      - SmarAPD ABRASAF.
+      - Porto Alegre (Em Teste).
+      - Abaco (Em Teste).
+      - Betha v1 (Em Teste).
+      - Betha v2 (Em Teste).
+      - GovDigital (Em Teste).
+      - FissLex (Em Teste).
       - Vitoria (Em Testes).
     </Description>
     <NeutralLanguage>pt-BR</NeutralLanguage>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <AssemblyVersion>1.1.2.0</AssemblyVersion>
-    <FileVersion>1.1.2.0</FileVersion>
-    <Version>1.1.2.0</Version>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
+    <Version>1.2.0.0</Version>
     <DelaySign>false</DelaySign>
   </PropertyGroup>
 
@@ -127,6 +129,10 @@
       <Pack>True</Pack>
       <PackagePath>content\Schemas\DSF</PackagePath>
     </None>
+    <None Include="Schemas\Equiplano\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\Equiplano</PackagePath>
+    </None>
     <None Include="Schemas\Ginfes\*.*">
       <Pack>True</Pack>
       <PackagePath>content\Schemas\Ginfes</PackagePath>
@@ -209,6 +215,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\DSF\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\Equiplano\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\Ginfes\*.*">

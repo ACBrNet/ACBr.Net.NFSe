@@ -19,9 +19,12 @@ Biblioteca para emissão e trasmissão de NFSe.
 - Coplan.
 - Nota Carioca.
 - Belo Horizonte.
+- Equiplano.
+- SmarAPD ABRASAF.
 - Porto Alegre (Em Teste).
 - Abaco (Em Teste).
 - Betha v1 (Em Teste).
 - Betha v2 (Em Teste).
 - GovDigital (Em Teste).
 - FissLex (Em Teste).
+- Vitoria (Em Testes).
