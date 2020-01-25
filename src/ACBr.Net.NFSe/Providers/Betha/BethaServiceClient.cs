@@ -31,10 +31,13 @@
 
 using System;
 using System.Security.Cryptography.X509Certificates;
+using System.Xml.Linq;
+using ACBr.Net.Core.Extensions;
+using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class BethaServiceClient : NFSeRequestServiceClient, IABRASFClient
+    internal sealed class BethaServiceClient : NFSeSOAP11ServiceClient, IABRASFClient
     {
         #region Constructors
 
@@ -52,37 +55,54 @@ namespace ACBr.Net.NFSe.Providers
 
         public string RecepcionarLoteRps(string cabec, string msg)
         {
-            return Execute("", msg);
+            return Execute(msg.Replace("EnviarLoteRpsEnvio", "e:EnviarLoteRpsEnvio"));
         }
 
         public string ConsultarSituacaoLoteRps(string cabec, string msg)
         {
-            return Execute("", msg);
+            return Execute(msg.Replace("ConsultarSituacaoLoteRpsEnvio", "e:ConsultarSituacaoLoteRpsEnvio"));
         }
 
         public string ConsultarNFSePorRps(string cabec, string msg)
         {
-            return Execute("", msg);
+            return Execute(msg.Replace("ConsultarNfsePorRpsEnvio", "e:ConsultarNfsePorRpsEnvio"));
         }
 
         public string ConsultarNFSe(string cabec, string msg)
         {
-            return Execute("", msg);
+            return Execute(msg.Replace("ConsultarNfseEnvio", "e:ConsultarNfseEnvio"));
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
         {
-            return Execute("", msg);
+            return Execute(msg.Replace("ConsultarLoteRpsEnvio", "e:ConsultarLoteRpsEnvio"));
         }
 
         public string CancelarNFSe(string cabec, string msg)
         {
-            return Execute("", msg);
+            return Execute(msg.Replace("CancelarNfseEnvio", "e:CancelarNfseEnvio"));
         }
 
         public string GerarNfse(string cabec, string msg)
         {
             throw new NotImplementedException();
+        }
+
+        private string Execute(string message)
+        {
+            return Execute("", message, "", "xmlns:e=\"http://www.betha.com.br/e-nota-contribuinte-ws\"");
+        }
+
+        protected override string TratarRetorno(string responseTag, XDocument xmlDocument)
+        {
+            var element = xmlDocument.ElementAnyNs("Fault");
+            if (element != null)
+            {
+                var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
+                throw new ACBrDFeCommunicationException(exMessage);
+            }
+
+            return xmlDocument.ToString();
         }
 
         #endregion Methods

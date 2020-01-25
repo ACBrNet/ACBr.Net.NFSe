@@ -66,7 +66,7 @@ namespace ACBr.Net.NFSe.Providers.GovDigital
 
         protected override string GerarCabecalho()
         {
-            return $"<cabecalho versao=\"2.02\" xmlns=\"http://www.abrasf.org.br/nfse.xsd\">{Environment.NewLine}<versaoDados>2.02</versaoDados>{Environment.NewLine}</cabecalho>";
+            return $"<cabecalho versao=\"2.02\" xmlns=\"http://www.abrasf.org.br/nfse.xsd\"><versaoDados>2.02</versaoDados></cabecalho>";
         }
 
         #endregion Protected Methods

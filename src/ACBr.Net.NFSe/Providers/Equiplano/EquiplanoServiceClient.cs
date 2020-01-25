@@ -29,9 +29,11 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System.Xml.Linq;
+
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class EquiplanoServiceClient : NFSeRequestServiceClient, IABRASFClient
+    internal sealed class EquiplanoServiceClient : NFSeSOAP11ServiceClient, IABRASFClient
     {
         #region Constructors
 
@@ -45,27 +47,27 @@ namespace ACBr.Net.NFSe.Providers
 
         public string CancelarNFSe(string cabec, string msg)
         {
-            return Execute("esCancelarNfse", msg);
+            return Execute("esCancelarNfse", msg, "");
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
         {
-            return Execute("esConsultarLoteRps", msg);
+            return Execute("esConsultarLoteRps", msg, "");
         }
 
         public string ConsultarNFSe(string cabec, string msg)
         {
-            return Execute("esConsultarNfse", msg);
+            return Execute("esConsultarNfse", msg, "");
         }
 
         public string ConsultarNFSePorRps(string cabec, string msg)
         {
-            return Execute("esConsultarNfsePorRps", msg);
+            return Execute("esConsultarNfsePorRps", msg, "");
         }
 
         public string ConsultarSituacaoLoteRps(string cabec, string msg)
         {
-            return Execute("esConsultarSituacaoLoteRps", msg);
+            return Execute("esConsultarSituacaoLoteRps", msg, "");
         }
 
         public string GerarNfse(string cabec, string msg)
@@ -75,7 +77,12 @@ namespace ACBr.Net.NFSe.Providers
 
         public string RecepcionarLoteRps(string cabec, string msg)
         {
-            return Execute("esRecepcionarLoteRps", msg);
+            return Execute("esRecepcionarLoteRps", msg, "");
+        }
+
+        protected override string TratarRetorno(string responseTag, XDocument xmlDocument)
+        {
+            return xmlDocument.ToString();
         }
 
         #endregion Methods

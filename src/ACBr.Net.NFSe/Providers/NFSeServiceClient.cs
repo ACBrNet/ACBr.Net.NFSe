@@ -47,6 +47,10 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Constructors
 
+        protected NFSeServiceClient(ProviderBase provider, TipoUrl tipoUrl) : this(provider, tipoUrl, provider.Certificado)
+        {
+        }
+
         protected NFSeServiceClient(ProviderBase provider, TipoUrl tipoUrl, X509Certificate2 certificado) :
             base(provider.GetUrl(tipoUrl), provider.TimeOut, certificado)
         {
@@ -56,58 +60,53 @@ namespace ACBr.Net.NFSe.Providers
             switch (tipoUrl)
             {
                 case TipoUrl.Enviar:
-                    ArquivoEnvio = "lot";
-                    ArquivoResposta = "lot";
+                    PrefixoEnvio = "lot";
+                    PrefixoResposta = "lot";
                     break;
 
                 case TipoUrl.EnviarSincrono:
-                    ArquivoEnvio = "lot-sinc";
-                    ArquivoResposta = "lot-sinc";
+                    PrefixoEnvio = "lot-sinc";
+                    PrefixoResposta = "lot-sinc";
                     break;
 
                 case TipoUrl.ConsultarSituacao:
-                    ArquivoEnvio = "env-sit-lot";
-                    ArquivoResposta = "rec-sit-lot";
+                    PrefixoEnvio = "env-sit-lot";
+                    PrefixoResposta = "rec-sit-lot";
                     break;
 
                 case TipoUrl.ConsultarLoteRps:
-                    ArquivoEnvio = "con-lot";
-                    ArquivoResposta = "con-lot";
+                    PrefixoEnvio = "con-lot";
+                    PrefixoResposta = "con-lot";
                     break;
 
                 case TipoUrl.ConsultarSequencialRps:
-                    ArquivoEnvio = "seq-rps";
-                    ArquivoResposta = "seq-rps";
+                    PrefixoEnvio = "seq-rps";
+                    PrefixoResposta = "seq-rps";
                     break;
 
                 case TipoUrl.ConsultaNFSeRps:
-                    ArquivoEnvio = "con-rps-nfse";
-                    ArquivoResposta = "con-rps-nfse";
+                    PrefixoEnvio = "con-rps-nfse";
+                    PrefixoResposta = "con-rps-nfse";
                     break;
 
                 case TipoUrl.ConsultaNFSe:
-                    ArquivoEnvio = "con-nfse";
-                    ArquivoResposta = "con-nfse";
+                    PrefixoEnvio = "con-nfse";
+                    PrefixoResposta = "con-nfse";
                     break;
 
                 case TipoUrl.CancelaNFSe:
-                    ArquivoEnvio = "canc-nfse";
-                    ArquivoResposta = "canc-nfse";
+                    PrefixoEnvio = "canc-nfse";
+                    PrefixoResposta = "canc-nfse";
                     break;
 
                 case TipoUrl.SubstituirNFSe:
-                    ArquivoEnvio = "sub-nfse";
-                    ArquivoResposta = "sub-nfse";
+                    PrefixoEnvio = "sub-nfse";
+                    PrefixoResposta = "sub-nfse";
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(tipoUrl), tipoUrl, null);
             }
-        }
-
-        protected NFSeServiceClient(ProviderBase provider, TipoUrl tipoUrl) :
-            this(provider, tipoUrl, provider.Certificado)
-        {
         }
 
         #endregion Constructors
@@ -119,12 +118,12 @@ namespace ACBr.Net.NFSe.Providers
         /// <summary>
         ///
         /// </summary>
-        public string ArquivoEnvio { get; protected set; }
+        public string PrefixoEnvio { get; protected set; }
 
         /// <summary>
         ///
         /// </summary>
-        public string ArquivoResposta { get; protected set; }
+        public string PrefixoResposta { get; protected set; }
 
         /// <summary>
         ///
@@ -146,7 +145,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="conteudoArquivo"></param>
         /// <param name="nomeArquivo"></param>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        protected void GravarSoap(string conteudoArquivo, string nomeArquivo)
+        protected virtual void GravarSoap(string conteudoArquivo, string nomeArquivo)
         {
             if (Provider.Configuracoes.WebServices.Salvar == false) return;
 
@@ -159,14 +158,14 @@ namespace ACBr.Net.NFSe.Providers
         protected override void BeforeSendDFeRequest(string message)
         {
             EnvelopeEnvio = message;
-            GravarSoap(message, $"{DateTime.Now:yyyyMMddssfff}_{ArquivoEnvio}_soap_env.xml");
+            GravarSoap(EnvelopeEnvio, $"{DateTime.Now:yyyyMMddssfff}_{PrefixoEnvio}_soap_env.xml");
         }
 
         /// <inheritdoc />
         protected override void AfterReceiveDFeReply(string message)
         {
             EnvelopeRetorno = message;
-            GravarSoap(message, $"{DateTime.Now:yyyyMMddssfff}_{ArquivoResposta}_soap_ret.xml");
+            GravarSoap(EnvelopeRetorno, $"{DateTime.Now:yyyyMMddssfff}_{PrefixoResposta}_soap_ret.xml");
         }
 
         #endregion Methods

@@ -44,7 +44,7 @@ using ACBr.Net.DFe.Core.Common;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class SmarAPDABRASFServiceClient : NFSeRequestServiceClient, IABRASF2Client
+    internal sealed class SmarAPDABRASFServiceClient : NFSeSOAP11ServiceClient, IABRASF2Client
     {
         #region Constructors
 
@@ -193,46 +193,16 @@ namespace ACBr.Net.NFSe.Providers
 
         private string Execute(string soapAction, string message, string responseTag)
         {
-            var envelope = new StringBuilder();
-            envelope.Append("<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:e=\"http://nfse.abrasf.org.br\">");
-            envelope.Append("<soapenv:Header/>");
-            envelope.Append("<soapenv:Body>");
-            envelope.Append(message);
-            envelope.Append("</soapenv:Body>");
-            envelope.Append("</soapenv:Envelope>");
+            return Execute(soapAction, message, responseTag, "xmlns:e=\"http://nfse.abrasf.org.br\"");
+        }
 
-            var msg = Message.CreateMessage(XmlReader.Create(new StringReader(envelope.ToString())), int.MaxValue, Endpoint.Binding.MessageVersion);
+        protected override bool ValidarCertificadoServidor()
+        {
+            return Provider.Configuracoes.WebServices.Ambiente != DFeTipoAmbiente.Homologacao;
+        }
 
-            RemoteCertificateValidationCallback validation = null;
-
-            // o certificado do servidor de homologação é invalido, override na validação do certificado do servidor.
-            if (Provider.Configuracoes.WebServices.Ambiente == DFeTipoAmbiente.Homologacao)
-            {
-                validation = ServicePointManager.ServerCertificateValidationCallback;
-                ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
-            }
-
-            var ret = string.Empty;
-
-            try
-            {
-                using (new OperationContextScope(InnerChannel))
-                {
-                    //Define a SOAPAction por ser SOAP 1.1
-                    var requestMessage = new HttpRequestMessageProperty();
-                    requestMessage.Headers["SOAPAction"] = soapAction;
-                    OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = requestMessage;
-
-                    ret = Execute(msg);
-                }
-            }
-            finally
-            {
-                if (Provider.Configuracoes.WebServices.Ambiente == DFeTipoAmbiente.Homologacao)
-                    ServicePointManager.ServerCertificateValidationCallback = validation;
-            }
-
-            var xmlDocument = XDocument.Parse(ret);
+        protected override string TratarRetorno(string responseTag, XDocument xmlDocument)
+        {
             var element = xmlDocument.ElementAnyNs("Fault");
             if (element != null)
             {

@@ -30,10 +30,11 @@
 // ***********************************************************************
 
 using System;
+using System.Xml.Linq;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class FissLexServiceClient : NFSeRequestServiceClient, IABRASFClient
+    internal sealed class FissLexServiceClient : NFSeSOAP11ServiceClient, IABRASFClient
     {
         #region Constructors
 
@@ -47,37 +48,42 @@ namespace ACBr.Net.NFSe.Providers
 
         public string RecepcionarLoteRps(string cabec, string msg)
         {
-            return Execute("FISS-LEXaction/AWS_RECEPCIONARLOTERPS.Execute", msg);
+            return Execute("FISS-LEXaction/AWS_RECEPCIONARLOTERPS.Execute", msg, "");
         }
 
         public string ConsultarSituacaoLoteRps(string cabec, string msg)
         {
-            return Execute("FISS-LEXaction/AWS_CONSULTARSITUACAOLOTERPS.Execute", msg);
+            return Execute("FISS-LEXaction/AWS_CONSULTARSITUACAOLOTERPS.Execute", msg, "");
         }
 
         public string ConsultarNFSePorRps(string cabec, string msg)
         {
-            return Execute("FISS-LEXaction/AWS_CONSULTANFSEPORRPS.Execute", msg);
+            return Execute("FISS-LEXaction/AWS_CONSULTANFSEPORRPS.Execute", msg, "");
         }
 
         public string ConsultarNFSe(string cabec, string msg)
         {
-            return Execute("FISS-LEXaction/AWS_CONSULTANFSE.Execute", msg);
+            return Execute("FISS-LEXaction/AWS_CONSULTANFSE.Execute", msg, "");
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
         {
-            return Execute("FISS-LEXaction/AWS_CONSULTALOTERPS.Execute", msg);
+            return Execute("FISS-LEXaction/AWS_CONSULTALOTERPS.Execute", msg, "");
         }
 
         public string CancelarNFSe(string cabec, string msg)
         {
-            return Execute("FISS-LEXaction/AWS_CANCELARNFSE.Execute", msg);
+            return Execute("FISS-LEXaction/AWS_CANCELARNFSE.Execute", msg, "");
         }
 
         public string GerarNfse(string nfseCabecMsg, string nfseDadosMsg)
         {
             throw new NotImplementedException();
+        }
+
+        protected override string TratarRetorno(string responseTag, XDocument xmlDocument)
+        {
+            return xmlDocument.ToString();
         }
 
         #endregion Methods

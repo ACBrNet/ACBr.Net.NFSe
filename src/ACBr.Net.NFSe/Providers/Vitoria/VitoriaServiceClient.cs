@@ -41,17 +41,12 @@ using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class VitoriaServiceClient : NFSeRequestServiceClient, IABRASF2Client
+    internal sealed class VitoriaServiceClient : NFSeSOAP12ServiceClient, IABRASF2Client
     {
         #region Constructors
 
         public VitoriaServiceClient(ProviderVitoria provider, TipoUrl tipoUrl, X509Certificate2 certificado) : base(provider, tipoUrl, certificado)
         {
-            var custom = new CustomBinding(Endpoint.Binding);
-            var version = custom.Elements.Find<TextMessageEncodingBindingElement>();
-            version.MessageVersion = MessageVersion.CreateVersion(EnvelopeVersion.Soap12, AddressingVersion.None);
-
-            Endpoint.Binding = custom;
         }
 
         #endregion Constructors
@@ -67,7 +62,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</mensagemXML>");
             message.Append("</CancelarNfse>");
 
-            return Execute("CancelarNfse", message.ToString());
+            return Execute(message.ToString(), "CancelarNfse");
         }
 
         public string SubstituirNFSe(string cabec, string msg)
@@ -79,7 +74,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</mensagemXML>");
             message.Append("</SubstituirNfse>");
 
-            return Execute("SubstituirNfse", message.ToString());
+            return Execute(message.ToString(), "SubstituirNfse");
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
@@ -91,7 +86,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</mensagemXML>");
             message.Append("</ConsultarLoteRps>");
 
-            return Execute("ConsultarLoteRps", message.ToString());
+            return Execute(message.ToString(), "ConsultarLoteRps");
         }
 
         public string ConsultarNFSeFaixa(string cabec, string msg)
@@ -103,7 +98,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</mensagemXML>");
             message.Append("</ConsultarNfseFaixa>");
 
-            return Execute("ConsultarNfseFaixa", message.ToString());
+            return Execute(message.ToString(), "ConsultarNfseFaixa");
         }
 
         public string ConsultarNFSeServicoTomado(string cabec, string msg)
@@ -115,7 +110,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</mensagemXML>");
             message.Append("</ConsultarNfseServicoTomado>");
 
-            return Execute("ConsultarNfseServicoTomado", message.ToString());
+            return Execute(message.ToString(), "ConsultarNfseServicoTomado");
         }
 
         public string ConsultarNFSePorRps(string cabec, string msg)
@@ -127,7 +122,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</mensagemXML>");
             message.Append("</ConsultarNfsePorRps>");
 
-            return Execute("ConsultarNfsePorRps", message.ToString());
+            return Execute(message.ToString(), "ConsultarNfsePorRps");
         }
 
         public string ConsultarNFSeServicoPrestado(string cabec, string msg)
@@ -139,7 +134,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</mensagemXML>");
             message.Append("</ConsultarNfseServicoPrestado>");
 
-            return Execute("ConsultarNfseServicoPrestado", message.ToString());
+            return Execute(message.ToString(), "ConsultarNfseServicoPrestado");
         }
 
         public string RecepcionarLoteRps(string cabec, string msg)
@@ -151,7 +146,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</mensagemXML>");
             message.Append("</RecepcionarLoteRps>");
 
-            return Execute("RecepcionarLoteRps", message.ToString());
+            return Execute(message.ToString(), "RecepcionarLoteRps");
         }
 
         public string RecepcionarLoteRpsSincrono(string cabec, string msg)
@@ -163,22 +158,11 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</mensagemXML>");
             message.Append("</RecepcionarLoteRpsSincrono>");
 
-            return Execute("RecepcionarLoteRpsSincrono", message.ToString());
+            return Execute(message.ToString(), "RecepcionarLoteRpsSincrono");
         }
 
-        private string Execute(string responseTag, string message)
+        protected override string TratarRetorno(string responseTag, XDocument xmlDocument)
         {
-            var envelope = new StringBuilder();
-            envelope.Append("<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">");
-            envelope.Append("<soap:Body>");
-            envelope.Append(message);
-            envelope.Append("</soap:Body>");
-            envelope.Append("</soap:Envelope>");
-
-            var msg = Message.CreateMessage(XmlReader.Create(new StringReader(envelope.ToString())), int.MaxValue, Endpoint.Binding.MessageVersion);
-            var ret = Execute(msg);
-
-            var xmlDocument = XDocument.Parse(ret);
             var element = xmlDocument.ElementAnyNs("Fault");
             if (element != null)
                 throw new ACBrDFeCommunicationException(element.ElementAnyNs("Reason").GetValue<string>());
