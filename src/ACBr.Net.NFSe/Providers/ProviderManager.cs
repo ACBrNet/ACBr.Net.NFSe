@@ -40,7 +40,6 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using ACBr.Net.NFSe.Providers.GovDigital;
 using ACBr.Net.NFSe.Providers.NotaCarioca;
-using ACBr.Net.NFSe.Providers.PortoAlegre;
 using ACBr.Net.NFSe.Providers.SaoPaulo;
 using ACBr.Net.NFSe.Providers.WebIss;
 using ACBr.Net.NFSe.Providers.WebIss2;
@@ -60,7 +59,7 @@ namespace ACBr.Net.NFSe.Providers
             Providers = new Dictionary<NFSeProvider, Type>
             {
                 {NFSeProvider.Abaco, typeof(ProviderAbaco)},
-                {NFSeProvider.BeloHorizonte, typeof(ProviderBeloHorizonte)},
+                {NFSeProvider.BHISS, typeof(ProviderBHISS)},
                 {NFSeProvider.Betha, typeof(ProviderBetha)},
                 {NFSeProvider.Betha2, typeof(ProviderBetha2)},
                 {NFSeProvider.Coplan, typeof(ProviderCoplan)},
@@ -70,7 +69,6 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.Ginfes, typeof(ProviderGinfes)},
                 {NFSeProvider.GovDigital, typeof(ProviderGovDigital)},
                 {NFSeProvider.NotaCarioca, typeof(ProviderNotaCarioca)},
-                {NFSeProvider.PortoAlegre, typeof(ProviderPortoAlegre)},
                 {NFSeProvider.SaoPaulo, typeof(ProviderSaoPaulo)},
                 {NFSeProvider.SmarAPDABRASF, typeof(ProviderSmarAPDABRASF)},
                 {NFSeProvider.Vitoria, typeof(ProviderVitoria)},

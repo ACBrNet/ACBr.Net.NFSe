@@ -42,9 +42,14 @@ namespace ACBr.Net.NFSe.Providers
         [Description("Betha v2")]
         Betha2 = 2,
 
+        BHISS = 8,
+
         Coplan = 3,
 
         DSF = 4,
+
+        [Description("Equiplano")]
+        Equiplano = 15,
 
         FissLex = 12,
 
@@ -55,27 +60,18 @@ namespace ACBr.Net.NFSe.Providers
         [Description("Nota Carioca")]
         NotaCarioca = 7,
 
-        [Description("Porto Alegre")]
-        PortoAlegre = 8,
-
         [Description("São Paulo")]
         SaoPaulo = 9,
+
+        [Description("SmarAPD ABRASF")]
+        SmarAPDABRASF = 14,
+
+        [Description("Vitoria")]
+        Vitoria = 13,
 
         WebIss = 10,
 
         [Description("WebIss v2")]
-        WebIss2 = 11,
-
-        [Description("Belo Horizonte")]
-        BeloHorizonte = 13,
-
-        [Description("Vitoria")]
-        Vitoria = 14,
-
-        [Description("SmarAPD ABRASF")]
-        SmarAPDABRASF = 15,
-
-        [Description("Equiplano")]
-        Equiplano = 16
+        WebIss2 = 11
     }
 }

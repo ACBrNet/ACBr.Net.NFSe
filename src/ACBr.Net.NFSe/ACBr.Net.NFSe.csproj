@@ -145,10 +145,6 @@
       <Pack>True</Pack>
       <PackagePath>content\Schemas\Nota Carioca</PackagePath>
     </None>
-    <None Include="Schemas\Porto Alegre\*.*">
-      <Pack>True</Pack>
-      <PackagePath>content\Schemas\Porto Alegre</PackagePath>
-    </None>
     <None Include="Schemas\São Paulo\*.*">
       <Pack>True</Pack>
       <PackagePath>content\Schemas\São Paulo</PackagePath>
@@ -227,9 +223,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\Nota Carioca\*.*">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schemas\Porto Alegre\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\São Paulo\*.*">

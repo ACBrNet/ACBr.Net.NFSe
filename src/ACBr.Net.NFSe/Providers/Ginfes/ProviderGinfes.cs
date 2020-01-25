@@ -1424,19 +1424,9 @@ namespace ACBr.Net.NFSe.Providers
             return xmlDoc.AsString(identado, showDeclaration, Encoding.UTF8);
         }
 
-        private IGinfesServiceClient GetCliente(TipoUrl tipo)
+        private GinfesServiceClient GetCliente(TipoUrl tipo)
         {
-            switch (Configuracoes.WebServices.Ambiente)
-            {
-                case DFeTipoAmbiente.Homologacao:
-                    return new GinfesHomServiceClient(this, tipo);
-
-                case DFeTipoAmbiente.Producao:
-                    return new GinfesProdServiceClient(this, tipo);
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            return new GinfesServiceClient(this, tipo);
         }
 
         private static string GerarCabecalho()
