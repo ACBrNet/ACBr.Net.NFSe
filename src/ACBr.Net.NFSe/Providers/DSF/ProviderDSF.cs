@@ -29,11 +29,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using ACBr.Net.Core.Extensions;
-using ACBr.Net.DFe.Core;
-using ACBr.Net.DFe.Core.Serializer;
-using ACBr.Net.NFSe.Configuracao;
-using ACBr.Net.NFSe.Nota;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,8 +36,14 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using ACBr.Net.Core;
+using ACBr.Net.Core.Extensions;
+using ACBr.Net.DFe.Core;
+using ACBr.Net.DFe.Core.Common;
+using ACBr.Net.DFe.Core.Serializer;
+using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Nota;
 
-namespace ACBr.Net.NFSe.Providers.DSF
+namespace ACBr.Net.NFSe.Providers
 {
     internal sealed class ProviderDSF : ProviderBase
     {
@@ -466,7 +467,11 @@ namespace ACBr.Net.NFSe.Providers.DSF
             {
                 using (var cliente = GetClient(TipoUrl.Enviar))
                 {
-                    retornoWebservice.XmlRetorno = cliente.Enviar(retornoWebservice.XmlEnvio);
+                    if (Configuracoes.WebServices.Ambiente == DFeTipoAmbiente.Homologacao)
+                        retornoWebservice.XmlRetorno = cliente.EnviarTeste(retornoWebservice.XmlEnvio);
+                    else
+                        retornoWebservice.XmlRetorno = cliente.Enviar(retornoWebservice.XmlEnvio);
+
                     retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
                     retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }

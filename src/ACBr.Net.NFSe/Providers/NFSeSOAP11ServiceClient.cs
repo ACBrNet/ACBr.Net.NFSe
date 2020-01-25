@@ -31,6 +31,11 @@ namespace ACBr.Net.NFSe.Providers
 
         protected virtual string Execute(string soapAction, string message, string responseTag, params string[] soapNamespaces)
         {
+            return Execute(soapAction, message, new[] { responseTag }, soapNamespaces);
+        }
+
+        protected virtual string Execute(string soapAction, string message, string[] responseTag, params string[] soapNamespaces)
+        {
             var request = WriteSoapEnvelope(message, soapNamespaces);
 
             RemoteCertificateValidationCallback validation = null;
@@ -48,14 +53,10 @@ namespace ACBr.Net.NFSe.Providers
             {
                 using (new OperationContextScope(InnerChannel))
                 {
-                    // Alguns provedores não usam SOAPAction
-                    if (!soapAction.IsEmpty())
-                    {
-                        //Define a SOAPAction por ser SOAP 1.1
-                        var requestMessage = new HttpRequestMessageProperty();
-                        requestMessage.Headers["SOAPAction"] = soapAction;
-                        OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = requestMessage;
-                    }
+                    //Define a SOAPAction por ser SOAP 1.1
+                    var requestMessage = new HttpRequestMessageProperty();
+                    requestMessage.Headers["SOAPAction"] = soapAction;
+                    OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = requestMessage;
 
                     lock (serviceLock)
                     {
@@ -73,7 +74,7 @@ namespace ACBr.Net.NFSe.Providers
             }
 
             var xmlDocument = XDocument.Parse(ret);
-            return TratarRetorno(responseTag, xmlDocument);
+            return TratarRetorno(xmlDocument, responseTag);
         }
 
         protected virtual Message WriteSoapEnvelope(string message, string[] soapNamespaces)
@@ -101,7 +102,7 @@ namespace ACBr.Net.NFSe.Providers
             return true;
         }
 
-        protected abstract string TratarRetorno(string responseTag, XDocument xmlDocument);
+        protected abstract string TratarRetorno(XDocument xmlDocument, params string[] responseTag);
 
         #endregion Methods
     }

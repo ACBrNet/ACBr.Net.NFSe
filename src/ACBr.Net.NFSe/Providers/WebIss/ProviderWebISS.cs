@@ -33,7 +33,7 @@ using System;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
 
-namespace ACBr.Net.NFSe.Providers.WebISS
+namespace ACBr.Net.NFSe.Providers.WebIss
 {
     // ReSharper disable once InconsistentNaming
     internal sealed class ProviderWebIss : ProviderABRASF

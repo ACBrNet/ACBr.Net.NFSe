@@ -38,15 +38,12 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using ACBr.Net.NFSe.Providers.BeloHorizonte;
-using ACBr.Net.NFSe.Providers.Coplan;
-using ACBr.Net.NFSe.Providers.DSF;
 using ACBr.Net.NFSe.Providers.GovDigital;
 using ACBr.Net.NFSe.Providers.NotaCarioca;
 using ACBr.Net.NFSe.Providers.PortoAlegre;
 using ACBr.Net.NFSe.Providers.SaoPaulo;
-using ACBr.Net.NFSe.Providers.WebISS;
-using ACBr.Net.NFSe.Providers.WebISS2;
+using ACBr.Net.NFSe.Providers.WebIss;
+using ACBr.Net.NFSe.Providers.WebIss2;
 
 namespace ACBr.Net.NFSe.Providers
 {

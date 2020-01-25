@@ -31,7 +31,7 @@
 
 using System;
 
-namespace ACBr.Net.NFSe.Providers.WebISS
+namespace ACBr.Net.NFSe.Providers.WebIss
 {
     // ReSharper disable once InconsistentNaming
     internal sealed class WebIssServiceClient : NFSeServiceClient<IWebIssServiceClient>, IABRASFClient

@@ -31,7 +31,7 @@
 
 using System.ServiceModel;
 
-namespace ACBr.Net.NFSe.Providers.WebISS2
+namespace ACBr.Net.NFSe.Providers.WebIss2
 {
     [ServiceContract(Namespace = "http://nfse.abrasf.org.br")]
     internal interface IWebIss2ServiceClient

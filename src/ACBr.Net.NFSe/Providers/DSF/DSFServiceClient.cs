@@ -29,9 +29,13 @@
 // <summary></summary>
 // ***********************************************************************
 
-namespace ACBr.Net.NFSe.Providers.DSF
+using System.Text;
+using System.Xml.Linq;
+using ACBr.Net.Core.Extensions;
+
+namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class DSFServiceClient : NFSeServiceClient<IDSFService>, IDSFService
+    internal sealed class DSFServiceClient : NFSeSOAP11ServiceClient
     {
         #region Constructor
 
@@ -50,9 +54,14 @@ namespace ACBr.Net.NFSe.Providers.DSF
         /// <returns>System.String.</returns>
         public string ConsultarSequencialRps(string mensagemXml)
         {
-            var request = new ConsultarSequencialRpsRequest(mensagemXml);
-            var retVal = ((IDSFService)this).consultarSequencialRps(request);
-            return retVal.Return;
+            var message = new StringBuilder();
+            message.Append("<proc:consultarSequencialRps soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
+            message.Append("<mensagemXml xsi:type=\"xsd:string\">");
+            message.AppendEnvio(mensagemXml);
+            message.Append("</mensagemXml>");
+            message.Append("</proc:consultarSequencialRps>");
+
+            return Execute(message.ToString(), "consultarSequencialRpsResponse", "consultarSequencialRpsReturn");
         }
 
         /// <summary>
@@ -62,9 +71,26 @@ namespace ACBr.Net.NFSe.Providers.DSF
         /// <returns>System.String.</returns>
         public string EnviarSincrono(string mensagemXml)
         {
-            var request = new EnviarSincronoRequest(mensagemXml);
-            var retVal = ((IDSFService)this).enviarSincrono(request);
-            return retVal.Return;
+            var message = new StringBuilder();
+            message.Append("<proc:enviarSincrono soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
+            message.Append("<mensagemXml xsi:type=\"xsd:string\">");
+            message.AppendEnvio(mensagemXml);
+            message.Append("</mensagemXml>");
+            message.Append("</proc:enviarSincrono>");
+
+            return Execute(message.ToString(), "enviarSincronoResponse", "enviarSincronoReturn");
+        }
+
+        public string EnviarTeste(string mensagemXml)
+        {
+            var message = new StringBuilder();
+            message.Append("<proc:testeEnviar soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
+            message.Append("<mensagemXml xsi:type=\"xsd:string\">");
+            message.AppendEnvio(mensagemXml);
+            message.Append("</mensagemXml>");
+            message.Append("</proc:testeEnviar>");
+
+            return Execute(message.ToString(), "testeEnviarResponse", "testeEnviarReturn");
         }
 
         /// <summary>
@@ -74,9 +100,14 @@ namespace ACBr.Net.NFSe.Providers.DSF
         /// <returns>System.String.</returns>
         public string Enviar(string mensagemXml)
         {
-            var request = new EnviarRequest(mensagemXml);
-            var retVal = ((IDSFService)this).enviar(request);
-            return retVal.Return;
+            var message = new StringBuilder();
+            message.Append("<proc:enviar soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
+            message.Append("<mensagemXml xsi:type=\"xsd:string\">");
+            message.AppendEnvio(mensagemXml);
+            message.Append("</mensagemXml>");
+            message.Append("</proc:enviar>");
+
+            return Execute(message.ToString(), "enviarResponse", "enviarReturn");
         }
 
         /// <summary>
@@ -86,9 +117,14 @@ namespace ACBr.Net.NFSe.Providers.DSF
         /// <returns>System.String.</returns>
         public string ConsultarLote(string mensagemXml)
         {
-            var request = new ConsultarLoteRequest(mensagemXml);
-            var retVal = ((IDSFService)this).consultarLote(request);
-            return retVal.Return;
+            var message = new StringBuilder();
+            message.Append("<proc:consultarLote soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
+            message.Append("<mensagemXml xsi:type=\"xsd:string\">");
+            message.AppendEnvio(mensagemXml);
+            message.Append("</mensagemXml>");
+            message.Append("</proc:consultarLote>");
+
+            return Execute(message.ToString(), "consultarLoteResponse", "consultarLoteReturn");
         }
 
         /// <summary>
@@ -98,9 +134,14 @@ namespace ACBr.Net.NFSe.Providers.DSF
         /// <returns>System.String.</returns>
         public string ConsultarNFSe(string mensagemXml)
         {
-            var request = new ConsultarNotaRequest(mensagemXml);
-            var retVal = ((IDSFService)this).consultarNota(request);
-            return retVal.Return;
+            var message = new StringBuilder();
+            message.Append("<proc:consultarNota soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
+            message.Append("<mensagemXml xsi:type=\"xsd:string\">");
+            message.AppendEnvio(mensagemXml);
+            message.Append("</mensagemXml>");
+            message.Append("</proc:consultarNota>");
+
+            return Execute(message.ToString(), "consultarNotaResponse", "consultarNotaReturn");
         }
 
         /// <summary>
@@ -110,9 +151,14 @@ namespace ACBr.Net.NFSe.Providers.DSF
         /// <returns>System.String.</returns>
         public string Cancelar(string mensagemXml)
         {
-            var request = new CancelarRequest(mensagemXml);
-            var retVal = ((IDSFService)this).cancelar(request);
-            return retVal.Return;
+            var message = new StringBuilder();
+            message.Append("<proc:cancelar soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
+            message.Append("<mensagemXml xsi:type=\"xsd:string\">");
+            message.AppendEnvio(mensagemXml);
+            message.Append("</mensagemXml>");
+            message.Append("</proc:cancelar>");
+
+            return Execute(message.ToString(), "cancelarResponse", "cancelarReturn");
         }
 
         /// <summary>
@@ -122,49 +168,25 @@ namespace ACBr.Net.NFSe.Providers.DSF
         /// <returns>System.String.</returns>
         public string ConsultarNFSeRps(string mensagemXml)
         {
-            var request = new ConsultarNFSeRpsRequest(mensagemXml);
-            var retVal = ((IDSFService)this).consultarNFSeRps(request);
-            return retVal.Return;
+            var message = new StringBuilder();
+            message.Append("<proc:consultarNFSeRps soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
+            message.Append("<mensagemXml xsi:type=\"xsd:string\">");
+            message.AppendEnvio(mensagemXml);
+            message.Append("</mensagemXml>");
+            message.Append("</proc:consultarNFSeRps>");
+
+            return Execute(message.ToString(), "consultarNFSeRpsResponse", "consultarNFSeRpsReturn");
         }
 
-        #region Interface Methods
-
-        ConsultarSequencialRpsResponse IDSFService.consultarSequencialRps(ConsultarSequencialRpsRequest request)
+        private string Execute(string message, params string[] reponseTags)
         {
-            return Channel.consultarSequencialRps(request);
+            return Execute("", message, reponseTags, "xmlns:proc=\"http://proces.wsnfe2.dsfnet.com.br\"");
         }
 
-        EnviarSincronoResponse IDSFService.enviarSincrono(EnviarSincronoRequest request)
+        protected override string TratarRetorno(XDocument xmlDocument, params string[] responseTag)
         {
-            return Channel.enviarSincrono(request);
+            return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs(responseTag[1]).Value;
         }
-
-        EnviarResponse IDSFService.enviar(EnviarRequest request)
-        {
-            return Channel.enviar(request);
-        }
-
-        ConsultarLoteResponse IDSFService.consultarLote(ConsultarLoteRequest request)
-        {
-            return Channel.consultarLote(request);
-        }
-
-        ConsultarNotaResponse IDSFService.consultarNota(ConsultarNotaRequest request)
-        {
-            return Channel.consultarNota(request);
-        }
-
-        CancelarResponse IDSFService.cancelar(CancelarRequest request)
-        {
-            return Channel.cancelar(request);
-        }
-
-        ConsultarNFSeRpsResponse IDSFService.consultarNFSeRps(ConsultarNFSeRpsRequest request)
-        {
-            return Channel.consultarNFSeRps(request);
-        }
-
-        #endregion Interface Methods
 
         #endregion Methods
     }

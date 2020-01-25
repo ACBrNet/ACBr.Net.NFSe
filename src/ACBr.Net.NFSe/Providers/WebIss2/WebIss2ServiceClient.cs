@@ -29,7 +29,7 @@
 // <summary></summary>
 // ***********************************************************************
 
-namespace ACBr.Net.NFSe.Providers.WebISS2
+namespace ACBr.Net.NFSe.Providers.WebIss2
 {
     internal sealed class WebIss2ServiceClient : NFSeServiceClient<IWebIss2ServiceClient>, IABRASF2Client
     {

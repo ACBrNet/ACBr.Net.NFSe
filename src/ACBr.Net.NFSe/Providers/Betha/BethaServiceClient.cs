@@ -93,7 +93,7 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("", message, "", "xmlns:e=\"http://www.betha.com.br/e-nota-contribuinte-ws\"");
         }
 
-        protected override string TratarRetorno(string responseTag, XDocument xmlDocument)
+        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
             var element = xmlDocument.ElementAnyNs("Fault");
             if (element != null)

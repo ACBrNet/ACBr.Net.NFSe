@@ -6,7 +6,7 @@ using ACBr.Net.DFe.Core;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
 
-namespace ACBr.Net.NFSe.Providers.BeloHorizonte
+namespace ACBr.Net.NFSe.Providers
 {
     internal sealed class ProviderBeloHorizonte : ProviderABRASF
     {

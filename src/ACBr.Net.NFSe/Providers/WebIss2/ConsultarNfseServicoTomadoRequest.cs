@@ -31,7 +31,7 @@
 
 using System.ServiceModel;
 
-namespace ACBr.Net.NFSe.Providers.WebISS2
+namespace ACBr.Net.NFSe.Providers.WebIss2
 {
     [MessageContract(WrapperName = "ConsultarNfseServicoTomadoRequest", WrapperNamespace = "http://nfse.abrasf.org.br", IsWrapped = true)]
     internal sealed class ConsultarNfseServicoTomadoRequest : RequestBase

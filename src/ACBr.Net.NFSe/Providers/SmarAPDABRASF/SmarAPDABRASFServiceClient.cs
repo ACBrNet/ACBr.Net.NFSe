@@ -201,7 +201,7 @@ namespace ACBr.Net.NFSe.Providers
             return Provider.Configuracoes.WebServices.Ambiente != DFeTipoAmbiente.Homologacao;
         }
 
-        protected override string TratarRetorno(string responseTag, XDocument xmlDocument)
+        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
             var element = xmlDocument.ElementAnyNs("Fault");
             if (element != null)
@@ -210,7 +210,7 @@ namespace ACBr.Net.NFSe.Providers
                 throw new ACBrDFeCommunicationException(exMessage);
             }
 
-            return xmlDocument.ElementAnyNs(responseTag).ElementAnyNs("outputXML").Value;
+            return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("outputXML").Value;
         }
 
         #endregion Methods

@@ -31,7 +31,7 @@
 
 using ACBr.Net.NFSe.Configuracao;
 
-namespace ACBr.Net.NFSe.Providers.WebISS2
+namespace ACBr.Net.NFSe.Providers.WebIss2
 {
     // ReSharper disable once InconsistentNaming
     internal sealed class ProviderWebIss2 : ProviderABRASF2

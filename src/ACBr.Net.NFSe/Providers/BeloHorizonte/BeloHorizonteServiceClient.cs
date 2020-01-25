@@ -3,7 +3,7 @@ using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core;
 
-namespace ACBr.Net.NFSe.Providers.BeloHorizonte
+namespace ACBr.Net.NFSe.Providers
 {
     internal sealed class BeloHorizonteServiceClient : NFSeSOAP11ServiceClient, IABRASFClient
     {
@@ -142,7 +142,7 @@ namespace ACBr.Net.NFSe.Providers.BeloHorizonte
             return Execute(action, message, responseTag, "xmlns:ws=\"http://ws.bhiss.pbh.gov.br\"");
         }
 
-        protected override string TratarRetorno(string responseTag, XDocument xmlDocument)
+        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
             var element = xmlDocument.ElementAnyNs("Fault");
             if (element != null)
@@ -151,7 +151,7 @@ namespace ACBr.Net.NFSe.Providers.BeloHorizonte
                 throw new ACBrDFeCommunicationException(exMessage);
             }
 
-            return xmlDocument.ElementAnyNs(responseTag).ElementAnyNs("outputXML").Value;
+            return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("outputXML").Value;
         }
 
         #endregion Methods

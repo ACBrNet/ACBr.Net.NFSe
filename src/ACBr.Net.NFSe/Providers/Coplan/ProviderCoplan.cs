@@ -31,7 +31,7 @@
 
 using ACBr.Net.NFSe.Configuracao;
 
-namespace ACBr.Net.NFSe.Providers.Coplan
+namespace ACBr.Net.NFSe.Providers
 {
     internal sealed class ProviderCoplan : ProviderABRASF2
     {

@@ -31,7 +31,7 @@
 
 using System.ServiceModel;
 
-namespace ACBr.Net.NFSe.Providers.WebISS
+namespace ACBr.Net.NFSe.Providers.WebIss
 {
     [ServiceContract]
     // ReSharper disable once InconsistentNaming

@@ -80,7 +80,7 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("esRecepcionarLoteRps", msg, "");
         }
 
-        protected override string TratarRetorno(string responseTag, XDocument xmlDocument)
+        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
             return xmlDocument.ToString();
         }

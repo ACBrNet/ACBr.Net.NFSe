@@ -29,12 +29,15 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
 using System.Net;
+using System.Text;
+using System.Xml.Linq;
+using ACBr.Net.Core.Extensions;
+using ACBr.Net.DFe.Core;
 
-namespace ACBr.Net.NFSe.Providers.Coplan
+namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class CoplanServiceClient : NFSeServiceClient<ICoplanService>, IABRASF2Client
+    internal sealed class CoplanServiceClient : NFSeSOAP11ServiceClient, IABRASF2Client
     {
         #region Fields
 
@@ -61,111 +64,172 @@ namespace ACBr.Net.NFSe.Providers.Coplan
 
         public string RecepcionarLoteRps(string cabec, string msg)
         {
-            var request = new RecepcionarLoteRpsRequest(new RequestBase()
-            {
-                Cabecalho = cabec,
-                Mensagem = msg
-            });
+            var message = new StringBuilder();
+            message.Append("<trib:nfse_web_service.RECEPCIONARLOTERPS>");
+            message.Append("<trib:Recepcionarloterpsrequest>");
+            message.Append("<trib:nfseCabecMsg>");
+            message.AppendCData(cabec);
+            message.Append("</trib:nfseCabecMsg>");
+            message.Append("<trib:nfseDadosMsg>");
+            message.AppendCData(msg);
+            message.Append("</trib:nfseDadosMsg>");
+            message.Append("</trib:Recepcionarloterpsrequest>");
+            message.Append("</trib:nfse_web_service.RECEPCIONARLOTERPS>");
 
-            var response = Channel.RecepcionarLoteRps(request);
-
-            return response.Response.OutputXml.Trim();
+            return Execute("RECEPCIONARLOTERPS", message.ToString(), "nfse_web_service.RECEPCIONARLOTERPSResponse", "Recepcionarloterpsresponse");
         }
 
         public string RecepcionarLoteRpsSincrono(string cabec, string msg)
         {
-            var request = new RecepcionarLoteRpsSincronoRequest(new RequestBase()
-            {
-                Cabecalho = cabec,
-                Mensagem = msg
-            });
+            var message = new StringBuilder();
+            message.Append("<trib:nfse_web_service.RECEPCIONARLOTERPSSINCRONO>");
+            message.Append("<trib:Recepcionarloterpssincronorequest>");
+            message.Append("<trib:nfseCabecMsg>");
+            message.AppendCData(cabec);
+            message.Append("</trib:nfseCabecMsg>");
+            message.Append("<trib:nfseDadosMsg>");
+            message.AppendCData(msg);
+            message.Append("</trib:nfseDadosMsg>");
+            message.Append("</trib:Recepcionarloterpssincronorequest>");
+            message.Append("</trib:nfse_web_service.RECEPCIONARLOTERPSSINCRONO>");
 
-            var response = Channel.RecepcionarLoteRpsSincrono(request);
-
-            return response.Response.OutputXml.Trim();
+            return Execute("RECEPCIONARLOTERPSSINCRONO", message.ToString(), "nfse_web_service.RECEPCIONARLOTERPSSINCRONOResponse", "Recepcionarloterpssincronoresponse");
         }
 
         public string ConsultarNFSePorRps(string cabec, string msg)
         {
-            var request = new ConsultarNFSePorRpsRequest(new RequestBase()
-            {
-                Cabecalho = cabec,
-                Mensagem = msg
-            });
+            var message = new StringBuilder();
+            message.Append("<trib:nfse_web_service.CONSULTARNFSEPORRPS>");
+            message.Append("<trib:Consultarnfseporrpsrequest>");
+            message.Append("<trib:nfseCabecMsg>");
+            message.AppendCData(cabec);
+            message.Append("</trib:nfseCabecMsg>");
+            message.Append("<trib:nfseDadosMsg>");
+            message.AppendCData(msg);
+            message.Append("</trib:nfseDadosMsg>");
+            message.Append("</trib:Consultarnfseporrpsrequest>");
+            message.Append("</trib:nfse_web_service.CONSULTARNFSEPORRPS>");
 
-            var response = Channel.ConsultarNFSePorRps(request);
-
-            return response.Response.OutputXml.Trim();
+            return Execute("CONSULTARNFSEPORRPS", message.ToString(), "nfse_web_service.CONSULTARNFSEPORRPSResponse", "Consultarnfseporrpsresponse");
         }
 
         public string ConsultarNFSeFaixa(string cabec, string msg)
         {
-            var request = new ConsultarNFSeFaixaRequest(new RequestBase()
-            {
-                Cabecalho = cabec,
-                Mensagem = msg
-            });
+            var message = new StringBuilder();
+            message.Append("<trib:nfse_web_service.CONSULTARNFSEFAIXA>");
+            message.Append("<trib:Consultarnfseporfaixarequest>");
+            message.Append("<trib:nfseCabecMsg>");
+            message.AppendCData(cabec);
+            message.Append("</trib:nfseCabecMsg>");
+            message.Append("<trib:nfseDadosMsg>");
+            message.AppendCData(msg);
+            message.Append("</trib:nfseDadosMsg>");
+            message.Append("</trib:Consultarnfseporfaixarequest>");
+            message.Append("</trib:nfse_web_service.CONSULTARNFSEFAIXA>");
 
-            var response = Channel.ConsultarNFSeFaixa(request);
-
-            return response.Response.OutputXml.Trim();
+            return Execute("CONSULTARNFSEFAIXA", message.ToString(), "nfse_web_service.CONSULTARNFSEFAIXAResponse", "Consultarnfseporfaixaresponse");
         }
 
         public string ConsultarNFSeServicoTomado(string cabec, string msg)
         {
-            throw new NotImplementedException();
+            var message = new StringBuilder();
+            message.Append("<trib:nfse_web_service.CONSULTARNFSESERVICOTOMADO>");
+            message.Append("<trib:Consultarnfseservicotomadorequest>");
+            message.Append("<trib:nfseCabecMsg>");
+            message.AppendCData(cabec);
+            message.Append("</trib:nfseCabecMsg>");
+            message.Append("<trib:nfseDadosMsg>");
+            message.AppendCData(msg);
+            message.Append("</trib:nfseDadosMsg>");
+            message.Append("</trib:Consultarnfseservicotomadorequest>");
+            message.Append("</trib:nfse_web_service.CONSULTARNFSESERVICOTOMADO>");
+
+            return Execute("CONSULTARNFSESERVICOTOMADO", message.ToString(), "nfse_web_service.CONSULTARNFSESERVICOTOMADOResponse", "Consultarnfseservicotomadoresponse");
         }
 
         public string ConsultarNFSeServicoPrestado(string cabec, string msg)
         {
-            var request = new ConsultarNFSeServicoPrestadoRequest(new RequestBase()
-            {
-                Cabecalho = cabec,
-                Mensagem = msg
-            });
+            var message = new StringBuilder();
+            message.Append("<trib:nfse_web_service.CONSULTARNFSESERVICOPRESTADO>");
+            message.Append("<trib:Consultarnfseservicoprestadorequest>");
+            message.Append("<trib:nfseCabecMsg>");
+            message.AppendCData(cabec);
+            message.Append("</trib:nfseCabecMsg>");
+            message.Append("<trib:nfseDadosMsg>");
+            message.AppendCData(msg);
+            message.Append("</trib:nfseDadosMsg>");
+            message.Append("</trib:Consultarnfseservicoprestadorequest>");
+            message.Append("</trib:nfse_web_service.CONSULTARNFSESERVICOPRESTADO>");
 
-            var response = Channel.ConsultarNFSeServicoPrestado(request);
-
-            return response.Response.OutputXml.Trim();
+            return Execute("CONSULTARNFSESERVICOPRESTADO", message.ToString(), "nfse_web_service.CONSULTARNFSESERVICOPRESTADOResponse", "Consultarnfseservicoprestadoresponse");
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
         {
-            var request = new ConsultarLoteRpsRequest(new RequestBase()
-            {
-                Cabecalho = cabec,
-                Mensagem = msg
-            });
+            var message = new StringBuilder();
+            message.Append("<trib:nfse_web_service.CONSULTARLOTERPS>");
+            message.Append("<trib:Consultarloterpsrequest>");
+            message.Append("<trib:nfseCabecMsg>");
+            message.AppendCData(cabec);
+            message.Append("</trib:nfseCabecMsg>");
+            message.Append("<trib:nfseDadosMsg>");
+            message.AppendCData(msg);
+            message.Append("</trib:nfseDadosMsg>");
+            message.Append("</trib:Consultarloterpsrequest>");
+            message.Append("</trib:nfse_web_service.CONSULTARLOTERPS>");
 
-            var response = Channel.ConsultarLoteRps(request);
-
-            return response.Response.OutputXml.Trim();
+            return Execute("CONSULTARLOTERPS", message.ToString(), "nfse_web_service.CONSULTARLOTERPSResponse", "Consultarloterpsresponse");
         }
 
         public string CancelarNFSe(string cabec, string msg)
         {
-            var request = new CancelarNFSeRequest(new RequestBase()
-            {
-                Cabecalho = cabec,
-                Mensagem = msg
-            });
+            var message = new StringBuilder();
+            message.Append("<trib:nfse_web_service.CANCELARNFSE>");
+            message.Append("<trib:Cancelarnfserequest>");
+            message.Append("<trib:nfseCabecMsg>");
+            message.AppendCData(cabec);
+            message.Append("</trib:nfseCabecMsg>");
+            message.Append("<trib:nfseDadosMsg>");
+            message.AppendCData(msg);
+            message.Append("</trib:nfseDadosMsg>");
+            message.Append("</trib:Cancelarnfserequest>");
+            message.Append("</trib:nfse_web_service.CANCELARNFSE>");
 
-            var response = Channel.CancelarNFSe(request);
-
-            return response.Response.OutputXml.Trim();
+            return Execute("CANCELARNFSE", message.ToString(), "nfse_web_service.CANCELARNFSEResponse", "Cancelarnfseresponse");
         }
 
         public string SubstituirNFSe(string cabec, string msg)
         {
-            var request = new SubstituirNFSeRequest(new RequestBase()
+            var message = new StringBuilder();
+            message.Append("<trib:nfse_web_service.SUBSTITUIRNFSE>");
+            message.Append("<trib:Substituirnfserequest>");
+            message.Append("<trib:nfseCabecMsg>");
+            message.AppendCData(cabec);
+            message.Append("</trib:nfseCabecMsg>");
+            message.Append("<trib:nfseDadosMsg>");
+            message.AppendCData(msg);
+            message.Append("</trib:nfseDadosMsg>");
+            message.Append("</trib:Substituirnfserequest>");
+            message.Append("</trib:nfse_web_service.SUBSTITUIRNFSE>");
+
+            return Execute("SUBSTITUIRNFSE", message.ToString(), "nfse_web_service.SUBSTITUIRNFSEResponse", "Substituirnfseresponse");
+        }
+
+        private string Execute(string action, string message, params string[] responseTag)
+        {
+            return Execute($"Tributarioaction/ANFSE_WEB_SERVICE.{action}", message, responseTag, "xmlns:trib=\"Tributario\"");
+        }
+
+        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
+        {
+            var element = xmlDocument.ElementAnyNs(responseTag[0])?.ElementAnyNs("Fault");
+            if (element != null)
             {
-                Cabecalho = cabec,
-                Mensagem = msg
-            });
+                var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
+                throw new ACBrDFeCommunicationException(exMessage);
+            }
 
-            var response = Channel.SubstituirNFSe(request);
-
-            return response.Response.OutputXml.Trim();
+            return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs(responseTag[1]).ElementAnyNs("outputXML").Value;
         }
 
         #endregion Methods
