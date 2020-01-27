@@ -62,7 +62,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</mensagemXML>");
             message.Append("</CancelarNfse>");
 
-            return Execute(message.ToString(), "CancelarNfse");
+            return Execute("http://www.abrasf.org.br/nfse.xsd/CancelarNfse", message.ToString(), "CancelarNfse");
         }
 
         public string SubstituirNFSe(string cabec, string msg)
@@ -74,7 +74,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</mensagemXML>");
             message.Append("</SubstituirNfse>");
 
-            return Execute(message.ToString(), "SubstituirNfse");
+            return Execute("http://www.abrasf.org.br/nfse.xsd/SubstituirNfse", message.ToString(), "SubstituirNfse");
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
@@ -86,7 +86,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</mensagemXML>");
             message.Append("</ConsultarLoteRps>");
 
-            return Execute(message.ToString(), "ConsultarLoteRps");
+            return Execute("http://www.abrasf.org.br/nfse.xsd/ConsultarLoteRps", message.ToString(), "ConsultarLoteRps");
         }
 
         public string ConsultarNFSeFaixa(string cabec, string msg)
@@ -98,7 +98,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</mensagemXML>");
             message.Append("</ConsultarNfseFaixa>");
 
-            return Execute(message.ToString(), "ConsultarNfseFaixa");
+            return Execute("http://www.abrasf.org.br/nfse.xsd/ConsultarNfseFaixa", message.ToString(), "ConsultarNfseFaixa");
         }
 
         public string ConsultarNFSeServicoTomado(string cabec, string msg)
@@ -110,7 +110,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</mensagemXML>");
             message.Append("</ConsultarNfseServicoTomado>");
 
-            return Execute(message.ToString(), "ConsultarNfseServicoTomado");
+            return Execute("http://www.abrasf.org.br/nfse.xsd/ConsultarNfseServicoTomado", message.ToString(), "ConsultarNfseServicoTomado");
         }
 
         public string ConsultarNFSePorRps(string cabec, string msg)
@@ -122,7 +122,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</mensagemXML>");
             message.Append("</ConsultarNfsePorRps>");
 
-            return Execute(message.ToString(), "ConsultarNfsePorRps");
+            return Execute("http://www.abrasf.org.br/nfse.xsd/ConsultarNfsePorRps", message.ToString(), "ConsultarNfsePorRps");
         }
 
         public string ConsultarNFSeServicoPrestado(string cabec, string msg)
@@ -134,7 +134,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</mensagemXML>");
             message.Append("</ConsultarNfseServicoPrestado>");
 
-            return Execute(message.ToString(), "ConsultarNfseServicoPrestado");
+            return Execute("http://www.abrasf.org.br/nfse.xsd/ConsultarNfseServicoPrestado", message.ToString(), "ConsultarNfseServicoPrestado");
         }
 
         public string RecepcionarLoteRps(string cabec, string msg)
@@ -146,7 +146,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</mensagemXML>");
             message.Append("</RecepcionarLoteRps>");
 
-            return Execute(message.ToString(), "RecepcionarLoteRps");
+            return Execute("http://www.abrasf.org.br/nfse.xsd/RecepcionarLoteRps", message.ToString(), "RecepcionarLoteRps");
         }
 
         public string RecepcionarLoteRpsSincrono(string cabec, string msg)
@@ -158,16 +158,16 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</mensagemXML>");
             message.Append("</RecepcionarLoteRpsSincrono>");
 
-            return Execute(message.ToString(), "RecepcionarLoteRpsSincrono");
+            return Execute("http://www.abrasf.org.br/nfse.xsd/RecepcionarLoteRpsSincrono", message.ToString(), "RecepcionarLoteRpsSincrono");
         }
 
-        protected override string TratarRetorno(string responseTag, XDocument xmlDocument)
+        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
             var element = xmlDocument.ElementAnyNs("Fault");
             if (element != null)
                 throw new ACBrDFeCommunicationException(element.ElementAnyNs("Reason").GetValue<string>());
 
-            return xmlDocument.ElementAnyNs(responseTag + "Response").ElementAnyNs(responseTag + "Result").Value;
+            return xmlDocument.ElementAnyNs(responseTag[0] + "Response").ElementAnyNs(responseTag[0] + "Result").Value;
         }
 
         #endregion Methods

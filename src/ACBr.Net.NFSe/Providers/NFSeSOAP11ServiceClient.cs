@@ -50,20 +50,17 @@ namespace ACBr.Net.NFSe.Providers
 
             try
             {
-                using (new OperationContextScope(InnerChannel))
-                {
-                    //Define a SOAPAction por ser SOAP 1.1
-                    var requestMessage = new HttpRequestMessageProperty();
-                    requestMessage.Headers["SOAPAction"] = soapAction;
-                    OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = requestMessage;
+                var requestMessage = new HttpRequestMessageProperty();
+                requestMessage.Headers["SOAPAction"] = soapAction;
 
-                    lock (serviceLock)
-                    {
-                        var response = Channel.Request(request);
-                        Guard.Against<ACBrDFeException>(response == null, "Nenhum retorno do webservice.");
-                        var reader = response.GetReaderAtBodyContents();
-                        ret = reader.ReadOuterXml();
-                    }
+                request.Properties[HttpRequestMessageProperty.Name] = requestMessage;
+
+                lock (serviceLock)
+                {
+                    var response = Channel.Request(request);
+                    Guard.Against<ACBrDFeException>(response == null, "Nenhum retorno do webservice.");
+                    var reader = response.GetReaderAtBodyContents();
+                    ret = reader.ReadOuterXml();
                 }
             }
             finally
@@ -101,7 +98,7 @@ namespace ACBr.Net.NFSe.Providers
             return true;
         }
 
-        protected abstract string TratarRetorno(XDocument xmlDocument, params string[] responseTag);
+        protected abstract string TratarRetorno(XDocument xmlDocument, string[] responseTag);
 
         #endregion Methods
     }

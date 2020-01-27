@@ -33,7 +33,7 @@ using System.Text;
 using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
 
-namespace ACBr.Net.NFSe.Providers.NotaCarioca
+namespace ACBr.Net.NFSe.Providers
 {
     // ReSharper disable once InconsistentNaming
     internal sealed class NotaCariocaServiceClient : NFSeSOAP11ServiceClient, IABRASFClient
@@ -137,7 +137,7 @@ namespace ACBr.Net.NFSe.Providers.NotaCarioca
             return Execute(soapAction, message, responseTag, "xmlns:not=\"http://notacarioca.rio.gov.br/\"");
         }
 
-        protected override string TratarRetorno(XDocument xmlDocument, params string[] responseTag)
+        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
             return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("outputXML").Value;
         }

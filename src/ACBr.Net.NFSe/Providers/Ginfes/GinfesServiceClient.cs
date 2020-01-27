@@ -146,7 +146,7 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("", message, responseTag, ns);
         }
 
-        protected override string TratarRetorno(XDocument xmlDocument, params string[] responseTag)
+        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
             return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("return").Value;
         }

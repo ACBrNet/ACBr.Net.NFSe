@@ -1719,7 +1719,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <returns></returns>
         protected virtual string GerarCabecalho()
         {
-            return $"<cabecalho versao=\"1.00\" xmlns=\"http://www.abrasf.org.br/nfse.xsd\">{Environment.NewLine}<versaoDados>1.00</versaoDados>{Environment.NewLine}</cabecalho>";
+            return $"<cabecalho versao=\"1.00\" xmlns=\"http://www.abrasf.org.br/nfse.xsd\"><versaoDados>1.00</versaoDados></cabecalho>";
         }
 
         /// <summary>

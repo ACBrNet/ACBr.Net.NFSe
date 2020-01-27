@@ -183,7 +183,7 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("", message, reponseTags, "xmlns:proc=\"http://proces.wsnfe2.dsfnet.com.br\"");
         }
 
-        protected override string TratarRetorno(XDocument xmlDocument, params string[] responseTag)
+        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
             return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs(responseTag[1]).Value;
         }

@@ -35,11 +35,11 @@ using System.Text;
 using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core;
+using ACBr.Net.DFe.Core.Serializer;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
-using ACBr.Net.DFe.Core.Serializer;
 
-namespace ACBr.Net.NFSe.Providers.NotaCarioca
+namespace ACBr.Net.NFSe.Providers
 {
     // ReSharper disable once InconsistentNaming
     internal sealed class ProviderNotaCarioca : ProviderABRASF

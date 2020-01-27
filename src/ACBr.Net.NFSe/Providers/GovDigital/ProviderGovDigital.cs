@@ -29,10 +29,9 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
 using ACBr.Net.NFSe.Configuracao;
 
-namespace ACBr.Net.NFSe.Providers.GovDigital
+namespace ACBr.Net.NFSe.Providers
 {
     internal sealed class ProviderGovDigital : ProviderABRASF2
     {

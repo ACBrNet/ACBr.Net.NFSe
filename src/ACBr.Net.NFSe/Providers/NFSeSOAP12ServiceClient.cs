@@ -38,7 +38,12 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        protected virtual string Execute(string message, string responseTag, params string[] soapNamespaces)
+        protected virtual string Execute(string soapAction, string message, string responseTag, params string[] soapNamespaces)
+        {
+            return Execute(soapAction, message, new[] { responseTag }, soapNamespaces);
+        }
+
+        protected virtual string Execute(string soapAction, string message, string[] responseTag, params string[] soapNamespaces)
         {
             var request = WriteSoapEnvelope(message, soapNamespaces);
 
@@ -55,6 +60,12 @@ namespace ACBr.Net.NFSe.Providers
 
             try
             {
+                //Define a action no content type por ser SOAP 1.2
+                var requestMessage = new HttpRequestMessageProperty();
+                requestMessage.Headers["Content-Type"] = $"application/soap+xml;charset=UTF-8;action=\"{soapAction}\"";
+
+                request.Properties[HttpRequestMessageProperty.Name] = requestMessage;
+
                 lock (serviceLock)
                 {
                     var response = Channel.Request(request);
@@ -70,7 +81,7 @@ namespace ACBr.Net.NFSe.Providers
             }
 
             var xmlDocument = XDocument.Parse(ret);
-            return TratarRetorno(responseTag, xmlDocument);
+            return TratarRetorno(xmlDocument, responseTag);
         }
 
         protected virtual Message WriteSoapEnvelope(string message, string[] soapNamespaces)
@@ -98,7 +109,7 @@ namespace ACBr.Net.NFSe.Providers
             return true;
         }
 
-        protected abstract string TratarRetorno(string responseTag, XDocument xmlDocument);
+        protected abstract string TratarRetorno(XDocument xmlDocument, string[] responseTag);
 
         #endregion Methods
     }

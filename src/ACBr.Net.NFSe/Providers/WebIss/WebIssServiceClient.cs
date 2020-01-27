@@ -30,11 +30,15 @@
 // ***********************************************************************
 
 using System;
+using System.Text;
+using System.Xml.Linq;
+using ACBr.Net.Core.Extensions;
+using ACBr.Net.DFe.Core;
 
-namespace ACBr.Net.NFSe.Providers.WebIss
+namespace ACBr.Net.NFSe.Providers
 {
     // ReSharper disable once InconsistentNaming
-    internal sealed class WebIssServiceClient : NFSeServiceClient<IWebIssServiceClient>, IABRASFClient
+    internal sealed class WebIssServiceClient : NFSeSOAP11ServiceClient, IABRASFClient
     {
         #region Constructors
 
@@ -48,37 +52,114 @@ namespace ACBr.Net.NFSe.Providers.WebIss
 
         public string RecepcionarLoteRps(string cabec, string msg)
         {
-            return Channel.RecepcionarLoteRps(cabec, msg);
+            var message = new StringBuilder();
+            message.Append("<RecepcionarLoteRps xmlns=\"http://tempuri.org/\">");
+            message.Append("<cabec>");
+            message.AppendCData(cabec);
+            message.Append("</cabec>");
+            message.Append("<msg>");
+            message.AppendCData(msg);
+            message.Append("</msg>");
+            message.Append("</RecepcionarLoteRps>");
+
+            return Execute("http://tempuri.org/INfseServices/RecepcionarLoteRps", message.ToString());
         }
 
         public string ConsultarSituacaoLoteRps(string cabec, string msg)
         {
-            return Channel.ConsultarSituacaoLoteRps(cabec, msg);
+            var message = new StringBuilder();
+            message.Append("<ConsultarSituacaoLoteRps xmlns=\"http://tempuri.org/\">");
+            message.Append("<cabec>");
+            message.AppendCData(cabec);
+            message.Append("</cabec>");
+            message.Append("<msg>");
+            message.AppendCData(msg);
+            message.Append("</msg>");
+            message.Append("</ConsultarSituacaoLoteRps>");
+
+            return Execute("http://tempuri.org/INfseServices/ConsultarSituacaoLoteRps", message.ToString());
         }
 
         public string ConsultarNFSePorRps(string cabec, string msg)
         {
-            return Channel.ConsultarNfsePorRps(cabec, msg);
+            var message = new StringBuilder();
+            message.Append("<ConsultarNfsePorRps xmlns=\"http://tempuri.org/\">");
+            message.Append("<cabec>");
+            message.AppendCData(cabec);
+            message.Append("</cabec>");
+            message.Append("<msg>");
+            message.AppendCData(msg);
+            message.Append("</msg>");
+            message.Append("</ConsultarNfsePorRps>");
+
+            return Execute("http://tempuri.org/INfseServices/ConsultarNfsePorRps", message.ToString());
         }
 
         public string ConsultarNFSe(string cabec, string msg)
         {
-            return Channel.ConsultarNfse(cabec, msg);
+            var message = new StringBuilder();
+            message.Append("<ConsultarNfse xmlns=\"http://tempuri.org/\">");
+            message.Append("<cabec>");
+            message.AppendCData(cabec);
+            message.Append("</cabec>");
+            message.Append("<msg>");
+            message.AppendCData(msg);
+            message.Append("</msg>");
+            message.Append("</ConsultarNfse>");
+
+            return Execute("http://tempuri.org/INfseServices/ConsultarNfse", message.ToString());
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
         {
-            return Channel.ConsultarLoteRps(cabec, msg);
+            var message = new StringBuilder();
+            message.Append("<ConsultarLoteRps xmlns=\"http://tempuri.org/\">");
+            message.Append("<cabec>");
+            message.AppendCData(cabec);
+            message.Append("</cabec>");
+            message.Append("<msg>");
+            message.AppendCData(msg);
+            message.Append("</msg>");
+            message.Append("</ConsultarLoteRps>");
+
+            return Execute("http://tempuri.org/INfseServices/ConsultarLoteRps", message.ToString());
         }
 
         public string CancelarNFSe(string cabec, string msg)
         {
-            return Channel.CancelarNfse(cabec, msg);
+            var message = new StringBuilder();
+            message.Append("<CancelarNfse xmlns=\"http://tempuri.org/\">");
+            message.Append("<cabec>");
+            message.AppendCData(cabec);
+            message.Append("</cabec>");
+            message.Append("<msg>");
+            message.AppendCData(msg);
+            message.Append("</msg>");
+            message.Append("</CancelarNfse>");
+
+            return Execute("http://tempuri.org/INfseServices/CancelarNfse", message.ToString());
         }
 
         public string GerarNfse(string cabec, string msg)
         {
             throw new NotImplementedException();
+        }
+
+        private string Execute(string soapAction, string message)
+        {
+            return Execute(soapAction, message, "");
+        }
+
+        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
+        {
+            var element = xmlDocument.ElementAnyNs("Fault");
+            if (element != null)
+            {
+                var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
+                throw new ACBrDFeCommunicationException(exMessage);
+            }
+
+            return xmlDocument.ToString();
         }
 
         #endregion Methods

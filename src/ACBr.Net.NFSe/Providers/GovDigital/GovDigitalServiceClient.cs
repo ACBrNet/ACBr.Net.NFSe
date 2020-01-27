@@ -29,9 +29,14 @@
 // <summary></summary>
 // ***********************************************************************
 
-namespace ACBr.Net.NFSe.Providers.GovDigital
+using System.Text;
+using System.Xml.Linq;
+using ACBr.Net.Core.Extensions;
+using ACBr.Net.DFe.Core;
+
+namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class GovDigitalServiceClient : NFSeServiceClient<IGovDigitalService>, IABRASF2Client
+    internal sealed class GovDigitalServiceClient : NFSeSOAP12ServiceClient, IABRASF2Client
     {
         #region Constructors
 
@@ -43,75 +48,156 @@ namespace ACBr.Net.NFSe.Providers.GovDigital
 
         #region Methods
 
-        public string RecepcionarLoteRps(string cabec, string msg)
-        {
-            var request = new RecepcionarLoteRpsRequest(cabec, msg);
-            var response = Channel.RecepcionarLoteRps(request);
-
-            return response.Response;
-        }
-
-        public string RecepcionarLoteRpsSincrono(string cabec, string msg)
-        {
-            var request = new RecepcionarLoteRpsSincronoRequest(cabec, msg);
-
-            var response = Channel.RecepcionarLoteRpsSincrono(request);
-            return response.Response;
-        }
-
-        public string ConsultarNFSePorRps(string cabec, string msg)
-        {
-            var request = new ConsultarNFSePorRpsRequest(cabec, msg);
-            var response = Channel.ConsultarNFSePorRps(request);
-            return response.Response;
-        }
-
-        public string ConsultarNFSeFaixa(string cabec, string msg)
-        {
-            var request = new ConsultarNFSePorFaixaRequest(cabec, msg);
-            var response = Channel.ConsultarNFSePorFaixa(request);
-
-            return response.Response;
-        }
-
-        public string ConsultarNFSeServicoTomado(string cabec, string msg)
-        {
-            var request = new ConsultarNFSeServicoTomadoRequest(cabec, msg);
-            var response = Channel.ConsultarNFSeServicoTomado(request);
-
-            return response.Response;
-        }
-
-        public string ConsultarNFSeServicoPrestado(string cabec, string msg)
-        {
-            var request = new ConsultarNFSeServicoPrestadoRequest(cabec, msg);
-            var response = Channel.ConsultarNFSeServicoPrestado(request);
-
-            return response.Response;
-        }
-
-        public string ConsultarLoteRps(string cabec, string msg)
-        {
-            var request = new ConsultarLoteRpsRequest(cabec, msg);
-            var response = Channel.ConsultarLoteRps(request);
-
-            return response.Response;
-        }
-
         public string CancelarNFSe(string cabec, string msg)
         {
-            var request = new CancelarNFSeRequest(cabec, msg);
-            var response = Channel.CancelarNFSe(request);
+            var message = new StringBuilder();
+            message.Append("<e:CancelarNfseRequest>");
+            message.Append("<nfseCabecMsg>");
+            message.AppendCData(cabec);
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.AppendCData(msg);
+            message.Append("</nfseDadosMsg>");
+            message.Append("</e:CancelarNfseRequest>");
 
-            return response.Response;
+            return Execute("http://nfse.abrasf.org.br/CancelarNfse", message.ToString(), "CancelarNfseResponse");
         }
 
         public string SubstituirNFSe(string cabec, string msg)
         {
-            var request = new SubstituirNFSeRequest(cabec, msg);
-            var response = Channel.SubstituirNFSe(request);
+            var message = new StringBuilder();
+            message.Append("<e:SubstituirNfseRequest>");
+            message.Append("<nfseCabecMsg>");
+            message.AppendCData(cabec);
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.AppendCData(msg);
+            message.Append("</nfseDadosMsg>");
+            message.Append("</e:SubstituirNfseRequest>");
 
-            return response.Response;
+            return Execute("http://nfse.abrasf.org.br/SubstituirNfse", message.ToString(), "SubstituirNfseResponse");
+        }
+
+        public string ConsultarLoteRps(string cabec, string msg)
+        {
+            var message = new StringBuilder();
+            message.Append("<e:ConsultarLoteRpsRequest>");
+            message.Append("<nfseCabecMsg>");
+            message.AppendCData(cabec);
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.AppendCData(msg);
+            message.Append("</nfseDadosMsg>");
+            message.Append("</e:ConsultarLoteRpsRequest>");
+
+            return Execute("http://nfse.abrasf.org.br/ConsultarLoteRps", message.ToString(), "ConsultarLoteRpsResponse");
+        }
+
+        public string ConsultarNFSeFaixa(string cabec, string msg)
+        {
+            var message = new StringBuilder();
+            message.Append("<e:ConsultarNfseFaixaRequest>");
+            message.Append("<nfseCabecMsg>");
+            message.AppendCData(cabec);
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.AppendCData(msg);
+            message.Append("</nfseDadosMsg>");
+            message.Append("</e:ConsultarNfseFaixaRequest>");
+
+            return Execute("http://nfse.abrasf.org.br/ConsultarNfseFaixa", message.ToString(), "ConsultarNfseFaixaResponse");
+        }
+
+        public string ConsultarNFSeServicoTomado(string cabec, string msg)
+        {
+            var message = new StringBuilder();
+            message.Append("<e:ConsultarNfseServicoTomadoRequest>");
+            message.Append("<nfseCabecMsg>");
+            message.AppendCData(cabec);
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.AppendCData(msg);
+            message.Append("</nfseDadosMsg>");
+            message.Append("</e:ConsultarNfseServicoTomadoRequest>");
+
+            return Execute("http://nfse.abrasf.org.br/ConsultarNfseServicoTomado", message.ToString(), "ConsultarNfseServicoTomadoResponse");
+        }
+
+        public string ConsultarNFSePorRps(string cabec, string msg)
+        {
+            var message = new StringBuilder();
+            message.Append("<e:ConsultarNfsePorRpsRequest>");
+            message.Append("<nfseCabecMsg>");
+            message.AppendCData(cabec);
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.AppendCData(msg);
+            message.Append("</nfseDadosMsg>");
+            message.Append("</e:ConsultarNfsePorRpsRequest>");
+
+            return Execute("http://nfse.abrasf.org.br/ConsultarNfsePorRps", message.ToString(), "ConsultarNfsePorRpsResponse");
+        }
+
+        public string ConsultarNFSeServicoPrestado(string cabec, string msg)
+        {
+            var message = new StringBuilder();
+            message.Append("<e:ConsultarNfseServicoPrestadoRequest>");
+            message.Append("<nfseCabecMsg>");
+            message.AppendCData(cabec);
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.AppendCData(msg);
+            message.Append("</nfseDadosMsg>");
+            message.Append("</e:ConsultarNfseServicoPrestadoRequest>");
+
+            return Execute("http://nfse.abrasf.org.br/ConsultarNfseServicoPrestado", message.ToString(), "ConsultarNfseServicoPrestadoResponse");
+        }
+
+        public string RecepcionarLoteRps(string cabec, string msg)
+        {
+            var message = new StringBuilder();
+            message.Append("<e:RecepcionarLoteRpsRequest>");
+            message.Append("<nfseCabecMsg>");
+            message.AppendCData(cabec);
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.AppendCData(msg);
+            message.Append("</nfseDadosMsg>");
+            message.Append("</e:RecepcionarLoteRpsRequest>");
+
+            return Execute("http://nfse.abrasf.org.br/RecepcionarLoteRps", message.ToString(), "RecepcionarLoteRpsResponse");
+        }
+
+        public string RecepcionarLoteRpsSincrono(string cabec, string msg)
+        {
+            var message = new StringBuilder();
+            message.Append("<e:RecepcionarLoteRpsSincronoRequest>");
+            message.Append("<nfseCabecMsg>");
+            message.AppendCData(cabec);
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.AppendCData(msg);
+            message.Append("</nfseDadosMsg>");
+            message.Append("</e:RecepcionarLoteRpsSincronoRequest>");
+
+            return Execute("http://nfse.abrasf.org.br/RecepcionarLoteRpsSincrono", message.ToString(), "RecepcionarLoteRpsSincronoResponse");
+        }
+
+        private string Execute(string soapAction, string message, string responseTag)
+        {
+            return Execute(soapAction, message, responseTag, "xmlns:e=\"http://nfse.abrasf.org.br\"");
+        }
+
+        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
+        {
+            var element = xmlDocument.ElementAnyNs("Fault");
+            if (element != null)
+            {
+                var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
+                throw new ACBrDFeCommunicationException(exMessage);
+            }
+
+            return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("outputXML").Value;
         }
 
         #endregion Methods
