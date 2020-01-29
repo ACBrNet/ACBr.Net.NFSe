@@ -1,4 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Schema for XML Signatures
+    http://www.w3.org/2000/09/xmldsig#
+    $Revision: 1.7 $ on $Date: 2007/09/20 19:06:50 $ by $Author: p052373 $
+
+    Copyright 2001 The Internet Society and W3C (Massachusetts Institute
+    of Technology, Institut National de Recherche en Informatique et en
+    Automatique, Keio University). All Rights Reserved.
+    http://www.w3.org/Consortium/Legal/
+
+    This document is governed by the W3C Software License [1] as described
+    in the FAQ [2].
+
+    [1] http://www.w3.org/Consortium/Legal/copyright-software-19980720
+    [2] http://www.w3.org/Consortium/Legal/IPR-FAQ-20000620.html#DTD
+-->
+
+<!--
+
+Download em 23/02/2007
+Link: 
+	http://www.w3.org/TR/xmldsig-core/#sec-Schema
+	http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd
+
+-->
 
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
         xmlns:ds="http://www.w3.org/2000/09/xmldsig#"

@@ -205,7 +205,7 @@ namespace ACBr.Net.NFSe.Providers
 
         protected override string GetSchema(TipoUrl tipo)
         {
-            return "nfse_pcrj_v01.xsd";
+            return "nfse.xsd";
         }
 
         #endregion Methods

@@ -1,11 +1,11 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-            targetNamespace="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd" 
-            xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd" 
+            targetNamespace="http://www.abrasf.org.br/nfse.xsd" 
+            xmlns="http://www.abrasf.org.br/nfse.xsd" 
             xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
             attributeFormDefault="unqualified"
             elementFormDefault="qualified">
-<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v01.xsd"/>
+<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema20020212.xsd"/>
 
 <!-- definition of simple elements -->
     <xsd:simpleType name="tsNumeroNfse">
@@ -259,7 +259,13 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="tsIdTag">
 		<xsd:restriction base="xsd:string">
-      <xsd:maxLength value="255"/>
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="tsVersao">
+		<xsd:restriction base="xsd:token">
+			<xsd:pattern value="[1-9]{1}[0-9]{0,1}\.[0-9]{2}"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 
@@ -353,7 +359,7 @@
             <xsd:element name="Valores" type="tcValores" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="ItemListaServico" type="tsItemListaServico" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="CodigoCnae" type="tsCodigoCnae" minOccurs="0" maxOccurs="1"/>
-            <xsd:element name="CodigoTributacaoMunicipio" type="tsCodigoTributacao" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="CodigoTributacaoMunicipio" type="tsCodigoTributacao" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="Discriminacao" type="tsDiscriminacao" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="CodigoMunicipio" type="tsCodigoMunicipioIbge" minOccurs="1" maxOccurs="1"/>
         </xsd:sequence>
@@ -387,14 +393,18 @@
             <xsd:element name="Prestador" type="tcIdentificacaoPrestador" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="Tomador" type="tcDadosTomador" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="IntermediarioServico" type="tcIdentificacaoIntermediarioServico" minOccurs="0" maxOccurs="1"/>
-            <xsd:element name="ConstrucaoCivil" type="tcDadosConstrucaoCivil" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="ContrucaoCivil" type="tcDadosConstrucaoCivil" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
-        <xsd:attribute name="Id" type="tsIdTag" />
+	<!-- 
+    	ALTERADO POR BELO HORIZONTE
+    	MOTIVO: Compatibilizar com o estado, em que o nome do atributo é Id, com I maiúsculo.
+	-->
+        <xsd:attribute name="Id" type="tsIdTag"/>
     </xsd:complexType>
     <xsd:complexType name="tcRps">
         <xsd:sequence>
             <xsd:element name="InfRps" type="tcInfRps" minOccurs="1" maxOccurs="1"/>
-            <xsd:element ref="dsig:Signature" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="dsig:Signature" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
     </xsd:complexType>
     <xsd:complexType name="tcIdentificacaoNfse">
@@ -425,28 +435,37 @@
             <xsd:element name="TomadorServico" type="tcDadosTomador" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="IntermediarioServico" type="tcIdentificacaoIntermediarioServico" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="OrgaoGerador" type="tcIdentificacaoOrgaoGerador" minOccurs="1" maxOccurs="1"/>
-            <xsd:element name="ConstrucaoCivil" type="tcDadosConstrucaoCivil" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="ContrucaoCivil" type="tcDadosConstrucaoCivil" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
-        <xsd:attribute name="Id" type="tsIdTag" />
+	<!-- 
+    	ALTERADO POR BELO HORIZONTE
+    	MOTIVO: Compatibilizar com o estado, em que o nome do atributo é Id, com I maiúsculo.
+	-->
+        <xsd:attribute name="Id" type="tsIdTag"/>
     </xsd:complexType>
     <xsd:complexType name="tcNfse">
         <xsd:sequence>
             <xsd:element name="InfNfse" type="tcInfNfse" minOccurs="1" maxOccurs="1"/>
-            <xsd:element ref="dsig:Signature" minOccurs="0" maxOccurs="2"/>
+            <xsd:element ref="dsig:Signature" minOccurs="1" maxOccurs="2"/>
         </xsd:sequence>
+	<xsd:attribute name="versao" type="tsVersao" use="required" />
     </xsd:complexType>
 
     <xsd:complexType name="tcInfPedidoCancelamento">
         <xsd:sequence>
             <xsd:element name="IdentificacaoNfse" type="tcIdentificacaoNfse" minOccurs="1" maxOccurs="1"/>
-            <xsd:element name="CodigoCancelamento" type="tsCodigoCancelamentoNfse" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="CodigoCancelamento" type="tsCodigoCancelamentoNfse" minOccurs="1" maxOccurs="1"/>
         </xsd:sequence>
-        <xsd:attribute name="Id" type="tsIdTag" />
+	<!-- 
+    	ALTERADO POR BELO HORIZONTE
+    	MOTIVO: Compatibilizar com o estado, em que o nome do atributo é Id, com I maiúsculo.
+	-->
+        <xsd:attribute name="Id" type="tsIdTag"/>
     </xsd:complexType>
     <xsd:complexType name="tcPedidoCancelamento">
         <xsd:sequence>
             <xsd:element name="InfPedidoCancelamento" type="tcInfPedidoCancelamento" minOccurs="1" maxOccurs="1"/>
-            <xsd:element ref="dsig:Signature" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="dsig:Signature" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
     </xsd:complexType>
     <xsd:complexType name="tcConfirmacaoCancelamento">
@@ -454,27 +473,51 @@
             <xsd:element name="Pedido" type="tcPedidoCancelamento" minOccurs="1" maxOccurs="1"/>
             <xsd:element name="DataHoraCancelamento" type="xsd:dateTime" minOccurs="1" maxOccurs="1"/>
         </xsd:sequence>
-        <xsd:attribute name="Id" type="tsIdTag" />
+	<!-- 
+    	ALTERADO POR BELO HORIZONTE
+    	MOTIVO: Compatibilizar com o estado, em que o nome do atributo é Id, com I maiúsculo.
+	-->
+        <xsd:attribute name="Id" type="tsIdTag"/>
     </xsd:complexType>
+    
+    <!-- 
+    	ADICIONADO POR BELO HORIZONTE
+    	MOTIVO: Evitar a redefinição de elementos já existentes e prover uma melhor estruturação para o retorno do cancelamento.
+    	Melhor explicado no tipo de retorno do cancelamento.
+     -->
+     <xsd:element name="RetCancelamento">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="NfseCancelamento" type="tcCancelamentoNfse" minOccurs="1" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+    <!-- FIM ALTERAÇÃO BELO HORIZONTE --> 
 
     <xsd:complexType name="tcCancelamentoNfse">
         <xsd:sequence>
             <xsd:element name="Confirmacao" type="tcConfirmacaoCancelamento" minOccurs="1" maxOccurs="1"/>
-            <xsd:element ref="dsig:Signature" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="dsig:Signature" minOccurs="1" maxOccurs="1"/>
         </xsd:sequence>
+	<xsd:attribute name="versao" type="tsVersao" use="required" />
     </xsd:complexType>
 
     <xsd:complexType name="tcInfSubstituicaoNfse">
         <xsd:sequence>
             <xsd:element name="NfseSubstituidora" type="tsNumeroNfse" minOccurs="1" maxOccurs="1"/>
         </xsd:sequence>
+	<!-- 
+    	ALTERADO POR BELO HORIZONTE
+    	MOTIVO: Compatibilizar com o estado, em que o nome do atributo é Id, com I maiúsculo.
+	-->
         <xsd:attribute name="Id" type="tsIdTag"/>
     </xsd:complexType>
     <xsd:complexType name="tcSubstituicaoNfse">
         <xsd:sequence>
             <xsd:element name="SubstituicaoNfse" type="tcInfSubstituicaoNfse" minOccurs="1" maxOccurs="1"/>
-            <xsd:element ref="dsig:Signature" minOccurs="0" maxOccurs="2"/>
+            <xsd:element ref="dsig:Signature" minOccurs="1" maxOccurs="2"/>
         </xsd:sequence>
+	<xsd:attribute name="versao" type="tsVersao" use="required" />
     </xsd:complexType>
     <xsd:complexType name="tcCompNfse">
         <xsd:sequence>
@@ -491,6 +534,19 @@
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
+    <!-- 
+    	ALTERADO POR BELO HORIZONTE 
+    -->
+    <xsd:element name="ListaMensagemRetornoLote">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="MensagemRetorno" type="tcMensagemRetornoLote" minOccurs="1" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!--
+    	FIM ALTERAÇÃO BELO HORIZONTE 
+     --> 
     <xsd:complexType name="tcMensagemRetorno">
         <xsd:sequence>
             <xsd:element name="Codigo" type="tsCodigoMensagemAlerta" minOccurs="1" maxOccurs="1"/>
@@ -520,7 +576,12 @@
                 </xsd:complexType>
             </xsd:element>
         </xsd:sequence>
-        <xsd:attribute name="Id" type="tsIdTag" />
+	<!-- 
+    	ALTERADO POR BELO HORIZONTE
+    	MOTIVO: Compatibilizar com o estado, em que o nome do atributo é Id, com I maiúsculo.
+	-->
+        <xsd:attribute name="Id" type="tsIdTag"/>
+	<xsd:attribute name="versao" type="tsVersao" use="required" />
     </xsd:complexType>
 
     <xsd:element name="EnviarLoteRpsResposta">
@@ -545,17 +606,24 @@
         </xsd:complexType>
     </xsd:element>
 
+	<!-- 
+    	ALTERADO POR BELO HORIZONTE
+    	ALTERAÇÃO: minOccurs do elemento NumeroLote alterado para zero, ao invés de 1.
+    	MOTIVO: Há a situação de lote não recebido, se for enviado um protocolo inexistente no parâmetro da consulta. Logo, não haverá
+    	número de lote a ser retornado nessa situação.
+    -->
     <xsd:element name="ConsultarSituacaoLoteRpsResposta">
         <xsd:complexType>
             <xsd:choice>
                 <xsd:sequence>
-                    <xsd:element name="NumeroLote" type="tsNumeroLote" minOccurs="1" maxOccurs="1"/>
+                    <xsd:element name="NumeroLote" type="tsNumeroLote" minOccurs="0" maxOccurs="1"/>
                     <xsd:element name="Situacao" type="tsSituacaoLoteRps" minOccurs="1" maxOccurs="1"/>
                 </xsd:sequence>
                 <xsd:element ref="ListaMensagemRetorno" minOccurs="1" maxOccurs="1"/>
             </xsd:choice>
         </xsd:complexType>
     </xsd:element>
+	<!-- FIM ALTERAÇÃO BELO HORIZONTE --> 
 
     <xsd:element name="ConsultarSituacaoLoteRpsEnvio">
         <xsd:complexType>
@@ -566,14 +634,21 @@
         </xsd:complexType>
     </xsd:element>
 
+	<!-- 
+    	ALTERADO POR BELO HORIZONTE
+    	ALTERAÇÃO: Utilizar o apontamento ref para a NFS-e retornada.
+    	MOTIVO: O elemento CompNfse já está definido, não há a necessidade de redefiní-lo nesse tipo de elemento, apenas utilizar uma 
+    	referência a ele.
+    -->
     <xsd:element name="ConsultarNfseRpsResposta">
         <xsd:complexType>
             <xsd:choice>
-                <xsd:element name="CompNfse" type="tcCompNfse" minOccurs="1" maxOccurs="1"/>
+                <xsd:element ref="CompNfse" minOccurs="1" maxOccurs="1"/>
                 <xsd:element ref="ListaMensagemRetorno" minOccurs="1" maxOccurs="1"/>
             </xsd:choice>
         </xsd:complexType>
     </xsd:element>
+    <!-- FIM ALTERAÇÃO BELO HORIZONTE -->
 
     <xsd:element name="ConsultarNfseRpsEnvio">
         <xsd:complexType>
@@ -584,13 +659,23 @@
         </xsd:complexType>
     </xsd:element>
 
+	<!-- 
+    	ALTERADO POR BELO HORIZONTE
+    	ALTERAÇÃO: Utilizar o apontamento ref para as NFS-e retornadas no elemento ListaNfse.
+    	MOTIVO: O elemento CompNfse já está definido, não há a necessidade de redefiní-lo nesse tipo de elemento, apenas utilizar uma 
+    	referência a ele.
+    	ALTERAÇÃO: minOccurs de CompNfse dentro de ListaNfse alterado para 1, ao invés de zero.
+    	MOTIVO: Se a filtragem não retornar registros, é mais sugestivo retornar uma mensagem no elemento ListaMensagemRetorno alertando
+    	o usuário sobre o fato, além de outros possíveis erros nessa lista como vínculo indevido de inscrição municipal e CNPJ informado
+    	nos parâmetros da pesquisa.
+    -->
     <xsd:element name="ConsultarNfseResposta">
         <xsd:complexType>
             <xsd:choice>
                 <xsd:element name="ListaNfse" minOccurs="1" maxOccurs="1">
                     <xsd:complexType>
                         <xsd:sequence>
-                            <xsd:element name="CompNfse" maxOccurs="unbounded" type="tcCompNfse" minOccurs="0"/>
+                            <xsd:element ref="CompNfse" minOccurs="1"/>
                         </xsd:sequence>
                     </xsd:complexType>
                 </xsd:element>
@@ -598,6 +683,7 @@
             </xsd:choice>
         </xsd:complexType>
     </xsd:element>
+    <!-- FIM ALTERAÇÃO BELO HORIZONTE --> 
 
     <xsd:element name="ConsultarNfseEnvio">
         <xsd:complexType>
@@ -618,20 +704,32 @@
         </xsd:complexType>
     </xsd:element>
 
+	<!-- 
+    	ALTERADO POR BELO HORIZONTE
+    	ALTERAÇÃO: Utilizar o apontamento ref para as NFS-e retornadas no elemento ListaNfse.
+    	MOTIVO: O elemento CompNfse já está definido, não há a necessidade de redefiní-lo nesse tipo de elemento, apenas utilizar uma 
+    	referência a ele.
+    	ALTERAÇÃO: Adição na estrutura de choice do retorno da lista de mensagem de retorno do lote.
+    	MOTIVO: Nessa resposta temos 3 possibilidade de retorno, ou a lista de NFS-e, ou a lista de erros comuns informandos erros nos
+    	parâmetros enviados pelo serviço ou a lista de erros dos RPS's em questão, que é a lista já especificada mas que não estava 
+    	sendo apontada desse tipo de dado. Esse erro é especial pois contém a referência ao RPS em que houve aquele erro.
+    -->
     <xsd:element name="ConsultarLoteRpsResposta">
         <xsd:complexType>
             <xsd:choice>
                 <xsd:element name="ListaNfse" minOccurs="1" maxOccurs="1">
                     <xsd:complexType>
                         <xsd:sequence>
-                            <xsd:element name="CompNfse" maxOccurs="unbounded" type="tcCompNfse" minOccurs="1"/>
+                            <xsd:element ref="CompNfse" maxOccurs="unbounded" minOccurs="1"/>
                         </xsd:sequence>
                     </xsd:complexType>
                 </xsd:element>
                 <xsd:element ref="ListaMensagemRetorno" minOccurs="1" maxOccurs="1"/>
+                <xsd:element ref="ListaMensagemRetornoLote" minOccurs="1" maxOccurs="1"/>
             </xsd:choice>
         </xsd:complexType>
     </xsd:element>
+	<!-- FIM ALTERAÇÃO BELO HORIZONTE --> 
 
     <xsd:element name="ConsultarLoteRpsEnvio">
         <xsd:complexType>
@@ -642,14 +740,22 @@
         </xsd:complexType>
     </xsd:element>
 
+	<!-- 
+    	ALTERADO POR BELO HORIZONTE
+    	ALTERAÇÃO: Referencia para RetCancelamento ao invés de Cancelamento diretamente.
+    	MOTIVO: Evitar a redefinição de elementos já existentes e prover uma melhor estruturação para o retorno do cancelamento.
+    	A NFS-e quando formada em CompNfse tem o nome do tipo de dado NfseCancelamento, para melhorar essa compatibilidade de nomes 
+    	e a estruturação dessa resposta do serviço de cancelamento.
+    -->
     <xsd:element name="CancelarNfseResposta">
         <xsd:complexType>
             <xsd:choice>
-                <xsd:element name="Cancelamento" type="tcCancelamentoNfse"/>
+                <xsd:element ref="RetCancelamento" minOccurs="1" maxOccurs="1"/>
                 <xsd:element ref="ListaMensagemRetorno" minOccurs="1" maxOccurs="1"/>
             </xsd:choice>
         </xsd:complexType>
     </xsd:element>
+	<!-- FIM ALTERAÇÃO BELO HORIZONTE --> 
 
     <xsd:element name="CancelarNfseEnvio">
         <xsd:complexType>
@@ -658,4 +764,17 @@
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
+
+    <!--
+	Cabeçalho de dados
+    -->
+    <xsd:element name="cabecalho">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="versaoDados" type="tsVersao" minOccurs="1" maxOccurs="1"/>
+			</xsd:sequence>
+			<xsd:attribute name="versao" type="tsVersao" use="required" />
+		</xsd:complexType>
+	</xsd:element>
+
 </xsd:schema>

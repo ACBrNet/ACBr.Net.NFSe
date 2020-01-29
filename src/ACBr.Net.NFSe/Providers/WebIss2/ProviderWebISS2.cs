@@ -59,7 +59,7 @@ namespace ACBr.Net.NFSe.Providers
 
         protected override string GetSchema(TipoUrl tipo)
         {
-            return "nfse v2 02.xsd";
+            return "nfse.xsd";
         }
 
         #endregion Methods
