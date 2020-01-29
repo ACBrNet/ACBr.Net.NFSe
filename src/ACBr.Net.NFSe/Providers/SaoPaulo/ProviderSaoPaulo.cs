@@ -3,7 +3,7 @@
 // Author           : Rodolfo Duarte
 // Created          : 05-15-2017
 //
-// Last Modified By : RFTD
+// Last Modified By : Rafael Dias
 // Last Modified On : 07-11-2018
 // ***********************************************************************
 // <copyright file="ProviderSaoPaulo.cs" company="ACBr.Net">

@@ -1,9 +1,9 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
-// Author           : RFTD
+// Author           : Rafael Dias
 // Created          : 01-31-2016
 //
-// Last Modified By : RFTD
+// Last Modified By : Rafael Dias
 // Last Modified On : 06-01-2018
 // ***********************************************************************
 // <copyright file="ProviderManager.cs" company="ACBr.Net">
@@ -60,6 +60,7 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.Coplan, typeof(ProviderCoplan)},
                 {NFSeProvider.DSF, typeof(ProviderDSF)},
                 {NFSeProvider.Equiplano, typeof(ProviderEquiplano)},
+                {NFSeProvider.Fiorilli, typeof(ProviderFiorilli)},
                 {NFSeProvider.FissLex, typeof(ProviderFissLex)},
                 {NFSeProvider.Ginfes, typeof(ProviderGinfes)},
                 {NFSeProvider.GovDigital, typeof(ProviderGovDigital)},

@@ -3,7 +3,7 @@
 // Author           : Rodolfo Duarte
 // Created          : 05-15-2017
 //
-// Last Modified By : RFTD
+// Last Modified By : Rafael Dias
 // Last Modified On : 05-15-2017
 // ***********************************************************************
 // <copyright file="DadosMateriais.cs" company="ACBr.Net">

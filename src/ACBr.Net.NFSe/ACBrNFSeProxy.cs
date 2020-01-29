@@ -3,7 +3,7 @@
 // Author           : Rodolfo Duarte
 // Created          : 01-31-2016
 //
-// Last Modified By : RFTD
+// Last Modified By : Rafael Dias
 // Last Modified On : 08-06-2017
 // ***********************************************************************
 // <copyright file="ACBrNFSeProxy.cs" company="ACBr.Net">

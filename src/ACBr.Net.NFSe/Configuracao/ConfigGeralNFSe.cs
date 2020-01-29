@@ -1,9 +1,9 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
-// Author           : RFTD
+// Author           : Rafael Dias
 // Created          : 01-31-2016
 //
-// Last Modified By : RFTD
+// Last Modified By : Rafael Dias
 // Last Modified On : 06-07-2016
 // ***********************************************************************
 // <copyright file="ConfigGeralNFSe.cs" company="ACBr.Net">

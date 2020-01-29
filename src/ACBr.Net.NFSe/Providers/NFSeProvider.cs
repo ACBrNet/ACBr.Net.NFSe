@@ -1,9 +1,9 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
-// Author           : RFTD
+// Author           : Rafael Dias
 // Created          : 07-30-2017
 //
-// Last Modified By : RFTD
+// Last Modified By : Rafael Dias
 // Last Modified On : 07-30-2017
 // ***********************************************************************
 // <copyright file="NFSeProvider.cs" company="ACBr.Net">
@@ -50,6 +50,8 @@ namespace ACBr.Net.NFSe.Providers
 
         [Description("Equiplano")]
         Equiplano = 15,
+
+        Fiorilli = 16,
 
         FissLex = 12,
 

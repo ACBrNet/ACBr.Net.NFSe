@@ -1,9 +1,9 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
-// Author           : RFTD
+// Author           : Rafael Dias
 // Created          : 06-05-2016
 //
-// Last Modified By : RFTD
+// Last Modified By : Rafael Dias
 // Last Modified On : 06-05-2016
 // ***********************************************************************
 // <copyright file="TipoEmissao.cs" company="ACBr.Net">

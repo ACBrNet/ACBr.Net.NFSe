@@ -1,9 +1,9 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFe
-// Author           : RFTD
+// Author           : Rafael Dias
 // Created          : 10-01-2014
 //
-// Last Modified By : RFTD
+// Last Modified By : Rafael Dias
 // Last Modified On : 10-01-2014
 // ***********************************************************************
 // <copyright file="ServicosCollection.cs" company="ACBr.Net">

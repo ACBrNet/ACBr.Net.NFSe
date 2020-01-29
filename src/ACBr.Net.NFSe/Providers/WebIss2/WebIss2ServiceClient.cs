@@ -1,9 +1,9 @@
 ﻿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
-// Author           : RFTD
+// Author           : Rafael Dias
 // Created          : 12-24-2017
 //
-// Last Modified By : RFTD
+// Last Modified By : Rafael Dias
 // Last Modified On : 27-01-2020
 // ***********************************************************************
 // <copyright file="WebIss2ServiceClient.cs" company="ACBr.Net">

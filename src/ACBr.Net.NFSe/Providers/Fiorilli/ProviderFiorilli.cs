@@ -1,12 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : Rafael Dias
-// Created          : 05-19-2016
+// Created          : 29-01-2020
 //
 // Last Modified By : Rafael Dias
-// Last Modified On : 05-19-2016
+// Last Modified On : 29-01-2020
 // ***********************************************************************
-// <copyright file="TipoRPS.cs" company="ACBr.Net">
+// <copyright file="ProviderFiorilli.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,12 +29,40 @@
 // <summary></summary>
 // ***********************************************************************
 
-namespace ACBr.Net.NFSe.Nota
+using ACBr.Net.NFSe.Configuracao;
+
+namespace ACBr.Net.NFSe.Providers
 {
-	public enum TipoRps
-	{
-		RPS = 0,
-		NFConjugada = 1,
-		Cupom = 2
-	}
+    // ReSharper disable once InconsistentNaming
+    internal sealed class ProviderFiorilli : ProviderABRASF2
+    {
+        #region Constructors
+
+        public ProviderFiorilli(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
+        {
+            Name = "Fiorilli";
+            Versao = "2.01";
+        }
+
+        #endregion Constructors
+
+        #region Methods
+
+        protected override IABRASF2Client GetClient(TipoUrl tipo)
+        {
+            return new FiorilliServiceClient(this, tipo);
+        }
+
+        protected override string GetNamespace()
+        {
+            return "xmlns=\"http://www.abrasf.org.br/nfse.xsd\"";
+        }
+
+        protected override string GetSchema(TipoUrl tipo)
+        {
+            return "nfse.xsd";
+        }
+
+        #endregion Methods
+    }
 }

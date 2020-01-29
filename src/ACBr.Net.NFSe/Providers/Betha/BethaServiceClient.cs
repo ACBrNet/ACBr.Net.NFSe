@@ -1,9 +1,9 @@
 ﻿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
-// Author           : RFTD
+// Author           : Rafael Dias
 // Created          : 05-22-2018
 //
-// Last Modified By : RFTD
+// Last Modified By : Rafael Dias
 // Last Modified On : 05-22-2018
 // ***********************************************************************
 // <copyright file="BethaServiceClient.cs" company="ACBr.Net">

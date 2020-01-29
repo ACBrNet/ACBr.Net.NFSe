@@ -1,9 +1,9 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFe
-// Author           : RFTD
+// Author           : Rafael Dias
 // Created          : 23-01-2020
 //
-// Last Modified By : RFTD
+// Last Modified By : Rafael Dias
 // Last Modified On : 23-01-2020
 // ***********************************************************************
 // <copyright file="EnderecoExterior.cs" company="ACBr.Net">

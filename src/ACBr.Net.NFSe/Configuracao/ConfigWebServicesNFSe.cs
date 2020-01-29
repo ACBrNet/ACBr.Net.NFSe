@@ -1,9 +1,9 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
-// Author           : RFTD
+// Author           : Rafael Dias
 // Created          : 01-31-2016
 //
-// Last Modified By : RFTD
+// Last Modified By : Rafael Dias
 // Last Modified On : 06-07-2016
 // ***********************************************************************
 // <copyright file="ConfigWebServicesNFSe.cs" company="ACBr.Net">
@@ -54,6 +54,10 @@ namespace ACBr.Net.NFSe.Configuracao
         /// </summary>
         internal ConfigWebServicesNFSe(ACBrNFSe parent) : base(parent)
         {
+            Usuario = string.Empty;
+            Senha = string.Empty;
+            FraseSecreta = string.Empty;
+            ChaveAcesso = string.Empty;
         }
 
         #endregion Constructor
@@ -66,6 +70,14 @@ namespace ACBr.Net.NFSe.Configuracao
         /// <value>The uf.</value>
         [Browsable(true)]
         public string Municipio { get; private set; }
+
+        public string Usuario { get; set; }
+
+        public string Senha { get; set; }
+
+        public string FraseSecreta { get; set; }
+
+        public string ChaveAcesso { get; set; }
 
         /// <summary>
         /// Codigo do municipio do Webservices em uso

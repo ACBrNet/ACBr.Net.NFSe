@@ -3,7 +3,7 @@
 // Author           : Adriano Trentim
 // Created          : 22-01-2020
 //
-// Last Modified By : RFTD
+// Last Modified By : Rafael Dias
 // Last Modified On : 22-01-2020
 // ***********************************************************************
 // <copyright file="ProviderABRASF204.cs" company="ACBr.Net">

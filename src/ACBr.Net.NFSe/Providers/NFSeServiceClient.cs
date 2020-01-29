@@ -1,9 +1,9 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFe
-// Author           : RFTD
+// Author           : Rafael Dias
 // Created          : 07-11-2018
 //
-// Last Modified By : RFTD
+// Last Modified By : Rafael Dias
 // Last Modified On : 09-11-2018
 // ***********************************************************************
 // <copyright file="NFSeServiceClient.cs" company="ACBr.Net">

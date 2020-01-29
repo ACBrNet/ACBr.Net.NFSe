@@ -1,9 +1,9 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe.Shared
-// Author           : RFTD
+// Author           : Rafael Dias
 // Created          : 06-02-2018
 //
-// Last Modified By : RFTD
+// Last Modified By : Rafael Dias
 // Last Modified On : 06-02-2018
 // ***********************************************************************
 // <copyright file="FissLexServiceClient.cs" company="ACBr.Net">
