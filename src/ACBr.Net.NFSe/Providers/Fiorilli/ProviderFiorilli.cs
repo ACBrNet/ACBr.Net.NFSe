@@ -34,14 +34,13 @@ using ACBr.Net.NFSe.Configuracao;
 namespace ACBr.Net.NFSe.Providers
 {
     // ReSharper disable once InconsistentNaming
-    internal sealed class ProviderFiorilli : ProviderABRASF2
+    internal sealed class ProviderFiorilli : ProviderABRASF201
     {
         #region Constructors
 
         public ProviderFiorilli(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
         {
             Name = "Fiorilli";
-            Versao = "2.01";
         }
 
         #endregion Constructors
@@ -51,16 +50,6 @@ namespace ACBr.Net.NFSe.Providers
         protected override IABRASF2Client GetClient(TipoUrl tipo)
         {
             return new FiorilliServiceClient(this, tipo);
-        }
-
-        protected override string GetNamespace()
-        {
-            return "xmlns=\"http://www.abrasf.org.br/nfse.xsd\"";
-        }
-
-        protected override string GetSchema(TipoUrl tipo)
-        {
-            return "nfse.xsd";
         }
 
         #endregion Methods

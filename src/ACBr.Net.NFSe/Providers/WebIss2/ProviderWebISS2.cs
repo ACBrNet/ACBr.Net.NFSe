@@ -34,7 +34,7 @@ using ACBr.Net.NFSe.Configuracao;
 namespace ACBr.Net.NFSe.Providers
 {
     // ReSharper disable once InconsistentNaming
-    internal sealed class ProviderWebIss2 : ProviderABRASF2
+    internal sealed class ProviderWebIss2 : ProviderABRASF202
     {
         #region Constructors
 
@@ -50,16 +50,6 @@ namespace ACBr.Net.NFSe.Providers
         protected override IABRASF2Client GetClient(TipoUrl tipo)
         {
             return new WebIss2ServiceClient(this, tipo);
-        }
-
-        protected override string GetNamespace()
-        {
-            return "xmlns=\"http://www.abrasf.org.br/nfse.xsd\"";
-        }
-
-        protected override string GetSchema(TipoUrl tipo)
-        {
-            return "nfse.xsd";
         }
 
         #endregion Methods

@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : Rafael Dias
-// Created          : 07-28-2017
+// Created          : 12-08-2016
 //
 // Last Modified By : Rafael Dias
-// Last Modified On : 07-28-2017
+// Last Modified On : 30-01-2020
 // ***********************************************************************
-// <copyright file="ProviderBetha2.cs" company="ACBr.Net">
+// <copyright file="ProviderABRASF202.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,41 +29,55 @@
 // <summary></summary>
 // ***********************************************************************
 
+using ACBr.Net.Core.Extensions;
+using ACBr.Net.DFe.Core.Serializer;
 using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Nota;
+using System.Xml.Linq;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class ProviderBetha2 : ProviderABRASF202
+    // ReSharper disable once InconsistentNaming
+    /// <summary>
+    /// Classe base para trabalhar com provedores que usam o padrão ABRASF 2.02
+    /// </summary>
+    /// <seealso cref="ProviderBase" />
+    public abstract class ProviderABRASF202 : ProviderABRASF201
     {
         #region Constructors
 
-        public ProviderBetha2(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProviderABRASF202"/> class.
+        /// </summary>
+        /// <param name="config">The configuration.</param>
+        /// <param name="municipio">The municipio.</param>
+        protected ProviderABRASF202(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
         {
-            Name = "Betha2";
+            Name = "ABRASFv202";
+            Versao = "2.02";
         }
 
         #endregion Constructors
 
         #region Methods
 
-        #region Protected Methods
+        #region RPS
 
-        protected override IABRASF2Client GetClient(TipoUrl tipo)
+        protected override XElement WriteRpsRps(NotaFiscal nota)
         {
-            return new Betha2ServiceClient(this, tipo);
+            var rps = new XElement("Rps");
+
+            rps.Add(WriteIdentificacaoRps(nota));
+
+            rps.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataEmissao", 10, 10, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.DataEmissao));
+            rps.AddChild(AdicionarTag(TipoCampo.Int, "", "Status", 1, 1, Ocorrencia.Obrigatoria, (int)nota.Situacao + 1));
+
+            rps.AddChild(WriteSubstituidoRps(nota));
+
+            return rps;
         }
 
-        protected override string GetSchema(TipoUrl tipo)
-        {
-            return "nfse_v202.xsd";
-        }
-
-        protected override string GetNamespace()
-        {
-            return "xmlns=\"http://www.betha.com.br/e-nota-contribuinte-ws\"";
-        }
-
-        #endregion Protected Methods
+        #endregion RPS
 
         #endregion Methods
     }

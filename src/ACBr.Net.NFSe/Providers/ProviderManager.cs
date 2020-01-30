@@ -200,7 +200,9 @@ namespace ACBr.Net.NFSe.Providers
         {
             return typeof(ProviderBase).IsAssignableFrom(providerType) ||
                    typeof(ProviderABRASF).IsAssignableFrom(providerType) ||
-                   typeof(ProviderABRASF2).IsAssignableFrom(providerType);
+                   typeof(ProviderABRASF201).IsAssignableFrom(providerType) ||
+                   typeof(ProviderABRASF202).IsAssignableFrom(providerType) ||
+                   typeof(ProviderABRASF204).IsAssignableFrom(providerType);
         }
 
         #endregion Private

@@ -1,66 +1,34 @@
-﻿// ***********************************************************************
-// Assembly         : ACBr.Net.NFSe
-// Author           : Rafael Dias
-// Created          : 12-08-2016
-//
-// Last Modified By : Rafael Dias
-// Last Modified On : 07-28-2017
-// ***********************************************************************
-// <copyright file="ProviderABRASF2.cs" company="ACBr.Net">
-//		        		   The MIT License (MIT)
-//	     		    Copyright (c) 2016 Grupo ACBr.Net
-//
-//	 Permission is hereby granted, free of charge, to any person obtaining
-// a copy of this software and associated documentation files (the "Software"),
-// to deal in the Software without restriction, including without limitation
-// the rights to use, copy, modify, merge, publish, distribute, sublicense,
-// and/or sell copies of the Software, and to permit persons to whom the
-// Software is furnished to do so, subject to the following conditions:
-//	 The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.
-//	 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-// DEALINGS IN THE SOFTWARE.
-// </copyright>
-// <summary></summary>
-// ***********************************************************************
-
-using ACBr.Net.Core.Extensions;
-using ACBr.Net.DFe.Core.Serializer;
-using ACBr.Net.NFSe.Configuracao;
-using ACBr.Net.NFSe.Nota;
-using System;
+﻿using System;
 using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using ACBr.Net.Core;
+using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core;
+using ACBr.Net.DFe.Core.Serializer;
+using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Nota;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    // ReSharper disable once InconsistentNaming
     /// <summary>
     /// Classe base para trabalhar com provedores que usam o padrão ABRASF 2.02
     /// </summary>
     /// <seealso cref="ProviderBase" />
-    public abstract class ProviderABRASF2 : ProviderBase
+    public abstract class ProviderABRASF201 : ProviderBase
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProviderABRASF2"/> class.
+        /// Initializes a new instance of the <see cref="ProviderABRASF202"/> class.
         /// </summary>
         /// <param name="config">The configuration.</param>
         /// <param name="municipio">The municipio.</param>
-        protected ProviderABRASF2(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
+        protected ProviderABRASF201(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
         {
-            Name = "ABRASFv2";
-            Versao = "2.02";
+            Name = "ABRASFv201";
+            Versao = "2.01";
         }
 
         #endregion Constructors
@@ -398,7 +366,7 @@ namespace ACBr.Net.NFSe.Providers
 
             rps.Add(WriteIdentificacaoRps(nota));
 
-            rps.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataEmissao", 10, 10, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.DataEmissao));
+            rps.AddChild(AdicionarTag(TipoCampo.Dat, "", "DataEmissao", 10, 10, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.DataEmissao));
             rps.AddChild(AdicionarTag(TipoCampo.Int, "", "Status", 1, 1, Ocorrencia.Obrigatoria, (int)nota.Situacao + 1));
 
             rps.AddChild(WriteSubstituidoRps(nota));
@@ -1475,7 +1443,7 @@ namespace ACBr.Net.NFSe.Providers
 
         protected virtual string GetNamespace()
         {
-            return "xmlns=\"http://www.abrasf.org.br/nfse\"";
+            return "xmlns=\"http://www.abrasf.org.br/nfse.xsd\"";
         }
 
         protected virtual string GetSchema(TipoUrl tipo)
