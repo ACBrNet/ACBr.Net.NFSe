@@ -177,8 +177,8 @@ namespace ACBr.Net.NFSe.Providers
             servico.AddChild(AdicionarTag(TipoCampo.Str, "", "ItemListaServico", 1, 5, Ocorrencia.Obrigatoria, nota.Servico.ItemListaServico));
             servico.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoCnae", 1, 7, Ocorrencia.NaoObrigatoria, nota.Servico.CodigoCnae));
 
-            //Algumas prefeituras não permitem TAG Código de Tributacao
-            //Sertãozinho/SP
+            // Algumas prefeituras não permitem TAG Código de Tributacao
+            // Sertãozinho/SP
             if (!Municipio.Codigo.IsIn(3551702))
                 servico.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoTributacaoMunicipio", 1, 20, Ocorrencia.NaoObrigatoria, nota.Servico.CodigoTributacaoMunicipio));
 
@@ -193,7 +193,7 @@ namespace ACBr.Net.NFSe.Providers
 
             return servico;
         }
-        
+
         protected virtual XElement WriteValoresRps(NotaFiscal nota)
         {
             var valores = new XElement("Valores");
@@ -206,15 +206,15 @@ namespace ACBr.Net.NFSe.Providers
             valores.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorIr", 1, 15, Ocorrencia.MaiorQueZero, nota.Servico.Valores.ValorIr));
             valores.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorCsll", 1, 15, Ocorrencia.MaiorQueZero, nota.Servico.Valores.ValorCsll));
             valores.AddChild(AdicionarTag(TipoCampo.De2, "", "OutrasRetencoes", 1, 15, Ocorrencia.MaiorQueZero, nota.Servico.Valores.OutrasRetencoes));
-            
-            //Algumas prefeituras não permitem TAG de ISSQN, pois são calculadas automaticamente pela prefeitura
-            //Sertãozinho/SP
+
+            // Algumas prefeituras não permitem TAG de ISSQN, pois são calculadas automaticamente pela prefeitura
+            // Sertãozinho/SP
             if (!Municipio.Codigo.IsIn(3551702))
             {
                 valores.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorIss", 1, 15, Ocorrencia.MaiorQueZero, nota.Servico.Valores.ValorIss));
                 valores.AddChild(AdicionarTag(TipoCampo.De4, "", "Aliquota", 1, 6, Ocorrencia.MaiorQueZero, nota.Servico.Valores.Aliquota));
             }
-            
+
             valores.AddChild(AdicionarTag(TipoCampo.De2, "", "DescontoIncondicionado", 1, 15, Ocorrencia.MaiorQueZero, nota.Servico.Valores.DescontoIncondicionado));
             valores.AddChild(AdicionarTag(TipoCampo.De2, "", "DescontoCondicionado", 1, 15, Ocorrencia.MaiorQueZero, nota.Servico.Valores.DescontoCondicionado));
 
