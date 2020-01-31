@@ -35,6 +35,7 @@
       - Betha v2 (Em Teste).
       - GovDigital (Em Teste).
       - FissLex (Em Teste).
+      - Fiorilli (Em Teste).
       - Vitoria (Em Testes).
     </Description>
     <NeutralLanguage>pt-BR</NeutralLanguage>
@@ -133,6 +134,14 @@
       <Pack>True</Pack>
       <PackagePath>content\Schemas\Equiplano</PackagePath>
     </None>
+    <None Include="Schemas\Fiorilli\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\Fiorilli</PackagePath>
+    </None>
+    <None Include="Schemas\FissLex\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\FissLex</PackagePath>
+    </None>
     <None Include="Schemas\Ginfes\*.*">
       <Pack>True</Pack>
       <PackagePath>content\Schemas\Ginfes</PackagePath>
@@ -214,6 +223,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\Equiplano\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\Fiorilli\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\FissLex\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\Ginfes\*.*">
