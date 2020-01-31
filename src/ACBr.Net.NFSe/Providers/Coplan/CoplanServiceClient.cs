@@ -65,16 +65,16 @@ namespace ACBr.Net.NFSe.Providers
         public string RecepcionarLoteRps(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<trib:nfse_web_service.RECEPCIONARLOTERPS>");
-            message.Append("<trib:Recepcionarloterpsrequest>");
-            message.Append("<trib:nfseCabecMsg>");
+            message.Append("<nfse_web_service.RECEPCIONARLOTERPS xmlns=\"Tributario\">");
+            message.Append("<Recepcionarloterpsrequest>");
+            message.Append("<nfseCabecMsg>");
             message.AppendCData(cabec);
-            message.Append("</trib:nfseCabecMsg>");
-            message.Append("<trib:nfseDadosMsg>");
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
             message.AppendCData(msg);
-            message.Append("</trib:nfseDadosMsg>");
-            message.Append("</trib:Recepcionarloterpsrequest>");
-            message.Append("</trib:nfse_web_service.RECEPCIONARLOTERPS>");
+            message.Append("</nfseDadosMsg>");
+            message.Append("</Recepcionarloterpsrequest>");
+            message.Append("</nfse_web_service.RECEPCIONARLOTERPS>");
 
             return Execute("RECEPCIONARLOTERPS", message.ToString(), "nfse_web_service.RECEPCIONARLOTERPSResponse", "Recepcionarloterpsresponse");
         }
@@ -82,16 +82,16 @@ namespace ACBr.Net.NFSe.Providers
         public string RecepcionarLoteRpsSincrono(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<trib:nfse_web_service.RECEPCIONARLOTERPSSINCRONO>");
-            message.Append("<trib:Recepcionarloterpssincronorequest>");
-            message.Append("<trib:nfseCabecMsg>");
+            message.Append("<nfse_web_service.RECEPCIONARLOTERPSSINCRONO xmlns=\"Tributario\">");
+            message.Append("<Recepcionarloterpssincronorequest>");
+            message.Append("<nfseCabecMsg>");
             message.AppendCData(cabec);
-            message.Append("</trib:nfseCabecMsg>");
-            message.Append("<trib:nfseDadosMsg>");
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
             message.AppendCData(msg);
-            message.Append("</trib:nfseDadosMsg>");
-            message.Append("</trib:Recepcionarloterpssincronorequest>");
-            message.Append("</trib:nfse_web_service.RECEPCIONARLOTERPSSINCRONO>");
+            message.Append("</nfseDadosMsg>");
+            message.Append("</Recepcionarloterpssincronorequest>");
+            message.Append("</nfse_web_service.RECEPCIONARLOTERPSSINCRONO>");
 
             return Execute("RECEPCIONARLOTERPSSINCRONO", message.ToString(), "nfse_web_service.RECEPCIONARLOTERPSSINCRONOResponse", "Recepcionarloterpssincronoresponse");
         }
@@ -99,16 +99,16 @@ namespace ACBr.Net.NFSe.Providers
         public string ConsultarNFSePorRps(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<trib:nfse_web_service.CONSULTARNFSEPORRPS>");
-            message.Append("<trib:Consultarnfseporrpsrequest>");
-            message.Append("<trib:nfseCabecMsg>");
+            message.Append("<nfse_web_service.CONSULTARNFSEPORRPS xmlns=\"Tributario\">");
+            message.Append("<Consultarnfseporrpsrequest>");
+            message.Append("<nfseCabecMsg>");
             message.AppendCData(cabec);
-            message.Append("</trib:nfseCabecMsg>");
-            message.Append("<trib:nfseDadosMsg>");
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
             message.AppendCData(msg);
-            message.Append("</trib:nfseDadosMsg>");
-            message.Append("</trib:Consultarnfseporrpsrequest>");
-            message.Append("</trib:nfse_web_service.CONSULTARNFSEPORRPS>");
+            message.Append("</nfseDadosMsg>");
+            message.Append("</Consultarnfseporrpsrequest>");
+            message.Append("</nfse_web_service.CONSULTARNFSEPORRPS>");
 
             return Execute("CONSULTARNFSEPORRPS", message.ToString(), "nfse_web_service.CONSULTARNFSEPORRPSResponse", "Consultarnfseporrpsresponse");
         }
@@ -116,16 +116,16 @@ namespace ACBr.Net.NFSe.Providers
         public string ConsultarNFSeFaixa(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<trib:nfse_web_service.CONSULTARNFSEFAIXA>");
-            message.Append("<trib:Consultarnfseporfaixarequest>");
-            message.Append("<trib:nfseCabecMsg>");
+            message.Append("<nfse_web_service.CONSULTARNFSEFAIXA xmlns=\"Tributario\">");
+            message.Append("<Consultarnfseporfaixarequest>");
+            message.Append("<nfseCabecMsg>");
             message.AppendCData(cabec);
-            message.Append("</trib:nfseCabecMsg>");
-            message.Append("<trib:nfseDadosMsg>");
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
             message.AppendCData(msg);
-            message.Append("</trib:nfseDadosMsg>");
-            message.Append("</trib:Consultarnfseporfaixarequest>");
-            message.Append("</trib:nfse_web_service.CONSULTARNFSEFAIXA>");
+            message.Append("</nfseDadosMsg>");
+            message.Append("</Consultarnfseporfaixarequest>");
+            message.Append("</nfse_web_service.CONSULTARNFSEFAIXA>");
 
             return Execute("CONSULTARNFSEFAIXA", message.ToString(), "nfse_web_service.CONSULTARNFSEFAIXAResponse", "Consultarnfseporfaixaresponse");
         }
@@ -133,16 +133,16 @@ namespace ACBr.Net.NFSe.Providers
         public string ConsultarNFSeServicoTomado(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<trib:nfse_web_service.CONSULTARNFSESERVICOTOMADO>");
-            message.Append("<trib:Consultarnfseservicotomadorequest>");
-            message.Append("<trib:nfseCabecMsg>");
+            message.Append("<nfse_web_service.CONSULTARNFSESERVICOTOMADO xmlns=\"Tributario\">");
+            message.Append("<Consultarnfseservicotomadorequest>");
+            message.Append("<nfseCabecMsg>");
             message.AppendCData(cabec);
-            message.Append("</trib:nfseCabecMsg>");
-            message.Append("<trib:nfseDadosMsg>");
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
             message.AppendCData(msg);
-            message.Append("</trib:nfseDadosMsg>");
-            message.Append("</trib:Consultarnfseservicotomadorequest>");
-            message.Append("</trib:nfse_web_service.CONSULTARNFSESERVICOTOMADO>");
+            message.Append("</nfseDadosMsg>");
+            message.Append("</Consultarnfseservicotomadorequest>");
+            message.Append("</nfse_web_service.CONSULTARNFSESERVICOTOMADO>");
 
             return Execute("CONSULTARNFSESERVICOTOMADO", message.ToString(), "nfse_web_service.CONSULTARNFSESERVICOTOMADOResponse", "Consultarnfseservicotomadoresponse");
         }
@@ -150,16 +150,16 @@ namespace ACBr.Net.NFSe.Providers
         public string ConsultarNFSeServicoPrestado(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<trib:nfse_web_service.CONSULTARNFSESERVICOPRESTADO>");
-            message.Append("<trib:Consultarnfseservicoprestadorequest>");
-            message.Append("<trib:nfseCabecMsg>");
+            message.Append("<nfse_web_service.CONSULTARNFSESERVICOPRESTADO xmlns=\"Tributario\">");
+            message.Append("<Consultarnfseservicoprestadorequest>");
+            message.Append("<nfseCabecMsg>");
             message.AppendCData(cabec);
-            message.Append("</trib:nfseCabecMsg>");
-            message.Append("<trib:nfseDadosMsg>");
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
             message.AppendCData(msg);
-            message.Append("</trib:nfseDadosMsg>");
-            message.Append("</trib:Consultarnfseservicoprestadorequest>");
-            message.Append("</trib:nfse_web_service.CONSULTARNFSESERVICOPRESTADO>");
+            message.Append("</nfseDadosMsg>");
+            message.Append("</Consultarnfseservicoprestadorequest>");
+            message.Append("</nfse_web_service.CONSULTARNFSESERVICOPRESTADO>");
 
             return Execute("CONSULTARNFSESERVICOPRESTADO", message.ToString(), "nfse_web_service.CONSULTARNFSESERVICOPRESTADOResponse", "Consultarnfseservicoprestadoresponse");
         }
@@ -167,16 +167,16 @@ namespace ACBr.Net.NFSe.Providers
         public string ConsultarLoteRps(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<trib:nfse_web_service.CONSULTARLOTERPS>");
-            message.Append("<trib:Consultarloterpsrequest>");
-            message.Append("<trib:nfseCabecMsg>");
+            message.Append("<nfse_web_service.CONSULTARLOTERPS xmlns=\"Tributario\">");
+            message.Append("<Consultarloterpsrequest>");
+            message.Append("<nfseCabecMsg>");
             message.AppendCData(cabec);
-            message.Append("</trib:nfseCabecMsg>");
-            message.Append("<trib:nfseDadosMsg>");
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
             message.AppendCData(msg);
-            message.Append("</trib:nfseDadosMsg>");
-            message.Append("</trib:Consultarloterpsrequest>");
-            message.Append("</trib:nfse_web_service.CONSULTARLOTERPS>");
+            message.Append("</nfseDadosMsg>");
+            message.Append("</Consultarloterpsrequest>");
+            message.Append("</nfse_web_service.CONSULTARLOTERPS>");
 
             return Execute("CONSULTARLOTERPS", message.ToString(), "nfse_web_service.CONSULTARLOTERPSResponse", "Consultarloterpsresponse");
         }
@@ -184,16 +184,16 @@ namespace ACBr.Net.NFSe.Providers
         public string CancelarNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<trib:nfse_web_service.CANCELARNFSE>");
-            message.Append("<trib:Cancelarnfserequest>");
-            message.Append("<trib:nfseCabecMsg>");
+            message.Append("<nfse_web_service.CANCELARNFSE xmlns=\"Tributario\">");
+            message.Append("<Cancelarnfserequest>");
+            message.Append("<nfseCabecMsg>");
             message.AppendCData(cabec);
-            message.Append("</trib:nfseCabecMsg>");
-            message.Append("<trib:nfseDadosMsg>");
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
             message.AppendCData(msg);
-            message.Append("</trib:nfseDadosMsg>");
-            message.Append("</trib:Cancelarnfserequest>");
-            message.Append("</trib:nfse_web_service.CANCELARNFSE>");
+            message.Append("</nfseDadosMsg>");
+            message.Append("</Cancelarnfserequest>");
+            message.Append("</nfse_web_service.CANCELARNFSE>");
 
             return Execute("CANCELARNFSE", message.ToString(), "nfse_web_service.CANCELARNFSEResponse", "Cancelarnfseresponse");
         }
@@ -201,23 +201,23 @@ namespace ACBr.Net.NFSe.Providers
         public string SubstituirNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<trib:nfse_web_service.SUBSTITUIRNFSE>");
-            message.Append("<trib:Substituirnfserequest>");
-            message.Append("<trib:nfseCabecMsg>");
+            message.Append("<nfse_web_service.SUBSTITUIRNFSE xmlns=\"Tributario\">");
+            message.Append("<Substituirnfserequest>");
+            message.Append("<nfseCabecMsg>");
             message.AppendCData(cabec);
-            message.Append("</trib:nfseCabecMsg>");
-            message.Append("<trib:nfseDadosMsg>");
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
             message.AppendCData(msg);
-            message.Append("</trib:nfseDadosMsg>");
-            message.Append("</trib:Substituirnfserequest>");
-            message.Append("</trib:nfse_web_service.SUBSTITUIRNFSE>");
+            message.Append("</nfseDadosMsg>");
+            message.Append("</Substituirnfserequest>");
+            message.Append("</nfse_web_service.SUBSTITUIRNFSE>");
 
             return Execute("SUBSTITUIRNFSE", message.ToString(), "nfse_web_service.SUBSTITUIRNFSEResponse", "Substituirnfseresponse");
         }
 
         private string Execute(string action, string message, params string[] responseTag)
         {
-            return Execute($"Tributarioaction/ANFSE_WEB_SERVICE.{action}", message, responseTag, "xmlns:trib=\"Tributario\"");
+            return base.Execute($"Tributarioaction/ANFSE_WEB_SERVICE.{action}", message, responseTag);
         }
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
