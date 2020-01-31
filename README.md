@@ -11,7 +11,7 @@ Se *ACBrNFSe* for um componente vital em sua aplicação comercial ou de código
 Biblioteca para emissão e trasmissão de NFSe.
 
 **Provedores Implementados**
-- Ginfes.
+ - Ginfes.
 - DSF.
 - WebISS.
 - WebIss2.
@@ -27,4 +27,5 @@ Biblioteca para emissão e trasmissão de NFSe.
 - Betha v2 (Em Teste).
 - GovDigital (Em Teste).
 - FissLex (Em Teste).
+- Fiorilli (Em Teste).
 - Vitoria (Em Testes).
