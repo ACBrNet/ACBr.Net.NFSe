@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using ACBr.Net.NFSe.DANFSe.FastReport;
 
 namespace ACBr.Net.NFSe.Demo
 {
@@ -30,7 +31,13 @@ namespace ACBr.Net.NFSe.Demo
         public FormMain()
         {
             InitializeComponent();
-            acbrNFSe = new ACBrNFSe();
+            acbrNFSe = new ACBrNFSe
+            {
+                DANFSe = new DANFSeFastReport()
+                {
+                    ShowDesign = true
+                }
+            };
             config = ACBrConfig.CreateOrLoad(Path.Combine(Application.StartupPath, "nfse.config"));
         }
 
@@ -263,6 +270,11 @@ namespace ACBr.Net.NFSe.Demo
                 var file = Helpers.OpenFile("Certificate Files (*.pfx)|*.pfx|All Files (*.*)|*.*", "Selecione o certificado");
                 txtCertificado.Text = file;
             });
+        }
+
+        private void btnImprimirDANFSe_Click(object sender, EventArgs e)
+        {
+            acbrNFSe.Imprimir();
         }
 
         private void lstMunicipios_MouseDoubleClick(object sender, MouseEventArgs e)

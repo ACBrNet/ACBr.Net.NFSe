@@ -29,9 +29,11 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.ComponentModel;
 using ACBr.Net.Core;
 using ACBr.Net.Core.Logging;
+using ACBr.Net.DFe.Core.Common;
 
 #if !NETSTANDARD2_0
 
@@ -45,7 +47,7 @@ namespace ACBr.Net.NFSe
     /// Classe base para impressão de DANFSe
     /// </summary>
     [TypeConverter(typeof(ACBrExpandableObjectConverter))]
-    public abstract class ACBrDANFSeBase : ACBrComponent, IACBrLog
+    public abstract class ACBrDANFSeBase : DFeReportClass<ACBrNFSe>
     {
         #region Fields
 
@@ -55,45 +57,13 @@ namespace ACBr.Net.NFSe
 
         #region Properties
 
-        [Browsable(false)]
-        public ACBrNFSe Parent
-        {
-            get => parent;
-            set
-            {
-                parent = value;
-                if (parent.DANFSe != this)
-                    parent.DANFSe = this;
-            }
-        }
-
-#if !NETSTANDARD2_0
-        public Image LogoEmpresa { get; set; }
-
+#if NETFULL
         public Image LogoPrefeitura { get; set; }
 #else
-        public byte[] LogoEmpresa { get; set; }
-
         public byte[] LogoPrefeitura { get; set; }
 #endif
 
         public LayoutImpressao Layout { get; set; }
-
-        public DANFSeFiltro Filtro { get; set; }
-
-        public bool MostrarPreview { get; set; }
-
-        public bool MostrarSetup { get; set; }
-
-        public string PrinterName { get; set; }
-
-        public int NumeroCopias { get; set; }
-
-        public string NomeArquivo { get; set; }
-
-        public string SoftwareHouse { get; set; }
-
-        public string Site { get; set; }
 
         #endregion Properties
 
@@ -110,5 +80,16 @@ namespace ACBr.Net.NFSe
         public abstract void ImprimirPDF();
 
         #endregion Methods
+
+        #region Overrides
+
+        /// <inheritdoc />
+        protected override void ParentChanged(ACBrNFSe oldParent, ACBrNFSe newParent)
+        {
+            if (oldParent != null && oldParent.DANFSe == this) oldParent.DANFSe = null;
+            if (newParent != null && newParent.DANFSe != this) newParent.DANFSe = this;
+        }
+
+        #endregion Overrides
     }
 }

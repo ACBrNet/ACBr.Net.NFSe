@@ -34,6 +34,7 @@ namespace ACBr.Net.NFSe
     public enum LayoutImpressao
     {
         ABRASF,
+        ABRASF2,
         DSF,
         Ginfes
     }

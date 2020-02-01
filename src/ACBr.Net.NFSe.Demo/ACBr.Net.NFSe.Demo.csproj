@@ -99,6 +99,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ACBr.Net.NFSe.DANFSe.FastReport\ACBr.Net.NFSe.DANFSe.FastReport.csproj">
+      <Project>{ba9dbab3-31f1-4d98-ad4d-cd73cf0b6921}</Project>
+      <Name>ACBr.Net.NFSe.DANFSe.FastReport</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ACBr.Net.NFSe\ACBr.Net.NFSe.csproj">
       <Project>{0ef298ca-a045-47e2-91ad-5c211e793c3b}</Project>
       <Name>ACBr.Net.NFSe</Name>

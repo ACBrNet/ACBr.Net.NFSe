@@ -208,6 +208,7 @@
             this.btnImprimirDANFSe.TabIndex = 16;
             this.btnImprimirDANFSe.Text = "Imprimir DANFSe";
             this.btnImprimirDANFSe.UseVisualStyleBackColor = true;
+            this.btnImprimirDANFSe.Click += new System.EventHandler(this.btnImprimirDANFSe_Click);
             // 
             // btnConsultarNFSeRps
             // 

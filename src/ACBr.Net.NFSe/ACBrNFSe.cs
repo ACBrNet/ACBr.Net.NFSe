@@ -58,6 +58,7 @@ namespace ACBr.Net.NFSe
         #region Fields
 
         private SecurityProtocolType protocolType;
+        private ACBrDANFSeBase danfSe;
 
         #endregion Fields
 
@@ -73,7 +74,16 @@ namespace ACBr.Net.NFSe
         /// Componente de impressão
         /// </summary>
         [Browsable(false)]
-        public ACBrDANFSeBase DANFSe { get; set; }
+        public ACBrDANFSeBase DANFSe
+        {
+            get => danfSe;
+            set
+            {
+                danfSe = value;
+                if (danfSe != null && danfSe.Parent != this)
+                    danfSe.Parent = this;
+            }
+        }
 
         /// <summary>
         /// Coleção de NFSe para processar e/ou processadas
