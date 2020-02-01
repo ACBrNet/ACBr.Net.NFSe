@@ -35,9 +35,12 @@ namespace ACBr.Net.NFSe.Demo
             {
                 DANFSe = new DANFSeFastReport()
                 {
-                    ShowDesign = true
+                    ShowDesign = true,
                 }
             };
+
+            ((DANFSeFastReport)acbrNFSe.DANFSe).OnExport += (sender, args) => args.Export.ShowDialog();
+
             config = ACBrConfig.CreateOrLoad(Path.Combine(Application.StartupPath, "nfse.config"));
         }
 

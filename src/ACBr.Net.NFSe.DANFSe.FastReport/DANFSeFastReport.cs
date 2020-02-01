@@ -20,6 +20,8 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport
 
         public event EventHandler<DANFSeEventArgs> OnGetReport;
 
+        public event EventHandler<DANFSeExportEventArgs> OnExport;
+
         #endregion Events
 
         #region Propriedades
@@ -30,75 +32,85 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport
 
         #region Methods
 
-        public override void Imprimir()
-        {
-            ImprimirInterno();
-        }
-
         public override void ImprimirPDF()
         {
-            Filtro = FiltroDFeReport.PDF;
-            ImprimirInterno();
+            var oldFiltro = Filtro;
+
+            try
+            {
+                Filtro = FiltroDFeReport.PDF;
+                Imprimir();
+            }
+            finally
+            {
+                Filtro = oldFiltro;
+            }
         }
 
-        private void ImprimirInterno()
+        public override void Imprimir()
         {
-            PrepararImpressao();
-            internalReport.RegisterData(Parent.NotasFiscais.ToArray(), "NotaFiscal");
-
-            internalReport.Prepare();
-
-            if (ShowDesign)
+            using (internalReport = new Report())
             {
-                internalReport.Design();
-            }
-            else
-            {
-                switch (Filtro)
+                PrepararImpressao();
+                internalReport.RegisterData(Parent.NotasFiscais.ToArray(), "NotaFiscal");
+
+                internalReport.Prepare();
+
+                if (ShowDesign)
                 {
-                    case FiltroDFeReport.Nenhum:
-                        if (MostrarPreview)
-                            internalReport.Show();
-                        else
-                            internalReport.Print();
-                        break;
-
-                    case FiltroDFeReport.PDF:
-                        var pdfExport = new PDFExport
-                        {
-                            EmbeddingFonts = true,
-                            ShowProgress = MostrarSetup,
-                            OpenAfterExport = MostrarPreview
-                        };
-
-                        internalReport.Export(pdfExport, NomeArquivo);
-                        break;
-
-                    case FiltroDFeReport.HTML:
-                        var htmlExport = new HTMLExport
-                        {
-                            Format = HTMLExportFormat.MessageHTML,
-                            EmbedPictures = true,
-                            Preview = MostrarPreview,
-                            ShowProgress = MostrarSetup
-                        };
-
-                        internalReport.Export(htmlExport, NomeArquivo);
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                    internalReport.Design();
                 }
+                else
+                {
+                    switch (Filtro)
+                    {
+                        case FiltroDFeReport.Nenhum:
+                            if (MostrarPreview)
+                                internalReport.Show();
+                            else
+                                internalReport.Print();
+                            break;
+
+                        case FiltroDFeReport.PDF:
+                            var evtPdf = new DANFSeExportEventArgs();
+                            evtPdf.Export = new PDFExport
+                            {
+                                EmbeddingFonts = true,
+                                ShowProgress = MostrarSetup,
+                                OpenAfterExport = MostrarPreview
+                            };
+
+                            OnExport.Raise(this, evtPdf);
+                            internalReport.Export(evtPdf.Export, NomeArquivo);
+                            break;
+
+                        case FiltroDFeReport.HTML:
+                            var evtHtml = new DANFSeExportEventArgs();
+                            evtHtml.Export = new HTMLExport()
+                            {
+                                Format = HTMLExportFormat.MessageHTML,
+                                EmbedPictures = true,
+                                Preview = MostrarPreview,
+                                ShowProgress = MostrarSetup
+                            };
+
+                            OnExport.Raise(this, evtHtml);
+                            internalReport.Export(evtHtml.Export, NomeArquivo);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                }
+
+                internalReport.Dispose();
             }
 
-            internalReport.Dispose();
             internalReport = null;
         }
 
         private void PrepararImpressao()
         {
-            internalReport = new Report();
-
             var e = new DANFSeEventArgs(Layout);
             OnGetReport.Raise(this, e);
             if (e.FilePath.IsEmpty() || !File.Exists(e.FilePath))

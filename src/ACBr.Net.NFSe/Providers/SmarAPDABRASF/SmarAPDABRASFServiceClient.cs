@@ -29,14 +29,8 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.IO;
-using System.Net;
-using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
 using System.Text;
-using System.Xml;
 using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core;
