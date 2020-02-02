@@ -448,7 +448,7 @@ namespace ACBr.Net.NFSe.Demo
             nfSe.IdentificacaoRps.Tipo = TipoRps.RPS;
             nfSe.IdentificacaoRps.DataEmissao = DateTime.Now;
             nfSe.Situacao = SituacaoNFSeRps.Normal;
-            nfSe.NaturezaOperacao = NaturezaOperacao.NT01;
+            nfSe.NaturezaOperacao = NaturezaOperacao.ABRASF.TributacaoNoMunicipio;
             nfSe.RegimeEspecialTributacao = RegimeEspecialTributacao.SimplesNacional;
             nfSe.IncentivadorCultural = NFSeSimNao.Nao;
 

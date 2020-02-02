@@ -121,36 +121,7 @@ namespace ACBr.Net.NFSe.Providers
                 ret.IdentificacaoRps.DataEmissao = rootDoc.ElementAnyNs("DataEmissao")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
             // Natureza da Operação
-            switch (rootDoc.ElementAnyNs("NaturezaOperacao")?.GetValue<int>())
-            {
-                case 0:
-                    ret.NaturezaOperacao = NaturezaOperacao.NT00;
-                    break;
-
-                case 1:
-                    ret.NaturezaOperacao = NaturezaOperacao.NT01;
-                    break;
-
-                case 2:
-                    ret.NaturezaOperacao = NaturezaOperacao.NT02;
-                    break;
-
-                case 3:
-                    ret.NaturezaOperacao = NaturezaOperacao.NT03;
-                    break;
-
-                case 4:
-                    ret.NaturezaOperacao = NaturezaOperacao.NT04;
-                    break;
-
-                case 5:
-                    ret.NaturezaOperacao = NaturezaOperacao.NT05;
-                    break;
-
-                case 6:
-                    ret.NaturezaOperacao = NaturezaOperacao.NT06;
-                    break;
-            }
+            ret.NaturezaOperacao = rootDoc.ElementAnyNs("NaturezaOperacao").GetValue<int>();
 
             // Simples Nacional
             if (rootDoc.ElementAnyNs("OptanteSimplesNacional")?.GetValue<int>() == 1)
@@ -424,38 +395,6 @@ namespace ACBr.Net.NFSe.Providers
         {
             var incentivadorCultural = nota.IncentivadorCultural == NFSeSimNao.Sim ? 1 : 2;
 
-            string naturezaOperacao;
-            switch (nota.NaturezaOperacao)
-            {
-                case NaturezaOperacao.NT01:
-                    naturezaOperacao = "1";
-                    break;
-
-                case NaturezaOperacao.NT02:
-                    naturezaOperacao = "2";
-                    break;
-
-                case NaturezaOperacao.NT03:
-                    naturezaOperacao = "3";
-                    break;
-
-                case NaturezaOperacao.NT04:
-                    naturezaOperacao = "4";
-                    break;
-
-                case NaturezaOperacao.NT05:
-                    naturezaOperacao = "5";
-                    break;
-
-                case NaturezaOperacao.NT06:
-                    naturezaOperacao = "6";
-                    break;
-
-                default:
-                    naturezaOperacao = "0";
-                    break;
-            }
-
             string regimeEspecialTributacao;
             string optanteSimplesNacional;
             if (nota.RegimeEspecialTributacao == RegimeEspecialTributacao.SimplesNacional)
@@ -476,7 +415,7 @@ namespace ACBr.Net.NFSe.Providers
 
             infoRps.Add(WriteIdentificacao(nota));
             infoRps.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataEmissao", 20, 20, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.DataEmissao));
-            infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "NaturezaOperacao", 1, 1, Ocorrencia.Obrigatoria, naturezaOperacao));
+            infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "NaturezaOperacao", 1, 1, Ocorrencia.Obrigatoria, nota.NaturezaOperacao));
             infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "RegimeEspecialTributacao", 1, 1, Ocorrencia.NaoObrigatoria, regimeEspecialTributacao));
             infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "OptanteSimplesNacional", 1, 1, Ocorrencia.Obrigatoria, optanteSimplesNacional));
             infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "IncentivadorCultural", 1, 1, Ocorrencia.Obrigatoria, incentivadorCultural));
@@ -738,38 +677,6 @@ namespace ACBr.Net.NFSe.Providers
                     break;
             }
 
-            string naturezaOperacao;
-            switch (nota.NaturezaOperacao)
-            {
-                case NaturezaOperacao.NT01:
-                    naturezaOperacao = "1";
-                    break;
-
-                case NaturezaOperacao.NT02:
-                    naturezaOperacao = "2";
-                    break;
-
-                case NaturezaOperacao.NT03:
-                    naturezaOperacao = "3";
-                    break;
-
-                case NaturezaOperacao.NT04:
-                    naturezaOperacao = "4";
-                    break;
-
-                case NaturezaOperacao.NT05:
-                    naturezaOperacao = "5";
-                    break;
-
-                case NaturezaOperacao.NT06:
-                    naturezaOperacao = "6";
-                    break;
-
-                default:
-                    naturezaOperacao = "0";
-                    break;
-            }
-
             string regimeEspecialTributacao;
             string optanteSimplesNacional;
             if (nota.RegimeEspecialTributacao == RegimeEspecialTributacao.SimplesNacional)
@@ -800,7 +707,7 @@ namespace ACBr.Net.NFSe.Providers
             infRps.AddChild(AdicionarTag(TipoCampo.Int, "", "Tipo", 1, 1, Ocorrencia.Obrigatoria, tipoRps));
 
             infNfse.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataEmissaoRps", 20, 20, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.DataEmissao));
-            infNfse.AddChild(AdicionarTag(TipoCampo.Int, "", "NaturezaOperacao", 1, 1, Ocorrencia.Obrigatoria, naturezaOperacao));
+            infNfse.AddChild(AdicionarTag(TipoCampo.Int, "", "NaturezaOperacao", 1, 1, Ocorrencia.Obrigatoria, nota.NaturezaOperacao));
             infNfse.AddChild(AdicionarTag(TipoCampo.Int, "", "RegimeEspecialTributacao", 1, 1, Ocorrencia.NaoObrigatoria, regimeEspecialTributacao));
             infNfse.AddChild(AdicionarTag(TipoCampo.Int, "", "OptanteSimplesNacional", 1, 1, Ocorrencia.Obrigatoria, optanteSimplesNacional));
             infNfse.AddChild(AdicionarTag(TipoCampo.Int, "", "IncentivadorCultural", 1, 1, Ocorrencia.Obrigatoria, incentivadorCultural));

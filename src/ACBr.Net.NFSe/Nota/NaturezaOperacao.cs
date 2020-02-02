@@ -31,236 +31,135 @@
 
 namespace ACBr.Net.NFSe.Nota
 {
-	public enum NaturezaOperacao
-	{
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT00,
+    /// <summary>
+    /// Classe que contém as naturezas de operação por provedor.
+    /// </summary>
+    public static class NaturezaOperacao
+    {
+        #region InnerTypes
 
-		/// <summary>
-		///  DSF : SemDeducao = 'A'
-		/// </summary>
-		NT01,
+        public sealed class NtABRASF
+        {
+            #region Constructors
 
-		/// <summary>
-		///  DSF : ComDeducao = 'B'
-		/// </summary>
-		NT02,
+            internal NtABRASF()
+            {
+                TributacaoNoMunicipio = 1;
+                TributacaoForaMunicipio = 2;
+                Isencao = 3;
+                Imune = 4;
+                ExigibilidadeSuspJud = 5;
+                ExigibilidadeSuspAdm = 6;
+            }
 
-		/// <summary>
-		///  DSF : Isenta = 'C'
-		/// </summary>
-		NT03,
+            #endregion Constructors
 
-		/// <summary>
-		///  DSF : Devolucao = 'D'
-		/// </summary>
-		NT04,
+            #region Properties
 
-		/// <summary>
-		///  DSF : Intermediacao = 'J'
-		/// </summary>
-		NT05,
+            /// <summary>
+            /// Obtém a Natureza de Operação 1 – Tributação no município.
+            /// </summary>
+            public int TributacaoNoMunicipio { get; }
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT06,
+            /// <summary>
+            /// Obtém a Natureza de Operação 2 - Tributação fora do município.
+            /// </summary>
+            public int TributacaoForaMunicipio { get; }
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT07,
+            /// <summary>
+            /// Obtém a Natureza de Operação 3 - Isenção.
+            /// </summary>
+            public int Isencao { get; }
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT08,
+            /// <summary>
+            /// Obtém a Natureza de Operação 4 - Imune.
+            /// </summary>
+            public int Imune { get; }
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT09,
+            /// <summary>
+            /// Obtém a Natureza de Operação 5 – Exigibilidade suspensa por decisão judicial.
+            /// </summary>
+            public int ExigibilidadeSuspJud { get; }
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT50,
+            /// <summary>
+            /// Obtém a Natureza de Operação 6 – Exigibilidade suspensa por procedimento administrativo.
+            /// </summary>
+            public int ExigibilidadeSuspAdm { get; }
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT51,
+            #endregion Properties
+        }
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT52,
+        public sealed class NtDSF
+        {
+            #region Constructors
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT53,
+            internal NtDSF()
+            {
+                SemDeducao = 'A';
+                ComDeducaoMateriais = 'B';
+                ImuneIsenta = 'C';
+                DevolucaoRemessa = 'D';
+                Intermediacao = 'J';
+            }
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT54,
+            #endregion Constructors
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT55,
+            #region Properties
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT56,
+            /// <summary>
+            /// Obtém a Natureza de Operação A – Sem Dedução.
+            /// </summary>
+            public int SemDeducao { get; }
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT57,
+            /// <summary>
+            /// Obtém a Natureza de Operação B – Com Dedução/Materiais.
+            /// </summary>
+            public int ComDeducaoMateriais { get; }
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT58,
+            /// <summary>
+            /// Obtém a Natureza de Operação C – Imune/Isenta de ISSQN.
+            /// </summary>
+            public int ImuneIsenta { get; }
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT59,
+            /// <summary>
+            /// Obtém a Natureza de Operação D – Devolução/Simples Remessa.
+            /// </summary>
+            public int DevolucaoRemessa { get; }
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT60,
+            /// <summary>
+            /// Obtém a Natureza de Operação J – Intermediação.
+            /// </summary>
+            public int Intermediacao { get; }
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT61,
+            #endregion Properties
+        }
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT62,
+        #endregion InnerTypes
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT63,
+        #region Fields
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT64,
+        private static NtABRASF abrasf;
+        private static NtDSF dsf;
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT65,
+        #endregion Fields
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT66,
+        #region Properties
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT67,
+        /// <summary>
+        /// Obtém as Natureza de Operação da ABRASAF v1.
+        /// </summary>
+        public static NtABRASF ABRASF => abrasf ?? (abrasf = new NtABRASF());
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT68,
+        /// <summary>
+        /// Obtém as Natureza de Operação do Ginfes.
+        /// </summary>
+        public static NtABRASF Ginfes => ABRASF;
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT69,
+        /// <summary>
+        /// Obtém as Natureza de Operação do DSF.
+        /// </summary>
+        public static NtDSF DSF => dsf ?? (dsf = new NtDSF());
 
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT70,
-
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT71,
-
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT72,
-
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT78,
-
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT79,
-
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT101,
-
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT111,
-
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT121,
-
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT201,
-
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT301,
-
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT501,
-
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT511,
-
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT541,
-
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT551,
-
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT601,
-
-		/// <summary>
-		///  DSF : Não Utiliza
-		/// </summary>
-		NT701
-	}
+        #endregion Properties
+    }
 }

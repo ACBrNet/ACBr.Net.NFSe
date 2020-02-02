@@ -59,38 +59,6 @@ namespace ACBr.Net.NFSe.Providers
         {
             var incentivadorCultural = nota.IncentivadorCultural == NFSeSimNao.Sim ? 1 : 2;
 
-            string naturezaOperacao;
-            switch (nota.NaturezaOperacao)
-            {
-                case NaturezaOperacao.NT01:
-                    naturezaOperacao = "1";
-                    break;
-
-                case NaturezaOperacao.NT02:
-                    naturezaOperacao = "2";
-                    break;
-
-                case NaturezaOperacao.NT03:
-                    naturezaOperacao = "3";
-                    break;
-
-                case NaturezaOperacao.NT04:
-                    naturezaOperacao = "4";
-                    break;
-
-                case NaturezaOperacao.NT05:
-                    naturezaOperacao = "5";
-                    break;
-
-                case NaturezaOperacao.NT06:
-                    naturezaOperacao = "6";
-                    break;
-
-                default:
-                    naturezaOperacao = "0";
-                    break;
-            }
-
             string regimeEspecialTributacao;
             string optanteSimplesNacional;
             if (nota.RegimeEspecialTributacao == RegimeEspecialTributacao.SimplesNacional)
@@ -111,7 +79,7 @@ namespace ACBr.Net.NFSe.Providers
 
             infoRps.Add(WriteIdentificacao(nota));
             infoRps.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataEmissao", 20, 20, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.DataEmissao));
-            infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "NaturezaOperacao", 1, 1, Ocorrencia.Obrigatoria, naturezaOperacao));
+            infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "NaturezaOperacao", 1, 1, Ocorrencia.Obrigatoria, nota.NaturezaOperacao));
             infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "RegimeEspecialTributacao", 1, 1, Ocorrencia.NaoObrigatoria, regimeEspecialTributacao));
             infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "OptanteSimplesNacional", 1, 1, Ocorrencia.Obrigatoria, optanteSimplesNacional));
             infoRps.AddChild(AdicionarTag(TipoCampo.Int, "", "IncentivadorCultural", 1, 1, Ocorrencia.Obrigatoria, incentivadorCultural));

@@ -140,28 +140,7 @@ namespace ACBr.Net.NFSe.Providers
             ret.Servico.CodigoMunicipio = root.ElementAnyNs("MunicipioPrestacao").GetValue<int>();
             ret.Servico.Municipio = root.ElementAnyNs("MunicipioPrestacaoDescricao").GetValue<string>();
 
-            switch (root.ElementAnyNs("Operacao").GetValue<char>())
-            {
-                case 'B':
-                    ret.NaturezaOperacao = NaturezaOperacao.NT02;
-                    break;
-
-                case 'C':
-                    ret.NaturezaOperacao = NaturezaOperacao.NT03;
-                    break;
-
-                case 'D':
-                    ret.NaturezaOperacao = NaturezaOperacao.NT04;
-                    break;
-
-                case 'J':
-                    ret.NaturezaOperacao = NaturezaOperacao.NT05;
-                    break;
-
-                default:
-                    ret.NaturezaOperacao = NaturezaOperacao.NT01;
-                    break;
-            }
+            ret.NaturezaOperacao = root.ElementAnyNs("Operacao").GetValue<char>();
 
             switch (root.ElementAnyNs("Tributacao").GetValue<char>())
             {
@@ -1184,29 +1163,7 @@ namespace ACBr.Net.NFSe.Providers
         {
             recolhimento = nota.Servico.Valores.IssRetido == SituacaoTributaria.Normal ? "A" : "R";
             situacao = nota.Situacao == SituacaoNFSeRps.Normal ? "N" : "C";
-
-            switch (nota.NaturezaOperacao)
-            {
-                case NaturezaOperacao.NT02:
-                    operacao = "B";
-                    break;
-
-                case NaturezaOperacao.NT03:
-                    operacao = "C";
-                    break;
-
-                case NaturezaOperacao.NT04:
-                    operacao = "D";
-                    break;
-
-                case NaturezaOperacao.NT05:
-                    operacao = "J";
-                    break;
-
-                default:
-                    operacao = "A";
-                    break;
-            }
+            operacao = $"{(char)nota.NaturezaOperacao}";
 
             switch (nota.TipoTributacao)
             {

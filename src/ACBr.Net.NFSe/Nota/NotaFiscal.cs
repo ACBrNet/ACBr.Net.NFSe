@@ -108,7 +108,7 @@ namespace ACBr.Net.NFSe.Nota
 
         public EmailCollection Emails { get; }
 
-        public NaturezaOperacao NaturezaOperacao { get; set; }
+        public int NaturezaOperacao { get; set; }
 
         public RegimeEspecialTributacao RegimeEspecialTributacao { get; set; }
 

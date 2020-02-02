@@ -272,7 +272,7 @@ namespace ACBr.Net.NFSe
                     NFSe.RpsSubstituido.Serie = serieRPSSubstituido;
                     NFSe.RpsSubstituido.Tipo = (TipoRps)tipoRPSSubstituido;
                 }
-                NFSe.NaturezaOperacao = (NaturezaOperacao)naturezaOperacao;
+                NFSe.NaturezaOperacao = naturezaOperacao;
                 NFSe.TipoTributacao = (TipoTributacao)tipoTributacao;
                 NFSe.RegimeEspecialTributacao = (RegimeEspecialTributacao)regimeEspecialTributacao;
                 NFSe.IncentivadorCultural = (NFSeSimNao)incentivadorCultural;
