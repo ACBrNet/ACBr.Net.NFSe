@@ -815,7 +815,12 @@ namespace ACBr.Net.NFSe.Providers
                 //
             }
 
-            certificado?.Reset();
+#if NETFULL
+            certificado?.ForceUnload();
+#else
+            certificado?.Dispose();
+#endif
+
             certificado = null;
             disposed = true;
         }

@@ -117,7 +117,6 @@ namespace ACBr.Net.NFSe.Providers
         /// Salva o arquivo de cidades.
         /// </summary>
         /// <param name="stream">O stream.</param>
-        /// <param name="compress"></param>
         public static void Save(Stream stream)
         {
             var formatter = new DataContractSerializer(typeof(MunicipiosNFSe));
