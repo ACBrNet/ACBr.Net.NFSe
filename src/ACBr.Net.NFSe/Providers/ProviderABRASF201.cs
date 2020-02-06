@@ -357,7 +357,7 @@ namespace ACBr.Net.NFSe.Providers
             {
                 if (nota.RegimeEspecialTributacao == RegimeEspecialTributacao.SimplesNacional)
                 {
-                    infServico.AddChild(AdicionarTag(TipoCampo.Str, "", "RegimeEspecialTributacao", 1, 1, Ocorrencia.NaoObrigatoria, "*"));
+                    infServico.AddChild(AdicionarTag(TipoCampo.Int, "", "RegimeEspecialTributacao", 1, 1, Ocorrencia.NaoObrigatoria, 6));
                 }
                 else if (nota.RegimeEspecialTributacao != RegimeEspecialTributacao.Nenhum)
                 {
