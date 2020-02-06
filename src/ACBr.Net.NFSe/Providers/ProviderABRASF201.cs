@@ -351,8 +351,24 @@ namespace ACBr.Net.NFSe.Providers
             infServico.AddChild(WriteIntermediarioRps(nota));
             infServico.AddChild(WriteConstrucaoCivilRps(nota));
 
-            if (nota.RegimeEspecialTributacao != RegimeEspecialTributacao.Nenhum)
-                infServico.AddChild(AdicionarTag(TipoCampo.Int, "", "RegimeEspecialTributacao", 1, 1, Ocorrencia.NaoObrigatoria, (int)nota.RegimeEspecialTributacao));
+            var provider = ProviderManager.GetProvider(Configuracoes);
+            //MODIFIQUEI EM FUNÇÃO DE NÃO HAVER CAMPO PRÓPRIO PARA RegimeEspecialTributacao
+            if (provider.ToString().Contains("ProviderCoplan"))
+            {
+                if (nota.RegimeEspecialTributacao == RegimeEspecialTributacao.SimplesNacional)
+                {
+                    infServico.AddChild(AdicionarTag(TipoCampo.Int, "", "RegimeEspecialTributacao", 1, 1, Ocorrencia.NaoObrigatoria, "*"));
+                }
+                else if (nota.RegimeEspecialTributacao != RegimeEspecialTributacao.Nenhum)
+                {
+                    infServico.AddChild(AdicionarTag(TipoCampo.Int, "", "RegimeEspecialTributacao", 1, 1, Ocorrencia.NaoObrigatoria, (int)nota.RegimeEspecialTributacao));
+                }
+            }
+            else
+            {
+                if (nota.RegimeEspecialTributacao != RegimeEspecialTributacao.Nenhum)
+                    infServico.AddChild(AdicionarTag(TipoCampo.Int, "", "RegimeEspecialTributacao", 1, 1, Ocorrencia.NaoObrigatoria, (int)nota.RegimeEspecialTributacao));
+            }
 
             infServico.AddChild(AdicionarTag(TipoCampo.Int, "", "OptanteSimplesNacional", 1, 1, Ocorrencia.Obrigatoria, nota.RegimeEspecialTributacao == RegimeEspecialTributacao.SimplesNacional ? 1 : 2));
             infServico.AddChild(AdicionarTag(TipoCampo.Int, "", "IncentivoFiscal", 1, 1, Ocorrencia.Obrigatoria, nota.IncentivadorCultural == NFSeSimNao.Sim ? 1 : 2));
