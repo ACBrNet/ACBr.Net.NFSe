@@ -520,6 +520,54 @@ namespace ACBr.Net.NFSe.Providers
             return retornoWebservice;
         }
 
+        public override RetornoWebservice ConsultaNFSeRps(string numero, string serie, TipoRps tipo, NotaFiscalCollection notas)
+        {
+            var retornoWebservice = base.ConsultaNFSeRps(numero, serie, tipo, notas);
+
+            // Analisa mensagem de retorno
+            var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
+
+            MensagemErro(retornoWebservice, xmlRet, "ConsultaNFSeRps");
+            if (retornoWebservice.Erros.Any()) return retornoWebservice;
+
+            var compNfse = xmlRet.Root?.ElementAnyNs("CompNfse");
+
+            if (compNfse == null)
+            {
+                retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "NFSe não encontrada! (CompNfse)" });
+                return retornoWebservice;
+            }
+
+            var nfse = compNfse.ElementAnyNs("Nfse").ElementAnyNs("InfNfse");
+            var numeroNFSe = nfse.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
+            var chaveNFSe = nfse.ElementAnyNs("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
+            var dataNFSe = nfse.ElementAnyNs("DataEmissao")?.GetValue<DateTime>() ?? DateTime.Now;
+            var numeroRps = nfse.ElementAnyNs("DeclaracaoPrestacaoServico")?
+                                .ElementAnyNs("InfDeclaracaoPrestacaoServico")?
+                                .ElementAnyNs("Rps")?
+                                .ElementAnyNs("IdentificacaoRps")?
+                                .ElementAnyNs("Numero").GetValue<string>() ?? string.Empty;
+
+            GravarNFSeEmDisco(compNfse.AsString(true), $"NFSe-{numeroNFSe}-{chaveNFSe}-.xml", dataNFSe);
+
+            var nota = notas.FirstOrDefault(x => x.IdentificacaoRps.Numero == numeroRps);
+            if (nota == null)
+            {
+                notas.Load(compNfse.ToString());
+            }
+            else
+            {
+                nota.IdentificacaoNFSe.Numero = numeroNFSe;
+                nota.IdentificacaoNFSe.Chave = chaveNFSe;
+            }
+
+            nota.Protocolo = retornoWebservice.Protocolo;
+
+            retornoWebservice.NotasFiscais.AddRange(notas);
+
+            return retornoWebservice;
+        }
+
         #endregion Services
 
         #endregion Methods

@@ -1142,6 +1142,11 @@ namespace ACBr.Net.NFSe.Providers
                 return retornoWebservice;
             }
 
+            //Algumas prefeituras não permitem controle de série de RPS
+            // Sertãozinho/SP
+            if (Municipio.Codigo.IsIn(3551702))
+                serie = "00000";
+
             var loteBuilder = new StringBuilder();
             loteBuilder.Append($"<ConsultarNfseRpsEnvio {GetNamespace()}>");
             loteBuilder.Append("<IdentificacaoRps>");
