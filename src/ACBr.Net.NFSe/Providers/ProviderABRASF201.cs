@@ -1,4 +1,35 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : ACBr.Net.NFSe
+// Author           : Rafael Dias
+// Created          : 27-01-2020
+//
+// Last Modified By : Rafael Dias
+// Last Modified On : 06-02-2020
+// ***********************************************************************
+// <copyright file="ProviderABRASF201.cs" company="ACBr.Net">
+//		        		   The MIT License (MIT)
+//	     		    Copyright (c) 2016 Grupo ACBr.Net
+//
+//	 Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//	 The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//	 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// DEALINGS IN THE SOFTWARE.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+
+using System;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -29,13 +60,19 @@ namespace ACBr.Net.NFSe.Providers
         {
             Name = "ABRASFv201";
             Versao = "2.01";
+            UsaPrestadorEnvio = false;
+            ConsultarNfseRpsResposta = "ConsultarNfseRpsResposta";
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public string Versao { get; protected set; }
+        protected string Versao { get; set; }
+
+        protected bool UsaPrestadorEnvio { get; set; }
+
+        protected string ConsultarNfseRpsResposta { get; set; }
 
         #endregion Properties
 
@@ -351,10 +388,21 @@ namespace ACBr.Net.NFSe.Providers
             infServico.AddChild(WriteIntermediarioRps(nota));
             infServico.AddChild(WriteConstrucaoCivilRps(nota));
 
-            if (nota.RegimeEspecialTributacao != RegimeEspecialTributacao.Nenhum)
-                infServico.AddChild(AdicionarTag(TipoCampo.Int, "", "RegimeEspecialTributacao", 1, 1, Ocorrencia.NaoObrigatoria, (int)nota.RegimeEspecialTributacao));
+            string regimeEspecialTributacao;
+            string optanteSimplesNacional;
+            if (nota.RegimeEspecialTributacao == RegimeEspecialTributacao.SimplesNacional)
+            {
+                regimeEspecialTributacao = "6";
+                optanteSimplesNacional = "1";
+            }
+            else
+            {
+                regimeEspecialTributacao = ((int)nota.RegimeEspecialTributacao).ToString();
+                optanteSimplesNacional = "2";
+            }
 
-            infServico.AddChild(AdicionarTag(TipoCampo.Int, "", "OptanteSimplesNacional", 1, 1, Ocorrencia.Obrigatoria, nota.RegimeEspecialTributacao == RegimeEspecialTributacao.SimplesNacional ? 1 : 2));
+            infServico.AddChild(AdicionarTag(TipoCampo.Int, "", "RegimeEspecialTributacao", 1, 1, Ocorrencia.NaoObrigatoria, regimeEspecialTributacao));
+            infServico.AddChild(AdicionarTag(TipoCampo.Int, "", "OptanteSimplesNacional", 1, 1, Ocorrencia.Obrigatoria, optanteSimplesNacional));
             infServico.AddChild(AdicionarTag(TipoCampo.Int, "", "IncentivoFiscal", 1, 1, Ocorrencia.Obrigatoria, nota.IncentivadorCultural == NFSeSimNao.Sim ? 1 : 2));
 
             return rootRps;
@@ -730,11 +778,13 @@ namespace ACBr.Net.NFSe.Providers
             xmlLote.Append($"<EnviarLoteRpsEnvio {GetNamespace()}>");
             xmlLote.Append($"<LoteRps Id=\"L{lote}\" {GetVersao()}>");
             xmlLote.Append($"<NumeroLote>{lote}</NumeroLote>");
+            if (UsaPrestadorEnvio) xmlLote.Append("<Prestador>");
             xmlLote.Append("<CpfCnpj>");
             xmlLote.Append(Configuracoes.PrestadorPadrao.CpfCnpj.IsCNPJ()
                 ? $"<Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
                 : $"<Cpf>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
             xmlLote.Append("</CpfCnpj>");
+            if (UsaPrestadorEnvio) xmlLote.Append("</Prestador>");
             if (!Configuracoes.PrestadorPadrao.InscricaoMunicipal.IsEmpty()) xmlLote.Append($"<InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
             xmlLote.Append($"<QuantidadeRps>{notas.Count}</QuantidadeRps>");
             xmlLote.Append("<ListaRps>");
@@ -815,11 +865,13 @@ namespace ACBr.Net.NFSe.Providers
             xmlLote.Append($"<EnviarLoteRpsSincronoEnvio {GetNamespace()}>");
             xmlLote.Append($"<LoteRps Id=\"L{lote}\" {GetVersao()}>");
             xmlLote.Append($"<NumeroLote>{lote}</NumeroLote>");
+            if (UsaPrestadorEnvio) xmlLote.Append("<Prestador>");
             xmlLote.Append("<CpfCnpj>");
             xmlLote.Append(Configuracoes.PrestadorPadrao.CpfCnpj.IsCNPJ()
                 ? $"<Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
                 : $"<Cpf>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
             xmlLote.Append("</CpfCnpj>");
+            if (UsaPrestadorEnvio) xmlLote.Append("/<Prestador>");
             if (!Configuracoes.PrestadorPadrao.InscricaoMunicipal.IsEmpty()) xmlLote.Append($"<InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
             xmlLote.Append($"<QuantidadeRps>{notas.Count}</QuantidadeRps>");
             xmlLote.Append("<ListaRps>");
@@ -1027,15 +1079,17 @@ namespace ACBr.Net.NFSe.Providers
                 var nota = notas.FirstOrDefault(x => x.IdentificacaoRps.Numero == numeroRps);
                 if (nota == null)
                 {
-                    notas.Load(compNfse.ToString());
+                    nota = notas.Load(compNfse.ToString());
                 }
                 else
                 {
                     nota.IdentificacaoNFSe.Numero = numeroNFSe;
                     nota.IdentificacaoNFSe.Chave = chaveNFSe;
+                    nota.IdentificacaoNFSe.DataEmissao = dataNFSe;
                 }
 
                 nota.Protocolo = retornoWebservice.Protocolo;
+                retornoWebservice.NotasFiscais.Add(nota);
             }
 
             return retornoWebservice;
@@ -1128,6 +1182,7 @@ namespace ACBr.Net.NFSe.Providers
             nota.Cancelamento.DataHora = confirmacaoCancelamento.ElementAnyNs("DataHora")?.GetValue<DateTime>() ?? DateTime.MinValue;
             nota.Cancelamento.MotivoCancelamento = motivo;
 
+            retornoWebservice.NotasFiscais.Add(nota);
             return retornoWebservice;
         }
 
@@ -1142,7 +1197,6 @@ namespace ACBr.Net.NFSe.Providers
                 return retornoWebservice;
             }
 
-            //Algumas prefeituras não permitem controle de série de RPS
             // Sertãozinho/SP
             if (Municipio.Codigo.IsIn(3551702))
                 serie = "00000";
@@ -1191,25 +1245,51 @@ namespace ACBr.Net.NFSe.Providers
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
                 return retornoWebservice;
             }
+
             GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConNotaRps-{numero}-ret.xml");
 
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            MensagemErro(retornoWebservice, xmlRet, "ConsultarNfseRpsResposta");
+            MensagemErro(retornoWebservice, xmlRet, ConsultarNfseRpsResposta);
             if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
-            var compNfse = xmlRet.ElementAnyNs("ConsultarNfseRpsResposta")?.ElementAnyNs("CompNfse");
+            var compNfse = xmlRet.ElementAnyNs(ConsultarNfseRpsResposta)?.ElementAnyNs("CompNfse");
+
             if (compNfse == null)
             {
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Nota Fiscal não encontrada! (CompNfse)" });
                 return retornoWebservice;
             }
 
-            // Carrega a nota fiscal na coleção de Notas Fiscais
-            var nota = LoadXml(compNfse.AsString());
-            notas.Add(nota);
+            var nfse = compNfse.ElementAnyNs("Nfse").ElementAnyNs("InfNfse");
+            var numeroNFSe = nfse.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
+            var chaveNFSe = nfse.ElementAnyNs("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
+            var dataNFSe = nfse.ElementAnyNs("DataEmissao")?.GetValue<DateTime>() ?? DateTime.Now;
+            var numeroRps = nfse.ElementAnyNs("DeclaracaoPrestacaoServico")?
+                                .ElementAnyNs("InfDeclaracaoPrestacaoServico")?
+                                .ElementAnyNs("Rps")?
+                                .ElementAnyNs("IdentificacaoRps")?
+                                .ElementAnyNs("Numero").GetValue<string>() ?? string.Empty;
 
-            retornoWebservice.Sucesso = true;
+            GravarNFSeEmDisco(compNfse.AsString(true), $"NFSe-{numeroNFSe}-{chaveNFSe}-.xml", dataNFSe);
+
+            // Carrega a nota fiscal na coleção de Notas Fiscais
+            var nota = notas.FirstOrDefault(x => x.IdentificacaoRps.Numero == numeroRps);
+
+            if (nota == null)
+            {
+                nota = notas.Load(compNfse.ToString());
+            }
+            else
+            {
+                nota.IdentificacaoNFSe.Numero = numeroNFSe;
+                nota.IdentificacaoNFSe.Chave = chaveNFSe;
+                nota.IdentificacaoNFSe.DataEmissao = dataNFSe;
+            }
+
+            nota.Protocolo = retornoWebservice.Protocolo;
+            retornoWebservice.NotasFiscais.Add(nota);
+
             return retornoWebservice;
         }
 
@@ -1315,6 +1395,10 @@ namespace ACBr.Net.NFSe.Providers
             {
                 // Carrega a nota fiscal na coleção de Notas Fiscais
                 var nota = LoadXml(compNfse.AsString());
+
+                GravarNFSeEmDisco(compNfse.AsString(true), $"NFSe-{nota.IdentificacaoNFSe.Numero}-{nota.IdentificacaoNFSe.Chave}-.xml", nota.IdentificacaoNFSe.DataEmissao);
+
+                retornoWebservice.NotasFiscais.Add(nota);
                 notas.Add(nota);
             }
 
