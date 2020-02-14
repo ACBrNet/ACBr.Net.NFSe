@@ -1,14 +1,12 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
-// Author           : Rafael Dias
-// Created          : 29-01-2020
+// Author           : Felipe Silveira/Transis
+// Created          : 14-02-2020
 //
-// Last Modified By : Rafael Dias
-// Last Modified On : 29-01-2020
 // ***********************************************************************
 // <copyright file="ProviderFiorilli.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
-//	     		    Copyright (c) 2016 Grupo ACBr.Net
+//	     		    Copyright (c) 2020 Grupo ACBr.Net
 //
 //	 Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the "Software"),
