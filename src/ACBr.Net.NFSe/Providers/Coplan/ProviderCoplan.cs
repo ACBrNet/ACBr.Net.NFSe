@@ -29,6 +29,8 @@
 // <summary></summary>
 // ***********************************************************************
 
+using ACBr.Net.Core.Extensions;
+using ACBr.Net.DFe.Core.Common;
 using ACBr.Net.NFSe.Configuracao;
 
 namespace ACBr.Net.NFSe.Providers
@@ -50,7 +52,8 @@ namespace ACBr.Net.NFSe.Providers
 
         protected override IABRASF2Client GetClient(TipoUrl tipo)
         {
-            return new CoplanServiceClient(this, tipo);
+            return Municipio.Codigo.IsIn(5107602) && Configuracoes.WebServices.Ambiente == DFeTipoAmbiente.Producao ?
+                   new CoplanServiceClient(this, tipo, null) : new CoplanServiceClient(this, tipo);
         }
 
         #endregion Protected Methods

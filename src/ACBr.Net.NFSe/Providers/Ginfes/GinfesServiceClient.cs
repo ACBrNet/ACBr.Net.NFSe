@@ -53,10 +53,10 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<gin:ConsultarSituacaoLoteRpsV3>");
             message.Append("<arg0>");
-            message.AppendCData(cabecalho);
+            message.AppendEnvio(cabecalho);
             message.Append("</arg0>");
             message.Append("<arg1>");
-            message.AppendCData(dados);
+            message.AppendEnvio(dados);
             message.Append("</arg1>");
             message.Append("</gin:ConsultarSituacaoLoteRpsV3>");
 
@@ -68,10 +68,10 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<gin:ConsultarLoteRpsV3>");
             message.Append("<arg0>");
-            message.AppendCData(cabecalho);
+            message.AppendEnvio(cabecalho);
             message.Append("</arg0>");
             message.Append("<arg1>");
-            message.AppendCData(dados);
+            message.AppendEnvio(dados);
             message.Append("</arg1>");
             message.Append("</gin:ConsultarLoteRpsV3>");
 
@@ -83,10 +83,10 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<gin:ConsultarNfsePorRpsV3>");
             message.Append("<arg0>");
-            message.AppendCData(cabecalho);
+            message.AppendEnvio(cabecalho);
             message.Append("</arg0>");
             message.Append("<arg1>");
-            message.AppendCData(dados);
+            message.AppendEnvio(dados);
             message.Append("</arg1>");
             message.Append("</gin:ConsultarNfsePorRpsV3>");
 
@@ -98,10 +98,10 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<gin:ConsultarNfseV3>");
             message.Append("<arg0>");
-            message.AppendCData(cabecalho);
+            message.AppendEnvio(cabecalho);
             message.Append("</arg0>");
             message.Append("<arg1>");
-            message.AppendCData(dados);
+            message.AppendEnvio(dados);
             message.Append("</arg1>");
             message.Append("</gin:ConsultarNfseV3Response>");
 
@@ -113,10 +113,10 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<gin:CancelarNfseV3>");
             message.Append("<arg0>");
-            message.AppendCData(cabecalho);
+            message.AppendEnvio(cabecalho);
             message.Append("</arg0>");
             message.Append("<arg1>");
-            message.AppendCData(dados);
+            message.AppendEnvio(dados);
             message.Append("</arg1>");
             message.Append("</gin:CancelarNfseV3>");
 
@@ -128,10 +128,10 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<gin:RecepcionarLoteRpsV3>");
             message.Append("<arg0>");
-            message.AppendCData(cabecalho);
+            message.AppendEnvio(cabecalho);
             message.Append("</arg0>");
             message.Append("<arg1>");
-            message.AppendCData(dados);
+            message.AppendEnvio(dados);
             message.Append("</arg1>");
             message.Append("</gin:RecepcionarLoteRpsV3>");
 

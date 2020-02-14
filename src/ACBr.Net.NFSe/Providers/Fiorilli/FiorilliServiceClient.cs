@@ -29,6 +29,7 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.Text;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml.Linq;
@@ -213,7 +214,9 @@ namespace ACBr.Net.NFSe.Providers
                 throw new ACBrDFeCommunicationException(exMessage);
             }
 
-            return xmlDocument.ElementAnyNs(responseTag[0]).Value;
+            var reader = xmlDocument.ElementAnyNs(responseTag[0]).CreateReader();
+            reader.MoveToContent();
+            return reader.ReadInnerXml().Replace("ns2:", string.Empty);
         }
 
         #endregion Methods
