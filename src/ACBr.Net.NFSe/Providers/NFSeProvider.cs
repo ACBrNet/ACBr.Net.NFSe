@@ -62,6 +62,9 @@ namespace ACBr.Net.NFSe.Providers
         [Description("Nota Carioca")]
         NotaCarioca = 7,
 
+        [Description("Pronim v2")]
+        Pronim2 = 17,
+
         [Description("São Paulo")]
         SaoPaulo = 9,
 
@@ -75,5 +78,8 @@ namespace ACBr.Net.NFSe.Providers
 
         [Description("WebIss v2")]
         WebIss2 = 11
+
+
+
     }
 }
