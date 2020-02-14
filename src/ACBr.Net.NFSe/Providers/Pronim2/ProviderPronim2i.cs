@@ -2,7 +2,6 @@
 // Assembly         : ACBr.Net.NFSe
 // Author           : Felipe Silveira/Transis
 // Created          : 14-02-2020
-//
 // ***********************************************************************
 // <copyright file="ProviderFiorilli.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -47,7 +46,7 @@ namespace ACBr.Net.NFSe.Providers
 
         protected override IABRASF2Client GetClient(TipoUrl tipo)
         {
-            return new Pronim2ServiceClient(this, tipo);
+            return new Pronim2ServiceClient(this, tipo, null);
         }
 
         #endregion Methods
