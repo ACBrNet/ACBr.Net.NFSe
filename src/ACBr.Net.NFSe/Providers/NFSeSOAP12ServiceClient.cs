@@ -39,6 +39,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using ACBr.Net.Core;
+using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Providers
@@ -71,12 +72,22 @@ namespace ACBr.Net.NFSe.Providers
 
         protected virtual string Execute(string soapAction, string message, string responseTag, params string[] soapNamespaces)
         {
-            return Execute(soapAction, message, new[] { responseTag }, soapNamespaces);
+            return Execute(soapAction, message, string.Empty, new[] { responseTag }, soapNamespaces);
         }
 
         protected virtual string Execute(string soapAction, string message, string[] responseTag, params string[] soapNamespaces)
         {
-            var request = WriteSoapEnvelope(message, soapNamespaces);
+            return Execute(soapAction, message, string.Empty, responseTag, soapNamespaces);
+        }
+
+        protected virtual string Execute(string soapAction, string message, string soapHeader, string responseTag, params string[] soapNamespaces)
+        {
+            return Execute(soapAction, message, soapHeader, new[] { responseTag }, soapNamespaces);
+        }
+
+        protected virtual string Execute(string soapAction, string message, string soapHeader, string[] responseTag, params string[] soapNamespaces)
+        {
+            var request = WriteSoapEnvelope(message, soapHeader, soapNamespaces);
 
             RemoteCertificateValidationCallback validation = null;
             var naoValidarCertificado = !ValidarCertificadoServidor();
@@ -115,7 +126,7 @@ namespace ACBr.Net.NFSe.Providers
             return TratarRetorno(xmlDocument, responseTag);
         }
 
-        protected virtual Message WriteSoapEnvelope(string message, string[] soapNamespaces)
+        protected virtual Message WriteSoapEnvelope(string message, string soapHeader, string[] soapNamespaces)
         {
             var envelope = new StringBuilder();
             envelope.Append("<soapenv:Envelope xmlns:soapenv=\"http://www.w3.org/2003/05/soap-envelope\"");
@@ -126,7 +137,7 @@ namespace ACBr.Net.NFSe.Providers
             }
 
             envelope.Append(">");
-            envelope.Append("<soapenv:Header/>");
+            envelope.Append(soapHeader.IsEmpty() ? "<soapenv:Header/>" : $"<soapenv:Header>{soapHeader}</soapenv:Header>");
             envelope.Append("<soapenv:Body>");
             envelope.Append(message);
             envelope.Append("</soapenv:Body>");
