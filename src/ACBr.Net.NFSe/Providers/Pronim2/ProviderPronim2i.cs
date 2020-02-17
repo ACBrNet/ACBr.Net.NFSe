@@ -4,7 +4,7 @@
 // Created          : 02-14-2020
 //
 // Last Modified By : Felipe Silveira/Transis
-// Last Modified On : 02-17-2017
+// Last Modified On : 02-17-2020
 // ***********************************************************************
 // <copyright file="ProviderFiorilli.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
@@ -47,7 +47,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        protected override IABRASF202Client GetClient(TipoUrl tipo)
+        protected override IABRASF2Client GetClient(TipoUrl tipo)
         {
             return new Pronim2ServiceClient(this, tipo, null);
         }

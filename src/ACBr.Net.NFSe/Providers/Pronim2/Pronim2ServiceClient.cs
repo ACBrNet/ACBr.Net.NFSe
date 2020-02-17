@@ -36,7 +36,7 @@ using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class Pronim2ServiceClient : NFSeSOAP11ServiceClient, IABRASF202Client
+    internal sealed class Pronim2ServiceClient : NFSeSOAP11ServiceClient, IABRASF2Client
     {
         #region Constructors
 
@@ -112,6 +112,18 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("ConsultarNfseServicoPrestado", message.ToString(), "ConsultarNfseServicoPrestadoResponse");
         }
 
+        public string ConsultarNFSeFaixa(string cabec, string msg)
+        {
+            //NAO EXISTE NO PRONIM
+            return "";
+        }
+
+        public string ConsultarNFSeServicoTomado(string cabec, string msg)
+        {
+            //NAO EXISTE NO PRONIM
+            return "";
+        }        
+
         public string RecepcionarLoteRps(string cabec, string msg)
         {
             var message = new StringBuilder();
@@ -124,7 +136,7 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("RecepcionarLoteRps", message.ToString(), "RecepcionarLoteRpsResponse");
         }
 
-        public string EnviarLoteRpsSincrono(string cabec, string msg)
+        public string RecepcionarLoteRpsSincrono(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<tem:EnviarLoteRpsSincrono>");
