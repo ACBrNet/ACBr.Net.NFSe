@@ -36,7 +36,7 @@ using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class Pronim2ServiceClient : NFSeSOAP11ServiceClient, IABRASF2Client
+    internal sealed class Pronim2ServiceClient : NFSeSOAP11ServiceClient, IABRASF202Client
     {
         #region Constructors
 
@@ -54,153 +54,91 @@ namespace ACBr.Net.NFSe.Providers
 
         public string CancelarNFSe(string cabec, string msg)
         {
-            // Dados de homologação
-            // CNPJ=01001001000113, IM:15000, Login=01001001000113, Senha=123456;
             var message = new StringBuilder();
-            message.Append("<ws:cancelarNfse>");
-            message.Append(msg);
-            message.Append("<username>");
-            message.Append(Provider.Configuracoes.WebServices.Usuario);
-            message.Append("</username>");
-            message.Append("<password>");
-            message.Append(Provider.Configuracoes.WebServices.Senha);
-            message.Append("</password>");
-            message.Append("</ws:cancelarNfse>");
+            message.Append("<tem:CancelarNfse>");
+            message.Append("<tem:xmlEnvio>");
+            message.AppendCData(msg);
+            message.Append("</tem:xmlEnvio>");
+            message.Append("</tem:CancelarNfse>");
 
-            return Execute("cancelarNfse", message.ToString(), "cancelarNfseResponse");
+            return Execute("CancelarNfse", message.ToString(), "CancelarNfseResponse");
         }
 
         public string SubstituirNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<ws:substituirNfse>");
-            message.Append(msg);
-            message.Append("<username>");
-            message.Append(Provider.Configuracoes.WebServices.Usuario);
-            message.Append("</username>");
-            message.Append("<password>");
-            message.Append(Provider.Configuracoes.WebServices.Senha);
-            message.Append("</password>");
-            message.Append("</ws:substituirNfse>");
+            message.Append("<tem:SubstituirNfse>");
+            message.Append("<tem:xmlEnvio>");
+            message.AppendCData(msg);
+            message.Append("</tem:xmlEnvio>");
+            message.Append("</tem:SubstituirNfse>");
 
-            return Execute("substituirNfse", message.ToString(), "substituirNfseResponse");
+            return Execute("SubstituirNfse", message.ToString(), "SubstituirNfseResponse");
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<ws:consultarLoteRps>");
-            message.Append(msg);
-            message.Append("<username>");
-            message.Append(Provider.Configuracoes.WebServices.Usuario);
-            message.Append("</username>");
-            message.Append("<password>");
-            message.Append(Provider.Configuracoes.WebServices.Senha);
-            message.Append("</password>");
-            message.Append("</ws:consultarLoteRps>");
+            message.Append("<tem:ConsultarLoteRps>");
+            message.Append("<tem:xmlEnvio>");
+            message.AppendCData(msg);
+            message.Append("</tem:xmlEnvio>");
+            message.Append("</tem:ConsultarLoteRps>");
 
-            return Execute("consultarLoteRps", message.ToString(), "consultarLoteRpsResponse");
-        }
-
-        public string ConsultarNFSeFaixa(string cabec, string msg)
-        {
-            var message = new StringBuilder();
-            message.Append("<ws:consultarNfsePorFaixa>");
-            message.Append(msg);
-            message.Append("<username>");
-            message.Append(Provider.Configuracoes.WebServices.Usuario);
-            message.Append("</username>");
-            message.Append("<password>");
-            message.Append(Provider.Configuracoes.WebServices.Senha);
-            message.Append("</password>");
-            message.Append("</ws:consultarNfsePorFaixa>");
-
-            return Execute("consultarNfsePorFaixa", message.ToString(), "consultarNfsePorFaixaResponse");
-        }
-
-        public string ConsultarNFSeServicoTomado(string cabec, string msg)
-        {
-            var message = new StringBuilder();
-            message.Append("<ws:consultarNfseServicoTomado>");
-            message.Append(msg);
-            message.Append("<username>");
-            message.Append(Provider.Configuracoes.WebServices.Usuario);
-            message.Append("</username>");
-            message.Append("<password>");
-            message.Append(Provider.Configuracoes.WebServices.Senha);
-            message.Append("</password>");
-            message.Append("</ws:consultarNfseServicoTomado>");
-
-            return Execute("consultarNfseServicoTomado", message.ToString(), "consultarNfseServicoTomadoResponse");
+            return Execute("ConsultarLoteRps", message.ToString(), "ConsultarLoteRpsResponse");
         }
 
         public string ConsultarNFSePorRps(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<ws:consultarNfsePorRps>");
-            message.Append(msg);
-            message.Append("<username>");
-            message.Append(Provider.Configuracoes.WebServices.Usuario);
-            message.Append("</username>");
-            message.Append("<password>");
-            message.Append(Provider.Configuracoes.WebServices.Senha);
-            message.Append("</password>");
-            message.Append("</ws:consultarNfsePorRps>");
+            message.Append("<tem:ConsultarNfsePorRps>");
+            message.Append("<tem:xmlEnvio>");
+            message.AppendCData(msg);
+            message.Append("</tem:xmlEnvio>");
+            message.Append("</tem:ConsultarNfsePorRps>");
 
-            return Execute("consultarNfsePorRps", message.ToString(), "consultarNfsePorRpsResponse");
+            return Execute("ConsultarNfsePorRps", message.ToString(), "ConsultarNfsePorRpsResponse");
         }
 
         public string ConsultarNFSeServicoPrestado(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<ws:consultarNfseServicoPrestado>");
-            message.Append(msg);
-            message.Append("<username>");
-            message.Append(Provider.Configuracoes.WebServices.Usuario);
-            message.Append("</username>");
-            message.Append("<password>");
-            message.Append(Provider.Configuracoes.WebServices.Senha);
-            message.Append("</password>");
-            message.Append("</ws:consultarNfseServicoPrestado>");
+            message.Append("<tem:ConsultarNfseServicoPrestado>");
+            message.Append("<tem:xmlEnvio>");
+            message.AppendCData(msg);
+            message.Append("</tem:xmlEnvio>");
+            message.Append("</tem:ConsultarNfseServicoPrestado>");
 
-            return Execute("consultarNfseServicoPrestado", message.ToString(), "consultarNfseServicoPrestadoResponse");
+            return Execute("ConsultarNfseServicoPrestado", message.ToString(), "ConsultarNfseServicoPrestadoResponse");
         }
 
         public string RecepcionarLoteRps(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<ws:recepcionarLoteRps>");
-            message.Append(msg);
-            message.Append("<username>");
-            message.Append(Provider.Configuracoes.WebServices.Usuario);
-            message.Append("</username>");
-            message.Append("<password>");
-            message.Append(Provider.Configuracoes.WebServices.Senha);
-            message.Append("</password>");
-            message.Append("</ws:recepcionarLoteRps>");
+            message.Append("<tem:RecepcionarLoteRps>");
+            message.Append("<tem:xmlEnvio>");
+            message.AppendCData(msg);
+            message.Append("</tem:xmlEnvio>");
+            message.Append("</tem:RecepcionarLoteRps>");
 
-            return Execute("recepcionarLoteRps", message.ToString(), "recepcionarLoteRpsResponse");
+            return Execute("RecepcionarLoteRps", message.ToString(), "RecepcionarLoteRpsResponse");
         }
 
-        public string RecepcionarLoteRpsSincrono(string cabec, string msg)
+        public string EnviarLoteRpsSincrono(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<ws:recepcionarLoteRpsSincrono>");
-            message.Append(msg);
-            message.Append("<username>");
-            message.Append(Provider.Configuracoes.WebServices.Usuario);
-            message.Append("</username>");
-            message.Append("<password>");
-            message.Append(Provider.Configuracoes.WebServices.Senha);
-            message.Append("</password>");
-            message.Append("</ws:recepcionarLoteRpsSincrono>");
+            message.Append("<tem:EnviarLoteRpsSincrono>");
+            message.Append("<tem:xmlEnvio>");
+            message.AppendCData(msg);
+            message.Append("</tem:xmlEnvio>");
+            message.Append("</tem:EnviarLoteRpsSincrono>");
 
-            return Execute("recepcionarLoteRpsSincrono", message.ToString(), "recepcionarLoteRpsSincronoResponse");
+            return Execute("EnviarLoteRpsSincrono", message.ToString(), "EnviarLoteRpsSincronoResponse");
         }
 
         private string Execute(string soapAction, string message, string responseTag)
         {
-            return Execute(soapAction, message, responseTag, "xmlns:ws=\"http://ws.issweb.fiorilli.com.br/\"");
+            return Execute(soapAction, message, responseTag, "xmlns:\"http://www.abrasf.org.br\"");
         }
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
@@ -214,7 +152,7 @@ namespace ACBr.Net.NFSe.Providers
 
             var reader = xmlDocument.ElementAnyNs(responseTag[0]).CreateReader();
             reader.MoveToContent();
-            return reader.ReadInnerXml().Replace("ns2:", string.Empty);
+            return reader.ReadInnerXml();
         }
 
         #endregion Methods

@@ -1,12 +1,12 @@
-// ***********************************************************************
+﻿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : Felipe Silveira/Transis
-// Created          : 02-14-2020
+// Created          : 02-17-2017
 //
 // Last Modified By : Felipe Silveira/Transis
 // Last Modified On : 02-17-2017
 // ***********************************************************************
-// <copyright file="ProviderFiorilli.cs" company="ACBr.Net">
+// <copyright file="IABRASF2Client.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2020 Grupo ACBr.Net
 //
@@ -29,28 +29,35 @@
 // <summary></summary>
 // ***********************************************************************
 
-using ACBr.Net.NFSe.Configuracao;
+using System;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    // ReSharper disable once InconsistentNaming
-    internal sealed class ProviderPronim2 : ProviderABRASF201
+    public interface IABRASF202Client : IServiceClient
     {
-        #region Constructors
+        #region Properties
 
-        public ProviderPronim2(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
-        {
-            Name = "Pronim2";
-        }
+        string EnvelopeEnvio { get; }
 
-        #endregion Constructors
+        string EnvelopeRetorno { get; }
+
+        #endregion Properties
 
         #region Methods
 
-        protected override IABRASF202Client GetClient(TipoUrl tipo)
-        {
-            return new Pronim2ServiceClient(this, tipo, null);
-        }
+        string RecepcionarLoteRps(string cabec, string msg);
+
+        string EnviarLoteRpsSincrono(string cabec, string msg);
+
+        string ConsultarNFSePorRps(string cabec, string msg);
+
+        string ConsultarNFSeServicoPrestado(string cabec, string msg);
+
+        string ConsultarLoteRps(string cabec, string msg);
+
+        string CancelarNFSe(string cabec, string msg);
+
+        string SubstituirNFSe(string cabec, string msg);
 
         #endregion Methods
     }
