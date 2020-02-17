@@ -167,7 +167,7 @@ namespace ACBr.Net.NFSe.Demo
                 var numero = 1;
                 if (InputBox.Show("Numero Lote", "Digite o numero do lote.", ref numero).Equals(DialogResult.Cancel)) return;
 
-                var ret = acbrNFSe.Enviar(numero, sincrono: true);
+                var ret = acbrNFSe.Enviar(numero, true);
                 wbbDados.LoadXml(ret.XmlEnvio);
                 wbbResposta.LoadXml(ret.XmlRetorno);
                 wbbRetorno.LoadXml(ret.EnvelopeRetorno);
