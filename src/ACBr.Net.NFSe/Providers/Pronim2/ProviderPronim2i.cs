@@ -1,14 +1,14 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
-// Author           : Rafael Dias
-// Created          : 07-30-2017
+// Author           : Felipe Silveira/Transis
+// Created          : 02-14-2020
 //
-// Last Modified By : Rafael Dias
-// Last Modified On : 07-30-2017
+// Last Modified By : Felipe Silveira/Transis
+// Last Modified On : 02-17-2020
 // ***********************************************************************
-// <copyright file="NFSeProvider.cs" company="ACBr.Net">
+// <copyright file="ProviderFiorilli.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
-//	     		    Copyright (c) 2016 Grupo ACBr.Net
+//	     		    Copyright (c) 2020 Grupo ACBr.Net
 //
 //	 Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the "Software"),
@@ -29,57 +29,29 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ComponentModel;
+using ACBr.Net.NFSe.Configuracao;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    public enum NFSeProvider : byte
+    // ReSharper disable once InconsistentNaming
+    internal sealed class ProviderPronim2 : ProviderABRASF201
     {
-        Abaco = 0,
+        #region Constructors
 
-        Betha = 1,
+        public ProviderPronim2(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
+        {
+            Name = "Pronim2";
+        }
 
-        [Description("Betha v2")]
-        Betha2 = 2,
+        #endregion Constructors
 
-        BHISS = 8,
+        #region Methods
 
-        Coplan = 3,
+        protected override IABRASF2Client GetClient(TipoUrl tipo)
+        {
+            return new Pronim2ServiceClient(this, tipo, null);
+        }
 
-        DSF = 4,
-
-        [Description("Equiplano")]
-        Equiplano = 15,
-
-        Fiorilli = 16,
-
-        FissLex = 12,
-
-        Ginfes = 5,
-
-        GovDigital = 6,
-
-        [Description("Nota Carioca")]
-        NotaCarioca = 7,
-
-        [Description("Pronim v2")]
-        Pronim2 = 17,
-
-        [Description("São Paulo")]
-        SaoPaulo = 9,
-
-        [Description("SmarAPD ABRASF")]
-        SmarAPDABRASF = 14,
-
-        [Description("Vitoria")]
-        Vitoria = 13,
-
-        WebIss = 10,
-
-        [Description("WebIss v2")]
-        WebIss2 = 11
-
-
-
+        #endregion Methods
     }
 }

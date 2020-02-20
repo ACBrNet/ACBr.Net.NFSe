@@ -65,6 +65,7 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.Ginfes, typeof(ProviderGinfes)},
                 {NFSeProvider.GovDigital, typeof(ProviderGovDigital)},
                 {NFSeProvider.NotaCarioca, typeof(ProviderNotaCarioca)},
+                {NFSeProvider.Pronim2, typeof(ProviderPronim2)},
                 {NFSeProvider.SaoPaulo, typeof(ProviderSaoPaulo)},
                 {NFSeProvider.SmarAPDABRASF, typeof(ProviderSmarAPDABRASF)},
                 {NFSeProvider.Vitoria, typeof(ProviderVitoria)},
