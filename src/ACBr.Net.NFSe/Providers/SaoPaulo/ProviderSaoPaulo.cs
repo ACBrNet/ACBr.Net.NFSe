@@ -62,25 +62,28 @@ namespace ACBr.Net.NFSe.Providers
         public override NotaFiscal LoadXml(XDocument xml)
         {
             Guard.Against<XmlException>(xml == null, "Xml invalido.");
+            
+            XElement rootDoc = xml.Root;
+            Guard.Against<XmlException>(rootDoc == null, "Xml de RPS ou NFSe invalido.");
 
             var ret = new NotaFiscal();
             ret.Assinatura = xml.Root?.ElementAnyNs("Assinatura")?.GetValue<string>() ?? string.Empty;
 
             // Nota Fiscal
-            ret.IdentificacaoNFSe.Numero = xml.ElementAnyNs("ChaveNFe")?.ElementAnyNs("NumeroNFe")?.GetValue<string>() ?? string.Empty;
-            ret.IdentificacaoNFSe.Chave = xml.ElementAnyNs("ChaveNFe")?.ElementAnyNs("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
-            ret.Prestador.InscricaoMunicipal = xml.ElementAnyNs("ChaveNFe")?.ElementAnyNs("InscricaoPrestador")?.GetValue<string>() ?? string.Empty;
+            ret.IdentificacaoNFSe.Numero = rootDoc.ElementAnyNs("ChaveNFe")?.ElementAnyNs("NumeroNFe")?.GetValue<string>() ?? string.Empty;
+            ret.IdentificacaoNFSe.Chave = rootDoc.ElementAnyNs("ChaveNFe")?.ElementAnyNs("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
+            ret.Prestador.InscricaoMunicipal = rootDoc.ElementAnyNs("ChaveNFe")?.ElementAnyNs("InscricaoPrestador")?.GetValue<string>() ?? string.Empty;
 
-            ret.IdentificacaoNFSe.DataEmissao = xml.ElementAnyNs("DataEmissao")?.GetValue<DateTime>() ?? DateTime.MinValue;
-            ret.NumeroLote = xml.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? "";
+            ret.IdentificacaoNFSe.DataEmissao = rootDoc.ElementAnyNs("DataEmissao")?.GetValue<DateTime>() ?? DateTime.MinValue;
+            ret.NumeroLote = rootDoc.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? "";
 
             // RPS
-            ret.IdentificacaoRps.Numero = xml.ElementAnyNs("ChaveRPS")?.ElementAnyNs("NumeroRPS")?.GetValue<string>() ?? string.Empty;
-            ret.IdentificacaoRps.Serie = xml.ElementAnyNs("ChaveRPS")?.ElementAnyNs("SerieRPS")?.GetValue<string>() ?? string.Empty;
+            ret.IdentificacaoRps.Numero = rootDoc.ElementAnyNs("ChaveRPS")?.ElementAnyNs("NumeroRPS")?.GetValue<string>() ?? string.Empty;
+            ret.IdentificacaoRps.Serie = rootDoc.ElementAnyNs("ChaveRPS")?.ElementAnyNs("SerieRPS")?.GetValue<string>() ?? string.Empty;
             if (ret.Prestador.InscricaoMunicipal == "")
-                ret.Prestador.InscricaoMunicipal = xml.ElementAnyNs("ChaveRPS")?.ElementAnyNs("InscricaoPrestador")?.GetValue<string>() ?? string.Empty;
+                ret.Prestador.InscricaoMunicipal = rootDoc.ElementAnyNs("ChaveRPS")?.ElementAnyNs("InscricaoPrestador")?.GetValue<string>() ?? string.Empty;
 
-            switch (xml.ElementAnyNs("TipoRPS")?.GetValue<string>() ?? string.Empty)
+            switch (rootDoc.ElementAnyNs("TipoRPS")?.GetValue<string>() ?? string.Empty)
             {
                 case "RPS":
                     ret.IdentificacaoRps.Tipo = TipoRps.RPS;
@@ -95,10 +98,10 @@ namespace ACBr.Net.NFSe.Providers
                     break;
             }
 
-            ret.IdentificacaoRps.DataEmissao = xml.ElementAnyNs("DataEmissaoRPS")?.GetValue<DateTime>() ?? DateTime.MinValue;
+            ret.IdentificacaoRps.DataEmissao = rootDoc.ElementAnyNs("DataEmissaoRPS")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
             // Tipo da Tributação
-            switch (xml.ElementAnyNs("TributacaoNFe")?.GetValue<string>() ?? string.Empty)
+            switch (rootDoc.ElementAnyNs("TributacaoNFe")?.GetValue<string>() ?? string.Empty)
             {
                 case "T":
                     ret.TipoTributacao = TipoTributacao.Tributavel;
@@ -137,7 +140,7 @@ namespace ACBr.Net.NFSe.Providers
                     break;
             }
 
-            switch (xml.ElementAnyNs("StatusNFe")?.GetValue<string>() ?? string.Empty)
+            switch (rootDoc.ElementAnyNs("StatusNFe")?.GetValue<string>() ?? string.Empty)
             {
                 case "N":
                     ret.Situacao = SituacaoNFSeRps.Normal;
@@ -148,17 +151,17 @@ namespace ACBr.Net.NFSe.Providers
                     break;
             }
 
-            ret.Servico.Discriminacao = xml.ElementAnyNs("Discriminacao")?.GetValue<string>() ?? string.Empty;
-            ret.Servico.Valores.ValorServicos = xml.ElementAnyNs("ValorServicos")?.GetValue<decimal>() ?? 0;
-            ret.Servico.Valores.Aliquota = xml.ElementAnyNs("AliquotaServicos")?.GetValue<decimal>() ?? 0;
-            ret.Servico.Valores.ValorIss = xml.ElementAnyNs("ValorISS")?.GetValue<decimal>() ?? 0;
-            ret.Servico.ItemListaServico = xml.ElementAnyNs("CodigoServico")?.GetValue<string>() ?? string.Empty;
-            ret.Servico.Valores.ValorCargaTributaria = xml.ElementAnyNs("ValorCargaTributaria")?.GetValue<decimal>() ?? 0;
-            ret.Servico.Valores.AliquotaCargaTributaria = xml.ElementAnyNs("PercentualCargaTributaria")?.GetValue<decimal>() ?? 0;
-            ret.Servico.Valores.FonteCargaTributaria = xml.ElementAnyNs("FonteCargaTributaria")?.GetValue<string>() ?? string.Empty;
-            ret.ValorCredito = xml.ElementAnyNs("ValorCredito")?.GetValue<decimal>() ?? 0;
+            ret.Servico.Discriminacao = rootDoc.ElementAnyNs("Discriminacao")?.GetValue<string>() ?? string.Empty;
+            ret.Servico.Valores.ValorServicos = rootDoc.ElementAnyNs("ValorServicos")?.GetValue<decimal>() ?? 0;
+            ret.Servico.Valores.Aliquota = rootDoc.ElementAnyNs("AliquotaServicos")?.GetValue<decimal>() ?? 0;
+            ret.Servico.Valores.ValorIss = rootDoc.ElementAnyNs("ValorISS")?.GetValue<decimal>() ?? 0;
+            ret.Servico.ItemListaServico = rootDoc.ElementAnyNs("CodigoServico")?.GetValue<string>() ?? string.Empty;
+            ret.Servico.Valores.ValorCargaTributaria = rootDoc.ElementAnyNs("ValorCargaTributaria")?.GetValue<decimal>() ?? 0;
+            ret.Servico.Valores.AliquotaCargaTributaria = rootDoc.ElementAnyNs("PercentualCargaTributaria")?.GetValue<decimal>() ?? 0;
+            ret.Servico.Valores.FonteCargaTributaria = rootDoc.ElementAnyNs("FonteCargaTributaria")?.GetValue<string>() ?? string.Empty;
+            ret.ValorCredito = rootDoc.ElementAnyNs("ValorCredito")?.GetValue<decimal>() ?? 0;
 
-            switch (xml.ElementAnyNs("ISSRetido")?.GetValue<string>() ?? string.Empty)
+            switch (rootDoc.ElementAnyNs("ISSRetido")?.GetValue<string>() ?? string.Empty)
             {
                 case "true":
                     ret.Servico.Valores.IssRetido = SituacaoTributaria.Retencao;
@@ -169,11 +172,11 @@ namespace ACBr.Net.NFSe.Providers
                     break;
             }
 
-            ret.Prestador.CpfCnpj = xml.ElementAnyNs("CPFCNPJPrestador")?.ElementAnyNs("CNPJ")?.GetValue<string>() ?? string.Empty;
+            ret.Prestador.CpfCnpj = rootDoc.ElementAnyNs("CPFCNPJPrestador")?.ElementAnyNs("CNPJ")?.GetValue<string>() ?? string.Empty;
             if (ret.Prestador.CpfCnpj == "")
-                ret.Prestador.CpfCnpj = xml.ElementAnyNs("CPFCNPJPrestador")?.ElementAnyNs("CPF")?.GetValue<string>() ?? string.Empty;
-            ret.Prestador.RazaoSocial = xml.ElementAnyNs("RazaoSocialPrestador")?.GetValue<string>() ?? string.Empty;
-            var endPrestador = xml.ElementAnyNs("EnderecoPrestador");
+                ret.Prestador.CpfCnpj = rootDoc.ElementAnyNs("CPFCNPJPrestador")?.ElementAnyNs("CPF")?.GetValue<string>() ?? string.Empty;
+            ret.Prestador.RazaoSocial = rootDoc.ElementAnyNs("RazaoSocialPrestador")?.GetValue<string>() ?? string.Empty;
+            var endPrestador = rootDoc.ElementAnyNs("EnderecoPrestador");
             if (endPrestador != null)
             {
                 ret.Prestador.Endereco.TipoLogradouro = endPrestador.ElementAnyNs("TipoLogradouro")?.GetValue<string>() ?? string.Empty;
@@ -186,11 +189,11 @@ namespace ACBr.Net.NFSe.Providers
                 ret.Prestador.Endereco.Cep = endPrestador.ElementAnyNs("CEP")?.GetValue<string>() ?? string.Empty;
             }
 
-            ret.Tomador.CpfCnpj = xml.ElementAnyNs("CPFCNPJTomador")?.ElementAnyNs("CNPJ")?.GetValue<string>() ?? string.Empty;
+            ret.Tomador.CpfCnpj = rootDoc.ElementAnyNs("CPFCNPJTomador")?.ElementAnyNs("CNPJ")?.GetValue<string>() ?? string.Empty;
             if (ret.Tomador.CpfCnpj == "")
-                ret.Tomador.CpfCnpj = xml.ElementAnyNs("CPFCNPJTomador")?.ElementAnyNs("CPF")?.GetValue<string>() ?? string.Empty;
-            ret.Tomador.RazaoSocial = xml.ElementAnyNs("RazaoSocialTomador")?.GetValue<string>() ?? string.Empty;
-            var endTomador = xml.ElementAnyNs("EnderecoTomador");
+                ret.Tomador.CpfCnpj = rootDoc.ElementAnyNs("CPFCNPJTomador")?.ElementAnyNs("CPF")?.GetValue<string>() ?? string.Empty;
+            ret.Tomador.RazaoSocial = rootDoc.ElementAnyNs("RazaoSocialTomador")?.GetValue<string>() ?? string.Empty;
+            var endTomador = rootDoc.ElementAnyNs("EnderecoTomador");
             if (endTomador != null)
             {
                 ret.Tomador.Endereco.TipoLogradouro = endTomador.ElementAnyNs("TipoLogradouro")?.GetValue<string>() ?? string.Empty;
