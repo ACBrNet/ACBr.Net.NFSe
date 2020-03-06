@@ -29,7 +29,9 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.Text;
+using System.Security.Cryptography.X509Certificates;
 using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core;
@@ -39,6 +41,10 @@ namespace ACBr.Net.NFSe.Providers
     internal sealed class FiorilliServiceClient : NFSeSOAP11ServiceClient, IABRASF2Client
     {
         #region Constructors
+
+        public FiorilliServiceClient(ProviderFiorilli provider, TipoUrl tipoUrl, X509Certificate2 certificado) : base(provider, tipoUrl, certificado)
+        {
+        }
 
         public FiorilliServiceClient(ProviderFiorilli provider, TipoUrl tipoUrl) : base(provider, tipoUrl)
         {
@@ -208,7 +214,9 @@ namespace ACBr.Net.NFSe.Providers
                 throw new ACBrDFeCommunicationException(exMessage);
             }
 
-            return xmlDocument.ElementAnyNs(responseTag[0]).Value;
+            var reader = xmlDocument.ElementAnyNs(responseTag[0]).CreateReader();
+            reader.MoveToContent();
+            return reader.ReadInnerXml().Replace("ns2:", string.Empty);
         }
 
         #endregion Methods
