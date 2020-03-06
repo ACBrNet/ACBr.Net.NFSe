@@ -401,7 +401,9 @@ namespace ACBr.Net.NFSe.Providers
                 optanteSimplesNacional = "2";
             }
 
-            infServico.AddChild(AdicionarTag(TipoCampo.Int, "", "RegimeEspecialTributacao", 1, 1, Ocorrencia.NaoObrigatoria, regimeEspecialTributacao));
+            if (nota.RegimeEspecialTributacao != RegimeEspecialTributacao.Nenhum)
+                infServico.AddChild(AdicionarTag(TipoCampo.Int, "", "RegimeEspecialTributacao", 1, 1, Ocorrencia.NaoObrigatoria, regimeEspecialTributacao));
+
             infServico.AddChild(AdicionarTag(TipoCampo.Int, "", "OptanteSimplesNacional", 1, 1, Ocorrencia.Obrigatoria, optanteSimplesNacional));
             infServico.AddChild(AdicionarTag(TipoCampo.Int, "", "IncentivoFiscal", 1, 1, Ocorrencia.Obrigatoria, nota.IncentivadorCultural == NFSeSimNao.Sim ? 1 : 2));
 
@@ -784,8 +786,8 @@ namespace ACBr.Net.NFSe.Providers
                 ? $"<Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
                 : $"<Cpf>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
             xmlLote.Append("</CpfCnpj>");
-            if (UsaPrestadorEnvio) xmlLote.Append("</Prestador>");
             if (!Configuracoes.PrestadorPadrao.InscricaoMunicipal.IsEmpty()) xmlLote.Append($"<InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
+            if (UsaPrestadorEnvio) xmlLote.Append("</Prestador>");
             xmlLote.Append($"<QuantidadeRps>{notas.Count}</QuantidadeRps>");
             xmlLote.Append("<ListaRps>");
             xmlLote.Append(xmlLoteRps);
@@ -873,8 +875,8 @@ namespace ACBr.Net.NFSe.Providers
                 ? $"<Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
                 : $"<Cpf>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
             xmlLote.Append("</CpfCnpj>");
-            if (UsaPrestadorEnvio) xmlLote.Append("/<Prestador>");
             if (!Configuracoes.PrestadorPadrao.InscricaoMunicipal.IsEmpty()) xmlLote.Append($"<InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
+            if (UsaPrestadorEnvio) xmlLote.Append("</Prestador>");
             xmlLote.Append($"<QuantidadeRps>{notas.Count}</QuantidadeRps>");
             xmlLote.Append("<ListaRps>");
             xmlLote.Append(xmlLoteRps);
