@@ -67,7 +67,7 @@ namespace ACBr.Net.NFSe.Providers
             Guard.Against<XmlException>(rootDoc == null, "Xml de RPS ou NFSe invalido.");
 
             var ret = new NotaFiscal();
-            ret.Assinatura = xml.Root?.ElementAnyNs("Assinatura")?.GetValue<string>() ?? string.Empty;
+            ret.Assinatura = rootDoc.ElementAnyNs("Assinatura")?.GetValue<string>() ?? string.Empty;
 
             // Nota Fiscal
             ret.IdentificacaoNFSe.Numero = rootDoc.ElementAnyNs("ChaveNFe")?.ElementAnyNs("NumeroNFe")?.GetValue<string>() ?? string.Empty;
