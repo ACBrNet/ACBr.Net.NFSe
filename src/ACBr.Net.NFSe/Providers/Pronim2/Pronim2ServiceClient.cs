@@ -122,7 +122,7 @@ namespace ACBr.Net.NFSe.Providers
         {
             //NAO EXISTE NO PRONIM
             return "";
-        }        
+        }
 
         public string RecepcionarLoteRps(string cabec, string msg)
         {
@@ -150,7 +150,7 @@ namespace ACBr.Net.NFSe.Providers
 
         private string Execute(string soapAction, string message, string responseTag)
         {
-            return Execute(soapAction, message, responseTag, "xmlns:\"http://www.abrasf.org.br\"");
+            return Execute(soapAction, message, "", responseTag, "xmlns:\"http://www.abrasf.org.br\"");
         }
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)

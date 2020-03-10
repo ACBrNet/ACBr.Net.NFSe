@@ -15,27 +15,29 @@
     <RepositoryUrl>https://github.com/ACBrNet/ACBr.Net.NFSe</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>ACBr.Net NFSe ACBrNFSe</PackageTags>
-    <Description>Biblioteca para emissão e trasmissão de NFSe.
+    <Description>
+      Biblioteca para emissão e trasmissão de NFSe.
 
- **Provedores Implementados**
-- Ginfes.
-- DSF.
-- WebISS.
-- WebIss2.
-- São Paulo.
-- Coplan.
-- Nota Carioca.
-- Belo Horizonte.
-- Equiplano.
-- SmarAPD ABRASAF.
-- Porto Alegre.
-- Abaco (Em Teste).
-- Betha v1 (Em Teste).
-- Betha v2 (Em Teste).
-- GovDigital (Em Teste).
-- FissLex (Em Teste).
-- Fiorilli (Em Teste).
-- Vitoria (Em Testes).</Description>
+      **Provedores Implementados**
+      - Ginfes.
+      - DSF.
+      - WebISS.
+      - WebIss2.
+      - São Paulo.
+      - Coplan.
+      - Nota Carioca.
+      - Belo Horizonte.
+      - Equiplano.
+      - SmarAPD ABRASAF.
+      - Porto Alegre.
+      - Abaco (Em Teste).
+      - Betha v1 (Em Teste).
+      - Betha v2 (Em Teste).
+      - GovDigital (Em Teste).
+      - FissLex (Em Teste).
+      - Fiorilli (Em Teste).
+      - Vitoria (Em Testes).
+    </Description>
     <NeutralLanguage>pt-BR</NeutralLanguage>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <AssemblyVersion>1.2.1.0</AssemblyVersion>
@@ -156,6 +158,10 @@
       <Pack>True</Pack>
       <PackagePath>content\Schemas\São Paulo</PackagePath>
     </None>
+    <None Include="Schemas\SimplISS\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\SimplISS</PackagePath>
+    </None>
     <None Include="Schemas\SmarAPDABRASF\*.*">
       <Pack>True</Pack>
       <PackagePath>content\Schemas\SmarAPDABRASF</PackagePath>
@@ -239,6 +245,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\São Paulo\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SimplISS\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\SmarAPDABRASF\*.*">

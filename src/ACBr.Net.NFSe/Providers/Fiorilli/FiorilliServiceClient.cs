@@ -202,7 +202,7 @@ namespace ACBr.Net.NFSe.Providers
 
         private string Execute(string soapAction, string message, string responseTag)
         {
-            return Execute(soapAction, message, responseTag, "xmlns:ws=\"http://ws.issweb.fiorilli.com.br/\"");
+            return Execute(soapAction, message, "", responseTag, "xmlns:ws=\"http://ws.issweb.fiorilli.com.br/\"");
         }
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)

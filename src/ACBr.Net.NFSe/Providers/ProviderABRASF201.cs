@@ -52,7 +52,7 @@ namespace ACBr.Net.NFSe.Providers
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProviderABRASF202"/> class.
+        /// Initializes a new instance of the <see cref="ProviderABRASF201"/> class.
         /// </summary>
         /// <param name="config">The configuration.</param>
         /// <param name="municipio">The municipio.</param>

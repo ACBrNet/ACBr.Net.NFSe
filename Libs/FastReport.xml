@@ -2463,6 +2463,11 @@
             Gets pdf AcroForms compatibility, if set then EmbeddingFonts = false and PdfCompliance = PdfStandard.None
             </summary>
         </member>
+        <member name="P:FastReport.Export.Pdf.PDFExport.InteractiveFormsFontSetPattern">
+            <summary>
+            Set pattern for selection of embedding glyphs for Interactive Forms
+            </summary>
+        </member>
         <member name="P:FastReport.Export.Pdf.PDFExport.IsDigitalSignEnable">
             <summary>
             Enable or disable digital sign for pdf document
@@ -4562,6 +4567,14 @@
             </summary>
             <param name="str"></param>
             <param name="rtl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FastReport.Export.TTF.ExportTTFFont.SetPattern(System.String,System.Boolean)">
+            <summary>
+            Set pattern for generation of alphabet's subset
+            </summary>
+            <param name="pattern">Regular expression with pattern generator</param>
+            <param name="rtl">Use left-to-right rules</param>
             <returns></returns>
         </member>
         <member name="M:FastReport.Export.TTF.ExportTTFFont.GetEnglishFontName">

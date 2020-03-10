@@ -185,7 +185,7 @@ namespace ACBr.Net.NFSe.Providers
 
         private string Execute(string soapAction, string responseTag, string message)
         {
-            return Execute(soapAction, message, responseTag, "xmlns:e=\"http://www.betha.com.br/e-nota-contribuinte-ws\"");
+            return Execute(soapAction, message, "", responseTag, "xmlns:e=\"http://www.betha.com.br/e-nota-contribuinte-ws\"");
         }
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)

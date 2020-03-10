@@ -180,7 +180,7 @@ namespace ACBr.Net.NFSe.Providers
 
         private string Execute(string soapAction, string message, string responseTag)
         {
-            return Execute(soapAction, message, responseTag, "xmlns:nfe=\"http://www.prefeitura.sp.gov.br/nfe\"");
+            return Execute(soapAction, message, "", responseTag, "xmlns:nfe=\"http://www.prefeitura.sp.gov.br/nfe\"");
         }
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)

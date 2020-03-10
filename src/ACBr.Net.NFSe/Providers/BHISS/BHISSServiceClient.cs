@@ -170,7 +170,7 @@ namespace ACBr.Net.NFSe.Providers
 
         private string Execute(string action, string message, string responseTag)
         {
-            return Execute(action, message, responseTag, "xmlns:ws=\"http://ws.bhiss.pbh.gov.br\"");
+            return Execute(action, message, "", responseTag, "xmlns:ws=\"http://ws.bhiss.pbh.gov.br\"");
         }
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)

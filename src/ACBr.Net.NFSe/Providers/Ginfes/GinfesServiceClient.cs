@@ -143,7 +143,7 @@ namespace ACBr.Net.NFSe.Providers
             var ns = Provider.Configuracoes.WebServices.Ambiente == DFeTipoAmbiente.Homologacao ?
                             "xmlns:gin=\"http://homologacao.ginfes.com.br\"" : "xmlns:gin=\"http://producao.ginfes.com.br\"";
 
-            return Execute("", message, responseTag, ns);
+            return Execute("", message, "", responseTag, ns);
         }
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)

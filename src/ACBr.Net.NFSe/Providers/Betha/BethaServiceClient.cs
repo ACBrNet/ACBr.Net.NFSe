@@ -90,7 +90,7 @@ namespace ACBr.Net.NFSe.Providers
 
         private string Execute(string message)
         {
-            return Execute("", message, "", "xmlns:e=\"http://www.betha.com.br/e-nota-contribuinte-ws\"");
+            return Execute("", message, "", "", "xmlns:e=\"http://www.betha.com.br/e-nota-contribuinte-ws\"");
         }
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)

@@ -134,7 +134,7 @@ namespace ACBr.Net.NFSe.Providers
 
         private string Execute(string soapAction, string message, string responseTag)
         {
-            return Execute(soapAction, message, responseTag, "xmlns:not=\"http://notacarioca.rio.gov.br/\"");
+            return Execute(soapAction, message, "", responseTag, "xmlns:not=\"http://notacarioca.rio.gov.br/\"");
         }
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
