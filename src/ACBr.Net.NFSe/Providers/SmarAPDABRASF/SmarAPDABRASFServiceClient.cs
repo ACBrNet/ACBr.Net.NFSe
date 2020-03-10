@@ -187,7 +187,7 @@ namespace ACBr.Net.NFSe.Providers
 
         private string Execute(string soapAction, string message, string responseTag)
         {
-            return Execute(soapAction, message, responseTag, "xmlns:e=\"http://nfse.abrasf.org.br\"");
+            return Execute(soapAction, message, "", responseTag, "xmlns:e=\"http://nfse.abrasf.org.br\"");
         }
 
         protected override bool ValidarCertificadoServidor()

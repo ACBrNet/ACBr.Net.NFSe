@@ -56,7 +56,7 @@ namespace ACBr.Net.NFSe.Providers
             Name = "ABRASFv204";
             Versao = "2.04";
             UsaPrestadorEnvio = true;
-            ConsultarNfseRpsResposta = "ConsultaNFSeRps";
+            ConsultarNfseRpsResposta = "ConsultarNfseRpsResposta";
         }
 
         #endregion Constructors
