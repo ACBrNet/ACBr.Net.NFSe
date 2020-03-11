@@ -931,7 +931,7 @@ namespace ACBr.Net.NFSe.Providers
 
             if (!retornoWebservice.Sucesso) return retornoWebservice;
 
-            var listaNfse = xmlRet.ElementAnyNs("ListaNfse");
+            var listaNfse = xmlRet.Root.ElementAnyNs("ListaNfse");
 
             if (listaNfse == null)
             {
