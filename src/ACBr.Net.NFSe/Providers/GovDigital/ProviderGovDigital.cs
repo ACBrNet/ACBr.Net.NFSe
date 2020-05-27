@@ -33,7 +33,7 @@ using ACBr.Net.NFSe.Configuracao;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class ProviderGovDigital : ProviderABRASF202
+    internal sealed class ProviderGovDigital : ProviderABRASF201
     {
         #region Constructors
 
