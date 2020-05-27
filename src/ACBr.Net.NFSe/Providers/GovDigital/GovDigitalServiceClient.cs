@@ -36,7 +36,7 @@ using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class GovDigitalServiceClient : NFSeSOAP12ServiceClient, IABRASF2Client
+    internal sealed class GovDigitalServiceClient : NFSeSOAP11ServiceClient, IABRASF2Client
     {
         #region Constructors
 
