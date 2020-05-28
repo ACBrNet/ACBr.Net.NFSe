@@ -76,7 +76,7 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("FISS-LEXaction/AWS_CANCELARNFSE.Execute", msg, "");
         }
 
-        public string GerarNfse(string nfseCabecMsg, string nfseDadosMsg)
+        public string GerarNfse(string cabec, string msg)
         {
             throw new NotImplementedException();
         }

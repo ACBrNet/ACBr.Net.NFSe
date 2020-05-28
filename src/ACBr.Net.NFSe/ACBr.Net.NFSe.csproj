@@ -15,28 +15,30 @@
     <RepositoryUrl>https://github.com/ACBrNet/ACBr.Net.NFSe</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>ACBr.Net NFSe ACBrNFSe</PackageTags>
-    <Description>Biblioteca para emissão e trasmissão de NFSe.
+    <Description>
+      Biblioteca para emissão e trasmissão de NFSe.
 
-**Provedores Implementados**
-- Ginfes.
-- DSF.
-- WebISS.
-- WebIss2.
-- São Paulo.
-- Coplan.
-- Nota Carioca.
-- Belo Horizonte.
-- Equiplano.
-- SmarAPD ABRASAF.
-- Fiorilli.
-- NFe Cidades (GovDigital).
-- Porto Alegre (Em Teste).
-- Abaco (Em Teste).
-- Betha v1 (Em Teste).
-- Betha v2 (Em Teste).
-- FissLex (Em Teste).
-- Pronim v2 (Em Teste).
-- Vitoria (Em Testes).</Description>
+      **Provedores Implementados**
+      - Ginfes.
+      - DSF.
+      - WebISS.
+      - WebIss2.
+      - São Paulo.
+      - Coplan.
+      - Nota Carioca.
+      - Belo Horizonte.
+      - Equiplano.
+      - SmarAPD ABRASAF.
+      - Fiorilli.
+      - NFe Cidades (GovDigital).
+      - Porto Alegre (Em Teste).
+      - Abaco (Em Teste).
+      - Betha v1 (Em Teste).
+      - Betha v2 (Em Teste).
+      - FissLex (Em Teste).
+      - Pronim v2 (Em Teste).
+      - Vitoria (Em Testes).
+    </Description>
     <NeutralLanguage>pt-BR</NeutralLanguage>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <AssemblyVersion>1.2.5.0</AssemblyVersion>
@@ -147,7 +149,7 @@
     </None>
     <None Include="Schemas\NFe Cidades\*.*">
       <Pack>True</Pack>
-      <PackagePath>content\Schemas\GovDigital</PackagePath>
+      <PackagePath>content\Schemas\NFe Cidades</PackagePath>
     </None>
     <None Include="Schemas\Nota Carioca\*.*">
       <Pack>True</Pack>

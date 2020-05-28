@@ -153,15 +153,15 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://ws.bhiss.pbh.gov.br/RecepcionarLoteRps", message.ToString(), "RecepcionarLoteRpsResponse");
         }
 
-        public string GerarNfse(string nfseCabecMsg, string nfseDadosMsg)
+        public string GerarNfse(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<ws:GerarNfseRequest>");
             message.Append("<nfseCabecMsg>");
-            message.AppendCData(nfseCabecMsg);
+            message.AppendCData(cabec);
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
-            message.AppendCData(nfseDadosMsg);
+            message.AppendCData(msg);
             message.Append("</nfseDadosMsg>");
             message.Append("</ws:GerarNfseRequest>");
 

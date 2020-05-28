@@ -140,7 +140,7 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://www.e-nfs.com.braction/ACANCELARNFSE.Execute", message.ToString(), "CancelarNfse.ExecuteResponse");
         }
 
-        public string GerarNfse(string nfseCabecMsg, string nfseDadosMsg)
+        public string GerarNfse(string cabec, string msg)
         {
             throw new NotImplementedException();
         }

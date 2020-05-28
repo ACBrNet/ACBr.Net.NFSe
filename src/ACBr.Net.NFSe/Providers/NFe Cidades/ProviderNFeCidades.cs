@@ -29,7 +29,9 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Nota;
 
 namespace ACBr.Net.NFSe.Providers
 {
@@ -47,6 +49,11 @@ namespace ACBr.Net.NFSe.Providers
         #region Methods
 
         #region Protected Methods
+
+        public override RetornoWebservice Enviar(int lote, NotaFiscalCollection notas)
+        {
+            throw new NotImplementedException($"O provedor [{Name}] não implementa o método [{nameof(Enviar)}], utilize o método [{nameof(EnviarSincrono)}]");
+        }
 
         protected override IABRASF2Client GetClient(TipoUrl tipo)
         {

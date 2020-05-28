@@ -47,7 +47,7 @@ namespace ACBr.Net.NFSe.Providers
 
         string CancelarNFSe(string cabec, string msg);
 
-        string GerarNfse(string nfseCabecMsg, string nfseDadosMsg);
+        string GerarNfse(string cabec, string msg);
 
         #endregion Methods
     }

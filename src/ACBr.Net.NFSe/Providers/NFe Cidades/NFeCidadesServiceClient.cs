@@ -29,6 +29,7 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.Text;
 using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
@@ -155,17 +156,7 @@ namespace ACBr.Net.NFSe.Providers
 
         public string RecepcionarLoteRps(string cabec, string msg)
         {
-            var message = new StringBuilder();
-            message.Append("<e:RecepcionarLoteRpsRequest>");
-            message.Append("<nfseCabecMsg>");
-            message.AppendCData(cabec);
-            message.Append("</nfseCabecMsg>");
-            message.Append("<nfseDadosMsg>");
-            message.AppendCData(msg);
-            message.Append("</nfseDadosMsg>");
-            message.Append("</e:RecepcionarLoteRpsRequest>");
-
-            return Execute("http://nfse.abrasf.org.br/RecepcionarLoteRps", message.ToString(), "RecepcionarLoteRpsResponse");
+            throw new NotImplementedException($"O provedor [{Provider.Name}] não implementa o método [{nameof(RecepcionarLoteRps)}]");
         }
 
         public string RecepcionarLoteRpsSincrono(string cabec, string msg)
