@@ -15,34 +15,33 @@
     <RepositoryUrl>https://github.com/ACBrNet/ACBr.Net.NFSe</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>ACBr.Net NFSe ACBrNFSe</PackageTags>
-    <Description>
-      Biblioteca para emissão e trasmissão de NFSe.
+    <Description>Biblioteca para emissão e trasmissão de NFSe.
 
-      **Provedores Implementados**
-      - Ginfes.
-      - DSF.
-      - WebISS.
-      - WebIss2.
-      - São Paulo.
-      - Coplan.
-      - Nota Carioca.
-      - Belo Horizonte.
-      - Equiplano.
-      - SmarAPD ABRASAF.
-      - Porto Alegre.
-      - Abaco (Em Teste).
-      - Betha v1 (Em Teste).
-      - Betha v2 (Em Teste).
-      - GovDigital (Em Teste).
-      - FissLex (Em Teste).
-      - Fiorilli (Em Teste).
-      - Vitoria (Em Testes).
-    </Description>
+**Provedores Implementados**
+- Ginfes.
+- DSF.
+- WebISS.
+- WebIss2.
+- São Paulo.
+- Coplan.
+- Nota Carioca.
+- Belo Horizonte.
+- Equiplano.
+- SmarAPD ABRASAF.
+- Fiorilli.
+- NFe Cidades (GovDigital).
+- Porto Alegre (Em Teste).
+- Abaco (Em Teste).
+- Betha v1 (Em Teste).
+- Betha v2 (Em Teste).
+- FissLex (Em Teste).
+- Pronim v2 (Em Teste).
+- Vitoria (Em Testes).</Description>
     <NeutralLanguage>pt-BR</NeutralLanguage>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <AssemblyVersion>1.2.1.0</AssemblyVersion>
-    <FileVersion>1.2.1.0</FileVersion>
-    <Version>1.2.1.0</Version>
+    <AssemblyVersion>1.2.5.0</AssemblyVersion>
+    <FileVersion>1.2.5.0</FileVersion>
+    <Version>1.2.5.0</Version>
     <DelaySign>false</DelaySign>
   </PropertyGroup>
 
@@ -146,7 +145,7 @@
       <Pack>True</Pack>
       <PackagePath>content\Schemas\Ginfes</PackagePath>
     </None>
-    <None Include="Schemas\GovDigital\*.*">
+    <None Include="Schemas\NFe Cidades\*.*">
       <Pack>True</Pack>
       <PackagePath>content\Schemas\GovDigital</PackagePath>
     </None>
@@ -238,7 +237,7 @@
     <None Update="Schemas\Ginfes\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Schemas\GovDigital\*.*">
+    <None Update="Schemas\NFe Cidades\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\Nota Carioca\*.*">

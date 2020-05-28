@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dias
 // Last Modified On : 07-11-2018
 // ***********************************************************************
-// <copyright file="GovDigitalServiceClient.cs" company="ACBr.Net">
+// <copyright file="NFeCidadesServiceClient.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -36,11 +36,11 @@ using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class GovDigitalServiceClient : NFSeSOAP11ServiceClient, IABRASF2Client
+    internal sealed class NFeCidadesServiceClient : NFSeSOAP11ServiceClient, IABRASF2Client
     {
         #region Constructors
 
-        public GovDigitalServiceClient(ProviderGovDigital provider, TipoUrl tipoUrl) : base(provider, tipoUrl)
+        public NFeCidadesServiceClient(ProviderNFeCidades provider, TipoUrl tipoUrl) : base(provider, tipoUrl)
         {
         }
 

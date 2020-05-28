@@ -57,7 +57,8 @@ namespace ACBr.Net.NFSe.Providers
 
         Ginfes = 5,
 
-        GovDigital = 6,
+        [Description("NFe Cidades")]
+        NFeCidades = 6,
 
         [Description("Nota Carioca")]
         NotaCarioca = 7,
@@ -78,8 +79,5 @@ namespace ACBr.Net.NFSe.Providers
 
         [Description("WebIss v2")]
         WebIss2 = 11
-
-
-
     }
 }

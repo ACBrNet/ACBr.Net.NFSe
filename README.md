@@ -22,11 +22,11 @@ Biblioteca para emissão e trasmissão de NFSe.
 - Equiplano.
 - SmarAPD ABRASAF.
 - Fiorilli.
+- NFe Cidades (GovDigital).
 - Porto Alegre (Em Teste).
 - Abaco (Em Teste).
 - Betha v1 (Em Teste).
 - Betha v2 (Em Teste).
-- GovDigital (Em Teste).
 - FissLex (Em Teste).
 - Pronim v2 (Em Teste).
 - Vitoria (Em Testes).

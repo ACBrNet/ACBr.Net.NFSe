@@ -63,7 +63,7 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.Fiorilli, typeof(ProviderFiorilli)},
                 {NFSeProvider.FissLex, typeof(ProviderFissLex)},
                 {NFSeProvider.Ginfes, typeof(ProviderGinfes)},
-                {NFSeProvider.GovDigital, typeof(ProviderGovDigital)},
+                {NFSeProvider.NFeCidades, typeof(ProviderNFeCidades)},
                 {NFSeProvider.NotaCarioca, typeof(ProviderNotaCarioca)},
                 {NFSeProvider.Pronim2, typeof(ProviderPronim2)},
                 {NFSeProvider.SaoPaulo, typeof(ProviderSaoPaulo)},

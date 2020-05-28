@@ -40,9 +40,19 @@ namespace ACBr.Net.NFSe.Providers
             Name = "SimplISS";
         }
 
+        protected override string GetNamespace()
+        {
+            return "xmlns=\"http://www.sistema.com.br/Nfse/arquivos/\"";
+        }
+
         protected override IABRASFClient GetClient(TipoUrl tipo)
         {
-            throw new System.NotImplementedException();
+            return new SimplISSServiceClient(this, tipo);
+        }
+
+        protected override string GetSchema(TipoUrl tipo)
+        {
+            return "nfse_3.xsd";
         }
     }
 }

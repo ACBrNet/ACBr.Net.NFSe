@@ -33,13 +33,13 @@ using ACBr.Net.NFSe.Configuracao;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class ProviderGovDigital : ProviderABRASF201
+    internal sealed class ProviderNFeCidades : ProviderABRASF201
     {
         #region Constructors
 
-        public ProviderGovDigital(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
+        public ProviderNFeCidades(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
         {
-            Name = "GovDigital";
+            Name = "NFe Cidades";
         }
 
         #endregion Constructors
@@ -50,7 +50,7 @@ namespace ACBr.Net.NFSe.Providers
 
         protected override IABRASF2Client GetClient(TipoUrl tipo)
         {
-            return new GovDigitalServiceClient(this, tipo);
+            return new NFeCidadesServiceClient(this, tipo);
         }
 
         #endregion Protected Methods
