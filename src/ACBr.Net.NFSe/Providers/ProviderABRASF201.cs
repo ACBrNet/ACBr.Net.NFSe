@@ -1190,7 +1190,7 @@ namespace ACBr.Net.NFSe.Providers
             nota.Cancelamento.Pedido.CodigoCancelamento = codigoCancelamento;
             nota.Cancelamento.DataHora = confirmacaoCancelamento.ElementAnyNs("DataHora")?.GetValue<DateTime>() ?? DateTime.MinValue;
             nota.Cancelamento.MotivoCancelamento = motivo;
-            nota.Cancelamento.Signature = DFeSignature.Load(confirmacaoCancelamento.ElementAnyNs("Signature").ToString());
+            nota.Cancelamento.Signature = DFeSignature.Load(confirmacaoCancelamento.ElementAnyNs("Pedido").ElementAnyNs("Signature").ToString());
 
             retornoWebservice.NotasFiscais.Add(nota);
             return retornoWebservice;
