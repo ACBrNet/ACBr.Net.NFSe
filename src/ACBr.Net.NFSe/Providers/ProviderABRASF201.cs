@@ -37,6 +37,7 @@ using System.Xml.Linq;
 using ACBr.Net.Core;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core;
+using ACBr.Net.DFe.Core.Document;
 using ACBr.Net.DFe.Core.Serializer;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
@@ -1189,6 +1190,7 @@ namespace ACBr.Net.NFSe.Providers
             nota.Cancelamento.Pedido.CodigoCancelamento = codigoCancelamento;
             nota.Cancelamento.DataHora = confirmacaoCancelamento.ElementAnyNs("DataHora")?.GetValue<DateTime>() ?? DateTime.MinValue;
             nota.Cancelamento.MotivoCancelamento = motivo;
+            nota.Cancelamento.Signature = DFeSignature.Load(confirmacaoCancelamento.ElementAnyNs("Signature").ToString());
 
             retornoWebservice.NotasFiscais.Add(nota);
             return retornoWebservice;

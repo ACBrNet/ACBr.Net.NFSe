@@ -95,7 +95,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -118,13 +117,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ACBr.Net.Core">
-      <Version>1.2.4</Version>
+      <Version>1.2.4.1</Version>
     </PackageReference>
     <PackageReference Include="ACBr.Net.DFe.Core">
-      <Version>1.2.7</Version>
+      <Version>1.2.7.1</Version>
     </PackageReference>
     <PackageReference Include="NLog">
-      <Version>4.6.8</Version>
+      <Version>4.7.2</Version>
     </PackageReference>
     <PackageReference Include="NLog.Windows.Forms">
       <Version>4.3.0</Version>
