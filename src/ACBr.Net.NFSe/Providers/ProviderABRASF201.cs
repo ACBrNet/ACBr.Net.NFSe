@@ -108,14 +108,14 @@ namespace ACBr.Net.NFSe.Providers
 
             var ret = new NotaFiscal();
 
+            LoadRps(ret, rootRps);
+
             if (rootNFSe != null)
             {
                 LoadNFSe(ret, rootNFSe);
                 if (rootSub != null) LoadNFSeSub(ret, rootSub);
                 if (rootCanc != null) LoadNFSeCancel(ret, rootCanc);
             }
-
-            LoadRps(ret, rootRps);
 
             return ret;
         }
@@ -1184,7 +1184,7 @@ namespace ACBr.Net.NFSe.Providers
 
             // Se a nota fiscal cancelada existir na coleção de Notas Fiscais, atualiza seu status:
             var nota = notas.FirstOrDefault(x => x.IdentificacaoNFSe.Numero.Trim() == numeroNFSe);
-            if (nota == null) return retornoWebservice;
+            if (nota == null) nota = new NotaFiscal();
 
             nota.Situacao = SituacaoNFSeRps.Cancelado;
             nota.Cancelamento.Pedido.CodigoCancelamento = codigoCancelamento;
