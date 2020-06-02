@@ -95,8 +95,8 @@ namespace ACBr.Net.NFSe.Providers
             if (rootGrupo != null)
             {
                 rootNFSe = rootGrupo.ElementAnyNs("Nfse")?.ElementAnyNs("InfNfse");
-                rootSub = rootGrupo.ElementAnyNs("NfseCancelamento");
-                rootCanc = rootGrupo.ElementAnyNs("NfseSubstituicao");
+                rootCanc = rootGrupo.ElementAnyNs("NfseCancelamento");
+                rootSub = rootGrupo.ElementAnyNs("NfseSubstituicao");
                 rootRps = rootNFSe.ElementAnyNs("DeclaracaoPrestacaoServico")?.ElementAnyNs("InfDeclaracaoPrestacaoServico");
             }
             else
