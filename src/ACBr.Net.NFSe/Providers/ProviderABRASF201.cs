@@ -95,8 +95,8 @@ namespace ACBr.Net.NFSe.Providers
             if (rootGrupo != null)
             {
                 rootNFSe = rootGrupo.ElementAnyNs("Nfse")?.ElementAnyNs("InfNfse");
-                rootSub = rootGrupo.ElementAnyNs("NfseCancelamento");
-                rootCanc = rootGrupo.ElementAnyNs("NfseSubstituicao");
+               rootCanc = rootGrupo.ElementAnyNs("NfseCancelamento");
+                rootSub = rootGrupo.ElementAnyNs("NfseSubstituicao");
                 rootRps = rootNFSe.ElementAnyNs("DeclaracaoPrestacaoServico")?.ElementAnyNs("InfDeclaracaoPrestacaoServico");
             }
             else
@@ -107,15 +107,15 @@ namespace ACBr.Net.NFSe.Providers
             Guard.Against<XmlException>(rootNFSe == null && rootRps == null, "Xml de RPS ou NFSe invalido.");
 
             var ret = new NotaFiscal();
+            
+            LoadRps(ret, rootRps);
 
             if (rootNFSe != null)
             {
                 LoadNFSe(ret, rootNFSe);
                 if (rootSub != null) LoadNFSeSub(ret, rootSub);
                 if (rootCanc != null) LoadNFSeCancel(ret, rootCanc);
-            }
-
-            LoadRps(ret, rootRps);
+            }            
 
             return ret;
         }
