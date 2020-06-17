@@ -191,7 +191,7 @@ namespace ACBr.Net.NFSe.Providers
             return servico;
         }
 
-        protected virtual XElement WriteValoresRps(NotaFiscal nota)
+        protected override XElement WriteValoresRps(NotaFiscal nota)
         {
             var valores = new XElement("Valores");
 

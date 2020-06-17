@@ -49,12 +49,6 @@ namespace ACBr.Net.NFSe
     [TypeConverter(typeof(ACBrExpandableObjectConverter))]
     public abstract class ACBrDANFSeBase : DFeReportClass<ACBrNFSe>
     {
-        #region Fields
-
-        private ACBrNFSe parent;
-
-        #endregion Fields
-
         #region Properties
 
 #if NETFULL

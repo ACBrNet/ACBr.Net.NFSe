@@ -345,15 +345,11 @@ namespace ACBr.Net.NFSe.Providers
             }
 
             // Verifica se a NFSe está cancelada
-            if (rootCanc != null)
-            {
-                if (rootCanc.ElementAnyNs("InfConfirmacaoCancelamento")?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false == true) ;
-                {
-                    ret.Situacao = SituacaoNFSeRps.Cancelado;
-                    ret.Cancelamento.Pedido.CodigoCancelamento = rootCanc.ElementAnyNs("InfPedidoCancelamento")?.ElementAnyNs("CodigoCancelamento")?.GetValue<string>() ?? string.Empty;
-                    ret.Cancelamento.DataHora = rootCanc.ElementAnyNs("InfConfirmacaoCancelamento")?.ElementAnyNs("DataHora")?.GetValue<DateTime>() ?? DateTime.MinValue;
-                }
-            }
+            if (rootCanc == null) return ret;
+            if (!(rootCanc.ElementAnyNs("InfConfirmacaoCancelamento")?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false)) return ret;
+            ret.Situacao = SituacaoNFSeRps.Cancelado;
+            ret.Cancelamento.Pedido.CodigoCancelamento = rootCanc.ElementAnyNs("InfPedidoCancelamento")?.ElementAnyNs("CodigoCancelamento")?.GetValue<string>() ?? string.Empty;
+            ret.Cancelamento.DataHora = rootCanc.ElementAnyNs("InfConfirmacaoCancelamento")?.ElementAnyNs("DataHora")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
             return ret;
         }

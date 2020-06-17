@@ -132,7 +132,7 @@ namespace ACBr.Net.NFSe.Nota
 
         public string DiscriminacaoImpostos { get; set; }
 
-        public string DescricaoCodigoTributacaoMunicípio { get; set; }
+        public string DescricaoCodigoTributacaoMunicipio { get; set; }
 
         public decimal ValorCredito { get; set; }
 

@@ -464,11 +464,11 @@ namespace ACBr.Net.NFSe.Providers
             GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"lote-{lote}-ret.xml");
 
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            var cabeçalho = xmlRet.ElementAnyNs("Cabecalho");
+            var cabecalho = xmlRet.ElementAnyNs("Cabecalho");
 
-            retornoWebservice.Sucesso = cabeçalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
-            retornoWebservice.NumeroLote = cabeçalho?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
-            retornoWebservice.DataLote = cabeçalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
+            retornoWebservice.Sucesso = cabecalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
+            retornoWebservice.NumeroLote = cabecalho?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
+            retornoWebservice.DataLote = cabecalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
             var erros = xmlRet.ElementAnyNs("Erros");
             retornoWebservice.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));
@@ -540,11 +540,11 @@ namespace ACBr.Net.NFSe.Providers
             GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"lote-{lote}-ret.xml");
 
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            var cabeçalho = xmlRet.ElementAnyNs("Cabecalho");
+            var cabecalho = xmlRet.ElementAnyNs("Cabecalho");
 
-            retornoWebservice.Sucesso = cabeçalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
-            retornoWebservice.NumeroLote = cabeçalho?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
-            retornoWebservice.DataLote = cabeçalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
+            retornoWebservice.Sucesso = cabecalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
+            retornoWebservice.NumeroLote = cabecalho?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
+            retornoWebservice.DataLote = cabecalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
             var erros = xmlRet.ElementAnyNs("Erros");
             retornoWebservice.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));
@@ -640,11 +640,11 @@ namespace ACBr.Net.NFSe.Providers
             GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"CanNFSe-{loteCancelamento}-ret.xml");
 
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            var cabeçalho = xmlRet.ElementAnyNs("Cabecalho");
+            var cabecalho = xmlRet.ElementAnyNs("Cabecalho");
 
-            retornoWebservice.Sucesso = cabeçalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
-            retornoWebservice.NumeroLote = cabeçalho?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
-            retornoWebservice.DataLote = cabeçalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
+            retornoWebservice.Sucesso = cabecalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
+            retornoWebservice.NumeroLote = cabecalho?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
+            retornoWebservice.DataLote = cabecalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
             var erros = xmlRet.ElementAnyNs("Erros");
             retornoWebservice.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));
@@ -731,11 +731,11 @@ namespace ACBr.Net.NFSe.Providers
             GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"CanNFSe-{loteCancelamento}-ret.xml");
 
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            var cabeçalho = xmlRet.ElementAnyNs("Cabecalho");
+            var cabecalho = xmlRet.ElementAnyNs("Cabecalho");
 
-            retornoWebservice.Sucesso = cabeçalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
-            retornoWebservice.NumeroLote = cabeçalho?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
-            retornoWebservice.DataLote = cabeçalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
+            retornoWebservice.Sucesso = cabecalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
+            retornoWebservice.NumeroLote = cabecalho?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
+            retornoWebservice.DataLote = cabecalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
             var erros = xmlRet.ElementAnyNs("Erros");
             retornoWebservice.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));
@@ -809,11 +809,11 @@ namespace ACBr.Net.NFSe.Providers
             GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"Consultalote-{DateTime.Now:yyyyMMddssfff}-{lote}-ret.xml");
 
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            var cabeçalho = xmlRet.ElementAnyNs("Cabecalho");
+            var cabecalho = xmlRet.ElementAnyNs("Cabecalho");
 
-            retornoWebservice.Sucesso = cabeçalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
-            retornoWebservice.NumeroLote = cabeçalho?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
-            retornoWebservice.DataLote = cabeçalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
+            retornoWebservice.Sucesso = cabecalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
+            retornoWebservice.NumeroLote = cabecalho?.ElementAnyNs("NumeroLote")?.GetValue<string>() ?? string.Empty;
+            retornoWebservice.DataLote = cabecalho?.ElementAnyNs("DataEnvioLote")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
             var erros = xmlRet.ElementAnyNs("Erros");
             retornoWebservice.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));
@@ -886,10 +886,10 @@ namespace ACBr.Net.NFSe.Providers
             GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"Consultalote-{DateTime.Now:yyyyMMddssfff}-{lote}-ret.xml");
 
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            var cabeçalho = xmlRet.ElementAnyNs("Cabecalho");
+            var cabecalho = xmlRet.ElementAnyNs("Cabecalho");
 
             retornoWebservice.Sucesso = true;
-            retornoWebservice.NumeroUltimoRps = cabeçalho?.ElementAnyNs("NroUltimoRps")?.GetValue<string>() ?? string.Empty;
+            retornoWebservice.NumeroUltimoRps = cabecalho?.ElementAnyNs("NroUltimoRps")?.GetValue<string>() ?? string.Empty;
 
             var erros = xmlRet.ElementAnyNs("Erros");
             retornoWebservice.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));

@@ -315,7 +315,7 @@ namespace ACBr.Net.NFSe.Providers
                 nota.Servico.Valores.ValorLiquidoNfse = valoresNFSe.ElementAnyNs("ValorLiquidoNfse")?.GetValue<decimal>() ?? 0;
             }
 
-            nota.DescricaoCodigoTributacaoMunicípio = rootNFSe.ElementAnyNs("DescricaoCodigoTributacaoMunicípio")?.GetValue<string>() ?? string.Empty;
+            nota.DescricaoCodigoTributacaoMunicipio = rootNFSe.ElementAnyNs("DescricaoCodigoTributacaoMunicípio")?.GetValue<string>() ?? string.Empty;
             nota.ValorCredito = rootNFSe.ElementAnyNs("ValorCredito")?.GetValue<decimal>() ?? 0;
 
             LoadPrestador(nota, rootNFSe);

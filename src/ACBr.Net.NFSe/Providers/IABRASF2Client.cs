@@ -35,14 +35,6 @@ namespace ACBr.Net.NFSe.Providers
 {
     public interface IABRASF2Client : IServiceClient
     {
-        #region Properties
-
-        string EnvelopeEnvio { get; }
-
-        string EnvelopeRetorno { get; }
-
-        #endregion Properties
-
         #region Methods
 
         string RecepcionarLoteRps(string cabec, string msg);
