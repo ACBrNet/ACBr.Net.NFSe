@@ -53,16 +53,15 @@ namespace ACBr.Net.NFSe.Providers
         public string RecepcionarLoteRps(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<e:RecepcionarLoteRPS.Execute>");
-            message.Append("<e:Nfsecabecmsg>");
-            message.AppendCData(cabec);
-            message.Append("</e:Nfsecabecmsg>");
-            message.Append("<e:Nfsedadosmsg>");
-            message.AppendCData(msg);
-            message.Append("</e:Nfsedadosmsg>");
-            message.Append("</e:RecepcionarLoteRPS.Execute>");
+            message.Append("<sis:RecepcionarLoteRps xmlns=\"http://www.sistema.com.br/Sistema.Ws.Nfse\">");
+            message.Append(msg.Replace("EnviarLoteRpsEnvio", "sis:EnviarLoteRpsEnvio"));
+            message.Append("<sis:pParam>");
+            message.Append($"<P1 xmlns=\"http://www.sistema.com.br/Sistema.Ws.Nfse.Cn\">{Provider.Configuracoes.WebServices.Usuario}</P1>");
+            message.Append($"<P2 xmlns=\"http://www.sistema.com.br/Sistema.Ws.Nfse.Cn\">{Provider.Configuracoes.WebServices.Senha}</P2>");
+            message.Append("</sis:pParam>");
+            message.Append("</sis:RecepcionarLoteRps>");
 
-            return Execute("http://www.e-nfs.com.braction/ARECEPCIONARLOTERPS.Execute", message.ToString(), "RecepcionarLoteRPS.ExecuteResponse");
+            return Execute("http://www.sistema.com.br/Sistema.Ws.Nfse/INfseService/RecepcionarLoteRps", message.ToString(), "RecepcionarLoteRpsResponse");
         }
 
         public string ConsultarSituacaoLoteRps(string cabec, string msg)
@@ -147,24 +146,16 @@ namespace ACBr.Net.NFSe.Providers
 
         private string Execute(string soapAction, string message, string responseTag)
         {
-            return Execute(soapAction, message, "", responseTag, "xmlns:e=\"http://www.e-nfs.com.br\"");
-        }
-
-        protected override bool ValidarCertificadoServidor()
-        {
-            return Provider.Configuracoes.WebServices.Ambiente != DFeTipoAmbiente.Homologacao;
+            return Execute(soapAction, message, "", responseTag, "xmlns:sis=\"http://www.sistema.com.br/Sistema.Ws.Nfse\"");
         }
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
             var element = xmlDocument.ElementAnyNs("Fault");
-            if (element != null)
-            {
-                var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
-                throw new ACBrDFeCommunicationException(exMessage);
-            }
+            if (element == null) return xmlDocument.ElementAnyNs(responseTag[0]).Value;
 
-            return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("Outputxml").Value;
+            var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
+            throw new ACBrDFeCommunicationException(exMessage);
         }
 
         #endregion Methods

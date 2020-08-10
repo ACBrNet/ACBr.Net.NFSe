@@ -57,6 +57,8 @@ namespace ACBr.Net.NFSe.Providers
 
         Ginfes = 5,
 
+        ISSNet = 18,
+
         [Description("NFe Cidades")]
         NFeCidades = 6,
 
