@@ -56,7 +56,14 @@ namespace ACBr.Net.NFSe.Providers
 
         public string RecepcionarLoteRps(string cabec, string msg)
         {
-            throw new NotImplementedException();
+            var message = new StringBuilder();
+            message.Append("<RecepcionarLoteRps xmlns=\"http://www.issnetonline.com.br/webservice/nfd\">");
+            message.Append("<xml>");
+            message.AppendCData(msg);
+            message.Append("</xml>");
+            message.Append("</RecepcionarLoteRps>");
+
+            return Execute("http://www.issnetonline.com.br/webservice/nfd/RecepcionarLoteRps", message.ToString(), "RecepcionarLoteRps");
         }
 
         public string ConsultarSituacaoLoteRps(string cabec, string msg)
@@ -68,13 +75,19 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</xml>");
             message.Append("</ConsultaSituacaoLoteRPS>");
 
-            return Execute("http://www.issnetonline.com.br/webservice/nfd/ConsultaSituacaoLoteRPS",
-                message.ToString(), "ConsultaSituacaoLoteRPS");
+            return Execute("http://www.issnetonline.com.br/webservice/nfd/ConsultaSituacaoLoteRPS", message.ToString(), "ConsultaSituacaoLoteRPS");
         }
 
         public string ConsultarNFSePorRps(string cabec, string msg)
         {
-            throw new NotImplementedException();
+            var message = new StringBuilder();
+            message.Append("<ConsultarNFSePorRPS xmlns=\"http://www.issnetonline.com.br/webservice/nfd\">");
+            message.Append("<xml>");
+            message.AppendCData(msg);
+            message.Append("</xml>");
+            message.Append("</ConsultarNFSePorRPS>");
+
+            return Execute("http://www.issnetonline.com.br/webservice/nfd/ConsultarNFSePorRPS", message.ToString(), "ConsultarNFSePorRPS");
         }
 
         public string ConsultarNFSe(string cabec, string msg)
@@ -84,12 +97,26 @@ namespace ACBr.Net.NFSe.Providers
 
         public string ConsultarLoteRps(string cabec, string msg)
         {
-            throw new NotImplementedException();
+            var message = new StringBuilder();
+            message.Append("<ConsultarLoteRps xmlns=\"http://www.issnetonline.com.br/webservice/nfd\">");
+            message.Append("<xml>");
+            message.AppendCData(msg);
+            message.Append("</xml>");
+            message.Append("</ConsultarLoteRps>");
+
+            return Execute("http://www.issnetonline.com.br/webservice/nfd/ConsultarLoteRps", message.ToString(), "ConsultarLoteRps");
         }
 
         public string CancelarNFSe(string cabec, string msg)
         {
-            throw new NotImplementedException();
+            var message = new StringBuilder();
+            message.Append("<CancelarNfse xmlns=\"http://www.issnetonline.com.br/webservice/nfd\">");
+            message.Append("<xml>");
+            message.AppendCData(msg);
+            message.Append("</xml>");
+            message.Append("</CancelarNfse>");
+
+            return Execute("http://www.issnetonline.com.br/webservice/nfd/CancelarNfse", message.ToString(), "CancelarNfse");
         }
 
         public string GerarNfse(string cabec, string msg)
