@@ -522,7 +522,7 @@ namespace ACBr.Net.NFSe.Providers
 
         protected override IABRASFClient GetClient(TipoUrl tipo)
         {
-            return new ISSNetServiceClient(this, tipo, null);
+            return new ISSNetServiceClient(this, tipo);
         }
 
         protected override string GetNamespace()
