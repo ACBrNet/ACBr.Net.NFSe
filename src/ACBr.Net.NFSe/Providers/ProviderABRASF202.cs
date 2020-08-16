@@ -63,7 +63,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region RPS
 
-        protected override XElement WriteRpsRps(NotaFiscal nota)
+        protected override XElement WriteRpsRps(NotaServico nota)
         {
             var rps = new XElement("Rps");
 

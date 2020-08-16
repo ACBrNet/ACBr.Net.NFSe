@@ -12,14 +12,14 @@ namespace ACBr.Net.NFSe.Test
 		{
 			var acbrNFSe = SetupACBrNFSe.Instance;
 
-			acbrNFSe.NotasFiscais.Clear();
+			acbrNFSe.NotasServico.Clear();
 
 			var dados = new MemoryStream(Properties.Resources.Exemplo_Rps_Ginfes);
-			acbrNFSe.NotasFiscais.Load(dados);
+			acbrNFSe.NotasServico.Load(dados);
 
-			Assert.True(acbrNFSe.NotasFiscais.Count == 1, "Erro ao carregar a Rps");
+			Assert.True(acbrNFSe.NotasServico.Count == 1, "Erro ao carregar a Rps");
 
-			var rpsGerada = acbrNFSe.NotasFiscais.GetXml(acbrNFSe.NotasFiscais[0]);
+			var rpsGerada = acbrNFSe.NotasServico.GetXml(acbrNFSe.NotasServico[0]);
 
 			dados.Position = 0;
 			var xml = XDocument.Load(dados);
@@ -33,14 +33,14 @@ namespace ACBr.Net.NFSe.Test
 		{
 			var acbrNFSe = SetupACBrNFSe.Instance;
 
-			acbrNFSe.NotasFiscais.Clear();
+			acbrNFSe.NotasServico.Clear();
 
 			var dados = new MemoryStream(Properties.Resources.Exemplo_Rps_Ginfes);
-			acbrNFSe.NotasFiscais.Load(dados);
+			acbrNFSe.NotasServico.Load(dados);
 
-			Assert.True(acbrNFSe.NotasFiscais.Count == 1, "Erro ao carregar a NFSe");
+			Assert.True(acbrNFSe.NotasServico.Count == 1, "Erro ao carregar a NFSe");
 
-			var nfseGerada = acbrNFSe.NotasFiscais.GetXml(acbrNFSe.NotasFiscais[0]);
+			var nfseGerada = acbrNFSe.NotasServico.GetXml(acbrNFSe.NotasServico[0]);
 
 			dados.Position = 0;
 			var xml = XDocument.Load(dados);

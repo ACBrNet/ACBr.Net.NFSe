@@ -48,7 +48,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        public override RetornoWebservice EnviarSincrono(int lote, NotaFiscalCollection notas)
+        protected override RetornoEnviar PrepararEnviarSincrono(NotaServicoCollection notas, int lote)
         {
             throw new NotImplementedException("Função não implementada/suportada neste Provedor.");
         }
@@ -58,7 +58,7 @@ namespace ACBr.Net.NFSe.Providers
             return string.Empty;
         }
 
-        protected override IABRASFClient GetClient(TipoUrl tipo)
+        protected override IServiceClient GetClient(TipoUrl tipo)
         {
             return new AbacoServiceClient(this, tipo);
         }

@@ -50,7 +50,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Protected Methods
 
-        public override RetornoWebservice Enviar(int lote, NotaFiscalCollection notas)
+        public override RetornoWebservice Enviar(int lote, NotaServicoCollection notas)
         {
             throw new NotImplementedException($"O provedor [{Name}] não implementa o método [{nameof(Enviar)}], utilize o método [{nameof(EnviarSincrono)}]");
         }

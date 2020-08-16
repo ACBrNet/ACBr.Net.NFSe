@@ -53,7 +53,7 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport
             {
                 PrepararImpressao();
 
-                internalReport.RegisterData(Parent.NotasFiscais.ToArray(), "NotaFiscal");
+                internalReport.RegisterData(Parent.NotasServico.ToArray(), "NotaServico");
                 internalReport.Prepare();
 
                 if (ShowDesign)

@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dias
 // Last Modified On : 10-01-2014
 // ***********************************************************************
-// <copyright file="NotaFiscal.cs" company="ACBr.Net">
+// <copyright file="NotaServico.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -36,7 +36,7 @@ using System.ComponentModel;
 
 namespace ACBr.Net.NFSe.Nota
 {
-    public sealed class NotaFiscal : GenericClone<NotaFiscal>, INotifyPropertyChanged
+    public sealed class NotaServico : GenericClone<NotaServico>, INotifyPropertyChanged
     {
         #region Events
 
@@ -46,7 +46,7 @@ namespace ACBr.Net.NFSe.Nota
 
         #region Constructor
 
-        public NotaFiscal()
+        public NotaServico()
         {
             Id = 0;
             IdentificacaoRps = new IdeRps();
@@ -67,9 +67,9 @@ namespace ACBr.Net.NFSe.Nota
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NotaFiscal"/> class.
+        /// Initializes a new instance of the <see cref="NotaServico"/> class.
         /// </summary>
-        public NotaFiscal(DadosPrestador prestador) : this()
+        public NotaServico(DadosPrestador prestador) : this()
         {
             Prestador = prestador;
         }

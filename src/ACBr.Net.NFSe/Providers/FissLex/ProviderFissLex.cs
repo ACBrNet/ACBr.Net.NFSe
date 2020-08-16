@@ -61,7 +61,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Services
 
-        public override RetornoWebservice Enviar(int lote, NotaFiscalCollection notas)
+        public override RetornoWebservice Enviar(int lote, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
 
@@ -143,7 +143,7 @@ namespace ACBr.Net.NFSe.Providers
             if (!retornoWebservice.Sucesso) return retornoWebservice;
 
             // ReSharper disable once SuggestVarOrType_SimpleTypes
-            foreach (NotaFiscal nota in notas)
+            foreach (NotaServico nota in notas)
             {
                 nota.NumeroLote = retornoWebservice.NumeroLote;
             }
@@ -151,12 +151,12 @@ namespace ACBr.Net.NFSe.Providers
             return retornoWebservice;
         }
 
-        public override RetornoWebservice EnviarSincrono(int lote, NotaFiscalCollection notas)
+        public override RetornoWebservice EnviarSincrono(int lote, NotaServicoCollection notas)
         {
             throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
-        public override RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas)
+        public override RetornoWebservice CancelarNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
 
@@ -301,7 +301,7 @@ namespace ACBr.Net.NFSe.Providers
             return retornoWebservice;
         }
 
-        public override RetornoWebservice ConsultarLoteRps(int lote, string protocolo, NotaFiscalCollection notas)
+        public override RetornoWebservice ConsultarLoteRps(int lote, string protocolo, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
 
@@ -383,7 +383,7 @@ namespace ACBr.Net.NFSe.Providers
             return retornoWebservice;
         }
 
-        public override RetornoWebservice ConsultaNFSeRps(string numero, string serie, TipoRps tipo, NotaFiscalCollection notas)
+        public override RetornoWebservice ConsultaNFSeRps(string numero, string serie, TipoRps tipo, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
 
@@ -460,8 +460,9 @@ namespace ACBr.Net.NFSe.Providers
             return retornoWebservice;
         }
 
-        public override RetornoWebservice ConsultaNFSe(DateTime? inicio, DateTime? fim, string numeroNfse, int pagina, string cnpjTomador,
-            string imTomador, string nomeInter, string cnpjInter, string imInter, string serie, NotaFiscalCollection notas)
+        public override RetornoWebservice ConsultaNFSe(NotaServicoCollection notas, DateTime? inicio,
+            DateTime? fim = null, string numeroNfse = "", int pagina = 0, string cnpjTomador = "",
+            string imTomador = "", string nomeInter = "", string cnpjInter = "", string imInter = "", string serie = "")
         {
             var retornoWebservice = new RetornoWebservice();
 

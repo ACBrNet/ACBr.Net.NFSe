@@ -29,11 +29,8 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
-using System.Linq;
 using System.Text;
 using ACBr.Net.Core.Extensions;
-using ACBr.Net.DFe.Core;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
 
@@ -52,10 +49,9 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        /// <inheritdoc />
-        public override RetornoWebservice Enviar(int lote, NotaFiscalCollection notas)
+        protected override RetornoEnviar PrepararEnviar(NotaServicoCollection notas, int lote)
         {
-            var retornoWebservice = new RetornoWebservice();
+            var retornoWebservice = new RetornoEnviar();
 
             if (lote == 0) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Lote não informado." });
             if (notas.Count == 0) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "RPS não informado." });
@@ -84,41 +80,10 @@ namespace ACBr.Net.NFSe.Providers
             xmlLote.Append("</EnviarLoteRpsEnvio>");
             retornoWebservice.XmlEnvio = xmlLote.ToString();
 
-            if (Configuracoes.Geral.RetirarAcentos)
-            {
-                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
-            }
-
-            retornoWebservice.XmlEnvio = XmlSigning.AssinarXmlTodos(retornoWebservice.XmlEnvio, "Rps", "InfRps", Certificado);
-            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(retornoWebservice.XmlEnvio, "EnviarLoteRpsEnvio", "LoteRps", Certificado);
-
-            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-{lote}-env.xml");
-
-            // Verifica Schema
-            ValidarSchema(retornoWebservice, GetSchema(TipoUrl.Enviar));
-            if (retornoWebservice.Erros.Any()) return retornoWebservice;
-
-            // Recebe mensagem de retorno
-            try
-            {
-                using (var cliente = GetClient(TipoUrl.Enviar))
-                {
-                    retornoWebservice.XmlRetorno = cliente.RecepcionarLoteRps(GerarCabecalho(), retornoWebservice.XmlEnvio);
-                    retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
-                    retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
-                }
-            }
-            catch (Exception ex)
-            {
-                retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
-                return retornoWebservice;
-            }
-            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"lote-{lote}-ret.xml");
-            TratarRetornoEnviar(retornoWebservice, notas);
             return retornoWebservice;
         }
 
-        protected override IABRASFClient GetClient(TipoUrl tipo)
+        protected override IServiceClient GetClient(TipoUrl tipo)
         {
             return new BHISSServiceClient(this, tipo);
         }

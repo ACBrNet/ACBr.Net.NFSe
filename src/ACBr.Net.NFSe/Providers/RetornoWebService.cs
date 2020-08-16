@@ -29,26 +29,13 @@
 // <summary></summary>
 // ***********************************************************************
 
-using ACBr.Net.NFSe.Nota;
 using System;
 using System.Collections.Generic;
-
-#if NETFULL
-
-using System.Runtime.InteropServices;
-
-#endif
+using ACBr.Net.NFSe.Nota;
 
 namespace ACBr.Net.NFSe.Providers
 {
-#if NETFULL
-
-    [ComVisible(true)]
-    [ProgId(nameof(RetornoWebservice))]
-    [ClassInterface(ClassInterfaceType.AutoDual)]
-#endif
-
-    public class RetornoWebservice
+    public abstract class RetornoWebservice
     {
         #region Propriedades
 
@@ -56,38 +43,10 @@ namespace ACBr.Net.NFSe.Providers
         /// Informa se a comunicação ocorreu com sucesso ou não.
         /// </summary>
         /// <value><c>true</c> se não teve erro, senão <c>false</c>.</value>
-        public bool Sucesso { get; set; } = false;
+        public bool Sucesso { get; set; }
 
-        public string Situacao { get; set; } = "";
-
-        public string Protocolo { get; set; } = "";
-
-        public string NumeroLote { get; set; } = "";
-
-        public string NumeroUltimoRps { get; set; } = "";
-
-        public DateTime DataLote { get; set; } = DateTime.Now;
-
-        public int ProximaPagina { get; set; } = 0;
-
-        public bool Assincrono { get; set; } = false;
-
-#if NETFULL
-
-        [ComVisible(false)]
-#endif
-        public List<NotaFiscal> NotasFiscais { get; } = new List<NotaFiscal>();
-
-#if NETFULL
-
-        [ComVisible(false)]
-#endif
         public List<Evento> Alertas { get; } = new List<Evento>();
 
-#if NETFULL
-
-        [ComVisible(false)]
-#endif
         public List<Evento> Erros { get; } = new List<Evento>();
 
         public string XmlEnvio { get; set; } = "";
@@ -99,5 +58,104 @@ namespace ACBr.Net.NFSe.Providers
         public string EnvelopeRetorno { get; set; } = "";
 
         #endregion Propriedades
+    }
+
+    public sealed class RetornoEnviar : RetornoWebservice
+    {
+        public string NumeroLote { get; set; }
+
+        public DateTime Data { get; set; }
+
+        public string Protocolo { get; set; }
+
+        public bool Sincrono { get; set; }
+    }
+
+    public sealed class RetornoConsultarSituacao : RetornoWebservice
+    {
+        public int NumeroLote { get; set; }
+
+        public string Situacao { get; set; }
+    }
+
+    public sealed class RetornoConsultarLoteRps : RetornoWebservice
+    {
+        public int Lote { get; set; }
+
+        public string Protocolo { get; set; }
+
+        public string Situacao { get; set; }
+
+        public NotaServico[] Notas { get; set; }
+    }
+
+    public sealed class RetornoConsultarNFSeRps : RetornoWebservice
+    {
+        public int NumeroRps { get; set; }
+
+        public string Serie { get; set; }
+
+        public TipoRps Tipo { get; set; }
+
+        public NotaServico Nota { get; set; }
+    }
+
+    public sealed class RetornoConsultarNFSe : RetornoWebservice
+    {
+        public DateTime? Inicio { get; set; }
+
+        public DateTime? Fim { get; set; }
+
+        public int NumeroNFse { get; set; }
+
+        public int Pagina { get; set; }
+
+        public int ProximaPagina { get; set; }
+
+        public string CNPJTomador { get; set; }
+
+        public string IMTomador { get; set; }
+
+        public string NomeIntermediario { get; set; }
+
+        public string CNPJIntermediario { get; set; }
+
+        public string IMIntermediario { get; set; }
+
+        public NotaServico[] Notas { get; set; }
+    }
+
+    public sealed class RetornoConsultarSequencialRps : RetornoWebservice
+    {
+        public string Serie { get; set; }
+
+        public int UltimoNumero { get; set; }
+    }
+
+    public sealed class RetornoCancelar : RetornoWebservice
+    {
+        public DateTime Data { get; set; }
+
+        public string NumeroNFSe { get; set; }
+
+        public string CodigoCancelamento { get; set; }
+
+        public string Motivo { get; set; }
+    }
+
+    public sealed class RetornoCancelarNFSeLote : RetornoWebservice
+    {
+        public int Lote { get; set; }
+    }
+
+    public sealed class RetornoSubstituirNFSe : RetornoWebservice
+    {
+        public string CodigoCancelamento { get; set; }
+
+        public string NumeroNFSe { get; set; }
+
+        public string Motivo { get; set; }
+
+        public NotaServico Nota { get; set; }
     }
 }

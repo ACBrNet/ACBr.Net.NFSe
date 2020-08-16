@@ -68,7 +68,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        public override NotaFiscal LoadXml(XDocument xml)
+        public override NotaServico LoadXml(XDocument xml)
         {
             Guard.Against<XmlException>(xml == null, "Xml invalido.");
 
@@ -95,7 +95,7 @@ namespace ACBr.Net.NFSe.Providers
 
             Guard.Against<XmlException>(rootDoc == null, "Xml de RPS ou NFSe invalido.");
 
-            var ret = new NotaFiscal();
+            var ret = new NotaServico();
 
             if (formatoXml == LoadXmlFormato.NFSe)
             {
@@ -354,12 +354,12 @@ namespace ACBr.Net.NFSe.Providers
             return ret;
         }
 
-        public override string WriteXmlRps(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
+        public override string WriteXmlRps(NotaServico nota, bool identado = true, bool showDeclaration = true)
         {
             return GetXmlRps(nota, identado, showDeclaration, false);
         }
 
-        public override string WriteXmlNFSe(NotaFiscal nota, bool identado = true, bool showDeclaration = true)
+        public override string WriteXmlNFSe(NotaServico nota, bool identado = true, bool showDeclaration = true)
         {
             var incentivadorCultural = nota.IncentivadorCultural == NFSeSimNao.Sim ? 1 : 2;
 
@@ -610,7 +610,7 @@ namespace ACBr.Net.NFSe.Providers
             return xmlDoc.AsString(identado, showDeclaration, Encoding.UTF8);
         }
 
-        public override RetornoWebservice Enviar(int lote, NotaFiscalCollection notas)
+        public override RetornoWebservice Enviar(int lote, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
 
@@ -692,7 +692,7 @@ namespace ACBr.Net.NFSe.Providers
                 return retornoWebservice;
 
             // ReSharper disable once SuggestVarOrType_SimpleTypes
-            foreach (NotaFiscal nota in notas)
+            foreach (NotaServico nota in notas)
             {
                 nota.NumeroLote = retornoWebservice.NumeroLote;
             }
@@ -757,7 +757,7 @@ namespace ACBr.Net.NFSe.Providers
             return retornoWebservice;
         }
 
-        public override RetornoWebservice ConsultarLoteRps(int lote, string protocolo, NotaFiscalCollection notas)
+        public override RetornoWebservice ConsultarLoteRps(int lote, string protocolo, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
 
@@ -840,7 +840,7 @@ namespace ACBr.Net.NFSe.Providers
             return retornoWebservice;
         }
 
-        public override RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas)
+        public override RetornoWebservice CancelarNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
 
@@ -927,7 +927,7 @@ namespace ACBr.Net.NFSe.Providers
             return retornoWebservice;
         }
 
-        public override RetornoWebservice ConsultaNFSeRps(string numero, string serie, TipoRps tipo, NotaFiscalCollection notas)
+        public override RetornoWebservice ConsultaNFSeRps(string numero, string serie, TipoRps tipo, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
 
@@ -1002,8 +1002,9 @@ namespace ACBr.Net.NFSe.Providers
             return retornoWebservice;
         }
 
-        public override RetornoWebservice ConsultaNFSe(DateTime? inicio, DateTime? fim, string numeroNfse, int pagina, string cnpjTomador,
-            string imTomador, string nomeInter, string cnpjInter, string imInter, string serie, NotaFiscalCollection notas)
+        public override RetornoWebservice ConsultaNFSe(NotaServicoCollection notas, DateTime? inicio,
+            DateTime? fim = null, string numeroNfse = "", int pagina = 0, string cnpjTomador = "",
+            string imTomador = "", string nomeInter = "", string cnpjInter = "", string imInter = "", string serie = "")
         {
             var retornoWebservice = new RetornoWebservice();
 
@@ -1105,7 +1106,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Private Methods
 
-        private string GetXmlRps(NotaFiscal nota, bool identado, bool showDeclaration, bool withPrefix)
+        private string GetXmlRps(NotaServico nota, bool identado, bool showDeclaration, bool withPrefix)
         {
             var incentivadorCultural = nota.IncentivadorCultural == NFSeSimNao.Sim ? 1 : 2;
 

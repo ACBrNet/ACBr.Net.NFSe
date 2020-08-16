@@ -51,7 +51,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        protected override void TratarRetornoConsultarLoteRps(RetornoWebservice retornoWebservice, NotaFiscalCollection notas)
+        protected override void TratarRetornoConsultarLoteRps(RetornoWebservice retornoWebservice, NotaServicoCollection notas)
         {
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);

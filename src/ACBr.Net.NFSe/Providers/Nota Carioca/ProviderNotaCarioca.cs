@@ -55,7 +55,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        protected override XElement WriteInfoRPS(NotaFiscal nota)
+        protected override XElement WriteInfoRPS(NotaServico nota)
         {
             var incentivadorCultural = nota.IncentivadorCultural == NFSeSimNao.Sim ? 1 : 2;
 
@@ -88,7 +88,7 @@ namespace ACBr.Net.NFSe.Providers
             return infoRps;
         }
 
-        public override RetornoWebservice EnviarSincrono(int lote, NotaFiscalCollection notas)
+        public override RetornoWebservice EnviarSincrono(int lote, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
 

@@ -57,7 +57,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region RPS
 
-        protected override XElement WriteInfoRPS(NotaFiscal nota)
+        protected override XElement WriteInfoRPS(NotaServico nota)
         {
             var incentivadorCultural = nota.IncentivadorCultural == NFSeSimNao.Sim ? 1 : 2;
 
@@ -90,7 +90,7 @@ namespace ACBr.Net.NFSe.Providers
             return infoRps;
         }
 
-        protected override XElement WritePrestadorRps(NotaFiscal nota)
+        protected override XElement WritePrestadorRps(NotaServico nota)
         {
             var prestador = new XElement("Prestador");
 
@@ -103,7 +103,7 @@ namespace ACBr.Net.NFSe.Providers
             return prestador;
         }
 
-        protected override XElement WriteTomadorRps(NotaFiscal nota)
+        protected override XElement WriteTomadorRps(NotaServico nota)
         {
             var tomador = new XElement("Tomador");
 
@@ -149,7 +149,7 @@ namespace ACBr.Net.NFSe.Providers
             return tomador;
         }
 
-        protected override XElement WriteServicosValoresRps(NotaFiscal nota)
+        protected override XElement WriteServicosValoresRps(NotaServico nota)
         {
             var servico = new XElement("Servico");
             var valores = new XElement("Valores");
@@ -202,7 +202,7 @@ namespace ACBr.Net.NFSe.Providers
         }
 
         /// <inheritdoc />
-        public override RetornoWebservice Enviar(int lote, NotaFiscalCollection notas)
+        public override RetornoWebservice Enviar(int lote, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
 
@@ -273,12 +273,12 @@ namespace ACBr.Net.NFSe.Providers
             return retornoWebservice;
         }
 
-        public override RetornoWebservice EnviarSincrono(int lote, NotaFiscalCollection notas)
+        public override RetornoWebservice EnviarSincrono(int lote, NotaServicoCollection notas)
         {
             throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
-        public override RetornoWebservice ConsultaNFSeRps(string numero, string serie, TipoRps tipo, NotaFiscalCollection notas)
+        public override RetornoWebservice ConsultaNFSeRps(string numero, string serie, TipoRps tipo, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
 
@@ -337,7 +337,7 @@ namespace ACBr.Net.NFSe.Providers
                 return retornoWebservice;
             }
             GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConNotaRps-{numero}-ret.xml");
-            TratarRetornoConsultaNFSeRps(retornoWebservice, notas);
+            TratarRetornoConsultarNFSeRps(retornoWebservice, notas);
             return retornoWebservice;
         }
 
@@ -394,7 +394,7 @@ namespace ACBr.Net.NFSe.Providers
             return retornoWebservice;
         }
 
-        public override RetornoWebservice ConsultarLoteRps(int lote, string protocolo, NotaFiscalCollection notas)
+        public override RetornoWebservice ConsultarLoteRps(int lote, string protocolo, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
 
@@ -447,7 +447,7 @@ namespace ACBr.Net.NFSe.Providers
             return retornoWebservice;
         }
 
-        public override RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas)
+        public override RetornoWebservice CancelarNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
 
@@ -512,7 +512,7 @@ namespace ACBr.Net.NFSe.Providers
                 return retornoWebservice;
             }
             GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"CanNFSe-{numeroNFSe}-ret.xml");
-            TratarRetornoCancelaNFSe(retornoWebservice, notas);
+            TratarRetornoCancelarNFSe(retornoWebservice, notas);
             return retornoWebservice;
         }
 

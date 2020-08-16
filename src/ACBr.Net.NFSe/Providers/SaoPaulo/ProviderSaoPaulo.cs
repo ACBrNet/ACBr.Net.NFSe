@@ -59,14 +59,14 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        public override NotaFiscal LoadXml(XDocument xml)
+        public override NotaServico LoadXml(XDocument xml)
         {
             Guard.Against<XmlException>(xml == null, "Xml invalido.");
             
             XElement rootDoc = xml.Root;
             Guard.Against<XmlException>(rootDoc == null, "Xml de RPS ou NFSe invalido.");
 
-            var ret = new NotaFiscal();
+            var ret = new NotaServico();
             ret.Assinatura = rootDoc.ElementAnyNs("Assinatura")?.GetValue<string>() ?? string.Empty;
 
             // Nota Fiscal
@@ -209,7 +209,7 @@ namespace ACBr.Net.NFSe.Providers
             return ret;
         }
 
-        public override string WriteXmlRps(NotaFiscal nota, bool identado, bool showDeclaration)
+        public override string WriteXmlRps(NotaServico nota, bool identado, bool showDeclaration)
         {
             string tipoRps;
             switch (nota.IdentificacaoRps.Tipo)
@@ -364,7 +364,7 @@ namespace ACBr.Net.NFSe.Providers
             return xmlDoc.AsString(identado, showDeclaration, Encoding.UTF8);
         }
 
-        public override RetornoWebservice Enviar(int lote, NotaFiscalCollection notas)
+        public override RetornoWebservice Enviar(int lote, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
 
@@ -447,7 +447,7 @@ namespace ACBr.Net.NFSe.Providers
             if (!retornoWebservice.Sucesso)
                 return retornoWebservice;
 
-            foreach (NotaFiscal nota in notas)
+            foreach (NotaServico nota in notas)
             {
                 nota.NumeroLote = retornoWebservice.NumeroLote;
             }
@@ -509,7 +509,7 @@ namespace ACBr.Net.NFSe.Providers
             return retornoWebservice;
         }
 
-        public override RetornoWebservice ConsultarLoteRps(int lote, string protocolo, NotaFiscalCollection notas)
+        public override RetornoWebservice ConsultarLoteRps(int lote, string protocolo, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
 
@@ -589,7 +589,7 @@ namespace ACBr.Net.NFSe.Providers
             return retornoWebservice;
         }
 
-        public override RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaFiscalCollection notas)
+        public override RetornoWebservice CancelarNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
 
@@ -676,13 +676,14 @@ namespace ACBr.Net.NFSe.Providers
             return retornoWebservice;
         }
 
-        public override RetornoWebservice ConsultaNFSeRps(string numeroRPS, string serieRPS, TipoRps tipo, NotaFiscalCollection notas)
+        public override RetornoWebservice ConsultaNFSeRps(string numeroRPS, string serieRPS, TipoRps tipo, NotaServicoCollection notas)
         {
             return ConsultarRpsNfseSP(numeroRPS, serieRPS, "", notas);
         }
 
-        public override RetornoWebservice ConsultaNFSe(DateTime? inicio, DateTime? fim, string numeroNFSe, int pagina, string cnpjTomador,
-            string imTomador, string nomeInter, string cnpjInter, string imInter, string serie, NotaFiscalCollection notas)
+        public override RetornoWebservice ConsultaNFSe(NotaServicoCollection notas, DateTime? inicio,
+            DateTime? fim = null, string numeroNFSe = "", int pagina = 0, string cnpjTomador = "",
+            string imTomador = "", string nomeInter = "", string cnpjInter = "", string imInter = "", string serie = "")
         {
             if (!string.IsNullOrWhiteSpace(numeroNFSe))
             {
@@ -702,7 +703,7 @@ namespace ACBr.Net.NFSe.Providers
             return new SaoPauloServiceClient(this, tipo);
         }
 
-        private RetornoWebservice ConsultarRpsNfseSP(string numeroRPS, string serieRPS, string numeroNFSe, NotaFiscalCollection notas)
+        private RetornoWebservice ConsultarRpsNfseSP(string numeroRPS, string serieRPS, string numeroNFSe, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoWebservice();
 
@@ -783,7 +784,7 @@ namespace ACBr.Net.NFSe.Providers
             return retornoWebservice;
         }
 
-        private string GetHashRps(NotaFiscal nota)
+        private string GetHashRps(NotaServico nota)
         {
             string tipoTributacao;
             switch (nota.TipoTributacao)

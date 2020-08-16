@@ -49,7 +49,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        public override RetornoWebservice EnviarSincrono(int lote, NotaFiscalCollection notas)
+        public override RetornoWebservice EnviarSincrono(int lote, NotaServicoCollection notas)
         {
             throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }

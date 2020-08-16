@@ -13,7 +13,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIconUrl>https://avatars2.githubusercontent.com/u/7342977?v=3&amp;amp;s=200</PackageIconUrl>
     <RepositoryUrl>https://github.com/ACBrNet/ACBr.Net.NFSe</RepositoryUrl>
-    <RepositoryType>Github</RepositoryType>
+    <RepositoryType>git</RepositoryType>
     <PackageTags>ACBr.Net NFSe ACBrNFSe</PackageTags>
     <Description>
       Biblioteca para emissão e trasmissão de NFSe.
@@ -32,6 +32,7 @@
       - Fiorilli.
       - NFe Cidades (GovDigital).
       - Porto Alegre (Em Teste).
+      - IIS Net (Em Teste).
       - Abaco (Em Teste).
       - Betha v1 (Em Teste).
       - Betha v2 (Em Teste).
@@ -41,12 +42,13 @@
     </Description>
     <NeutralLanguage>pt-BR</NeutralLanguage>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <AssemblyVersion>1.2.5.0</AssemblyVersion>
-    <FileVersion>1.2.5.0</FileVersion>
-    <Version>1.2.5.0</Version>
-    <DelaySign>false</DelaySign>
+    <AssemblyVersion>1.5.0.0</AssemblyVersion>
+    <FileVersion>1.5.0.0</FileVersion>
+    <Version>1.5.0.0</Version>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
@@ -79,7 +81,11 @@
 
   <ItemGroup>
     <PackageReference Include="ACBr.Net.Core" Version="1.2.4.1" />
-    <PackageReference Include="ACBr.Net.DFe.Core" Version="1.2.7.1" />
+    <PackageReference Include="ACBr.Net.DFe.Core" Version="1.2.8" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="PropertyChanged.Fody" Version="3.2.8">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

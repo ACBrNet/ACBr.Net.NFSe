@@ -131,7 +131,7 @@ namespace ACBr.Net.NFSe.Demo
         {
             ExecuteSafe(() =>
             {
-                var ret = acbrNFSe.ConsultaNFSe(DateTime.Today.AddDays(-7), DateTime.Today);
+                var ret = acbrNFSe.ConsultaNFSePeriodo(DateTime.Today.AddDays(-7), DateTime.Today);
                 wbbDados.LoadXml(ret.XmlEnvio);
                 wbbResposta.LoadXml(ret.XmlRetorno);
                 wbbRetorno.LoadXml(ret.EnvelopeRetorno);
@@ -151,7 +151,7 @@ namespace ACBr.Net.NFSe.Demo
                 var motivo = "";
                 if (InputBox.Show("Motivo Cancelamento", "Digite o motivo do cancelamento.", ref motivo).Equals(DialogResult.Cancel)) return;
 
-                var ret = acbrNFSe.CancelaNFSe(codigo, serie, motivo);
+                var ret = acbrNFSe.CancelarNFSe(codigo, serie, motivo);
                 wbbDados.LoadXml(ret.XmlEnvio);
                 wbbResposta.LoadXml(ret.XmlRetorno);
                 wbbRetorno.LoadXml(ret.EnvelopeRetorno);
@@ -441,8 +441,8 @@ namespace ACBr.Net.NFSe.Demo
             var municipio = cmbCidades.GetSelectedValue<ACBrMunicipioNFSe>();
             if (municipio == null) return;
 
-            acbrNFSe.NotasFiscais.Clear();
-            var nfSe = acbrNFSe.NotasFiscais.AddNew();
+            acbrNFSe.NotasServico.Clear();
+            var nfSe = acbrNFSe.NotasServico.AddNew();
             nfSe.IdentificacaoRps.Numero = "1";
             nfSe.IdentificacaoRps.Serie = "1";
             nfSe.IdentificacaoRps.Tipo = TipoRps.RPS;
