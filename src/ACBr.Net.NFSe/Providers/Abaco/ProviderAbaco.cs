@@ -48,7 +48,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        protected override RetornoEnviar PrepararEnviarSincrono(NotaServicoCollection notas, int lote)
+        protected override void PrepararEnviarSincrono(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
         {
             throw new NotImplementedException("Função não implementada/suportada neste Provedor.");
         }

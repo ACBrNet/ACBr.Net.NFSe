@@ -122,7 +122,7 @@ namespace ACBr.Net.NFSe.Nota
 
         public TipoLocalServico LocalServico { get; set; }
 
-        public string NumeroLote { get; set; }
+        public int NumeroLote { get; set; }
 
         public string Protocolo { get; set; }
 
