@@ -572,7 +572,7 @@ namespace ACBr.Net.NFSe.Providers
                 Tipo = tipo
             };
 
-            PrepararConsultarNFSeRps(retornoWebservice);
+            PrepararConsultarNFSeRps(retornoWebservice, notas);
             if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             if (Configuracoes.Geral.RetirarAcentos)
@@ -742,7 +742,7 @@ namespace ACBr.Net.NFSe.Providers
                 Lote = lote
             };
 
-            PrepararCancelarNFSeLote(retornoWebservice);
+            PrepararCancelarNFSeLote(retornoWebservice, notas);
             if (retornoWebservice.Erros.Any()) return retornoWebservice;
 
             if (Configuracoes.Geral.RetirarAcentos)
@@ -869,28 +869,24 @@ namespace ACBr.Net.NFSe.Providers
         /// <summary>
         /// Gera o xml de envio para o serviço de consultar lote rps.
         /// </summary>
-        /// <param name="notas"></param>
-        /// <param name="lote"></param>
-        /// <param name="protocolo"></param>
+        /// <param name="retornoWebservice"></param>
         /// <returns></returns>
         protected abstract void PrepararConsultarLoteRps(RetornoConsultarLoteRps retornoWebservice);
 
         /// <summary>
         /// Gera o xml de envio para o serviço de consultar sequencial rps.
         /// </summary>
-        /// <param name="serie"></param>
+        /// <param name="retornoWebservice"></param>
         /// <returns></returns>
         protected abstract void PrepararConsultarSequencialRps(RetornoConsultarSequencialRps retornoWebservice);
 
         /// <summary>
         /// Gera o xml de envio para o serviço de consultar NFSe por RPS.
         /// </summary>
+        /// <param name="retornoWebservice"></param>
         /// <param name="notas"></param>
-        /// <param name="numero"></param>
-        /// <param name="serie"></param>
-        /// <param name="tipo"></param>
         /// <returns></returns>
-        protected abstract void PrepararConsultarNFSeRps(RetornoConsultarNFSeRps retornoWebservice);
+        protected abstract void PrepararConsultarNFSeRps(RetornoConsultarNFSeRps retornoWebservice, NotaServicoCollection notas);
 
         /// <summary>
         /// Gera o xml de envio para o serviço consultar NFSe.
@@ -922,10 +918,12 @@ namespace ACBr.Net.NFSe.Providers
         /// <summary>
         /// Gera o xml de envio para o serviço cancelar NFSe.
         /// </summary>
+        /// <param name="retornoWebservice"></param>
         /// <param name="notas"></param>
         /// <param name="lote"></param>
         /// <returns></returns>
-        protected abstract void PrepararCancelarNFSeLote(RetornoCancelarNFSeLote retornoWebservice);
+        protected abstract void PrepararCancelarNFSeLote(RetornoCancelarNFSeLote retornoWebservice,
+            NotaServicoCollection notas);
 
         /// <summary>
         /// Gera o xml de envio para o serviço substituir NFSe.

@@ -29,13 +29,15 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.Text;
 using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
+using ACBr.Net.DFe.Core.Common;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class DSFServiceClient : NFSeSOAP11ServiceClient
+    internal sealed class DSFServiceClient : NFSeSOAP11ServiceClient, IServiceClient
     {
         #region Constructor
 
@@ -47,135 +49,120 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        /// <summary>
-        /// Consultars the sequencial RPS.
-        /// </summary>
-        /// <param name="mensagemXml">The mensagem XML.</param>
-        /// <returns>System.String.</returns>
-        public string ConsultarSequencialRps(string mensagemXml)
+        public string Enviar(string cabec, string msg)
         {
-            var message = new StringBuilder();
-            message.Append("<proc:consultarSequencialRps soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
-            message.Append("<mensagemXml xsi:type=\"xsd:string\">");
-            message.AppendEnvio(mensagemXml);
-            message.Append("</mensagemXml>");
-            message.Append("</proc:consultarSequencialRps>");
+            var servico = EhHomologação ? "testeEnviar" : "enviar";
 
-            return Execute(message.ToString(), "consultarSequencialRpsResponse", "consultarSequencialRpsReturn");
+            var message = new StringBuilder();
+            message.Append($"<proc:{servico} soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
+            message.Append("<mensagemXml xsi:type=\"xsd:string\">");
+            message.AppendEnvio(msg);
+            message.Append("</mensagemXml>");
+            message.Append($"</proc:{servico}>");
+
+            var response = EhHomologação ? "testeEnviarResponse" : "enviarResponse";
+            var responseReturn = EhHomologação ? "testeEnviarReturn" : "enviarReturn";
+
+            return Execute(message.ToString(), response, responseReturn);
         }
 
-        /// <summary>
-        /// Enviars the sincrono.
-        /// </summary>
-        /// <param name="mensagemXml">The mensagem XML.</param>
-        /// <returns>System.String.</returns>
-        public string EnviarSincrono(string mensagemXml)
+        public string EnviarSincrono(string cabec, string msg)
         {
+            if (EhHomologação) throw new NotImplementedException();
+
             var message = new StringBuilder();
             message.Append("<proc:enviarSincrono soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
             message.Append("<mensagemXml xsi:type=\"xsd:string\">");
-            message.AppendEnvio(mensagemXml);
+            message.AppendEnvio(msg);
             message.Append("</mensagemXml>");
             message.Append("</proc:enviarSincrono>");
 
             return Execute(message.ToString(), "enviarSincronoResponse", "enviarSincronoReturn");
         }
 
-        public string EnviarTeste(string mensagemXml)
+        public string ConsultarSituacao(string cabec, string msg)
         {
-            var message = new StringBuilder();
-            message.Append("<proc:testeEnviar soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
-            message.Append("<mensagemXml xsi:type=\"xsd:string\">");
-            message.AppendEnvio(mensagemXml);
-            message.Append("</mensagemXml>");
-            message.Append("</proc:testeEnviar>");
-
-            return Execute(message.ToString(), "testeEnviarResponse", "testeEnviarReturn");
+            throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Enviars the specified mensagem XML.
-        /// </summary>
-        /// <param name="mensagemXml">The mensagem XML.</param>
-        /// <returns>System.String.</returns>
-        public string Enviar(string mensagemXml)
+        public string ConsultarLoteRps(string cabec, string msg)
         {
-            var message = new StringBuilder();
-            message.Append("<proc:enviar soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
-            message.Append("<mensagemXml xsi:type=\"xsd:string\">");
-            message.AppendEnvio(mensagemXml);
-            message.Append("</mensagemXml>");
-            message.Append("</proc:enviar>");
+            if (EhHomologação) throw new NotImplementedException();
 
-            return Execute(message.ToString(), "enviarResponse", "enviarReturn");
-        }
-
-        /// <summary>
-        /// Consultars the lote.
-        /// </summary>
-        /// <param name="mensagemXml">The mensagem XML.</param>
-        /// <returns>System.String.</returns>
-        public string ConsultarLote(string mensagemXml)
-        {
             var message = new StringBuilder();
             message.Append("<proc:consultarLote soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
             message.Append("<mensagemXml xsi:type=\"xsd:string\">");
-            message.AppendEnvio(mensagemXml);
+            message.AppendEnvio(msg);
             message.Append("</mensagemXml>");
             message.Append("</proc:consultarLote>");
 
             return Execute(message.ToString(), "consultarLoteResponse", "consultarLoteReturn");
         }
 
-        /// <summary>
-        /// Consultars the nota.
-        /// </summary>
-        /// <param name="mensagemXml">The mensagem XML.</param>
-        /// <returns>System.String.</returns>
-        public string ConsultarNFSe(string mensagemXml)
+        public string ConsultarSequencialRps(string cabec, string msg)
         {
+            if (EhHomologação) throw new NotImplementedException();
+
+            var message = new StringBuilder();
+            message.Append("<proc:consultarSequencialRps soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
+            message.Append("<mensagemXml xsi:type=\"xsd:string\">");
+            message.AppendEnvio(msg);
+            message.Append("</mensagemXml>");
+            message.Append("</proc:consultarSequencialRps>");
+
+            return Execute(message.ToString(), "consultarSequencialRpsResponse", "consultarSequencialRpsReturn");
+        }
+
+        public string ConsultarNFSeRps(string cabec, string msg)
+        {
+            if (EhHomologação) throw new NotImplementedException();
+
+            var message = new StringBuilder();
+            message.Append("<proc:consultarNFSeRps soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
+            message.Append("<mensagemXml xsi:type=\"xsd:string\">");
+            message.AppendEnvio(msg);
+            message.Append("</mensagemXml>");
+            message.Append("</proc:consultarNFSeRps>");
+
+            return Execute(message.ToString(), "consultarNFSeRpsResponse", "consultarNFSeRpsReturn");
+        }
+
+        public string ConsultarNFSe(string cabec, string msg)
+        {
+            if (EhHomologação) throw new NotImplementedException();
+
             var message = new StringBuilder();
             message.Append("<proc:consultarNota soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
             message.Append("<mensagemXml xsi:type=\"xsd:string\">");
-            message.AppendEnvio(mensagemXml);
+            message.AppendEnvio(msg);
             message.Append("</mensagemXml>");
             message.Append("</proc:consultarNota>");
 
             return Execute(message.ToString(), "consultarNotaResponse", "consultarNotaReturn");
         }
 
-        /// <summary>
-        /// Cancelars the specified mensagem XML.
-        /// </summary>
-        /// <param name="mensagemXml">The mensagem XML.</param>
-        /// <returns>System.String.</returns>
-        public string Cancelar(string mensagemXml)
+        public string CancelarNFSe(string cabec, string msg)
         {
+            if (EhHomologação) throw new NotImplementedException();
+
             var message = new StringBuilder();
             message.Append("<proc:cancelar soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
             message.Append("<mensagemXml xsi:type=\"xsd:string\">");
-            message.AppendEnvio(mensagemXml);
+            message.AppendEnvio(msg);
             message.Append("</mensagemXml>");
             message.Append("</proc:cancelar>");
 
             return Execute(message.ToString(), "cancelarResponse", "cancelarReturn");
         }
 
-        /// <summary>
-        /// Consultars the nf se RPS.
-        /// </summary>
-        /// <param name="mensagemXml">The mensagem XML.</param>
-        /// <returns>System.String.</returns>
-        public string ConsultarNFSeRps(string mensagemXml)
+        public string CancelarNFSeLote(string cabec, string msg)
         {
-            var message = new StringBuilder();
-            message.Append("<proc:consultarNFSeRps soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
-            message.Append("<mensagemXml xsi:type=\"xsd:string\">");
-            message.AppendEnvio(mensagemXml);
-            message.Append("</mensagemXml>");
-            message.Append("</proc:consultarNFSeRps>");
+            throw new NotImplementedException();
+        }
 
-            return Execute(message.ToString(), "consultarNFSeRpsResponse", "consultarNFSeRpsReturn");
+        public string SubstituirNFSe(string cabec, string msg)
+        {
+            throw new NotImplementedException();
         }
 
         private string Execute(string message, params string[] reponseTags)

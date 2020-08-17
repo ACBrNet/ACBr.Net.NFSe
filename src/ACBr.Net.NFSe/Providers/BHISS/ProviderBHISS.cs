@@ -31,6 +31,7 @@
 
 using System.Text;
 using ACBr.Net.Core.Extensions;
+using ACBr.Net.DFe.Core;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
 
@@ -49,13 +50,11 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        protected override RetornoEnviar PrepararEnviar(NotaServicoCollection notas, int lote)
+        protected override void PrepararEnviar(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
         {
-            var retornoWebservice = new RetornoEnviar();
-
-            if (lote == 0) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Lote não informado." });
+            if (retornoWebservice.Lote == 0) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Lote não informado." });
             if (notas.Count == 0) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "RPS não informado." });
-            if (retornoWebservice.Erros.Count > 0) return retornoWebservice;
+            if (retornoWebservice.Erros.Count > 0) return;
 
             var xmlLoteRps = new StringBuilder();
 
@@ -68,8 +67,8 @@ namespace ACBr.Net.NFSe.Providers
 
             var xmlLote = new StringBuilder();
             xmlLote.Append($"<EnviarLoteRpsEnvio {GetNamespace()}>");
-            xmlLote.Append($"<LoteRps Id=\"L{lote}\" versao=\"1.00\">");
-            xmlLote.Append($"<NumeroLote>{lote}</NumeroLote>");
+            xmlLote.Append($"<LoteRps Id=\"L{retornoWebservice.Lote}\" versao=\"1.00\">");
+            xmlLote.Append($"<NumeroLote>{retornoWebservice.Lote}</NumeroLote>");
             xmlLote.Append($"<Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>");
             xmlLote.Append($"<InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
             xmlLote.Append($"<QuantidadeRps>{notas.Count}</QuantidadeRps>");
@@ -79,8 +78,6 @@ namespace ACBr.Net.NFSe.Providers
             xmlLote.Append("</LoteRps>");
             xmlLote.Append("</EnviarLoteRpsEnvio>");
             retornoWebservice.XmlEnvio = xmlLote.ToString();
-
-            return retornoWebservice;
         }
 
         protected override IServiceClient GetClient(TipoUrl tipo)

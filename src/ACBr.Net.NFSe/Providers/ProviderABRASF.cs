@@ -1042,7 +1042,8 @@ namespace ACBr.Net.NFSe.Providers
         }
 
         /// <inheritdoc />
-        protected override void PrepararConsultarNFSeRps(RetornoConsultarNFSeRps retornoWebservice)
+        protected override void PrepararConsultarNFSeRps(RetornoConsultarNFSeRps retornoWebservice,
+            NotaServicoCollection notas)
         {
             if (retornoWebservice.NumeroRps < 1)
             {
@@ -1146,7 +1147,8 @@ namespace ACBr.Net.NFSe.Providers
         }
 
         /// <inheritdoc />
-        protected override void PrepararCancelarNFSeLote(RetornoCancelarNFSeLote retornoWebservice)
+        protected override void PrepararCancelarNFSeLote(RetornoCancelarNFSeLote retornoWebservice,
+            NotaServicoCollection notas)
         {
             throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }

@@ -235,7 +235,8 @@ namespace ACBr.Net.NFSe.Providers
             }
         }
 
-        protected override void PrepararConsultarNFSeRps(RetornoConsultarNFSeRps retornoWebservice)
+        protected override void PrepararConsultarNFSeRps(RetornoConsultarNFSeRps retornoWebservice,
+            NotaServicoCollection notas)
         {
             if (retornoWebservice.NumeroRps < 1)
             {
