@@ -97,7 +97,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("<xml>");
             message.AppendCData(msg);
             message.Append("</xml>");
-            message.Append("</ConsultarNFSePorRPS>");
+            message.Append("</ConsultarNfseEnvio>");
 
             return Execute("http://www.issnetonline.com.br/webservice/nfd/ConsultarNfseEnvio", message.ToString(), "ConsultarNfseEnvio");
         }
