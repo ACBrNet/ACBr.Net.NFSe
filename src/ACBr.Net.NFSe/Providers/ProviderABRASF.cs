@@ -1230,7 +1230,7 @@ namespace ACBr.Net.NFSe.Providers
 
             foreach (var nota in notas)
             {
-                nota.NumeroLote = retornoWebservice.Lote.ToString();
+                nota.NumeroLote = retornoWebservice.Lote;
             }
         }
 

@@ -36,7 +36,7 @@ using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class WebIss2ServiceClient : NFSeSOAP12ServiceClient, IABRASF2Client
+    internal sealed class WebIss2ServiceClient : NFSeSOAP12ServiceClient, IServiceClient
     {
         #region Constructors
 
@@ -48,34 +48,39 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        public string CancelarNFSe(string cabec, string msg)
+        public string Enviar(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<e:CancelarNfseRequest>");
+            message.Append("<e:RecepcionarLoteRpsRequest>");
             message.Append("<nfseCabecMsg>");
             message.AppendCData(cabec);
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
             message.AppendCData(msg);
             message.Append("</nfseDadosMsg>");
-            message.Append("</e:CancelarNfseRequest>");
+            message.Append("</e:RecepcionarLoteRpsRequest>");
 
-            return Execute("http://nfse.abrasf.org.br/CancelarNfse", message.ToString(), "CancelarNfseResponse");
+            return Execute("http://nfse.abrasf.org.br/RecepcionarLoteRps", message.ToString(), "RecepcionarLoteRpsResponse");
         }
 
-        public string SubstituirNFSe(string cabec, string msg)
+        public string EnviarSincrono(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<e:SubstituirNfseRequest>");
+            message.Append("<e:RecepcionarLoteRpsSincronoRequest>");
             message.Append("<nfseCabecMsg>");
             message.AppendCData(cabec);
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
             message.AppendCData(msg);
             message.Append("</nfseDadosMsg>");
-            message.Append("</e:SubstituirNfseRequest>");
+            message.Append("</e:RecepcionarLoteRpsSincronoRequest>");
 
-            return Execute("http://nfse.abrasf.org.br/SubstituirNfse", message.ToString(), "SubstituirNfseResponse");
+            return Execute("http://nfse.abrasf.org.br/RecepcionarLoteRpsSincrono", message.ToString(), "RecepcionarLoteRpsSincronoResponse");
+        }
+
+        public string ConsultarSituacao(string cabec, string msg)
+        {
+            throw new System.NotImplementedException();
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
@@ -93,37 +98,12 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://nfse.abrasf.org.br/ConsultarLoteRps", message.ToString(), "ConsultarLoteRpsResponse");
         }
 
-        public string ConsultarNFSeFaixa(string cabec, string msg)
+        public string ConsultarSequencialRps(string cabec, string msg)
         {
-            var message = new StringBuilder();
-            message.Append("<e:ConsultarNfseFaixaRequest>");
-            message.Append("<nfseCabecMsg>");
-            message.AppendCData(cabec);
-            message.Append("</nfseCabecMsg>");
-            message.Append("<nfseDadosMsg>");
-            message.AppendCData(msg);
-            message.Append("</nfseDadosMsg>");
-            message.Append("</e:ConsultarNfseFaixaRequest>");
-
-            return Execute("http://nfse.abrasf.org.br/ConsultarNfseFaixa", message.ToString(), "ConsultarNfseFaixaResponse");
+            throw new System.NotImplementedException();
         }
 
-        public string ConsultarNFSeServicoTomado(string cabec, string msg)
-        {
-            var message = new StringBuilder();
-            message.Append("<e:ConsultarNfseServicoTomadoRequest>");
-            message.Append("<nfseCabecMsg>");
-            message.AppendCData(cabec);
-            message.Append("</nfseCabecMsg>");
-            message.Append("<nfseDadosMsg>");
-            message.AppendCData(msg);
-            message.Append("</nfseDadosMsg>");
-            message.Append("</e:ConsultarNfseServicoTomadoRequest>");
-
-            return Execute("http://nfse.abrasf.org.br/ConsultarNfseServicoTomado", message.ToString(), "ConsultarNfseServicoTomadoResponse");
-        }
-
-        public string ConsultarNFSePorRps(string cabec, string msg)
+        public string ConsultarNFSeRps(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<e:ConsultarNfsePorRpsRequest>");
@@ -138,7 +118,7 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://nfse.abrasf.org.br/ConsultarNfsePorRps", message.ToString(), "ConsultarNfsePorRpsResponse");
         }
 
-        public string ConsultarNFSeServicoPrestado(string cabec, string msg)
+        public string ConsultarNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<e:ConsultarNfseServicoPrestadoRequest>");
@@ -153,34 +133,39 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://nfse.abrasf.org.br/ConsultarNfseServicoPrestado", message.ToString(), "ConsultarNfseServicoPrestadoResponse");
         }
 
-        public string RecepcionarLoteRps(string cabec, string msg)
+        public string CancelarNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<e:RecepcionarLoteRpsRequest>");
+            message.Append("<e:CancelarNfseRequest>");
             message.Append("<nfseCabecMsg>");
             message.AppendCData(cabec);
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
             message.AppendCData(msg);
             message.Append("</nfseDadosMsg>");
-            message.Append("</e:RecepcionarLoteRpsRequest>");
+            message.Append("</e:CancelarNfseRequest>");
 
-            return Execute("http://nfse.abrasf.org.br/RecepcionarLoteRps", message.ToString(), "RecepcionarLoteRpsResponse");
+            return Execute("http://nfse.abrasf.org.br/CancelarNfse", message.ToString(), "CancelarNfseResponse");
         }
 
-        public string RecepcionarLoteRpsSincrono(string cabec, string msg)
+        public string CancelarNFSeLote(string cabec, string msg)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public string SubstituirNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<e:RecepcionarLoteRpsSincronoRequest>");
+            message.Append("<e:SubstituirNfseRequest>");
             message.Append("<nfseCabecMsg>");
             message.AppendCData(cabec);
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
             message.AppendCData(msg);
             message.Append("</nfseDadosMsg>");
-            message.Append("</e:RecepcionarLoteRpsSincronoRequest>");
+            message.Append("</e:SubstituirNfseRequest>");
 
-            return Execute("http://nfse.abrasf.org.br/RecepcionarLoteRpsSincrono", message.ToString(), "RecepcionarLoteRpsSincronoResponse");
+            return Execute("http://nfse.abrasf.org.br/SubstituirNfse", message.ToString(), "SubstituirNfseResponse");
         }
 
         private string Execute(string soapAction, string message, string responseTag)

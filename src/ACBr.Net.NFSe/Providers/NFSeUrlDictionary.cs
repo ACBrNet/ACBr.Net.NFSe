@@ -71,7 +71,6 @@ namespace ACBr.Net.NFSe.Providers
         #region Methods
 
         public XmlSchema GetSchema()
-
         {
             return null;
         }
@@ -85,7 +84,6 @@ namespace ACBr.Net.NFSe.Providers
             if (wasEmpty) return;
 
             while (reader.NodeType != XmlNodeType.EndElement)
-
             {
                 reader.ReadStartElement("Item");
 

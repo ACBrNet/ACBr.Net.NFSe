@@ -563,7 +563,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="notas"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public RetornoWebservice ConsultaNFSeRps(int numero, string serie, TipoRps tipo, NotaServicoCollection notas)
+        public RetornoConsultarNFSeRps ConsultaNFSeRps(int numero, string serie, TipoRps tipo, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoConsultarNFSeRps()
             {
@@ -579,19 +579,19 @@ namespace ACBr.Net.NFSe.Providers
                 retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
 
             AssinarConsultarNFSeRps(retornoWebservice);
-            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultaNFSeRps-{numero}-{serie}-env.xml");
+            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarNFSeRps-{numero}-{serie}-env.xml");
 
             // Verifica Schema
-            if (PrecisaValidarSchema(TipoUrl.ConsultaNFSeRps))
+            if (PrecisaValidarSchema(TipoUrl.ConsultarNFSeRps))
             {
-                ValidarSchema(retornoWebservice, GetSchema(TipoUrl.ConsultaNFSeRps));
+                ValidarSchema(retornoWebservice, GetSchema(TipoUrl.ConsultarNFSeRps));
                 if (retornoWebservice.Erros.Any()) return retornoWebservice;
             }
 
             // Recebe mensagem de retorno
             try
             {
-                using (var cliente = GetClient(TipoUrl.ConsultaNFSeRps))
+                using (var cliente = GetClient(TipoUrl.ConsultarNFSeRps))
                 {
                     retornoWebservice.XmlRetorno = cliente.ConsultarNFSeRps(GerarCabecalho(), retornoWebservice.XmlEnvio);
                     retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
@@ -603,7 +603,7 @@ namespace ACBr.Net.NFSe.Providers
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
                 return retornoWebservice;
             }
-            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultaNFSeRps-{numero}-{serie}-ret.xml");
+            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarNFSeRps-{numero}-{serie}-ret.xml");
             TratarRetornoConsultarNFSeRps(retornoWebservice, notas);
             return retornoWebservice;
         }
@@ -646,19 +646,19 @@ namespace ACBr.Net.NFSe.Providers
                 retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
 
             AssinarConsultarNFSe(retornoWebservice);
-            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultaNFSe-{DateTime.Now:yyyyMMddssfff}-{numeroNfse}-env.xml");
+            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarNFSe-{DateTime.Now:yyyyMMddssfff}-{numeroNfse}-env.xml");
 
             // Verifica Schema
-            if (PrecisaValidarSchema(TipoUrl.ConsultaNFSe))
+            if (PrecisaValidarSchema(TipoUrl.ConsultarNFSe))
             {
-                ValidarSchema(retornoWebservice, GetSchema(TipoUrl.ConsultaNFSe));
+                ValidarSchema(retornoWebservice, GetSchema(TipoUrl.ConsultarNFSe));
                 if (retornoWebservice.Erros.Any()) return retornoWebservice;
             }
 
             // Recebe mensagem de retorno
             try
             {
-                using (var cliente = GetClient(TipoUrl.ConsultaNFSe))
+                using (var cliente = GetClient(TipoUrl.ConsultarNFSe))
                 {
                     retornoWebservice.XmlRetorno = cliente.ConsultarNFSe(GerarCabecalho(), retornoWebservice.XmlEnvio);
                     retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
@@ -671,7 +671,7 @@ namespace ACBr.Net.NFSe.Providers
                 return retornoWebservice;
             }
 
-            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultaNFSe-{DateTime.Now:yyyyMMddssfff}-{numeroNfse}-ret.xml");
+            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarNFSe-{DateTime.Now:yyyyMMddssfff}-{numeroNfse}-ret.xml");
             TratarRetornoConsultarNFSe(retornoWebservice, notas);
             return retornoWebservice;
         }
@@ -703,16 +703,16 @@ namespace ACBr.Net.NFSe.Providers
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CancelarNFSe-{numeroNFSe}-env.xml");
 
             // Verifica Schema
-            if (PrecisaValidarSchema(TipoUrl.CancelaNFSe))
+            if (PrecisaValidarSchema(TipoUrl.CancelarNFSe))
             {
-                ValidarSchema(retornoWebservice, GetSchema(TipoUrl.CancelaNFSe));
+                ValidarSchema(retornoWebservice, GetSchema(TipoUrl.CancelarNFSe));
                 if (retornoWebservice.Erros.Any()) return retornoWebservice;
             }
 
             // Recebe mensagem de retorno
             try
             {
-                using (var cliente = GetClient(TipoUrl.CancelaNFSe))
+                using (var cliente = GetClient(TipoUrl.CancelarNFSe))
                 {
                     retornoWebservice.XmlRetorno = cliente.CancelarNFSe(GerarCabecalho(), retornoWebservice.XmlEnvio);
                     retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
@@ -752,16 +752,16 @@ namespace ACBr.Net.NFSe.Providers
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CancelarNFSeLote-{lote}-env.xml");
 
             // Verifica Schema
-            if (PrecisaValidarSchema(TipoUrl.CancelaNFSeLote))
+            if (PrecisaValidarSchema(TipoUrl.CancelarNFSeLote))
             {
-                ValidarSchema(retornoWebservice, GetSchema(TipoUrl.CancelaNFSeLote));
+                ValidarSchema(retornoWebservice, GetSchema(TipoUrl.CancelarNFSeLote));
                 if (retornoWebservice.Erros.Any()) return retornoWebservice;
             }
 
             // Recebe mensagem de retorno
             try
             {
-                using (var cliente = GetClient(TipoUrl.CancelaNFSeLote))
+                using (var cliente = GetClient(TipoUrl.CancelarNFSeLote))
                 {
                     retornoWebservice.XmlRetorno = cliente.CancelarNFSeLote(GerarCabecalho(), retornoWebservice.XmlEnvio);
                     retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
@@ -815,7 +815,7 @@ namespace ACBr.Net.NFSe.Providers
             // Recebe mensagem de retorno
             try
             {
-                using (var cliente = GetClient(TipoUrl.CancelaNFSeLote))
+                using (var cliente = GetClient(TipoUrl.CancelarNFSeLote))
                 {
                     retornoWebservice.XmlRetorno = cliente.SubstituirNFSe(GerarCabecalho(), retornoWebservice.XmlEnvio);
                     retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
@@ -1092,7 +1092,7 @@ namespace ACBr.Net.NFSe.Providers
         /// </summary>
         /// <param name="url">The URL.</param>
         /// <returns>System.String.</returns>
-        protected string GetUrl(TipoUrl url)
+        public string GetUrl(TipoUrl url)
         {
             switch (Configuracoes.WebServices.Ambiente)
             {

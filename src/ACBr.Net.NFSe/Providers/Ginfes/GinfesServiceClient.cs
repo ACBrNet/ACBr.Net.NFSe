@@ -36,7 +36,7 @@ using ACBr.Net.DFe.Core.Common;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class GinfesServiceClient : NFSeSOAP11ServiceClient
+    internal sealed class GinfesServiceClient : NFSeSOAP11ServiceClient, IServiceClient
     {
         #region Constructors
 
@@ -47,6 +47,26 @@ namespace ACBr.Net.NFSe.Providers
         #endregion Constructors
 
         #region Methods
+
+        public string Enviar(string cabecalho, string dados)
+        {
+            var message = new StringBuilder();
+            message.Append("<gin:RecepcionarLoteRpsV3>");
+            message.Append("<arg0>");
+            message.AppendEnvio(cabecalho);
+            message.Append("</arg0>");
+            message.Append("<arg1>");
+            message.AppendEnvio(dados);
+            message.Append("</arg1>");
+            message.Append("</gin:RecepcionarLoteRpsV3>");
+
+            return Execute(message.ToString(), "RecepcionarLoteRpsV3Response");
+        }
+
+        public string EnviarSincrono(string cabec, string msg)
+        {
+            throw new System.NotImplementedException();
+        }
 
         public string ConsultarSituacao(string cabecalho, string dados)
         {
@@ -78,7 +98,12 @@ namespace ACBr.Net.NFSe.Providers
             return Execute(message.ToString(), "ConsultarLoteRpsV3Response");
         }
 
-        public string ConsultarNfsePorRps(string cabecalho, string dados)
+        public string ConsultarSequencialRps(string cabec, string msg)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public string ConsultarNFSeRps(string cabecalho, string dados)
         {
             var message = new StringBuilder();
             message.Append("<gin:ConsultarNfsePorRpsV3>");
@@ -93,7 +118,7 @@ namespace ACBr.Net.NFSe.Providers
             return Execute(message.ToString(), "ConsultarNfsePorRpsV3Response");
         }
 
-        public string ConsultarNfse(string cabecalho, string dados)
+        public string ConsultarNFSe(string cabecalho, string dados)
         {
             var message = new StringBuilder();
             message.Append("<gin:ConsultarNfseV3>");
@@ -108,34 +133,29 @@ namespace ACBr.Net.NFSe.Providers
             return Execute(message.ToString(), "RecepcionarLoteRpsV3Response");
         }
 
-        public string CancelarNfse(string cabecalho, string dados)
+        public string CancelarNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<gin:CancelarNfseV3>");
             message.Append("<arg0>");
-            message.AppendEnvio(cabecalho);
+            message.AppendEnvio(cabec);
             message.Append("</arg0>");
             message.Append("<arg1>");
-            message.AppendEnvio(dados);
+            message.AppendEnvio(msg);
             message.Append("</arg1>");
             message.Append("</gin:CancelarNfseV3>");
 
             return Execute(message.ToString(), "CancelarNfseV3Response");
         }
 
-        public string RecepcionarLoteRps(string cabecalho, string dados)
+        public string CancelarNFSeLote(string cabec, string msg)
         {
-            var message = new StringBuilder();
-            message.Append("<gin:RecepcionarLoteRpsV3>");
-            message.Append("<arg0>");
-            message.AppendEnvio(cabecalho);
-            message.Append("</arg0>");
-            message.Append("<arg1>");
-            message.AppendEnvio(dados);
-            message.Append("</arg1>");
-            message.Append("</gin:RecepcionarLoteRpsV3>");
+            throw new System.NotImplementedException();
+        }
 
-            return Execute(message.ToString(), "RecepcionarLoteRpsV3Response");
+        public string SubstituirNFSe(string cabec, string msg)
+        {
+            throw new System.NotImplementedException();
         }
 
         private string Execute(string message, string responseTag)

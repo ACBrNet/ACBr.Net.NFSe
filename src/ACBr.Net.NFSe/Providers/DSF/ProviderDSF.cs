@@ -930,14 +930,14 @@ namespace ACBr.Net.NFSe.Providers
                 case TipoUrl.ConsultarSequencialRps:
                     return "ConsultaSeqRps.xsd";
 
-                case TipoUrl.ConsultaNFSeRps:
+                case TipoUrl.ConsultarNFSeRps:
                     return "ReqConsultaNFSeRPS.xsd";
 
-                case TipoUrl.ConsultaNFSe:
+                case TipoUrl.ConsultarNFSe:
                     return "ReqConsultaNotas.xsd";
 
-                case TipoUrl.CancelaNFSeLote:
-                case TipoUrl.CancelaNFSe:
+                case TipoUrl.CancelarNFSeLote:
+                case TipoUrl.CancelarNFSe:
                     return "ReqCancelamentoNFSe.xsd";
 
                 default:

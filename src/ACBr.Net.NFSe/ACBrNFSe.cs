@@ -261,7 +261,7 @@ namespace ACBr.Net.NFSe
             }
             catch (Exception exception)
             {
-                this.Log().Error("[ConsultaNFSeRps]", exception);
+                this.Log().Error("[ConsultarNFSeRps]", exception);
                 throw;
             }
             finally
@@ -294,7 +294,7 @@ namespace ACBr.Net.NFSe
             }
             catch (Exception exception)
             {
-                this.Log().Error("[ConsultaNFSe]", exception);
+                this.Log().Error("[ConsultarNFSe]", exception);
                 throw;
             }
             finally

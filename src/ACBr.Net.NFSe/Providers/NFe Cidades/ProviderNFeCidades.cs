@@ -50,12 +50,12 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Protected Methods
 
-        public override RetornoWebservice Enviar(int lote, NotaServicoCollection notas)
+        protected override void PrepararEnviar(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
         {
             throw new NotImplementedException($"O provedor [{Name}] não implementa o método [{nameof(Enviar)}], utilize o método [{nameof(EnviarSincrono)}]");
         }
 
-        protected override IABRASF2Client GetClient(TipoUrl tipo)
+        protected override IServiceClient GetClient(TipoUrl tipo)
         {
             return new NFeCidadesServiceClient(this, tipo);
         }

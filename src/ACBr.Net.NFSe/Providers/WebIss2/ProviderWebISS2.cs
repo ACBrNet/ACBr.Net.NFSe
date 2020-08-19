@@ -47,7 +47,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        protected override IABRASF2Client GetClient(TipoUrl tipo)
+        protected override IServiceClient GetClient(TipoUrl tipo)
         {
             return new WebIss2ServiceClient(this, tipo);
         }

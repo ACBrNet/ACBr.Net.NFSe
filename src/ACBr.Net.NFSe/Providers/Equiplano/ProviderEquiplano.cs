@@ -747,16 +747,16 @@ namespace ACBr.Net.NFSe.Providers
                 case TipoUrl.ConsultarSequencialRps:
                     return "";
 
-                case TipoUrl.ConsultaNFSeRps:
+                case TipoUrl.ConsultarNFSeRps:
                     return "esConsultarNfsePorRpsEnvio_v01.xsd";
 
-                case TipoUrl.ConsultaNFSe:
+                case TipoUrl.ConsultarNFSe:
                     return "esConsultarNfseEnvio_v01.xsd";
 
-                case TipoUrl.CancelaNFSe:
+                case TipoUrl.CancelarNFSe:
                     return "esCancelarNfseEnvio_v01.xsd";
 
-                case TipoUrl.CancelaNFSeLote:
+                case TipoUrl.CancelarNFSeLote:
                     return "";
 
                 case TipoUrl.SubstituirNFSe:

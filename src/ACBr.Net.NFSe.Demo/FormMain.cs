@@ -114,7 +114,7 @@ namespace ACBr.Net.NFSe.Demo
         {
             ExecuteSafe(() =>
             {
-                var numero = "10";
+                var numero = 10;
                 if (InputBox.Show("Numero da RPS", "Digite o numero da RPS.", ref numero).Equals(DialogResult.Cancel)) return;
 
                 var serie = "0";

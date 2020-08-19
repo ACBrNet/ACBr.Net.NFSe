@@ -30,6 +30,7 @@
 // ***********************************************************************
 
 using System;
+using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
@@ -46,6 +47,15 @@ namespace ACBr.Net.NFSe.Providers
         #endregion Fields
 
         #region Methods
+
+        public static void ApplyNamespace(XElement parent, XNamespace nameSpace, params string[] excludeElements)
+        {
+            if (!excludeElements.Contains(parent.Name.LocalName))
+                parent.Name = nameSpace + parent.Name.LocalName;
+
+            foreach (var child in parent.Elements())
+                ApplyNamespace(child, nameSpace, excludeElements);
+        }
 
         public static string RemoverDeclaracaoXml(this string xml)
         {

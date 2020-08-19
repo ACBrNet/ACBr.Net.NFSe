@@ -65,9 +65,10 @@ namespace ACBr.Net.NFSe.Demo
 
             txtPEnviar.Text = target.UrlProducao[TipoUrl.Enviar];
             txtPEnviarSincrono.Text = target.UrlProducao[TipoUrl.EnviarSincrono];
-            txtPCancelaNFSe.Text = target.UrlProducao[TipoUrl.CancelaNFSe];
-            txtPConsultaNFSe.Text = target.UrlProducao[TipoUrl.ConsultaNFSe];
-            txtPConsultaNFSeRps.Text = target.UrlProducao[TipoUrl.ConsultaNFSeRps];
+            txtPCancelaNFSe.Text = target.UrlProducao[TipoUrl.CancelarNFSe];
+            txtPCancelaNFSeLote.Text = target.UrlProducao[TipoUrl.CancelarNFSeLote];
+            txtPConsultaNFSe.Text = target.UrlProducao[TipoUrl.ConsultarNFSe];
+            txtPConsultaNFSeRps.Text = target.UrlProducao[TipoUrl.ConsultarNFSeRps];
             txtPConsultrLoteRps.Text = target.UrlProducao[TipoUrl.ConsultarLoteRps];
             txtPConsultarSituacao.Text = target.UrlProducao[TipoUrl.ConsultarSituacao];
             txtPConsultarSequencialRps.Text = target.UrlProducao[TipoUrl.ConsultarSequencialRps];
@@ -75,9 +76,10 @@ namespace ACBr.Net.NFSe.Demo
 
             txtHEnviar.Text = target.UrlHomologacao[TipoUrl.Enviar];
             txtHEnviarSincrono.Text = target.UrlHomologacao[TipoUrl.EnviarSincrono];
-            txtHCancelaNFSe.Text = target.UrlHomologacao[TipoUrl.CancelaNFSe];
-            txtHConsultaNFSe.Text = target.UrlHomologacao[TipoUrl.ConsultaNFSe];
-            txtHConsultaNFSeRps.Text = target.UrlHomologacao[TipoUrl.ConsultaNFSeRps];
+            txtHCancelaNFSe.Text = target.UrlHomologacao[TipoUrl.CancelarNFSe];
+            txtHCancelaNFSeLote.Text = target.UrlHomologacao[TipoUrl.CancelarNFSeLote];
+            txtHConsultaNFSe.Text = target.UrlHomologacao[TipoUrl.ConsultarNFSe];
+            txtHConsultaNFSeRps.Text = target.UrlHomologacao[TipoUrl.ConsultarNFSeRps];
             txtHConsultrLoteRps.Text = target.UrlHomologacao[TipoUrl.ConsultarLoteRps];
             txtHConsultarSituacao.Text = target.UrlHomologacao[TipoUrl.ConsultarSituacao];
             txtHConsultarSequencialRps.Text = target.UrlHomologacao[TipoUrl.ConsultarSequencialRps];
@@ -96,9 +98,10 @@ namespace ACBr.Net.NFSe.Demo
 
             target.UrlProducao[TipoUrl.Enviar] = txtPEnviar.Text;
             target.UrlProducao[TipoUrl.EnviarSincrono] = txtPEnviarSincrono.Text;
-            target.UrlProducao[TipoUrl.CancelaNFSe] = txtPCancelaNFSe.Text;
-            target.UrlProducao[TipoUrl.ConsultaNFSe] = txtPConsultaNFSe.Text;
-            target.UrlProducao[TipoUrl.ConsultaNFSeRps] = txtPConsultaNFSeRps.Text;
+            target.UrlProducao[TipoUrl.CancelarNFSe] = txtPCancelaNFSe.Text;
+            target.UrlProducao[TipoUrl.CancelarNFSeLote] = txtPCancelaNFSeLote.Text;
+            target.UrlProducao[TipoUrl.ConsultarNFSe] = txtPConsultaNFSe.Text;
+            target.UrlProducao[TipoUrl.ConsultarNFSeRps] = txtPConsultaNFSeRps.Text;
             target.UrlProducao[TipoUrl.ConsultarLoteRps] = txtPConsultrLoteRps.Text;
             target.UrlProducao[TipoUrl.ConsultarSituacao] = txtPConsultarSituacao.Text;
             target.UrlProducao[TipoUrl.ConsultarSequencialRps] = txtPConsultarSequencialRps.Text;
@@ -106,9 +109,10 @@ namespace ACBr.Net.NFSe.Demo
 
             target.UrlHomologacao[TipoUrl.Enviar] = txtHEnviar.Text;
             target.UrlHomologacao[TipoUrl.EnviarSincrono] = txtHEnviarSincrono.Text;
-            target.UrlHomologacao[TipoUrl.CancelaNFSe] = txtHCancelaNFSe.Text;
-            target.UrlHomologacao[TipoUrl.ConsultaNFSe] = txtHConsultaNFSe.Text;
-            target.UrlHomologacao[TipoUrl.ConsultaNFSeRps] = txtHConsultaNFSeRps.Text;
+            target.UrlHomologacao[TipoUrl.CancelarNFSe] = txtHCancelaNFSe.Text;
+            target.UrlHomologacao[TipoUrl.CancelarNFSeLote] = txtHCancelaNFSeLote.Text;
+            target.UrlHomologacao[TipoUrl.ConsultarNFSe] = txtHConsultaNFSe.Text;
+            target.UrlHomologacao[TipoUrl.ConsultarNFSeRps] = txtHConsultaNFSeRps.Text;
             target.UrlHomologacao[TipoUrl.ConsultarLoteRps] = txtHConsultrLoteRps.Text;
             target.UrlHomologacao[TipoUrl.ConsultarSituacao] = txtHConsultarSituacao.Text;
             target.UrlHomologacao[TipoUrl.ConsultarSequencialRps] = txtHConsultarSequencialRps.Text;

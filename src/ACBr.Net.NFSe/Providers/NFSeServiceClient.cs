@@ -97,17 +97,17 @@ namespace ACBr.Net.NFSe.Providers
                     PrefixoResposta = "seq-rps";
                     break;
 
-                case TipoUrl.ConsultaNFSeRps:
+                case TipoUrl.ConsultarNFSeRps:
                     PrefixoEnvio = "con-rps-nfse";
                     PrefixoResposta = "con-rps-nfse";
                     break;
 
-                case TipoUrl.ConsultaNFSe:
+                case TipoUrl.ConsultarNFSe:
                     PrefixoEnvio = "con-nfse";
                     PrefixoResposta = "con-nfse";
                     break;
 
-                case TipoUrl.CancelaNFSe:
+                case TipoUrl.CancelarNFSe:
                     PrefixoEnvio = "canc-nfse";
                     PrefixoResposta = "canc-nfse";
                     break;

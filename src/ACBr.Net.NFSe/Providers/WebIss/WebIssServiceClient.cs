@@ -38,7 +38,7 @@ using ACBr.Net.DFe.Core;
 namespace ACBr.Net.NFSe.Providers
 {
     // ReSharper disable once InconsistentNaming
-    internal sealed class WebIssServiceClient : NFSeSOAP11ServiceClient, IABRASFClient
+    internal sealed class WebIssServiceClient : NFSeSOAP11ServiceClient, IServiceClient
     {
         #region Constructors
 
@@ -50,7 +50,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        public string RecepcionarLoteRps(string cabec, string msg)
+        public string Enviar(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<RecepcionarLoteRps xmlns=\"http://tempuri.org/\">");
@@ -65,7 +65,12 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://tempuri.org/INfseServices/RecepcionarLoteRps", message.ToString());
         }
 
-        public string ConsultarSituacaoLoteRps(string cabec, string msg)
+        public string EnviarSincrono(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ConsultarSituacao(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<ConsultarSituacaoLoteRps xmlns=\"http://tempuri.org/\">");
@@ -80,7 +85,27 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://tempuri.org/INfseServices/ConsultarSituacaoLoteRps", message.ToString());
         }
 
-        public string ConsultarNFSePorRps(string cabec, string msg)
+        public string ConsultarLoteRps(string cabec, string msg)
+        {
+            var message = new StringBuilder();
+            message.Append("<ConsultarLoteRps xmlns=\"http://tempuri.org/\">");
+            message.Append("<cabec>");
+            message.AppendCData(cabec);
+            message.Append("</cabec>");
+            message.Append("<msg>");
+            message.AppendCData(msg);
+            message.Append("</msg>");
+            message.Append("</ConsultarLoteRps>");
+
+            return Execute("http://tempuri.org/INfseServices/ConsultarLoteRps", message.ToString());
+        }
+
+        public string ConsultarSequencialRps(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ConsultarNFSeRps(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<ConsultarNfsePorRps xmlns=\"http://tempuri.org/\">");
@@ -110,21 +135,6 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://tempuri.org/INfseServices/ConsultarNfse", message.ToString());
         }
 
-        public string ConsultarLoteRps(string cabec, string msg)
-        {
-            var message = new StringBuilder();
-            message.Append("<ConsultarLoteRps xmlns=\"http://tempuri.org/\">");
-            message.Append("<cabec>");
-            message.AppendCData(cabec);
-            message.Append("</cabec>");
-            message.Append("<msg>");
-            message.AppendCData(msg);
-            message.Append("</msg>");
-            message.Append("</ConsultarLoteRps>");
-
-            return Execute("http://tempuri.org/INfseServices/ConsultarLoteRps", message.ToString());
-        }
-
         public string CancelarNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
@@ -140,7 +150,12 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://tempuri.org/INfseServices/CancelarNfse", message.ToString());
         }
 
-        public string GerarNfse(string cabec, string msg)
+        public string CancelarNFSeLote(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string SubstituirNFSe(string cabec, string msg)
         {
             throw new NotImplementedException();
         }
@@ -153,13 +168,10 @@ namespace ACBr.Net.NFSe.Providers
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
             var element = xmlDocument.ElementAnyNs("Fault");
-            if (element != null)
-            {
-                var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
-                throw new ACBrDFeCommunicationException(exMessage);
-            }
+            if (element == null) return xmlDocument.ToString();
 
-            return xmlDocument.ToString();
+            var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
+            throw new ACBrDFeCommunicationException(exMessage);
         }
 
         #endregion Methods

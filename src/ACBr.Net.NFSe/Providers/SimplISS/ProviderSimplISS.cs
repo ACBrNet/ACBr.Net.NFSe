@@ -51,7 +51,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        protected override void TratarRetornoConsultarLoteRps(RetornoWebservice retornoWebservice, NotaServicoCollection notas)
+        protected override void TratarRetornoConsultarLoteRps(RetornoConsultarLoteRps retornoWebservice, NotaServicoCollection notas)
         {
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
@@ -97,7 +97,7 @@ namespace ACBr.Net.NFSe.Providers
             return "xmlns=\"http://www.sistema.com.br/Nfse/arquivos/nfse_3.xsd\"";
         }
 
-        protected override IABRASFClient GetClient(TipoUrl tipo)
+        protected override IServiceClient GetClient(TipoUrl tipo)
         {
             return new SimplISSServiceClient(this, tipo);
         }

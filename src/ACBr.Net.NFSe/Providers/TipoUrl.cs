@@ -38,10 +38,10 @@ namespace ACBr.Net.NFSe.Providers
         ConsultarSituacao,
         ConsultarLoteRps,
         ConsultarSequencialRps,
-        ConsultaNFSeRps,
-        ConsultaNFSe,
-        CancelaNFSe,
-        CancelaNFSeLote,
+        ConsultarNFSeRps,
+        ConsultarNFSe,
+        CancelarNFSe,
+        CancelarNFSeLote,
         SubstituirNFSe
     }
 }

@@ -370,9 +370,9 @@ namespace ACBr.Net.NFSe.Providers
         {
             switch (tipo)
             {
-                case TipoUrl.CancelaNFSe: return new BethaServiceClient(this, tipo, null);
-                case TipoUrl.ConsultaNFSeRps: return new BethaServiceClient(this, tipo, null);
-                case TipoUrl.ConsultaNFSe: return new BethaServiceClient(this, tipo, null);
+                case TipoUrl.CancelarNFSe: return new BethaServiceClient(this, tipo, null);
+                case TipoUrl.ConsultarNFSeRps: return new BethaServiceClient(this, tipo, null);
+                case TipoUrl.ConsultarNFSe: return new BethaServiceClient(this, tipo, null);
                 default: return new BethaServiceClient(this, tipo);
             }
         }
@@ -389,9 +389,9 @@ namespace ACBr.Net.NFSe.Providers
                 case TipoUrl.Enviar: return "servico_enviar_lote_rps_envio_v01.xsd";
                 case TipoUrl.ConsultarSituacao: return "servico_consultar_situacao_lote_rps_envio_v01.xsd";
                 case TipoUrl.ConsultarLoteRps: return "servico_consultar_lote_rps_envio_v01.xsd";
-                case TipoUrl.ConsultaNFSeRps: return "servico_consultar_nfse_rps_envio_v01.xsd";
-                case TipoUrl.ConsultaNFSe: return "servico_consultar_nfse_envio_v01.xsd";
-                case TipoUrl.CancelaNFSe: return "servico_cancelar_nfse_envio_v01.xsd";
+                case TipoUrl.ConsultarNFSeRps: return "servico_consultar_nfse_rps_envio_v01.xsd";
+                case TipoUrl.ConsultarNFSe: return "servico_consultar_nfse_envio_v01.xsd";
+                case TipoUrl.CancelarNFSe: return "servico_cancelar_nfse_envio_v01.xsd";
                 default: throw new ArgumentOutOfRangeException(nameof(tipo), tipo, @"Valor incorreto ou serviço não suportado.");
             }
         }
