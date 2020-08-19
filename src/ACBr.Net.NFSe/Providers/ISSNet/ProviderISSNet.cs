@@ -516,6 +516,96 @@ namespace ACBr.Net.NFSe.Providers
             return retornoWebservice;
         }
 
+        public override RetornoWebservice ConsultaNFSe(DateTime? inicio, DateTime? fim, string numeroNfse, int pagina, string cnpjTomador,
+            string imTomador, string nomeInter, string cnpjInter, string imInter, string serie, NotaFiscalCollection notas)
+        {
+            var retornoWebservice = new RetornoWebservice();
+
+            var loteBuilder = new StringBuilder();
+
+            loteBuilder.Append($"<ConsultarNfseEnvio  xmlns=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_consultar_nfse_envio.xsd\">");
+            loteBuilder.Append("<Prestador>");
+            loteBuilder.Append($"<CpfCnpj><Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj></CpfCnpj>");
+            loteBuilder.Append($"<InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
+            loteBuilder.Append("</Prestador>");
+
+            if (!numeroNfse.IsEmpty())
+                loteBuilder.Append($"<NumeroNfse>{numeroNfse}</NumeroNfse>");
+
+            if (inicio.HasValue && fim.HasValue)
+            {
+                loteBuilder.Append("<PeriodoEmissao>");
+                loteBuilder.Append($"<DataInicial>{inicio:yyyy-MM-dd}</DataInicial>");
+                loteBuilder.Append($"<DataFinal>{fim:yyyy-MM-dd}</DataFinal>");
+                loteBuilder.Append("</PeriodoEmissao>");
+            }
+
+            if (!cnpjTomador.IsEmpty() || !imTomador.IsEmpty())
+            {
+                loteBuilder.Append("<Tomador>");
+                loteBuilder.Append("<CpfCnpj>");
+                loteBuilder.Append(cnpjTomador.IsCNPJ()
+                    ? $"<Cnpj>{cnpjTomador.ZeroFill(14)}</Cnpj>"
+                    : $"<Cpf>{cnpjTomador.ZeroFill(11)}</Cpf>");
+                loteBuilder.Append("</CpfCnpj>");
+                if (!imTomador.IsEmpty()) loteBuilder.Append($"<InscricaoMunicipal>{imTomador}</InscricaoMunicipal>");
+                loteBuilder.Append("</Tomador>");
+            }
+
+            if (!nomeInter.IsEmpty() && !cnpjInter.IsEmpty())
+            {
+                loteBuilder.Append("<IntermediarioServico>");
+                loteBuilder.Append($"<RazaoSocial>{nomeInter}</RazaoSocial>");
+                loteBuilder.Append("<CpfCnpj>");
+                loteBuilder.Append(cnpjInter.IsCNPJ()
+                    ? $"<Cnpj>{cnpjInter.ZeroFill(14)}</Cnpj>"
+                    : $"<Cpf>{cnpjInter.ZeroFill(11)}</Cpf>");
+                loteBuilder.Append("</CpfCnpj>");
+                if (!imInter.IsEmpty()) loteBuilder.Append($"<InscricaoMunicipal>{imInter}</InscricaoMunicipal>");
+                loteBuilder.Append("</IntermediarioServico>");
+            }
+
+            loteBuilder.Append("</ConsultarNfseEnvio>");
+            retornoWebservice.XmlEnvio = loteBuilder.ToString();
+
+            if (Configuracoes.Geral.RetirarAcentos)
+            {
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
+            }
+
+            XNamespace tc = "http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd";
+            var element = XElement.Parse(retornoWebservice.XmlEnvio);
+            element.AddAttribute(new XAttribute(XNamespace.Xmlns + "tc", "http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd"));
+            ApplyNamespace(element, tc, "ConsultarNfseEnvio", "Prestador", "NumeroNfse", "PeriodoEmissao", "DataInicial", "DataFinal", "Tomador", "IntermediarioServico");
+
+            retornoWebservice.XmlEnvio = element.ToString();
+
+            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConNota-{DateTime.Now:yyyyMMddssfff}-{numeroNfse}-env.xml");
+
+            // Verifica Schema
+            ValidarSchema(retornoWebservice, GetSchema(TipoUrl.ConsultaNFSe));
+            if (retornoWebservice.Erros.Any()) return retornoWebservice;
+
+            // Recebe mensagem de retorno
+            try
+            {
+                using (var cliente = GetClient(TipoUrl.ConsultaNFSe))
+                {
+                    retornoWebservice.XmlRetorno = cliente.ConsultarNFSe(GerarCabecalho(), retornoWebservice.XmlEnvio);
+                    retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
+                    retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
+                }
+            }
+            catch (Exception ex)
+            {
+                retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
+                return retornoWebservice;
+            }
+            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConNota-{DateTime.Now:yyyyMMddssfff}-{numeroNfse}-ret.xml");
+            TratarRetornoConsultaNFSe(retornoWebservice, notas);
+            return retornoWebservice;
+        }
+
         #endregion Services
 
         #region Protected Methods

@@ -92,7 +92,14 @@ namespace ACBr.Net.NFSe.Providers
 
         public string ConsultarNFSe(string cabec, string msg)
         {
-            throw new NotImplementedException();
+            var message = new StringBuilder();
+            message.Append("<ConsultarNfseEnvio xmlns=\"http://www.issnetonline.com.br/webservice/nfd\">");
+            message.Append("<xml>");
+            message.AppendCData(msg);
+            message.Append("</xml>");
+            message.Append("</ConsultarNFSePorRPS>");
+
+            return Execute("http://www.issnetonline.com.br/webservice/nfd/ConsultarNfseEnvio", message.ToString(), "ConsultarNfseEnvio");
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
