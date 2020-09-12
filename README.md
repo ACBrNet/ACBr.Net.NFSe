@@ -31,3 +31,4 @@ Biblioteca para emissão e trasmissão de NFSe.
 - FissLex (Em Teste).
 - Pronim v2 (Em Teste).
 - Vitoria (Em Testes).
+- DBSeller (Em Testes).
