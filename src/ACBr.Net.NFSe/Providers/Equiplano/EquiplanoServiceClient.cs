@@ -29,11 +29,14 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
+using System.Text;
 using System.Xml.Linq;
+using ACBr.Net.Core.Extensions;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class EquiplanoServiceClient : NFSeSOAP11ServiceClient, IABRASFClient
+    internal sealed class EquiplanoServiceClient : NFSeSOAP11ServiceClient, IServiceClient
     {
         #region Constructors
 
@@ -45,44 +48,107 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        public string CancelarNFSe(string cabec, string msg)
+        public string Enviar(string cabec, string msg)
         {
-            return Execute("esCancelarNfse", msg, "");
+            var request = new StringBuilder();
+            request.Append("<esRecepcionarLoteRps xmlns=\"http://services.enfsws.es\">");
+            request.Append("<nrVersaoXml>1</nrVersaoXml>");
+            request.Append("<xml>");
+            request.AppendEnvio(msg);
+            request.Append("</xml>");
+            request.Append("</esRecepcionarLoteRps>");
+
+            return Execute("esRecepcionarLoteRps", request.ToString(), "esRecepcionarLoteRpsResponse");
+        }
+
+        public string EnviarSincrono(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ConsultarSituacao(string cabec, string msg)
+        {
+            var request = new StringBuilder();
+            request.Append("<esConsultarSituacaoLoteRps xmlns=\"http://services.enfsws.es\">");
+            request.Append("<nrVersaoXml>1</nrVersaoXml>");
+            request.Append("<xml>");
+            request.AppendEnvio(msg);
+            request.Append("</xml>");
+            request.Append("</esConsultarSituacaoLoteRps>");
+
+            return Execute("esConsultarSituacaoLoteRps", request.ToString(), "esConsultarSituacaoLoteRpsResponse");
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
         {
-            return Execute("esConsultarLoteRps", msg, "");
+            var request = new StringBuilder();
+            request.Append("<esConsultarLoteNfse xmlns=\"http://services.enfsws.es\">");
+            request.Append("<nrVersaoXml>1</nrVersaoXml>");
+            request.Append("<xml>");
+            request.AppendEnvio(msg);
+            request.Append("</xml>");
+            request.Append("</esConsultarLoteNfse>");
+
+            return Execute("esConsultarLoteRps", request.ToString(), "esConsultarLoteRpsResponse");
+        }
+
+        public string ConsultarSequencialRps(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ConsultarNFSeRps(string cabec, string msg)
+        {
+            var request = new StringBuilder();
+            request.Append("<esConsultarNfsePorRps xmlns=\"http://services.enfsws.es\">");
+            request.Append("<nrVersaoXml>1</nrVersaoXml>");
+            request.Append("<xml>");
+            request.AppendEnvio(msg);
+            request.Append("</xml>");
+            request.Append("</esConsultarNfsePorRps>");
+
+            return Execute("esConsultarNfsePorRps", request.ToString(), "esConsultarNfsePorRpsResponse");
         }
 
         public string ConsultarNFSe(string cabec, string msg)
         {
-            return Execute("esConsultarNfse", msg, "");
+            var request = new StringBuilder();
+            request.Append("<esConsultarNfse xmlns=\"http://services.enfsws.es\">");
+            request.Append("<nrVersaoXml>1</nrVersaoXml>");
+            request.Append("<xml>");
+            request.AppendEnvio(msg);
+            request.Append("</xml>");
+            request.Append("</esConsultarNfse>");
+
+            return Execute("esConsultarNfse", request.ToString(), "esConsultarNfseResponse");
         }
 
-        public string ConsultarNFSePorRps(string cabec, string msg)
+        public string CancelarNFSe(string cabec, string msg)
         {
-            return Execute("esConsultarNfsePorRps", msg, "");
+            var request = new StringBuilder();
+            request.Append("<esCancelarNfse xmlns=\"http://services.enfsws.es\">");
+            request.Append("<nrVersaoXml>1</nrVersaoXml>");
+            request.Append("<xml>");
+            request.AppendEnvio(msg);
+            request.Append("</xml>");
+            request.Append("</esCancelarNfse>");
+
+            return Execute("esCancelarNfse", request.ToString(), "esCancelarNfseResponse");
         }
 
-        public string ConsultarSituacaoLoteRps(string cabec, string msg)
+        public string CancelarNFSeLote(string cabec, string msg)
         {
-            return Execute("esConsultarSituacaoLoteRps", msg, "");
+            throw new NotImplementedException();
         }
 
-        public string GerarNfse(string cabec, string msg)
+        public string SubstituirNFSe(string cabec, string msg)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public string RecepcionarLoteRps(string cabec, string msg)
-        {
-            return Execute("esRecepcionarLoteRps", msg, "");
+            throw new NotImplementedException();
         }
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
-            return xmlDocument.ToString();
+            return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("return").ToString();
         }
 
         #endregion Methods

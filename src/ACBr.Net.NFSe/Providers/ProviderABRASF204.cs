@@ -65,7 +65,7 @@ namespace ACBr.Net.NFSe.Providers
         #region LoadXml
 
         /// <inheritdoc />
-        protected override void LoadTomador(NotaFiscal nota, XElement rpsRoot)
+        protected override void LoadTomador(NotaServico nota, XElement rpsRoot)
         {
             // Tomador
             var rootTomador = rpsRoot.ElementAnyNs("TomadorServico");
@@ -110,7 +110,7 @@ namespace ACBr.Net.NFSe.Providers
         }
 
         /// <inheritdoc />
-        protected override void LoadPrestador(NotaFiscal nota, XElement rootNFSe)
+        protected override void LoadPrestador(NotaServico nota, XElement rootNFSe)
         {
             // Endereco Prestador
             var prestadorServico = rootNFSe.ElementAnyNs("PrestadorServico");
@@ -146,7 +146,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region RPS
 
-        protected override XElement WriteRpsRps(NotaFiscal nota)
+        protected override XElement WriteRpsRps(NotaServico nota)
         {
             var rps = new XElement("Rps");
 
@@ -160,7 +160,7 @@ namespace ACBr.Net.NFSe.Providers
             return rps;
         }
 
-        protected override XElement WriteServicosRps(NotaFiscal nota)
+        protected override XElement WriteServicosRps(NotaServico nota)
         {
             var servico = new XElement("Servico");
 
@@ -191,7 +191,7 @@ namespace ACBr.Net.NFSe.Providers
             return servico;
         }
 
-        protected override XElement WriteValoresRps(NotaFiscal nota)
+        protected override XElement WriteValoresRps(NotaServico nota)
         {
             var valores = new XElement("Valores");
 
@@ -220,7 +220,7 @@ namespace ACBr.Net.NFSe.Providers
             return valores;
         }
 
-        protected override XElement WriteTomadorRps(NotaFiscal nota)
+        protected override XElement WriteTomadorRps(NotaServico nota)
         {
             if (nota.Tomador.CpfCnpj.IsEmpty()) return null;
 
@@ -276,7 +276,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region NFSe
 
-        protected override XElement WritePrestador(NotaFiscal nota)
+        protected override XElement WritePrestador(NotaServico nota)
         {
             var prestador = new XElement("PrestadorServico");
             prestador.AddChild(AdicionarTag(TipoCampo.Str, "", "RazaoSocial", 1, 150, Ocorrencia.Obrigatoria, nota.Prestador.RazaoSocial));

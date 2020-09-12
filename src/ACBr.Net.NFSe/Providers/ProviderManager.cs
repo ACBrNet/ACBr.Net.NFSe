@@ -58,6 +58,7 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.Betha, typeof(ProviderBetha)},
                 {NFSeProvider.Betha2, typeof(ProviderBetha2)},
                 {NFSeProvider.Coplan, typeof(ProviderCoplan)},
+                {NFSeProvider.DBSeller, typeof(ProviderDBSeller)},
                 {NFSeProvider.DSF, typeof(ProviderDSF)},
                 {NFSeProvider.Equiplano, typeof(ProviderEquiplano)},
                 {NFSeProvider.Fiorilli, typeof(ProviderFiorilli)},

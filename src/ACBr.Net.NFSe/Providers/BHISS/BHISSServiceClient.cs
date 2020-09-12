@@ -29,6 +29,7 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.Text;
 using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
@@ -36,7 +37,7 @@ using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class BHISSServiceClient : NFSeSOAP11ServiceClient, IABRASFClient
+    internal sealed class BHISSServiceClient : NFSeSOAP11ServiceClient, IServiceClient
     {
         #region Constructors
 
@@ -47,6 +48,36 @@ namespace ACBr.Net.NFSe.Providers
         #endregion Constructors
 
         #region Methods
+
+        public string Enviar(string nfseCabecMsg, string nfseDadosMsg)
+        {
+            var message = new StringBuilder();
+            message.Append("<ws:RecepcionarLoteRpsRequest>");
+            message.Append("<nfseCabecMsg>");
+            message.AppendCData(nfseCabecMsg);
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.AppendCData(nfseDadosMsg);
+            message.Append("</nfseDadosMsg>");
+            message.Append("</ws:RecepcionarLoteRpsRequest>");
+
+            return Execute("http://ws.bhiss.pbh.gov.br/RecepcionarLoteRps", message.ToString(), "RecepcionarLoteRpsResponse");
+        }
+
+        public string EnviarSincrono(string cabec, string msg)
+        {
+            var message = new StringBuilder();
+            message.Append("<ws:GerarNfseRequest>");
+            message.Append("<nfseCabecMsg>");
+            message.AppendCData(cabec);
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.AppendCData(msg);
+            message.Append("</nfseDadosMsg>");
+            message.Append("</ws:GerarNfseRequest>");
+
+            return Execute("http://ws.bhiss.pbh.gov.br/GerarNfse", message.ToString(), "GerarNfseResponse");
+        }
 
         public string CancelarNFSe(string nfseCabecMsg, string nfseDadosMsg)
         {
@@ -93,22 +124,7 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://ws.bhiss.pbh.gov.br/ConsultarNfse", message.ToString(), "ConsultarNfseResponse");
         }
 
-        public string ConsultarNfsePorFaixa(string nfseCabecMsg, string nfseDadosMsg)
-        {
-            var message = new StringBuilder();
-            message.Append("<ws:ConsultarNfsePorFaixaRequest>");
-            message.Append("<nfseCabecMsg>");
-            message.AppendCData(nfseCabecMsg);
-            message.Append("</nfseCabecMsg>");
-            message.Append("<nfseDadosMsg>");
-            message.AppendCData(nfseDadosMsg);
-            message.Append("</nfseDadosMsg>");
-            message.Append("</ws:ConsultarNfsePorFaixaRequest>");
-
-            return Execute("http://ws.bhiss.pbh.gov.br/ConsultarNfsePorFaixa", message.ToString(), "ConsultarNfsePorFaixaResponse");
-        }
-
-        public string ConsultarNFSePorRps(string nfseCabecMsg, string nfseDadosMsg)
+        public string ConsultarNFSeRps(string nfseCabecMsg, string nfseDadosMsg)
         {
             var message = new StringBuilder();
             message.Append("<ws:ConsultarNfsePorRpsRequest>");
@@ -123,7 +139,7 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://ws.bhiss.pbh.gov.br/ConsultarNfsePorRps", message.ToString(), "ConsultarNfsePorRpsResponse");
         }
 
-        public string ConsultarSituacaoLoteRps(string nfseCabecMsg, string nfseDadosMsg)
+        public string ConsultarSituacao(string nfseCabecMsg, string nfseDadosMsg)
         {
             var message = new StringBuilder();
             message.Append("<ws:ConsultarSituacaoLoteRpsRequest>");
@@ -138,34 +154,19 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://ws.bhiss.pbh.gov.br/ConsultarSituacaoLoteRps", message.ToString(), "ConsultarSituacaoLoteRpsResponse");
         }
 
-        public string RecepcionarLoteRps(string nfseCabecMsg, string nfseDadosMsg)
+        public string ConsultarSequencialRps(string nfseCabecMsg, string nfseDadosMsg)
         {
-            var message = new StringBuilder();
-            message.Append("<ws:RecepcionarLoteRpsRequest>");
-            message.Append("<nfseCabecMsg>");
-            message.AppendCData(nfseCabecMsg);
-            message.Append("</nfseCabecMsg>");
-            message.Append("<nfseDadosMsg>");
-            message.AppendCData(nfseDadosMsg);
-            message.Append("</nfseDadosMsg>");
-            message.Append("</ws:RecepcionarLoteRpsRequest>");
-
-            return Execute("http://ws.bhiss.pbh.gov.br/RecepcionarLoteRps", message.ToString(), "RecepcionarLoteRpsResponse");
+            throw new NotImplementedException();
         }
 
-        public string GerarNfse(string cabec, string msg)
+        public string CancelarNFSeLote(string nfseCabecMsg, string nfseDadosMsg)
         {
-            var message = new StringBuilder();
-            message.Append("<ws:GerarNfseRequest>");
-            message.Append("<nfseCabecMsg>");
-            message.AppendCData(cabec);
-            message.Append("</nfseCabecMsg>");
-            message.Append("<nfseDadosMsg>");
-            message.AppendCData(msg);
-            message.Append("</nfseDadosMsg>");
-            message.Append("</ws:GerarNfseRequest>");
+            throw new NotImplementedException();
+        }
 
-            return Execute("http://ws.bhiss.pbh.gov.br/GerarNfse", message.ToString(), "GerarNfseResponse");
+        public string SubstituirNFSe(string nfseCabecMsg, string nfseDadosMsg)
+        {
+            throw new NotImplementedException();
         }
 
         private string Execute(string action, string message, string responseTag)
@@ -176,13 +177,10 @@ namespace ACBr.Net.NFSe.Providers
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
             var element = xmlDocument.ElementAnyNs("Fault");
-            if (element != null)
-            {
-                var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
-                throw new ACBrDFeCommunicationException(exMessage);
-            }
+            if (element == null) return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("outputXML").Value;
+            var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
 
-            return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("outputXML").Value;
+            throw new ACBrDFeCommunicationException(exMessage);
         }
 
         #endregion Methods

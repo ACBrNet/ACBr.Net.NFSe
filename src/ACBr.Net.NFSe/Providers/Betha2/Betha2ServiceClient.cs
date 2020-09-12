@@ -29,6 +29,7 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.Text;
 using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
@@ -36,7 +37,7 @@ using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class Betha2ServiceClient : NFSeSOAP11ServiceClient, IABRASF2Client
+    internal sealed class Betha2ServiceClient : NFSeSOAP11ServiceClient, IServiceClient
     {
         #region Constructors
 
@@ -48,34 +49,39 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        public string CancelarNFSe(string cabec, string msg)
+        public string Enviar(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<e:CancelarNfse>");
+            message.Append("<e:RecepcionarLoteRps>");
             message.Append("<nfseCabecMsg>");
             message.AppendCData(cabec);
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
             message.AppendCData(msg);
             message.Append("</nfseDadosMsg>");
-            message.Append("</e:CancelarNfse>");
+            message.Append("</e:RecepcionarLoteRps>");
 
-            return Execute("CancelarNfseEnvio", "CancelarNfseResponse", message.ToString());
+            return Execute("RecepcionarLoteRpsEnvio", "RecepcionarLoteRpsResponse", message.ToString());
         }
 
-        public string SubstituirNFSe(string cabec, string msg)
+        public string EnviarSincrono(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<e:SubstituirNfse>");
+            message.Append("<e:RecepcionarLoteRpsSincrono>");
             message.Append("<nfseCabecMsg>");
             message.AppendCData(cabec);
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
             message.AppendCData(msg);
             message.Append("</nfseDadosMsg>");
-            message.Append("</e:SubstituirNfse>");
+            message.Append("</e:RecepcionarLoteRpsSincrono>");
 
-            return Execute("SubstituirNfseEnvio", "SubstituirNfseResponse", message.ToString());
+            return Execute("RecepcionarLoteRpsSincronoEnvio", "RecepcionarLoteRpsSincronoResponse", message.ToString());
+        }
+
+        public string ConsultarSituacao(string cabec, string msg)
+        {
+            throw new NotImplementedException();
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
@@ -93,37 +99,12 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("ConsultarLoteRpsEnvio", "ConsultarLoteRpsResponse", message.ToString());
         }
 
-        public string ConsultarNFSeFaixa(string cabec, string msg)
+        public string ConsultarSequencialRps(string cabec, string msg)
         {
-            var message = new StringBuilder();
-            message.Append("<e:ConsultarNfseFaixa>");
-            message.Append("<nfseCabecMsg>");
-            message.AppendCData(cabec);
-            message.Append("</nfseCabecMsg>");
-            message.Append("<nfseDadosMsg>");
-            message.AppendCData(msg);
-            message.Append("</nfseDadosMsg>");
-            message.Append("</e:ConsultarNfseFaixa>");
-
-            return Execute("ConsultarNfseFaixaEnvio", "ConsultarNfseFaixaResponse", message.ToString());
+            throw new NotImplementedException();
         }
 
-        public string ConsultarNFSeServicoTomado(string cabec, string msg)
-        {
-            var message = new StringBuilder();
-            message.Append("<e:ConsultarNfseServicoTomado>");
-            message.Append("<nfseCabecMsg>");
-            message.AppendCData(cabec);
-            message.Append("</nfseCabecMsg>");
-            message.Append("<nfseDadosMsg>");
-            message.AppendCData(msg);
-            message.Append("</nfseDadosMsg>");
-            message.Append("</e:ConsultarNfseServicoTomado>");
-
-            return Execute("ConsultarNfseServicoTomadoEnvio", "ConsultarNfseServicoTomadoResponse", message.ToString());
-        }
-
-        public string ConsultarNFSePorRps(string cabec, string msg)
+        public string ConsultarNFSeRps(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<e:ConsultarNfsePorRps>");
@@ -138,7 +119,7 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("ConsultarNfseRpsEnvio", "ConsultarNfsePorRpsResponse", message.ToString());
         }
 
-        public string ConsultarNFSeServicoPrestado(string cabec, string msg)
+        public string ConsultarNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<e:ConsultarNfseServicoPrestado>");
@@ -153,34 +134,39 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("ConsultarNfseServicoPrestadoEnvio", "ConsultarNfseServicoPrestadoResponse", message.ToString());
         }
 
-        public string RecepcionarLoteRps(string cabec, string msg)
+        public string CancelarNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<e:RecepcionarLoteRps>");
+            message.Append("<e:CancelarNfse>");
             message.Append("<nfseCabecMsg>");
             message.AppendCData(cabec);
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
             message.AppendCData(msg);
             message.Append("</nfseDadosMsg>");
-            message.Append("</e:RecepcionarLoteRps>");
+            message.Append("</e:CancelarNfse>");
 
-            return Execute("RecepcionarLoteRpsEnvio", "RecepcionarLoteRpsResponse", message.ToString());
+            return Execute("CancelarNfseEnvio", "CancelarNfseResponse", message.ToString());
         }
 
-        public string RecepcionarLoteRpsSincrono(string cabec, string msg)
+        public string CancelarNFSeLote(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string SubstituirNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<e:RecepcionarLoteRpsSincrono>");
+            message.Append("<e:SubstituirNfse>");
             message.Append("<nfseCabecMsg>");
             message.AppendCData(cabec);
             message.Append("</nfseCabecMsg>");
             message.Append("<nfseDadosMsg>");
             message.AppendCData(msg);
             message.Append("</nfseDadosMsg>");
-            message.Append("</e:RecepcionarLoteRpsSincrono>");
+            message.Append("</e:SubstituirNfse>");
 
-            return Execute("RecepcionarLoteRpsSincronoEnvio", "RecepcionarLoteRpsSincronoResponse", message.ToString());
+            return Execute("SubstituirNfseEnvio", "SubstituirNfseResponse", message.ToString());
         }
 
         private string Execute(string soapAction, string responseTag, string message)
@@ -191,13 +177,10 @@ namespace ACBr.Net.NFSe.Providers
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
             var element = xmlDocument.ElementAnyNs("Fault");
-            if (element != null)
-            {
-                var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
-                throw new ACBrDFeCommunicationException(exMessage);
-            }
+            if (element == null) return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("return").Value;
 
-            return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("return").Value;
+            var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
+            throw new ACBrDFeCommunicationException(exMessage);
         }
 
         #endregion Methods

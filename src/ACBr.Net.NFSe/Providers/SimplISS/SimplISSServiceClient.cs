@@ -38,7 +38,7 @@ using ACBr.Net.DFe.Core.Common;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class SimplISSServiceClient : NFSeSOAP11ServiceClient, IABRASFClient
+    internal sealed class SimplISSServiceClient : NFSeSOAP11ServiceClient, IServiceClient
     {
         #region Constructors
 
@@ -50,7 +50,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        public string RecepcionarLoteRps(string cabec, string msg)
+        public string Enviar(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<sis:RecepcionarLoteRps xmlns=\"http://www.sistema.com.br/Sistema.Ws.Nfse\">");
@@ -64,7 +64,12 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://www.sistema.com.br/Sistema.Ws.Nfse/INfseService/RecepcionarLoteRps", message.ToString(), "RecepcionarLoteRpsResponse");
         }
 
-        public string ConsultarSituacaoLoteRps(string cabec, string msg)
+        public string EnviarSincrono(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ConsultarSituacao(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<e:ConsultarSituacaoLoteRPS.Execute>");
@@ -79,7 +84,27 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://www.e-nfs.com.braction/ACONSULTARSITUACAOLOTERPS.Execute", message.ToString(), "ConsultarSituacaoLoteRPS.ExecuteResponse");
         }
 
-        public string ConsultarNFSePorRps(string cabec, string msg)
+        public string ConsultarLoteRps(string cabec, string msg)
+        {
+            var message = new StringBuilder();
+            message.Append("<e:ConsultarLoteRps.Execute>");
+            message.Append("<e:Nfsecabecmsg>");
+            message.AppendCData(cabec);
+            message.Append("</e:Nfsecabecmsg>");
+            message.Append("<e:Nfsedadosmsg>");
+            message.AppendCData(msg);
+            message.Append("</e:Nfsedadosmsg>");
+            message.Append("</e:ConsultarLoteRps.Execute>");
+
+            return Execute("http://www.e-nfs.com.braction/ACONSULTARLOTERPS.Execute", message.ToString(), "ConsultarLoteRps.ExecuteResponse");
+        }
+
+        public string ConsultarSequencialRps(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ConsultarNFSeRps(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<e:ConsultarNfsePorRps.Execute>");
@@ -109,21 +134,6 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://www.e-nfs.com.braction/ACONSULTARNFSE.Execute", message.ToString(), "ConsultarNfse.ExecuteResponse");
         }
 
-        public string ConsultarLoteRps(string cabec, string msg)
-        {
-            var message = new StringBuilder();
-            message.Append("<e:ConsultarLoteRps.Execute>");
-            message.Append("<e:Nfsecabecmsg>");
-            message.AppendCData(cabec);
-            message.Append("</e:Nfsecabecmsg>");
-            message.Append("<e:Nfsedadosmsg>");
-            message.AppendCData(msg);
-            message.Append("</e:Nfsedadosmsg>");
-            message.Append("</e:ConsultarLoteRps.Execute>");
-
-            return Execute("http://www.e-nfs.com.braction/ACONSULTARLOTERPS.Execute", message.ToString(), "ConsultarLoteRps.ExecuteResponse");
-        }
-
         public string CancelarNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
@@ -139,7 +149,12 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://www.e-nfs.com.braction/ACANCELARNFSE.Execute", message.ToString(), "CancelarNfse.ExecuteResponse");
         }
 
-        public string GerarNfse(string cabec, string msg)
+        public string CancelarNFSeLote(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string SubstituirNFSe(string cabec, string msg)
         {
             throw new NotImplementedException();
         }

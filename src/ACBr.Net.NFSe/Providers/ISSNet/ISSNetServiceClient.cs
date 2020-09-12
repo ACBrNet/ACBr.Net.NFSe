@@ -38,7 +38,7 @@ using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class ISSNetServiceClient : NFSeSOAP12ServiceClient, IABRASFClient
+    internal sealed class ISSNetServiceClient : NFSeSOAP12ServiceClient, IServiceClient
     {
         #region Constructors
 
@@ -54,7 +54,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        public string RecepcionarLoteRps(string cabec, string msg)
+        public string Enviar(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<RecepcionarLoteRps xmlns=\"http://www.issnetonline.com.br/webservice/nfd\">");
@@ -66,7 +66,12 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://www.issnetonline.com.br/webservice/nfd/RecepcionarLoteRps", message.ToString(), "RecepcionarLoteRps");
         }
 
-        public string ConsultarSituacaoLoteRps(string cabec, string msg)
+        public string EnviarSincrono(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ConsultarSituacao(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<ConsultaSituacaoLoteRPS xmlns=\"http://www.issnetonline.com.br/webservice/nfd\">");
@@ -76,23 +81,6 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</ConsultaSituacaoLoteRPS>");
 
             return Execute("http://www.issnetonline.com.br/webservice/nfd/ConsultaSituacaoLoteRPS", message.ToString(), "ConsultaSituacaoLoteRPS");
-        }
-
-        public string ConsultarNFSePorRps(string cabec, string msg)
-        {
-            var message = new StringBuilder();
-            message.Append("<ConsultarNFSePorRPS xmlns=\"http://www.issnetonline.com.br/webservice/nfd\">");
-            message.Append("<xml>");
-            message.AppendCData(msg);
-            message.Append("</xml>");
-            message.Append("</ConsultarNFSePorRPS>");
-
-            return Execute("http://www.issnetonline.com.br/webservice/nfd/ConsultarNFSePorRPS", message.ToString(), "ConsultarNFSePorRPS");
-        }
-
-        public string ConsultarNFSe(string cabec, string msg)
-        {
-            throw new NotImplementedException();
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
@@ -107,6 +95,35 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://www.issnetonline.com.br/webservice/nfd/ConsultarLoteRps", message.ToString(), "ConsultarLoteRps");
         }
 
+        public string ConsultarSequencialRps(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ConsultarNFSeRps(string cabec, string msg)
+        {
+            var message = new StringBuilder();
+            message.Append("<ConsultarNFSePorRPS xmlns=\"http://www.issnetonline.com.br/webservice/nfd\">");
+            message.Append("<xml>");
+            message.AppendCData(msg);
+            message.Append("</xml>");
+            message.Append("</ConsultarNFSePorRPS>");
+
+            return Execute("http://www.issnetonline.com.br/webservice/nfd/ConsultarNFSePorRPS", message.ToString(), "ConsultarNFSePorRPS");
+        }
+
+        public string ConsultarNFSe(string cabec, string msg)
+        {
+            var message = new StringBuilder();
+            message.Append("<ConsultarNfse xmlns=\"http://www.issnetonline.com.br/webservice/nfd\">");
+            message.Append("<xml>");
+            message.AppendCData(msg);
+            message.Append("</xml>");
+            message.Append("</ConsultarNfse>");
+
+            return Execute("http://www.issnetonline.com.br/webservice/nfd/ConsultarNfse", message.ToString(), "ConsultarNfse");
+        }
+
         public string CancelarNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
@@ -119,7 +136,12 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://www.issnetonline.com.br/webservice/nfd/CancelarNfse", message.ToString(), "CancelarNfse");
         }
 
-        public string GerarNfse(string cabec, string msg)
+        public string CancelarNFSeLote(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string SubstituirNFSe(string cabec, string msg)
         {
             throw new NotImplementedException();
         }

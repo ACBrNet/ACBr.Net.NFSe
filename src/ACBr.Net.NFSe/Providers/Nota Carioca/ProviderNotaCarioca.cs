@@ -55,7 +55,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        protected override XElement WriteInfoRPS(NotaFiscal nota)
+        protected override XElement WriteInfoRPS(NotaServico nota)
         {
             var incentivadorCultural = nota.IncentivadorCultural == NFSeSimNao.Sim ? 1 : 2;
 
@@ -88,14 +88,11 @@ namespace ACBr.Net.NFSe.Providers
             return infoRps;
         }
 
-        public override RetornoWebservice EnviarSincrono(int lote, NotaFiscalCollection notas)
+        protected override void PrepararEnviarSincrono(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
         {
-            var retornoWebservice = new RetornoWebservice();
-
-            if (lote == 0) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Lote não informado." });
             if (notas.Count == 0) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Nenhuma RPS informada." });
             if (notas.Count > 1) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Apenas uma RPS pode ser enviada em modo Sincrono." });
-            if (retornoWebservice.Erros.Count > 0) return retornoWebservice;
+            if (retornoWebservice.Erros.Count > 0) return;
 
             var xmlLote = new StringBuilder();
             xmlLote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -108,39 +105,18 @@ namespace ACBr.Net.NFSe.Providers
             xmlLote.Append(xmlRps);
             xmlLote.Append("</GerarNfseEnvio>");
             retornoWebservice.XmlEnvio = xmlLote.ToString();
+        }
 
-            if (Configuracoes.Geral.RetirarAcentos)
-            {
-                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
-            }
+        protected override void AssinarEnviarSincrono(RetornoEnviar retornoWebservice)
+        {
+            //
+        }
 
-            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"lote-sinc-{lote}-env.xml");
-
-            // Verifica Schema
-            ValidarSchema(retornoWebservice, GetSchema(TipoUrl.EnviarSincrono));
-            if (retornoWebservice.Erros.Any()) return retornoWebservice;
-
-            // Recebe mensagem de retorno
-            try
-            {
-                using (var cliente = GetClient(TipoUrl.EnviarSincrono))
-                {
-                    retornoWebservice.XmlRetorno = cliente.GerarNfse(GerarCabecalho(), retornoWebservice.XmlEnvio);
-                    retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
-                    retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
-                }
-            }
-            catch (Exception ex)
-            {
-                retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
-                return retornoWebservice;
-            }
-            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"lote-sinc-{lote}-ret.xml");
-
-            // Analisa mensagem de retorno
+        protected override void TratarRetornoEnviarSincrono(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
+        {
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
             MensagemErro(retornoWebservice, xmlRet, "GerarNfseResposta");
-            if (retornoWebservice.Erros.Any()) return retornoWebservice;
+            if (retornoWebservice.Erros.Any()) return;
 
             var compNfse = xmlRet.ElementAnyNs("GerarNfseResposta")?.ElementAnyNs("CompNfse");
             var nfse = compNfse.ElementAnyNs("Nfse").ElementAnyNs("InfNfse");
@@ -154,7 +130,7 @@ namespace ACBr.Net.NFSe.Providers
             var nota = notas.FirstOrDefault(x => x.IdentificacaoRps.Numero == numeroRps);
             if (nota == null)
             {
-                notas.Load(compNfse.ToString());
+                nota = LoadXml(compNfse.ToString());
             }
             else
             {
@@ -162,11 +138,11 @@ namespace ACBr.Net.NFSe.Providers
                 nota.IdentificacaoNFSe.Chave = chaveNFSe;
             }
 
+            notas.Add(nota);
             retornoWebservice.Sucesso = true;
-            return retornoWebservice;
         }
 
-        protected override IABRASFClient GetClient(TipoUrl tipo)
+        protected override IServiceClient GetClient(TipoUrl tipo)
         {
             return new NotaCariocaServiceClient(this, tipo);
         }

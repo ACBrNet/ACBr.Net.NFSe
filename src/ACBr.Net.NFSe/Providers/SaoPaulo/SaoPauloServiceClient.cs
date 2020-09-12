@@ -29,6 +29,7 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.Text;
 using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
@@ -36,7 +37,7 @@ using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class SaoPauloServiceClient : NFSeSOAP12ServiceClient
+    internal sealed class SaoPauloServiceClient : NFSeSOAP12ServiceClient, IServiceClient
     {
         #region Constructors
 
@@ -48,134 +49,106 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        public string CancelamentoNFe(string request)
+        public string Enviar(string cabec, string msg)
         {
+            var tag = EhHomologação ? "TesteEnvioLoteRPSRequest" : "EnvioLoteRPSRequest";
+
             var message = new StringBuilder();
-            message.Append("<nfe:CancelamentoNFeRequest>");
+            message.Append($"<nfe:{tag}>");
             message.Append("<nfe:VersaoSchema>1</nfe:VersaoSchema>");
             message.Append("<nfe:MensagemXML>");
-            message.AppendCData(request);
+            message.AppendCData(msg);
             message.Append("</nfe:MensagemXML>");
-            message.Append("</nfe:CancelamentoNFeRequest>");
+            message.Append($"</nfe:{tag}>");
 
-            return Execute("http://www.prefeitura.sp.gov.br/nfe/ws/cancelamentoNFe", message.ToString(), "CancelamentoNFeResponse");
+            var response = EhHomologação ? "TesteEnvioLoteRPSResponse" : "EnvioLoteRPSResponse";
+
+            return Execute("http://www.prefeitura.sp.gov.br/nfe/ws/envioLoteRPS", message.ToString(), response);
         }
 
-        public string ConsultaCNPJ(string request)
-        {
-            var message = new StringBuilder();
-            message.Append("<nfe:ConsultaCNPJRequest>");
-            message.Append("<nfe:VersaoSchema>1</nfe:VersaoSchema>");
-            message.Append("<nfe:MensagemXML>");
-            message.AppendCData(request);
-            message.Append("</nfe:MensagemXML>");
-            message.Append("</nfe:ConsultaCNPJRequest>");
-
-            return Execute("http://www.prefeitura.sp.gov.br/nfe/ws/consultaCNPJ", message.ToString(), "ConsultaCNPJResponse");
-        }
-
-        public string ConsultaInformacoesLote(string request)
-        {
-            var message = new StringBuilder();
-            message.Append("<nfe:ConsultaInformacoesLoteRequest>");
-            message.Append("<nfe:VersaoSchema>1</nfe:VersaoSchema>");
-            message.Append("<nfe:MensagemXML>");
-            message.AppendCData(request);
-            message.Append("</nfe:MensagemXML>");
-            message.Append("</nfe:ConsultaInformacoesLoteRequest>");
-
-            return Execute("http://www.prefeitura.sp.gov.br/nfe/ws/consultaInformacoesLote", message.ToString(), "ConsultaInformacoesLoteResponse");
-        }
-
-        public string ConsultaLote(string request)
-        {
-            var message = new StringBuilder();
-            message.Append("<nfe:ConsultaLoteRequest>");
-            message.Append("<nfe:VersaoSchema>1</nfe:VersaoSchema>");
-            message.Append("<nfe:MensagemXML>");
-            message.AppendCData(request);
-            message.Append("</nfe:MensagemXML>");
-            message.Append("</nfe:ConsultaLoteRequest>");
-
-            return Execute("http://www.prefeitura.sp.gov.br/nfe/ws/consultaLote", message.ToString(), "ConsultaLoteResponse");
-        }
-
-        public string ConsultaNFe(string request)
-        {
-            var message = new StringBuilder();
-            message.Append("<nfe:ConsultaNFeRequest>");
-            message.Append("<nfe:VersaoSchema>1</nfe:VersaoSchema>");
-            message.Append("<nfe:MensagemXML>");
-            message.AppendCData(request);
-            message.Append("</nfe:MensagemXML>");
-            message.Append("</nfe:ConsultaNFeRequest>");
-
-            return Execute("http://www.prefeitura.sp.gov.br/nfe/ws/consultaNFe", message.ToString(), "ConsultaNFeResponse");
-        }
-
-        public string ConsultaNFeEmitidas(string request)
-        {
-            var message = new StringBuilder();
-            message.Append("<nfe:ConsultaNFeEmitidasRequest>");
-            message.Append("<nfe:VersaoSchema>1</nfe:VersaoSchema>");
-            message.Append("<nfe:MensagemXML>");
-            message.AppendCData(request);
-            message.Append("</nfe:MensagemXML>");
-            message.Append("</nfe:ConsultaNFeEmitidasRequest>");
-
-            return Execute("http://www.prefeitura.sp.gov.br/nfe/ws/consultaNFeEmitidas", message.ToString(), "ConsultaNFeEmitidasResponse");
-        }
-
-        public string ConsultaNFeRecebidas(string request)
-        {
-            var message = new StringBuilder();
-            message.Append("<nfe:ConsultaNFeRecebidasRequest>");
-            message.Append("<nfe:VersaoSchema>1</nfe:VersaoSchema>");
-            message.Append("<nfe:MensagemXML>");
-            message.AppendCData(request);
-            message.Append("</nfe:MensagemXML>");
-            message.Append("</nfe:ConsultaNFeRecebidasRequest>");
-
-            return Execute("http://www.prefeitura.sp.gov.br/nfe/ws/consultaNFeRecebidas", message.ToString(), "ConsultaNFeRecebidasResponse");
-        }
-
-        public string EnvioLoteRPS(string request)
-        {
-            var message = new StringBuilder();
-            message.Append("<nfe:EnvioLoteRPSRequest>");
-            message.Append("<nfe:VersaoSchema>1</nfe:VersaoSchema>");
-            message.Append("<nfe:MensagemXML>");
-            message.AppendCData(request);
-            message.Append("</nfe:MensagemXML>");
-            message.Append("</nfe:EnvioLoteRPSRequest>");
-
-            return Execute("http://www.prefeitura.sp.gov.br/nfe/ws/envioLoteRPS", message.ToString(), "EnvioLoteRPSResponse");
-        }
-
-        public string EnvioRPS(string request)
+        public string EnviarSincrono(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<nfe:EnvioRPSRequest>");
             message.Append("<nfe:VersaoSchema>1</nfe:VersaoSchema>");
             message.Append("<nfe:MensagemXML>");
-            message.AppendCData(request);
+            message.AppendCData(msg);
             message.Append("</nfe:MensagemXML>");
             message.Append("</nfe:EnvioRPSRequest>");
 
             return Execute("http://www.prefeitura.sp.gov.br/nfe/ws/envioRPS", message.ToString(), "EnvioRPSResponse");
         }
 
-        public string TesteEnvioLoteRPS(string request)
+        public string ConsultarSituacao(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<nfe:TesteEnvioLoteRPSRequest>");
+            message.Append("<nfe:ConsultaInformacoesLoteRequest>");
             message.Append("<nfe:VersaoSchema>1</nfe:VersaoSchema>");
             message.Append("<nfe:MensagemXML>");
-            message.AppendCData(request);
+            message.AppendCData(msg);
             message.Append("</nfe:MensagemXML>");
-            message.Append("</nfe:TesteEnvioLoteRPSRequest>");
+            message.Append("</nfe:ConsultaInformacoesLoteRequest>");
 
-            return Execute("http://www.prefeitura.sp.gov.br/nfe/ws/testeenvio", message.ToString(), "TesteEnvioLoteRPSResponse");
+            return Execute("http://www.prefeitura.sp.gov.br/nfe/ws/consultaInformacoesLote", message.ToString(), "ConsultaInformacoesLoteResponse");
+        }
+
+        public string ConsultarLoteRps(string cabec, string msg)
+        {
+            var message = new StringBuilder();
+            message.Append("<nfe:ConsultaLoteRequest>");
+            message.Append("<nfe:VersaoSchema>1</nfe:VersaoSchema>");
+            message.Append("<nfe:MensagemXML>");
+            message.AppendCData(msg);
+            message.Append("</nfe:MensagemXML>");
+            message.Append("</nfe:ConsultaLoteRequest>");
+
+            return Execute("http://www.prefeitura.sp.gov.br/nfe/ws/consultaLote", message.ToString(), "ConsultaLoteResponse");
+        }
+
+        public string ConsultarSequencialRps(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ConsultarNFSeRps(string cabec, string msg)
+        {
+            return ConsultarNFSe(cabec, msg);
+        }
+
+        public string ConsultarNFSe(string cabec, string msg)
+        {
+            var message = new StringBuilder();
+            message.Append("<nfe:ConsultaNFeRequest>");
+            message.Append("<nfe:VersaoSchema>1</nfe:VersaoSchema>");
+            message.Append("<nfe:MensagemXML>");
+            message.AppendCData(msg);
+            message.Append("</nfe:MensagemXML>");
+            message.Append("</nfe:ConsultaNFeRequest>");
+
+            return Execute("http://www.prefeitura.sp.gov.br/nfe/ws/consultaNFe", message.ToString(), "ConsultaNFeResponse");
+        }
+
+        public string CancelarNFSe(string cabec, string msg)
+        {
+            var message = new StringBuilder();
+            message.Append("<nfe:CancelamentoNFeRequest>");
+            message.Append("<nfe:VersaoSchema>1</nfe:VersaoSchema>");
+            message.Append("<nfe:MensagemXML>");
+            message.AppendCData(msg);
+            message.Append("</nfe:MensagemXML>");
+            message.Append("</nfe:CancelamentoNFeRequest>");
+
+            return Execute("http://www.prefeitura.sp.gov.br/nfe/ws/cancelamentoNFe", message.ToString(), "CancelamentoNFeResponse");
+        }
+
+        public string CancelarNFSeLote(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string SubstituirNFSe(string cabec, string msg)
+        {
+            throw new NotImplementedException();
         }
 
         private string Execute(string soapAction, string message, string responseTag)

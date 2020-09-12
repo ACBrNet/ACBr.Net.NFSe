@@ -29,6 +29,7 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
 using System.Text;
 using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
@@ -36,7 +37,7 @@ using ACBr.Net.Core.Extensions;
 namespace ACBr.Net.NFSe.Providers
 {
     // ReSharper disable once InconsistentNaming
-    internal sealed class NotaCariocaServiceClient : NFSeSOAP11ServiceClient, IABRASFClient
+    internal sealed class NotaCariocaServiceClient : NFSeSOAP11ServiceClient, IServiceClient
     {
         #region Constructors
 
@@ -48,7 +49,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        public string RecepcionarLoteRps(string cabec, string msg)
+        public string Enviar(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<not:RecepcionarLoteRpsRequest>");
@@ -60,7 +61,19 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://notacarioca.rio.gov.br/RecepcionarLoteRps", message.ToString(), "RecepcionarLoteRpsResponse");
         }
 
-        public string ConsultarSituacaoLoteRps(string cabec, string msg)
+        public string EnviarSincrono(string cabec, string msg)
+        {
+            var message = new StringBuilder();
+            message.Append("<not:GerarNfseRequest>");
+            message.Append("<not:inputXML>");
+            message.AppendCData(msg);
+            message.Append("</not:inputXML>");
+            message.Append("</not:GerarNfseRequest>");
+
+            return Execute("http://notacarioca.rio.gov.br/GerarNfse", message.ToString(), "GerarNfseResponse");
+        }
+
+        public string ConsultarSituacao(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<not:ConsultarSituacaoLoteRpsRequest>");
@@ -72,7 +85,24 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://notacarioca.rio.gov.br/ConsultarSituacaoLoteRps", message.ToString(), "ConsultarSituacaoLoteRpsResponse");
         }
 
-        public string ConsultarNFSePorRps(string cabec, string msg)
+        public string ConsultarLoteRps(string cabec, string msg)
+        {
+            var message = new StringBuilder();
+            message.Append("<not:ConsultarLoteRpsRequest>");
+            message.Append("<not:inputXML>");
+            message.AppendCData(msg);
+            message.Append("</not:inputXML>");
+            message.Append("</not:ConsultarLoteRpsRequest>");
+
+            return Execute("http://notacarioca.rio.gov.br/ConsultarLoteRps", message.ToString(), "ConsultarLoteRpsResponse");
+        }
+
+        public string ConsultarSequencialRps(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ConsultarNFSeRps(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<not:ConsultarNfsePorRpsRequest>");
@@ -96,18 +126,6 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://notacarioca.rio.gov.br/ConsultarNfse", message.ToString(), "ConsultarNfseResponse");
         }
 
-        public string ConsultarLoteRps(string cabec, string msg)
-        {
-            var message = new StringBuilder();
-            message.Append("<not:ConsultarLoteRpsRequest>");
-            message.Append("<not:inputXML>");
-            message.AppendCData(msg);
-            message.Append("</not:inputXML>");
-            message.Append("</not:ConsultarLoteRpsRequest>");
-
-            return Execute("http://notacarioca.rio.gov.br/ConsultarLoteRps", message.ToString(), "ConsultarLoteRpsResponse");
-        }
-
         public string CancelarNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
@@ -120,16 +138,14 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://notacarioca.rio.gov.br/CancelarNfse", message.ToString(), "CancelarNfseResponse");
         }
 
-        public string GerarNfse(string cabec, string msg)
+        public string CancelarNFSeLote(string cabec, string msg)
         {
-            var message = new StringBuilder();
-            message.Append("<not:GerarNfseRequest>");
-            message.Append("<not:inputXML>");
-            message.AppendCData(msg);
-            message.Append("</not:inputXML>");
-            message.Append("</not:GerarNfseRequest>");
+            throw new NotImplementedException();
+        }
 
-            return Execute("http://notacarioca.rio.gov.br/GerarNfse", message.ToString(), "GerarNfseResponse");
+        public string SubstituirNFSe(string cabec, string msg)
+        {
+            throw new NotImplementedException();
         }
 
         private string Execute(string soapAction, string message, string responseTag)

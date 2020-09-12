@@ -1,14 +1,14 @@
 // ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
-// Author           : Rafael Dias
-// Created          : 01-13-2017
+// Author           : Felipe Silveira/Transis
+// Created          : 02-14-2020
 //
-// Last Modified By : Rafael Dias
-// Last Modified On : 01-13-2017
+// Last Modified By : Felipe Silveira/Transis
+// Last Modified On : 02-17-2020
 // ***********************************************************************
-// <copyright file="IABRASFClient.cs" company="ACBr.Net">
+// <copyright file="ProviderFiorilli.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
-//	     		    Copyright (c) 2016 Grupo ACBr.Net
+//	     		    Copyright (c) 2020 Grupo ACBr.Net
 //
 //	 Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the "Software"),
@@ -29,25 +29,28 @@
 // <summary></summary>
 // ***********************************************************************
 
+using ACBr.Net.NFSe.Configuracao;
+
 namespace ACBr.Net.NFSe.Providers
 {
-    public interface IABRASFClient : IServiceClient
+    // ReSharper disable once InconsistentNaming
+    internal sealed class ProviderPronim2 : ProviderABRASF201
     {
+        #region Constructors
+
+        public ProviderPronim2(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
+        {
+            Name = "Pronim2";
+        }
+
+        #endregion Constructors
+
         #region Methods
 
-        string RecepcionarLoteRps(string cabec, string msg);
-
-        string ConsultarSituacaoLoteRps(string cabec, string msg);
-
-        string ConsultarNFSePorRps(string cabec, string msg);
-
-        string ConsultarNFSe(string cabec, string msg);
-
-        string ConsultarLoteRps(string cabec, string msg);
-
-        string CancelarNFSe(string cabec, string msg);
-
-        string GerarNfse(string cabec, string msg);
+        protected override IServiceClient GetClient(TipoUrl tipo)
+        {
+            return new Pronim2ServiceClient(this, tipo, null);
+        }
 
         #endregion Methods
     }

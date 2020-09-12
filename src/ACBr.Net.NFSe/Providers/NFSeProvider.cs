@@ -46,9 +46,10 @@ namespace ACBr.Net.NFSe.Providers
 
         Coplan = 3,
 
+        DBSeller = 19,
+
         DSF = 4,
 
-        [Description("Equiplano")]
         Equiplano = 15,
 
         Fiorilli = 16,

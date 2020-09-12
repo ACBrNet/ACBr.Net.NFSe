@@ -50,7 +50,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Protected Methods
 
-        protected override IABRASF2Client GetClient(TipoUrl tipo)
+        protected override IServiceClient GetClient(TipoUrl tipo)
         {
             return Municipio.Codigo.IsIn(5107602) && Configuracoes.WebServices.Ambiente == DFeTipoAmbiente.Producao ?
                    new CoplanServiceClient(this, tipo, null) : new CoplanServiceClient(this, tipo);

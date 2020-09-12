@@ -1,4 +1,4 @@
-// ***********************************************************************
+﻿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : Rafael Dias
 // Created          : 12-26-2017
@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dias
 // Last Modified On : 12-26-2017
 // ***********************************************************************
-// <copyright file="DANFSeFiltro.cs" company="ACBr.Net">
+// <copyright file="ProviderAbaco.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,12 +29,40 @@
 // <summary></summary>
 // ***********************************************************************
 
-namespace ACBr.Net.NFSe
+using System;
+using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Nota;
+
+namespace ACBr.Net.NFSe.Providers
 {
-    public enum DANFSeFiltro
+    internal sealed class ProviderDBSeller : ProviderABRASF
     {
-        Nenhum,
-        PDF,
-        HTML
+        #region Constructors
+
+        public ProviderDBSeller(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
+        {
+            Name = "DBSeller";
+        }
+
+        #endregion Constructors
+
+        #region Methods
+
+        protected override void PrepararEnviarSincrono(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
+        {
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor.");
+        }
+
+        protected override bool PrecisaValidarSchema(TipoUrl tipo)
+        {
+            return false;
+        }
+
+        protected override IServiceClient GetClient(TipoUrl tipo)
+        {
+            return new DBSellerServiceClient(this, tipo);
+        }
+
+        #endregion Methods
     }
 }

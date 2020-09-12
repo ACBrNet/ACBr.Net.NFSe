@@ -38,7 +38,7 @@ using ACBr.Net.DFe.Core.Common;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class AbacoServiceClient : NFSeSOAP11ServiceClient, IABRASFClient
+    internal sealed class AbacoServiceClient : NFSeSOAP11ServiceClient, IServiceClient
     {
         #region Constructors
 
@@ -50,7 +50,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        public string RecepcionarLoteRps(string cabec, string msg)
+        public string Enviar(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<e:RecepcionarLoteRPS.Execute>");
@@ -65,7 +65,12 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://www.e-nfs.com.braction/ARECEPCIONARLOTERPS.Execute", message.ToString(), "RecepcionarLoteRPS.ExecuteResponse");
         }
 
-        public string ConsultarSituacaoLoteRps(string cabec, string msg)
+        public string EnviarSincrono(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ConsultarSituacao(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<e:ConsultarSituacaoLoteRPS.Execute>");
@@ -80,7 +85,27 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://www.e-nfs.com.braction/ACONSULTARSITUACAOLOTERPS.Execute", message.ToString(), "ConsultarSituacaoLoteRPS.ExecuteResponse");
         }
 
-        public string ConsultarNFSePorRps(string cabec, string msg)
+        public string ConsultarLoteRps(string cabec, string msg)
+        {
+            var message = new StringBuilder();
+            message.Append("<e:ConsultarLoteRps.Execute>");
+            message.Append("<e:Nfsecabecmsg>");
+            message.AppendCData(cabec);
+            message.Append("</e:Nfsecabecmsg>");
+            message.Append("<e:Nfsedadosmsg>");
+            message.AppendCData(msg);
+            message.Append("</e:Nfsedadosmsg>");
+            message.Append("</e:ConsultarLoteRps.Execute>");
+
+            return Execute("http://www.e-nfs.com.braction/ACONSULTARLOTERPS.Execute", message.ToString(), "ConsultarLoteRps.ExecuteResponse");
+        }
+
+        public string ConsultarSequencialRps(string cabec, string msg)
+        {
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
+        }
+
+        public string ConsultarNFSeRps(string cabec, string msg)
         {
             var message = new StringBuilder();
             message.Append("<e:ConsultarNfsePorRps.Execute>");
@@ -110,21 +135,6 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://www.e-nfs.com.braction/ACONSULTARNFSE.Execute", message.ToString(), "ConsultarNfse.ExecuteResponse");
         }
 
-        public string ConsultarLoteRps(string cabec, string msg)
-        {
-            var message = new StringBuilder();
-            message.Append("<e:ConsultarLoteRps.Execute>");
-            message.Append("<e:Nfsecabecmsg>");
-            message.AppendCData(cabec);
-            message.Append("</e:Nfsecabecmsg>");
-            message.Append("<e:Nfsedadosmsg>");
-            message.AppendCData(msg);
-            message.Append("</e:Nfsedadosmsg>");
-            message.Append("</e:ConsultarLoteRps.Execute>");
-
-            return Execute("http://www.e-nfs.com.braction/ACONSULTARLOTERPS.Execute", message.ToString(), "ConsultarLoteRps.ExecuteResponse");
-        }
-
         public string CancelarNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
@@ -140,9 +150,14 @@ namespace ACBr.Net.NFSe.Providers
             return Execute("http://www.e-nfs.com.braction/ACANCELARNFSE.Execute", message.ToString(), "CancelarNfse.ExecuteResponse");
         }
 
-        public string GerarNfse(string cabec, string msg)
+        public string CancelarNFSeLote(string cabec, string msg)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
+        }
+
+        public string SubstituirNFSe(string cabec, string msg)
+        {
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
         private string Execute(string soapAction, string message, string responseTag)
@@ -158,13 +173,10 @@ namespace ACBr.Net.NFSe.Providers
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
             var element = xmlDocument.ElementAnyNs("Fault");
-            if (element != null)
-            {
-                var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
-                throw new ACBrDFeCommunicationException(exMessage);
-            }
+            if (element == null) return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("Outputxml").Value;
 
-            return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("Outputxml").Value;
+            var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
+            throw new ACBrDFeCommunicationException(exMessage);
         }
 
         #endregion Methods

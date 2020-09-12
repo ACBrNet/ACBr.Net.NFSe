@@ -48,7 +48,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Protected Methods
 
-        protected override IABRASF2Client GetClient(TipoUrl tipo)
+        protected override IServiceClient GetClient(TipoUrl tipo)
         {
             return new Betha2ServiceClient(this, tipo);
         }

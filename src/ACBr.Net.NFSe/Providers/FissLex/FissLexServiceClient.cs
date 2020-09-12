@@ -30,11 +30,13 @@
 // ***********************************************************************
 
 using System;
+using System.Linq;
 using System.Xml.Linq;
+using ACBr.Net.Core.Extensions;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class FissLexServiceClient : NFSeSOAP11ServiceClient, IABRASFClient
+    internal sealed class FissLexServiceClient : NFSeSOAP11ServiceClient, IServiceClient
     {
         #region Constructors
 
@@ -46,44 +48,63 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        public string RecepcionarLoteRps(string cabec, string msg)
+        public string Enviar(string cabec, string msg)
         {
-            return Execute("FISS-LEXaction/AWS_RECEPCIONARLOTERPS.Execute", msg, "");
+            return Execute("FISS-LEXaction/AWS_RECEPCIONARLOTERPS.Execute", msg,
+                   new[] { "WS_RecepcionarLoteRps.ExecuteResponse", "Enviarloterpsresposta" });
         }
 
-        public string ConsultarSituacaoLoteRps(string cabec, string msg)
+        public string EnviarSincrono(string cabec, string msg)
         {
-            return Execute("FISS-LEXaction/AWS_CONSULTARSITUACAOLOTERPS.Execute", msg, "");
+            throw new NotImplementedException();
         }
 
-        public string ConsultarNFSePorRps(string cabec, string msg)
+        public string ConsultarSituacao(string cabec, string msg)
         {
-            return Execute("FISS-LEXaction/AWS_CONSULTANFSEPORRPS.Execute", msg, "");
-        }
-
-        public string ConsultarNFSe(string cabec, string msg)
-        {
-            return Execute("FISS-LEXaction/AWS_CONSULTANFSE.Execute", msg, "");
+            return Execute("FISS-LEXaction/AWS_CONSULTARSITUACAOLOTERPS.Execute", msg,
+                   new[] { "WS_ConsultarSituacaoLoteRps.ExecuteResponse" });
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
         {
-            return Execute("FISS-LEXaction/AWS_CONSULTALOTERPS.Execute", msg, "");
+            return Execute("FISS-LEXaction/AWS_CONSULTALOTERPS.Execute", msg, new string[0]);
+        }
+
+        public string ConsultarSequencialRps(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ConsultarNFSeRps(string cabec, string msg)
+        {
+            return Execute("FISS-LEXaction/AWS_CONSULTANFSEPORRPS.Execute", msg, new string[0]);
+        }
+
+        public string ConsultarNFSe(string cabec, string msg)
+        {
+            return Execute("FISS-LEXaction/AWS_CONSULTANFSE.Execute", msg, new string[0]);
         }
 
         public string CancelarNFSe(string cabec, string msg)
         {
-            return Execute("FISS-LEXaction/AWS_CANCELARNFSE.Execute", msg, "");
+            return Execute("FISS-LEXaction/AWS_CANCELARNFSE.Execute", msg,
+                   new[] { "WS_CancelarNfse.ExecuteResponse", "Cancelarnfseresposta" });
         }
 
-        public string GerarNfse(string cabec, string msg)
+        public string CancelarNFSeLote(string cabec, string msg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string SubstituirNFSe(string cabec, string msg)
         {
             throw new NotImplementedException();
         }
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
-            return xmlDocument.ToString();
+            var element = responseTag.Aggregate(xmlDocument.Root, (current, tag) => current.ElementAnyNs(tag));
+            return element.ToString();
         }
 
         #endregion Methods

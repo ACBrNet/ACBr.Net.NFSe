@@ -89,7 +89,7 @@ namespace ACBr.Net.NFSe
         /// Coleção de NFSe para processar e/ou processadas
         /// </summary>
         [Browsable(false)]
-        public NotaFiscalCollection NotasFiscais { get; private set; }
+        public NotaServicoCollection NotasServico { get; private set; }
 
         #endregion Propriedades
 
@@ -102,14 +102,14 @@ namespace ACBr.Net.NFSe
         /// <param name="sincrono">Se for informado <c>true</c> o envio será sincrono.</param>
         /// <param name="imprimir">Se for informado <c>true</c> imprime as RPS, se o envio foi executado com sucesso.</param>
         /// <returns>RetornoWebservice.</returns>
-        public RetornoWebservice Enviar(int lote, bool sincrono = false, bool imprimir = false)
+        public RetornoEnviar Enviar(int lote, bool sincrono = false, bool imprimir = false)
 
         {
-            Guard.Against<ACBrException>(NotasFiscais.Count < 1, "ERRO: Nenhuma RPS adicionada ao Lote");
+            Guard.Against<ACBrException>(NotasServico.Count < 1, "ERRO: Nenhuma RPS adicionada ao Lote");
 
-            Guard.Against<ACBrException>(NotasFiscais.Count > 50,
+            Guard.Against<ACBrException>(NotasServico.Count > 50,
                 $"ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS) excedido.{Environment.NewLine}" +
-                $"Quantidade atual: {NotasFiscais.Count}");
+                $"Quantidade atual: {NotasServico.Count}");
 
             var oldProtocol = ServicePointManager.SecurityProtocol;
 
@@ -119,11 +119,11 @@ namespace ACBr.Net.NFSe
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
                     var ret = sincrono
-                        ? provider.EnviarSincrono(lote, NotasFiscais)
-                        : provider.Enviar(lote, NotasFiscais);
+                        ? provider.EnviarSincrono(lote, NotasServico)
+                        : provider.Enviar(lote, NotasServico);
 
-                    if (ret.Sucesso && DANFSe != null && imprimir)
-                        DANFSe.Imprimir();
+                    if (ret.Sucesso && imprimir)
+                        DANFSe?.Imprimir();
 
                     return ret;
                 }
@@ -147,7 +147,7 @@ namespace ACBr.Net.NFSe
         /// <param name="lote">The lote.</param>
         /// <param name="protocolo">The protocolo.</param>
         /// <returns>RetornoWebservice.</returns>
-        public RetornoWebservice ConsultarSituacao(int lote, string protocolo = "")
+        public RetornoConsultarSituacao ConsultarSituacao(int lote, string protocolo = "")
         {
             Guard.Against<ArgumentException>(lote < 1, "Lote não pode ser Zero ou negativo.");
 
@@ -181,7 +181,7 @@ namespace ACBr.Net.NFSe
         /// <param name="lote">The lote.</param>
         /// <returns>RetornoWebservice.</returns>
         /// <exception cref="NotImplementedException"></exception>
-        public RetornoWebservice ConsultarLoteRps(int lote, string protocolo)
+        public RetornoConsultarLoteRps ConsultarLoteRps(int lote, string protocolo)
         {
             var oldProtocol = ServicePointManager.SecurityProtocol;
 
@@ -190,7 +190,7 @@ namespace ACBr.Net.NFSe
                 ServicePointManager.SecurityProtocol = protocolType;
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
-                    return provider.ConsultarLoteRps(lote, protocolo, NotasFiscais);
+                    return provider.ConsultarLoteRps(lote, protocolo, NotasServico);
                 }
             }
             catch (Exception exception)
@@ -212,7 +212,7 @@ namespace ACBr.Net.NFSe
         /// <param name="serie">The serie.</param>
         /// <returns>RetornoWebservice.</returns>
         /// <exception cref="NotImplementedException"></exception>
-        public RetornoWebservice ConsultarSequencialRps(string serie)
+        public RetornoConsultarSequencialRps ConsultarSequencialRps(string serie)
         {
             Guard.Against<ArgumentNullException>(serie.IsEmpty(), "Serie não pode ser vazia ou nulo.");
 
@@ -247,7 +247,7 @@ namespace ACBr.Net.NFSe
         /// <param name="tipo">The tipo.</param>
         /// <returns>RetornoWebservice.</returns>
         /// <exception cref="NotImplementedException"></exception>
-        public RetornoWebservice ConsultaNFSeRps(string numero, string serie, TipoRps tipo)
+        public RetornoConsultarNFSeRps ConsultaNFSeRps(int numero, string serie, TipoRps tipo)
         {
             var oldProtocol = ServicePointManager.SecurityProtocol;
 
@@ -256,12 +256,12 @@ namespace ACBr.Net.NFSe
                 ServicePointManager.SecurityProtocol = protocolType;
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
-                    return provider.ConsultaNFSeRps(numero, serie, tipo, NotasFiscais);
+                    return provider.ConsultaNFSeRps(numero, serie, tipo, NotasServico);
                 }
             }
             catch (Exception exception)
             {
-                this.Log().Error("[ConsultaNFSeRps]", exception);
+                this.Log().Error("[ConsultarNFSeRps]", exception);
                 throw;
             }
             finally
@@ -275,22 +275,12 @@ namespace ACBr.Net.NFSe
         ///
         /// Obs.: Nem todos provedores suportam este metodo.
         /// </summary>
-        /// <param name="inicio">The inicio.</param>
-        /// <param name="fim">The fim.</param>
         /// <param name="numeroNfse">The numero nfse.</param>
-        /// <param name="pagina">The pagina.</param>
-        /// <param name="cnpjTomador">The CNPJ tomador.</param>
-        /// <param name="imTomador">The im tomador.</param>
-        /// <param name="nomeInter">The nome inter.</param>
-        /// <param name="cnpjInter">The CNPJ inter.</param>
-        /// <param name="imInter">The im inter.</param>
-        /// <param name="serie">The serie.</param>
         /// <returns>RetornoWebservice.</returns>
         /// <exception cref="NotImplementedException"></exception>
-        public RetornoWebservice ConsultaNFSe(DateTime? inicio, DateTime? fim, string numeroNfse = "", int pagina = 1,
-            string cnpjTomador = "", string imTomador = "", string nomeInter = "", string cnpjInter = "", string imInter = "", string serie = "")
+        public RetornoConsultarNFSe ConsultaNFSe(int numeroNfse)
         {
-            Guard.Against<ACBrException>(inicio?.Date > fim?.Date, "A data inicial não pode ser maior que a data final.");
+            Guard.Against<ACBrException>(numeroNfse < 1, "O número da NFSe não pode ser zero ou negativo.");
 
             var oldProtocol = ServicePointManager.SecurityProtocol;
 
@@ -299,13 +289,114 @@ namespace ACBr.Net.NFSe
                 ServicePointManager.SecurityProtocol = protocolType;
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
-                    return provider.ConsultaNFSe(inicio, fim, numeroNfse, pagina, cnpjTomador,
-                        imTomador, nomeInter, cnpjInter, imInter, serie, NotasFiscais);
+                    return provider.ConsultaNFSe(NotasServico, numeroNfse: numeroNfse);
                 }
             }
             catch (Exception exception)
             {
-                this.Log().Error("[ConsultaNFSe]", exception);
+                this.Log().Error("[ConsultarNFSe]", exception);
+                throw;
+            }
+            finally
+            {
+                ServicePointManager.SecurityProtocol = oldProtocol;
+            }
+        }
+
+        /// <summary>
+        /// Consulta as NFSe de acordo com os filtros.
+        ///
+        /// Obs.: Nem todos provedores suportam este metodo.
+        /// </summary>
+        /// <param name="inicio"></param>
+        /// <param name="fim"></param>
+        /// <returns>RetornoWebservice.</returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public RetornoConsultarNFSe ConsultaNFSePeriodo(DateTime inicio, DateTime fim)
+        {
+            Guard.Against<ACBrException>(inicio.Date > fim.Date, "A data inicial não pode ser maior que a data final.");
+
+            var oldProtocol = ServicePointManager.SecurityProtocol;
+
+            try
+            {
+                ServicePointManager.SecurityProtocol = protocolType;
+                using (var provider = ProviderManager.GetProvider(Configuracoes))
+                {
+                    return provider.ConsultaNFSe(NotasServico, inicio, fim);
+                }
+            }
+            catch (Exception exception)
+            {
+                this.Log().Error("[ConsultaNFSePeriodo]", exception);
+                throw;
+            }
+            finally
+            {
+                ServicePointManager.SecurityProtocol = oldProtocol;
+            }
+        }
+
+        /// <summary>
+        /// Consulta as NFSe de acordo com os filtros.
+        ///
+        /// Obs.: Nem todos provedores suportam este metodo.
+        /// </summary>
+        /// <param name="cnpjTomador"></param>
+        /// <param name="imTomador"></param>
+        /// <returns>RetornoWebservice.</returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public RetornoConsultarNFSe ConsultaNFSeTomador(string cnpjTomador, string imTomador)
+        {
+            Guard.Against<ACBrException>(cnpjTomador.IsEmpty(), "O CNPJ/CPF do tomador não pode ser vazio.");
+
+            var oldProtocol = ServicePointManager.SecurityProtocol;
+
+            try
+            {
+                ServicePointManager.SecurityProtocol = protocolType;
+                using (var provider = ProviderManager.GetProvider(Configuracoes))
+                {
+                    return provider.ConsultaNFSe(NotasServico, cnpjTomador: cnpjTomador, imTomador: imTomador);
+                }
+            }
+            catch (Exception exception)
+            {
+                this.Log().Error("[ConsultaNFSeTomador]", exception);
+                throw;
+            }
+            finally
+            {
+                ServicePointManager.SecurityProtocol = oldProtocol;
+            }
+        }
+
+        /// <summary>
+        /// Consulta as NFSe de acordo com os filtros.
+        ///
+        /// Obs.: Nem todos provedores suportam este metodo.
+        /// </summary>
+        /// <param name="cnpjInter"></param>
+        /// <param name="imInter"></param>
+        /// <returns></returns>
+        public RetornoConsultarNFSe ConsultaNFSeIntermediario(string nomeInter, string cnpjInter, string imInter)
+        {
+            Guard.Against<ACBrException>(nomeInter.IsEmpty(), "O Nome do intermediário não pode ser vazio.");
+            Guard.Against<ACBrException>(cnpjInter.IsEmpty(), "O CNPJ/CPF do intermediário não pode ser vazio.");
+
+            var oldProtocol = ServicePointManager.SecurityProtocol;
+
+            try
+            {
+                ServicePointManager.SecurityProtocol = protocolType;
+                using (var provider = ProviderManager.GetProvider(Configuracoes))
+                {
+                    return provider.ConsultaNFSe(NotasServico, nomeInter: nomeInter, cnpjInter: cnpjInter, imInter: imInter);
+                }
+            }
+            catch (Exception exception)
+            {
+                this.Log().Error("[ConsultaNFSeIntermediario]", exception);
                 throw;
             }
             finally
@@ -323,7 +414,7 @@ namespace ACBr.Net.NFSe
         /// <param name="numeroNFSe">O numero da NFSe.</param>
         /// <param name="motivo">O motivo.</param>
         /// <returns>RetornoWebservice.</returns>
-        public RetornoWebservice CancelaNFSe(string codigoCancelamento, string numeroNFSe, string motivo)
+        public RetornoCancelar CancelarNFSe(string codigoCancelamento, string numeroNFSe, string motivo)
         {
             var oldProtocol = ServicePointManager.SecurityProtocol;
 
@@ -332,12 +423,12 @@ namespace ACBr.Net.NFSe
                 ServicePointManager.SecurityProtocol = protocolType;
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
-                    return provider.CancelaNFSe(codigoCancelamento, numeroNFSe, motivo, NotasFiscais);
+                    return provider.CancelarNFSe(codigoCancelamento, numeroNFSe, motivo, NotasServico);
                 }
             }
             catch (Exception exception)
             {
-                this.Log().Error("[CancelaNFSe]", exception);
+                this.Log().Error("[CancelarNFSe]", exception);
                 throw;
             }
             finally
@@ -354,23 +445,23 @@ namespace ACBr.Net.NFSe
         /// </summary>
         /// <param name="lote">Identificação do lote.</param>
         /// <returns>RetornoWebservice.</returns>
-        public RetornoWebservice CancelaNFSe(int lote)
+        public RetornoCancelarNFSeLote CancelarNFSeLote(int lote)
         {
             var oldProtocol = ServicePointManager.SecurityProtocol;
 
             try
             {
                 ServicePointManager.SecurityProtocol = protocolType;
-                Guard.Against<ArgumentException>(NotasFiscais.Count < 1, "ERRO: Nenhuma NFS-e carregada ao componente");
+                Guard.Against<ArgumentException>(NotasServico.Count < 1, "ERRO: Nenhuma NFS-e carregada ao componente");
 
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
-                    return provider.CancelaNFSe(lote, NotasFiscais);
+                    return provider.CancelarNFSeLote(lote, NotasServico);
                 }
             }
             catch (Exception exception)
             {
-                this.Log().Error("[CancelaNFSe]", exception);
+                this.Log().Error("[CancelarNFSe]", exception);
                 throw;
             }
             finally
@@ -388,11 +479,11 @@ namespace ACBr.Net.NFSe
         /// <param name="numeroNFSe">O numero da NFSe.</param>
         /// <param name="motivo">O motivo.</param>
         /// <returns>RetornoWebservice.</returns>
-        public RetornoWebservice SubstituirNFSe(string codigoCancelamento, string numeroNFSe, string motivo)
+        public RetornoSubstituirNFSe SubstituirNFSe(string codigoCancelamento, string numeroNFSe, string motivo)
         {
             Guard.Against<ArgumentException>(codigoCancelamento.IsEmpty(), "ERRO: Código de Cancelamento não informado");
             Guard.Against<ArgumentException>(numeroNFSe.IsEmpty(), "ERRO: Numero da NFS-e não informada");
-            Guard.Against<ArgumentException>(NotasFiscais.Count < 1, "ERRO: Nenhuma RPS carregada ao componente");
+            Guard.Against<ArgumentException>(NotasServico.Count < 1, "ERRO: Nenhuma RPS carregada ao componente");
 
             var oldProtocol = ServicePointManager.SecurityProtocol;
 
@@ -401,7 +492,7 @@ namespace ACBr.Net.NFSe
                 ServicePointManager.SecurityProtocol = protocolType;
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
-                    return provider.SubstituirNFSe(codigoCancelamento, numeroNFSe, motivo, NotasFiscais);
+                    return provider.SubstituirNFSe(NotasServico, codigoCancelamento, numeroNFSe, motivo);
                 }
             }
             catch (Exception exception)
@@ -433,6 +524,8 @@ namespace ACBr.Net.NFSe
             DANFSe?.ImprimirPDF();
         }
 
+        #endregion Methods
+
         #region Override Methods
 
         /// <summary>
@@ -441,7 +534,7 @@ namespace ACBr.Net.NFSe
         protected override void OnInitialize()
         {
             Configuracoes = new ConfigNFSe(this);
-            NotasFiscais = new NotaFiscalCollection(Configuracoes);
+            NotasServico = new NotaServicoCollection(Configuracoes);
             protocolType = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls |
                            SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
         }
@@ -454,7 +547,5 @@ namespace ACBr.Net.NFSe
         }
 
         #endregion Override Methods
-
-        #endregion Methods
     }
 }

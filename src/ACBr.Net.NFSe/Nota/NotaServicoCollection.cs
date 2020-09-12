@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dias
 // Last Modified On : 10-01-2014
 // ***********************************************************************
-// <copyright path="NotaFiscalCollection.cs" company="ACBr.Net">
+// <copyright path="NotaServicoCollection.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -40,21 +40,21 @@ using System.Xml.Linq;
 
 namespace ACBr.Net.NFSe.Nota
 {
-    public sealed class NotaFiscalCollection : DFeCollection<NotaFiscal>
+    public sealed class NotaServicoCollection : DFeCollection<NotaServico>
     {
         #region Fields
 
-        private ConfigNFSe config;
+        private readonly ConfigNFSe config;
 
         #endregion Fields
 
         #region Constructor
 
         /// <summary>
-        /// Inicializa uma nova instacia da classe <see cref="NotaFiscalCollection" />.
+        /// Inicializa uma nova instacia da classe <see cref="NotaServicoCollection" />.
         /// </summary>
         /// <param name="config">The configuration.</param>
-        public NotaFiscalCollection(ConfigNFSe config)
+        public NotaServicoCollection(ConfigNFSe config)
         {
             Guard.Against<ACBrException>(config == null, "Configurações não podem ser nulas");
 
@@ -69,9 +69,9 @@ namespace ACBr.Net.NFSe.Nota
         /// Adiciona uma nova nota fiscal na coleção.
         /// </summary>
         /// <returns>T.</returns>
-        public override NotaFiscal AddNew()
+        public override NotaServico AddNew()
         {
-            var nota = new NotaFiscal(config.PrestadorPadrao);
+            var nota = new NotaServico(config.PrestadorPadrao);
             Add(nota);
             return nota;
         }
@@ -81,8 +81,8 @@ namespace ACBr.Net.NFSe.Nota
         /// </summary>
         /// <param name="xml">caminho do arquivo XML ou string com o XML.</param>
         /// <param name="encoding">encoding do XML.</param>
-        /// <returns>NotaFiscal carregada.</returns>
-        public NotaFiscal Load(string xml, Encoding encoding = null)
+        /// <returns>NotaServico carregada.</returns>
+        public NotaServico Load(string xml, Encoding encoding = null)
         {
             using (var provider = ProviderManager.GetProvider(config))
             {
@@ -96,8 +96,8 @@ namespace ACBr.Net.NFSe.Nota
         /// Carrega a NFSe/RPS do xml.
         /// </summary>
         /// <param name="stream">Stream do XML.</param>
-        /// <returns>NotaFiscal carregada.</returns>
-        public NotaFiscal Load(Stream stream)
+        /// <returns>NotaServico carregada.</returns>
+        public NotaServico Load(Stream stream)
         {
             using (var provider = ProviderManager.GetProvider(config))
             {
@@ -111,8 +111,8 @@ namespace ACBr.Net.NFSe.Nota
         /// Carrega a NFSe/RPS do XMLDocument.
         /// </summary>
         /// <param name="xml">XMLDocument da NFSe/RPS.</param>
-        /// <returns>NotaFiscal carregada.</returns>
-        public NotaFiscal Load(XDocument xml)
+        /// <returns>NotaServico carregada.</returns>
+        public NotaServico Load(XDocument xml)
         {
             using (var provider = ProviderManager.GetProvider(config))
             {
@@ -128,17 +128,20 @@ namespace ACBr.Net.NFSe.Nota
         /// <param name="nota">A nota para salvar</param>
         /// <param name="path">Caminho onde sera salvo o arquivo.</param>
         /// <returns></returns>
-        public void Save(NotaFiscal nota, string path)
+        public void Save(NotaServico nota, string path = "")
         {
             using (var provider = ProviderManager.GetProvider(config))
             {
-                var file = nota.IdentificacaoNFSe.Numero.IsEmpty()
-                    ? $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml"
-                    : $"NFSe-{nota.IdentificacaoNFSe.Chave}-{nota.IdentificacaoNFSe.Numero}.xml";
+                var isNFSe = nota.IdentificacaoNFSe.Numero.IsEmpty();
 
-                var xmlNota = nota.IdentificacaoNFSe.Numero.IsEmpty()
-                    ? provider.WriteXmlRps(nota)
-                    : provider.WriteXmlNFSe(nota);
+                var file = isNFSe ?
+                      $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}-{nota.IdentificacaoRps.Serie}.xml" :
+                      $"NFSe-{nota.IdentificacaoNFSe.Chave}-{nota.IdentificacaoNFSe.Numero}.xml";
+
+                var xmlNota = isNFSe ? provider.WriteXmlRps(nota) : provider.WriteXmlNFSe(nota);
+
+                if (path.IsEmpty())
+                    path = config.Arquivos.PathSalvar;
 
                 path = Path.Combine(path, file);
 
@@ -153,7 +156,7 @@ namespace ACBr.Net.NFSe.Nota
         /// <param name="nota">A nota para salvar</param>
         /// <param name="stream">Stream onde sera salvo o xml</param>
         /// <returns></returns>
-        public void Save(NotaFiscal nota, Stream stream)
+        public void Save(NotaServico nota, Stream stream)
         {
             using (var provider = ProviderManager.GetProvider(config))
             {
@@ -171,7 +174,7 @@ namespace ACBr.Net.NFSe.Nota
         /// </summary>
         /// <param name="nota"></param>
         /// <returns></returns>
-        public string GetXml(NotaFiscal nota)
+        public string GetXml(NotaServico nota)
         {
             using (var provider = ProviderManager.GetProvider(config))
             {

@@ -33,6 +33,7 @@ using System;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using ACBr.Net.DFe.Core.Common;
 using ACBr.Net.DFe.Core.Service;
 
 namespace ACBr.Net.NFSe.Providers
@@ -47,10 +48,22 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Constructors
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <param name="tipoUrl"></param>
         protected NFSeServiceClient(ProviderBase provider, TipoUrl tipoUrl) : this(provider, tipoUrl, provider.Certificado)
         {
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <param name="tipoUrl"></param>
+        /// <param name="certificado"></param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         protected NFSeServiceClient(ProviderBase provider, TipoUrl tipoUrl, X509Certificate2 certificado) :
             base(provider.GetUrl(tipoUrl), provider.TimeOut, certificado)
         {
@@ -84,17 +97,17 @@ namespace ACBr.Net.NFSe.Providers
                     PrefixoResposta = "seq-rps";
                     break;
 
-                case TipoUrl.ConsultaNFSeRps:
+                case TipoUrl.ConsultarNFSeRps:
                     PrefixoEnvio = "con-rps-nfse";
                     PrefixoResposta = "con-rps-nfse";
                     break;
 
-                case TipoUrl.ConsultaNFSe:
+                case TipoUrl.ConsultarNFSe:
                     PrefixoEnvio = "con-nfse";
                     PrefixoResposta = "con-nfse";
                     break;
 
-                case TipoUrl.CancelaNFSe:
+                case TipoUrl.CancelarNFSe:
                     PrefixoEnvio = "canc-nfse";
                     PrefixoResposta = "canc-nfse";
                     break;
@@ -113,7 +126,15 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Properties
 
+        /// <summary>
+        ///
+        /// </summary>
         public ProviderBase Provider { get; set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public bool EhHomologação => Provider.Configuracoes.WebServices.Ambiente == DFeTipoAmbiente.Homologacao;
 
         /// <summary>
         ///

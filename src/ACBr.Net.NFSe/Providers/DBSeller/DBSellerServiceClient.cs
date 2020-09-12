@@ -1,12 +1,12 @@
-// ***********************************************************************
+﻿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : Rafael Dias
-// Created          : 01-13-2017
+// Created          : 19-08-2020
 //
 // Last Modified By : Rafael Dias
-// Last Modified On : 07-11-2018
+// Last Modified On : 19-08-2020
 // ***********************************************************************
-// <copyright file="WebIssServiceClient.cs" company="ACBr.Net">
+// <copyright file="DBSellerServiceClient.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -30,6 +30,7 @@
 // ***********************************************************************
 
 using System;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
@@ -37,12 +38,15 @@ using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    // ReSharper disable once InconsistentNaming
-    internal sealed class WebIssServiceClient : NFSeSOAP11ServiceClient, IServiceClient
+    internal sealed class DBSellerServiceClient : NFSeSOAP11ServiceClient, IServiceClient
     {
         #region Constructors
 
-        public WebIssServiceClient(ProviderWebIss provider, TipoUrl tipoUrl) : base(provider, tipoUrl)
+        public DBSellerServiceClient(ProviderDBSeller provider, TipoUrl tipoUrl) : base(provider, tipoUrl)
+        {
+        }
+
+        public DBSellerServiceClient(ProviderDBSeller provider, TipoUrl tipoUrl, X509Certificate2 certificado) : base(provider, tipoUrl, certificado)
         {
         }
 
@@ -53,16 +57,13 @@ namespace ACBr.Net.NFSe.Providers
         public string Enviar(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<RecepcionarLoteRps xmlns=\"http://tempuri.org/\">");
-            message.Append("<cabec>");
-            message.AppendCData(cabec);
-            message.Append("</cabec>");
-            message.Append("<msg>");
+            message.Append("<e:RecepcionarLoteRps>");
+            message.Append("<xml>");
             message.AppendCData(msg);
-            message.Append("</msg>");
-            message.Append("</RecepcionarLoteRps>");
+            message.Append("</xml>");
+            message.Append("</e:RecepcionarLoteRps>");
 
-            return Execute("http://tempuri.org/INfseServices/RecepcionarLoteRps", message.ToString());
+            return Execute("*", message.ToString(), "RecepcionarLoteRpsResponse");
         }
 
         public string EnviarSincrono(string cabec, string msg)
@@ -73,102 +74,91 @@ namespace ACBr.Net.NFSe.Providers
         public string ConsultarSituacao(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<ConsultarSituacaoLoteRps xmlns=\"http://tempuri.org/\">");
-            message.Append("<cabec>");
-            message.AppendCData(cabec);
-            message.Append("</cabec>");
-            message.Append("<msg>");
+            message.Append("<e:ConsultarSituacaoLoteRps>");
+            message.Append("<xml>");
             message.AppendCData(msg);
-            message.Append("</msg>");
-            message.Append("</ConsultarSituacaoLoteRps>");
+            message.Append("</xml>");
+            message.Append("</e:ConsultarSituacaoLoteRps>");
 
-            return Execute("http://tempuri.org/INfseServices/ConsultarSituacaoLoteRps", message.ToString());
+            return Execute("*", message.ToString(), "ConsultarSituacaoLoteRpsResponse");
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<ConsultarLoteRps xmlns=\"http://tempuri.org/\">");
-            message.Append("<cabec>");
-            message.AppendCData(cabec);
-            message.Append("</cabec>");
-            message.Append("<msg>");
+            message.Append("<e:ConsultarLoteRps>");
+            message.Append("<xml>");
             message.AppendCData(msg);
-            message.Append("</msg>");
-            message.Append("</ConsultarLoteRps>");
+            message.Append("</xml>");
+            message.Append("</e:ConsultarLoteRps>");
 
-            return Execute("http://tempuri.org/INfseServices/ConsultarLoteRps", message.ToString());
+            return Execute("*", message.ToString(), "ConsultarLoteRpsResponse");
         }
 
         public string ConsultarSequencialRps(string cabec, string msg)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
         public string ConsultarNFSeRps(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<ConsultarNfsePorRps xmlns=\"http://tempuri.org/\">");
-            message.Append("<cabec>");
-            message.AppendCData(cabec);
-            message.Append("</cabec>");
-            message.Append("<msg>");
+            message.Append("<e:ConsultarNfsePorRps>");
+            message.Append("<xml>");
             message.AppendCData(msg);
-            message.Append("</msg>");
-            message.Append("</ConsultarNfsePorRps>");
+            message.Append("</xml>");
+            message.Append("</e:ConsultarNfsePorRps>");
 
-            return Execute("http://tempuri.org/INfseServices/ConsultarNfsePorRps", message.ToString());
+            return Execute("*", message.ToString(), "ConsultarNfsePorRpsResponse");
         }
 
         public string ConsultarNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<ConsultarNfse xmlns=\"http://tempuri.org/\">");
-            message.Append("<cabec>");
-            message.AppendCData(cabec);
-            message.Append("</cabec>");
-            message.Append("<msg>");
+            message.Append("<e:ConsultarNfse>");
+            message.Append("<xml>");
             message.AppendCData(msg);
-            message.Append("</msg>");
-            message.Append("</ConsultarNfse>");
+            message.Append("</xml>");
+            message.Append("</e:ConsultarNfse>");
 
-            return Execute("http://tempuri.org/INfseServices/ConsultarNfse", message.ToString());
+            return Execute("*", message.ToString(), "ConsultarNfseResponse");
         }
 
         public string CancelarNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<CancelarNfse xmlns=\"http://tempuri.org/\">");
-            message.Append("<cabec>");
-            message.AppendCData(cabec);
-            message.Append("</cabec>");
-            message.Append("<msg>");
+            message.Append("<e:CancelarNfse>");
+            message.Append("<xml>");
             message.AppendCData(msg);
-            message.Append("</msg>");
-            message.Append("</CancelarNfse>");
+            message.Append("</xml>");
+            message.Append("</e:CancelarNfse>");
 
-            return Execute("http://tempuri.org/INfseServices/CancelarNfse", message.ToString());
+            return Execute("*", message.ToString(), "CancelarNfseResponse");
         }
 
         public string CancelarNFSeLote(string cabec, string msg)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
         public string SubstituirNFSe(string cabec, string msg)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
-        private string Execute(string soapAction, string message)
+        private string Execute(string soapAction, string message, string responseTag)
         {
-            return Execute(soapAction, message, "");
+            var baseUrl = Endpoint.Address.Uri.GetLeftPart(UriPartial.Authority);
+            var soapNs = EhHomologação ? $"xmlns:e=\"{baseUrl}/webservice/index/homologacao\"" :
+                                         $"xmlns:e=\"{baseUrl}/webservice/index/producao\"";
+
+            return Execute(soapAction, message, "", responseTag, soapNs);
         }
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
             var element = xmlDocument.ElementAnyNs("Fault");
-            if (element == null) return xmlDocument.ToString();
+            if (element == null) return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("return").Value;
 
             var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
             throw new ACBrDFeCommunicationException(exMessage);
