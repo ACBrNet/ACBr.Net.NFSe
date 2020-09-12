@@ -1,12 +1,12 @@
-// ***********************************************************************
+﻿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : Rafael Dias
-// Created          : 07-30-2017
+// Created          : 12-26-2017
 //
 // Last Modified By : Rafael Dias
-// Last Modified On : 07-30-2017
+// Last Modified On : 12-26-2017
 // ***********************************************************************
-// <copyright file="NFSeProvider.cs" company="ACBr.Net">
+// <copyright file="ProviderAbaco.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,58 +29,40 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ComponentModel;
+using System;
+using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Nota;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    public enum NFSeProvider : byte
+    internal sealed class ProviderDBSeller : ProviderABRASF
     {
-        Abaco = 0,
+        #region Constructors
 
-        Betha = 1,
+        public ProviderDBSeller(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
+        {
+            Name = "DBSeller";
+        }
 
-        [Description("Betha v2")]
-        Betha2 = 2,
+        #endregion Constructors
 
-        BHISS = 8,
+        #region Methods
 
-        Coplan = 3,
+        protected override void PrepararEnviarSincrono(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
+        {
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor.");
+        }
 
-        DBSeller = 19,
+        protected override bool PrecisaValidarSchema(TipoUrl tipo)
+        {
+            return false;
+        }
 
-        DSF = 4,
+        protected override IServiceClient GetClient(TipoUrl tipo)
+        {
+            return new DBSellerServiceClient(this, tipo);
+        }
 
-        Equiplano = 15,
-
-        Fiorilli = 16,
-
-        FissLex = 12,
-
-        Ginfes = 5,
-
-        ISSNet = 18,
-
-        [Description("NFe Cidades")]
-        NFeCidades = 6,
-
-        [Description("Nota Carioca")]
-        NotaCarioca = 7,
-
-        [Description("Pronim v2")]
-        Pronim2 = 17,
-
-        [Description("S�o Paulo")]
-        SaoPaulo = 9,
-
-        [Description("SmarAPD ABRASF")]
-        SmarAPDABRASF = 14,
-
-        [Description("Vitoria")]
-        Vitoria = 13,
-
-        WebIss = 10,
-
-        [Description("WebIss v2")]
-        WebIss2 = 11
+        #endregion Methods
     }
 }

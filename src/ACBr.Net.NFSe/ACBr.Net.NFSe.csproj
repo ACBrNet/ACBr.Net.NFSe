@@ -39,6 +39,7 @@
       - FissLex (Em Teste).
       - Pronim v2 (Em Teste).
       - Vitoria (Em Testes).
+      - DBSeller (Em Teste).
     </Description>
     <NeutralLanguage>pt-BR</NeutralLanguage>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -134,6 +135,10 @@
     <None Include="Schemas\Coplan\*.*">
       <Pack>True</Pack>
       <PackagePath>content\Schemas\Coplan</PackagePath>
+    </None>
+    <None Include="Schemas\DBSeller\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\DBSeller</PackagePath>
     </None>
     <None Include="Schemas\DSF\*.*">
       <Pack>True</Pack>
@@ -234,6 +239,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\Coplan\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\DBSeller\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\DSF\*.*">
