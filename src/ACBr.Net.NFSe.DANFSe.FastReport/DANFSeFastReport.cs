@@ -13,6 +13,7 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport
         #region Fields
 
         private Report internalReport;
+        private bool isDesign;
 
         #endregion Fields
 
@@ -24,13 +25,21 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport
 
         #endregion Events
 
-        #region Propriedades
-
-        public bool ShowDesign { get; set; }
-
-        #endregion Propriedades
-
         #region Methods
+
+        public void ShowDesign()
+        {
+            isDesign = true;
+
+            try
+            {
+                Imprimir();
+            }
+            finally
+            {
+                isDesign = false;
+            }
+        }
 
         public override void ImprimirPDF()
         {
@@ -56,7 +65,7 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport
                 internalReport.RegisterData(Parent.NotasServico.ToArray(), "NotaServico");
                 internalReport.Prepare();
 
-                if (ShowDesign)
+                if (isDesign)
                 {
                     internalReport.Design();
                 }
@@ -116,6 +125,8 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport
             if (e.FilePath.IsEmpty() || !File.Exists(e.FilePath))
             {
                 MemoryStream ms;
+
+                //ToDo: Adicionar os layouts de acordo com o provedor
                 switch (Layout)
                 {
                     case LayoutImpressao.ABRASF2:

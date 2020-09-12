@@ -524,6 +524,8 @@ namespace ACBr.Net.NFSe
             DANFSe?.ImprimirPDF();
         }
 
+        #endregion Methods
+
         #region Override Methods
 
         /// <summary>
@@ -545,7 +547,5 @@ namespace ACBr.Net.NFSe
         }
 
         #endregion Override Methods
-
-        #endregion Methods
     }
 }

@@ -44,7 +44,7 @@ namespace ACBr.Net.NFSe.Nota
     {
         #region Fields
 
-        private ConfigNFSe config;
+        private readonly ConfigNFSe config;
 
         #endregion Fields
 
@@ -128,17 +128,20 @@ namespace ACBr.Net.NFSe.Nota
         /// <param name="nota">A nota para salvar</param>
         /// <param name="path">Caminho onde sera salvo o arquivo.</param>
         /// <returns></returns>
-        public void Save(NotaServico nota, string path)
+        public void Save(NotaServico nota, string path = "")
         {
             using (var provider = ProviderManager.GetProvider(config))
             {
-                var file = nota.IdentificacaoNFSe.Numero.IsEmpty()
-                    ? $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml"
-                    : $"NFSe-{nota.IdentificacaoNFSe.Chave}-{nota.IdentificacaoNFSe.Numero}.xml";
+                var isNFSe = nota.IdentificacaoNFSe.Numero.IsEmpty();
 
-                var xmlNota = nota.IdentificacaoNFSe.Numero.IsEmpty()
-                    ? provider.WriteXmlRps(nota)
-                    : provider.WriteXmlNFSe(nota);
+                var file = isNFSe ?
+                      $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}-{nota.IdentificacaoRps.Serie}.xml" :
+                      $"NFSe-{nota.IdentificacaoNFSe.Chave}-{nota.IdentificacaoNFSe.Numero}.xml";
+
+                var xmlNota = isNFSe ? provider.WriteXmlRps(nota) : provider.WriteXmlNFSe(nota);
+
+                if (path.IsEmpty())
+                    path = config.Arquivos.PathSalvar;
 
                 path = Path.Combine(path, file);
 
