@@ -34,9 +34,6 @@ namespace ACBr.Net.NFSe.Demo
             acbrNFSe = new ACBrNFSe
             {
                 DANFSe = new DANFSeFastReport()
-                {
-                    ShowDesign = true,
-                }
             };
 
             ((DANFSeFastReport)acbrNFSe.DANFSe).OnExport += (sender, args) => args.Export.ShowDialog();
@@ -277,7 +274,11 @@ namespace ACBr.Net.NFSe.Demo
 
         private void btnImprimirDANFSe_Click(object sender, EventArgs e)
         {
+#if DEBUG
+            ((DANFSeFastReport)acbrNFSe.DANFSe).ShowDesign();
+#else
             acbrNFSe.Imprimir();
+#endif
         }
 
         private void lstMunicipios_MouseDoubleClick(object sender, MouseEventArgs e)
