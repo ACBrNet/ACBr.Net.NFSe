@@ -317,7 +317,11 @@ namespace ACBr.Net.NFSe.Providers
                 retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
 
             AssinarEnviar(retornoWebservice);
+
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"Enviar-{lote}-env.xml");
+
+            //Remover a declaração do Xml se tiver
+            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
 
             // Verifica Schema
             if (PrecisaValidarSchema(TipoUrl.Enviar))
@@ -370,6 +374,9 @@ namespace ACBr.Net.NFSe.Providers
 
             AssinarEnviarSincrono(retornoWebservice);
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"EnviarSincrono-{lote}-env.xml");
+
+            //Remover a declaração do Xml se tiver
+            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
 
             // Verifica Schema
             if (PrecisaValidarSchema(TipoUrl.EnviarSincrono))
@@ -424,6 +431,9 @@ namespace ACBr.Net.NFSe.Providers
             AssinarConsultarSituacao(retornoWebservice);
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarSituacao-{DateTime.Now:yyyyMMddssfff}-{protocolo}-env.xml");
 
+            //Remover a declaração do Xml se tiver
+            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
+
             // Verifica Schema
             if (PrecisaValidarSchema(TipoUrl.ConsultarSituacao))
             {
@@ -476,6 +486,9 @@ namespace ACBr.Net.NFSe.Providers
             AssinarConsultarLoteRps(retornoWebservice);
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMddssfff}-{protocolo}-env.xml");
 
+            //Remover a declaração do Xml se tiver
+            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
+
             // Verifica Schema
             if (PrecisaValidarSchema(TipoUrl.ConsultarLoteRps))
             {
@@ -525,6 +538,9 @@ namespace ACBr.Net.NFSe.Providers
 
             AssinarConsultarSequencialRps(retornoWebservice);
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarSequencialRps-{DateTime.Now:yyyyMMddssfff}-{serie}-env.xml");
+
+            //Remover a declaração do Xml se tiver
+            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
 
             // Verifica Schema
             if (PrecisaValidarSchema(TipoUrl.ConsultarSequencialRps))
@@ -580,6 +596,9 @@ namespace ACBr.Net.NFSe.Providers
 
             AssinarConsultarNFSeRps(retornoWebservice);
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarNFSeRps-{numero}-{serie}-env.xml");
+
+            //Remover a declaração do Xml se tiver
+            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
 
             // Verifica Schema
             if (PrecisaValidarSchema(TipoUrl.ConsultarNFSeRps))
@@ -648,6 +667,9 @@ namespace ACBr.Net.NFSe.Providers
             AssinarConsultarNFSe(retornoWebservice);
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarNFSe-{DateTime.Now:yyyyMMddssfff}-{numeroNfse}-env.xml");
 
+            //Remover a declaração do Xml se tiver
+            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
+
             // Verifica Schema
             if (PrecisaValidarSchema(TipoUrl.ConsultarNFSe))
             {
@@ -702,6 +724,9 @@ namespace ACBr.Net.NFSe.Providers
             AssinarCancelarNFSe(retornoWebservice);
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CancelarNFSe-{numeroNFSe}-env.xml");
 
+            //Remover a declaração do Xml se tiver
+            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
+
             // Verifica Schema
             if (PrecisaValidarSchema(TipoUrl.CancelarNFSe))
             {
@@ -750,6 +775,9 @@ namespace ACBr.Net.NFSe.Providers
 
             AssinarCancelarNFSeLote(retornoWebservice);
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CancelarNFSeLote-{lote}-env.xml");
+
+            //Remover a declaração do Xml se tiver
+            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
 
             // Verifica Schema
             if (PrecisaValidarSchema(TipoUrl.CancelarNFSeLote))
@@ -804,6 +832,9 @@ namespace ACBr.Net.NFSe.Providers
 
             AssinarSubstituirNFSe(retornoWebservice);
             GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"SubstituirNFSe-{numeroNFSe}-env.xml");
+
+            //Remover a declaração do Xml se tiver
+            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
 
             // Verifica Schema
             if (PrecisaValidarSchema(TipoUrl.SubstituirNFSe))
