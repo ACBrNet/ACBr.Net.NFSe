@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBr.Net.NFSe.Demo", "ACBr.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBr.Net.NFSe.DANFSe.FastReport", "ACBr.Net.NFSe.DANFSe.FastReport\ACBr.Net.NFSe.DANFSe.FastReport.csproj", "{BA9DBAB3-31F1-4D98-AD4D-CD73CF0B6921}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{FE596540-DF08-4CB0-A300-58E94687ABB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{BA9DBAB3-31F1-4D98-AD4D-CD73CF0B6921}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA9DBAB3-31F1-4D98-AD4D-CD73CF0B6921}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA9DBAB3-31F1-4D98-AD4D-CD73CF0B6921}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE596540-DF08-4CB0-A300-58E94687ABB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE596540-DF08-4CB0-A300-58E94687ABB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE596540-DF08-4CB0-A300-58E94687ABB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE596540-DF08-4CB0-A300-58E94687ABB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

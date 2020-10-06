@@ -207,7 +207,8 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
 
         public override string WriteXmlRps(NotaServico nota, bool identado = true, bool showDeclaration = true)
         {
-            GerarCampos(nota);
+            return "";
+            /*GerarCampos(nota);
 
             var xmldoc = new XDocument(new XDeclaration("1.0", "UTF-8", null));
             var rpsTag = new XElement("RPS", new XAttribute("Id", $"rps:{nota.Id}"));
@@ -283,12 +284,13 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
             if (nota.Servico.Deducoes.Count > 0)
                 rpsTag.AddChild(GerarDeducoes(nota.Servico.Deducoes));
 
-            return xmldoc.Root.AsString(identado, showDeclaration, Encoding.UTF8);
+            return xmldoc.Root.AsString(identado, showDeclaration, Encoding.UTF8);*/
         }
 
         public override string WriteXmlNFSe(NotaServico nota, bool identado = true, bool showDeclaration = true)
         {
-            GerarCampos(nota);
+            return "";
+            /*GerarCampos(nota);
 
             var xmldoc = new XDocument(new XDeclaration("1.0", "UTF-8", null));
             var notaTag = new XElement("Nota");
@@ -370,7 +372,7 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
             if (nota.Servico.Deducoes.Count > 0)
                 notaTag.AddChild(GerarDeducoes(nota.Servico.Deducoes));
 
-            return xmldoc.Root.AsString(identado, showDeclaration, Encoding.UTF8);
+            return xmldoc.Root.AsString(identado, showDeclaration, Encoding.UTF8);*/
         }
 
         #endregion Public
@@ -380,7 +382,7 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
         //GerarNotaRequest
         protected override void PrepararEnviar(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
         {
-            var rpsOrg = notas.OrderBy(x => x.IdentificacaoRps.DataEmissao);
+            /*var rpsOrg = notas.OrderBy(x => x.IdentificacaoRps.DataEmissao);
             var valorTotal = notas.Sum(nota => nota.Servico.Valores.ValorServicos);
             var deducaoTotal = notas.Sum(nota => nota.Servico.Valores.ValorDeducoes);
 
@@ -395,19 +397,18 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
                 GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
             }
 
-            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.SafeReplace("%NOTAS%", xmlNotas.ToString());
+            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.SafeReplace("%NOTAS%", xmlNotas.ToString());*/
         }
 
         //GerarNotaRequest não assina
         protected override void AssinarEnviar(RetornoEnviar retornoWebservice)
         {
-            //retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(retornoWebservice.XmlEnvio, "ns1:ReqEnvioLoteRPS", "Lote", Certificado, true);
         }
 
         //GerarNotaResponse
         protected override void TratarRetornoEnviar(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
         {
-            var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
+            /*var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
             var cabecalho = xmlRet.ElementAnyNs("Cabecalho");
 
             retornoWebservice.Sucesso = cabecalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
@@ -425,67 +426,32 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
             foreach (var nota in notas)
             {
                 nota.NumeroLote = retornoWebservice.Lote;
-            }
+            }*/
         }
 
+
+        //ConsultarNotaValida
         protected override void PrepararConsultarSituacao(RetornoConsultarSituacao retornoWebservice)
         {
-            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
+
         }
 
+        //ConsultarNotaValida Não utiliza
         protected override void AssinarConsultarSituacao(RetornoConsultarSituacao retornoWebservice)
         {
-            throw new NotImplementedException();
         }
 
+        //ConsultarNotaValida
         protected override void TratarRetornoConsultarSituacao(RetornoConsultarSituacao retornoWebservice)
         {
-            throw new NotImplementedException();
+
         }
 
-        protected override void PrepararConsultarNFSe(RetornoConsultarNFSe retornoWebservice)
-        {
-            var lote = new StringBuilder();
-            lote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            lote.Append(
-                "<ns1:ReqConsultaNotas xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqConsultaNotas.xsd\">");
-            lote.Append("<Cabecalho Id=\"Consulta:notas\">");
-            lote.Append($"<CodCidade>{Municipio.CodigoSiafi}</CodCidade>");
-            lote.Append($"<CPFCNPJRemetente>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</CPFCNPJRemetente>");
-            lote.Append($"<InscricaoMunicipalPrestador>{Configuracoes.PrestadorPadrao.InscricaoMunicipal.ZeroFill(Municipio.TamanhoIm)}</InscricaoMunicipalPrestador>");
-            lote.Append($"<dtInicio>{retornoWebservice.Inicio:yyyy-MM-dd}</dtInicio>");
-            lote.Append($"<dtFim>{retornoWebservice.Fim:yyyy-MM-dd}</dtFim>");
-            lote.Append($"<NotaInicial>{retornoWebservice.NumeroNFse}</NotaInicial>");
-            lote.Append("<Versao>1</Versao>");
-            lote.Append("</Cabecalho>");
-            lote.Append("</ns1:ReqConsultaNotas>");
-            retornoWebservice.XmlEnvio = lote.ToString();
-        }
 
-        protected override void AssinarConsultarNFSe(RetornoConsultarNFSe retornoWebservice)
-        {
-            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(retornoWebservice.XmlEnvio, "ns1:ReqConsultaNotas", "Cabecalho", Certificado, true);
-        }
-
-        protected override void TratarRetornoConsultarNFSe(RetornoConsultarNFSe retornoWebservice, NotaServicoCollection notas)
-        {
-            var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-
-            var erros = xmlRet.ElementAnyNs("Erros");
-            retornoWebservice.Erros.AddRange(ProcessarEventos(TipoEvento.Erros, erros));
-
-            retornoWebservice.Sucesso = !retornoWebservice.Erros.Any();
-
-            var notasXml = xmlRet.ElementAnyNs("Notas");
-            if (notasXml == null || !notasXml.HasElements) return;
-
-            retornoWebservice.Notas = notasXml.ElementsAnyNs("Nota").Select(element => LoadXml(element.AsString())).ToArray();
-            notas.AddRange(retornoWebservice.Notas);
-        }
-
+        //CancelarNota
         protected override void PrepararCancelarNFSe(RetornoCancelar retornoWebservice)
         {
-            var loteCancelamento = new StringBuilder();
+            /*var loteCancelamento = new StringBuilder();
             loteCancelamento.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             loteCancelamento.Append("<ns1:ReqCancelamentoNFSe xmlns:ns1=\"http://localhost:8080/WsNFe2/lote\" xmlns:tipos=\"http://localhost:8080/WsNFe2/tp\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://localhost:8080/WsNFe2/lote http://localhost:8080/WsNFe2/xsd/ReqCancelamentoNFSe.xsd\">");
             loteCancelamento.Append("<Cabecalho>");
@@ -506,17 +472,18 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
             loteCancelamento.Append("</Lote>");
             loteCancelamento.Append("</ns1:ReqCancelamentoNFSe>");
 
-            retornoWebservice.XmlEnvio = loteCancelamento.ToString();
+            retornoWebservice.XmlEnvio = loteCancelamento.ToString();*/
         }
 
+        //CancelarNota Não utiliza
         protected override void AssinarCancelarNFSe(RetornoCancelar retornoWebservice)
-        {
-            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(retornoWebservice.XmlEnvio, "ns1:ReqCancelamentoNFSe", "Lote", Certificado, true);
+        {  
         }
 
+        //CancelarNota
         protected override void TratarRetornoCancelarNFSe(RetornoCancelar retornoWebservice, NotaServicoCollection notas)
         {
-            var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
+            /*var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
             var cabecalho = xmlRet.ElementAnyNs("Cabecalho");
 
             retornoWebservice.Sucesso = cabecalho?.ElementAnyNs("Sucesso")?.GetValue<bool>() ?? false;
@@ -543,11 +510,26 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
 
                 var xmlNFSe = WriteXmlNFSe(nota);
                 GravarNFSeEmDisco(xmlNFSe, $"NFSe-{nota.IdentificacaoNFSe.Chave}-{nota.IdentificacaoNFSe.Numero}-Canc.xml", nota.IdentificacaoNFSe.DataEmissao);
-            }
+            }*/
         }
 
 
-        #region Não Utilizadas
+        #region Não Utilizados
+
+        protected override void PrepararConsultarNFSe(RetornoConsultarNFSe retornoWebservice)
+        {
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor.");
+        }
+
+        protected override void AssinarConsultarNFSe(RetornoConsultarNFSe retornoWebservice)
+        {
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor.");
+        }
+
+        protected override void TratarRetornoConsultarNFSe(RetornoConsultarNFSe retornoWebservice, NotaServicoCollection notas)
+        {
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor.");
+        }
 
         protected override void PrepararEnviarSincrono(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
         {
@@ -639,7 +621,7 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
             throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
-        #endregion Não Utilizadas
+        #endregion Não Utilizados
 
         #endregion Services
 
@@ -647,10 +629,9 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
 
         protected override IServiceClient GetClient(TipoUrl tipo)
         {
-            return new DSFServiceClient(this, tipo);
+            return new SigissServiceClient(this, tipo);
         }
 
-        /*
         protected override string GerarCabecalho()
         {
             return "";
@@ -661,35 +642,20 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
             switch (tipo)
             {
                 case TipoUrl.Enviar:
-                case TipoUrl.EnviarSincrono:
-                    return "ReqEnvioLoteRPS.xsd";
+                    return "";
 
-                case TipoUrl.SubstituirNFSe:
                 case TipoUrl.ConsultarSituacao:
                     return "";
 
-                case TipoUrl.ConsultarLoteRps:
-                    return "ReqConsultaLote.xsd";
-
-                case TipoUrl.ConsultarSequencialRps:
-                    return "ConsultaSeqRps.xsd";
-
-                case TipoUrl.ConsultarNFSeRps:
-                    return "ReqConsultaNFSeRPS.xsd";
-
-                case TipoUrl.ConsultarNFSe:
-                    return "ReqConsultaNotas.xsd";
-
-                case TipoUrl.CancelarNFSeLote:
                 case TipoUrl.CancelarNFSe:
-                    return "ReqCancelamentoNFSe.xsd";
+                    return "";
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(tipo), tipo, null);
             }
         }
 
-        private string GerarEnvEnvio(DateTime dataIni, DateTime dataFim, int total, decimal valorTotal, decimal valorDeducao, string lote)
+        /*private string GerarEnvEnvio(DateTime dataIni, DateTime dataFim, int total, decimal valorTotal, decimal valorDeducao, string lote)
         {
             var xmlLote = new StringBuilder();
             xmlLote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
