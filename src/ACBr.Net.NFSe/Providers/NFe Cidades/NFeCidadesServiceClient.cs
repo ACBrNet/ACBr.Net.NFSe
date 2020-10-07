@@ -167,13 +167,11 @@ namespace ACBr.Net.NFSe.Providers
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
             var element = xmlDocument.ElementAnyNs("Fault");
-            if (element != null)
-            {
-                var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
-                throw new ACBrDFeCommunicationException(exMessage);
-            }
+            if (element == null) return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("outputXML").Value;
 
-            return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs("outputXML").Value;
+            var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
+            throw new ACBrDFeCommunicationException(exMessage);
+
         }
 
         #endregion Methods

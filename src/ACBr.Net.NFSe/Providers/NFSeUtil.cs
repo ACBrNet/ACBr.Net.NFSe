@@ -102,6 +102,19 @@ namespace ACBr.Net.NFSe.Providers
             return (element.ElementAnyNs("Cnpj")?.GetValue<string>() ?? element.ElementAnyNs("Cpf")?.GetValue<string>()) ?? string.Empty;
         }
 
+        public static bool IsValidXml(this string xmlstring)
+        {
+            try
+            {
+                var xDocument = XDocument.Parse(xmlstring);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         #endregion Methods
     }
 }
