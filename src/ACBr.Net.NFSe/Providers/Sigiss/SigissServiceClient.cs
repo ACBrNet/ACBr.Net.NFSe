@@ -25,9 +25,9 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
         {
             StringBuilder request = new StringBuilder();
             request.Append("<urn:GerarNota soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
-            request.Append("<DescricaoRps xsi:type=\"urn:tcDescricaoRps\">");
-            request.AppendEnvio(msg);
-            request.Append("</DescricaoRps>");
+            //request.Append("<DescricaoRps xsi:type=\"urn:tcDescricaoRps\">");
+            request.Append(msg);
+            //request.Append("</DescricaoRps>");
             request.Append("</urn:GerarNota>");
 
             return Execute("urn:sigiss_ws#GerarNota", request.ToString(), new string[] { "GerarNotaResponse", "RetornoNota" }, "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"", "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"", "xmlns:urn=\"urn: sigiss_ws\"");
@@ -61,8 +61,9 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
         {
             var element = xmlDocument.ElementAnyNs(responseTag[0]) ?? throw new ACBrDFeCommunicationException($"Primeiro Elemento ({responseTag[0]}) do xml não encontrado");
             var dataElement = element.ElementAnyNs(responseTag[1]) ?? throw new ACBrDFeCommunicationException($"Dados ({responseTag[1]}) do xml não encontrado");
+            var resultado = dataElement.ElementAnyNs("Resultado") ?? throw new ACBrDFeCommunicationException($"Dados ({responseTag[1]} -> Resultado) do xml não encontrado");
             var errorElement = element.ElementAnyNs("DescricaoErros") ?? throw new ACBrDFeCommunicationException($"Erro ({responseTag[1]}) do xml não encontrado");
-            if (errorElement.HasElements)
+            if (resultado.Value == "0" && errorElement.HasElements)
             {
                 List<string> erros = new List<string>();
                 foreach (var node in errorElement.Descendants().Where(x => x.Name == "item"))

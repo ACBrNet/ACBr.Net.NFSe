@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel.Channels;
@@ -12,13 +11,13 @@ namespace ACBr.Net.NFSe.Providers
     {
         public NFSeSOAP11Charset8859ServiceClient(ProviderBase provider, TipoUrl tipoUrl, bool https = false) : base(provider, tipoUrl)
         {
-            CustomBinding binding = new CustomBinding(new CustomTextMessageBindingElement("iso-8859-1", "text/xml", MessageVersion.Soap11), https ? new HttpsTransportBindingElement() : new HttpTransportBindingElement()); //Or  HttpsTransportBindingElement
+            CustomBinding binding = new CustomBinding(new CustomTextMessageBindingElement("iso-8859-1", "text/xml", MessageVersion.Soap11), https ? new HttpsTransportBindingElement() : new HttpTransportBindingElement());
             Endpoint.Binding = binding;
         }
 
         public NFSeSOAP11Charset8859ServiceClient(ProviderBase provider, TipoUrl tipoUrl, X509Certificate2 certificado, bool https = false) : base(provider, tipoUrl, certificado)
         {
-            CustomBinding binding = new CustomBinding(new CustomTextMessageBindingElement("iso-8859-1", "text/xml", MessageVersion.Soap11), https ? new HttpsTransportBindingElement() : new HttpTransportBindingElement()); //Or  HttpsTransportBindingElement
+            CustomBinding binding = new CustomBinding(new CustomTextMessageBindingElement("iso-8859-1", "text/xml", MessageVersion.Soap11), https ? new HttpsTransportBindingElement() : new HttpTransportBindingElement());
             Endpoint.Binding = binding;
         }
     }

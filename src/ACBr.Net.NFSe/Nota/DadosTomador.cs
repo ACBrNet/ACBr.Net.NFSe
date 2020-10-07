@@ -71,6 +71,8 @@ namespace ACBr.Net.NFSe.Nota
 
         public DadosContato DadosContato { get; }
 
+        public int Tipo { get; set; } //Utilize a classe TipoTomador
+
         #endregion Propriedades
     }
 }
