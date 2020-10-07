@@ -31,14 +31,20 @@
 
 using System;
 using System.IO;
+using System.Net;
+using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using System.ServiceModel.Channels;
 using System.Text;
+using System.Xml.Linq;
+using ACBr.Net.Core;
+using ACBr.Net.DFe.Core;
 using ACBr.Net.DFe.Core.Common;
 using ACBr.Net.DFe.Core.Service;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    public abstract class NFSeServiceClient<T> : DFeServiceClientBase<T> where T : class
+    public abstract class NFSeServiceClient : DFeServiceClientBase<IRequestChannel>
     {
         #region Fields
 
@@ -159,6 +165,68 @@ namespace ACBr.Net.NFSe.Providers
         #endregion Properties
 
         #region Methods
+
+        protected virtual string Execute(string soapAction, string message, string responseTag, params string[] soapNamespaces)
+        {
+            return Execute(soapAction, message, string.Empty, new[] { responseTag }, soapNamespaces);
+        }
+
+        protected virtual string Execute(string soapAction, string message, string[] responseTag, params string[] soapNamespaces)
+        {
+            return Execute(soapAction, message, string.Empty, responseTag, soapNamespaces);
+        }
+
+        protected virtual string Execute(string soapAction, string message, string soapHeader, string responseTag, params string[] soapNamespaces)
+        {
+            return Execute(soapAction, message, soapHeader, new[] { responseTag }, soapNamespaces);
+        }
+
+        protected virtual string Execute(string soapAction, string message, string soapHeader, string[] responseTag, params string[] soapNamespaces)
+        {
+            var request = WriteSoapEnvelope(message, soapAction, soapHeader, soapNamespaces);
+
+            RemoteCertificateValidationCallback validation = null;
+            var naoValidarCertificado = !ValidarCertificadoServidor();
+
+            if (naoValidarCertificado)
+            {
+                validation = ServicePointManager.ServerCertificateValidationCallback;
+                ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+            }
+
+            string soapResponse;
+
+            try
+            {
+                lock (serviceLock)
+                {
+                    var response = Channel.Request(request);
+                    Guard.Against<ACBrDFeException>(response == null, "Nenhum retorno do webservice.");
+                    var reader = response.GetReaderAtBodyContents();
+                    soapResponse = reader.ReadOuterXml();
+                }
+            }
+            finally
+            {
+                if (naoValidarCertificado)
+                    ServicePointManager.ServerCertificateValidationCallback = validation;
+            }
+
+            var xmlDocument = XDocument.Parse(soapResponse);
+            var retorno = TratarRetorno(xmlDocument, responseTag);
+            if (retorno.IsValidXml()) return retorno;
+
+            throw new ApplicationException(retorno);
+        }
+
+        protected virtual bool ValidarCertificadoServidor()
+        {
+            return true;
+        }
+
+        protected abstract Message WriteSoapEnvelope(string message, string soapAction, string soapHeader, string[] soapNamespaces);
+
+        protected abstract string TratarRetorno(XDocument xmlDocument, string[] responseTag);
 
         /// <summary>
         /// Salvar o arquivo xml no disco de acordo com as propriedades.

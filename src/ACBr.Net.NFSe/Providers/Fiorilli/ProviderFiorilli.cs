@@ -48,9 +48,7 @@ namespace ACBr.Net.NFSe.Providers
 
         protected override IServiceClient GetClient(TipoUrl tipo)
         {
-            //Assis/SP é a única cidade que usa https em produção até o momento (13/02/2020)
-            return Municipio.Codigo == 3504008 && Configuracoes.WebServices.Ambiente == DFe.Core.Common.DFeTipoAmbiente.Producao ?
-                new FiorilliServiceClient(this, tipo) : new FiorilliServiceClient(this, tipo, null);
+            return new FiorilliServiceClient(this, tipo);
         }
 
         #endregion Methods

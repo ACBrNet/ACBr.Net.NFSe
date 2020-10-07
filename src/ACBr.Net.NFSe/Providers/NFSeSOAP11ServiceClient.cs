@@ -30,20 +30,15 @@
 // ***********************************************************************
 
 using System.IO;
-using System.Net;
-using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel.Channels;
 using System.Text;
 using System.Xml;
-using System.Xml.Linq;
-using ACBr.Net.Core;
 using ACBr.Net.Core.Extensions;
-using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal abstract class NFSeSOAP11ServiceClient : NFSeServiceClient<IRequestChannel>
+    internal abstract class NFSeSOAP11ServiceClient : NFSeServiceClient
     {
         #region Constructors
 
@@ -59,62 +54,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
-        protected virtual string Execute(string soapAction, string message, string responseTag, params string[] soapNamespaces)
-        {
-            return Execute(soapAction, message, string.Empty, new[] { responseTag }, soapNamespaces);
-        }
-
-        protected virtual string Execute(string soapAction, string message, string[] responseTag, params string[] soapNamespaces)
-        {
-            return Execute(soapAction, message, string.Empty, responseTag, soapNamespaces);
-        }
-
-        protected virtual string Execute(string soapAction, string message, string soapHeader, string responseTag, params string[] soapNamespaces)
-        {
-            return Execute(soapAction, message, soapHeader, new[] { responseTag }, soapNamespaces);
-        }
-
-        protected virtual string Execute(string soapAction, string message, string soapHeader, string[] responseTag, params string[] soapNamespaces)
-        {
-            var request = WriteSoapEnvelope(message, soapHeader, soapNamespaces);
-
-            RemoteCertificateValidationCallback validation = null;
-            var naoValidarCertificado = !ValidarCertificadoServidor();
-
-            if (naoValidarCertificado)
-            {
-                validation = ServicePointManager.ServerCertificateValidationCallback;
-                ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
-            }
-
-            var ret = string.Empty;
-
-            try
-            {
-                var requestMessage = new HttpRequestMessageProperty();
-                requestMessage.Headers["SOAPAction"] = soapAction;
-
-                request.Properties[HttpRequestMessageProperty.Name] = requestMessage;
-
-                lock (serviceLock)
-                {
-                    var response = Channel.Request(request);
-                    Guard.Against<ACBrDFeException>(response == null, "Nenhum retorno do webservice.");
-                    var reader = response.GetReaderAtBodyContents();
-                    ret = reader.ReadOuterXml();
-                }
-            }
-            finally
-            {
-                if (naoValidarCertificado)
-                    ServicePointManager.ServerCertificateValidationCallback = validation;
-            }
-
-            var xmlDocument = XDocument.Parse(ret);
-            return TratarRetorno(xmlDocument, responseTag);
-        }
-
-        protected virtual Message WriteSoapEnvelope(string message, string soapHeader, string[] soapNamespaces)
+        protected override Message WriteSoapEnvelope(string message, string soapAction, string soapHeader, string[] soapNamespaces)
         {
             var envelope = new StringBuilder();
             envelope.Append("<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"");
@@ -131,15 +71,15 @@ namespace ACBr.Net.NFSe.Providers
             envelope.Append("</soapenv:Body>");
             envelope.Append("</soapenv:Envelope>");
 
-            return Message.CreateMessage(XmlReader.Create(new StringReader(envelope.ToString())), int.MaxValue, Endpoint.Binding.MessageVersion);
-        }
+            var request = Message.CreateMessage(XmlReader.Create(new StringReader(envelope.ToString())), int.MaxValue, Endpoint.Binding.MessageVersion);
 
-        protected virtual bool ValidarCertificadoServidor()
-        {
-            return true;
-        }
+            //Define a action no Header por ser SOAP 1.1
+            var requestMessage = new HttpRequestMessageProperty();
+            requestMessage.Headers["SOAPAction"] = soapAction;
 
-        protected abstract string TratarRetorno(XDocument xmlDocument, string[] responseTag);
+            request.Properties[HttpRequestMessageProperty.Name] = requestMessage;
+            return request;
+        }
 
         #endregion Methods
     }
