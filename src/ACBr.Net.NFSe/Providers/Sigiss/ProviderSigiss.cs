@@ -1,4 +1,5 @@
-﻿using ACBr.Net.NFSe.Configuracao;
+﻿using ACBr.Net.Core.Extensions;
+using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
 using System;
 using System.Collections.Generic;
@@ -12,28 +13,9 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
     internal sealed class ProviderSigiss : ProviderBase
     {
         #region Internal Types
-
-        /*private enum TipoEvento
-        {
-            Erros,
-            Alertas,
-            ListNFSeRps
-        }*/
-
         #endregion Internal Types
 
         #region Fields
-
-        /*private string situacao;
-
-        private string recolhimento;
-
-        private string tributacao;
-
-        private string operacao;
-
-        private string assinatura;*/
-
         #endregion Fields
 
         #region Constructors
@@ -207,7 +189,14 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
 
         public override string WriteXmlRps(NotaServico nota, bool identado = true, bool showDeclaration = true)
         {
-            return "";
+            var xmldoc = new XDocument(new XDeclaration("1.0", "UTF-8", null));
+            xmldoc.AddChild(AdicionarTag(DFe.Core.Serializer.TipoCampo.Str, "", "ccm", 1, 120, Ocorrencia.Obrigatoria, Configuracoes.WebServices.Usuario.OnlyNumbers())); //mesmo que nota.Prestador.InscricaoMunicipal
+            xmldoc.AddChild(AdicionarTag(DFe.Core.Serializer.TipoCampo.Str, "", "cnpj", 14, 14, Ocorrencia.Obrigatoria, nota.Prestador.CpfCnpj.OnlyNumbers()));
+            xmldoc.AddChild(AdicionarTag(DFe.Core.Serializer.TipoCampo.Str, "", "senha", 1, 120, Ocorrencia.Obrigatoria, Configuracoes.WebServices.Senha));
+            xmldoc.AddChild(AdicionarTag(DFe.Core.Serializer.TipoCampo.Int, "", "crc", 1, , Ocorrencia.NaoObrigatoria, nota.));
+
+            return xmldoc.Root.AsString(identado, showDeclaration, Encoding.UTF8);
+
             /*GerarCampos(nota);
 
             var xmldoc = new XDocument(new XDeclaration("1.0", "UTF-8", null));
@@ -382,22 +371,17 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
         //GerarNotaRequest
         protected override void PrepararEnviar(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
         {
-            /*var rpsOrg = notas.OrderBy(x => x.IdentificacaoRps.DataEmissao);
-            var valorTotal = notas.Sum(nota => nota.Servico.Valores.ValorServicos);
-            var deducaoTotal = notas.Sum(nota => nota.Servico.Valores.ValorDeducoes);
+            if (notas.Count > 1) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Apenas o envio de uma nota por vez é permitido para esse serviço." });
+            if (notas.Count == 0) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "RPS não informado." });
+            var nota = notas.FirstOrDefault() ?? throw new Exception("Nenhuma nota para ser enviada");
 
-            retornoWebservice.XmlEnvio = GerarEnvEnvio(rpsOrg.First().IdentificacaoRps.DataEmissao,
-                rpsOrg.Last().IdentificacaoRps.DataEmissao, notas.Count, valorTotal, deducaoTotal, retornoWebservice.Lote.ToString());
+            var xmlRps = WriteXmlRps(nota, false, false);
+            GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
 
-            var xmlNotas = new StringBuilder();
-            foreach (var nota in notas)
-            {
-                var xmlRps = WriteXmlRps(nota, false, false);
-                xmlNotas.Append(xmlRps);
-                GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
-            }
+            var xmlLote = new StringBuilder();
+            xmlLote.Append(xmlRps);
 
-            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.SafeReplace("%NOTAS%", xmlNotas.ToString());*/
+            retornoWebservice.XmlEnvio = xmlLote.ToString();
         }
 
         //GerarNotaRequest não assina
@@ -477,7 +461,7 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
 
         //CancelarNota Não utiliza
         protected override void AssinarCancelarNFSe(RetornoCancelar retornoWebservice)
-        {  
+        {
         }
 
         //CancelarNota
@@ -639,6 +623,7 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
 
         protected override string GetSchema(TipoUrl tipo)
         {
+            //esse servidor nao tem schemas até o momento
             switch (tipo)
             {
                 case TipoUrl.Enviar:
@@ -653,6 +638,12 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
                 default:
                     throw new ArgumentOutOfRangeException(nameof(tipo), tipo, null);
             }
+        }
+
+        protected override bool PrecisaValidarSchema(TipoUrl tipo)
+        {
+            //esse servidor nao tem schemas até o momento
+            return false;
         }
 
         /*private string GerarEnvEnvio(DateTime dataIni, DateTime dataFim, int total, decimal valorTotal, decimal valorDeducao, string lote)
