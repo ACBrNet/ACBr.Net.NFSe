@@ -535,8 +535,13 @@ namespace ACBr.Net.NFSe
         {
             Configuracoes = new ConfigNFSe(this);
             NotasServico = new NotaServicoCollection(Configuracoes);
-            protocolType = /*SecurityProtocolType.Ssl3 |*/ SecurityProtocolType.Tls |
+#if NETCORE
+            protocolType = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+#else
+            protocolType = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls |
                            SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
+#endif
         }
 
         /// <summary>
