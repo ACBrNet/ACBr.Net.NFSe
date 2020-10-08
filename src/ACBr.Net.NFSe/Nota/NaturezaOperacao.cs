@@ -29,6 +29,8 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
+
 namespace ACBr.Net.NFSe.Nota
 {
     /// <summary>
@@ -134,12 +136,88 @@ namespace ACBr.Net.NFSe.Nota
             #endregion Properties
         }
 
+
+        public sealed class NtSigiss
+        {
+
+            #region Constructors
+
+            internal NtSigiss()
+            {
+                TributadaNoPrestador = 1; //"tp";
+                TributadaNoTomador = 2; //"tt";
+                Isenta = 3; //"is";
+                Imune = 4; // "im";
+                NãoTributada = 5; // "nt";
+            }
+
+            #endregion Constructors
+
+            #region Methods
+
+            /// <summary>
+            /// Retorna o valor da natureza de operação
+            /// </summary>
+            /// <param name="key">Chave</param>
+            /// <returns></returns>
+            public string GetValue(int key)
+            {
+                switch (key)
+                {
+                    case 1:
+                        return "tp";
+                    case 2:
+                        return "tt";
+                    case 3:
+                        return "is";
+                    case 4:
+                        return "im";
+                    case 5:
+                        return "nt";
+                    default:
+                        throw new Exception("Natureza de operação de NtSigiss não implementada");
+                }
+            }
+
+            #endregion
+
+            #region Properties
+
+            /// <summary>
+            /// Obtém a Natureza de Operação tp – Tributada no Prestador.
+            /// </summary>
+            public int TributadaNoPrestador { get; }
+
+            /// <summary>
+            /// Obtém a Natureza de Operação tt - Tributada no Tomador.
+            /// </summary>
+            public int TributadaNoTomador { get; }
+
+            /// <summary>
+            /// Obtém a Natureza de Operação is – Isenta.
+            /// </summary>
+            public int Isenta { get; }
+
+            /// <summary>
+            /// Obtém a Natureza de Operação im – Imune.
+            /// </summary>
+            public int Imune { get; }
+
+            /// <summary>
+            /// Obtém a Natureza de Operação nt – Não Tributada.
+            /// </summary>
+            public int NãoTributada { get; }
+
+            #endregion Properties
+        }
+
         #endregion InnerTypes
 
         #region Fields
 
         private static NtABRASF abrasf;
         private static NtDSF dsf;
+        private static NtSigiss sigiss;
 
         #endregion Fields
 
@@ -159,6 +237,11 @@ namespace ACBr.Net.NFSe.Nota
         /// Obtém as Natureza de Operação do DSF.
         /// </summary>
         public static NtDSF DSF => dsf ?? (dsf = new NtDSF());
+
+        /// <summary>
+        /// Obtém as Natura de Operações do Sigis
+        /// </summary>
+        public static NtSigiss Sigiss => sigiss ?? (sigiss = new NtSigiss());
 
         #endregion Properties
     }

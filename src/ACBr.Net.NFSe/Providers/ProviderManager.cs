@@ -32,6 +32,7 @@
 using ACBr.Net.Core;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Providers.Sigiss;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -72,7 +73,8 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.SmarAPDABRASF, typeof(ProviderSmarAPDABRASF)},
                 {NFSeProvider.Vitoria, typeof(ProviderVitoria)},
                 {NFSeProvider.WebIss, typeof(ProviderWebIss)},
-                {NFSeProvider.WebIss2, typeof(ProviderWebIss2)}
+                {NFSeProvider.WebIss2, typeof(ProviderWebIss2)},
+                {NFSeProvider.Sigiss, typeof(ProviderSigiss)}
             };
 
             Load();
