@@ -57,7 +57,6 @@ namespace ACBr.Net.NFSe
     {
         #region Fields
 
-        private SecurityProtocolType protocolType;
         private ACBrDANFSeBase danfSe;
 
         #endregion Fields
@@ -115,7 +114,7 @@ namespace ACBr.Net.NFSe
 
             try
             {
-                ServicePointManager.SecurityProtocol = protocolType;
+                ServicePointManager.SecurityProtocol = Configuracoes.WebServices.Protocolos;
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
                     var ret = sincrono
@@ -155,7 +154,7 @@ namespace ACBr.Net.NFSe
 
             try
             {
-                ServicePointManager.SecurityProtocol = protocolType;
+                ServicePointManager.SecurityProtocol = Configuracoes.WebServices.Protocolos;
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
                     return provider.ConsultarSituacao(lote, protocolo);
@@ -187,7 +186,7 @@ namespace ACBr.Net.NFSe
 
             try
             {
-                ServicePointManager.SecurityProtocol = protocolType;
+                ServicePointManager.SecurityProtocol = Configuracoes.WebServices.Protocolos;
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
                     return provider.ConsultarLoteRps(lote, protocolo, NotasServico);
@@ -220,7 +219,7 @@ namespace ACBr.Net.NFSe
 
             try
             {
-                ServicePointManager.SecurityProtocol = protocolType;
+                ServicePointManager.SecurityProtocol = Configuracoes.WebServices.Protocolos;
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
                     return provider.ConsultarSequencialRps(serie);
@@ -253,7 +252,7 @@ namespace ACBr.Net.NFSe
 
             try
             {
-                ServicePointManager.SecurityProtocol = protocolType;
+                ServicePointManager.SecurityProtocol = Configuracoes.WebServices.Protocolos;
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
                     return provider.ConsultaNFSeRps(numero, serie, tipo, NotasServico);
@@ -286,7 +285,7 @@ namespace ACBr.Net.NFSe
 
             try
             {
-                ServicePointManager.SecurityProtocol = protocolType;
+                ServicePointManager.SecurityProtocol = Configuracoes.WebServices.Protocolos;
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
                     return provider.ConsultaNFSe(NotasServico, numeroNfse: numeroNfse);
@@ -320,7 +319,7 @@ namespace ACBr.Net.NFSe
 
             try
             {
-                ServicePointManager.SecurityProtocol = protocolType;
+                ServicePointManager.SecurityProtocol = Configuracoes.WebServices.Protocolos;
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
                     return provider.ConsultaNFSe(NotasServico, inicio, fim);
@@ -354,7 +353,7 @@ namespace ACBr.Net.NFSe
 
             try
             {
-                ServicePointManager.SecurityProtocol = protocolType;
+                ServicePointManager.SecurityProtocol = Configuracoes.WebServices.Protocolos;
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
                     return provider.ConsultaNFSe(NotasServico, cnpjTomador: cnpjTomador, imTomador: imTomador);
@@ -388,7 +387,7 @@ namespace ACBr.Net.NFSe
 
             try
             {
-                ServicePointManager.SecurityProtocol = protocolType;
+                ServicePointManager.SecurityProtocol = Configuracoes.WebServices.Protocolos;
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
                     return provider.ConsultaNFSe(NotasServico, nomeInter: nomeInter, cnpjInter: cnpjInter, imInter: imInter);
@@ -420,7 +419,7 @@ namespace ACBr.Net.NFSe
 
             try
             {
-                ServicePointManager.SecurityProtocol = protocolType;
+                ServicePointManager.SecurityProtocol = Configuracoes.WebServices.Protocolos;
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
                     return provider.CancelarNFSe(codigoCancelamento, numeroNFSe, motivo, NotasServico);
@@ -451,7 +450,7 @@ namespace ACBr.Net.NFSe
 
             try
             {
-                ServicePointManager.SecurityProtocol = protocolType;
+                ServicePointManager.SecurityProtocol = Configuracoes.WebServices.Protocolos;
                 Guard.Against<ArgumentException>(NotasServico.Count < 1, "ERRO: Nenhuma NFS-e carregada ao componente");
 
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
@@ -489,7 +488,7 @@ namespace ACBr.Net.NFSe
 
             try
             {
-                ServicePointManager.SecurityProtocol = protocolType;
+                ServicePointManager.SecurityProtocol = Configuracoes.WebServices.Protocolos;
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
                     return provider.SubstituirNFSe(NotasServico, codigoCancelamento, numeroNFSe, motivo);
@@ -535,13 +534,6 @@ namespace ACBr.Net.NFSe
         {
             Configuracoes = new ConfigNFSe(this);
             NotasServico = new NotaServicoCollection(Configuracoes);
-#if NETCORE
-            protocolType = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-#else
-            protocolType = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls |
-                           SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-
-#endif
         }
 
         /// <summary>

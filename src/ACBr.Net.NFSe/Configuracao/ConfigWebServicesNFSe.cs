@@ -34,6 +34,7 @@ using ACBr.Net.NFSe.Providers;
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using ACBr.Net.Core;
 
 namespace ACBr.Net.NFSe.Configuracao
@@ -58,6 +59,14 @@ namespace ACBr.Net.NFSe.Configuracao
             Senha = string.Empty;
             FraseSecreta = string.Empty;
             ChaveAcesso = string.Empty;
+
+#if NETCORE
+            Protocolos = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+#else
+            Protocolos = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls |
+                         SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
+#endif
         }
 
         #endregion Constructor
@@ -78,6 +87,8 @@ namespace ACBr.Net.NFSe.Configuracao
         public string FraseSecreta { get; set; }
 
         public string ChaveAcesso { get; set; }
+
+        public SecurityProtocolType Protocolos { get; set; }
 
         /// <summary>
         /// Codigo do municipio do Webservices em uso

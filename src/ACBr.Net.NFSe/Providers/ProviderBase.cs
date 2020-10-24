@@ -208,16 +208,7 @@ namespace ACBr.Net.NFSe.Providers
             }
         }
 
-        public X509Certificate2 Certificado
-        {
-            get
-            {
-                if(string.IsNullOrEmpty(Configuracoes.Certificados.Certificado) && (Configuracoes.Certificados.CertificadoBytes == null || Configuracoes.Certificados.CertificadoBytes.Length == 0) && string.IsNullOrEmpty(Configuracoes.Certificados.Senha))
-                    return null;
-
-                return certificado ?? (certificado = Configuracoes.Certificados.ObterCertificado());
-            }
-        }
+        public X509Certificate2 Certificado => certificado ?? (certificado = Configuracoes.Certificados.ObterCertificado());
 
         #endregion Propriedades
 

@@ -1,27 +1,47 @@
-﻿using ACBr.Net.Core.Extensions;
-using ACBr.Net.DFe.Core;
+﻿// ***********************************************************************
+// Assembly         : ACBr.Net.NFSe
+// Author           : danilobreda
+// Created          : 07-10-2020
+//
+// Last Modified By : Rafael Dias
+// Last Modified On : 10-10-2020
+// ***********************************************************************
+// <copyright file="ProviderSigiss.cs" company="ACBr.Net">
+//		        		   The MIT License (MIT)
+//	     		    Copyright (c) 2016 Grupo ACBr.Net
+//
+//	 Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//	 The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//	 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// DEALINGS IN THE SOFTWARE.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+
+using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core.Serializer;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace ACBr.Net.NFSe.Providers.Sigiss
 {
     internal sealed class ProviderSigiss : ProviderBase
     {
-        #region Internal Types
-
-        #endregion Internal Types
-
-        #region Fields
-
-        #endregion Fields
-
         #region Constructors
 
         public ProviderSigiss(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
@@ -45,16 +65,14 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
             var notaTag = new XElement("DescricaoRps");
             xmldoc.Add(notaTag);
 
-            notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "ccm", 1, 120, Ocorrencia.Obrigatoria, Configuracoes.WebServices.Usuario)); //mesmo que nota.Prestador.InscricaoMunicipal
+            notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "ccm", 1, 120, Ocorrencia.Obrigatoria, Configuracoes.WebServices.Usuario));
             notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "cnpj", 1, 14, Ocorrencia.Obrigatoria, nota.Prestador.CpfCnpj.OnlyNumbers()));
             notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "senha", 1, 120, Ocorrencia.Obrigatoria, Configuracoes.WebServices.Senha));
-            //notaTag.AddChild(AdicionarTag(TipoCampo.Int, "", "crc", 1, 120, Ocorrencia.NaoObrigatoria, "")); //nao utilizado
-            //notaTag.AddChild(AdicionarTag(TipoCampo.Int, "", "crc_estado", 1, 120, Ocorrencia.NaoObrigatoria, "")); //nao utilizado
+
+            //obrigatorio apenas para simplesnacional
             if (nota.RegimeEspecialTributacao == RegimeEspecialTributacao.SimplesNacional)
-            {
-                //obrigatorio apenas para simplesnacional
                 notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "aliquota_simples", 1, 11, Ocorrencia.Obrigatoria, nota.Servico.Valores.Aliquota));
-            }
+
             notaTag.AddChild(AdicionarTag(TipoCampo.Int, "", "id_sis_legado", 1, 15, Ocorrencia.NaoObrigatoria, nota.NumeroLote)); //nao utilizado
             notaTag.AddChild(AdicionarTag(TipoCampo.Int, "", "servico", 1, 20, Ocorrencia.Obrigatoria, nota.Servico.CodigoTributacaoMunicipio));
             notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "situacao", 2, 2, Ocorrencia.Obrigatoria, NaturezaOperacao.Sigiss.GetValue(nota.NaturezaOperacao)));
@@ -62,15 +80,14 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
             notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "base", 1, 15, Ocorrencia.Obrigatoria, FormataDecimalModeloSigiss(nota.Servico.Valores.BaseCalculo)));
             notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "descricaoNF", 0, 2000, Ocorrencia.NaoObrigatoria, nota.Servico.Descricao.RemoveAccent()));
             notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "tomador_tipo", 14, 14, Ocorrencia.NaoObrigatoria, nota.Tomador.Tipo)); //TipoTomador
+
             if (nota.Tomador.Tipo != TipoTomador.Sigiss.PFNI)
-            {
                 notaTag.AddChild(AdicionarTagCNPJCPF("", "tomador_cnpj", "tomador_cnpj", nota.Tomador.CpfCnpj ?? string.Empty));
-            }
+
             notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "tomador_email", 1, 120, Ocorrencia.NaoObrigatoria, nota.Tomador.DadosContato.Email));
             notaTag.AddChild(AdicionarTag(TipoCampo.Int, "", "tomador_im", 1, 120, Ocorrencia.NaoObrigatoria, nota.Tomador.InscricaoMunicipal.OnlyNumbers()));
             notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "tomador_ie", 1, 120, Ocorrencia.NaoObrigatoria, nota.Tomador.InscricaoEstadual.OnlyNumbers()));
             notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "tomador_razao", 1, 120, Ocorrencia.Obrigatoria, RetirarAcentos ? nota.Tomador.RazaoSocial.RemoveAccent() : nota.Tomador.RazaoSocial));
-            //notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "tomador_fantasia", 1, 120, Ocorrencia.NaoObrigatoria, string.Empty)); //não utilizado
             notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "tomador_endereco", 1, 120, Ocorrencia.NaoObrigatoria, RetirarAcentos ? nota.Tomador.Endereco.Logradouro.RemoveAccent() : nota.Tomador.Endereco.Logradouro));
             notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "tomador_numero", 1, 9, Ocorrencia.NaoObrigatoria, string.IsNullOrEmpty(nota.Tomador.Endereco.Numero) ? "S/N" : nota.Tomador.Endereco.Numero));
             notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "tomador_complemento", 1, 30, Ocorrencia.NaoObrigatoria, RetirarAcentos ? nota.Tomador.Endereco.Complemento.RemoveAccent() : nota.Tomador.Endereco.Complemento));
@@ -78,8 +95,6 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
             notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "tomador_CEP", 1, 8, Ocorrencia.NaoObrigatoria, nota.Tomador.Endereco.Cep.OnlyNumbers()));
             notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "tomador_cod_cidade", 1, 10, Ocorrencia.NaoObrigatoria, nota.Tomador.Endereco.CodigoMunicipio));
             notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "tomador_fone", 0, 15, Ocorrencia.Obrigatoria, nota.Tomador.DadosContato.DDD.OnlyNumbers() + nota.Tomador.DadosContato.Telefone.OnlyNumbers()));
-            //notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "tomador_ramal", 0, 15, Ocorrencia.Obrigatoria, string.Empty)); //não utilizado
-            //notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "tomador_fax", 0, 15, Ocorrencia.Obrigatoria, string.Empty)); //não utilizado
 
             if (!string.IsNullOrEmpty(nota.IdentificacaoRps.Numero) && !string.IsNullOrEmpty(nota.IdentificacaoRps.Serie))
             {
@@ -121,7 +136,6 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
 
         #region Services
 
-        //GerarNotaRequest
         protected override void PrepararEnviar(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
         {
             if (notas.Count > 1) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Apenas o envio de uma nota por vez é permitido para esse serviço." });
@@ -137,7 +151,6 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
             retornoWebservice.XmlEnvio = xmlLote.ToString();
         }
 
-        //GerarNotaRequest
         protected override void AssinarEnviar(RetornoEnviar retornoWebservice)
         {
             //não assina
@@ -173,7 +186,6 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
                 retornoWebservice.Protocolo = protocolo;
             }
         }
-
 
         //CancelarNota
         protected override void PrepararCancelarNFSe(RetornoCancelar retornoWebservice)
@@ -225,9 +237,6 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
                 retornoWebservice.Sucesso = true;
             }
         }
-
-
-        #region Não Utilizados
 
         //ConsultarNotaValida - provedor suporta porem não implementado por conta da dificuldade de dados para procurar nota.
         protected override void PrepararConsultarSituacao(RetornoConsultarSituacao retornoWebservice)
@@ -352,8 +361,6 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
             throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
-        #endregion Não Utilizados
-
         #endregion Services
 
         #region Private
@@ -370,23 +377,11 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
 
         protected override string GetSchema(TipoUrl tipo)
         {
-            //esse servidor nao tem schemas até o momento
-            switch (tipo)
-            {
-                case TipoUrl.Enviar:
-                    return "";
-
-                case TipoUrl.CancelarNFSe:
-                    return "";
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(tipo), tipo, null);
-            }
+            return "";
         }
 
         protected override bool PrecisaValidarSchema(TipoUrl tipo)
         {
-            //esse servidor nao tem schemas até o momento
             return false;
         }
 
