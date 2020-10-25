@@ -34,7 +34,6 @@ using System.IO;
 using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
-using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Text;
 using System.Xml.Linq;
@@ -127,11 +126,6 @@ namespace ACBr.Net.NFSe.Providers
                 default:
                     throw new ArgumentOutOfRangeException(nameof(tipoUrl), tipoUrl, null);
             }
-
-            if (!(Endpoint?.Binding is BasicHttpBinding binding))
-                return;
-
-            binding.MaxReceivedMessageSize = long.MaxValue;
         }
 
         #endregion Constructors
