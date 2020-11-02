@@ -73,7 +73,9 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
             if (nota.RegimeEspecialTributacao == RegimeEspecialTributacao.SimplesNacional)
                 notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "aliquota_simples", 1, 11, Ocorrencia.Obrigatoria, nota.Servico.Valores.Aliquota));
 
-            notaTag.AddChild(AdicionarTag(TipoCampo.Int, "", "id_sis_legado", 1, 15, Ocorrencia.NaoObrigatoria, nota.NumeroLote)); //nao utilizado
+            if(nota.NumeroLote > 0) //nao obrigatorio e pode ser utilizado para controle
+                notaTag.AddChild(AdicionarTag(TipoCampo.Int, "", "id_sis_legado", 1, 15, Ocorrencia.NaoObrigatoria, nota.NumeroLote)); 
+
             notaTag.AddChild(AdicionarTag(TipoCampo.Int, "", "servico", 1, 20, Ocorrencia.Obrigatoria, nota.Servico.CodigoTributacaoMunicipio));
             notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "situacao", 2, 2, Ocorrencia.Obrigatoria, NaturezaOperacao.Sigiss.GetValue(nota.NaturezaOperacao)));
             notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "valor", 1, 15, Ocorrencia.Obrigatoria, FormataDecimalModeloSigiss(nota.Servico.Valores.ValorServicos)));
@@ -112,10 +114,12 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
                 {
                     notaTag.AddChild(AdicionarTag(TipoCampo.Int, "", "cod_outro_municipio", 1, 10, Ocorrencia.Obrigatoria, nota.Servico.CodigoMunicipio));
                 }
-                if (nota.Servico.Valores.ValorIssRetido > 0)
-                {
-                    notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "retencao_iss", 1, 15, Ocorrencia.Obrigatoria, FormataDecimalModeloSigiss(nota.Servico.Valores.ValorIssRetido)));
-                }
+            }
+
+            //iis retido pode acontecer em varios casos, no manual está que apenas caso for fora do município, o que está incorreto segundo contadores da região.
+            if (nota.Servico.Valores.ValorIssRetido > 0)
+            {
+                notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "retencao_iss", 1, 15, Ocorrencia.Obrigatoria, FormataDecimalModeloSigiss(nota.Servico.Valores.ValorIssRetido)));
             }
 
             notaTag.AddChild(AdicionarTag(TipoCampo.Str, "", "pis", 1, 15, Ocorrencia.NaoObrigatoria, FormataDecimalModeloSigiss(nota.Servico.Valores.ValorPis)));
