@@ -145,6 +145,7 @@ namespace ACBr.Net.NFSe.Providers.Sigiss
             if (notas.Count > 1) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Apenas o envio de uma nota por vez é permitido para esse serviço." });
             if (notas.Count == 0) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "RPS não informado." });
             var nota = notas.FirstOrDefault() ?? throw new Exception("Nenhuma nota para ser enviada");
+            nota.NumeroLote = retornoWebservice.Lote;
 
             var xmlRps = WriteXmlRps(nota, false, false);
             GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
