@@ -1162,7 +1162,8 @@ namespace ACBr.Net.NFSe.Providers
             //Algumas prefeituras não permitem estas TAGs
             if (
                 Municipio.Codigo != 2704302 && //Maceió/AL
-                Municipio.Codigo != 3503208 // Araraquara/SP
+                Municipio.Codigo != 3503208 && // Araraquara/SP
+                Municipio.Codigo != 3510401    // Capivari/SP
                 )
             {
                 valores.AddChild(AdicionarTag(TipoCampo.De2, "", "DescontoIncondicionado", ns, 1, 15, Ocorrencia.Obrigatoria, nota.Servico.Valores.DescontoIncondicionado));
