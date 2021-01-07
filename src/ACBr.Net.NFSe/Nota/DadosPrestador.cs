@@ -73,8 +73,6 @@ namespace ACBr.Net.NFSe.Nota
 
         public DadosContato DadosContato { get; }
 
-        public DadosToken DadosToken { get; }
-
         #endregion Propriedades
     }
 }
