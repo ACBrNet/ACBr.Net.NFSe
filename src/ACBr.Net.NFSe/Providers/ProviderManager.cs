@@ -74,7 +74,8 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.Vitoria, typeof(ProviderVitoria)},
                 {NFSeProvider.WebIss, typeof(ProviderWebIss)},
                 {NFSeProvider.WebIss2, typeof(ProviderWebIss2)},
-                {NFSeProvider.Sigiss, typeof(ProviderSigiss)}
+                {NFSeProvider.Sigiss, typeof(ProviderSigiss)},
+                {NFSeProvider.Conam, typeof(ProviderCONAM)},
             };
 
             Load();

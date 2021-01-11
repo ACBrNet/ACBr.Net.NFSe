@@ -83,6 +83,9 @@ namespace ACBr.Net.NFSe.Providers
         [Description("WebIss v2")]
         WebIss2 = 11,
 
-        Sigiss = 20
+        Sigiss = 20,
+
+        [Description("CONAM")]
+        Conam = 21
     }
 }

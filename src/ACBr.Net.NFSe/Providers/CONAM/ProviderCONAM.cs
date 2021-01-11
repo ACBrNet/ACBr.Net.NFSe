@@ -39,63 +39,64 @@ namespace ACBr.Net.NFSe.Providers
             Guard.Against<XmlException>(xml == null, "Xml invalido.");
 
             var ret = new NotaServico();
+            var xmlElement = xml.ElementAnyNs("Nota");
 
-            ret.Competencia = xml.ElementAnyNs("DtEmiNf")?.GetValue<DateTime>() ?? DateTime.MinValue;
+            ret.Competencia = xmlElement.ElementAnyNs("DtEmiNf")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
             //Dados da NFS-e
-            ret.IdentificacaoNFSe.Numero = xml.ElementAnyNs("NumNf")?.GetValue<string>() ?? string.Empty;
-            ret.IdentificacaoNFSe.ModeloNfse = xml.ElementAnyNs("SerNf")?.GetValue<string>() ?? string.Empty;
-            ret.IdentificacaoNFSe.Chave = xml.ElementAnyNs("CodVernf")?.GetValue<string>() ?? string.Empty;
-            ret.IdentificacaoNFSe.DataEmissao = xml.ElementAnyNs("DtEmiNf")?.GetValue<DateTime>() ?? DateTime.MinValue;
+            ret.IdentificacaoNFSe.Numero = xmlElement.ElementAnyNs("NumNf")?.GetValue<string>() ?? string.Empty;
+            ret.IdentificacaoNFSe.ModeloNfse = xmlElement.ElementAnyNs("SerNf")?.GetValue<string>() ?? string.Empty;
+            ret.IdentificacaoNFSe.Chave = xmlElement.ElementAnyNs("CodVernf")?.GetValue<string>() ?? string.Empty;
+            ret.IdentificacaoNFSe.DataEmissao = xmlElement.ElementAnyNs("DtEmiNf")?.GetValue<DateTime>() ?? DateTime.MinValue;
             ret.Situacao = SituacaoNFSeRps.Normal;
 
-            if ((xml.ElementAnyNs("SitNf")?.GetValue<string>() ?? string.Empty) == "2")
+            if ((xmlElement.ElementAnyNs("SitNf")?.GetValue<string>() ?? string.Empty) == "2")
             {
                 ret.Situacao = SituacaoNFSeRps.Cancelado;
-                ret.Cancelamento.DataHora = xml.ElementAnyNs("DataCncNf")?.GetValue<DateTime>() ?? DateTime.MinValue;
-                ret.Cancelamento.MotivoCancelamento = xml.ElementAnyNs("MotivoCncNf")?.GetValue<string>() ??string.Empty;
+                ret.Cancelamento.DataHora = xmlElement.ElementAnyNs("DataCncNf")?.GetValue<DateTime>() ?? DateTime.MinValue;
+                ret.Cancelamento.MotivoCancelamento = xmlElement.ElementAnyNs("MotivoCncNf")?.GetValue<string>() ??string.Empty;
             }
 
             //Dados do RPS
-            ret.IdentificacaoRps.Numero = xml.ElementAnyNs("NumRps")?.GetValue<string>() ?? string.Empty;
-            ret.IdentificacaoRps.Serie = xml.ElementAnyNs("SerRps")?.GetValue<string>() ?? string.Empty;
+            ret.IdentificacaoRps.Numero = xmlElement.ElementAnyNs("NumRps")?.GetValue<string>() ?? string.Empty;
+            ret.IdentificacaoRps.Serie = xmlElement.ElementAnyNs("SerRps")?.GetValue<string>() ?? string.Empty;
             ret.IdentificacaoRps.Tipo = TipoRps.RPS;
-            ret.IdentificacaoRps.DataEmissao = xml.ElementAnyNs("DtEmiRps")?.GetValue<DateTime>() ?? DateTime.MinValue;
+            ret.IdentificacaoRps.DataEmissao = xmlElement.ElementAnyNs("DtEmiRps")?.GetValue<DateTime>() ?? DateTime.MinValue;
 
             //Dados do Prestador
-            ret.Prestador.CpfCnpj = xml.ElementAnyNs("CpfCnpjPre")?.GetValue<string>() ?? string.Empty;
-            ret.Prestador.RazaoSocial = xml.ElementAnyNs("RazSocPre")?.GetValue<string>() ?? string.Empty;
-            ret.Prestador.Endereco.Logradouro = xml.ElementAnyNs("LogPre")?.GetValue<string>() ?? string.Empty;
-            ret.Prestador.Endereco.Numero = xml.ElementAnyNs("NumEndPre")?.GetValue<string>() ?? string.Empty;
-            ret.Prestador.Endereco.Complemento = xml.ElementAnyNs("ComplEndPre")?.GetValue<string>() ?? string.Empty;
-            ret.Prestador.Endereco.Bairro = xml.ElementAnyNs("BairroPre")?.GetValue<string>() ?? string.Empty;
-            ret.Prestador.Endereco.Municipio = xml.ElementAnyNs("MunPre")?.GetValue<string>() ?? string.Empty;
-            ret.Prestador.Endereco.Uf = xml.ElementAnyNs("SiglaUFPre")?.GetValue<string>() ?? string.Empty;
-            ret.Prestador.Endereco.Cep = xml.ElementAnyNs("CepPre")?.GetValue<string>() ?? string.Empty;
-            ret.Prestador.DadosContato.Email = xml.ElementAnyNs("EmailPre")?.GetValue<string>() ?? string.Empty;
+            ret.Prestador.CpfCnpj = xmlElement.ElementAnyNs("CpfCnpjPre")?.GetValue<string>() ?? string.Empty;
+            ret.Prestador.RazaoSocial = xmlElement.ElementAnyNs("RazSocPre")?.GetValue<string>() ?? string.Empty;
+            ret.Prestador.Endereco.Logradouro = xmlElement.ElementAnyNs("LogPre")?.GetValue<string>() ?? string.Empty;
+            ret.Prestador.Endereco.Numero = xmlElement.ElementAnyNs("NumEndPre")?.GetValue<string>() ?? string.Empty;
+            ret.Prestador.Endereco.Complemento = xmlElement.ElementAnyNs("ComplEndPre")?.GetValue<string>() ?? string.Empty;
+            ret.Prestador.Endereco.Bairro = xmlElement.ElementAnyNs("BairroPre")?.GetValue<string>() ?? string.Empty;
+            ret.Prestador.Endereco.Municipio = xmlElement.ElementAnyNs("MunPre")?.GetValue<string>() ?? string.Empty;
+            ret.Prestador.Endereco.Uf = xmlElement.ElementAnyNs("SiglaUFPre")?.GetValue<string>() ?? string.Empty;
+            ret.Prestador.Endereco.Cep = xmlElement.ElementAnyNs("CepPre")?.GetValue<string>() ?? string.Empty;
+            ret.Prestador.DadosContato.Email = xmlElement.ElementAnyNs("EmailPre")?.GetValue<string>() ?? string.Empty;
 
             //Dados do Tomador
-            ret.Tomador.CpfCnpj = xml.ElementAnyNs("CpfCnpjTom")?.GetValue<string>() ?? string.Empty;
-            ret.Tomador.RazaoSocial = xml.ElementAnyNs("RazSocTom")?.GetValue<string>() ?? string.Empty;
-            ret.Tomador.Endereco.Logradouro = xml.ElementAnyNs("LogTom")?.GetValue<string>() ?? string.Empty;
-            ret.Tomador.Endereco.Numero = xml.ElementAnyNs("NumEndTom")?.GetValue<string>() ?? string.Empty;
-            ret.Tomador.Endereco.Complemento = xml.ElementAnyNs("ComplEndTom")?.GetValue<string>() ?? string.Empty;
-            ret.Tomador.Endereco.Bairro = xml.ElementAnyNs("BairroTom")?.GetValue<string>() ?? string.Empty;
-            ret.Tomador.Endereco.Municipio = xml.ElementAnyNs("MunTom")?.GetValue<string>() ?? string.Empty;
-            ret.Tomador.Endereco.Uf = xml.ElementAnyNs("SiglaUFTom")?.GetValue<string>() ?? string.Empty;
-            ret.Tomador.Endereco.Cep = xml.ElementAnyNs("CepTom")?.GetValue<string>() ?? string.Empty;
-            ret.Tomador.DadosContato.Email = xml.ElementAnyNs("EMailTom")?.GetValue<string>() ?? string.Empty;
+            ret.Tomador.CpfCnpj = xmlElement.ElementAnyNs("CpfCnpjTom")?.GetValue<string>() ?? string.Empty;
+            ret.Tomador.RazaoSocial = xmlElement.ElementAnyNs("RazSocTom")?.GetValue<string>() ?? string.Empty;
+            ret.Tomador.Endereco.Logradouro = xmlElement.ElementAnyNs("LogTom")?.GetValue<string>() ?? string.Empty;
+            ret.Tomador.Endereco.Numero = xmlElement.ElementAnyNs("NumEndTom")?.GetValue<string>() ?? string.Empty;
+            ret.Tomador.Endereco.Complemento = xmlElement.ElementAnyNs("ComplEndTom")?.GetValue<string>() ?? string.Empty;
+            ret.Tomador.Endereco.Bairro = xmlElement.ElementAnyNs("BairroTom")?.GetValue<string>() ?? string.Empty;
+            ret.Tomador.Endereco.Municipio = xmlElement.ElementAnyNs("MunTom")?.GetValue<string>() ?? string.Empty;
+            ret.Tomador.Endereco.Uf = xmlElement.ElementAnyNs("SiglaUFTom")?.GetValue<string>() ?? string.Empty;
+            ret.Tomador.Endereco.Cep = xmlElement.ElementAnyNs("CepTom")?.GetValue<string>() ?? string.Empty;
+            ret.Tomador.DadosContato.Email = xmlElement.ElementAnyNs("EMailTom")?.GetValue<string>() ?? string.Empty;
 
             //Dados do Serviço
-            ret.Servico.CodigoTributacaoMunicipio = xml.ElementAnyNs("CodSrv")?.GetValue<string>() ?? string.Empty;
-            ret.Servico.Discriminacao = xml.ElementAnyNs("DiscrSrv")?.GetValue<string>() ?? string.Empty;
-            ret.Servico.Valores.ValorServicos = xml.ElementAnyNs("VlNFS")?.GetValue<decimal>() ?? 0;
-            ret.Servico.Valores.ValorDeducoes = xml.ElementAnyNs("VlDed")?.GetValue<decimal>() ?? 0;
-            ret.Servico.Valores.JustificativaDeducao = xml.ElementAnyNs("DiscrDed")?.GetValue<string>() ?? string.Empty;
-            ret.Servico.Valores.BaseCalculo = xml.ElementAnyNs("VlBasCalc")?.GetValue<decimal>() ?? 0;
-            ret.Servico.Valores.Aliquota = xml.ElementAnyNs("AlqIss")?.GetValue<decimal>() ?? 0;
-            ret.Servico.Valores.ValorIss = xml.ElementAnyNs("VlIss")?.GetValue<decimal>() ?? 0;
-            ret.Servico.Valores.ValorIssRetido = xml.ElementAnyNs("VlIssRet")?.GetValue<decimal>() ?? 0;
+            ret.Servico.CodigoTributacaoMunicipio = xmlElement.ElementAnyNs("CodSrv")?.GetValue<string>() ?? string.Empty;
+            ret.Servico.Discriminacao = xmlElement.ElementAnyNs("DiscrSrv")?.GetValue<string>() ?? string.Empty;
+            ret.Servico.Valores.ValorServicos = xmlElement.ElementAnyNs("VlNFS")?.GetValue<decimal>() ?? 0;
+            ret.Servico.Valores.ValorDeducoes = xmlElement.ElementAnyNs("VlDed")?.GetValue<decimal>() ?? 0;
+            ret.Servico.Valores.JustificativaDeducao = xmlElement.ElementAnyNs("DiscrDed")?.GetValue<string>() ?? string.Empty;
+            ret.Servico.Valores.BaseCalculo = xmlElement.ElementAnyNs("VlBasCalc")?.GetValue<decimal>() ?? 0;
+            ret.Servico.Valores.Aliquota = xmlElement.ElementAnyNs("AlqIss")?.GetValue<decimal>() ?? 0;
+            ret.Servico.Valores.ValorIss = xmlElement.ElementAnyNs("VlIss")?.GetValue<decimal>() ?? 0;
+            ret.Servico.Valores.ValorIssRetido = xmlElement.ElementAnyNs("VlIssRet")?.GetValue<decimal>() ?? 0;
 
             return ret;
         }
@@ -115,8 +116,8 @@ namespace ACBr.Net.NFSe.Providers
 
             var xmlDoc = new XDocument(new XDeclaration("1.0", "UTF-8", null));
 
-            var stdRPS = new XElement("STDRPS");
-            xmlDoc.AddChild(stdRPS);
+            var sdt = new XElement("SDTRPS");
+            xmlDoc.AddChild(sdt);
 
             var tipoTrib = 1;
 
@@ -138,17 +139,17 @@ namespace ACBr.Net.NFSe.Providers
                     break;
             }
 
-            stdRPS.AddChild(AdicionarTag(TipoCampo.Int, "", "Ano", 0, 0, Ocorrencia.Obrigatoria, nota.Competencia.Year));
-            stdRPS.AddChild(AdicionarTag(TipoCampo.Int, "", "Mes", 0, 0, Ocorrencia.Obrigatoria, nota.Competencia.Month.ZeroFill(2)));
-            stdRPS.AddChild(AdicionarTag(TipoCampo.Str, "", "CPFCNPJ", 0, 0, Ocorrencia.Obrigatoria, nota.Prestador.CpfCnpj.ZeroFill(14)));
-            stdRPS.AddChild(AdicionarTag(TipoCampo.Dat, "", "DTIni", 0, 0, Ocorrencia.Obrigatoria, nota.Competencia.ToString("01/MM/yyyy")));
-            stdRPS.AddChild(AdicionarTag(TipoCampo.Dat, "", "DTFin", 0, 0, Ocorrencia.Obrigatoria, DateTime.Parse(nota.Competencia.AddMonths(1).ToString("01/MM/yyyy")).AddDays(-1).ToString("dd/MM/yyyy")));
-            stdRPS.AddChild(AdicionarTag(TipoCampo.Int, "", "TipoTrib", 0, 0, Ocorrencia.Obrigatoria, tipoTrib));
-            stdRPS.AddChild(AdicionarTag(TipoCampo.Dat, "", "DtAdeSN", 0, 0, Ocorrencia.NaoObrigatoria, nota.DataOptanteSimplesNacional.ToString("dd/MM/yyyy")));
-            stdRPS.AddChild(AdicionarTag(TipoCampo.De2, "", "AlqIssSN_IP", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.Aliquota.ToString("##0.00")));
-            stdRPS.AddChild(AdicionarTag(TipoCampo.Str, "", "Versao", 0, 0, Ocorrencia.Obrigatoria, "2.00"));
+            sdt.AddChild(AdicionarTag(TipoCampo.Int, "", "Ano", 0, 0, Ocorrencia.Obrigatoria, nota.Competencia.Year));
+            sdt.AddChild(AdicionarTag(TipoCampo.Int, "", "Mes", 0, 0, Ocorrencia.Obrigatoria, nota.Competencia.Month.ZeroFill(2)));
+            sdt.AddChild(AdicionarTag(TipoCampo.Str, "", "CPFCNPJ", 0, 0, Ocorrencia.Obrigatoria, nota.Prestador.CpfCnpj.ZeroFill(14)));
+            sdt.AddChild(AdicionarTag(TipoCampo.Str, "", "DTIni", 0, 0, Ocorrencia.Obrigatoria, nota.Competencia.ToString("01/MM/yyyy")));
+            sdt.AddChild(AdicionarTag(TipoCampo.Str, "", "DTFin", 0, 0, Ocorrencia.Obrigatoria, DateTime.Parse(nota.Competencia.AddMonths(1).ToString("01/MM/yyyy")).AddDays(-1).ToString("dd/MM/yyyy")));
+            sdt.AddChild(AdicionarTag(TipoCampo.Int, "", "TipoTrib", 0, 0, Ocorrencia.Obrigatoria, tipoTrib));
+            sdt.AddChild(AdicionarTag(TipoCampo.Str, "", "DtAdeSN", 0, 0, Ocorrencia.Obrigatoria, nota.DataOptanteSimplesNacional == DateTime.MinValue || tipoTrib != 4 ? "" : nota.DataOptanteSimplesNacional.ToString("dd/MM/yyyy")));
+            sdt.AddChild(AdicionarTag(TipoCampo.Str, "", "AlqIssSN_IP", 0, 0, Ocorrencia.Obrigatoria, tipoTrib != 4 ? "" :  nota.Servico.Valores.Aliquota.ToString("##0.00")));
+            sdt.AddChild(AdicionarTag(TipoCampo.Str, "", "Versao", 0, 0, Ocorrencia.Obrigatoria, "2.00"));
 
-            stdRPS.Add(WriteREG20(nota));
+            sdt.Add(WriteREG20(nota));
 
             if (
                 nota.Servico.Valores.ValorCofins > 0 ||
@@ -158,9 +159,9 @@ namespace ACBr.Net.NFSe.Providers
                 nota.Servico.Valores.IssRetido == SituacaoTributaria.Retencao ||
                 nota.Servico.Valores.ValorPis > 0
             )
-                stdRPS.Add(WriteREG30(nota));
+                sdt.Add(WriteREG30(nota));
 
-            stdRPS.Add(WriteREG90(nota));
+            sdt.Add(WriteREG90(nota));
 
             return xmlDoc.AsString(identado, showDeclaration);
         }
@@ -174,21 +175,21 @@ namespace ACBr.Net.NFSe.Providers
             reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TipoNFS", 3, 3, Ocorrencia.Obrigatoria, "RPS"));
             reg20Item.AddChild(AdicionarTag(TipoCampo.Int, "", "NumRps", 0, 0, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.Numero));
             reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "SerRps", 1, 3, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.Serie));
-            reg20Item.AddChild(AdicionarTag(TipoCampo.Dat, "", "DtEmi", 0, 0, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.DataEmissao.ToString("01/MM/yyyy")));
+            reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "DtEmi", 0, 0, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.DataEmissao.ToString("dd/MM/yyyy")));
             reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "RetFonte", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.IssRetido == SituacaoTributaria.Retencao ? "SIM" : "NAO"));
             reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "CodSrv", 5, 5, Ocorrencia.Obrigatoria, nota.Servico.CodigoTributacaoMunicipio));
             reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "DiscrSrv", 1, 4000, Ocorrencia.Obrigatoria, nota.Servico.Discriminacao));
-            reg20Item.AddChild(AdicionarTag(TipoCampo.De2, "", "VlNFS", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorServicos.ToString("##0.00")));
-            reg20Item.AddChild(AdicionarTag(TipoCampo.De2, "", "VlDed", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorDeducoes));
+            reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "VlNFS", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorServicos.ToString("##0.00")));
+            reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "VlDed", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorDeducoes.ToString("##0.00")));
             reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "DiscrDed", 0, 4000, Ocorrencia.Obrigatoria, nota.Servico.Valores.JustificativaDeducao));
-            reg20Item.AddChild(AdicionarTag(TipoCampo.De2, "", "VlBasCalc", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.BaseCalculo));
-            reg20Item.AddChild(AdicionarTag(TipoCampo.De2, "", "AlqIss", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.Aliquota));
-            reg20Item.AddChild(AdicionarTag(TipoCampo.De2, "", "VlIss", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorIss));
-            reg20Item.AddChild(AdicionarTag(TipoCampo.De2, "", "VlIssRet", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorIssRetido));
+            reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "VlBasCalc", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.BaseCalculo.ToString("##0.00")));
+            reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "AlqIss", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.Aliquota.ToString("##0.00")));
+            reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "VlIss", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorIss.ToString("##0.00")));
+            reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "VlIssRet", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorIssRetido.ToString("##0.00")));
 
             if (!string.IsNullOrEmpty(nota.Tomador.CpfCnpj))
             {
-                reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "CpfCnpjTom", 14, 14, Ocorrencia.Obrigatoria, nota.Tomador.CpfCnpj.Length <= 11 ? nota.Tomador.CpfCnpj.ZeroFill(11) : nota.Tomador.CpfCnpj.ZeroFill(14)));
+                reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "CpfCnpTom", 14, 14, Ocorrencia.Obrigatoria, nota.Tomador.CpfCnpj.Length <= 11 ? nota.Tomador.CpfCnpj.ZeroFill(11) : nota.Tomador.CpfCnpj.ZeroFill(14)));
                 reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "RazSocTom", 1, 60, Ocorrencia.Obrigatoria, nota.Tomador.RazaoSocial));
                 reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TipoLogtom", 1, 10, Ocorrencia.Obrigatoria, nota.Tomador.Endereco.TipoLogradouro));
                 reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "LogTom", 1, 60, Ocorrencia.Obrigatoria, nota.Tomador.Endereco.Logradouro));
@@ -230,8 +231,8 @@ namespace ACBr.Net.NFSe.Providers
                 reg30.AddChild(reg30Item);
 
                 reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoSigla", 1, 10, Ocorrencia.Obrigatoria, "COFINS"));
-                reg30Item.AddChild(AdicionarTag(TipoCampo.De2, "", "TributoAliquota", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.AliquotaCofins));
-                reg30Item.AddChild(AdicionarTag(TipoCampo.De2, "", "TributoValor", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorCofins));
+                reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoAliquota", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.AliquotaCofins.ToString("##0.00")));
+                reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoValor", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorCofins.ToString("##0.00")));
 
                 valoresTipo30.Add(nota.Servico.Valores.ValorCofins);
             }
@@ -242,8 +243,8 @@ namespace ACBr.Net.NFSe.Providers
                 reg30.AddChild(reg30Item);
 
                 reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoSigla", 1, 10, Ocorrencia.Obrigatoria, "CSLL"));
-                reg30Item.AddChild(AdicionarTag(TipoCampo.De2, "", "TributoAliquota", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.AliquotaCsll));
-                reg30Item.AddChild(AdicionarTag(TipoCampo.De2, "", "TributoValor", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorCsll));
+                reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoAliquota", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.AliquotaCsll.ToString("##0.00")));
+                reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoValor", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorCsll.ToString("##0.00")));
 
                 valoresTipo30.Add(nota.Servico.Valores.ValorCsll);
             }
@@ -254,8 +255,8 @@ namespace ACBr.Net.NFSe.Providers
                 reg30.AddChild(reg30Item);
 
                 reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoSigla", 1, 10, Ocorrencia.Obrigatoria, "INSS"));
-                reg30Item.AddChild(AdicionarTag(TipoCampo.De2, "", "TributoAliquota", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.AliquotaInss));
-                reg30Item.AddChild(AdicionarTag(TipoCampo.De2, "", "TributoValor", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorInss));
+                reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoAliquota", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.AliquotaInss.ToString("##0.00")));
+                reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoValor", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorInss.ToString("##0.00")));
 
                 valoresTipo30.Add(nota.Servico.Valores.ValorInss);
             }
@@ -266,8 +267,8 @@ namespace ACBr.Net.NFSe.Providers
                 reg30.AddChild(reg30Item);
 
                 reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoSigla", 1, 10, Ocorrencia.Obrigatoria, "IR"));
-                reg30Item.AddChild(AdicionarTag(TipoCampo.De2, "", "TributoAliquota", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.AliquotaIR));
-                reg30Item.AddChild(AdicionarTag(TipoCampo.De2, "", "TributoValor", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorIr));
+                reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoAliquota", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.AliquotaIR.ToString("##0.00")));
+                reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoValor", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorIr.ToString("##0.00")));
 
                 valoresTipo30.Add(nota.Servico.Valores.ValorIr);
             }
@@ -278,8 +279,8 @@ namespace ACBr.Net.NFSe.Providers
                 reg30.AddChild(reg30Item);
 
                 reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoSigla", 1, 10, Ocorrencia.Obrigatoria, "ISS"));
-                reg30Item.AddChild(AdicionarTag(TipoCampo.De2, "", "TributoAliquota", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.AliquotaInss));
-                reg30Item.AddChild(AdicionarTag(TipoCampo.De2, "", "TributoValor", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorIssRetido));
+                reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoAliquota", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.AliquotaInss.ToString("##0.00")));
+                reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoValor", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorIssRetido.ToString("##0.00")));
 
                 valoresTipo30.Add(nota.Servico.Valores.ValorIssRetido);
             }
@@ -290,8 +291,8 @@ namespace ACBr.Net.NFSe.Providers
                 reg30.AddChild(reg30Item);
 
                 reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoSigla", 1, 10, Ocorrencia.Obrigatoria, "PIS"));
-                reg30Item.AddChild(AdicionarTag(TipoCampo.De2, "", "TributoAliquota", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.AliquotaPis));
-                reg30Item.AddChild(AdicionarTag(TipoCampo.De2, "", "TributoValor", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorPis));
+                reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoAliquota", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.AliquotaPis.ToString("##0.00")));
+                reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoValor", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorPis.ToString("##0.00")));
 
                 valoresTipo30.Add(nota.Servico.Valores.ValorPis);
             }
@@ -304,12 +305,12 @@ namespace ACBr.Net.NFSe.Providers
             var reg90 = new XElement("Reg90");
 
             reg90.AddChild(AdicionarTag(TipoCampo.Int, "", "QtdRegNormal", 0, 0, Ocorrencia.Obrigatoria, "1"));
-            reg90.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorNFS", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorServicos));
-            reg90.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorISS", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorIss));
-            reg90.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorDed", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorDeducoes));
-            reg90.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorIssRetTom", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorIssRetido));
+            reg90.AddChild(AdicionarTag(TipoCampo.Str, "", "ValorNFS", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorServicos.ToString("##0.00")));
+            reg90.AddChild(AdicionarTag(TipoCampo.Str, "", "ValorISS", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorIss.ToString("##0.00")));
+            reg90.AddChild(AdicionarTag(TipoCampo.Str, "", "ValorDed", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorDeducoes.ToString("##0.00")));
+            reg90.AddChild(AdicionarTag(TipoCampo.Str, "", "ValorIssRetTom", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorIssRetido.ToString("##0.00")));
             reg90.AddChild(AdicionarTag(TipoCampo.Int, "", "QtdReg30", 0, 0, Ocorrencia.Obrigatoria, valoresTipo30.Count));
-            reg90.AddChild(AdicionarTag(TipoCampo.Int, "", "ValorTributos", 0, 0, Ocorrencia.Obrigatoria, valoresTipo30.Sum()));
+            reg90.AddChild(AdicionarTag(TipoCampo.Str, "", "ValorTributos", 0, 0, Ocorrencia.Obrigatoria, valoresTipo30.Sum().ToString("##0.00")));
 
             return reg90;
         }
@@ -318,7 +319,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Services
 
-        protected override void PrepararEnviar(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
+        protected override void PrepararEnviarSincrono(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
         {
             if (notas.Count == 0)
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "RPS não informado." });
@@ -341,22 +342,24 @@ namespace ACBr.Net.NFSe.Providers
             retornoWebservice.XmlEnvio = xmlLote.ToString();
         }
 
-        protected override void TratarRetornoEnviar(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
+        protected override void TratarRetornoEnviarSincrono(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
         {
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
 
-            if (!(xmlRet.ElementAnyNs("Retorno")?.GetValue<bool>() ?? false))
+            if (!(xmlRet.Root.ElementAnyNs("Sdt_processarpsout").ElementAnyNs("Retorno")?.GetValue<bool>() ?? false))
             {
-                MensagemErro(retornoWebservice, xmlRet, "Sdt_processarpsout");
+                MensagemErro(retornoWebservice, xmlRet.Root, "Sdt_processarpsout");
                 retornoWebservice.Sucesso = false;
 
                 return;
             }
 
+            var xmlElement = xmlRet.Root.ElementAnyNs("Sdt_processarpsout");
+
             retornoWebservice.Lote = 0;
             retornoWebservice.Data = DateTime.Now;
-            retornoWebservice.Protocolo = xmlRet.Root?.ElementAnyNs("Protocolo")?.GetValue<string>() ?? string.Empty;
+            retornoWebservice.Protocolo = xmlElement.ElementAnyNs("Protocolo")?.GetValue<string>() ?? string.Empty;
             retornoWebservice.Sucesso = true;
         }
 
@@ -374,16 +377,18 @@ namespace ACBr.Net.NFSe.Providers
             // Analisa mensagem de retorno// Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
 
-            if (!(xmlRet.ElementAnyNs("Retorno")?.GetValue<bool>() ?? false))
+            if (!(xmlRet.Root.ElementAnyNs("Sdt_consultaprotocoloout").ElementAnyNs("Retorno")?.GetValue<bool>() ?? false))
             {
-                MensagemErro(retornoWebservice, xmlRet, "Sdt_consultaprotocoloout");
+                MensagemErro(retornoWebservice, xmlRet.Root, "Sdt_consultaprotocoloout");
                 retornoWebservice.Sucesso = false;
 
                 return;
             }
 
+            var xmlElement = xmlRet.Root.ElementAnyNs("Sdt_consultaprotocoloout");
+
             var situacao = "";
-            switch (xmlRet.Root?.ElementAnyNs("PrtXSts")?.GetValue<string>() ?? "0")
+            switch (xmlElement.ElementAnyNs("PrtXSts")?.GetValue<string>() ?? "0")
             {
                 case  "1" : //Aguardando processamento
                     situacao = "2"; //Padrão Ginfes e ABRASF - Ainda não processado
@@ -425,9 +430,9 @@ namespace ACBr.Net.NFSe.Providers
             // Analisa mensagem de retorno// Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
 
-            if (!(xmlRet.ElementAnyNs("Retorno")?.GetValue<bool>() ?? false))
+            if (!(xmlRet.Root.ElementAnyNs("Sdt_consultanotasprotocoloout").ElementAnyNs("Retorno")?.GetValue<bool>() ?? false))
             {
-                MensagemErro(retornoWebservice, xmlRet, "Sdt_consultanotasprotocoloout");
+                MensagemErro(retornoWebservice, xmlRet.Root, "Sdt_consultanotasprotocoloout");
                 retornoWebservice.Sucesso = false;
 
                 return;
@@ -487,7 +492,7 @@ namespace ACBr.Net.NFSe.Providers
                 return;
             }
 
-            if (retornoWebservice.AnoCompetencia <= 2000 || retornoWebservice.AnoCompetencia >= DateTime.Now.Year)
+            if (retornoWebservice.AnoCompetencia <= 2000 || retornoWebservice.AnoCompetencia > DateTime.Now.Year)
             {
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Você deve informar o ano de competência." });
                 return;
@@ -499,6 +504,8 @@ namespace ACBr.Net.NFSe.Providers
             loteBuilder.Append($"<Competencia_Ano>{retornoWebservice.AnoCompetencia}</Competencia_Ano>");
             loteBuilder.Append($"<RPS_Serie>{retornoWebservice.Serie}</RPS_Serie>");
             loteBuilder.Append($"<RPS_Numero>{retornoWebservice.NumeroRps}</RPS_Numero>");
+            loteBuilder.Append($"<Nota_Serie></Nota_Serie>");
+            loteBuilder.Append($"<Nota_Numero></Nota_Numero>");
 
             retornoWebservice.XmlEnvio = loteBuilder.ToString();
         }
@@ -507,13 +514,15 @@ namespace ACBr.Net.NFSe.Providers
         {
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            var xmlString = xmlRet.ElementAnyNs("Xml_saida").GetValue<string>().Replace("<![CDATA[", "").Replace("]]>", "");
+            var xmlString = xmlRet.Root.ElementAnyNs("Xml_saida").GetValue<string>();
             xmlRet = XDocument.Parse(xmlString);
 
             MensagemErro2(retornoWebservice, xmlRet);
             if (retornoWebservice.Erros.Any()) return;
 
-            var listaNfse = xmlRet.ElementAnyNs("Lista_Notas");
+            var xmlElement = xmlRet.ElementAnyNs("Info");
+
+            var listaNfse = xmlElement.ElementAnyNs("Lista_Notas");
             if (listaNfse == null)
             {
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Nota Fiscal não encontrada! (Nota)" });
@@ -552,6 +561,8 @@ namespace ACBr.Net.NFSe.Providers
             var loteBuilder = new StringBuilder();
             loteBuilder.Append($"<Competencia_Mes>{retornoWebservice.Inicio?.Month.ZeroFill(2)}</Competencia_Mes>");
             loteBuilder.Append($"<Competencia_Ano>{retornoWebservice.Inicio?.Year}</Competencia_Ano>");
+            loteBuilder.Append($"<RPS_Serie></RPS_Serie>");
+            loteBuilder.Append($"<RPS_Numero></RPS_Numero>");
             loteBuilder.Append($"<Nota_Serie>{retornoWebservice.SerieNFse}</Nota_Serie>");
             loteBuilder.Append($"<Nota_Numero>{retornoWebservice.NumeroNFse}</Nota_Numero>");
 
@@ -562,13 +573,15 @@ namespace ACBr.Net.NFSe.Providers
         {
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            var xmlString = xmlRet.ElementAnyNs("Xml_saida").GetValue<string>().Replace("<![CDATA[", "").Replace("]]>", "");
+            var xmlString = xmlRet.Root.ElementAnyNs("Xml_saida").GetValue<string>();
             xmlRet = XDocument.Parse(xmlString);
 
             MensagemErro2(retornoWebservice, xmlRet);
             if (retornoWebservice.Erros.Any()) return;
 
-            var listaNfse = xmlRet.ElementAnyNs("Lista_Notas");
+            var xmlElement = xmlRet.ElementAnyNs("Info");
+
+            var listaNfse = xmlElement.ElementAnyNs("Lista_Notas");
             if (listaNfse == null)
             {
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Nota Fiscal não encontrada! (Nota)" });
@@ -598,9 +611,9 @@ namespace ACBr.Net.NFSe.Providers
             }
 
             var loteBuilder = new StringBuilder();
-            loteBuilder.Append($"<SerieNota>{retornoWebservice.SerieNFSe}</SerieNota>");
+            loteBuilder.Append($"<SerieNota>NFE</SerieNota>");
             loteBuilder.Append($"<NumeroNota>{retornoWebservice.NumeroNFSe}</NumeroNota>");
-            loteBuilder.Append($"<ValorNota>{retornoWebservice.ValorNFSe}</ValorNota>");
+            loteBuilder.Append($"<ValorNota>{retornoWebservice.ValorNFSe.ToString("##0.00").Replace(",", ".")}</ValorNota>");
             loteBuilder.Append($"<MotivoCancelamento>{retornoWebservice.Motivo}</MotivoCancelamento>");
             loteBuilder.Append($"<PodeCancelarGuia>S</PodeCancelarGuia>");
 
@@ -612,9 +625,9 @@ namespace ACBr.Net.NFSe.Providers
             // Analisa mensagem de retorno// Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
 
-            if (!(xmlRet.ElementAnyNs("Retorno")?.GetValue<bool>() ?? false))
+            if (!(xmlRet.Root.ElementAnyNs("Sdt_retornocancelanfe").ElementAnyNs("Retorno")?.GetValue<bool>() ?? false))
             {
-                MensagemErro(retornoWebservice, xmlRet, "Sdt_retornocancelanfe");
+                MensagemErro(retornoWebservice, xmlRet.Root, "Sdt_retornocancelanfe");
                 retornoWebservice.Sucesso = false;
 
                 return;
@@ -638,23 +651,23 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Not Implemented Methods
 
-        protected override void AssinarEnviar(RetornoEnviar retornoWebservice)
+        protected override void PrepararEnviar(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
         {
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
-        protected override void PrepararEnviarSincrono(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
+        protected override void AssinarEnviar(RetornoEnviar retornoWebservice)
+        {
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
+        }
+
+        protected override void TratarRetornoEnviar(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
         {
             throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
         protected override void AssinarEnviarSincrono(RetornoEnviar retornoWebservice)
         {
-            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
-        }
-
-        protected override void TratarRetornoEnviarSincrono(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
-        {
-            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
         protected override void AssinarConsultarSituacao(RetornoConsultarSituacao retornoWebservice)
@@ -744,15 +757,22 @@ namespace ACBr.Net.NFSe.Providers
                 return;
 
             foreach (var mensagem in mensagens.ElementsAnyNs("Message"))
-                MensagemErro2(retornoWs, xmlRet);
+            {
+                retornoWs.Erros.Add(new Evento
+                {
+                    Codigo = mensagem?.ElementAnyNs("Id")?.GetValue<string>() ?? string.Empty,
+                    Descricao = mensagem?.ElementAnyNs("Description")?.GetValue<string>() ?? string.Empty,
+                    Correcao = mensagem?.ElementAnyNs("Description")?.GetValue<string>() ?? string.Empty
+                });
+            }
         }
 
         private static void MensagemErro2(RetornoWebservice retornoWs, XContainer xmlRet)
         {
-            var mensagem = xmlRet.ElementAnyNs("Message");
-
-            if (mensagem == null)
+            if (xmlRet.ElementAnyNs("Info").ElementAnyNs("Sucesso").GetValue<bool>())
                 return;
+
+            var mensagem = xmlRet.ElementAnyNs("Info").ElementAnyNs("Message");
 
             var evento = new Evento
                 {
