@@ -579,13 +579,15 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="notas"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public RetornoConsultarNFSeRps ConsultaNFSeRps(int numero, string serie, TipoRps tipo, NotaServicoCollection notas)
+        public RetornoConsultarNFSeRps ConsultaNFSeRps(int numero, string serie, TipoRps tipo, NotaServicoCollection notas, int anoCompetencia, int mesCompetencia)
         {
             var retornoWebservice = new RetornoConsultarNFSeRps()
             {
                 NumeroRps = numero,
                 Serie = serie,
-                Tipo = tipo
+                Tipo = tipo,
+                AnoCompetencia = anoCompetencia,
+                MesCompetencia = mesCompetencia
             };
 
             PrepararConsultarNFSeRps(retornoWebservice, notas);
@@ -642,7 +644,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="imInter"></param>
         /// <returns></returns>
         public RetornoConsultarNFSe ConsultaNFSe(NotaServicoCollection notas, DateTime? inicio = null,
-            DateTime? fim = null, int numeroNfse = 0, int pagina = 0, string cnpjTomador = "",
+            DateTime? fim = null, int numeroNfse = 0, string serieNfse = "", int pagina = 0, string cnpjTomador = "",
             string imTomador = "", string nomeInter = "", string cnpjInter = "", string imInter = "")
         {
             var retornoWebservice = new RetornoConsultarNFSe()
@@ -650,6 +652,7 @@ namespace ACBr.Net.NFSe.Providers
                 Inicio = inicio,
                 Fim = fim,
                 NumeroNFse = numeroNfse,
+                SerieNFse = serieNfse,
                 Pagina = pagina,
                 CPFCNPJTomador = cnpjTomador,
                 IMTomador = imTomador,
@@ -706,12 +709,14 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="motivo"></param>
         /// <param name="notas"></param>
         /// <returns></returns>
-        public RetornoCancelar CancelarNFSe(string codigoCancelamento, string numeroNFSe, string motivo, NotaServicoCollection notas)
+        public RetornoCancelar CancelarNFSe(string codigoCancelamento, string numeroNFSe, string serieNFSe, decimal valorNFSe, string motivo, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoCancelar()
             {
                 CodigoCancelamento = codigoCancelamento,
                 NumeroNFSe = numeroNFSe,
+                SerieNFSe = serieNFSe,
+                ValorNFSe = valorNFSe,
                 Motivo = motivo
             };
 

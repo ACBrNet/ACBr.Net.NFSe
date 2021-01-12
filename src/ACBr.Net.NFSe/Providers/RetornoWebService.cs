@@ -100,6 +100,10 @@ namespace ACBr.Net.NFSe.Providers
         public TipoRps Tipo { get; internal set; }
 
         public NotaServico Nota { get; internal set; }
+
+        public int AnoCompetencia { get; internal set; }
+
+        public int MesCompetencia { get; internal set; }
     }
 
     public sealed class RetornoConsultarNFSe : RetornoWebservice
@@ -109,6 +113,8 @@ namespace ACBr.Net.NFSe.Providers
         public DateTime? Fim { get; internal set; }
 
         public int NumeroNFse { get; internal set; }
+
+        public string SerieNFse { get; internal set; }
 
         public int Pagina { get; internal set; }
 
@@ -139,6 +145,10 @@ namespace ACBr.Net.NFSe.Providers
         public DateTime Data { get; internal set; }
 
         public string NumeroNFSe { get; internal set; }
+
+        public string SerieNFSe { get; internal set; }
+
+        public decimal ValorNFSe { get; internal set; }
 
         public string CodigoCancelamento { get; internal set; }
 

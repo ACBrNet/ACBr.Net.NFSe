@@ -255,7 +255,40 @@ namespace ACBr.Net.NFSe
                 ServicePointManager.SecurityProtocol = Configuracoes.WebServices.Protocolos;
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
-                    return provider.ConsultaNFSeRps(numero, serie, tipo, NotasServico);
+                    return provider.ConsultaNFSeRps(numero, serie, tipo, NotasServico, 0, 0);
+                }
+            }
+            catch (Exception exception)
+            {
+                this.Log().Error("[ConsultarNFSeRps]", exception);
+                throw;
+            }
+            finally
+            {
+                ServicePointManager.SecurityProtocol = oldProtocol;
+            }
+        }
+
+        /// <summary>
+        /// Consulta a NFSe/RPS que atende os filtros informados.
+        ///
+        /// Obs.: Nem todos provedores suportam este metodo.
+        /// </summary>
+        /// <param name="numero">The numero.</param>
+        /// <param name="serie">The serie.</param>
+        /// <param name="tipo">The tipo.</param>
+        /// <returns>RetornoWebservice.</returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public RetornoConsultarNFSeRps ConsultaNFSeRps(int numero, string serie, TipoRps tipo, int mesCompetencia, int anoCompetencia)
+        {
+            var oldProtocol = ServicePointManager.SecurityProtocol;
+
+            try
+            {
+                ServicePointManager.SecurityProtocol = Configuracoes.WebServices.Protocolos;
+                using (var provider = ProviderManager.GetProvider(Configuracoes))
+                {
+                    return provider.ConsultaNFSeRps(numero, serie, tipo, NotasServico, mesCompetencia, anoCompetencia);
                 }
             }
             catch (Exception exception)
@@ -289,6 +322,39 @@ namespace ACBr.Net.NFSe
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
                     return provider.ConsultaNFSe(NotasServico, numeroNfse: numeroNfse);
+                }
+            }
+            catch (Exception exception)
+            {
+                this.Log().Error("[ConsultarNFSe]", exception);
+                throw;
+            }
+            finally
+            {
+                ServicePointManager.SecurityProtocol = oldProtocol;
+            }
+        }
+
+        /// <summary>
+        /// Consulta as NFSe de acordo com os filtros.
+        ///
+        /// Obs.: Nem todos provedores suportam este metodo.
+        /// </summary>
+        /// <param name="numeroNfse">The numero nfse.</param>
+        /// <returns>RetornoWebservice.</returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public RetornoConsultarNFSe ConsultaNFSe(int numeroNfse, string serieNfse)
+        {
+            Guard.Against<ACBrException>(numeroNfse < 1, "O número da NFSe não pode ser zero ou negativo.");
+
+            var oldProtocol = ServicePointManager.SecurityProtocol;
+
+            try
+            {
+                ServicePointManager.SecurityProtocol = Configuracoes.WebServices.Protocolos;
+                using (var provider = ProviderManager.GetProvider(Configuracoes))
+                {
+                    return provider.ConsultaNFSe(NotasServico, numeroNfse: numeroNfse, serieNfse: serieNfse);
                 }
             }
             catch (Exception exception)
@@ -422,7 +488,39 @@ namespace ACBr.Net.NFSe
                 ServicePointManager.SecurityProtocol = Configuracoes.WebServices.Protocolos;
                 using (var provider = ProviderManager.GetProvider(Configuracoes))
                 {
-                    return provider.CancelarNFSe(codigoCancelamento, numeroNFSe, motivo, NotasServico);
+                    return provider.CancelarNFSe(codigoCancelamento, numeroNFSe, "", 0, motivo, NotasServico);
+                }
+            }
+            catch (Exception exception)
+            {
+                this.Log().Error("[CancelarNFSe]", exception);
+                throw;
+            }
+            finally
+            {
+                ServicePointManager.SecurityProtocol = oldProtocol;
+            }
+        }
+
+        /// <summary>
+        /// Cancela uma NFSe
+        ///
+        /// Obs.: Nem todos provedores suportam este metodo.
+        /// </summary>
+        /// <param name="codigoCancelamento">O codigo de cancelamento.</param>
+        /// <param name="numeroNFSe">O numero da NFSe.</param>
+        /// <param name="motivo">O motivo.</param>
+        /// <returns>RetornoWebservice.</returns>
+        public RetornoCancelar CancelarNFSe(string codigoCancelamento, string numeroNFSe, string serie, decimal valor, string motivo)
+        {
+            var oldProtocol = ServicePointManager.SecurityProtocol;
+
+            try
+            {
+                ServicePointManager.SecurityProtocol = Configuracoes.WebServices.Protocolos;
+                using (var provider = ProviderManager.GetProvider(Configuracoes))
+                {
+                    return provider.CancelarNFSe(codigoCancelamento, numeroNFSe, serie, valor, motivo, NotasServico);
                 }
             }
             catch (Exception exception)
