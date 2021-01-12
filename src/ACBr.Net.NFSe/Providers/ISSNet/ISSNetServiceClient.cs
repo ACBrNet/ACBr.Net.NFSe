@@ -59,7 +59,7 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<RecepcionarLoteRps xmlns=\"http://www.issnetonline.com.br/webservice/nfd\">");
             message.Append("<xml>");
-            message.AppendCData(msg);
+            message.AppendCData("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + msg);
             message.Append("</xml>");
             message.Append("</RecepcionarLoteRps>");
 
@@ -76,7 +76,7 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<ConsultaSituacaoLoteRPS xmlns=\"http://www.issnetonline.com.br/webservice/nfd\">");
             message.Append("<xml>");
-            message.AppendCData(msg);
+            message.AppendCData("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + msg);
             message.Append("</xml>");
             message.Append("</ConsultaSituacaoLoteRPS>");
 
@@ -88,7 +88,7 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<ConsultarLoteRps xmlns=\"http://www.issnetonline.com.br/webservice/nfd\">");
             message.Append("<xml>");
-            message.AppendCData(msg);
+            message.AppendCData("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + msg);
             message.Append("</xml>");
             message.Append("</ConsultarLoteRps>");
 
@@ -105,7 +105,7 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<ConsultarNFSePorRPS xmlns=\"http://www.issnetonline.com.br/webservice/nfd\">");
             message.Append("<xml>");
-            message.AppendCData(msg);
+            message.AppendCData("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + msg);
             message.Append("</xml>");
             message.Append("</ConsultarNFSePorRPS>");
 
@@ -117,7 +117,7 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<ConsultarNfse xmlns=\"http://www.issnetonline.com.br/webservice/nfd\">");
             message.Append("<xml>");
-            message.AppendCData(msg);
+            message.AppendCData("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + msg);
             message.Append("</xml>");
             message.Append("</ConsultarNfse>");
 
@@ -129,7 +129,7 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<CancelarNfse xmlns=\"http://www.issnetonline.com.br/webservice/nfd\">");
             message.Append("<xml>");
-            message.AppendCData(msg);
+            message.AppendCData("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + msg);
             message.Append("</xml>");
             message.Append("</CancelarNfse>");
 
