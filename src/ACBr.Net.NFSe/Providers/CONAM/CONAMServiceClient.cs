@@ -39,7 +39,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</Sdt_processarpsin>");
             message.Append("</ws_nfe.PROCESSARPS>");
 
-            return Execute(message.ToString(), "ws_nfe.VERFICARPSResponse");
+            return Execute(message.ToString(), "ws_nfe.PROCESSARPSResponse");
         }
 
         public string ConsultarSituacao(string cabecalho, string dados)

@@ -202,14 +202,30 @@ namespace ACBr.Net.NFSe.Providers
                 reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "Telefone", 10, 10, Ocorrencia.Obrigatoria, (nota.Tomador.DadosContato.DDD.OnlyNumbers() + nota.Tomador.DadosContato.Telefone.OnlyNumbers()).ZeroFill(10)));
                 reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipal", 1, 20, Ocorrencia.Obrigatoria, nota.Tomador.InscricaoMunicipal));
 
-                reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TipoLogLocPre", 1, 10, Ocorrencia.NaoObrigatoria, ""));
-                reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "LogLocPre", 1, 60, Ocorrencia.NaoObrigatoria, ""));
-                reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "NumEndLocPre", 1, 10, Ocorrencia.NaoObrigatoria, ""));
-                reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "ComplEndLocPre", 0, 60, Ocorrencia.NaoObrigatoria, ""));
-                reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "BairroLocPre", 1, 60, Ocorrencia.NaoObrigatoria, ""));
-                reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "MunLocPre", 1, 60, Ocorrencia.NaoObrigatoria, ""));
-                reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "SiglaUFLocpre", 2, 2, Ocorrencia.NaoObrigatoria, ""));
-                reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "CepLocPre", 8, 8, Ocorrencia.NaoObrigatoria, ""));
+                if (nota.NaturezaOperacao == 1 && nota.Tomador.Endereco.CodigoMunicipio != nota.Prestador.Endereco.CodigoMunicipio) //Natureza 1 = Tributacao no Município, 2 - Fora do Município
+                {
+                    //Quando a natureza é 1 (dentro do município) e o tomador é de cidade diferente do prestador, os campos abaixo são preenchidos com o endereço do prestador
+
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TipoLogLocPre", 1, 10, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.TipoLogradouro));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "LogLocPre", 1, 60, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Logradouro));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "NumEndLocPre", 1, 10, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Numero));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "ComplEndLocPre", 0, 60, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Complemento));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "BairroLocPre", 1, 60, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Bairro));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "MunLocPre", 1, 60, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Municipio));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "SiglaUFLocpre", 2, 2, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Uf));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "CepLocPre", 8, 8, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Cep.ZeroFill(8)));
+                }
+                else
+                {
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TipoLogLocPre", 1, 10, Ocorrencia.NaoObrigatoria, ""));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "LogLocPre", 1, 60, Ocorrencia.NaoObrigatoria, ""));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "NumEndLocPre", 1, 10, Ocorrencia.NaoObrigatoria, ""));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "ComplEndLocPre", 0, 60, Ocorrencia.NaoObrigatoria, ""));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "BairroLocPre", 1, 60, Ocorrencia.NaoObrigatoria, ""));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "MunLocPre", 1, 60, Ocorrencia.NaoObrigatoria, ""));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "SiglaUFLocpre", 2, 2, Ocorrencia.NaoObrigatoria, ""));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "CepLocPre", 8, 8, Ocorrencia.NaoObrigatoria, ""));
+                }
 
                 reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "Email1", 0, 120, Ocorrencia.NaoObrigatoria, nota.Tomador.DadosContato.Email));
             }

@@ -232,6 +232,7 @@ namespace ACBr.Net.NFSe.Providers
             }
 
             var xmlLote = new StringBuilder();
+            xmlLote.Append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
             xmlLote.Append("<EnviarLoteRpsEnvio xmlns=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_enviar_lote_rps_envio.xsd\">");
             xmlLote.Append("<LoteRps>");
             xmlLote.Append($"<NumeroLote>{retornoWebservice.Lote}</NumeroLote>");
@@ -245,7 +246,7 @@ namespace ACBr.Net.NFSe.Providers
             xmlLote.Append("</EnviarLoteRpsEnvio>");
 
             var document = XDocument.Parse(xmlLote.ToString());
-            document.AddAttribute(new XAttribute(XNamespace.Xmlns + "tc", tc));
+            document.ElementAnyNs("EnviarLoteRpsEnvio").AddAttribute(new XAttribute(XNamespace.Xmlns + "tc", tc));
             NFSeUtil.ApplyNamespace(document.Root, tc, "LoteRps", "EnviarLoteRpsEnvio");
 
             retornoWebservice.XmlEnvio = document.AsString();
@@ -265,8 +266,7 @@ namespace ACBr.Net.NFSe.Providers
         {
             var loteBuilder = new StringBuilder();
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-            loteBuilder.Append("<ConsultarSituacaoLoteRpsEnvio xmlns=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_consultar_situacao_lote_rps_envio.xsd\">" +
-                               "xmlns:tc=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd\">");
+            loteBuilder.Append("<ConsultarSituacaoLoteRpsEnvio xmlns=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_consultar_situacao_lote_rps_envio.xsd\" xmlns:tc=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd\">");
             loteBuilder.Append("<Prestador>");
             loteBuilder.Append($"<tc:CpfCnpj><tc:Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tc:Cnpj></tc:CpfCnpj>");
             loteBuilder.Append($"<tc:InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</tc:InscricaoMunicipal>");
@@ -281,8 +281,7 @@ namespace ACBr.Net.NFSe.Providers
         {
             var loteBuilder = new StringBuilder();
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-            loteBuilder.Append("<ConsultarLoteRpsEnvio xmlns=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_consultar_lote_rps_envio.xsd\">" +
-                               "xmlns:tc=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd\">");
+            loteBuilder.Append("<ConsultarLoteRpsEnvio xmlns=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_consultar_lote_rps_envio.xsd\" xmlns:tc=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd\">");
             loteBuilder.Append("<Prestador>");
             loteBuilder.Append($"<tc:CpfCnpj><tc:Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tc:Cnpj></tc:CpfCnpj>");
             loteBuilder.Append($"<tc:InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</tc:InscricaoMunicipal>");
@@ -303,8 +302,7 @@ namespace ACBr.Net.NFSe.Providers
 
             var loteBuilder = new StringBuilder();
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-            loteBuilder.Append("<ConsultarNfseRpsEnvio xmlns=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_consultar_nfse_rps_envio.xsd\">" +
-                               "xmlns:tc=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd\">");
+            loteBuilder.Append("<ConsultarNfseRpsEnvio xmlns=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_consultar_nfse_rps_envio.xsd\" xmlns:tc=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd\">");
             loteBuilder.Append("<IdentificacaoRps>");
             loteBuilder.Append($"<tc:Numero>{retornoWebservice.NumeroRps}</tc:Numero>");
             loteBuilder.Append($"<tc:Serie>{retornoWebservice.Serie}</tc:Serie>");
@@ -324,8 +322,7 @@ namespace ACBr.Net.NFSe.Providers
             var loteBuilder = new StringBuilder();
 
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-            loteBuilder.Append("<ConsultarNfseEnvio xmlns=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_consultar_nfse_envio.xsd\">" +
-                               "xmlns:tc=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd\">");
+            loteBuilder.Append("<ConsultarNfseEnvio xmlns=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_consultar_nfse_envio.xsd\" xmlns:tc=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd\">");
             loteBuilder.Append("<Prestador>");
             loteBuilder.Append($"<tc:CpfCnpj><tc:Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</tc:Cnpj></tc:CpfCnpj>");
             loteBuilder.Append($"<tc:InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</tc:InscricaoMunicipal>");
@@ -381,11 +378,10 @@ namespace ACBr.Net.NFSe.Providers
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Número da NFSe/Codigo de cancelamento não informado para cancelamento." });
                 return;
             }
-
+            
             var loteBuilder = new StringBuilder();
             loteBuilder.Append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-            loteBuilder.Append("<pl:CancelarNfseEnvio xmlns:pl=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_cancelar_nfse_envio.xsd\">" +
-                               "xmlns:tc=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd\">");
+            loteBuilder.Append("<pl:CancelarNfseEnvio xmlns:pl=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_cancelar_nfse_envio.xsd\" xmlns:tc=\"http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd\">");
             loteBuilder.Append("<Pedido>");
             loteBuilder.Append("<tc:InfPedidoCancelamento>");
             loteBuilder.Append("<tc:IdentificacaoNfse>");
@@ -404,6 +400,11 @@ namespace ACBr.Net.NFSe.Providers
             loteBuilder.Append("</pl:CancelarNfseEnvio>");
 
             retornoWebservice.XmlEnvio = loteBuilder.ToString();
+        }
+
+        protected override void AssinarCancelarNFSe(RetornoCancelar retornoWebservice)
+        {
+            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(retornoWebservice.XmlEnvio, "Pedido", "", Certificado);
         }
 
         #endregion Services
