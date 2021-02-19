@@ -51,7 +51,19 @@ namespace ACBr.Net.NFSe.Providers
 
         public string Enviar(string cabec, string msg)
         {
-            var tag = EhHomologação ? "TesteEnvioLoteRPSRequest" : "EnvioLoteRPSRequest";
+            string tag, response, soapAction;
+            if (EhHomologação)
+            {
+                tag = "TesteEnvioLoteRPSRequest";
+                response = "TesteEnvioLoteRPSResponse";
+                soapAction = "http://www.prefeitura.sp.gov.br/nfe/ws/testeEnvioLoteRPS";
+            }
+            else
+            {
+                tag = "EnvioLoteRPSRequest";
+                response = "EnvioLoteRPSResponse";
+                soapAction = "http://www.prefeitura.sp.gov.br/nfe/ws/envioLoteRPS";
+            }
 
             var message = new StringBuilder();
             message.Append($"<nfe:{tag}>");
@@ -61,9 +73,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</nfe:MensagemXML>");
             message.Append($"</nfe:{tag}>");
 
-            var response = EhHomologação ? "TesteEnvioLoteRPSResponse" : "EnvioLoteRPSResponse";
-
-            return Execute("http://www.prefeitura.sp.gov.br/nfe/ws/envioLoteRPS", message.ToString(), response);
+            return Execute(soapAction, message.ToString(), response);
         }
 
         public string EnviarSincrono(string cabec, string msg)
