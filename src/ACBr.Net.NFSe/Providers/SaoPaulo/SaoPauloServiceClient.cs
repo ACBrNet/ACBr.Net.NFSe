@@ -61,8 +61,8 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</nfe:MensagemXML>");
             message.Append($"</nfe:{tag}>");
 
-            var soapAction = EhHomologação ? "http://www.prefeitura.sp.gov.br/nfe/ws/testeenvio" : "http://www.prefeitura.sp.gov.br/nfe/ws/envioLoteRPS";
             var response = EhHomologação ? "TesteEnvioLoteRPSResponse" : "EnvioLoteRPSResponse";
+            var soapAction = EhHomologação ? "http://www.prefeitura.sp.gov.br/nfe/ws/testeenvio" : "http://www.prefeitura.sp.gov.br/nfe/ws/envioLoteRPS";
 
             return Execute(soapAction, message.ToString(), response);
         }
