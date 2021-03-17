@@ -584,7 +584,9 @@ namespace ACBr.Net.NFSe.Providers
             if (!retornoWebservice.Sucesso) return;
 
             var notasServico = xmlRet.Root.ElementsAnyNs("NFe").Select(nfse => LoadXml(nfse.ToString())).ToList();
-            retornoWebservice.Nota = notasServico[0];
+            if (notasServico.Count>0)
+                retornoWebservice.Nota = notasServico[0];
+                
             notasServico.AddRange(notasServico);
         }
 
