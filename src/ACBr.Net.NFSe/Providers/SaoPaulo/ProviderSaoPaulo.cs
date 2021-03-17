@@ -584,9 +584,7 @@ namespace ACBr.Net.NFSe.Providers
             if (!retornoWebservice.Sucesso) return;
 
             var notasServico = xmlRet.Root.ElementsAnyNs("NFe").Select(nfse => LoadXml(nfse.ToString())).ToList();
-            if (notasServico.Count>0)
-                retornoWebservice.Nota = notasServico[0];
-                
+            retornoWebservice.Nota = notasServico[0];
             notasServico.AddRange(notasServico);
         }
 
@@ -844,7 +842,7 @@ namespace ACBr.Net.NFSe.Providers
             var issRetido = nota.Servico.Valores.IssRetido == SituacaoTributaria.Retencao ? "S" : "N";
 
             var indCpfCnpjTomador = "3";
-            switch (nota.Tomador.CpfCnpj.Length)
+            switch (nota.Tomador.CpfCnpj?.Length)
             {
                 case 11:
                     indCpfCnpjTomador = "1";
@@ -869,7 +867,7 @@ namespace ACBr.Net.NFSe.Providers
                           Convert.ToInt32(nota.Servico.Valores.ValorDeducoes * 100).ToString().PadLeft(15, '0') +
                           nota.Servico.ItemListaServico.PadLeft(5, '0') +
                           indCpfCnpjTomador +
-                          nota.Tomador.CpfCnpj.PadLeft(14, '0');
+                          nota.Tomador.CpfCnpj?.PadLeft(14, '0');
             if (!nota.Intermediario.CpfCnpj.IsEmpty())
             {
                 var indCpfCnpjIntermediario = "3";
