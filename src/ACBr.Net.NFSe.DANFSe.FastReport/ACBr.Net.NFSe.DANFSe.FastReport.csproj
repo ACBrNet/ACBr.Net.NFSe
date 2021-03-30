@@ -77,7 +77,7 @@
       <Version>1.2.4.1</Version>
     </PackageReference>
     <PackageReference Include="ACBr.Net.DFe.Core">
-      <Version>1.2.8</Version>
+      <Version>1.2.8.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

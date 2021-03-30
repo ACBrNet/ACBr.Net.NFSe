@@ -43,9 +43,9 @@
     </Description>
     <NeutralLanguage>pt-BR</NeutralLanguage>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <AssemblyVersion>1.5.1.0</AssemblyVersion>
-    <FileVersion>1.5.1.0</FileVersion>
-    <Version>1.5.1.0</Version>
+    <AssemblyVersion>1.5.1.1</AssemblyVersion>
+    <FileVersion>1.5.1.1</FileVersion>
+    <Version>1.5.1.1</Version>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
@@ -82,16 +82,14 @@
 
   <ItemGroup>
     <PackageReference Include="ACBr.Net.Core" Version="1.2.4.1" />
-    <PackageReference Include="ACBr.Net.DFe.Core" Version="1.2.8" />
+    <PackageReference Include="ACBr.Net.DFe.Core" Version="1.2.8.1" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="PropertyChanged.Fody" Version="3.3.1">
+    <PackageReference Include="PropertyChanged.Fody" Version="3.3.3">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="System.ServiceModel.Http" Version="4.8.0" />
-    <PackageReference Include="System.ServiceModel.Primitives" Version="4.8.0" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">

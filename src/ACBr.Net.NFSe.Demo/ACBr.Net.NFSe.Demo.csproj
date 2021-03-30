@@ -120,13 +120,13 @@
       <Version>1.2.4.1</Version>
     </PackageReference>
     <PackageReference Include="ACBr.Net.DFe.Core">
-      <Version>1.2.8</Version>
+      <Version>1.2.8.1</Version>
     </PackageReference>
     <PackageReference Include="NLog">
-      <Version>4.7.6</Version>
+      <Version>4.7.9</Version>
     </PackageReference>
     <PackageReference Include="NLog.Windows.Forms">
-      <Version>4.3.0</Version>
+      <Version>4.4.0</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
