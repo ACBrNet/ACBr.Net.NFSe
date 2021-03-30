@@ -65,6 +65,7 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.Fiorilli, typeof(ProviderFiorilli)},
                 {NFSeProvider.FissLex, typeof(ProviderFissLex)},
                 {NFSeProvider.Ginfes, typeof(ProviderGinfes)},
+                {NFSeProvider.ISSe, typeof(ProviderISSe)},
                 {NFSeProvider.ISSNet, typeof(ProviderISSNet)},
                 {NFSeProvider.NFeCidades, typeof(ProviderNFeCidades)},
                 {NFSeProvider.NotaCarioca, typeof(ProviderNotaCarioca)},
