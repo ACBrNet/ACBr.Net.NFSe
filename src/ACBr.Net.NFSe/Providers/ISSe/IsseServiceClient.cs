@@ -66,7 +66,8 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</xml>");
             message.Append("</EnviarLoteRpsSincrono>");
 
-            return Execute("tns:EnviarLoteRpsSincronoIn", "tns:EnviarLoteRpsSincronoOut", message.ToString());
+            const string SoapAction = "https://nfse-ws.ecity.maringa.pr.gov.br/v2.01#EnviarLoteRpsSincrono";
+            return Execute(SoapAction, message.ToString(), "EnviarLoteRpsSincronoResponse");
         }
 
         public string ConsultarSituacao(string cabec, string msg)
