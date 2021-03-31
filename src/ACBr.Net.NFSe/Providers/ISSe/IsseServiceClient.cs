@@ -36,7 +36,7 @@ using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class ISSeServiceClient : NFSeSOAP11ServiceClient, IServiceClient
+    internal sealed class ISSeServiceClient : NFSeSOAP12ServiceClient, IServiceClient
     {
         #region Constructors
 

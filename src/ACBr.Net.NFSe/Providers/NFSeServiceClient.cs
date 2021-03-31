@@ -206,6 +206,16 @@ namespace ACBr.Net.NFSe.Providers
                     soapResponse = reader.ReadOuterXml();
                 }
             }
+            catch (Exception ex)
+            {
+                //DICA: SE DER ERRO DE VERSAO, ALTERE NO HEADER DA CLASSE xxxClient.cs O TIPO DE SOAP
+                //PARA VERSAO SOAP 1.1
+                //EX: internal sealed class ISSNetServiceClient : NFSeSOAP11ServiceClient, IServiceClient
+                //PARA VERSAO SOAP 1.2
+                //EX: internal sealed class ISSNetServiceClient : NFSeSOAP12ServiceClient, IServiceClient
+                var w = ex.Message;
+                throw;
+            }
             finally
             {
                 if (naoValidarCertificado)
@@ -240,7 +250,15 @@ namespace ACBr.Net.NFSe.Providers
 
             var path = Provider.Configuracoes.Arquivos.GetPathSoap(DateTime.Now, Provider.Configuracoes.PrestadorPadrao.CpfCnpj);
             nomeArquivo = Path.Combine(path, nomeArquivo);
-            File.WriteAllText(nomeArquivo, conteudoArquivo, Encoding.UTF8);
+            try
+            {
+                File.WriteAllText(nomeArquivo, conteudoArquivo, Encoding.UTF8);
+            }
+            catch (Exception ex)
+            {
+                var w = ex.Message;
+                throw;
+            }
         }
 
         /// <inheritdoc />
