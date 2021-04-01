@@ -45,10 +45,24 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
+        #region Protected Methods
+
         protected override IServiceClient GetClient(TipoUrl tipo)
         {
             return new ISSeServiceClient(this, tipo);
         }
+
+        //protected override string GetSchema(TipoUrl tipo)
+        //{
+        //    return "nfse_v202.xsd";
+        //}
+
+        protected override string GetNamespace()
+        {
+            return " xmlns=\"http://www.abrasf.org.br/nfse.xsd\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.abrasf.org.br/nfse.xsd nfse_v2.01.xsd \"";
+        }
+
+        #endregion Protected Methods
 
         #endregion Methods
     }

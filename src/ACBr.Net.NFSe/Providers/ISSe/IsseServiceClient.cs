@@ -59,14 +59,19 @@ namespace ACBr.Net.NFSe.Providers
 
         public string EnviarSincrono(string cabec, string msg)
         {
+            //message.Append("<EnviarLoteRpsSincrono>");
+            //message.Append("<xml>");
+            //message.Append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+
             var message = new StringBuilder();
-            message.Append("<EnviarLoteRpsSincrono>");
-            message.Append("<xml>");
-            message.AppendCData(msg);
+            message.Append("<v2:EnviarLoteRpsSincrono soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
+            message.Append("<xml xsi:type=\"xsd: string\">");
+            message.AppendEnvio(msg);
             message.Append("</xml>");
-            message.Append("</EnviarLoteRpsSincrono>");
+            message.Append("</v2:EnviarLoteRpsSincrono>");
 
             const string SoapAction = "https://nfse-ws.ecity.maringa.pr.gov.br/v2.01#EnviarLoteRpsSincrono";
+
             return Execute(SoapAction, message.ToString(), "EnviarLoteRpsSincronoResponse");
         }
 
@@ -112,7 +117,7 @@ namespace ACBr.Net.NFSe.Providers
 
         private string Execute(string soapAction, string message, string responseTag)
         {
-            return Execute(soapAction, message, "", responseTag);
+            return Execute(soapAction, message, "", responseTag, "xmlns:v2=\"https://nfse-ws.hom-ecity.maringa.pr.gov.br/v2.01\"");
         }
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)

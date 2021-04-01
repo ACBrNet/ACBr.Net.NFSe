@@ -390,7 +390,8 @@ namespace ACBr.Net.NFSe.Providers
             {
                 using (var cliente = GetClient(TipoUrl.EnviarSincrono))
                 {
-                    retornoWebservice.XmlRetorno = cliente.EnviarSincrono(GerarCabecalho(), retornoWebservice.XmlEnvio);
+                    string Cabecalho = GerarCabecalho();
+                    retornoWebservice.XmlRetorno = cliente.EnviarSincrono(Cabecalho, retornoWebservice.XmlEnvio);
                     retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
                     retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }

@@ -183,7 +183,7 @@ namespace ACBr.Net.NFSe.Providers
 
         protected virtual string Execute(string soapAction, string message, string soapHeader, string[] responseTag, params string[] soapNamespaces)
         {
-            var request = WriteSoapEnvelope(message, soapAction, soapHeader, soapNamespaces);
+            Message request = WriteSoapEnvelope(message, soapAction, soapHeader, soapNamespaces);
 
             RemoteCertificateValidationCallback validation = null;
             var naoValidarCertificado = !ValidarCertificadoServidor();
@@ -208,13 +208,12 @@ namespace ACBr.Net.NFSe.Providers
             }
             catch (Exception ex)
             {
-                //DICA: SE DER ERRO DE VERSAO, ALTERE NO HEADER DA CLASSE xxxClient.cs O TIPO DE SOAP
-                //PARA VERSAO SOAP 1.1
+                //Dica: Se der erro de versao, altere no Header da classe "{Provedor}ServiceClient.cs" o tipo de Soap
+                //Para versao Soap 1.1
                 //EX: internal sealed class ISSNetServiceClient : NFSeSOAP11ServiceClient, IServiceClient
-                //PARA VERSAO SOAP 1.2
+                //Para versao Soap 1.2
                 //EX: internal sealed class ISSNetServiceClient : NFSeSOAP12ServiceClient, IServiceClient
-                var w = ex.Message;
-                throw;
+                throw new Exception("Erro no NFSeServiceClient.Execute", ex);
             }
             finally
             {
