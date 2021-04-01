@@ -117,7 +117,10 @@ namespace ACBr.Net.NFSe.Providers
 
         private string Execute(string soapAction, string message, string responseTag)
         {
-            return Execute(soapAction, message, "", responseTag, "xmlns:v2=\"https://nfse-ws.hom-ecity.maringa.pr.gov.br/v2.01\"");
+            var TagV2 = EhHomologação ? "xmlns:v2=\"https://nfse-ws.hom-ecity.maringa.pr.gov.br/v2.01\"" :
+                                            "xmlns:v2=\"https://nfse-ws.ecity.maringa.pr.gov.br/v2.01\"";
+
+            return Execute(soapAction, message, "", responseTag, TagV2, "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
         }
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
