@@ -86,6 +86,9 @@ namespace ACBr.Net.NFSe.Providers
         Sigiss = 20,
 
         [Description("CONAM")]
-        Conam = 21
+        Conam = 21,
+
+        [Description("Goiania")]
+        Goiania = 22
     }
 }
