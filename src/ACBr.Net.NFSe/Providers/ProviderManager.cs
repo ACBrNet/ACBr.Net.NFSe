@@ -57,7 +57,7 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.Abaco, typeof(ProviderAbaco)},
                 {NFSeProvider.BHISS, typeof(ProviderBHISS)},
                 {NFSeProvider.Betha, typeof(ProviderBetha)},
-                {NFSeProvider.Betha2, typeof(ProviderBetha2)},
+                {NFSeProvider.Betha2, typeof(ProviderGoiania)},
                 {NFSeProvider.Coplan, typeof(ProviderCoplan)},
                 {NFSeProvider.DBSeller, typeof(ProviderDBSeller)},
                 {NFSeProvider.DSF, typeof(ProviderDSF)},
@@ -76,6 +76,7 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.WebIss2, typeof(ProviderWebIss2)},
                 {NFSeProvider.Sigiss, typeof(ProviderSigiss)},
                 {NFSeProvider.Conam, typeof(ProviderCONAM)},
+                {NFSeProvider.Goiania, typeof(ProviderGoiania)}
             };
 
             Load();

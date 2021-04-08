@@ -109,7 +109,8 @@ namespace ACBr.Net.NFSe.Providers
 
             var ret = new NotaServico();
 
-            LoadRps(ret, rootRps);
+            if (rootRps != null) //Goiania não retorna o RPS, somente a NFSe
+                LoadRps(ret, rootRps);
 
             if (rootNFSe != null)
             {
@@ -438,6 +439,10 @@ namespace ACBr.Net.NFSe.Providers
             // Sertãozinho/SP
             if (Municipio.Codigo.IsIn(3551702))
                 serie = "00000";
+
+            //Goiânia/GO
+            if (Municipio.Codigo.IsIn(5208707))
+                serie = "UNICA";
 
             indRps.AddChild(AdicionarTag(TipoCampo.Str, "", "Serie", 1, 5, Ocorrencia.Obrigatoria, serie));
             indRps.AddChild(AdicionarTag(TipoCampo.Int, "", "Tipo", 1, 1, Ocorrencia.Obrigatoria, (int)nota.IdentificacaoRps.Tipo + 1));
@@ -1138,6 +1143,10 @@ namespace ACBr.Net.NFSe.Providers
             // Sertãozinho/SP
             if (Municipio.Codigo.IsIn(3551702))
                 retornoWebservice.Serie = "00000";
+
+            //Goiania/GO
+            if (Municipio.Codigo.IsIn(5208707))
+                retornoWebservice.Serie = "UNICA";
 
             var loteBuilder = new StringBuilder();
             loteBuilder.Append($"<ConsultarNfseRpsEnvio {GetNamespace()}>");
