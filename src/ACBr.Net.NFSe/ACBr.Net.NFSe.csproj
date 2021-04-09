@@ -157,6 +157,10 @@
       <Pack>True</Pack>
       <PackagePath>content\Schemas\Ginfes</PackagePath>
     </None>
+    <None Include="Schemas\Goiania\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\Goiania</PackagePath>
+    </None>
     <None Include="Schemas\ISSNet\*.*">
       <Pack>True</Pack>
       <PackagePath>content\Schemas\ISSNet</PackagePath>
@@ -254,6 +258,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\Ginfes\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\Goiania\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\ISSNet\*.*">
