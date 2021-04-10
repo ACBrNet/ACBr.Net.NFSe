@@ -31,6 +31,7 @@
 
 using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
+using ACBr.Net.DFe.Core;
 using ACBr.Net.DFe.Core.Serializer;
 using ACBr.Net.NFSe.Configuracao;
 using ACBr.Net.NFSe.Nota;
@@ -62,7 +63,7 @@ namespace ACBr.Net.NFSe.Providers
 
         #region RPS
 
-        protected virtual XElement WriteRps(NotaServico nota)
+        protected override XElement WriteRps(NotaServico nota)
         {
             var rootRps = new XElement("Rps");
 
@@ -101,7 +102,7 @@ namespace ACBr.Net.NFSe.Providers
             return rootRps;
         }
 
-        protected virtual XElement WriteRpsRps(NotaServico nota)
+        protected override XElement WriteRpsRps(NotaServico nota)
         {
             var rps = new XElement("Rps");
 
@@ -116,5 +117,23 @@ namespace ACBr.Net.NFSe.Providers
         }
 
         #endregion RPS
+
+        #region Services
+
+        /// <inheritdoc />
+        protected override void AssinarEnviar(RetornoEnviar retornoWebservice)
+        {
+            retornoWebservice.XmlEnvio = XmlSigning.AssinarXmlTodos(retornoWebservice.XmlEnvio, "Rps", "InfDeclaracaoPrestacaoServico", Certificado);
+            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(retornoWebservice.XmlEnvio, "EnviarLoteRpsEnvio", "LoteRps", Certificado);
+        }
+
+        /// <inheritdoc />
+        protected override void AssinarEnviarSincrono(RetornoEnviar retornoWebservice)
+        {
+            retornoWebservice.XmlEnvio = XmlSigning.AssinarXmlTodos(retornoWebservice.XmlEnvio, "Rps", "InfDeclaracaoPrestacaoServico", Certificado);
+            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(retornoWebservice.XmlEnvio, "EnviarLoteRpsSincronoEnvio", "LoteRps", Certificado);
+        }
+
+        #endregion Services
     }
 }

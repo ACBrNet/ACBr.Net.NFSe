@@ -67,9 +67,7 @@ namespace ACBr.Net.NFSe.Demo
                 if (InputBox.Show("Numero Lote", "Digite o numero do lote.", ref numero).Equals(DialogResult.Cancel)) return;
 
                 var ret = acbrNFSe.Enviar(numero);
-                wbbDados.LoadXml(ret.XmlEnvio);
-                wbbResposta.LoadXml(ret.XmlRetorno);
-                wbbRetorno.LoadXml(ret.EnvelopeRetorno);
+                ProcessarRetorno(ret);
             });
         }
 
@@ -84,9 +82,7 @@ namespace ACBr.Net.NFSe.Demo
                 if (InputBox.Show("Numero do Protocolo", "Digite o numero do protocolo.", ref protocolo).Equals(DialogResult.Cancel)) return;
 
                 var ret = acbrNFSe.ConsultarSituacao(numero, protocolo);
-                wbbDados.LoadXml(ret.XmlEnvio);
-                wbbResposta.LoadXml(ret.XmlRetorno);
-                wbbRetorno.LoadXml(ret.EnvelopeRetorno);
+                ProcessarRetorno(ret);
             });
         }
 
@@ -101,9 +97,7 @@ namespace ACBr.Net.NFSe.Demo
                 if (InputBox.Show("Numero do Protocolo", "Digite o numero do protocolo.", ref protocolo).Equals(DialogResult.Cancel)) return;
 
                 var ret = acbrNFSe.ConsultarLoteRps(numero, protocolo);
-                wbbDados.LoadXml(ret.XmlEnvio);
-                wbbResposta.LoadXml(ret.XmlRetorno);
-                wbbRetorno.LoadXml(ret.EnvelopeRetorno);
+                ProcessarRetorno(ret);
             });
         }
 
@@ -118,9 +112,7 @@ namespace ACBr.Net.NFSe.Demo
                 if (InputBox.Show("Serie da RPS", "Digite o numero da serie da RPS.", ref serie).Equals(DialogResult.Cancel)) return;
 
                 var ret = acbrNFSe.ConsultaNFSeRps(numero, serie, TipoRps.RPS);
-                wbbDados.LoadXml(ret.XmlEnvio);
-                wbbResposta.LoadXml(ret.XmlRetorno);
-                wbbRetorno.LoadXml(ret.EnvelopeRetorno);
+                ProcessarRetorno(ret);
             });
         }
 
@@ -129,9 +121,7 @@ namespace ACBr.Net.NFSe.Demo
             ExecuteSafe(() =>
             {
                 var ret = acbrNFSe.ConsultaNFSePeriodo(DateTime.Today.AddDays(-7), DateTime.Today);
-                wbbDados.LoadXml(ret.XmlEnvio);
-                wbbResposta.LoadXml(ret.XmlRetorno);
-                wbbRetorno.LoadXml(ret.EnvelopeRetorno);
+                ProcessarRetorno(ret);
             });
         }
 
@@ -149,9 +139,7 @@ namespace ACBr.Net.NFSe.Demo
                 if (InputBox.Show("Motivo Cancelamento", "Digite o motivo do cancelamento.", ref motivo).Equals(DialogResult.Cancel)) return;
 
                 var ret = acbrNFSe.CancelarNFSe(codigo, serie, motivo);
-                wbbDados.LoadXml(ret.XmlEnvio);
-                wbbResposta.LoadXml(ret.XmlRetorno);
-                wbbRetorno.LoadXml(ret.EnvelopeRetorno);
+                ProcessarRetorno(ret);
             });
         }
 
@@ -165,9 +153,7 @@ namespace ACBr.Net.NFSe.Demo
                 if (InputBox.Show("Numero Lote", "Digite o numero do lote.", ref numero).Equals(DialogResult.Cancel)) return;
 
                 var ret = acbrNFSe.Enviar(numero, true);
-                wbbDados.LoadXml(ret.XmlEnvio);
-                wbbResposta.LoadXml(ret.XmlRetorno);
-                wbbRetorno.LoadXml(ret.EnvelopeRetorno);
+                ProcessarRetorno(ret);
             });
         }
 
@@ -498,6 +484,58 @@ namespace ACBr.Net.NFSe.Demo
             nfSe.Tomador.DadosContato.Email = "NOME@EMPRESA.COM.BR";
         }
 
+        private void ProcessarRetorno(RetornoWebservice retorno)
+        {
+            wbbDados.LoadXml(retorno.XmlEnvio);
+            wbbResposta.LoadXml(retorno.XmlRetorno);
+            wbbRetorno.LoadXml(retorno.EnvelopeRetorno);
+
+            rtLogResposta.Clear();
+
+            switch (retorno)
+            {
+                case RetornoEnviar ret:
+                    rtLogResposta.AppendLine(ret.Sincrono ? "Metodo : Enviar Sincrono" : "Metodo : Enviar");
+                    rtLogResposta.AppendLine($"Data : {ret.Data:G}");
+                    rtLogResposta.AppendLine($"Lote : {ret.Lote}");
+                    rtLogResposta.AppendLine($"Protocolo : {ret.Protocolo}");
+                    rtLogResposta.AppendLine($"Sucesso : {ret.Sucesso}");
+                    break;
+
+                case RetornoConsultarLoteRps ret:
+                    rtLogResposta.AppendLine("Metodo : Consultar Lote RPS");
+                    rtLogResposta.AppendLine($"Lote : {ret.Lote}");
+                    rtLogResposta.AppendLine($"Protocolo : {ret.Protocolo}");
+                    rtLogResposta.AppendLine($"Situação : {ret.Situacao}");
+                    rtLogResposta.AppendLine($"Sucesso : {ret.Sucesso}");
+
+                    if (ret.Notas.Any())
+                    {
+                        foreach (var nota in ret.Notas)
+                        {
+                            rtLogResposta.AppendLine($"NFSe : {nota.IdentificacaoNFSe.Numero}");
+                            rtLogResposta.AppendLine($"Chave : {nota.IdentificacaoNFSe.Chave}");
+                            rtLogResposta.AppendLine($"Data Emissão : {nota.IdentificacaoNFSe.DataEmissao:G}");
+                        }
+                    }
+                    break;
+            }
+
+            if (!retorno.Erros.Any()) return;
+
+            rtLogResposta.JumpLine();
+            rtLogResposta.AppendLine("----------------------------------------------------");
+            rtLogResposta.AppendLine("                     Erros");
+            rtLogResposta.AppendLine("----------------------------------------------------");
+            foreach (var erro in retorno.Erros)
+            {
+                rtLogResposta.AppendLine($"Codigo do Erro : {erro.Codigo}");
+                rtLogResposta.AppendLine($"Mensagem : {erro.Descricao}");
+                rtLogResposta.AppendLine($"Correção : {erro.Correcao}");
+                rtLogResposta.AppendLine("----------------------------------------------------");
+            }
+        }
+
         private void AddMunicipio(params ACBrMunicipioNFSe[] municipios)
         {
             ProviderManager.Municipios.AddRange(municipios);
@@ -650,6 +688,8 @@ namespace ACBr.Net.NFSe.Demo
             catch (Exception exception)
             {
                 lblStatus.Text = exception.Message;
+                rtLogResposta.Clear();
+                rtLogResposta.AppendLine($"Erro : {exception.Message}");
             }
         }
 

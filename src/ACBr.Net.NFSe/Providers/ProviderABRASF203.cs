@@ -55,7 +55,6 @@ namespace ACBr.Net.NFSe.Providers
         {
             Name = "ABRASFv203";
             Versao = "2.03";
-            UsaPrestadorEnvio = false;
         }
 
         #endregion Constructors
