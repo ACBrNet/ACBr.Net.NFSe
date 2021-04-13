@@ -486,10 +486,6 @@ namespace ACBr.Net.NFSe.Demo
 
         private void ProcessarRetorno(RetornoWebservice retorno)
         {
-            wbbDados.LoadXml(retorno.XmlEnvio);
-            wbbResposta.LoadXml(retorno.XmlRetorno);
-            wbbRetorno.LoadXml(retorno.EnvelopeRetorno);
-
             rtLogResposta.Clear();
 
             switch (retorno)
@@ -502,6 +498,14 @@ namespace ACBr.Net.NFSe.Demo
                     rtLogResposta.AppendLine($"Sucesso : {ret.Sucesso}");
                     break;
 
+                case RetornoConsultarSituacao ret:
+                    rtLogResposta.AppendLine("Metodo : Consultar Situação Lote RPS");
+                    rtLogResposta.AppendLine($"Lote : {ret.Lote}");
+                    rtLogResposta.AppendLine($"Protocolo : {ret.Protocolo}");
+                    rtLogResposta.AppendLine($"Situação : {ret.Situacao}");
+                    rtLogResposta.AppendLine($"Sucesso : {ret.Sucesso}");
+                    break;
+
                 case RetornoConsultarLoteRps ret:
                     rtLogResposta.AppendLine("Metodo : Consultar Lote RPS");
                     rtLogResposta.AppendLine($"Lote : {ret.Lote}");
@@ -509,7 +513,7 @@ namespace ACBr.Net.NFSe.Demo
                     rtLogResposta.AppendLine($"Situação : {ret.Situacao}");
                     rtLogResposta.AppendLine($"Sucesso : {ret.Sucesso}");
 
-                    if (ret.Notas.Any())
+                    if (!ret.Notas.IsNullOrEmpty())
                     {
                         foreach (var nota in ret.Notas)
                         {
@@ -519,21 +523,119 @@ namespace ACBr.Net.NFSe.Demo
                         }
                     }
                     break;
+
+                case RetornoConsultarNFSeRps ret:
+                    rtLogResposta.AppendLine("Metodo : Consultar NFSe por RPS");
+                    rtLogResposta.AppendLine($"Tipo : {ret.Tipo.GetDescription()}");
+                    rtLogResposta.AppendLine($"Serie : {ret.Serie}");
+                    rtLogResposta.AppendLine($"RPS : {ret.NumeroRps}");
+                    rtLogResposta.AppendLine($"Ano : {ret.AnoCompetencia}");
+                    rtLogResposta.AppendLine($"Mês : {ret.MesCompetencia}");
+                    rtLogResposta.AppendLine($"Sucesso : {ret.Sucesso}");
+
+                    if (ret.Nota != null)
+                    {
+                        rtLogResposta.AppendLine($"NFSe : {ret.Nota.IdentificacaoNFSe.Numero}");
+                        rtLogResposta.AppendLine($"Chave : {ret.Nota.IdentificacaoNFSe.Chave}");
+                        rtLogResposta.AppendLine($"Data Emissão : {ret.Nota.IdentificacaoNFSe.DataEmissao:G}");
+                    }
+                    break;
+
+                case RetornoConsultarNFSe ret:
+                    rtLogResposta.AppendLine("Metodo : Consultar NFSe");
+                    rtLogResposta.AppendLine($"Nome Intermediario : {ret.NomeIntermediario}");
+                    rtLogResposta.AppendLine($"CNPJ Intermediario : {ret.CPFCNPJIntermediario}");
+                    rtLogResposta.AppendLine($"IM Intermediario : {ret.IMIntermediario}");
+                    rtLogResposta.AppendLine($"CNPJ Tomador : {ret.CPFCNPJTomador}");
+                    rtLogResposta.AppendLine($"IM Tomador : {ret.IMTomador}");
+                    rtLogResposta.AppendLine($"Data Inicial : {(ret.Inicio ?? DateTime.MinValue):G}");
+                    rtLogResposta.AppendLine($"Data Final : {(ret.Fim ?? DateTime.MinValue):G}");
+                    rtLogResposta.AppendLine($"NFSe : {ret.NumeroNFse}");
+                    rtLogResposta.AppendLine($"Serie : {ret.SerieNFse}");
+                    rtLogResposta.AppendLine($"Pagina : {ret.Pagina}");
+                    rtLogResposta.AppendLine($"Proxima Pagina : {ret.ProximaPagina}");
+                    rtLogResposta.AppendLine($"Sucesso : {ret.Sucesso}");
+
+                    if (!ret.Notas.IsNullOrEmpty())
+                    {
+                        foreach (var nota in ret.Notas)
+                        {
+                            rtLogResposta.AppendLine($"NFSe : {nota.IdentificacaoNFSe.Numero}");
+                            rtLogResposta.AppendLine($"Chave : {nota.IdentificacaoNFSe.Chave}");
+                            rtLogResposta.AppendLine($"Data Emissão : {nota.IdentificacaoNFSe.DataEmissao:G}");
+                        }
+                    }
+                    break;
+
+                case RetornoConsultarSequencialRps ret:
+                    rtLogResposta.AppendLine("Metodo : Consultar Sequencial RPS");
+                    rtLogResposta.AppendLine($"Serie : {ret.Serie}");
+                    rtLogResposta.AppendLine($"ùltimo RPS : {ret.UltimoNumero}");
+                    rtLogResposta.AppendLine($"Sucesso : {ret.Sucesso}");
+                    break;
+
+                case RetornoCancelar ret:
+                    rtLogResposta.AppendLine("Metodo : Cancelar NFSe");
+                    rtLogResposta.AppendLine($"Codigo : {ret.CodigoCancelamento}");
+                    rtLogResposta.AppendLine($"Data : {ret.Data:G}");
+                    rtLogResposta.AppendLine($"Motivo : {ret.Motivo}");
+                    rtLogResposta.AppendLine($"NFSe : {ret.NumeroNFSe}");
+                    rtLogResposta.AppendLine($"Serie : {ret.SerieNFSe}");
+                    rtLogResposta.AppendLine($"Valor : {ret.ValorNFSe:C2}");
+                    rtLogResposta.AppendLine($"Sucesso : {ret.Sucesso}");
+                    break;
+
+                case RetornoCancelarNFSeLote ret:
+                    rtLogResposta.AppendLine("Metodo : Cancelar NFSe Lote");
+                    rtLogResposta.AppendLine($"Lote : {ret.Lote}");
+                    rtLogResposta.AppendLine($"Sucesso : {ret.Sucesso}");
+                    break;
+
+                case RetornoSubstituirNFSe ret:
+                    rtLogResposta.AppendLine("Metodo : Substituitr NFSe");
+                    rtLogResposta.AppendLine($"Codigo : {ret.CodigoCancelamento}");
+                    rtLogResposta.AppendLine($"Motivo : {ret.Motivo}");
+                    rtLogResposta.AppendLine($"NFSe : {ret.NumeroNFSe}");
+                    rtLogResposta.AppendLine($"Sucesso : {ret.Sucesso}");
+
+                    if (ret.Nota != null)
+                    {
+                        rtLogResposta.AppendLine($"NFSe : {ret.Nota.IdentificacaoNFSe.Numero}");
+                        rtLogResposta.AppendLine($"Chave : {ret.Nota.IdentificacaoNFSe.Chave}");
+                        rtLogResposta.AppendLine($"Data Emissão : {ret.Nota.IdentificacaoNFSe.DataEmissao:G}");
+                    }
+                    break;
             }
 
-            if (!retorno.Erros.Any()) return;
-
-            rtLogResposta.JumpLine();
-            rtLogResposta.AppendLine("----------------------------------------------------");
-            rtLogResposta.AppendLine("                     Erros");
-            rtLogResposta.AppendLine("----------------------------------------------------");
-            foreach (var erro in retorno.Erros)
+            if (retorno.Alertas.Any())
             {
-                rtLogResposta.AppendLine($"Codigo do Erro : {erro.Codigo}");
-                rtLogResposta.AppendLine($"Mensagem : {erro.Descricao}");
-                rtLogResposta.AppendLine($"Correção : {erro.Correcao}");
-                rtLogResposta.AppendLine("----------------------------------------------------");
+                rtLogResposta.JumpLine();
+                rtLogResposta.AppendLine("Alerta(s):");
+                foreach (var erro in retorno.Erros)
+                {
+                    rtLogResposta.AppendLine($"Codigo : {erro.Codigo}");
+                    rtLogResposta.AppendLine($"Mensagem : {erro.Descricao}");
+                    rtLogResposta.AppendLine($"Correção : {erro.Correcao}");
+                    rtLogResposta.AppendLine("----------------------------------------------------");
+                }
             }
+
+            if (retorno.Erros.Any())
+            {
+                rtLogResposta.JumpLine();
+                rtLogResposta.AppendLine("Erro(s):");
+                foreach (var erro in retorno.Erros)
+                {
+                    rtLogResposta.AppendLine($"Codigo : {erro.Codigo}");
+                    rtLogResposta.AppendLine($"Mensagem : {erro.Descricao}");
+                    rtLogResposta.AppendLine($"Correção : {erro.Correcao}");
+                    rtLogResposta.AppendLine("----------------------------------------------------");
+                }
+            }
+
+            wbbDados.LoadXml(retorno.XmlEnvio);
+            wbbResposta.LoadXml(retorno.XmlRetorno);
+            wbbRetorno.LoadXml(retorno.EnvelopeRetorno);
         }
 
         private void AddMunicipio(params ACBrMunicipioNFSe[] municipios)

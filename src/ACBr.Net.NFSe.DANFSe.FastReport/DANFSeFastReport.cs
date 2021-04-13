@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
+using ACBr.Net.Core;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core.Common;
 using FastReport;
@@ -8,6 +10,7 @@ using FastReport.Export.Pdf;
 
 namespace ACBr.Net.NFSe.DANFSe.FastReport
 {
+    [TypeConverter(typeof(ACBrExpandableObjectConverter))]
     public sealed class DANFSeFastReport : ACBrDANFSeBase
     {
         #region Fields

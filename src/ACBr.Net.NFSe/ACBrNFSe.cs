@@ -72,7 +72,6 @@ namespace ACBr.Net.NFSe
         /// <summary>
         /// Componente de impressão
         /// </summary>
-        [Browsable(false)]
         public ACBrDANFSeBase DANFSe
         {
             get => danfSe;

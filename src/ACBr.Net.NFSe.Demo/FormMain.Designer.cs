@@ -30,20 +30,24 @@
 		{
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.tabPage14 = new System.Windows.Forms.TabPage();
             this.btnGerarLoteRps = new System.Windows.Forms.Button();
             this.btnImprimirDANFSe = new System.Windows.Forms.Button();
-            this.btnConsultarNFSeRps = new System.Windows.Forms.Button();
             this.btnSubstituirNFSe = new System.Windows.Forms.Button();
             this.btnLinkNFSe = new System.Windows.Forms.Button();
-            this.btnCancelarNFSe = new System.Windows.Forms.Button();
-            this.btnConsultarLote = new System.Windows.Forms.Button();
             this.btnGerarEnviarLoteSinc = new System.Windows.Forms.Button();
             this.btnEnviarEmail = new System.Windows.Forms.Button();
-            this.btnConsultarNFSePeriodo = new System.Windows.Forms.Button();
-            this.btnConsultarSituacao = new System.Windows.Forms.Button();
             this.btnGerarEnviarRps = new System.Windows.Forms.Button();
             this.btnGerarEnviarLoteRps = new System.Windows.Forms.Button();
             this.btnGerarRps = new System.Windows.Forms.Button();
+            this.tabPage15 = new System.Windows.Forms.TabPage();
+            this.btnConsultarNFSeRps = new System.Windows.Forms.Button();
+            this.btnConsultarLote = new System.Windows.Forms.Button();
+            this.btnConsultarNFSePeriodo = new System.Windows.Forms.Button();
+            this.btnConsultarSituacao = new System.Windows.Forms.Button();
+            this.tabPage16 = new System.Windows.Forms.TabPage();
+            this.btnCancelarNFSe = new System.Windows.Forms.Button();
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.rtLogResposta = new System.Windows.Forms.RichTextBox();
@@ -132,10 +136,14 @@
             this.cmhCodigo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cmhCodigoSiafi = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cmhProvedor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabControl2.SuspendLayout();
+            this.tabPage14.SuspendLayout();
+            this.tabPage15.SuspendLayout();
+            this.tabPage16.SuspendLayout();
             this.tabControl3.SuspendLayout();
             this.tabPage8.SuspendLayout();
             this.tabPage9.SuspendLayout();
@@ -162,169 +170,212 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(865, 489);
+            this.tabControl1.Size = new System.Drawing.Size(860, 489);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.btnGerarLoteRps);
-            this.tabPage1.Controls.Add(this.btnImprimirDANFSe);
-            this.tabPage1.Controls.Add(this.btnConsultarNFSeRps);
-            this.tabPage1.Controls.Add(this.btnSubstituirNFSe);
-            this.tabPage1.Controls.Add(this.btnLinkNFSe);
-            this.tabPage1.Controls.Add(this.btnCancelarNFSe);
-            this.tabPage1.Controls.Add(this.btnConsultarLote);
-            this.tabPage1.Controls.Add(this.btnGerarEnviarLoteSinc);
-            this.tabPage1.Controls.Add(this.btnEnviarEmail);
-            this.tabPage1.Controls.Add(this.btnConsultarNFSePeriodo);
-            this.tabPage1.Controls.Add(this.btnConsultarSituacao);
-            this.tabPage1.Controls.Add(this.btnGerarEnviarRps);
-            this.tabPage1.Controls.Add(this.btnGerarEnviarLoteRps);
-            this.tabPage1.Controls.Add(this.btnGerarRps);
+            this.tabPage1.Controls.Add(this.tabControl2);
             this.tabPage1.Controls.Add(this.tabControl3);
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(857, 463);
+            this.tabPage1.Size = new System.Drawing.Size(852, 463);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "NFSe";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // tabControl2
+            // 
+            this.tabControl2.Controls.Add(this.tabPage14);
+            this.tabControl2.Controls.Add(this.tabPage15);
+            this.tabControl2.Controls.Add(this.tabPage16);
+            this.tabControl2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tabControl2.Location = new System.Drawing.Point(286, 3);
+            this.tabControl2.Name = "tabControl2";
+            this.tabControl2.SelectedIndex = 0;
+            this.tabControl2.Size = new System.Drawing.Size(563, 164);
+            this.tabControl2.TabIndex = 18;
+            // 
+            // tabPage14
+            // 
+            this.tabPage14.Controls.Add(this.btnGerarLoteRps);
+            this.tabPage14.Controls.Add(this.btnImprimirDANFSe);
+            this.tabPage14.Controls.Add(this.btnSubstituirNFSe);
+            this.tabPage14.Controls.Add(this.btnLinkNFSe);
+            this.tabPage14.Controls.Add(this.btnGerarEnviarLoteSinc);
+            this.tabPage14.Controls.Add(this.btnEnviarEmail);
+            this.tabPage14.Controls.Add(this.btnGerarEnviarRps);
+            this.tabPage14.Controls.Add(this.btnGerarEnviarLoteRps);
+            this.tabPage14.Controls.Add(this.btnGerarRps);
+            this.tabPage14.Location = new System.Drawing.Point(4, 22);
+            this.tabPage14.Name = "tabPage14";
+            this.tabPage14.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage14.Size = new System.Drawing.Size(555, 138);
+            this.tabPage14.TabIndex = 0;
+            this.tabPage14.Text = "Envios";
+            this.tabPage14.UseVisualStyleBackColor = true;
+            // 
             // btnGerarLoteRps
             // 
-            this.btnGerarLoteRps.Location = new System.Drawing.Point(665, 102);
+            this.btnGerarLoteRps.Location = new System.Drawing.Point(6, 35);
             this.btnGerarLoteRps.Name = "btnGerarLoteRps";
-            this.btnGerarLoteRps.Size = new System.Drawing.Size(180, 23);
-            this.btnGerarLoteRps.TabIndex = 17;
+            this.btnGerarLoteRps.Size = new System.Drawing.Size(177, 23);
+            this.btnGerarLoteRps.TabIndex = 31;
             this.btnGerarLoteRps.Text = "Gerar Lote RPS";
             this.btnGerarLoteRps.UseVisualStyleBackColor = true;
             // 
             // btnImprimirDANFSe
             // 
-            this.btnImprimirDANFSe.Location = new System.Drawing.Point(665, 73);
+            this.btnImprimirDANFSe.Location = new System.Drawing.Point(372, 64);
             this.btnImprimirDANFSe.Name = "btnImprimirDANFSe";
-            this.btnImprimirDANFSe.Size = new System.Drawing.Size(180, 23);
-            this.btnImprimirDANFSe.TabIndex = 16;
+            this.btnImprimirDANFSe.Size = new System.Drawing.Size(177, 23);
+            this.btnImprimirDANFSe.TabIndex = 30;
             this.btnImprimirDANFSe.Text = "Imprimir DANFSe";
             this.btnImprimirDANFSe.UseVisualStyleBackColor = true;
             this.btnImprimirDANFSe.Click += new System.EventHandler(this.btnImprimirDANFSe_Click);
             // 
-            // btnConsultarNFSeRps
-            // 
-            this.btnConsultarNFSeRps.Location = new System.Drawing.Point(665, 44);
-            this.btnConsultarNFSeRps.Name = "btnConsultarNFSeRps";
-            this.btnConsultarNFSeRps.Size = new System.Drawing.Size(180, 23);
-            this.btnConsultarNFSeRps.TabIndex = 15;
-            this.btnConsultarNFSeRps.Text = "Consultar NFSe por RPS";
-            this.btnConsultarNFSeRps.UseVisualStyleBackColor = true;
-            this.btnConsultarNFSeRps.Click += new System.EventHandler(this.btnConsultarNFSeRps_Click);
-            // 
             // btnSubstituirNFSe
             // 
-            this.btnSubstituirNFSe.Location = new System.Drawing.Point(479, 131);
+            this.btnSubstituirNFSe.Location = new System.Drawing.Point(372, 35);
             this.btnSubstituirNFSe.Name = "btnSubstituirNFSe";
-            this.btnSubstituirNFSe.Size = new System.Drawing.Size(180, 23);
-            this.btnSubstituirNFSe.TabIndex = 14;
+            this.btnSubstituirNFSe.Size = new System.Drawing.Size(177, 23);
+            this.btnSubstituirNFSe.TabIndex = 28;
             this.btnSubstituirNFSe.Text = "Substituir NFSe";
             this.btnSubstituirNFSe.UseVisualStyleBackColor = true;
             // 
             // btnLinkNFSe
             // 
-            this.btnLinkNFSe.Location = new System.Drawing.Point(479, 102);
+            this.btnLinkNFSe.Location = new System.Drawing.Point(6, 64);
             this.btnLinkNFSe.Name = "btnLinkNFSe";
-            this.btnLinkNFSe.Size = new System.Drawing.Size(180, 23);
-            this.btnLinkNFSe.TabIndex = 13;
+            this.btnLinkNFSe.Size = new System.Drawing.Size(177, 23);
+            this.btnLinkNFSe.TabIndex = 27;
             this.btnLinkNFSe.Text = "Link NFSe";
             this.btnLinkNFSe.UseVisualStyleBackColor = true;
             // 
-            // btnCancelarNFSe
-            // 
-            this.btnCancelarNFSe.Location = new System.Drawing.Point(479, 73);
-            this.btnCancelarNFSe.Name = "btnCancelarNFSe";
-            this.btnCancelarNFSe.Size = new System.Drawing.Size(180, 23);
-            this.btnCancelarNFSe.TabIndex = 12;
-            this.btnCancelarNFSe.Text = "Cancelar NFSe";
-            this.btnCancelarNFSe.UseVisualStyleBackColor = true;
-            this.btnCancelarNFSe.Click += new System.EventHandler(this.btnCancelarNFSe_Click);
-            // 
-            // btnConsultarLote
-            // 
-            this.btnConsultarLote.Location = new System.Drawing.Point(479, 44);
-            this.btnConsultarLote.Name = "btnConsultarLote";
-            this.btnConsultarLote.Size = new System.Drawing.Size(180, 23);
-            this.btnConsultarLote.TabIndex = 11;
-            this.btnConsultarLote.Text = "Consultar Lote";
-            this.btnConsultarLote.UseVisualStyleBackColor = true;
-            this.btnConsultarLote.Click += new System.EventHandler(this.btnConsultarLote_Click);
-            // 
             // btnGerarEnviarLoteSinc
             // 
-            this.btnGerarEnviarLoteSinc.Location = new System.Drawing.Point(292, 131);
+            this.btnGerarEnviarLoteSinc.Location = new System.Drawing.Point(372, 6);
             this.btnGerarEnviarLoteSinc.Name = "btnGerarEnviarLoteSinc";
-            this.btnGerarEnviarLoteSinc.Size = new System.Drawing.Size(180, 23);
-            this.btnGerarEnviarLoteSinc.TabIndex = 10;
+            this.btnGerarEnviarLoteSinc.Size = new System.Drawing.Size(177, 23);
+            this.btnGerarEnviarLoteSinc.TabIndex = 24;
             this.btnGerarEnviarLoteSinc.Text = "Gerar e Enviar Lote - Sincrono";
             this.btnGerarEnviarLoteSinc.UseVisualStyleBackColor = true;
             this.btnGerarEnviarLoteSinc.Click += new System.EventHandler(this.btnGerarEnviarLoteSinc_Click);
             // 
             // btnEnviarEmail
             // 
-            this.btnEnviarEmail.Location = new System.Drawing.Point(293, 102);
+            this.btnEnviarEmail.Location = new System.Drawing.Point(189, 64);
             this.btnEnviarEmail.Name = "btnEnviarEmail";
-            this.btnEnviarEmail.Size = new System.Drawing.Size(180, 23);
-            this.btnEnviarEmail.TabIndex = 9;
+            this.btnEnviarEmail.Size = new System.Drawing.Size(177, 23);
+            this.btnEnviarEmail.TabIndex = 23;
             this.btnEnviarEmail.Text = "Enviar e-mail";
             this.btnEnviarEmail.UseVisualStyleBackColor = true;
             // 
-            // btnConsultarNFSePeriodo
-            // 
-            this.btnConsultarNFSePeriodo.Location = new System.Drawing.Point(293, 73);
-            this.btnConsultarNFSePeriodo.Name = "btnConsultarNFSePeriodo";
-            this.btnConsultarNFSePeriodo.Size = new System.Drawing.Size(180, 23);
-            this.btnConsultarNFSePeriodo.TabIndex = 8;
-            this.btnConsultarNFSePeriodo.Text = "Consultar NFSe por Período";
-            this.btnConsultarNFSePeriodo.UseVisualStyleBackColor = true;
-            this.btnConsultarNFSePeriodo.Click += new System.EventHandler(this.btnConsultarNFSePeriodo_Click);
-            // 
-            // btnConsultarSituacao
-            // 
-            this.btnConsultarSituacao.Location = new System.Drawing.Point(293, 44);
-            this.btnConsultarSituacao.Name = "btnConsultarSituacao";
-            this.btnConsultarSituacao.Size = new System.Drawing.Size(180, 23);
-            this.btnConsultarSituacao.TabIndex = 7;
-            this.btnConsultarSituacao.Text = "Consultar Situação do Lote";
-            this.btnConsultarSituacao.UseVisualStyleBackColor = true;
-            this.btnConsultarSituacao.Click += new System.EventHandler(this.btnConsultarSituacao_Click);
-            // 
             // btnGerarEnviarRps
             // 
-            this.btnGerarEnviarRps.Location = new System.Drawing.Point(665, 15);
+            this.btnGerarEnviarRps.Location = new System.Drawing.Point(189, 35);
             this.btnGerarEnviarRps.Name = "btnGerarEnviarRps";
-            this.btnGerarEnviarRps.Size = new System.Drawing.Size(180, 23);
-            this.btnGerarEnviarRps.TabIndex = 6;
+            this.btnGerarEnviarRps.Size = new System.Drawing.Size(177, 23);
+            this.btnGerarEnviarRps.TabIndex = 20;
             this.btnGerarEnviarRps.Text = "Gerar e Enviar um RPS";
             this.btnGerarEnviarRps.UseVisualStyleBackColor = true;
             // 
             // btnGerarEnviarLoteRps
             // 
-            this.btnGerarEnviarLoteRps.Location = new System.Drawing.Point(479, 15);
+            this.btnGerarEnviarLoteRps.Location = new System.Drawing.Point(189, 6);
             this.btnGerarEnviarLoteRps.Name = "btnGerarEnviarLoteRps";
-            this.btnGerarEnviarLoteRps.Size = new System.Drawing.Size(180, 23);
-            this.btnGerarEnviarLoteRps.TabIndex = 5;
+            this.btnGerarEnviarLoteRps.Size = new System.Drawing.Size(177, 23);
+            this.btnGerarEnviarLoteRps.TabIndex = 19;
             this.btnGerarEnviarLoteRps.Text = "Gerar e Enviar Lote RPS";
             this.btnGerarEnviarLoteRps.UseVisualStyleBackColor = true;
             this.btnGerarEnviarLoteRps.Click += new System.EventHandler(this.btnGerarEnviarLoteRps_Click);
             // 
             // btnGerarRps
             // 
-            this.btnGerarRps.Location = new System.Drawing.Point(293, 15);
+            this.btnGerarRps.Location = new System.Drawing.Point(6, 6);
             this.btnGerarRps.Name = "btnGerarRps";
-            this.btnGerarRps.Size = new System.Drawing.Size(180, 23);
-            this.btnGerarRps.TabIndex = 4;
+            this.btnGerarRps.Size = new System.Drawing.Size(177, 23);
+            this.btnGerarRps.TabIndex = 18;
             this.btnGerarRps.Text = "Gerar RPS";
             this.btnGerarRps.UseVisualStyleBackColor = true;
             this.btnGerarRps.Click += new System.EventHandler(this.btnGerarRps_Click);
+            // 
+            // tabPage15
+            // 
+            this.tabPage15.Controls.Add(this.btnConsultarNFSeRps);
+            this.tabPage15.Controls.Add(this.btnConsultarLote);
+            this.tabPage15.Controls.Add(this.btnConsultarNFSePeriodo);
+            this.tabPage15.Controls.Add(this.btnConsultarSituacao);
+            this.tabPage15.Location = new System.Drawing.Point(4, 22);
+            this.tabPage15.Name = "tabPage15";
+            this.tabPage15.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage15.Size = new System.Drawing.Size(555, 138);
+            this.tabPage15.TabIndex = 1;
+            this.tabPage15.Text = "Consultas";
+            this.tabPage15.UseVisualStyleBackColor = true;
+            // 
+            // btnConsultarNFSeRps
+            // 
+            this.btnConsultarNFSeRps.Location = new System.Drawing.Point(372, 6);
+            this.btnConsultarNFSeRps.Name = "btnConsultarNFSeRps";
+            this.btnConsultarNFSeRps.Size = new System.Drawing.Size(177, 23);
+            this.btnConsultarNFSeRps.TabIndex = 33;
+            this.btnConsultarNFSeRps.Text = "Consultar NFSe por RPS";
+            this.btnConsultarNFSeRps.UseVisualStyleBackColor = true;
+            this.btnConsultarNFSeRps.Click += new System.EventHandler(this.btnConsultarNFSeRps_Click);
+            // 
+            // btnConsultarLote
+            // 
+            this.btnConsultarLote.Location = new System.Drawing.Point(189, 6);
+            this.btnConsultarLote.Name = "btnConsultarLote";
+            this.btnConsultarLote.Size = new System.Drawing.Size(177, 23);
+            this.btnConsultarLote.TabIndex = 32;
+            this.btnConsultarLote.Text = "Consultar Lote";
+            this.btnConsultarLote.UseVisualStyleBackColor = true;
+            this.btnConsultarLote.Click += new System.EventHandler(this.btnConsultarLote_Click);
+            // 
+            // btnConsultarNFSePeriodo
+            // 
+            this.btnConsultarNFSePeriodo.Location = new System.Drawing.Point(6, 35);
+            this.btnConsultarNFSePeriodo.Name = "btnConsultarNFSePeriodo";
+            this.btnConsultarNFSePeriodo.Size = new System.Drawing.Size(177, 23);
+            this.btnConsultarNFSePeriodo.TabIndex = 31;
+            this.btnConsultarNFSePeriodo.Text = "Consultar NFSe por Período";
+            this.btnConsultarNFSePeriodo.UseVisualStyleBackColor = true;
+            this.btnConsultarNFSePeriodo.Click += new System.EventHandler(this.btnConsultarNFSePeriodo_Click);
+            // 
+            // btnConsultarSituacao
+            // 
+            this.btnConsultarSituacao.Location = new System.Drawing.Point(6, 6);
+            this.btnConsultarSituacao.Name = "btnConsultarSituacao";
+            this.btnConsultarSituacao.Size = new System.Drawing.Size(177, 23);
+            this.btnConsultarSituacao.TabIndex = 30;
+            this.btnConsultarSituacao.Text = "Consultar Situação do Lote";
+            this.btnConsultarSituacao.UseVisualStyleBackColor = true;
+            this.btnConsultarSituacao.Click += new System.EventHandler(this.btnConsultarSituacao_Click);
+            // 
+            // tabPage16
+            // 
+            this.tabPage16.Controls.Add(this.btnCancelarNFSe);
+            this.tabPage16.Location = new System.Drawing.Point(4, 22);
+            this.tabPage16.Name = "tabPage16";
+            this.tabPage16.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage16.Size = new System.Drawing.Size(555, 138);
+            this.tabPage16.TabIndex = 2;
+            this.tabPage16.Text = "Cancelamento";
+            this.tabPage16.UseVisualStyleBackColor = true;
+            // 
+            // btnCancelarNFSe
+            // 
+            this.btnCancelarNFSe.Location = new System.Drawing.Point(6, 6);
+            this.btnCancelarNFSe.Name = "btnCancelarNFSe";
+            this.btnCancelarNFSe.Size = new System.Drawing.Size(177, 23);
+            this.btnCancelarNFSe.TabIndex = 27;
+            this.btnCancelarNFSe.Text = "Cancelar NFSe";
+            this.btnCancelarNFSe.UseVisualStyleBackColor = true;
+            this.btnCancelarNFSe.Click += new System.EventHandler(this.btnCancelarNFSe_Click);
             // 
             // tabControl3
             // 
@@ -335,10 +386,10 @@
             this.tabControl3.Controls.Add(this.tabPage12);
             this.tabControl3.Controls.Add(this.tabPage13);
             this.tabControl3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tabControl3.Location = new System.Drawing.Point(286, 160);
+            this.tabControl3.Location = new System.Drawing.Point(286, 173);
             this.tabControl3.Name = "tabControl3";
             this.tabControl3.SelectedIndex = 0;
-            this.tabControl3.Size = new System.Drawing.Size(568, 300);
+            this.tabControl3.Size = new System.Drawing.Size(563, 287);
             this.tabControl3.TabIndex = 2;
             // 
             // tabPage8
@@ -347,7 +398,7 @@
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(560, 274);
+            this.tabPage8.Size = new System.Drawing.Size(555, 261);
             this.tabPage8.TabIndex = 0;
             this.tabPage8.Text = "Respostas";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -359,7 +410,7 @@
             this.rtLogResposta.Location = new System.Drawing.Point(3, 3);
             this.rtLogResposta.Name = "rtLogResposta";
             this.rtLogResposta.ReadOnly = true;
-            this.rtLogResposta.Size = new System.Drawing.Size(554, 268);
+            this.rtLogResposta.Size = new System.Drawing.Size(549, 255);
             this.rtLogResposta.TabIndex = 1;
             this.rtLogResposta.Text = "";
             // 
@@ -369,7 +420,7 @@
             this.tabPage9.Location = new System.Drawing.Point(4, 22);
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage9.Size = new System.Drawing.Size(560, 274);
+            this.tabPage9.Size = new System.Drawing.Size(555, 261);
             this.tabPage9.TabIndex = 1;
             this.tabPage9.Text = "Xml Resposta";
             this.tabPage9.UseVisualStyleBackColor = true;
@@ -380,7 +431,7 @@
             this.wbbResposta.Location = new System.Drawing.Point(3, 3);
             this.wbbResposta.MinimumSize = new System.Drawing.Size(20, 20);
             this.wbbResposta.Name = "wbbResposta";
-            this.wbbResposta.Size = new System.Drawing.Size(554, 268);
+            this.wbbResposta.Size = new System.Drawing.Size(549, 255);
             this.wbbResposta.TabIndex = 1;
             // 
             // tabPage10
@@ -389,7 +440,7 @@
             this.tabPage10.Location = new System.Drawing.Point(4, 22);
             this.tabPage10.Name = "tabPage10";
             this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage10.Size = new System.Drawing.Size(560, 274);
+            this.tabPage10.Size = new System.Drawing.Size(555, 261);
             this.tabPage10.TabIndex = 2;
             this.tabPage10.Text = "Log";
             this.tabPage10.UseVisualStyleBackColor = true;
@@ -401,7 +452,7 @@
             this.rtbLog.Location = new System.Drawing.Point(3, 3);
             this.rtbLog.Name = "rtbLog";
             this.rtbLog.ReadOnly = true;
-            this.rtbLog.Size = new System.Drawing.Size(554, 268);
+            this.rtbLog.Size = new System.Drawing.Size(549, 255);
             this.rtbLog.TabIndex = 0;
             this.rtbLog.Text = "";
             // 
@@ -411,7 +462,7 @@
             this.tabPage11.Location = new System.Drawing.Point(4, 22);
             this.tabPage11.Name = "tabPage11";
             this.tabPage11.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage11.Size = new System.Drawing.Size(560, 274);
+            this.tabPage11.Size = new System.Drawing.Size(555, 261);
             this.tabPage11.TabIndex = 3;
             this.tabPage11.Text = "NFSe";
             this.tabPage11.UseVisualStyleBackColor = true;
@@ -422,7 +473,7 @@
             this.wbbNFSe.Location = new System.Drawing.Point(3, 3);
             this.wbbNFSe.MinimumSize = new System.Drawing.Size(20, 20);
             this.wbbNFSe.Name = "wbbNFSe";
-            this.wbbNFSe.Size = new System.Drawing.Size(554, 268);
+            this.wbbNFSe.Size = new System.Drawing.Size(549, 255);
             this.wbbNFSe.TabIndex = 2;
             // 
             // tabPage12
@@ -431,7 +482,7 @@
             this.tabPage12.Location = new System.Drawing.Point(4, 22);
             this.tabPage12.Name = "tabPage12";
             this.tabPage12.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage12.Size = new System.Drawing.Size(560, 274);
+            this.tabPage12.Size = new System.Drawing.Size(555, 261);
             this.tabPage12.TabIndex = 4;
             this.tabPage12.Text = "Retorno Completo WS";
             this.tabPage12.UseVisualStyleBackColor = true;
@@ -442,7 +493,7 @@
             this.wbbRetorno.Location = new System.Drawing.Point(3, 3);
             this.wbbRetorno.MinimumSize = new System.Drawing.Size(20, 20);
             this.wbbRetorno.Name = "wbbRetorno";
-            this.wbbRetorno.Size = new System.Drawing.Size(554, 268);
+            this.wbbRetorno.Size = new System.Drawing.Size(549, 255);
             this.wbbRetorno.TabIndex = 2;
             // 
             // tabPage13
@@ -451,7 +502,7 @@
             this.tabPage13.Location = new System.Drawing.Point(4, 22);
             this.tabPage13.Name = "tabPage13";
             this.tabPage13.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage13.Size = new System.Drawing.Size(560, 274);
+            this.tabPage13.Size = new System.Drawing.Size(555, 261);
             this.tabPage13.TabIndex = 5;
             this.tabPage13.Text = "Dados";
             this.tabPage13.UseVisualStyleBackColor = true;
@@ -462,7 +513,7 @@
             this.wbbDados.Location = new System.Drawing.Point(3, 3);
             this.wbbDados.MinimumSize = new System.Drawing.Size(20, 20);
             this.wbbDados.Name = "wbbDados";
-            this.wbbDados.Size = new System.Drawing.Size(554, 268);
+            this.wbbDados.Size = new System.Drawing.Size(549, 255);
             this.wbbDados.TabIndex = 2;
             // 
             // groupBox1
@@ -1101,7 +1152,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(857, 463);
+            this.tabPage3.Size = new System.Drawing.Size(852, 463);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Gerenciador de Cidades";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1110,7 +1161,7 @@
             // 
             this.btnCopiar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCopiar.Location = new System.Drawing.Point(693, 434);
+            this.btnCopiar.Location = new System.Drawing.Point(688, 434);
             this.btnCopiar.Name = "btnCopiar";
             this.btnCopiar.Size = new System.Drawing.Size(75, 23);
             this.btnCopiar.TabIndex = 5;
@@ -1122,7 +1173,7 @@
             // 
             this.btnDeletar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeletar.Location = new System.Drawing.Point(612, 434);
+            this.btnDeletar.Location = new System.Drawing.Point(607, 434);
             this.btnDeletar.Name = "btnDeletar";
             this.btnDeletar.Size = new System.Drawing.Size(75, 23);
             this.btnDeletar.TabIndex = 4;
@@ -1134,7 +1185,7 @@
             // 
             this.btnAdicionar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAdicionar.Location = new System.Drawing.Point(774, 434);
+            this.btnAdicionar.Location = new System.Drawing.Point(769, 434);
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(75, 23);
             this.btnAdicionar.TabIndex = 3;
@@ -1146,7 +1197,7 @@
             // 
             this.btnSalvar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSalvar.Location = new System.Drawing.Point(89, 434);
+            this.btnSalvar.Location = new System.Drawing.Point(84, 434);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(75, 23);
             this.btnSalvar.TabIndex = 2;
@@ -1158,7 +1209,7 @@
             // 
             this.btnCarregar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCarregar.Location = new System.Drawing.Point(8, 434);
+            this.btnCarregar.Location = new System.Drawing.Point(3, 434);
             this.btnCarregar.Name = "btnCarregar";
             this.btnCarregar.Size = new System.Drawing.Size(75, 23);
             this.btnCarregar.TabIndex = 1;
@@ -1182,7 +1233,7 @@
             this.lstMunicipios.Location = new System.Drawing.Point(3, 3);
             this.lstMunicipios.MultiSelect = false;
             this.lstMunicipios.Name = "lstMunicipios";
-            this.lstMunicipios.Size = new System.Drawing.Size(851, 425);
+            this.lstMunicipios.Size = new System.Drawing.Size(846, 425);
             this.lstMunicipios.TabIndex = 0;
             this.lstMunicipios.UseCompatibleStateImageBehavior = false;
             this.lstMunicipios.View = System.Windows.Forms.View.Details;
@@ -1213,26 +1264,26 @@
             this.cmhProvedor.Text = "Provedor";
             this.cmhProvedor.Width = 86;
             // 
+            // lblStatus
+            // 
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(0, 17);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblStatus});
             this.statusStrip1.Location = new System.Drawing.Point(0, 489);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(865, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(860, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(0, 17);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(865, 511);
+            this.ClientSize = new System.Drawing.Size(860, 511);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -1242,6 +1293,10 @@
             this.Text = "ACBr.Net.NFSe Demo";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabControl2.ResumeLayout(false);
+            this.tabPage14.ResumeLayout(false);
+            this.tabPage15.ResumeLayout(false);
+            this.tabPage16.ResumeLayout(false);
             this.tabControl3.ResumeLayout(false);
             this.tabPage8.ResumeLayout(false);
             this.tabPage9.ResumeLayout(false);
@@ -1324,20 +1379,6 @@
 		private System.Windows.Forms.TextBox txtNumero;
 		private System.Windows.Forms.TextBox txtEndereco;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Button btnGerarLoteRps;
-		private System.Windows.Forms.Button btnImprimirDANFSe;
-		private System.Windows.Forms.Button btnConsultarNFSeRps;
-		private System.Windows.Forms.Button btnSubstituirNFSe;
-		private System.Windows.Forms.Button btnLinkNFSe;
-		private System.Windows.Forms.Button btnCancelarNFSe;
-		private System.Windows.Forms.Button btnConsultarLote;
-		private System.Windows.Forms.Button btnGerarEnviarLoteSinc;
-		private System.Windows.Forms.Button btnEnviarEmail;
-		private System.Windows.Forms.Button btnConsultarNFSePeriodo;
-		private System.Windows.Forms.Button btnConsultarSituacao;
-		private System.Windows.Forms.Button btnGerarEnviarRps;
-		private System.Windows.Forms.Button btnGerarEnviarLoteRps;
-		private System.Windows.Forms.Button btnGerarRps;
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.TextBox txtSenha;
 		private System.Windows.Forms.Button btnFindCertificate;
@@ -1346,8 +1387,6 @@
 		private System.Windows.Forms.Button btnGetCertificate;
 		private System.Windows.Forms.TextBox txtNumeroSerie;
 		private System.Windows.Forms.Label label11;
-		private System.Windows.Forms.StatusStrip statusStrip1;
-		private System.Windows.Forms.ToolStripStatusLabel lblStatus;
 		private System.Windows.Forms.Button btnDeletar;
 		private System.Windows.Forms.Button btnSelecionarSchema;
 		private System.Windows.Forms.TextBox txtSchemas;
@@ -1377,6 +1416,26 @@
 		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Button btnCopiar;
+        private System.Windows.Forms.TabControl tabControl2;
+        private System.Windows.Forms.TabPage tabPage14;
+        private System.Windows.Forms.Button btnGerarLoteRps;
+        private System.Windows.Forms.Button btnImprimirDANFSe;
+        private System.Windows.Forms.Button btnSubstituirNFSe;
+        private System.Windows.Forms.Button btnLinkNFSe;
+        private System.Windows.Forms.Button btnGerarEnviarLoteSinc;
+        private System.Windows.Forms.Button btnEnviarEmail;
+        private System.Windows.Forms.Button btnGerarEnviarRps;
+        private System.Windows.Forms.Button btnGerarEnviarLoteRps;
+        private System.Windows.Forms.Button btnGerarRps;
+        private System.Windows.Forms.TabPage tabPage15;
+        private System.Windows.Forms.Button btnConsultarNFSeRps;
+        private System.Windows.Forms.Button btnConsultarLote;
+        private System.Windows.Forms.Button btnConsultarNFSePeriodo;
+        private System.Windows.Forms.Button btnConsultarSituacao;
+        private System.Windows.Forms.TabPage tabPage16;
+        private System.Windows.Forms.Button btnCancelarNFSe;
+        private System.Windows.Forms.ToolStripStatusLabel lblStatus;
+        private System.Windows.Forms.StatusStrip statusStrip1;
     }
 }
 
