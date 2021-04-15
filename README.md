@@ -22,6 +22,7 @@ Biblioteca para emissão e trasmissão de NFSe.
 - Equiplano.
 - SmarAPD ABRASAF.
 - Fiorilli.
+- Goiânia.
 - NFe Cidades (GovDigital).
 - IISNet (Em Teste).
 - Porto Alegre (Em Teste).
