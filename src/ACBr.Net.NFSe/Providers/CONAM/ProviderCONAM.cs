@@ -334,8 +334,8 @@ namespace ACBr.Net.NFSe.Providers
         #endregion
 
         #region Services
-
-        protected override void PrepararEnviarSincrono(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
+        
+        protected override void PrepararEnviar(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
         {
             if (notas.Count == 0)
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "RPS não informado." });
@@ -358,7 +358,11 @@ namespace ACBr.Net.NFSe.Providers
             retornoWebservice.XmlEnvio = xmlLote.ToString();
         }
 
-        protected override void TratarRetornoEnviarSincrono(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
+        protected override void AssinarEnviar(RetornoEnviar retornoWebservice)
+        {
+        }
+
+        protected override void TratarRetornoEnviar(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
         {
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
@@ -667,23 +671,19 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Not Implemented Methods
 
-        protected override void PrepararEnviar(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
-        {
-            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
-        }
-
-        protected override void AssinarEnviar(RetornoEnviar retornoWebservice)
-        {
-            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
-        }
-
-        protected override void TratarRetornoEnviar(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
+        protected override void PrepararEnviarSincrono(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
         {
             throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
         protected override void AssinarEnviarSincrono(RetornoEnviar retornoWebservice)
         {
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
+        }
+
+        protected override void TratarRetornoEnviarSincrono(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
+        {
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
         protected override void AssinarConsultarSituacao(RetornoConsultarSituacao retornoWebservice)
