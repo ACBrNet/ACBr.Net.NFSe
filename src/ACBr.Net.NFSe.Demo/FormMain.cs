@@ -55,6 +55,11 @@ namespace ACBr.Net.NFSe.Demo
         private void btnGerarRps_Click(object sender, EventArgs e)
         {
             GerarRps();
+
+            var path = Helpers.SelectFolder();
+            if (path.IsEmpty()) return;
+
+            acbrNFSe.NotasServico[0].Save(path);
         }
 
         private void btnGerarEnviarLoteRps_Click(object sender, EventArgs e)
@@ -260,11 +265,17 @@ namespace ACBr.Net.NFSe.Demo
 
         private void btnImprimirDANFSe_Click(object sender, EventArgs e)
         {
-#if DEBUG
-            ((DANFSeFastReport)acbrNFSe.DANFSe).ShowDesign();
-#else
             acbrNFSe.Imprimir();
-#endif
+        }
+
+        private void btnDesignDANFSe_Click(object sender, EventArgs e)
+        {
+            ((DANFSeFastReport)acbrNFSe.DANFSe).ShowDesign();
+        }
+
+        private void btnGerarPDF_Click(object sender, EventArgs e)
+        {
+            acbrNFSe.ImprimirPDF();
         }
 
         private void lstMunicipios_MouseDoubleClick(object sender, MouseEventArgs e)

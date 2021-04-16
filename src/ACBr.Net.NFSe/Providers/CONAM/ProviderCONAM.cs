@@ -38,7 +38,7 @@ namespace ACBr.Net.NFSe.Providers
         {
             Guard.Against<XmlException>(xml == null, "Xml invalido.");
 
-            var ret = new NotaServico();
+            var ret = new NotaServico(Configuracoes);
             var xmlElement = xml.ElementAnyNs("Nota");
 
             ret.Competencia = xmlElement.ElementAnyNs("DtEmiNf")?.GetValue<DateTime>() ?? DateTime.MinValue;
@@ -54,7 +54,7 @@ namespace ACBr.Net.NFSe.Providers
             {
                 ret.Situacao = SituacaoNFSeRps.Cancelado;
                 ret.Cancelamento.DataHora = xmlElement.ElementAnyNs("DataCncNf")?.GetValue<DateTime>() ?? DateTime.MinValue;
-                ret.Cancelamento.MotivoCancelamento = xmlElement.ElementAnyNs("MotivoCncNf")?.GetValue<string>() ??string.Empty;
+                ret.Cancelamento.MotivoCancelamento = xmlElement.ElementAnyNs("MotivoCncNf")?.GetValue<string>() ?? string.Empty;
             }
 
             //Dados do RPS
@@ -146,7 +146,7 @@ namespace ACBr.Net.NFSe.Providers
             sdt.AddChild(AdicionarTag(TipoCampo.Str, "", "DTFin", 0, 0, Ocorrencia.Obrigatoria, DateTime.Parse(nota.Competencia.AddMonths(1).ToString("01/MM/yyyy")).AddDays(-1).ToString("dd/MM/yyyy")));
             sdt.AddChild(AdicionarTag(TipoCampo.Int, "", "TipoTrib", 0, 0, Ocorrencia.Obrigatoria, tipoTrib));
             sdt.AddChild(AdicionarTag(TipoCampo.Str, "", "DtAdeSN", 0, 0, Ocorrencia.Obrigatoria, nota.DataOptanteSimplesNacional == DateTime.MinValue || tipoTrib != 4 ? "" : nota.DataOptanteSimplesNacional.ToString("dd/MM/yyyy")));
-            sdt.AddChild(AdicionarTag(TipoCampo.Str, "", "AlqIssSN_IP", 0, 0, Ocorrencia.Obrigatoria, tipoTrib != 4 ? "" :  nota.Servico.Valores.Aliquota.ToString("##0.00")));
+            sdt.AddChild(AdicionarTag(TipoCampo.Str, "", "AlqIssSN_IP", 0, 0, Ocorrencia.Obrigatoria, tipoTrib != 4 ? "" : nota.Servico.Valores.Aliquota.ToString("##0.00")));
             sdt.AddChild(AdicionarTag(TipoCampo.Str, "", "Versao", 0, 0, Ocorrencia.Obrigatoria, "2.00"));
 
             sdt.Add(WriteREG20(nota));
@@ -331,7 +331,7 @@ namespace ACBr.Net.NFSe.Providers
             return reg90;
         }
 
-        #endregion
+        #endregion RPS
 
         #region Services
 
@@ -406,7 +406,7 @@ namespace ACBr.Net.NFSe.Providers
             var situacao = "";
             switch (xmlElement.ElementAnyNs("PrtXSts")?.GetValue<string>() ?? "0")
             {
-                case  "1" : //Aguardando processamento
+                case "1": //Aguardando processamento
                     situacao = "2"; //Padrão Ginfes e ABRASF - Ainda não processado
                     break;
 
@@ -572,7 +572,7 @@ namespace ACBr.Net.NFSe.Providers
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Você deve informar a competência no campo Início." });
                 return;
             }
-            
+
             // Monta mensagem de envio
             var loteBuilder = new StringBuilder();
             loteBuilder.Append($"<Competencia_Mes>{retornoWebservice.Inicio?.Month.ZeroFill(2)}</Competencia_Mes>");
@@ -734,7 +734,6 @@ namespace ACBr.Net.NFSe.Providers
             throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
-        
         protected override void AssinarSubstituirNFSe(RetornoSubstituirNFSe retornoWebservice)
         {
         }
@@ -759,7 +758,7 @@ namespace ACBr.Net.NFSe.Providers
             return "";
         }
 
-        #endregion
+        #endregion Not Implemented Methods
 
         #endregion Methods
 
@@ -791,13 +790,13 @@ namespace ACBr.Net.NFSe.Providers
             var mensagem = xmlRet.ElementAnyNs("Info").ElementAnyNs("Message");
 
             var evento = new Evento
-                {
-                    Codigo = mensagem?.ElementAnyNs("Id")?.GetValue<string>() ?? string.Empty,
-                    Descricao = mensagem?.ElementAnyNs("Description")?.GetValue<string>() ?? string.Empty,
-                    Correcao = mensagem?.ElementAnyNs("Description")?.GetValue<string>() ?? string.Empty
-                };
+            {
+                Codigo = mensagem?.ElementAnyNs("Id")?.GetValue<string>() ?? string.Empty,
+                Descricao = mensagem?.ElementAnyNs("Description")?.GetValue<string>() ?? string.Empty,
+                Correcao = mensagem?.ElementAnyNs("Description")?.GetValue<string>() ?? string.Empty
+            };
 
-                retornoWs.Erros.Add(evento);
+            retornoWs.Erros.Add(evento);
         }
 
         #endregion Private Methods

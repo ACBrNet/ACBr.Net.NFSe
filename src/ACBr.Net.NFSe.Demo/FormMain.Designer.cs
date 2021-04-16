@@ -34,7 +34,6 @@
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage14 = new System.Windows.Forms.TabPage();
             this.btnGerarLoteRps = new System.Windows.Forms.Button();
-            this.btnImprimirDANFSe = new System.Windows.Forms.Button();
             this.btnSubstituirNFSe = new System.Windows.Forms.Button();
             this.btnLinkNFSe = new System.Windows.Forms.Button();
             this.btnGerarEnviarLoteSinc = new System.Windows.Forms.Button();
@@ -49,6 +48,10 @@
             this.btnConsultarSituacao = new System.Windows.Forms.Button();
             this.tabPage16 = new System.Windows.Forms.TabPage();
             this.btnCancelarNFSe = new System.Windows.Forms.Button();
+            this.tabPage17 = new System.Windows.Forms.TabPage();
+            this.btnGerarPDF = new System.Windows.Forms.Button();
+            this.btnDesignDANFSe = new System.Windows.Forms.Button();
+            this.btnImprimirDANFSe = new System.Windows.Forms.Button();
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.rtLogResposta = new System.Windows.Forms.RichTextBox();
@@ -145,6 +148,7 @@
             this.tabPage14.SuspendLayout();
             this.tabPage15.SuspendLayout();
             this.tabPage16.SuspendLayout();
+            this.tabPage17.SuspendLayout();
             this.tabControl3.SuspendLayout();
             this.tabPage8.SuspendLayout();
             this.tabPage9.SuspendLayout();
@@ -192,6 +196,7 @@
             this.tabControl2.Controls.Add(this.tabPage14);
             this.tabControl2.Controls.Add(this.tabPage15);
             this.tabControl2.Controls.Add(this.tabPage16);
+            this.tabControl2.Controls.Add(this.tabPage17);
             this.tabControl2.Dock = System.Windows.Forms.DockStyle.Top;
             this.tabControl2.Location = new System.Drawing.Point(286, 3);
             this.tabControl2.Name = "tabControl2";
@@ -202,7 +207,6 @@
             // tabPage14
             // 
             this.tabPage14.Controls.Add(this.btnGerarLoteRps);
-            this.tabPage14.Controls.Add(this.btnImprimirDANFSe);
             this.tabPage14.Controls.Add(this.btnSubstituirNFSe);
             this.tabPage14.Controls.Add(this.btnLinkNFSe);
             this.tabPage14.Controls.Add(this.btnGerarEnviarLoteSinc);
@@ -226,16 +230,6 @@
             this.btnGerarLoteRps.TabIndex = 31;
             this.btnGerarLoteRps.Text = "Gerar Lote RPS";
             this.btnGerarLoteRps.UseVisualStyleBackColor = true;
-            // 
-            // btnImprimirDANFSe
-            // 
-            this.btnImprimirDANFSe.Location = new System.Drawing.Point(372, 64);
-            this.btnImprimirDANFSe.Name = "btnImprimirDANFSe";
-            this.btnImprimirDANFSe.Size = new System.Drawing.Size(177, 23);
-            this.btnImprimirDANFSe.TabIndex = 30;
-            this.btnImprimirDANFSe.Text = "Imprimir DANFSe";
-            this.btnImprimirDANFSe.UseVisualStyleBackColor = true;
-            this.btnImprimirDANFSe.Click += new System.EventHandler(this.btnImprimirDANFSe_Click);
             // 
             // btnSubstituirNFSe
             // 
@@ -377,6 +371,48 @@
             this.btnCancelarNFSe.Text = "Cancelar NFSe";
             this.btnCancelarNFSe.UseVisualStyleBackColor = true;
             this.btnCancelarNFSe.Click += new System.EventHandler(this.btnCancelarNFSe_Click);
+            // 
+            // tabPage17
+            // 
+            this.tabPage17.Controls.Add(this.btnGerarPDF);
+            this.tabPage17.Controls.Add(this.btnDesignDANFSe);
+            this.tabPage17.Controls.Add(this.btnImprimirDANFSe);
+            this.tabPage17.Location = new System.Drawing.Point(4, 22);
+            this.tabPage17.Name = "tabPage17";
+            this.tabPage17.Size = new System.Drawing.Size(555, 138);
+            this.tabPage17.TabIndex = 3;
+            this.tabPage17.Text = "Impressão";
+            this.tabPage17.UseVisualStyleBackColor = true;
+            // 
+            // btnGerarPDF
+            // 
+            this.btnGerarPDF.Location = new System.Drawing.Point(372, 6);
+            this.btnGerarPDF.Name = "btnGerarPDF";
+            this.btnGerarPDF.Size = new System.Drawing.Size(177, 23);
+            this.btnGerarPDF.TabIndex = 33;
+            this.btnGerarPDF.Text = "Gerar PDF";
+            this.btnGerarPDF.UseVisualStyleBackColor = true;
+            this.btnGerarPDF.Click += new System.EventHandler(this.btnGerarPDF_Click);
+            // 
+            // btnDesignDANFSe
+            // 
+            this.btnDesignDANFSe.Location = new System.Drawing.Point(189, 6);
+            this.btnDesignDANFSe.Name = "btnDesignDANFSe";
+            this.btnDesignDANFSe.Size = new System.Drawing.Size(177, 23);
+            this.btnDesignDANFSe.TabIndex = 32;
+            this.btnDesignDANFSe.Text = "Mostrar Design";
+            this.btnDesignDANFSe.UseVisualStyleBackColor = true;
+            this.btnDesignDANFSe.Click += new System.EventHandler(this.btnDesignDANFSe_Click);
+            // 
+            // btnImprimirDANFSe
+            // 
+            this.btnImprimirDANFSe.Location = new System.Drawing.Point(6, 6);
+            this.btnImprimirDANFSe.Name = "btnImprimirDANFSe";
+            this.btnImprimirDANFSe.Size = new System.Drawing.Size(177, 23);
+            this.btnImprimirDANFSe.TabIndex = 31;
+            this.btnImprimirDANFSe.Text = "Imprimir ";
+            this.btnImprimirDANFSe.UseVisualStyleBackColor = true;
+            this.btnImprimirDANFSe.Click += new System.EventHandler(this.btnImprimirDANFSe_Click);
             // 
             // tabControl3
             // 
@@ -1299,6 +1335,7 @@
             this.tabPage14.ResumeLayout(false);
             this.tabPage15.ResumeLayout(false);
             this.tabPage16.ResumeLayout(false);
+            this.tabPage17.ResumeLayout(false);
             this.tabControl3.ResumeLayout(false);
             this.tabPage8.ResumeLayout(false);
             this.tabPage9.ResumeLayout(false);
@@ -1421,7 +1458,6 @@
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage14;
         private System.Windows.Forms.Button btnGerarLoteRps;
-        private System.Windows.Forms.Button btnImprimirDANFSe;
         private System.Windows.Forms.Button btnSubstituirNFSe;
         private System.Windows.Forms.Button btnLinkNFSe;
         private System.Windows.Forms.Button btnGerarEnviarLoteSinc;
@@ -1438,6 +1474,10 @@
         private System.Windows.Forms.Button btnCancelarNFSe;
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
         private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.TabPage tabPage17;
+        private System.Windows.Forms.Button btnGerarPDF;
+        private System.Windows.Forms.Button btnDesignDANFSe;
+        private System.Windows.Forms.Button btnImprimirDANFSe;
     }
 }
 

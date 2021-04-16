@@ -98,7 +98,7 @@ namespace ACBr.Net.NFSe.Providers
 
             Guard.Against<XmlException>(rootDoc == null, "Xml de RPS ou NFSe invalido.");
 
-            var ret = new NotaServico();
+            var ret = new NotaServico(Configuracoes);
             if (isNFSe)
             {
                 // Nota Fiscal

@@ -107,7 +107,7 @@ namespace ACBr.Net.NFSe.Providers
 
             Guard.Against<XmlException>(rootNFSe == null && rootRps == null, "Xml de RPS ou NFSe invalido.");
 
-            var ret = new NotaServico();
+            var ret = new NotaServico(Configuracoes);
 
             if (rootRps != null) //Goiania não retorna o RPS, somente a NFSe
                 LoadRps(ret, rootRps);

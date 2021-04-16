@@ -97,7 +97,7 @@ namespace ACBr.Net.NFSe.Providers
 
             Guard.Against<XmlException>(rootDoc == null, "Xml de RPS ou NFSe invalido.");
 
-            var ret = new NotaServico();
+            var ret = new NotaServico(Configuracoes);
 
             if (formatoXml == LoadXmlFormato.NFSe)
             {
@@ -1143,7 +1143,7 @@ namespace ACBr.Net.NFSe.Providers
             valores.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorCsll", ns, 1, 15, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorCsll));
 
             valores.AddChild(AdicionarTag(TipoCampo.Int, "", "IssRetido", ns, 1, 1, Ocorrencia.Obrigatoria, issRetido));
-            
+
             valores.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorIss", ns, 1, 15, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorIss));
             valores.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorIssRetido", ns, 1, 15, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorIssRetido));
             valores.AddChild(AdicionarTag(TipoCampo.De2, "", "OutrasRetencoes", ns, 1, 15, Ocorrencia.Obrigatoria, nota.Servico.Valores.OutrasRetencoes));
