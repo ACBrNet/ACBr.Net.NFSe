@@ -41,7 +41,7 @@
       - Pronim v2 (Em Teste).
       - Vitoria (Em Testes).
       - DBSeller (Em Teste).
-</Description>
+    </Description>
     <NeutralLanguage>pt-BR</NeutralLanguage>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <AssemblyVersion>1.5.1.0</AssemblyVersion>
@@ -51,9 +51,10 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <PackageReleaseNotes>[+] Adicionado o provedor de Goiânia
-[*] Atualizada as classe bases da ABRASF 2.00, 2.01, 2.02, 2.03 e 2.04.
-</PackageReleaseNotes>
+    <PackageReleaseNotes>
+      [+] Adicionado o provedor de Goiânia
+      [*] Atualizada as classe bases da ABRASF 2.00, 2.01, 2.02, 2.03 e 2.04.
+    </PackageReleaseNotes>
     <PackageIcon>ACBr.Net.png</PackageIcon>
   </PropertyGroup>
 
@@ -170,6 +171,10 @@
       <Pack>True</Pack>
       <PackagePath>content\Schemas\Goiania</PackagePath>
     </None>
+    <None Include="Schemas\ISSe\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\ISSe</PackagePath>
+    </None>
     <None Include="Schemas\ISSNet\*.*">
       <Pack>True</Pack>
       <PackagePath>content\Schemas\ISSNet</PackagePath>
@@ -262,6 +267,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\Goiania\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\ISSe\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\ISSNet\*.*">

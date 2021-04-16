@@ -1,12 +1,12 @@
-// ***********************************************************************
+﻿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
 // Author           : Rafael Dias
-// Created          : 07-30-2017
+// Created          : 05-16-2018
 //
 // Last Modified By : Rafael Dias
-// Last Modified On : 07-30-2017
+// Last Modified On : 07-11-2018
 // ***********************************************************************
-// <copyright file="NFSeProvider.cs" company="ACBr.Net">
+// <copyright file="ProviderISSe.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,68 +29,32 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ComponentModel;
+using ACBr.Net.NFSe.Configuracao;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    public enum NFSeProvider : byte
+    internal sealed class ProviderISSe : ProviderABRASF201
     {
-        Abaco = 0,
+        #region Constructors
 
-        Betha = 1,
+        public ProviderISSe(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
+        {
+            Name = "ISSe";
+        }
 
-        [Description("Betha v2")]
-        Betha2 = 2,
+        #endregion Constructors
 
-        BHISS = 8,
+        #region Methods
 
-        Coplan = 3,
+        #region Protected Methods
 
-        DBSeller = 19,
+        protected override IServiceClient GetClient(TipoUrl tipo)
+        {
+            return new ISSeServiceClient(this, tipo);
+        }
 
-        DSF = 4,
+        #endregion Protected Methods
 
-        Equiplano = 15,
-
-        Fiorilli = 16,
-
-        FissLex = 12,
-
-        Ginfes = 5,
-
-        ISSe = 23,
-
-        ISSNet = 18,
-
-        [Description("NFe Cidades")]
-        NFeCidades = 6,
-
-        [Description("Nota Carioca")]
-        NotaCarioca = 7,
-
-        [Description("Pronim v2")]
-        Pronim2 = 17,
-
-        [Description("São Paulo")]
-        SaoPaulo = 9,
-
-        [Description("SmarAPD ABRASF")]
-        SmarAPDABRASF = 14,
-
-        [Description("Vitoria")]
-        Vitoria = 13,
-
-        WebIss = 10,
-
-        [Description("WebIss v2")]
-        WebIss2 = 11,
-
-        Sigiss = 20,
-
-        [Description("CONAM")]
-        Conam = 21,
-
-        [Description("Goiania")]
-        Goiania = 22
+        #endregion Methods
     }
 }

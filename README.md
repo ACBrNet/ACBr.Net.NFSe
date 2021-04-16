@@ -25,6 +25,7 @@ Biblioteca para emissão e trasmissão de NFSe.
 - Goiânia.
 - NFe Cidades (GovDigital).
 - IISNet (Em Teste).
+- ISSe (Em Teste).
 - Porto Alegre (Em Teste).
 - Abaco (Em Teste).
 - Betha v1 (Em Teste).
