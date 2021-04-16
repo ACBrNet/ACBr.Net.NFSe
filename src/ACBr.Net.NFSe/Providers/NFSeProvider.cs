@@ -58,6 +58,8 @@ namespace ACBr.Net.NFSe.Providers
 
         Ginfes = 5,
 
+        ISSe = 22,
+
         ISSNet = 18,
 
         [Description("NFe Cidades")]
@@ -69,7 +71,7 @@ namespace ACBr.Net.NFSe.Providers
         [Description("Pronim v2")]
         Pronim2 = 17,
 
-        [Description("São Paulo")]
+        [Description("SÃ£o Paulo")]
         SaoPaulo = 9,
 
         [Description("SmarAPD ABRASF")]
