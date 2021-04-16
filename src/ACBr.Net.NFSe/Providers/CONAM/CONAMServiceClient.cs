@@ -23,11 +23,6 @@ namespace ACBr.Net.NFSe.Providers
 
         public string Enviar(string cabecalho, string dados)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public string EnviarSincrono(string cabecalho, string dados)
-        {
             var message = new StringBuilder();
             message.Append("<ws_nfe.PROCESSARPS>");
             message.Append("<Sdt_processarpsin xmlns=\"NFe\">");
@@ -40,6 +35,11 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</ws_nfe.PROCESSARPS>");
 
             return Execute(message.ToString(), "ws_nfe.PROCESSARPSResponse");
+        }
+
+        public string EnviarSincrono(string cabecalho, string dados)
+        {
+            throw new System.NotImplementedException();
         }
 
         public string ConsultarSituacao(string cabecalho, string dados)
