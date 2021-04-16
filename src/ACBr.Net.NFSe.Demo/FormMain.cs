@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ACBr.Net.NFSe.DANFSe.FastReport;
+using ACBr.Net.NFSe.DANFSe.FastReport.OpenSource;
 
 namespace ACBr.Net.NFSe.Demo
 {
@@ -33,10 +34,13 @@ namespace ACBr.Net.NFSe.Demo
             InitializeComponent();
             acbrNFSe = new ACBrNFSe
             {
-                DANFSe = new DANFSeFastReport()
+                DANFSe = new DANFSeFastReportOpenSource()
+                {
+                    MostrarPreview = true
+                }
             };
 
-            ((DANFSeFastReport)acbrNFSe.DANFSe).OnExport += (sender, args) => args.Export.ShowDialog();
+            //((DANFSeFastReportOpenSource)acbrNFSe.DANFSe).OnExport += (sender, args) => args.Export.ShowDialog();
 
             config = ACBrConfig.CreateOrLoad(Path.Combine(Application.StartupPath, "nfse.config"));
         }
@@ -270,11 +274,13 @@ namespace ACBr.Net.NFSe.Demo
 
         private void btnDesignDANFSe_Click(object sender, EventArgs e)
         {
-            ((DANFSeFastReport)acbrNFSe.DANFSe).ShowDesign();
+            // Design apenas na versão Full do FastReports
+            //((DANFSeFastReport)acbrNFSe.DANFSe).ShowDesign();
         }
 
         private void btnGerarPDF_Click(object sender, EventArgs e)
         {
+            acbrNFSe.DANFSe.NomeArquivo = "NFSe.pdf";
             acbrNFSe.ImprimirPDF();
         }
 
