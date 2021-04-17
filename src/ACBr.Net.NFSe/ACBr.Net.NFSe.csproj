@@ -6,12 +6,11 @@
     <RootNamespace>ACBr.Net.NFSe</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>acbr.net.snk</AssemblyOriginatorKeyFile>
-    <Copyright>Copyright © Grupo ACBr.Net 2014 - 2020</Copyright>
+    <Copyright>Copyright © Grupo ACBr.Net 2014 - 2021</Copyright>
     <Company>Grupo ACBr.Net</Company>
     <Authors>Rafael Dias</Authors>
     <PackageProjectUrl>https://acbrnet.github.io</PackageProjectUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageIconUrl></PackageIconUrl>
     <RepositoryUrl>https://github.com/ACBrNet/ACBr.Net.NFSe</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>ACBr.Net NFSe ACBrNFSe</PackageTags>
@@ -33,6 +32,7 @@
       - Goiânia.
       - NFe Cidades (GovDigital).
       - Porto Alegre (Em Teste).
+      - ISSe (Em Teste).
       - IIS Net (Em Teste).
       - Abaco (Em Teste).
       - Betha v1 (Em Teste).
@@ -46,14 +46,14 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <AssemblyVersion>1.5.1.0</AssemblyVersion>
     <FileVersion>1.5.1.0</FileVersion>
-    <Version>1.5.1.3</Version>
+    <Version>1.5.1.4</Version>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageReleaseNotes>
-      [+] Adicionado o provedor de Goiânia
-      [*] Atualizada as classe bases da ABRASF 2.00, 2.01, 2.02, 2.03 e 2.04.
+      [+] Adicionado o provedor de ISSe.
+
     </PackageReleaseNotes>
     <PackageIcon>ACBr.Net.png</PackageIcon>
   </PropertyGroup>
