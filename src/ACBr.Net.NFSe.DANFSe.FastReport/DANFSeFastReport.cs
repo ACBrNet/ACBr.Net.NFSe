@@ -44,6 +44,11 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport
             }
         }
 
+        public override void Imprimir()
+        {
+            Imprimir(null);
+        }
+
         public override void ImprimirPDF()
         {
             var oldFiltro = Filtro;
@@ -51,7 +56,7 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport
             try
             {
                 Filtro = FiltroDFeReport.PDF;
-                Imprimir();
+                Imprimir(null);
             }
             finally
             {
@@ -59,7 +64,52 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport
             }
         }
 
-        public override void Imprimir()
+        public override void ImprimirPDF(Stream stream)
+        {
+            var oldFiltro = Filtro;
+
+            try
+            {
+                Filtro = FiltroDFeReport.PDF;
+                Imprimir(stream);
+            }
+            finally
+            {
+                Filtro = oldFiltro;
+            }
+        }
+
+        public override void ImprimirHTML()
+        {
+            var oldFiltro = Filtro;
+
+            try
+            {
+                Filtro = FiltroDFeReport.HTML;
+                Imprimir(null);
+            }
+            finally
+            {
+                Filtro = oldFiltro;
+            }
+        }
+
+        public override void ImprimirHTML(Stream stream)
+        {
+            var oldFiltro = Filtro;
+
+            try
+            {
+                Filtro = FiltroDFeReport.HTML;
+                Imprimir(stream);
+            }
+            finally
+            {
+                Filtro = oldFiltro;
+            }
+        }
+
+        private void Imprimir(Stream stream)
         {
             using (internalReport = new Report())
             {
@@ -87,27 +137,33 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport
                             var evtPdf = new DANFSeExportEventArgs();
                             evtPdf.Export = new PDFExport
                             {
-                                EmbeddingFonts = true,
+                                PdfCompliance = PDFExport.PdfStandard.PdfA_1a,
                                 ShowProgress = MostrarSetup,
                                 OpenAfterExport = MostrarPreview
                             };
 
                             OnExport.Raise(this, evtPdf);
-                            internalReport.Export(evtPdf.Export, NomeArquivo);
+                            if (stream.IsNull())
+                                internalReport.Export(evtPdf.Export, NomeArquivo);
+                            else
+                                internalReport.Export(evtPdf.Export, stream);
                             break;
 
                         case FiltroDFeReport.HTML:
                             var evtHtml = new DANFSeExportEventArgs();
                             evtHtml.Export = new HTMLExport()
                             {
-                                Format = HTMLExportFormat.MessageHTML,
+                                Format = HTMLExportFormat.HTML,
                                 EmbedPictures = true,
                                 Preview = MostrarPreview,
                                 ShowProgress = MostrarSetup
                             };
 
                             OnExport.Raise(this, evtHtml);
-                            internalReport.Export(evtHtml.Export, NomeArquivo);
+                            if (stream.IsNull())
+                                internalReport.Export(evtHtml.Export, NomeArquivo);
+                            else
+                                internalReport.Export(evtHtml.Export, stream);
                             break;
 
                         default:

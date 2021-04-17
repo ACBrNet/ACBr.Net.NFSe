@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReferencedAssemblies="System.dll&#13;&#10;System.Drawing.dll&#13;&#10;System.Windows.Forms.dll&#13;&#10;System.Data.dll&#13;&#10;System.Xml.dll&#13;&#10;ACBr.Net.Core.dll&#13;&#10;ACBr.Net.DFe.Core.dll&#13;&#10;ACBr.Net.NFSe.dll" ReportInfo.Created="03/21/2017 02:41:33" ReportInfo.Modified="04/16/2021 02:12:29" ReportInfo.CreatorVersion="2021.2.0.0" PrintSettings.Copies="0" PrintSettings.ShowDialog="false">
+<Report ScriptLanguage="CSharp" ReferencedAssemblies="System.dll&#13;&#10;System.Drawing.dll&#13;&#10;System.Windows.Forms.dll&#13;&#10;System.Data.dll&#13;&#10;System.Xml.dll&#13;&#10;ACBr.Net.Core.dll&#13;&#10;ACBr.Net.DFe.Core.dll&#13;&#10;ACBr.Net.NFSe.dll" ReportInfo.Created="03/21/2017 02:41:33" ReportInfo.Modified="04/17/2021 16:27:46" ReportInfo.CreatorVersion="2021.2.0.0" PrintSettings.Copies="0" PrintSettings.ShowDialog="false">
   <ScriptText>using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,10 +25,10 @@ namespace FastReport
       var imagem = (byte[])(Report.GetParameterValue(&quot;Logo&quot;) ?? new byte[0]);
          
       if(imagemP.Length &gt; 0)
-        imgPrefeitura.Image = imagemP.ToImage();
+        imgPrefeitura.SetImageData(imagemP);
       
       if(imagem.Length &gt; 0)
-        imgPrestador.Image = imagem.ToImage();
+        imgPrestador.SetImageData(imagem);
     }
 
     private void prestadorCNPJCPF_BeforePrint(object sender, EventArgs e)
@@ -373,7 +373,7 @@ namespace FastReport
       <TextObject Name="Memo9" Left="563.15" Top="7.56" Width="154.96" Height="15.12" Text="[NotaFiscal.IdentificacaoNFSe.Numero]" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Arial, 9pt, style=Bold"/>
       <TextObject Name="Memo53" Left="563.15" Top="34.02" Width="154.96" Height="15.12" Text="[NotaFiscal.IdentificacaoNFSe.DataEmissao]" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Arial, 9pt, style=Bold"/>
       <TextObject Name="Memo54" Left="563.15" Top="60.47" Width="154.96" Height="15.12" Text="[NotaFiscal.IdentificacaoNFSe.Chave]" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Arial, 9pt, style=Bold"/>
-      <PictureObject Name="imgPrefeitura" Left="3.78" Top="3" Width="109.61" Height="71.81" BeforePrintEvent="imgPrefeitura_BeforePrint" Image=""/>
+      <PictureObject Name="imgPrefeitura" Left="3.78" Top="3" Width="109.61" Height="71.81" BeforePrintEvent="imgPrefeitura_BeforePrint"/>
       <TextObject Name="Memo38" Left="117.17" Top="26.46" Width="438.43" Height="18.9" Text="Secretaria Municipal de Finanças" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
       <TextObject Name="Memo46" Left="117.17" Top="45.35" Width="438.43" Height="18.9" Text="NOTA FISCAL DE SERVIÇOS ELETRÔNICA - NFS-e" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
       <TextObject Name="Memo65" Left="117.17" Top="63.25" Width="438.43" Height="15.12" Text="RPS Nº [NotaFiscal.IdentificacaoRps.Numero] Série [NotaFiscal.IdentificacaoRps.Serie], emitido em [FormatDateTime([NotaFiscal.IdentificacaoRps.DataEmissao], &quot;dd/MM/yyyy&quot;)]" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 8pt"/>
@@ -385,7 +385,7 @@ namespace FastReport
         <TextObject Name="Memo17" Left="120.19" Top="26.46" Width="75.59" Height="15.12" Text="CPF / CNPJ" Padding="2, 1, 2, 1" VertAlign="Center" Font="Arial, 6pt"/>
         <TextObject Name="Memo19" Left="420.66" Top="26.46" Width="113.39" Height="15.12" Text="INSCRIÇÃO MUNICIPAL" Padding="2, 1, 2, 1" VertAlign="Center" Font="Arial, 6pt"/>
         <TextObject Name="Memo98" Left="1.89" Top="1.78" Width="714.33" Height="18.9" Fill.Color="White" Text="PRESTADOR DE SERVIÇOS" Padding="0, 1, 0, 1" HorzAlign="Center" Font="Arial, 10pt, style=Bold"/>
-        <PictureObject Name="imgPrestador" Left="4.56" Top="26.46" Width="109.61" Height="86.93" Image=""/>
+        <PictureObject Name="imgPrestador" Left="4.56" Top="26.46" Width="109.61" Height="86.93"/>
         <TextObject Name="Memo20" Left="200.31" Top="45.35" Width="514.02" Height="15.12" Text="[NotaFiscal.Prestador.RazaoSocial]" Padding="2, 1, 2, 1" Font="Arial, 8pt, style=Bold"/>
         <TextObject Name="Memo25" Left="200.31" Top="64.25" Width="514.02" Height="15.12" Text="[NotaFiscal.Prestador.Endereco.Logradouro], [NotaFiscal.Prestador.Endereco.Numero]" Padding="2, 1, 2, 1" Font="Arial, 8pt, style=Bold"/>
         <TextObject Name="Memo42" Left="200.31" Top="83.15" Width="291.02" Height="15.12" Text="[MunicipioPrestador]" Padding="2, 1, 2, 1" Font="Arial, 8pt, style=Bold"/>

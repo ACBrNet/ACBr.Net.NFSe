@@ -49,6 +49,7 @@
             this.tabPage16 = new System.Windows.Forms.TabPage();
             this.btnCancelarNFSe = new System.Windows.Forms.Button();
             this.tabPage17 = new System.Windows.Forms.TabPage();
+            this.btnGerarHTML = new System.Windows.Forms.Button();
             this.btnGerarPDF = new System.Windows.Forms.Button();
             this.btnDesignDANFSe = new System.Windows.Forms.Button();
             this.btnImprimirDANFSe = new System.Windows.Forms.Button();
@@ -374,6 +375,7 @@
             // 
             // tabPage17
             // 
+            this.tabPage17.Controls.Add(this.btnGerarHTML);
             this.tabPage17.Controls.Add(this.btnGerarPDF);
             this.tabPage17.Controls.Add(this.btnDesignDANFSe);
             this.tabPage17.Controls.Add(this.btnImprimirDANFSe);
@@ -384,9 +386,19 @@
             this.tabPage17.Text = "Impressão";
             this.tabPage17.UseVisualStyleBackColor = true;
             // 
+            // btnGerarHTML
+            // 
+            this.btnGerarHTML.Location = new System.Drawing.Point(372, 6);
+            this.btnGerarHTML.Name = "btnGerarHTML";
+            this.btnGerarHTML.Size = new System.Drawing.Size(177, 23);
+            this.btnGerarHTML.TabIndex = 34;
+            this.btnGerarHTML.Text = "Gerar HTML";
+            this.btnGerarHTML.UseVisualStyleBackColor = true;
+            this.btnGerarHTML.Click += new System.EventHandler(this.btnGerarHTML_Click);
+            // 
             // btnGerarPDF
             // 
-            this.btnGerarPDF.Location = new System.Drawing.Point(372, 6);
+            this.btnGerarPDF.Location = new System.Drawing.Point(189, 6);
             this.btnGerarPDF.Name = "btnGerarPDF";
             this.btnGerarPDF.Size = new System.Drawing.Size(177, 23);
             this.btnGerarPDF.TabIndex = 33;
@@ -396,7 +408,7 @@
             // 
             // btnDesignDANFSe
             // 
-            this.btnDesignDANFSe.Location = new System.Drawing.Point(189, 6);
+            this.btnDesignDANFSe.Location = new System.Drawing.Point(6, 35);
             this.btnDesignDANFSe.Name = "btnDesignDANFSe";
             this.btnDesignDANFSe.Size = new System.Drawing.Size(177, 23);
             this.btnDesignDANFSe.TabIndex = 32;
@@ -1478,6 +1490,7 @@
         private System.Windows.Forms.Button btnGerarPDF;
         private System.Windows.Forms.Button btnDesignDANFSe;
         private System.Windows.Forms.Button btnImprimirDANFSe;
+        private System.Windows.Forms.Button btnGerarHTML;
     }
 }
 

@@ -31,6 +31,7 @@
 
 using System;
 using System.ComponentModel;
+using System.IO;
 using ACBr.Net.Core;
 using ACBr.Net.Core.Logging;
 using ACBr.Net.DFe.Core.Common;
@@ -72,6 +73,21 @@ namespace ACBr.Net.NFSe
         /// Imprimirs the PDF.
         /// </summary>
         public abstract void ImprimirPDF();
+
+        /// <summary>
+        /// Imprimirs the PDF.
+        /// </summary>
+        public abstract void ImprimirPDF(Stream stream);
+
+        /// <summary>
+        /// Imprimirs the PDF.
+        /// </summary>
+        public abstract void ImprimirHTML();
+
+        /// <summary>
+        /// Imprimirs the PDF.
+        /// </summary>
+        public abstract void ImprimirHTML(Stream stream);
 
         #endregion Methods
 

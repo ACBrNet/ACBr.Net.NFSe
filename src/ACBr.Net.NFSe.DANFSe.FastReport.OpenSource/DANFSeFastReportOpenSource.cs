@@ -1,11 +1,41 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
+// Author           : Rafael Dias
+// Created          : 01-31-2016
+//
+// Last Modified By : Rafael Dias
+// Last Modified On : 07-05-2018
+// ***********************************************************************
+// <copyright file="DANFSeFastReportOpenSource.cs" company="ACBr.Net">
+//		        		   The MIT License (MIT)
+//	     		    Copyright (c) 2016 Grupo ACBr.Net
+//
+//	 Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//	 The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//	 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// DEALINGS IN THE SOFTWARE.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+
+using System;
 using System.ComponentModel;
 using System.Drawing.Printing;
 using System.IO;
 using System.Reflection;
 using ACBr.Net.Core;
 using ACBr.Net.Core.Extensions;
-using ACBr.Net.DFe.Core;
 using ACBr.Net.DFe.Core.Common;
 using FastReport;
 using FastReport.Export.Html;
@@ -33,6 +63,13 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
 
         #region Methods
 
+        /// <inheritdoc />
+        public override void Imprimir()
+        {
+            Imprimir(null);
+        }
+
+        /// <inheritdoc />
         public override void ImprimirPDF()
         {
             var oldFiltro = Filtro;
@@ -40,7 +77,7 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
             try
             {
                 Filtro = FiltroDFeReport.PDF;
-                Imprimir();
+                Imprimir(null);
             }
             finally
             {
@@ -48,7 +85,55 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
             }
         }
 
-        public override void Imprimir()
+        /// <inheritdoc />
+        public override void ImprimirPDF(Stream stream)
+        {
+            var oldFiltro = Filtro;
+
+            try
+            {
+                Filtro = FiltroDFeReport.PDF;
+                Imprimir(stream);
+            }
+            finally
+            {
+                Filtro = oldFiltro;
+            }
+        }
+
+        /// <inheritdoc />
+        public override void ImprimirHTML()
+        {
+            var oldFiltro = Filtro;
+
+            try
+            {
+                Filtro = FiltroDFeReport.HTML;
+                Imprimir(null);
+            }
+            finally
+            {
+                Filtro = oldFiltro;
+            }
+        }
+
+        /// <inheritdoc />
+        public override void ImprimirHTML(Stream stream)
+        {
+            var oldFiltro = Filtro;
+
+            try
+            {
+                Filtro = FiltroDFeReport.HTML;
+                Imprimir(stream);
+            }
+            finally
+            {
+                Filtro = oldFiltro;
+            }
+        }
+
+        private void Imprimir(Stream stream)
         {
             try
             {
@@ -62,20 +147,17 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
                     switch (Filtro)
                     {
                         case FiltroDFeReport.Nenhum:
-#if NETFRAMEWORK
                             if (MostrarPreview)
                                 internalReport.Show();
                             else if (MostrarSetup)
                                 internalReport.PrintWithDialog();
                             else
                                 internalReport.Print(settings);
-#else
-                            throw new ACBrDFeException("Metodo não suportado nesta plataforma.");
-#endif
                             break;
 
                         case FiltroDFeReport.PDF:
                             var evtPdf = new DANFSeExportEventArgs();
+                            evtPdf.Filtro = Filtro;
                             evtPdf.Export = new PDFSimpleExport()
                             {
                                 ImageDpi = 600,
@@ -84,21 +166,28 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
                             };
 
                             OnExport.Raise(this, evtPdf);
-                            internalReport.Export(evtPdf.Export, NomeArquivo);
+                            if (stream.IsNull())
+                                internalReport.Export(evtPdf.Export, NomeArquivo);
+                            else
+                                internalReport.Export(evtPdf.Export, stream);
                             break;
 
                         case FiltroDFeReport.HTML:
                             var evtHtml = new DANFSeExportEventArgs();
+                            evtHtml.Filtro = Filtro;
                             evtHtml.Export = new HTMLExport()
                             {
-                                Format = HTMLExportFormat.MessageHTML,
+                                Format = HTMLExportFormat.HTML,
                                 EmbedPictures = true,
                                 Preview = MostrarPreview,
                                 ShowProgress = MostrarSetup
                             };
 
                             OnExport.Raise(this, evtHtml);
-                            internalReport.Export(evtHtml.Export, NomeArquivo);
+                            if (stream.IsNull())
+                                internalReport.Export(evtHtml.Export, NomeArquivo);
+                            else
+                                internalReport.Export(evtHtml.Export, stream);
                             break;
 
                         default:
@@ -152,7 +241,7 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
                 internalReport.Load(e.FilePath);
             }
 
-#if NETFRAMEWORK
+#if NETFULL
             internalReport.SetParameterValue("Logo", Logo.ToByteArray());
             internalReport.SetParameterValue("LogoPrefeitura", LogoPrefeitura.ToByteArray());
 #else

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReferencedAssemblies="System.dll&#13;&#10;System.Drawing.dll&#13;&#10;System.Windows.Forms.dll&#13;&#10;System.Data.dll&#13;&#10;System.Xml.dll&#13;&#10;ACBr.Net.Core.dll&#13;&#10;ACBr.Net.DFe.Core.dll&#13;&#10;ACBr.Net.NFSe.dll" ReportInfo.Created="03/21/2017 02:41:33" ReportInfo.Modified="04/15/2021 17:52:23" ReportInfo.CreatorVersion="2021.2.8.0" PrintSettings.Copies="0" PrintSettings.ShowDialog="false">
+<Report ScriptLanguage="CSharp" ReferencedAssemblies="System.dll&#13;&#10;System.Drawing.dll&#13;&#10;System.Windows.Forms.dll&#13;&#10;System.Data.dll&#13;&#10;System.Xml.dll&#13;&#10;ACBr.Net.Core.dll&#13;&#10;ACBr.Net.DFe.Core.dll&#13;&#10;ACBr.Net.NFSe.dll" ReportInfo.Created="03/21/2017 02:41:33" ReportInfo.Modified="04/17/2021 16:27:43" ReportInfo.CreatorVersion="2021.2.8.0" PrintSettings.Copies="0" PrintSettings.ShowDialog="false">
   <ScriptText>using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,8 +12,8 @@ using FastReport.Data;
 using FastReport.Dialog;
 using FastReport.Barcode;
 using FastReport.Table;
-using FastReport.Utils;
-using ACBr.Net.Core.Extensions;
+using FastReport.Utils;      
+using ACBr.Net.Core.Extensions;   
 
 namespace FastReport
 {
@@ -25,10 +25,10 @@ namespace FastReport
       var imagem = (byte[])(Report.GetParameterValue(&quot;Logo&quot;) ?? new byte[0]);
          
       if(imagemP.Length &gt; 0)
-        imgPrefeitura.Image = imagemP.ToImage();
+        imgPrefeitura.SetImageData(imagemP);
       
       if(imagem.Length &gt; 0)
-        imgPrestador.Image = imagem.ToImage();
+        imgPrestador.SetImageData(imagem);
     }
 
     private void prestadorCNPJCPF_BeforePrint(object sender, EventArgs e)

@@ -284,6 +284,12 @@ namespace ACBr.Net.NFSe.Demo
             acbrNFSe.ImprimirPDF();
         }
 
+        private void btnGerarHTML_Click(object sender, EventArgs e)
+        {
+            acbrNFSe.DANFSe.NomeArquivo = "NFSe.html";
+            acbrNFSe.ImprimirHTML();
+        }
+
         private void lstMunicipios_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             ExecuteSafe(() =>

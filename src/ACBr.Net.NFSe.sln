@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBr.Net.NFSe.Demo", "ACBr.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBr.Net.NFSe.DANFSe.FastReport", "ACBr.Net.NFSe.DANFSe.FastReport\ACBr.Net.NFSe.DANFSe.FastReport.csproj", "{BA9DBAB3-31F1-4D98-AD4D-CD73CF0B6921}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBr.Net.NFSe.DANFSe.FastReport.OpenSource", "ACBr.Net.NFSe.DANFSe.FastReport.OpenSource\ACBr.Net.NFSe.DANFSe.FastReport.OpenSource.csproj", "{F16DBEED-46EB-46B1-8264-711EDFADC099}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACBr.Net.NFSe.DANFSe.FastReport.OpenSource", "ACBr.Net.NFSe.DANFSe.FastReport.OpenSource\ACBr.Net.NFSe.DANFSe.FastReport.OpenSource.csproj", "{F16DBEED-46EB-46B1-8264-711EDFADC099}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,4 +1,35 @@
-﻿using System.Drawing;
+﻿// ***********************************************************************
+// Assembly         : ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
+// Author           : Rafael Dias
+// Created          : 01-31-2016
+//
+// Last Modified By : Rafael Dias
+// Last Modified On : 07-05-2018
+// ***********************************************************************
+// <copyright file="FastReportExtensions.cs" company="ACBr.Net">
+//		        		   The MIT License (MIT)
+//	     		    Copyright (c) 2016 Grupo ACBr.Net
+//
+//	 Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//	 The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//	 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// DEALINGS IN THE SOFTWARE.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+
+using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
 using System.Windows.Forms;
@@ -7,9 +38,13 @@ using FastReport.Export;
 using FastReport.Export.Image;
 using FastReport.Utils;
 
+#if !NETFULL
+using ACBr.Net.DFe.Core;
+#endif
+
 namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
 {
-    public static class Extensions
+    internal static class FastReportExtensions
     {
         #region Fields
 
@@ -21,6 +56,7 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
 
         public static void PrintWithDialog(this Report report)
         {
+#if NETFULL
             using (var dlg = new PrintDialog())
             {
                 dlg.AllowSomePages = true;
@@ -31,6 +67,9 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
 
                 report.Print(dlg.PrinterSettings);
             }
+#else
+            throw new ACBrDFeException("Metodo não suportado nesta plataforma.");
+#endif
         }
 
         public static void Print(this Report report, PrinterSettings settings = null)
@@ -44,6 +83,7 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
 
         public static void Show(this Report report, PrinterSettings settings = null)
         {
+#if NETFULL
             var doc = report.PrepareDoc(settings);
             if (doc == null) return;
 
@@ -56,6 +96,9 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
                 preview.ShowDialog();
 
             doc.Dispose();
+#else
+            throw new ACBrDFeException("Metodo não suportado nesta plataforma.");
+#endif
         }
 
         private static PrintDocument PrepareDoc(this Report report, PrinterSettings settings = null)
@@ -70,6 +113,7 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
             var exp = new ImageExport { ImageFormat = ImageExportFormat.Png, Resolution = 600 };
 
             var doc = new PrintDocument { DocumentName = report.Name };
+
             if (settings != null)
                 doc.PrinterSettings = settings;
 

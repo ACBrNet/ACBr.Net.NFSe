@@ -36,6 +36,7 @@ using ACBr.Net.NFSe.Nota;
 using ACBr.Net.NFSe.Providers;
 using System;
 using System.ComponentModel;
+using System.IO;
 using System.Net;
 using ACBr.Net.Core.Logging;
 
@@ -594,6 +595,33 @@ namespace ACBr.Net.NFSe
         {
             Guard.Against<ArgumentNullException>(DANFSe == null, "Nenhum componente de impressão especificado.");
             DANFSe?.ImprimirPDF();
+        }
+
+        /// <summary>
+        /// Imprime o PDF do DANFse para uma stream
+        /// </summary>
+        public void ImprimirPDF(Stream stream)
+        {
+            Guard.Against<ArgumentNullException>(DANFSe == null, "Nenhum componente de impressão especificado.");
+            DANFSe?.ImprimirPDF(stream);
+        }
+
+        /// <summary>
+        /// Imprime o HTML do DANFse
+        /// </summary>
+        public void ImprimirHTML()
+        {
+            Guard.Against<ArgumentNullException>(DANFSe == null, "Nenhum componente de impressão especificado.");
+            DANFSe?.ImprimirHTML();
+        }
+
+        /// <summary>
+        /// Imprime o HTML do DANFse para uma stream
+        /// </summary>
+        public void ImprimirHTML(Stream stream)
+        {
+            Guard.Against<ArgumentNullException>(DANFSe == null, "Nenhum componente de impressão especificado.");
+            DANFSe?.ImprimirHTML(stream);
         }
 
         #endregion Methods
