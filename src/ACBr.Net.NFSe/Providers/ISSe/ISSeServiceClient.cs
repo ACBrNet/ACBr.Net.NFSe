@@ -40,12 +40,6 @@ namespace ACBr.Net.NFSe.Providers
 {
     internal sealed class ISSeServiceClient : NFSeSOAP11ServiceClient, IServiceClient
     {
-        #region Fields
-
-        private bool expect100Continue;
-
-        #endregion Fields
-
         #region Constructors
 
         public ISSeServiceClient(ProviderISSe provider, TipoUrl tipoUrl, X509Certificate2 certificado) : base(provider, tipoUrl, certificado)
@@ -162,7 +156,8 @@ namespace ACBr.Net.NFSe.Providers
         private string Execute(string action, string message, params string[] responseTag)
         {
             var baseUrl = Endpoint.Address.Uri.GetLeftPart(UriPartial.Authority);
-            var soapNs = $"xmlns:v2=\"{baseUrl}/v2.01\"";
+            var soapNs = $"xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" " +
+                         $"xmlns:v2=\"{baseUrl}/v2.01\"";
 
             return Execute($"https://nfse-ws.hom-ecity.maringa.pr.gov.br/v2.01#{action}", message, responseTag, soapNs);
         }

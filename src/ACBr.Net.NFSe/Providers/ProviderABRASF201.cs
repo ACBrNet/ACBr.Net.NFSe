@@ -118,6 +118,86 @@ namespace ACBr.Net.NFSe.Providers
 
         #endregion RPS
 
+        #region NFSe
+
+        protected override XElement WritePrestador(NotaServico nota)
+        {
+            var prestador = new XElement("PrestadorServico");
+
+            prestador.AddChild(AdicionarTag(TipoCampo.Str, "", "RazaoSocial", 1, 150, Ocorrencia.Obrigatoria, nota.Prestador.RazaoSocial));
+            prestador.AddChild(AdicionarTag(TipoCampo.Str, "", "NomeFantasia", 1, 60, Ocorrencia.NaoObrigatoria, nota.Prestador.NomeFantasia));
+
+            var indPrestador = new XElement("IdentificacaoPrestador");
+            prestador.AddChild(indPrestador);
+
+            indPrestador.AddChild(AdicionarTag(TipoCampo.Str, "", "CpfCnpj", 1, 14, Ocorrencia.NaoObrigatoria, nota.Prestador.CpfCnpj));
+            indPrestador.AddChild(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipal", 1, 15, Ocorrencia.NaoObrigatoria, nota.Prestador.InscricaoMunicipal));
+
+            var endereco = new XElement("Endereco");
+            prestador.AddChild(endereco);
+
+            endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Endereco", 1, 125, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Logradouro));
+            endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Numero", 1, 10, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Numero));
+            endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Complemento", 1, 60, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Complemento));
+            endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Bairro", 1, 60, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Bairro));
+            endereco.AddChild(AdicionarTag(TipoCampo.Int, "", "CodigoMunicipio", 7, 7, Ocorrencia.MaiorQueZero, nota.Prestador.Endereco.CodigoMunicipio));
+            endereco.AddChild(AdicionarTag(TipoCampo.Str, "", "Uf", 2, 2, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Uf));
+            endereco.AddChild(AdicionarTag(TipoCampo.Int, "", "CodigoPais", 4, 4, Ocorrencia.MaiorQueZero, nota.Prestador.Endereco.CodigoPais));
+            endereco.AddChild(AdicionarTag(TipoCampo.StrNumber, "", "Cep", 8, 8, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Cep));
+
+            if (!nota.Prestador.DadosContato.Telefone.IsEmpty() ||
+                !nota.Prestador.DadosContato.Email.IsEmpty())
+            {
+                var contato = new XElement("contato");
+                prestador.AddChild(contato);
+
+                contato.AddChild(AdicionarTag(TipoCampo.Str, "", "Telefone", 1, 20, Ocorrencia.NaoObrigatoria, nota.Prestador.DadosContato.Telefone));
+                contato.AddChild(AdicionarTag(TipoCampo.Str, "", "Email", 1, 80, Ocorrencia.NaoObrigatoria, nota.Prestador.DadosContato.Email));
+            }
+
+            return prestador;
+        }
+
+        /// <inheritdoc />
+        protected override void LoadPrestador(NotaServico nota, XElement rootNFSe)
+        {
+            // Endereco Prestador
+            var prestadorServico = rootNFSe.ElementAnyNs("PrestadorServico");
+            if (prestadorServico == null) return;
+
+            nota.Prestador.RazaoSocial = prestadorServico.ElementAnyNs("RazaoSocial")?.GetValue<string>() ?? string.Empty;
+            nota.Prestador.NomeFantasia = prestadorServico.ElementAnyNs("NomeFantasia")?.GetValue<string>() ?? string.Empty;
+
+            var indPrestador = rootNFSe.ElementAnyNs("IdentificacaoPrestador");
+            if (indPrestador != null)
+            {
+                nota.Prestador.CpfCnpj = indPrestador.ElementAnyNs("CpfCnpj")?.GetValue<string>() ?? string.Empty;
+                nota.Prestador.InscricaoMunicipal = indPrestador.ElementAnyNs("InscricaoMunicipal")?.GetValue<string>() ?? string.Empty;
+            }
+
+            // Endereco Prestador
+            var enderecoPrestador = rootNFSe.ElementAnyNs("Endereco");
+            if (enderecoPrestador != null)
+            {
+                nota.Prestador.Endereco.Logradouro = enderecoPrestador.ElementAnyNs("Endereco")?.GetValue<string>() ?? string.Empty;
+                nota.Prestador.Endereco.Numero = enderecoPrestador.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
+                nota.Prestador.Endereco.Complemento = enderecoPrestador.ElementAnyNs("Complemento")?.GetValue<string>() ?? string.Empty;
+                nota.Prestador.Endereco.Bairro = enderecoPrestador.ElementAnyNs("Bairro")?.GetValue<string>() ?? string.Empty;
+                nota.Prestador.Endereco.CodigoMunicipio = enderecoPrestador.ElementAnyNs("CodigoMunicipio")?.GetValue<int>() ?? 0;
+                nota.Prestador.Endereco.Uf = enderecoPrestador.ElementAnyNs("Uf")?.GetValue<string>() ?? string.Empty;
+                nota.Prestador.Endereco.Cep = enderecoPrestador.ElementAnyNs("Cep")?.GetValue<string>() ?? string.Empty;
+            }
+
+            // Contato Prestador
+            var contatoPrestador = rootNFSe.ElementAnyNs("Contato");
+            if (contatoPrestador == null) return;
+
+            nota.Prestador.DadosContato.Telefone = contatoPrestador.ElementAnyNs("Telefone")?.GetValue<string>() ?? string.Empty;
+            nota.Prestador.DadosContato.Email = contatoPrestador.ElementAnyNs("Email")?.GetValue<string>() ?? string.Empty;
+        }
+
+        #endregion NFSe
+
         #region Services
 
         /// <inheritdoc />

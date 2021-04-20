@@ -13,7 +13,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using ACBr.Net.NFSe.DANFSe.FastReport;
 using ACBr.Net.NFSe.DANFSe.FastReport.OpenSource;
 
 namespace ACBr.Net.NFSe.Demo

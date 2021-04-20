@@ -36,6 +36,7 @@ using System.IO;
 using System.Reflection;
 using ACBr.Net.Core;
 using ACBr.Net.Core.Extensions;
+using ACBr.Net.Core.Logging;
 using ACBr.Net.DFe.Core.Common;
 using FastReport;
 using FastReport.Export.Html;
@@ -137,9 +138,13 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
         {
             try
             {
+                this.Log().Debug("Iniciando impressão.");
+
                 using (internalReport = new Report())
                 {
                     PrepararImpressao();
+
+                    this.Log().Debug("Passando dados para impressão.");
 
                     internalReport.RegisterData(Parent.NotasServico.ToArray(), "NotaServico");
                     internalReport.Prepare();
@@ -156,6 +161,8 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
                             break;
 
                         case FiltroDFeReport.PDF:
+                            this.Log().Debug("Exportando para PDF.");
+
                             var evtPdf = new DANFSeExportEventArgs();
                             evtPdf.Filtro = Filtro;
                             evtPdf.Export = new PDFSimpleExport()
@@ -170,9 +177,13 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
                                 internalReport.Export(evtPdf.Export, NomeArquivo);
                             else
                                 internalReport.Export(evtPdf.Export, stream);
+
+                            this.Log().Debug("Exportação concluida.");
                             break;
 
                         case FiltroDFeReport.HTML:
+                            this.Log().Debug("Exportando para HTML.");
+
                             var evtHtml = new DANFSeExportEventArgs();
                             evtHtml.Filtro = Filtro;
                             evtHtml.Export = new HTMLExport()
@@ -188,11 +199,15 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
                                 internalReport.Export(evtHtml.Export, NomeArquivo);
                             else
                                 internalReport.Export(evtHtml.Export, stream);
+
+                            this.Log().Debug("Exportação concluida.");
                             break;
 
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
+
+                    this.Log().Debug("Impressão Concluida.");
                 }
             }
             finally
@@ -204,6 +219,8 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
 
         private void PrepararImpressao()
         {
+            this.Log().Debug("Preparando a impressão.");
+
             var e = new DANFSeEventArgs(Layout);
             OnGetReport.Raise(this, e);
             if (e.FilePath.IsEmpty() || !File.Exists(e.FilePath))
@@ -234,12 +251,18 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
                         throw new ArgumentOutOfRangeException();
                 }
 
+                this.Log().Debug("Carregando layout impressão.");
+
                 internalReport.Load(ms);
             }
             else
             {
+                this.Log().Debug("Carregando layout impressão costumizado.");
+
                 internalReport.Load(e.FilePath);
             }
+
+            this.Log().Debug("Passando configurações para o relatório.");
 
 #if NETFULL
             internalReport.SetParameterValue("Logo", Logo.ToByteArray());
@@ -253,7 +276,12 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
             internalReport.SetParameterValue("SoftwareHouse", SoftwareHouse);
             internalReport.SetParameterValue("Site", Site);
 
-            settings = new PrinterSettings { Copies = (short)NumeroCopias, PrinterName = Impressora };
+            settings = new PrinterSettings { Copies = (short)Math.Max(NumeroCopias, 1) };
+
+            if (!Impressora.IsEmpty())
+                settings.PrinterName = Impressora;
+
+            this.Log().Debug("Impressão preparada.");
         }
 
         #endregion Methods
