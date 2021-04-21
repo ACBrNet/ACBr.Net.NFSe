@@ -130,7 +130,7 @@ namespace ACBr.Net.NFSe.Providers
             var indPrestador = new XElement("IdentificacaoPrestador");
             prestador.AddChild(indPrestador);
 
-            indPrestador.AddChild(AdicionarTag(TipoCampo.Str, "", "CpfCnpj", 1, 14, Ocorrencia.NaoObrigatoria, nota.Prestador.CpfCnpj));
+            indPrestador.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Prestador.CpfCnpj));
             indPrestador.AddChild(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipal", 1, 15, Ocorrencia.NaoObrigatoria, nota.Prestador.InscricaoMunicipal));
 
             var endereco = new XElement("Endereco");
@@ -171,7 +171,7 @@ namespace ACBr.Net.NFSe.Providers
             var indPrestador = rootNFSe.ElementAnyNs("IdentificacaoPrestador");
             if (indPrestador != null)
             {
-                nota.Prestador.CpfCnpj = indPrestador.ElementAnyNs("CpfCnpj")?.GetValue<string>() ?? string.Empty;
+                nota.Prestador.CpfCnpj = indPrestador.ElementAnyNs("CpfCnpj")?.GetCPF_CNPJ();
                 nota.Prestador.InscricaoMunicipal = indPrestador.ElementAnyNs("InscricaoMunicipal")?.GetValue<string>() ?? string.Empty;
             }
 
