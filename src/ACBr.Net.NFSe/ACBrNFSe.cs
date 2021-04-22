@@ -300,9 +300,10 @@ namespace ACBr.Net.NFSe
         /// Obs.: Nem todos provedores suportam este metodo.
         /// </summary>
         /// <param name="numeroNfse">The numero nfse.</param>
+        /// <param name="pagina"></param>
         /// <returns>RetornoWebservice.</returns>
         /// <exception cref="NotImplementedException"></exception>
-        public RetornoConsultarNFSe ConsultaNFSe(int numeroNfse)
+        public RetornoConsultarNFSe ConsultaNFSe(int numeroNfse, int pagina = 0)
         {
             Guard.Against<ACBrException>(provider == null, "ERRO: Nenhuma cidade informada.");
             Guard.Against<ACBrException>(numeroNfse < 1, "O número da NFSe não pode ser zero ou negativo.");
@@ -312,7 +313,7 @@ namespace ACBr.Net.NFSe
             try
             {
                 ServicePointManager.SecurityProtocol = Configuracoes.WebServices.Protocolos;
-                return provider.ConsultaNFSe(NotasServico, numeroNfse: numeroNfse);
+                return provider.ConsultaNFSe(NotasServico, numeroNfse: numeroNfse, pagina: pagina);
             }
             catch (Exception exception)
             {
