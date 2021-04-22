@@ -125,21 +125,26 @@ namespace ACBr.Net.NFSe.Providers
         protected virtual void LoadRps(NotaServico nota, XElement rpsRoot)
         {
             var rps = rpsRoot.ElementAnyNs("Rps");
-            var ideRps = rps.ElementAnyNs("IdentificacaoRps");
-            var subRps = ideRps.ElementAnyNs("RpsSubstituido");
-
-            nota.IdentificacaoRps.Numero = ideRps.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
-            nota.IdentificacaoRps.Serie = ideRps.ElementAnyNs("Serie")?.GetValue<string>() ?? string.Empty;
-            nota.IdentificacaoRps.Tipo = ideRps.ElementAnyNs("Tipo")?.GetValue<TipoRps>() ?? TipoRps.RPS;
-
-            nota.IdentificacaoRps.DataEmissao = rps.ElementAnyNs("DataEmissao")?.GetValue<DateTime>() ?? DateTime.MinValue;
-            nota.Situacao = rps.ElementAnyNs("Status")?.GetValue<SituacaoNFSeRps>() ?? SituacaoNFSeRps.Normal;
-
-            if (subRps != null)
+            if (rps != null)
             {
-                nota.RpsSubstituido.NumeroRps = subRps.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
-                nota.RpsSubstituido.Serie = subRps.ElementAnyNs("Serie")?.GetValue<string>() ?? string.Empty;
-                nota.RpsSubstituido.Tipo = subRps.ElementAnyNs("Tipo")?.GetValue<TipoRps>() ?? TipoRps.RPS;
+                nota.IdentificacaoRps.DataEmissao = rps.ElementAnyNs("DataEmissao")?.GetValue<DateTime>() ?? DateTime.MinValue;
+                nota.Situacao = rps.ElementAnyNs("Status")?.GetValue<SituacaoNFSeRps>() ?? SituacaoNFSeRps.Normal;
+
+                var ideRps = rps.ElementAnyNs("IdentificacaoRps");
+                if (ideRps != null)
+                {
+                    nota.IdentificacaoRps.Numero = ideRps.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
+                    nota.IdentificacaoRps.Serie = ideRps.ElementAnyNs("Serie")?.GetValue<string>() ?? string.Empty;
+                    nota.IdentificacaoRps.Tipo = ideRps.ElementAnyNs("Tipo")?.GetValue<TipoRps>() ?? TipoRps.RPS;
+
+                    var subRps = ideRps.ElementAnyNs("RpsSubstituido");
+                    if (subRps != null)
+                    {
+                        nota.RpsSubstituido.NumeroRps = subRps.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
+                        nota.RpsSubstituido.Serie = subRps.ElementAnyNs("Serie")?.GetValue<string>() ?? string.Empty;
+                        nota.RpsSubstituido.Tipo = subRps.ElementAnyNs("Tipo")?.GetValue<TipoRps>() ?? TipoRps.RPS;
+                    }
+                }
             }
 
             nota.Competencia = rpsRoot.ElementAnyNs("Competencia")?.GetValue<DateTime>() ?? DateTime.MinValue;

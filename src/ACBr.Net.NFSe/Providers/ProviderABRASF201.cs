@@ -130,10 +130,7 @@ namespace ACBr.Net.NFSe.Providers
             var indPrestador = new XElement("IdentificacaoPrestador");
             prestador.AddChild(indPrestador);
 
-            var cpfCNPJ = new XElement("CpfCnpj");
-            indPrestador.AddChild(cpfCNPJ);
-
-            cpfCNPJ.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Prestador.CpfCnpj));
+            indPrestador.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Prestador.CpfCnpj));
             indPrestador.AddChild(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipal", 1, 15, Ocorrencia.NaoObrigatoria, nota.Prestador.InscricaoMunicipal));
 
             var endereco = new XElement("Endereco");
@@ -171,7 +168,7 @@ namespace ACBr.Net.NFSe.Providers
             nota.Prestador.RazaoSocial = prestadorServico.ElementAnyNs("RazaoSocial")?.GetValue<string>() ?? string.Empty;
             nota.Prestador.NomeFantasia = prestadorServico.ElementAnyNs("NomeFantasia")?.GetValue<string>() ?? string.Empty;
 
-            var indPrestador = rootNFSe.ElementAnyNs("IdentificacaoPrestador");
+            var indPrestador = prestadorServico.ElementAnyNs("IdentificacaoPrestador");
             if (indPrestador != null)
             {
                 nota.Prestador.CpfCnpj = indPrestador.ElementAnyNs("CpfCnpj")?.GetCPF_CNPJ();
@@ -179,7 +176,7 @@ namespace ACBr.Net.NFSe.Providers
             }
 
             // Endereco Prestador
-            var enderecoPrestador = rootNFSe.ElementAnyNs("Endereco");
+            var enderecoPrestador = prestadorServico.ElementAnyNs("Endereco");
             if (enderecoPrestador != null)
             {
                 nota.Prestador.Endereco.Logradouro = enderecoPrestador.ElementAnyNs("Endereco")?.GetValue<string>() ?? string.Empty;
@@ -192,7 +189,7 @@ namespace ACBr.Net.NFSe.Providers
             }
 
             // Contato Prestador
-            var contatoPrestador = rootNFSe.ElementAnyNs("Contato");
+            var contatoPrestador = prestadorServico.ElementAnyNs("Contato");
             if (contatoPrestador == null) return;
 
             nota.Prestador.DadosContato.Telefone = contatoPrestador.ElementAnyNs("Telefone")?.GetValue<string>() ?? string.Empty;
