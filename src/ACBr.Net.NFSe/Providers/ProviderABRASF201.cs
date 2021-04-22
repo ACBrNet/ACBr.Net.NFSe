@@ -130,7 +130,10 @@ namespace ACBr.Net.NFSe.Providers
             var indPrestador = new XElement("IdentificacaoPrestador");
             prestador.AddChild(indPrestador);
 
-            indPrestador.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Prestador.CpfCnpj));
+            var cpfCNPJ = new XElement("CpfCnpj");
+            indPrestador.AddChild(cpfCNPJ);
+
+            cpfCNPJ.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Prestador.CpfCnpj));
             indPrestador.AddChild(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipal", 1, 15, Ocorrencia.NaoObrigatoria, nota.Prestador.InscricaoMunicipal));
 
             var endereco = new XElement("Endereco");
