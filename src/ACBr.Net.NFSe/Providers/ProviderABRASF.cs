@@ -98,7 +98,7 @@ namespace ACBr.Net.NFSe.Providers
 
             Guard.Against<XmlException>(rootDoc == null, "Xml de RPS ou NFSe invalido.");
 
-            var ret = new NotaServico();
+            var ret = new NotaServico(Configuracoes);
             if (isNFSe)
             {
                 // Nota Fiscal
@@ -992,7 +992,7 @@ namespace ACBr.Net.NFSe.Providers
             var xmlLote = new StringBuilder();
             xmlLote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             xmlLote.Append($"<GerarNfseEnvio {GetNamespace()}>");
-            xmlLote.Append($"<LoteRps Id=\"L{retornoWebservice.Lote}\">");
+            xmlLote.Append($"<LoteRps Id=\"L{retornoWebservice.Lote}\" versao=\"1.00\">");
             xmlLote.Append($"<NumeroLote>{retornoWebservice.Lote}</NumeroLote>");
             xmlLote.Append($"<Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>");
             xmlLote.Append($"<InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");

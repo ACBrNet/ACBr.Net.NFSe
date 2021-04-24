@@ -73,6 +73,8 @@ namespace ACBr.Net.NFSe.Nota
 
         public decimal OutrasRetencoes { get; set; }
 
+        public decimal ValTotTributos { get; set; }
+
         public decimal BaseCalculo { get; set; }
 
         public decimal Aliquota { get; set; }
@@ -102,7 +104,9 @@ namespace ACBr.Net.NFSe.Nota
         public string DescricaoOutrasRetencoes { get; set; }
 
         public decimal ValorCargaTributaria { get; set; }
+
         public decimal AliquotaCargaTributaria { get; set; }
+
         public string FonteCargaTributaria { get; set; }
 
         #endregion Propriedades

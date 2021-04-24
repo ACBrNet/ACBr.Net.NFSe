@@ -30,13 +30,12 @@
 // ***********************************************************************
 
 using ACBr.Net.Core;
-using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core.Collection;
 using ACBr.Net.NFSe.Configuracao;
-using ACBr.Net.NFSe.Providers;
 using System.IO;
 using System.Text;
 using System.Xml.Linq;
+using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Nota
 {
@@ -56,7 +55,7 @@ namespace ACBr.Net.NFSe.Nota
         /// <param name="config">The configuration.</param>
         public NotaServicoCollection(ConfigNFSe config)
         {
-            Guard.Against<ACBrException>(config == null, "Configurações não podem ser nulas");
+            Guard.Against<ACBrDFeException>(config == null, "Configurações não podem ser nulas");
 
             this.config = config;
         }
@@ -71,7 +70,7 @@ namespace ACBr.Net.NFSe.Nota
         /// <returns>T.</returns>
         public override NotaServico AddNew()
         {
-            var nota = new NotaServico(config.PrestadorPadrao);
+            var nota = new NotaServico(config, config.PrestadorPadrao);
             Add(nota);
             return nota;
         }
@@ -84,12 +83,11 @@ namespace ACBr.Net.NFSe.Nota
         /// <returns>NotaServico carregada.</returns>
         public NotaServico Load(string xml, Encoding encoding = null)
         {
-            using (var provider = ProviderManager.GetProvider(config))
-            {
-                var nota = provider.LoadXml(xml, encoding);
-                Add(nota);
-                return nota;
-            }
+            Guard.Against<ACBrException>(config?.Parent?.provider == null, "ERRO: Nenhuma cidade informada.");
+
+            var nota = config?.Parent?.provider.LoadXml(xml, encoding);
+            Add(nota);
+            return nota;
         }
 
         /// <summary>
@@ -99,12 +97,11 @@ namespace ACBr.Net.NFSe.Nota
         /// <returns>NotaServico carregada.</returns>
         public NotaServico Load(Stream stream)
         {
-            using (var provider = ProviderManager.GetProvider(config))
-            {
-                var nota = provider.LoadXml(stream);
-                Add(nota);
-                return nota;
-            }
+            Guard.Against<ACBrException>(config?.Parent?.provider == null, "ERRO: Nenhuma cidade informada.");
+
+            var nota = config?.Parent?.provider.LoadXml(stream);
+            Add(nota);
+            return nota;
         }
 
         /// <summary>
@@ -114,72 +111,11 @@ namespace ACBr.Net.NFSe.Nota
         /// <returns>NotaServico carregada.</returns>
         public NotaServico Load(XDocument xml)
         {
-            using (var provider = ProviderManager.GetProvider(config))
-            {
-                var nota = provider.LoadXml(xml);
-                Add(nota);
-                return nota;
-            }
-        }
+            Guard.Against<ACBrException>(config?.Parent?.provider == null, "ERRO: Nenhuma cidade informada.");
 
-        /// <summary>
-        /// Salvar o xml da Rps/NFSe no determinado arquivo
-        /// </summary>
-        /// <param name="nota">A nota para salvar</param>
-        /// <param name="path">Caminho onde sera salvo o arquivo.</param>
-        /// <returns></returns>
-        public void Save(NotaServico nota, string path = "")
-        {
-            using (var provider = ProviderManager.GetProvider(config))
-            {
-                var isNFSe = nota.IdentificacaoNFSe.Numero.IsEmpty();
-
-                var file = isNFSe ?
-                      $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}-{nota.IdentificacaoRps.Serie}.xml" :
-                      $"NFSe-{nota.IdentificacaoNFSe.Chave}-{nota.IdentificacaoNFSe.Numero}.xml";
-
-                var xmlNota = isNFSe ? provider.WriteXmlRps(nota) : provider.WriteXmlNFSe(nota);
-
-                if (path.IsEmpty())
-                    path = config.Arquivos.PathSalvar;
-
-                path = Path.Combine(path, file);
-
-                var doc = XDocument.Parse(xmlNota);
-                doc.Save(path, SaveOptions.OmitDuplicateNamespaces);
-            }
-        }
-
-        /// <summary>
-        /// Salvar o xml da Rps/NFSe no determinado arquivo
-        /// </summary>
-        /// <param name="nota">A nota para salvar</param>
-        /// <param name="stream">Stream onde sera salvo o xml</param>
-        /// <returns></returns>
-        public void Save(NotaServico nota, Stream stream)
-        {
-            using (var provider = ProviderManager.GetProvider(config))
-            {
-                var xmlNota = nota.IdentificacaoNFSe.Numero.IsEmpty()
-                    ? provider.WriteXmlRps(nota)
-                    : provider.WriteXmlNFSe(nota);
-
-                var doc = XDocument.Parse(xmlNota);
-                doc.Save(stream, SaveOptions.OmitDuplicateNamespaces);
-            }
-        }
-
-        /// <summary>
-        /// Gera o Xml Da Rps
-        /// </summary>
-        /// <param name="nota"></param>
-        /// <returns></returns>
-        public string GetXml(NotaServico nota)
-        {
-            using (var provider = ProviderManager.GetProvider(config))
-            {
-                return nota.IdentificacaoNFSe.Numero.IsEmpty() ? provider.WriteXmlRps(nota) : provider.WriteXmlNFSe(nota);
-            }
+            var nota = config?.Parent?.provider.LoadXml(xml);
+            Add(nota);
+            return nota;
         }
 
         #endregion Methods

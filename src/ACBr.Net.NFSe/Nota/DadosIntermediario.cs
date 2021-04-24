@@ -58,6 +58,8 @@ namespace ACBr.Net.NFSe.Nota
 
         public string InscricaoMunicipal { get; set; }
 
+        public string CodigoMunicipio { get; set; }
+
         public SituacaoTributaria IssRetido { get; set; }
 
         public string EMail { get; set; }

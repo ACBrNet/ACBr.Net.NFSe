@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
+using ACBr.Net.Core.Extensions;
 using ACBr.Net.NFSe.Providers;
 
 namespace ACBr.Net.NFSe.Demo
@@ -11,8 +12,7 @@ namespace ACBr.Net.NFSe.Demo
     {
         public static void LoadXml(this WebBrowser browser, string xml)
         {
-            if (xml == null)
-                return;
+            if (xml.IsEmpty()) return;
 
             var path = Path.GetTempPath();
             var fileName = Guid.NewGuid() + ".xml";
@@ -24,6 +24,16 @@ namespace ACBr.Net.NFSe.Demo
                 xmlDoc.LoadXml(xml);
             xmlDoc.Save(fullFileName);
             browser.Navigate(fullFileName);
+        }
+
+        public static void AppendLine(this RichTextBox rtb, string text)
+        {
+            rtb.AppendText(text + Environment.NewLine);
+        }
+
+        public static void JumpLine(this RichTextBox rtb)
+        {
+            rtb.AppendText(Environment.NewLine);
         }
 
         public static void EnumDataSource<T>(this ComboBox cmb) where T : struct

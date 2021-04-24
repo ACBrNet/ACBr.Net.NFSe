@@ -19,7 +19,7 @@ namespace ACBr.Net.NFSe.Test
 
             Assert.True(acbrNFSe.NotasServico.Count == 1, "Erro ao carregar a Rps");
 
-            var rpsGerada = acbrNFSe.NotasServico.GetXml(acbrNFSe.NotasServico[0]);
+            var rpsGerada = acbrNFSe.NotasServico[0].GetXml();
 
             dados.Position = 0;
             var xml = XDocument.Load(dados);
@@ -40,7 +40,7 @@ namespace ACBr.Net.NFSe.Test
 
             Assert.True(acbrNFSe.NotasServico.Count == 1, "Erro ao carregar a NFSe");
 
-            var nfseGerada = acbrNFSe.NotasServico.GetXml(acbrNFSe.NotasServico[0]);
+            var nfseGerada = acbrNFSe.NotasServico[0].GetXml();
 
             dados.Position = 0;
             var xml = XDocument.Load(dados);

@@ -1,9 +1,6 @@
-﻿using System.ServiceModel.Channels;
-using System.Text;
+﻿using System.Text;
 using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
-using ACBr.Net.DFe.Core.Common;
-using ACBr.Net.NFSe.Configuracao;
 
 namespace ACBr.Net.NFSe.Providers
 {

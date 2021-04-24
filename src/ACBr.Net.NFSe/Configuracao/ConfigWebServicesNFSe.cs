@@ -106,6 +106,9 @@ namespace ACBr.Net.NFSe.Configuracao
                 var municipio = ProviderManager.Municipios.SingleOrDefault(x => x.Codigo == codigoMunicipio);
                 Guard.Against<ArgumentException>(municipio == null, "Município não cadastrado.");
                 Municipio = municipio.Nome;
+
+                Parent.provider?.Dispose();
+                Parent.provider = ProviderManager.GetProvider(Parent.Configuracoes);
             }
         }
 

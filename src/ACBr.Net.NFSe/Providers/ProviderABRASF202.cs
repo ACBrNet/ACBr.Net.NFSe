@@ -29,11 +29,7 @@
 // <summary></summary>
 // ***********************************************************************
 
-using ACBr.Net.Core.Extensions;
-using ACBr.Net.DFe.Core.Serializer;
 using ACBr.Net.NFSe.Configuracao;
-using ACBr.Net.NFSe.Nota;
-using System.Xml.Linq;
 
 namespace ACBr.Net.NFSe.Providers
 {
@@ -58,27 +54,5 @@ namespace ACBr.Net.NFSe.Providers
         }
 
         #endregion Constructors
-
-        #region Methods
-
-        #region RPS
-
-        protected override XElement WriteRpsRps(NotaServico nota)
-        {
-            var rps = new XElement("Rps");
-
-            rps.Add(WriteIdentificacaoRps(nota));
-
-            rps.AddChild(AdicionarTag(TipoCampo.DatHor, "", "DataEmissao", 10, 10, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.DataEmissao));
-            rps.AddChild(AdicionarTag(TipoCampo.Int, "", "Status", 1, 1, Ocorrencia.Obrigatoria, (int)nota.Situacao + 1));
-
-            rps.AddChild(WriteSubstituidoRps(nota));
-
-            return rps;
-        }
-
-        #endregion RPS
-
-        #endregion Methods
     }
 }

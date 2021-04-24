@@ -458,7 +458,7 @@ namespace ACBr.Net.NFSe.Providers
 
             foreach (var nfse in listaNfse.ElementsAnyNs("nfse"))
             {
-                var nota = new NotaServico();
+                var nota = new NotaServico(Configuracoes);
                 nota.IdentificacaoNFSe.Chave = nfse?.ElementAnyNs("cdAutenticacao")?.GetValue<string>() ?? string.Empty;
                 nota.IdentificacaoNFSe.Numero = nfse?.ElementAnyNs("nrNfse")?.GetValue<string>() ?? string.Empty;
                 nota.IdentificacaoRps.Numero = nfse?.ElementAnyNs("nrRps")?.GetValue<string>() ?? string.Empty;
@@ -531,7 +531,7 @@ namespace ACBr.Net.NFSe.Providers
                 return;
             }
 
-            var nota = new NotaServico();
+            var nota = new NotaServico(Configuracoes);
             nota.IdentificacaoNFSe.Chave = nfse?.ElementAnyNs("cdAutenticacao")?.GetValue<string>() ?? string.Empty;
             nota.IdentificacaoNFSe.Numero = nfse?.ElementAnyNs("nrNfse")?.GetValue<string>() ?? string.Empty;
             nota.IdentificacaoRps.Numero = nfse?.ElementAnyNs("nrRps")?.GetValue<string>() ?? string.Empty;
@@ -609,7 +609,7 @@ namespace ACBr.Net.NFSe.Providers
 
             foreach (var nfse in listaNfse.ElementsAnyNs("nfse"))
             {
-                var nota = new NotaServico();
+                var nota = new NotaServico(Configuracoes);
                 nota.IdentificacaoNFSe.Chave = nfse?.ElementAnyNs("cdAutenticacao")?.GetValue<string>() ?? string.Empty;
                 nota.IdentificacaoNFSe.Numero = nfse?.ElementAnyNs("nrNfse")?.GetValue<string>() ?? string.Empty;
                 nota.IdentificacaoRps.Numero = nfse?.ElementAnyNs("nrRps")?.GetValue<string>() ?? string.Empty;
