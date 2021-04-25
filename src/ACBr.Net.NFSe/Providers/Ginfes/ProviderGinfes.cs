@@ -1142,10 +1142,10 @@ namespace ACBr.Net.NFSe.Providers
             valores.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorIr", ns, 1, 15, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorIr));
             valores.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorCsll", ns, 1, 15, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorCsll));
 
-            valores.AddChild(AdicionarTag(TipoCampo.Int, "", "IssRetido", ns, 1, 1, Ocorrencia.Obrigatoria, issRetido));
+            valores.AddChild(AdicionarTag(TipoCampo.Int, "", "IssRetido", ns, 1, 1, Ocorrencia.Obrigatoria, issRetido)); 
+            valores.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorIss", ns, 1, 15, Ocorrencia.MaiorQueZero, nota.Servico.Valores.ValorIss));
+            valores.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorIssRetido", ns, 1, 15, Ocorrencia.MaiorQueZero, nota.Servico.Valores.ValorIssRetido));
 
-            valores.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorIss", ns, 1, 15, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorIss));
-            valores.AddChild(AdicionarTag(TipoCampo.De2, "", "ValorIssRetido", ns, 1, 15, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorIssRetido));
             valores.AddChild(AdicionarTag(TipoCampo.De2, "", "OutrasRetencoes", ns, 1, 15, Ocorrencia.Obrigatoria, nota.Servico.Valores.OutrasRetencoes));
             valores.AddChild(AdicionarTag(TipoCampo.De2, "", "BaseCalculo", ns, 1, 15, Ocorrencia.Obrigatoria, nota.Servico.Valores.BaseCalculo));
             // Valor Percentual - Exemplos: 1% => 0.01   /   25,5% => 0.255   /   100% => 1
