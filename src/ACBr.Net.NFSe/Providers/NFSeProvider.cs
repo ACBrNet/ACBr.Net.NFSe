@@ -87,6 +87,8 @@ namespace ACBr.Net.NFSe.Providers
 
         Sigiss = 20,
 
+        SimplISS = 24,
+
         [Description("CONAM")]
         Conam = 21,
 

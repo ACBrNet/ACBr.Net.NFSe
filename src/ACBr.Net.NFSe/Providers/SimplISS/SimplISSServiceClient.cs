@@ -32,6 +32,7 @@
 using System;
 using System.Text;
 using System.Xml.Linq;
+using System.Xml.XPath;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core;
 using ACBr.Net.DFe.Core.Common;
@@ -40,6 +41,12 @@ namespace ACBr.Net.NFSe.Providers
 {
     internal sealed class SimplISSServiceClient : NFSeSOAP11ServiceClient, IServiceClient
     {
+        #region Fields
+
+        private XNamespace tc = "http://www.sistema.com.br/Nfse/arquivos/nfse_3.xsd";
+
+        #endregion Fields
+
         #region Constructors
 
         public SimplISSServiceClient(ProviderSimplISS provider, TipoUrl tipoUrl) : base(provider, tipoUrl)
@@ -50,53 +57,71 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Methods
 
+        public string AjustarMensagem(string msg, params string[] tags)
+        {
+            var document = XDocument.Parse(msg);
+            var element = document.Root;
+
+            foreach (var tag in tags)
+                element = element.ElementAnyNs(tag);
+
+            element.AddAttribute(new XAttribute(XNamespace.Xmlns + "nfse", tc));
+            NFSeUtil.ApplyNamespace(element, tc);
+
+            var result = document.AsString(false, false);
+            var tagName = document.Root.Name.LocalName;
+
+            return result.Contains($"nfse:{tagName}") ? result.Replace($"nfse:{tagName}", $"sis:{tagName}") :
+                                                        result.Replace(tagName, $"sis:{tagName}");
+        }
+
         public string Enviar(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<sis:RecepcionarLoteRps xmlns=\"http://www.sistema.com.br/Sistema.Ws.Nfse\">");
-            message.Append(msg.Replace("EnviarLoteRpsEnvio", "sis:EnviarLoteRpsEnvio"));
+            message.Append("<sis:RecepcionarLoteRps>");
+            message.Append(AjustarMensagem(msg, "LoteRps"));
             message.Append("<sis:pParam>");
-            message.Append($"<P1 xmlns=\"http://www.sistema.com.br/Sistema.Ws.Nfse.Cn\">{Provider.Configuracoes.WebServices.Usuario}</P1>");
-            message.Append($"<P2 xmlns=\"http://www.sistema.com.br/Sistema.Ws.Nfse.Cn\">{Provider.Configuracoes.WebServices.Senha}</P2>");
+            message.Append($"<sis1:P1>{Provider.Configuracoes.WebServices.Usuario}</sis1:P1>");
+            message.Append($"<sis1:P2>{Provider.Configuracoes.WebServices.Senha}</sis1:P2>");
             message.Append("</sis:pParam>");
             message.Append("</sis:RecepcionarLoteRps>");
 
-            return Execute("http://www.sistema.com.br/Sistema.Ws.Nfse/INfseService/RecepcionarLoteRps", message.ToString(), "RecepcionarLoteRpsResponse");
+            return Execute("http://www.sistema.com.br/Sistema.Ws.Nfse/INfseService/RecepcionarLoteRps", message.ToString(), "RecepcionarLoteRpsResult");
         }
 
         public string EnviarSincrono(string cabec, string msg)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
         public string ConsultarSituacao(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<e:ConsultarSituacaoLoteRPS.Execute>");
-            message.Append("<e:Nfsecabecmsg>");
-            message.AppendCData(cabec);
-            message.Append("</e:Nfsecabecmsg>");
-            message.Append("<e:Nfsedadosmsg>");
-            message.AppendCData(msg);
-            message.Append("</e:Nfsedadosmsg>");
-            message.Append("</e:ConsultarSituacaoLoteRPS.Execute>");
+            message.Append("<sis:ConsultarSituacaoLoteRps>");
+            message.Append(AjustarMensagem(msg));
+            message.Append("<sis:pParam>");
+            message.Append($"<sis1:P1>{Provider.Configuracoes.WebServices.Usuario}</sis1:P1>");
+            message.Append($"<sis1:P2>{Provider.Configuracoes.WebServices.Senha}</sis1:P2>");
+            message.Append("</sis:pParam>");
+            message.Append("</sis:ConsultarSituacaoLoteRps>");
 
-            return Execute("http://www.e-nfs.com.braction/ACONSULTARSITUACAOLOTERPS.Execute", message.ToString(), "ConsultarSituacaoLoteRPS.ExecuteResponse");
+            return Execute("http://www.sistema.com.br/Sistema.Ws.Nfse/INfseService/ConsultarSituacaoLoteRps",
+                message.ToString(), "ConsultarSituacaoLoteRpsResult");
         }
 
         public string ConsultarLoteRps(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<e:ConsultarLoteRps.Execute>");
-            message.Append("<e:Nfsecabecmsg>");
-            message.AppendCData(cabec);
-            message.Append("</e:Nfsecabecmsg>");
-            message.Append("<e:Nfsedadosmsg>");
-            message.AppendCData(msg);
-            message.Append("</e:Nfsedadosmsg>");
-            message.Append("</e:ConsultarLoteRps.Execute>");
+            message.Append("<sis:ConsultarLoteRps>");
+            message.Append(AjustarMensagem(msg));
+            message.Append("<sis:pParam>");
+            message.Append($"<sis1:P1>{Provider.Configuracoes.WebServices.Usuario}</sis1:P1>");
+            message.Append($"<sis1:P2>{Provider.Configuracoes.WebServices.Senha}</sis1:P2>");
+            message.Append("</sis:pParam>");
+            message.Append("</sis:ConsultarLoteRps>");
 
-            return Execute("http://www.e-nfs.com.braction/ACONSULTARLOTERPS.Execute", message.ToString(), "ConsultarLoteRps.ExecuteResponse");
+            return Execute("http://www.sistema.com.br/Sistema.Ws.Nfse/INfseService/ConsultarLoteRps",
+                message.ToString(), "ConsultarLoteRpsResult");
         }
 
         public string ConsultarSequencialRps(string cabec, string msg)
@@ -107,46 +132,46 @@ namespace ACBr.Net.NFSe.Providers
         public string ConsultarNFSeRps(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<e:ConsultarNfsePorRps.Execute>");
-            message.Append("<e:Nfsecabecmsg>");
-            message.AppendCData(cabec);
-            message.Append("</e:Nfsecabecmsg>");
-            message.Append("<e:Nfsedadosmsg>");
-            message.AppendCData(msg);
-            message.Append("</e:Nfsedadosmsg>");
-            message.Append("</e:ConsultarNfsePorRps.Execute>");
+            message.Append("<sis:ConsultarNfsePorRps>");
+            message.Append(AjustarMensagem(msg));
+            message.Append("<sis:pParam>");
+            message.Append($"<sis1:P1>{Provider.Configuracoes.WebServices.Usuario}</sis1:P1>");
+            message.Append($"<sis1:P2>{Provider.Configuracoes.WebServices.Senha}</sis1:P2>");
+            message.Append("</sis:pParam>");
+            message.Append("</sis:ConsultarNfsePorRps>");
 
-            return Execute("http://www.e-nfs.com.braction/ACONSULTARNFSEPORRPS.Execute", message.ToString(), "ConsultarNfsePorRps.ExecuteResponse");
+            return Execute("http://www.sistema.com.br/Sistema.Ws.Nfse/INfseService/ConsultarNfsePorRps",
+                message.ToString(), "ConsultarNfsePorRpsResult");
         }
 
         public string ConsultarNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<e:ConsultarNfse.Execute>");
-            message.Append("<e:Nfsecabecmsg>");
-            message.AppendCData(cabec);
-            message.Append("</e:Nfsecabecmsg>");
-            message.Append("<e:Nfsedadosmsg>");
-            message.AppendCData(msg);
-            message.Append("</e:Nfsedadosmsg>");
-            message.Append("</e:ConsultarNfse.Execute>");
+            message.Append("<sis:ConsultarNfse>");
+            message.Append(AjustarMensagem(msg));
+            message.Append("<sis:pParam>");
+            message.Append($"<sis1:P1>{Provider.Configuracoes.WebServices.Usuario}</sis1:P1>");
+            message.Append($"<sis1:P2>{Provider.Configuracoes.WebServices.Senha}</sis1:P2>");
+            message.Append("</sis:pParam>");
+            message.Append("</sis:ConsultarNfse>");
 
-            return Execute("http://www.e-nfs.com.braction/ACONSULTARNFSE.Execute", message.ToString(), "ConsultarNfse.ExecuteResponse");
+            return Execute("http://www.sistema.com.br/Sistema.Ws.Nfse/INfseService/ConsultarNfse",
+                message.ToString(), "ConsultarNfseResult");
         }
 
         public string CancelarNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<e:CancelarNfse.Execute>");
-            message.Append("<e:Nfsecabecmsg>");
-            message.AppendCData(cabec);
-            message.Append("</e:Nfsecabecmsg>");
-            message.Append("<e:Nfsedadosmsg>");
-            message.AppendCData(msg);
-            message.Append("</e:Nfsedadosmsg>");
-            message.Append("</e:CancelarNfse.Execute>");
+            message.Append("<sis:CancelarNfse>");
+            message.Append(AjustarMensagem(msg));
+            message.Append("<sis:pParam>");
+            message.Append($"<sis1:P1>{Provider.Configuracoes.WebServices.Usuario}</sis1:P1>");
+            message.Append($"<sis1:P2>{Provider.Configuracoes.WebServices.Senha}</sis1:P2>");
+            message.Append("</sis:pParam>");
+            message.Append("</sis:CancelarNfse>");
 
-            return Execute("http://www.e-nfs.com.braction/ACANCELARNFSE.Execute", message.ToString(), "CancelarNfse.ExecuteResponse");
+            return Execute("http://www.sistema.com.br/Sistema.Ws.Nfse/INfseService/CancelarNfse",
+                message.ToString(), "CancelarNfseResult");
         }
 
         public string CancelarNFSeLote(string cabec, string msg)
@@ -161,13 +186,21 @@ namespace ACBr.Net.NFSe.Providers
 
         private string Execute(string soapAction, string message, string responseTag)
         {
-            return Execute(soapAction, message, "", responseTag, "xmlns:sis=\"http://www.sistema.com.br/Sistema.Ws.Nfse\"");
+            return Execute(soapAction, message, "", responseTag, "xmlns:sis=\"http://www.sistema.com.br/Sistema.Ws.Nfse\"",
+                                                                 "xmlns:sis1=\"http://www.sistema.com.br/Sistema.Ws.Nfse.Cn\"");
         }
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
             var element = xmlDocument.ElementAnyNs("Fault");
-            if (element == null) return xmlDocument.ElementAnyNs(responseTag[0]).Value;
+            if (element == null)
+            {
+                element = xmlDocument.Root;
+                foreach (var tag in responseTag)
+                    element = element.ElementAnyNs(tag);
+
+                return element.ToString();
+            }
 
             var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
             throw new ACBrDFeCommunicationException(exMessage);

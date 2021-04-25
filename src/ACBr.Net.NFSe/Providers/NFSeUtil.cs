@@ -50,6 +50,8 @@ namespace ACBr.Net.NFSe.Providers
 
         public static void ApplyNamespace(XElement parent, XNamespace nameSpace, params string[] excludeElements)
         {
+            if (parent == null) return;
+
             if (!excludeElements.Contains(parent.Name.LocalName))
                 parent.Name = nameSpace + parent.Name.LocalName;
 

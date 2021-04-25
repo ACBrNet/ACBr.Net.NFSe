@@ -93,7 +93,7 @@ namespace ACBr.Net.NFSe.Providers
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(AjustarRetorno(retornoWebservice.XmlRetorno));
 
-            MensagemErro(retornoWebservice, xmlRet, "EnviarLoteRpsResposta");
+            MensagemErro(retornoWebservice, xmlRet.Root);
             if (retornoWebservice.Erros.Count > 0) return;
 
             retornoWebservice.Lote = xmlRet?.ElementAnyNs("NumeroLote")?.GetValue<int>() ?? 0;
@@ -159,7 +159,7 @@ namespace ACBr.Net.NFSe.Providers
         protected override void TratarRetornoConsultarLoteRps(RetornoConsultarLoteRps retornoWebservice, NotaServicoCollection notas)
         {
             var xmlRet = XDocument.Parse(AjustarRetorno(retornoWebservice.XmlRetorno));
-            MensagemErro(retornoWebservice, xmlRet, "WS_ConsultaLoteRps.ExecuteResponse");
+            MensagemErro(retornoWebservice, xmlRet.Root);
             if (retornoWebservice.Erros.Any()) return;
 
             var rootElement = xmlRet.ElementAnyNs("WS_ConsultaLoteRps.ExecuteResponse").ElementAnyNs("Consultarloterpsresposta");
@@ -225,7 +225,7 @@ namespace ACBr.Net.NFSe.Providers
         {
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(AjustarRetorno(retornoWebservice.XmlRetorno));
-            MensagemErro(retornoWebservice, xmlRet, "WS_ConsultaNfsePorRps.ExecuteResponse", "Listamensagemretorno", "tcMensagemRetorno");
+            MensagemErro(retornoWebservice, xmlRet.Root, "Listamensagemretorno", "tcMensagemRetorno");
             if (retornoWebservice.Erros.Any()) return;
 
             var elementRoot = xmlRet.ElementAnyNs("WS_ConsultaNfsePorRps.ExecuteResponse");
@@ -301,7 +301,7 @@ namespace ACBr.Net.NFSe.Providers
         {
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(AjustarRetorno(retornoWebservice.XmlRetorno));
-            MensagemErro(retornoWebservice, xmlRet, "WS_ConsultaNfse.ExecuteResponse", "Listamensagemretorno", "tcMensagemRetorno");
+            MensagemErro(retornoWebservice, xmlRet.Root, "Listamensagemretorno", "tcMensagemRetorno");
 
             if (retornoWebservice.Erros.Count > 0) return;
 
@@ -360,7 +360,7 @@ namespace ACBr.Net.NFSe.Providers
         {
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(AjustarRetorno(retornoWebservice.XmlRetorno));
-            MensagemErro(retornoWebservice, xmlRet, "CancelarNfseResposta");
+            MensagemErro(retornoWebservice, xmlRet.Root);
             if (retornoWebservice.Erros.Count > 0) return;
 
             var confirmacaoCancelamento = xmlRet.ElementAnyNs("CancelarNfseResposta")?.ElementAnyNs("RetCancelamento")?.ElementAnyNs("NfseCancelamento")?.ElementAnyNs("Confirmacao");

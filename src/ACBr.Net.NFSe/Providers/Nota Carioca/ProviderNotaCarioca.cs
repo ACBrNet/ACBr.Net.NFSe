@@ -115,7 +115,7 @@ namespace ACBr.Net.NFSe.Providers
         protected override void TratarRetornoEnviarSincrono(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
         {
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            MensagemErro(retornoWebservice, xmlRet, "GerarNfseResposta");
+            MensagemErro(retornoWebservice, xmlRet.Root);
             if (retornoWebservice.Erros.Any()) return;
 
             var compNfse = xmlRet.ElementAnyNs("GerarNfseResposta")?.ElementAnyNs("CompNfse");

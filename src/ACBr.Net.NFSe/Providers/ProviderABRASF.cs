@@ -1217,7 +1217,7 @@ namespace ACBr.Net.NFSe.Providers
         {
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            MensagemErro(retornoWebservice, xmlRet, "EnviarLoteRpsResposta");
+            MensagemErro(retornoWebservice, xmlRet.Root);
             if (retornoWebservice.Erros.Any()) return;
 
             retornoWebservice.Data = xmlRet.Root?.ElementAnyNs("DataRecebimento")?.GetValue<DateTime>() ?? DateTime.MinValue;
@@ -1237,8 +1237,8 @@ namespace ACBr.Net.NFSe.Providers
         {
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            MensagemErro(retornoWebservice, xmlRet, "GerarNfseResposta");
-            MensagemErro(retornoWebservice, xmlRet, "GerarNfseResposta", "ListaMensagemRetornoLote");
+            MensagemErro(retornoWebservice, xmlRet.Root);
+            MensagemErro(retornoWebservice, xmlRet.Root, "ListaMensagemRetornoLote");
             if (retornoWebservice.Erros.Any()) return;
 
             retornoWebservice.Data = xmlRet.Root?.ElementAnyNs("DataRecebimento")?.GetValue<DateTime>() ?? DateTime.MinValue;
@@ -1285,7 +1285,7 @@ namespace ACBr.Net.NFSe.Providers
         {
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            MensagemErro(retornoWebservice, xmlRet, "ConsultarSituacaoLoteRpsResposta");
+            MensagemErro(retornoWebservice, xmlRet.Root);
 
             retornoWebservice.Lote = xmlRet.Root?.ElementAnyNs("NumeroLote")?.GetValue<int>() ?? 0;
             retornoWebservice.Situacao = xmlRet.Root?.ElementAnyNs("Situacao")?.GetValue<string>() ?? string.Empty;
@@ -1297,7 +1297,7 @@ namespace ACBr.Net.NFSe.Providers
         {
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            MensagemErro(retornoWebservice, xmlRet, "ConsultarLoteRpsResposta");
+            MensagemErro(retornoWebservice, xmlRet.Root);
             if (retornoWebservice.Erros.Any()) return;
 
             var retornoLote = xmlRet.ElementAnyNs("ConsultarLoteRpsResposta");
@@ -1345,7 +1345,7 @@ namespace ACBr.Net.NFSe.Providers
         {
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            MensagemErro(retornoWebservice, xmlRet, "ConsultarNfseRpsResposta");
+            MensagemErro(retornoWebservice, xmlRet.Root);
             if (retornoWebservice.Erros.Any()) return;
 
             var compNfse = xmlRet.ElementAnyNs("ConsultarNfseRpsResposta")?.ElementAnyNs("CompNfse");
@@ -1367,7 +1367,7 @@ namespace ACBr.Net.NFSe.Providers
         {
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            MensagemErro(retornoWebservice, xmlRet, "ConsultarNfseResposta");
+            MensagemErro(retornoWebservice, xmlRet.Root);
             if (retornoWebservice.Erros.Any()) return;
 
             var retornoLote = xmlRet.ElementAnyNs("ConsultarNfseResposta");
@@ -1397,10 +1397,13 @@ namespace ACBr.Net.NFSe.Providers
         {
             // Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
-            MensagemErro(retornoWebservice, xmlRet, "CancelarNfseResposta");
+            MensagemErro(retornoWebservice, xmlRet.Root);
             if (retornoWebservice.Erros.Any()) return;
 
-            var confirmacaoCancelamento = xmlRet.ElementAnyNs("CancelarNfseResposta")?.ElementAnyNs("Cancelamento")?.ElementAnyNs("Confirmacao");
+            var confirmacaoCancelamento = xmlRet.Root.ElementAnyNs("RetCancelamento")?
+                                                     .ElementAnyNs("NfseCancelamento")?
+                                                     .ElementAnyNs("Confirmacao");
+
             if (confirmacaoCancelamento == null)
             {
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Confirmação do cancelamento não encontrada!" });
@@ -1469,10 +1472,10 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="xmlTag"></param>
         /// <param name="elementName"></param>
         /// <param name="messageElement"></param>
-        protected virtual void MensagemErro(RetornoWebservice retornoWs, XContainer xmlRet, string xmlTag,
+        protected virtual void MensagemErro(RetornoWebservice retornoWs, XContainer xmlRet,
             string elementName = "ListaMensagemRetorno", string messageElement = "MensagemRetorno")
         {
-            var listaMenssagens = xmlRet?.ElementAnyNs(xmlTag)?.ElementAnyNs(elementName);
+            var listaMenssagens = xmlRet?.ElementAnyNs(elementName);
             if (listaMenssagens == null) return;
 
             foreach (var mensagem in listaMenssagens.ElementsAnyNs(messageElement))

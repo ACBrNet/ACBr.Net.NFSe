@@ -111,7 +111,7 @@ namespace ACBr.Net.NFSe.Providers
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
             var element = xmlDocument.ElementAnyNs("Fault");
-            if (element == null) return xmlDocument.ToString();
+            if (element == null) return xmlDocument.Root.FirstNode.ToString();
 
             var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
             throw new ACBrDFeCommunicationException(exMessage);
