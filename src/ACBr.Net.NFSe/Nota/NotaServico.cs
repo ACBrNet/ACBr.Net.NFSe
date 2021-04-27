@@ -53,6 +53,7 @@ namespace ACBr.Net.NFSe.Nota
             IdentificacaoNFSe = new IdeNFSe();
             RpsSubstituido = new IdeRpsSubtituida();
             Servico = new DadosServico();
+            EnderecoPrestacao = new Endereco();
             Prestador = new DadosPrestador();
             Tomador = new DadosTomador();
             Intermediario = new DadosIntermediario();
@@ -97,6 +98,8 @@ namespace ACBr.Net.NFSe.Nota
         public DadosIntermediario Intermediario { get; }
 
         public DadosServico Servico { get; }
+
+        public Endereco EnderecoPrestacao { get; set; }
 
         public DadosConstrucaoCivil ConstrucaoCivil { get; }
 

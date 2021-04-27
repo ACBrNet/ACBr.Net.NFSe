@@ -54,7 +54,7 @@ namespace ACBr.Net.NFSe.Providers
             {
                 ret.Situacao = SituacaoNFSeRps.Cancelado;
                 ret.Cancelamento.DataHora = xmlElement.ElementAnyNs("DataCncNf")?.GetValue<DateTime>() ?? DateTime.MinValue;
-                ret.Cancelamento.MotivoCancelamento = xmlElement.ElementAnyNs("MotivoCncNf")?.GetValue<string>() ??string.Empty;
+                ret.Cancelamento.MotivoCancelamento = xmlElement.ElementAnyNs("MotivoCncNf")?.GetValue<string>() ?? string.Empty;
             }
 
             //Dados do RPS
@@ -146,7 +146,7 @@ namespace ACBr.Net.NFSe.Providers
             sdt.AddChild(AdicionarTag(TipoCampo.Str, "", "DTFin", 0, 0, Ocorrencia.Obrigatoria, DateTime.Parse(nota.Competencia.AddMonths(1).ToString("01/MM/yyyy")).AddDays(-1).ToString("dd/MM/yyyy")));
             sdt.AddChild(AdicionarTag(TipoCampo.Int, "", "TipoTrib", 0, 0, Ocorrencia.Obrigatoria, tipoTrib));
             sdt.AddChild(AdicionarTag(TipoCampo.Str, "", "DtAdeSN", 0, 0, Ocorrencia.Obrigatoria, nota.DataOptanteSimplesNacional == DateTime.MinValue || tipoTrib != 4 ? "" : nota.DataOptanteSimplesNacional.ToString("dd/MM/yyyy")));
-            sdt.AddChild(AdicionarTag(TipoCampo.Str, "", "AlqIssSN_IP", 0, 0, Ocorrencia.Obrigatoria, tipoTrib != 4 ? "" :  nota.Servico.Valores.Aliquota.ToString("##0.00")));
+            sdt.AddChild(AdicionarTag(TipoCampo.Str, "", "AlqIssSN_IP", 0, 0, Ocorrencia.Obrigatoria, tipoTrib != 4 ? "" : nota.Servico.Valores.Aliquota.ToString("##0.00")));
             sdt.AddChild(AdicionarTag(TipoCampo.Str, "", "Versao", 0, 0, Ocorrencia.Obrigatoria, "2.00"));
 
             sdt.Add(WriteREG20(nota));
@@ -202,29 +202,30 @@ namespace ACBr.Net.NFSe.Providers
                 reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "Telefone", 10, 10, Ocorrencia.Obrigatoria, (nota.Tomador.DadosContato.DDD.OnlyNumbers() + nota.Tomador.DadosContato.Telefone.OnlyNumbers()).ZeroFill(10)));
                 reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipal", 1, 20, Ocorrencia.Obrigatoria, nota.Tomador.InscricaoMunicipal));
 
-                if (nota.NaturezaOperacao == 1 && nota.Tomador.Endereco.CodigoMunicipio != nota.Prestador.Endereco.CodigoMunicipio) //Natureza 1 = Tributacao no Município, 2 - Fora do Município
+                if (
+                    !string.IsNullOrEmpty(nota.EnderecoPrestacao.Logradouro) && (
+                        nota.EnderecoPrestacao.Numero != nota.Tomador.Endereco.Numero ||
+                        nota.EnderecoPrestacao.Cep.ZeroFill(8) != nota.Tomador.Endereco.Cep.ZeroFill(8)
+                    )
+                )
                 {
-                    //Quando a natureza é 1 (dentro do município) e o tomador é de cidade diferente do prestador, os campos abaixo são preenchidos com o endereço do prestador
+                    if (
+                        string.IsNullOrEmpty(nota.EnderecoPrestacao.Numero) ||
+                        string.IsNullOrEmpty(nota.EnderecoPrestacao.Bairro) ||
+                        string.IsNullOrEmpty(nota.EnderecoPrestacao.Municipio) ||
+                        string.IsNullOrEmpty(nota.EnderecoPrestacao.Uf) ||
+                        string.IsNullOrEmpty(nota.EnderecoPrestacao.Cep)
+                    )
+                        throw new Exception("Para emissão com endereço de prestação do serviço diferente do endereço do tomador, informe os campos CEP, Logradouro, Numero, Bairro, Cidade e UF do local da prestação!");
 
-                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TipoLogLocPre", 1, 10, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.TipoLogradouro));
-                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "LogLocPre", 1, 60, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Logradouro));
-                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "NumEndLocPre", 1, 10, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Numero));
-                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "ComplEndLocPre", 0, 60, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Complemento));
-                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "BairroLocPre", 1, 60, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Bairro));
-                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "MunLocPre", 1, 60, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Municipio));
-                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "SiglaUFLocpre", 2, 2, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Uf));
-                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "CepLocPre", 8, 8, Ocorrencia.NaoObrigatoria, nota.Prestador.Endereco.Cep.ZeroFill(8)));
-                }
-                else
-                {
-                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TipoLogLocPre", 1, 10, Ocorrencia.NaoObrigatoria, ""));
-                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "LogLocPre", 1, 60, Ocorrencia.NaoObrigatoria, ""));
-                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "NumEndLocPre", 1, 10, Ocorrencia.NaoObrigatoria, ""));
-                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "ComplEndLocPre", 0, 60, Ocorrencia.NaoObrigatoria, ""));
-                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "BairroLocPre", 1, 60, Ocorrencia.NaoObrigatoria, ""));
-                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "MunLocPre", 1, 60, Ocorrencia.NaoObrigatoria, ""));
-                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "SiglaUFLocpre", 2, 2, Ocorrencia.NaoObrigatoria, ""));
-                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "CepLocPre", 8, 8, Ocorrencia.NaoObrigatoria, ""));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TipoLogLocPre", 1, 10, Ocorrencia.NaoObrigatoria, nota.EnderecoPrestacao.TipoLogradouro));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "LogLocPre", 1, 60, Ocorrencia.NaoObrigatoria, nota.EnderecoPrestacao.Logradouro));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "NumEndLocPre", 1, 10, Ocorrencia.NaoObrigatoria, nota.EnderecoPrestacao.Numero));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "ComplEndLocPre", 0, 60, Ocorrencia.NaoObrigatoria, nota.EnderecoPrestacao.Complemento));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "BairroLocPre", 1, 60, Ocorrencia.NaoObrigatoria, nota.EnderecoPrestacao.Bairro));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "MunLocPre", 1, 60, Ocorrencia.NaoObrigatoria, nota.EnderecoPrestacao.Municipio));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "SiglaUFLocpre", 2, 2, Ocorrencia.NaoObrigatoria, nota.EnderecoPrestacao.Uf));
+                    reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "CepLocPre", 8, 8, Ocorrencia.NaoObrigatoria, nota.EnderecoPrestacao.Cep.ZeroFill(8)));
                 }
 
                 reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "Email1", 0, 120, Ocorrencia.NaoObrigatoria, nota.Tomador.DadosContato.Email));
@@ -334,7 +335,7 @@ namespace ACBr.Net.NFSe.Providers
         #endregion
 
         #region Services
-        
+
         protected override void PrepararEnviar(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
         {
             if (notas.Count == 0)
@@ -410,7 +411,7 @@ namespace ACBr.Net.NFSe.Providers
             var situacao = "";
             switch (xmlElement.ElementAnyNs("PrtXSts")?.GetValue<string>() ?? "0")
             {
-                case  "1" : //Aguardando processamento
+                case "1": //Aguardando processamento
                     situacao = "2"; //Padrão Ginfes e ABRASF - Ainda não processado
                     break;
 
@@ -576,7 +577,7 @@ namespace ACBr.Net.NFSe.Providers
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Você deve informar a competência no campo Início." });
                 return;
             }
-            
+
             // Monta mensagem de envio
             var loteBuilder = new StringBuilder();
             loteBuilder.Append($"<Competencia_Mes>{retornoWebservice.Inicio?.Month.ZeroFill(2)}</Competencia_Mes>");
@@ -734,7 +735,7 @@ namespace ACBr.Net.NFSe.Providers
             throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
-        
+
         protected override void AssinarSubstituirNFSe(RetornoSubstituirNFSe retornoWebservice)
         {
         }
@@ -791,13 +792,13 @@ namespace ACBr.Net.NFSe.Providers
             var mensagem = xmlRet.ElementAnyNs("Info").ElementAnyNs("Message");
 
             var evento = new Evento
-                {
-                    Codigo = mensagem?.ElementAnyNs("Id")?.GetValue<string>() ?? string.Empty,
-                    Descricao = mensagem?.ElementAnyNs("Description")?.GetValue<string>() ?? string.Empty,
-                    Correcao = mensagem?.ElementAnyNs("Description")?.GetValue<string>() ?? string.Empty
-                };
+            {
+                Codigo = mensagem?.ElementAnyNs("Id")?.GetValue<string>() ?? string.Empty,
+                Descricao = mensagem?.ElementAnyNs("Description")?.GetValue<string>() ?? string.Empty,
+                Correcao = mensagem?.ElementAnyNs("Description")?.GetValue<string>() ?? string.Empty
+            };
 
-                retornoWs.Erros.Add(evento);
+            retornoWs.Erros.Add(evento);
         }
 
         #endregion Private Methods
