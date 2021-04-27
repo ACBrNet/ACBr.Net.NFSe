@@ -33,6 +33,14 @@ using ACBr.Net.Core.Generics;
 using ACBr.Net.DFe.Core.Document;
 using System;
 using System.ComponentModel;
+using System.IO;
+using System.Text;
+using System.Xml.Linq;
+using ACBr.Net.Core;
+using ACBr.Net.Core.Extensions;
+using ACBr.Net.DFe.Core;
+using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Providers;
 
 namespace ACBr.Net.NFSe.Nota
 {
@@ -44,10 +52,20 @@ namespace ACBr.Net.NFSe.Nota
 
         #endregion Events
 
+        #region Fields
+
+        private readonly ConfigNFSe config;
+
+        #endregion Fields
+
         #region Constructor
 
-        public NotaServico()
+        public NotaServico(ConfigNFSe config)
         {
+            Guard.Against<ACBrDFeException>(config == null, "Configurações não podem ser nulas");
+
+            this.config = config;
+
             Id = 0;
             IdentificacaoRps = new IdeRps();
             IdentificacaoNFSe = new IdeNFSe();
@@ -70,7 +88,7 @@ namespace ACBr.Net.NFSe.Nota
         /// <summary>
         /// Initializes a new instance of the <see cref="NotaServico"/> class.
         /// </summary>
-        public NotaServico(DadosPrestador prestador) : this()
+        public NotaServico(ConfigNFSe config, DadosPrestador prestador) : this(config)
         {
             Prestador = prestador;
         }
@@ -150,5 +168,62 @@ namespace ACBr.Net.NFSe.Nota
         public DFeSignature Signature { get; set; }
 
         #endregion Propriedades
+
+        #region Methods
+
+        /// <summary>
+        /// Salvar o xml da Rps/NFSe no determinado arquivo
+        /// </summary>
+        /// <param name="provider">A nota para salvar</param>
+        /// <param name="path">Caminho onde sera salvo o arquivo.</param>
+        /// <returns></returns>
+        public void Save(string path = "")
+        {
+            Guard.Against<ACBrException>(config?.Parent?.provider == null, "ERRO: Nenhuma cidade informada.");
+
+            var isNFSe = IdentificacaoNFSe.Numero.IsEmpty();
+
+            var file = isNFSe
+                ? $"Rps-{IdentificacaoRps.DataEmissao:yyyyMMdd}-{IdentificacaoRps.Numero}-{IdentificacaoRps.Serie}.xml"
+                : $"NFSe-{IdentificacaoNFSe.Chave}-{IdentificacaoNFSe.Numero}.xml";
+
+            var xmlNota = GetXml();
+
+            path = Path.Combine(path, file);
+
+            var doc = XDocument.Parse(xmlNota);
+            doc.Save(path, SaveOptions.OmitDuplicateNamespaces);
+        }
+
+        /// <summary>
+        /// Salvar o xml da Rps/NFSe no determinado arquivo
+        /// </summary>
+        /// <param name="provider">O provedor</param>
+        /// <param name="stream">Stream onde sera salvo o xml</param>
+        /// <returns></returns>
+        public void Save(Stream stream)
+        {
+            Guard.Against<ACBrException>(config?.Parent?.provider == null, "ERRO: Nenhuma cidade informada.");
+
+            var xmlNota = GetXml();
+
+            var doc = XDocument.Parse(xmlNota);
+            doc.Save(stream, SaveOptions.OmitDuplicateNamespaces);
+        }
+
+        /// <summary>
+        /// Gera o Xml Da Rps
+        /// </summary>
+        /// <param name="provider">O provedor</param>
+        /// <returns></returns>
+        public string GetXml()
+        {
+            Guard.Against<ACBrException>(config?.Parent?.provider == null, "ERRO: Nenhuma cidade informada.");
+
+            return IdentificacaoNFSe.Numero.IsEmpty() ? config.Parent.provider.WriteXmlRps(this) :
+                                                        config.Parent.provider.WriteXmlNFSe(this);
+        }
+
+        #endregion Methods
     }
 }

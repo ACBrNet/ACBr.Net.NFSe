@@ -38,7 +38,7 @@ namespace ACBr.Net.NFSe.Providers
         {
             Guard.Against<XmlException>(xml == null, "Xml invalido.");
 
-            var ret = new NotaServico();
+            var ret = new NotaServico(Configuracoes);
             var xmlElement = xml.ElementAnyNs("Nota");
 
             ret.Competencia = xmlElement.ElementAnyNs("DtEmiNf")?.GetValue<DateTime>() ?? DateTime.MinValue;
@@ -332,7 +332,7 @@ namespace ACBr.Net.NFSe.Providers
             return reg90;
         }
 
-        #endregion
+        #endregion RPS
 
         #region Services
 
@@ -735,7 +735,6 @@ namespace ACBr.Net.NFSe.Providers
             throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
         }
 
-
         protected override void AssinarSubstituirNFSe(RetornoSubstituirNFSe retornoWebservice)
         {
         }
@@ -760,7 +759,7 @@ namespace ACBr.Net.NFSe.Providers
             return "";
         }
 
-        #endregion
+        #endregion Not Implemented Methods
 
         #endregion Methods
 

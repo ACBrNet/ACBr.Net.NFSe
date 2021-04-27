@@ -1,12 +1,12 @@
-// ***********************************************************************
-// Assembly         : ACBr.Net.NFSe
+﻿// ***********************************************************************
+// Assembly         : ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
 // Author           : Rafael Dias
-// Created          : 07-30-2017
+// Created          : 01-31-2016
 //
 // Last Modified By : Rafael Dias
-// Last Modified On : 07-30-2017
+// Last Modified On : 07-05-2018
 // ***********************************************************************
-// <copyright file="NFSeProvider.cs" company="ACBr.Net">
+// <copyright file="DANFSeEventArgs.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,68 +29,36 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ComponentModel;
+using System;
 
-namespace ACBr.Net.NFSe.Providers
+namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
 {
-    public enum NFSeProvider : byte
+    public class DANFSeEventArgs : EventArgs
     {
-        Abaco = 0,
+        #region Constructors
 
-        Betha = 1,
+        public DANFSeEventArgs(LayoutImpressao layout)
+        {
+            Layout = layout;
+            FilePath = string.Empty;
+        }
 
-        [Description("Betha v2")]
-        Betha2 = 2,
+        #endregion Constructors
 
-        BHISS = 8,
+        #region Propriedades
 
-        Coplan = 3,
+        /// <summary>
+        /// Retorna o tipo de arquivo necessario.
+        /// </summary>
+        /// <value>The tipo.</value>
+        public LayoutImpressao Layout { get; internal set; }
 
-        DBSeller = 19,
+        /// <summary>
+        /// Define ou retorna o caminho para o arquivo do FastReport.
+        /// </summary>
+        /// <value>The file path.</value>
+        public string FilePath { get; set; }
 
-        DSF = 4,
-
-        Equiplano = 15,
-
-        Fiorilli = 16,
-
-        FissLex = 12,
-
-        Ginfes = 5,
-
-        ISSe = 23,
-
-        ISSNet = 18,
-
-        [Description("NFe Cidades")]
-        NFeCidades = 6,
-
-        [Description("Nota Carioca")]
-        NotaCarioca = 7,
-
-        [Description("Pronim v2")]
-        Pronim2 = 17,
-
-        [Description("São Paulo")]
-        SaoPaulo = 9,
-
-        [Description("SmarAPD ABRASF")]
-        SmarAPDABRASF = 14,
-
-        [Description("Vitoria")]
-        Vitoria = 13,
-
-        WebIss = 10,
-
-        [Description("WebIss v2")]
-        WebIss2 = 11,
-
-        Sigiss = 20,
-
-        [Description("CONAM")]
-        Conam = 21,
-
-        [Description("Goiania")]
-        Goiania = 22
+        #endregion Propriedades
     }
 }

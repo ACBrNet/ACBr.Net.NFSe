@@ -1,12 +1,12 @@
-// ***********************************************************************
-// Assembly         : ACBr.Net.NFSe
+﻿// ***********************************************************************
+// Assembly         : ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
 // Author           : Rafael Dias
-// Created          : 07-30-2017
+// Created          : 01-31-2016
 //
 // Last Modified By : Rafael Dias
-// Last Modified On : 07-30-2017
+// Last Modified On : 07-05-2018
 // ***********************************************************************
-// <copyright file="NFSeProvider.cs" company="ACBr.Net">
+// <copyright file="DANFSeExportEventArgs.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,68 +29,28 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ComponentModel;
+using System;
+using ACBr.Net.DFe.Core.Common;
+using FastReport.Export;
 
-namespace ACBr.Net.NFSe.Providers
+namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
 {
-    public enum NFSeProvider : byte
+    public sealed class DANFSeExportEventArgs : EventArgs
     {
-        Abaco = 0,
+        #region Constructors
 
-        Betha = 1,
+        internal DANFSeExportEventArgs()
+        {
+        }
 
-        [Description("Betha v2")]
-        Betha2 = 2,
+        #endregion Constructors
 
-        BHISS = 8,
+        #region Properties
 
-        Coplan = 3,
+        public FiltroDFeReport Filtro { get; internal set; }
 
-        DBSeller = 19,
+        public ExportBase Export { get; internal set; }
 
-        DSF = 4,
-
-        Equiplano = 15,
-
-        Fiorilli = 16,
-
-        FissLex = 12,
-
-        Ginfes = 5,
-
-        ISSe = 23,
-
-        ISSNet = 18,
-
-        [Description("NFe Cidades")]
-        NFeCidades = 6,
-
-        [Description("Nota Carioca")]
-        NotaCarioca = 7,
-
-        [Description("Pronim v2")]
-        Pronim2 = 17,
-
-        [Description("São Paulo")]
-        SaoPaulo = 9,
-
-        [Description("SmarAPD ABRASF")]
-        SmarAPDABRASF = 14,
-
-        [Description("Vitoria")]
-        Vitoria = 13,
-
-        WebIss = 10,
-
-        [Description("WebIss v2")]
-        WebIss2 = 11,
-
-        Sigiss = 20,
-
-        [Description("CONAM")]
-        Conam = 21,
-
-        [Description("Goiania")]
-        Goiania = 22
+        #endregion Properties
     }
 }

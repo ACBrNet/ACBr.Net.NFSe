@@ -42,7 +42,7 @@ using ACBr.Net.NFSe.Providers.Goiania;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class ProviderGoiania : ProviderABRASF202
+    internal sealed class ProviderGoiania : ProviderABRASF200
     {
         #region Constructors
 
@@ -63,7 +63,6 @@ namespace ACBr.Net.NFSe.Providers
         {
             var rootRps = new XElement("Rps");
 
-            //var infServico = new XElement("InfDeclaracaoPrestacaoServico", new XAttribute("Id", $"R{nota.IdentificacaoRps.Numero.OnlyNumbers()}"));
             var infServico = new XElement("InfDeclaracaoPrestacaoServico");
             rootRps.Add(infServico);
 
@@ -75,16 +74,8 @@ namespace ACBr.Net.NFSe.Providers
             infServico.AddChild(WriteIntermediarioRps(nota));
             infServico.AddChild(WriteConstrucaoCivilRps(nota));
 
-            string regimeEspecialTributacao;
-            string optanteSimplesNacional;
-            if (nota.RegimeEspecialTributacao == RegimeEspecialTributacao.SimplesNacional)
-            {
-                regimeEspecialTributacao = "6";
-            }
-            else
-            {
-                regimeEspecialTributacao = ((int)nota.RegimeEspecialTributacao).ToString();
-            }
+            var regimeEspecialTributacao = nota.RegimeEspecialTributacao == RegimeEspecialTributacao.SimplesNacional ? "6" :
+                                           ((int)nota.RegimeEspecialTributacao).ToString();
 
             if (nota.RegimeEspecialTributacao != RegimeEspecialTributacao.Nenhum)
                 infServico.AddChild(AdicionarTag(TipoCampo.Int, "", "RegimeEspecialTributacao", 1, 1, Ocorrencia.NaoObrigatoria, regimeEspecialTributacao));
@@ -168,7 +159,7 @@ namespace ACBr.Net.NFSe.Providers
             return tomador;
         }
 
-        #endregion
+        #endregion RPS
 
         #region Services
 
@@ -317,7 +308,7 @@ namespace ACBr.Net.NFSe.Providers
             retornoWebservice.Nota = nota;
         }
 
-        #endregion
+        #endregion Services
 
         protected override IServiceClient GetClient(TipoUrl tipo)
         {

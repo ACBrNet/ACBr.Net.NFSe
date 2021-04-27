@@ -6,12 +6,11 @@
     <RootNamespace>ACBr.Net.NFSe</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>acbr.net.snk</AssemblyOriginatorKeyFile>
-    <Copyright>Copyright © Grupo ACBr.Net 2014 - 2020</Copyright>
+    <Copyright>Copyright © Grupo ACBr.Net 2014 - 2021</Copyright>
     <Company>Grupo ACBr.Net</Company>
     <Authors>Rafael Dias</Authors>
     <PackageProjectUrl>https://acbrnet.github.io</PackageProjectUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageIconUrl>https://avatars2.githubusercontent.com/u/7342977?v=3&amp;amp;s=200</PackageIconUrl>
     <RepositoryUrl>https://github.com/ACBrNet/ACBr.Net.NFSe</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>ACBr.Net NFSe ACBrNFSe</PackageTags>
@@ -30,8 +29,10 @@
       - Equiplano.
       - SmarAPD ABRASAF.
       - Fiorilli.
+      - Goiânia.
       - NFe Cidades (GovDigital).
       - Porto Alegre (Em Teste).
+      - ISSe (Em Teste).
       - IIS Net (Em Teste).
       - Abaco (Em Teste).
       - Betha v1 (Em Teste).
@@ -43,13 +44,18 @@
     </Description>
     <NeutralLanguage>pt-BR</NeutralLanguage>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <AssemblyVersion>1.5.1.1</AssemblyVersion>
-    <FileVersion>1.5.1.1</FileVersion>
-    <Version>1.5.1.1</Version>
+    <AssemblyVersion>1.5.1.0</AssemblyVersion>
+    <FileVersion>1.5.1.0</FileVersion>
+    <Version>1.5.1.7</Version>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageReleaseNotes>
+      [+] Adicionado o provedor de ISSe.
+
+    </PackageReleaseNotes>
+    <PackageIcon>ACBr.Net.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
@@ -81,8 +87,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ACBr.Net.Core" Version="1.2.4.1" />
-    <PackageReference Include="ACBr.Net.DFe.Core" Version="1.2.8.2" />
+    <PackageReference Include="ACBr.Net.Core" Version="1.2.5" />
+    <PackageReference Include="ACBr.Net.DFe.Core" Version="1.2.8.3" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -102,6 +108,10 @@
   <!-- Itens do pacote nuget -->
   <ItemGroup>
     <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\ACBr.Net.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
@@ -157,6 +167,14 @@
       <Pack>True</Pack>
       <PackagePath>content\Schemas\Ginfes</PackagePath>
     </None>
+    <None Include="Schemas\Goiania\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\Goiania</PackagePath>
+    </None>
+    <None Include="Schemas\ISSe\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\ISSe</PackagePath>
+    </None>
     <None Include="Schemas\ISSNet\*.*">
       <Pack>True</Pack>
       <PackagePath>content\Schemas\ISSNet</PackagePath>
@@ -197,6 +215,7 @@
 
   <ItemGroup>
     <None Remove="Resources\Municipios.nfse" />
+    <None Remove="ACBrNFSe.bmp" />
   </ItemGroup>
 
   <ItemGroup>
@@ -204,16 +223,7 @@
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <None Remove="ACBrNFSe.bmp" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <EmbeddedResource Include="ACBrNFSe.bmp" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <Compile Remove="ACBrNFSe.bmp" />
-    <Compile Remove="ACBrNFSeProxy.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -254,6 +264,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\Ginfes\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\Goiania\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\ISSe\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\ISSNet\*.*">

@@ -31,14 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FastReport, Version=2020.1.19.0, Culture=neutral, PublicKeyToken=db7e5ce63278458c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\FastReport.dll</HintPath>
-    </Reference>
-    <Reference Include="FastReport.Bars, Version=2020.1.19.0, Culture=neutral, PublicKeyToken=db7e5ce63278458c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\FastReport.Bars.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -74,10 +66,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ACBr.Net.Core">
-      <Version>1.2.4.1</Version>
+      <Version>1.2.5</Version>
     </PackageReference>
     <PackageReference Include="ACBr.Net.DFe.Core">
-      <Version>1.2.8.2</Version>
+      <Version>1.2.8.3</Version>
+    </PackageReference>
+    <PackageReference Include="FastReport.Net.Demo">
+      <Version>2021.2.7</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

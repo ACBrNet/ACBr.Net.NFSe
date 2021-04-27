@@ -76,7 +76,8 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.WebIss2, typeof(ProviderWebIss2)},
                 {NFSeProvider.Sigiss, typeof(ProviderSigiss)},
                 {NFSeProvider.Conam, typeof(ProviderCONAM)},
-                {NFSeProvider.Goiania, typeof(ProviderGoiania)}
+                {NFSeProvider.Goiania, typeof(ProviderGoiania)},
+                {NFSeProvider.ISSe, typeof(ProviderISSe)}
             };
 
             Load();

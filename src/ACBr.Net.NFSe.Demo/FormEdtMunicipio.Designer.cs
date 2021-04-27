@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEdtMunicipio));
             this.btnSalvar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -35,6 +36,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label26 = new System.Windows.Forms.Label();
+            this.txtHCancelaNFSeLote = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.txtHConsultarSequencialRps = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -54,6 +57,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtHEnviar = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label27 = new System.Windows.Forms.Label();
+            this.txtPCancelaNFSeLote = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.txtPConsultarSequencialRps = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -84,10 +89,6 @@
             this.cmbUf = new System.Windows.Forms.ComboBox();
             this.label25 = new System.Windows.Forms.Label();
             this.nudIdEntidade = new System.Windows.Forms.NumericUpDown();
-            this.label26 = new System.Windows.Forms.Label();
-            this.txtHCancelaNFSeLote = new System.Windows.Forms.TextBox();
-            this.label27 = new System.Windows.Forms.Label();
-            this.txtPCancelaNFSeLote = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -183,6 +184,22 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Homologação";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(3, 81);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(100, 13);
+            this.label26.TabIndex = 23;
+            this.label26.Text = "Cancela NFSe Lote";
+            // 
+            // txtHCancelaNFSeLote
+            // 
+            this.txtHCancelaNFSeLote.Location = new System.Drawing.Point(6, 97);
+            this.txtHCancelaNFSeLote.Name = "txtHCancelaNFSeLote";
+            this.txtHCancelaNFSeLote.Size = new System.Drawing.Size(328, 20);
+            this.txtHCancelaNFSeLote.TabIndex = 22;
             // 
             // label11
             // 
@@ -357,6 +374,22 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Produção";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(3, 81);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(100, 13);
+            this.label27.TabIndex = 41;
+            this.label27.Text = "Cancela NFSe Lote";
+            // 
+            // txtPCancelaNFSeLote
+            // 
+            this.txtPCancelaNFSeLote.Location = new System.Drawing.Point(6, 97);
+            this.txtPCancelaNFSeLote.Name = "txtPCancelaNFSeLote";
+            this.txtPCancelaNFSeLote.Size = new System.Drawing.Size(328, 20);
+            this.txtPCancelaNFSeLote.TabIndex = 40;
             // 
             // label12
             // 
@@ -624,38 +657,6 @@
             this.nudIdEntidade.Size = new System.Drawing.Size(64, 20);
             this.nudIdEntidade.TabIndex = 18;
             // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(3, 81);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(100, 13);
-            this.label26.TabIndex = 23;
-            this.label26.Text = "Cancela NFSe Lote";
-            // 
-            // txtHCancelaNFSeLote
-            // 
-            this.txtHCancelaNFSeLote.Location = new System.Drawing.Point(6, 97);
-            this.txtHCancelaNFSeLote.Name = "txtHCancelaNFSeLote";
-            this.txtHCancelaNFSeLote.Size = new System.Drawing.Size(328, 20);
-            this.txtHCancelaNFSeLote.TabIndex = 22;
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(3, 81);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(100, 13);
-            this.label27.TabIndex = 41;
-            this.label27.Text = "Cancela NFSe Lote";
-            // 
-            // txtPCancelaNFSeLote
-            // 
-            this.txtPCancelaNFSeLote.Location = new System.Drawing.Point(6, 97);
-            this.txtPCancelaNFSeLote.Name = "txtPCancelaNFSeLote";
-            this.txtPCancelaNFSeLote.Size = new System.Drawing.Size(328, 20);
-            this.txtPCancelaNFSeLote.TabIndex = 40;
-            // 
             // FormEdtMunicipio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -679,6 +680,7 @@
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnSalvar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormEdtMunicipio";

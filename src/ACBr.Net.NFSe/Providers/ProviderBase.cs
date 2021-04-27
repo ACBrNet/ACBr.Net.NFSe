@@ -310,45 +310,46 @@ namespace ACBr.Net.NFSe.Providers
                 Sincrono = false
             };
 
-            PrepararEnviar(retornoWebservice, notas);
-            if (retornoWebservice.Erros.Count > 0) return retornoWebservice;
-
-            if (Configuracoes.Geral.RetirarAcentos)
-                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
-
-            AssinarEnviar(retornoWebservice);
-
-            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"Enviar-{lote}-env.xml");
-
-            //Remover a declaração do Xml se tiver
-            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
-
-            // Verifica Schema
-            if (PrecisaValidarSchema(TipoUrl.Enviar))
-            {
-                ValidarSchema(retornoWebservice, GetSchema(TipoUrl.Enviar));
-                if (retornoWebservice.Erros.Any()) return retornoWebservice;
-            }
-
-            // Recebe mensagem de retorno
             try
             {
+                PrepararEnviar(retornoWebservice, notas);
+                if (retornoWebservice.Erros.Count > 0) return retornoWebservice;
+
+                if (Configuracoes.Geral.RetirarAcentos)
+                    retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
+
+                AssinarEnviar(retornoWebservice);
+
+                GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"Enviar-{lote}-env.xml");
+
+                //Remover a declaração do Xml se tiver
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
+
+                // Verifica Schema
+                if (PrecisaValidarSchema(TipoUrl.Enviar))
+                {
+                    ValidarSchema(retornoWebservice, GetSchema(TipoUrl.Enviar));
+                    if (retornoWebservice.Erros.Any()) return retornoWebservice;
+                }
+
+                // Recebe mensagem de retorno
+
                 using (var cliente = GetClient(TipoUrl.Enviar))
                 {
                     retornoWebservice.XmlRetorno = cliente.Enviar(GerarCabecalho(), retornoWebservice.XmlEnvio);
                     retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
                     retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
+
+                GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"lote-{lote}-ret.xml");
+                TratarRetornoEnviar(retornoWebservice, notas);
+                return retornoWebservice;
             }
             catch (Exception ex)
             {
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
                 return retornoWebservice;
             }
-
-            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"lote-{lote}-ret.xml");
-            TratarRetornoEnviar(retornoWebservice, notas);
-            return retornoWebservice;
         }
 
         /// <summary>
@@ -422,43 +423,45 @@ namespace ACBr.Net.NFSe.Providers
                 Protocolo = protocolo
             };
 
-            PrepararConsultarSituacao(retornoWebservice);
-            if (retornoWebservice.Erros.Any()) return retornoWebservice;
-
-            if (Configuracoes.Geral.RetirarAcentos)
-                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
-
-            AssinarConsultarSituacao(retornoWebservice);
-            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarSituacao-{DateTime.Now:yyyyMMddssfff}-{protocolo}-env.xml");
-
-            //Remover a declaração do Xml se tiver
-            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
-
-            // Verifica Schema
-            if (PrecisaValidarSchema(TipoUrl.ConsultarSituacao))
-            {
-                ValidarSchema(retornoWebservice, GetSchema(TipoUrl.ConsultarSituacao));
-                if (retornoWebservice.Erros.Any()) return retornoWebservice;
-            }
-
-            // Recebe mensagem de retorno
             try
             {
+                PrepararConsultarSituacao(retornoWebservice);
+                if (retornoWebservice.Erros.Any()) return retornoWebservice;
+
+                if (Configuracoes.Geral.RetirarAcentos)
+                    retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
+
+                AssinarConsultarSituacao(retornoWebservice);
+                GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarSituacao-{DateTime.Now:yyyyMMddssfff}-{protocolo}-env.xml");
+
+                //Remover a declaração do Xml se tiver
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
+
+                // Verifica Schema
+                if (PrecisaValidarSchema(TipoUrl.ConsultarSituacao))
+                {
+                    ValidarSchema(retornoWebservice, GetSchema(TipoUrl.ConsultarSituacao));
+                    if (retornoWebservice.Erros.Any()) return retornoWebservice;
+                }
+
+                // Recebe mensagem de retorno
+
                 using (var cliente = GetClient(TipoUrl.ConsultarSituacao))
                 {
                     retornoWebservice.XmlRetorno = cliente.ConsultarSituacao(GerarCabecalho(), retornoWebservice.XmlEnvio);
                     retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
                     retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
+
+                GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarSituacao-{DateTime.Now:yyyyMMddssfff}-{lote}-ret.xml");
+                TratarRetornoConsultarSituacao(retornoWebservice);
+                return retornoWebservice;
             }
             catch (Exception ex)
             {
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
                 return retornoWebservice;
             }
-            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarSituacao-{DateTime.Now:yyyyMMddssfff}-{lote}-ret.xml");
-            TratarRetornoConsultarSituacao(retornoWebservice);
-            return retornoWebservice;
         }
 
         /// <summary>
@@ -477,44 +480,45 @@ namespace ACBr.Net.NFSe.Providers
                 Protocolo = protocolo
             };
 
-            PrepararConsultarLoteRps(retornoWebservice);
-            if (retornoWebservice.Erros.Any()) return retornoWebservice;
-
-            if (Configuracoes.Geral.RetirarAcentos)
-                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
-
-            AssinarConsultarLoteRps(retornoWebservice);
-            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMddssfff}-{protocolo}-env.xml");
-
-            //Remover a declaração do Xml se tiver
-            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
-
-            // Verifica Schema
-            if (PrecisaValidarSchema(TipoUrl.ConsultarLoteRps))
-            {
-                ValidarSchema(retornoWebservice, GetSchema(TipoUrl.ConsultarLoteRps));
-                if (retornoWebservice.Erros.Any()) return retornoWebservice;
-            }
-
-            // Recebe mensagem de retorno
             try
             {
+                PrepararConsultarLoteRps(retornoWebservice);
+                if (retornoWebservice.Erros.Any()) return retornoWebservice;
+
+                if (Configuracoes.Geral.RetirarAcentos)
+                    retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
+
+                AssinarConsultarLoteRps(retornoWebservice);
+                GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarLote-{DateTime.Now:yyyyMMddssfff}-{protocolo}-env.xml");
+
+                //Remover a declaração do Xml se tiver
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
+
+                // Verifica Schema
+                if (PrecisaValidarSchema(TipoUrl.ConsultarLoteRps))
+                {
+                    ValidarSchema(retornoWebservice, GetSchema(TipoUrl.ConsultarLoteRps));
+                    if (retornoWebservice.Erros.Any()) return retornoWebservice;
+                }
+
+                // Recebe mensagem de retorno
+
                 using (var cliente = GetClient(TipoUrl.ConsultarLoteRps))
                 {
                     retornoWebservice.XmlRetorno = cliente.ConsultarLoteRps(GerarCabecalho(), retornoWebservice.XmlEnvio);
                     retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
                     retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
+
+                GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarLote-{DateTime.Now:yyyyMMddssfff}-{lote}-ret.xml");
+                TratarRetornoConsultarLoteRps(retornoWebservice, notas);
+                return retornoWebservice;
             }
             catch (Exception ex)
             {
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
                 return retornoWebservice;
             }
-
-            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarLote-{DateTime.Now:yyyyMMddssfff}-{lote}-ret.xml");
-            TratarRetornoConsultarLoteRps(retornoWebservice, notas);
-            return retornoWebservice;
         }
 
         /// <summary>
@@ -530,44 +534,45 @@ namespace ACBr.Net.NFSe.Providers
                 Serie = serie
             };
 
-            PrepararConsultarSequencialRps(retornoWebservice);
-            if (retornoWebservice.Erros.Any()) return retornoWebservice;
-
-            if (Configuracoes.Geral.RetirarAcentos)
-                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
-
-            AssinarConsultarSequencialRps(retornoWebservice);
-            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarSequencialRps-{DateTime.Now:yyyyMMddssfff}-{serie}-env.xml");
-
-            //Remover a declaração do Xml se tiver
-            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
-
-            // Verifica Schema
-            if (PrecisaValidarSchema(TipoUrl.ConsultarSequencialRps))
-            {
-                ValidarSchema(retornoWebservice, GetSchema(TipoUrl.ConsultarSequencialRps));
-                if (retornoWebservice.Erros.Any()) return retornoWebservice;
-            }
-
-            // Recebe mensagem de retorno
             try
             {
+                PrepararConsultarSequencialRps(retornoWebservice);
+                if (retornoWebservice.Erros.Any()) return retornoWebservice;
+
+                if (Configuracoes.Geral.RetirarAcentos)
+                    retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
+
+                AssinarConsultarSequencialRps(retornoWebservice);
+                GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarSequencialRps-{DateTime.Now:yyyyMMddssfff}-{serie}-env.xml");
+
+                //Remover a declaração do Xml se tiver
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
+
+                // Verifica Schema
+                if (PrecisaValidarSchema(TipoUrl.ConsultarSequencialRps))
+                {
+                    ValidarSchema(retornoWebservice, GetSchema(TipoUrl.ConsultarSequencialRps));
+                    if (retornoWebservice.Erros.Any()) return retornoWebservice;
+                }
+
+                // Recebe mensagem de retorno
+
                 using (var cliente = GetClient(TipoUrl.ConsultarSequencialRps))
                 {
                     retornoWebservice.XmlRetorno = cliente.ConsultarSequencialRps(GerarCabecalho(), retornoWebservice.XmlEnvio);
                     retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
                     retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
+
+                GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarSequencialRps-{DateTime.Now:yyyyMMddssfff}-{serie}-ret.xml");
+                TratarRetornoConsultarSequencialRps(retornoWebservice);
+                return retornoWebservice;
             }
             catch (Exception ex)
             {
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
                 return retornoWebservice;
             }
-
-            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarSequencialRps-{DateTime.Now:yyyyMMddssfff}-{serie}-ret.xml");
-            TratarRetornoConsultarSequencialRps(retornoWebservice);
-            return retornoWebservice;
         }
 
         /// <summary>
@@ -590,43 +595,45 @@ namespace ACBr.Net.NFSe.Providers
                 MesCompetencia = mesCompetencia
             };
 
-            PrepararConsultarNFSeRps(retornoWebservice, notas);
-            if (retornoWebservice.Erros.Any()) return retornoWebservice;
-
-            if (Configuracoes.Geral.RetirarAcentos)
-                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
-
-            AssinarConsultarNFSeRps(retornoWebservice);
-            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarNFSeRps-{numero}-{serie}-env.xml");
-
-            //Remover a declaração do Xml se tiver
-            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
-
-            // Verifica Schema
-            if (PrecisaValidarSchema(TipoUrl.ConsultarNFSeRps))
-            {
-                ValidarSchema(retornoWebservice, GetSchema(TipoUrl.ConsultarNFSeRps));
-                if (retornoWebservice.Erros.Any()) return retornoWebservice;
-            }
-
-            // Recebe mensagem de retorno
             try
             {
+                PrepararConsultarNFSeRps(retornoWebservice, notas);
+                if (retornoWebservice.Erros.Any()) return retornoWebservice;
+
+                if (Configuracoes.Geral.RetirarAcentos)
+                    retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
+
+                AssinarConsultarNFSeRps(retornoWebservice);
+                GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarNFSeRps-{numero}-{serie}-env.xml");
+
+                //Remover a declaração do Xml se tiver
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
+
+                // Verifica Schema
+                if (PrecisaValidarSchema(TipoUrl.ConsultarNFSeRps))
+                {
+                    ValidarSchema(retornoWebservice, GetSchema(TipoUrl.ConsultarNFSeRps));
+                    if (retornoWebservice.Erros.Any()) return retornoWebservice;
+                }
+
+                // Recebe mensagem de retorno
+
                 using (var cliente = GetClient(TipoUrl.ConsultarNFSeRps))
                 {
                     retornoWebservice.XmlRetorno = cliente.ConsultarNFSeRps(GerarCabecalho(), retornoWebservice.XmlEnvio);
                     retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
                     retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
+
+                GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarNFSeRps-{numero}-{serie}-ret.xml");
+                TratarRetornoConsultarNFSeRps(retornoWebservice, notas);
+                return retornoWebservice;
             }
             catch (Exception ex)
             {
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
                 return retornoWebservice;
             }
-            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarNFSeRps-{numero}-{serie}-ret.xml");
-            TratarRetornoConsultarNFSeRps(retornoWebservice, notas);
-            return retornoWebservice;
         }
 
         /// <summary>
@@ -661,44 +668,45 @@ namespace ACBr.Net.NFSe.Providers
                 IMIntermediario = imInter
             };
 
-            PrepararConsultarNFSe(retornoWebservice);
-            if (retornoWebservice.Erros.Any()) return retornoWebservice;
-
-            if (Configuracoes.Geral.RetirarAcentos)
-                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
-
-            AssinarConsultarNFSe(retornoWebservice);
-            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarNFSe-{DateTime.Now:yyyyMMddssfff}-{numeroNfse}-env.xml");
-
-            //Remover a declaração do Xml se tiver
-            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
-
-            // Verifica Schema
-            if (PrecisaValidarSchema(TipoUrl.ConsultarNFSe))
-            {
-                ValidarSchema(retornoWebservice, GetSchema(TipoUrl.ConsultarNFSe));
-                if (retornoWebservice.Erros.Any()) return retornoWebservice;
-            }
-
-            // Recebe mensagem de retorno
             try
             {
+                PrepararConsultarNFSe(retornoWebservice);
+                if (retornoWebservice.Erros.Any()) return retornoWebservice;
+
+                if (Configuracoes.Geral.RetirarAcentos)
+                    retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
+
+                AssinarConsultarNFSe(retornoWebservice);
+                GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"ConsultarNFSe-{DateTime.Now:yyyyMMddssfff}-{numeroNfse}-env.xml");
+
+                //Remover a declaração do Xml se tiver
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
+
+                // Verifica Schema
+                if (PrecisaValidarSchema(TipoUrl.ConsultarNFSe))
+                {
+                    ValidarSchema(retornoWebservice, GetSchema(TipoUrl.ConsultarNFSe));
+                    if (retornoWebservice.Erros.Any()) return retornoWebservice;
+                }
+
+                // Recebe mensagem de retorno
+
                 using (var cliente = GetClient(TipoUrl.ConsultarNFSe))
                 {
                     retornoWebservice.XmlRetorno = cliente.ConsultarNFSe(GerarCabecalho(), retornoWebservice.XmlEnvio);
                     retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
                     retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
+
+                GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarNFSe-{DateTime.Now:yyyyMMddssfff}-{numeroNfse}-ret.xml");
+                TratarRetornoConsultarNFSe(retornoWebservice, notas);
+                return retornoWebservice;
             }
             catch (Exception ex)
             {
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
                 return retornoWebservice;
             }
-
-            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"ConsultarNFSe-{DateTime.Now:yyyyMMddssfff}-{numeroNfse}-ret.xml");
-            TratarRetornoConsultarNFSe(retornoWebservice, notas);
-            return retornoWebservice;
         }
 
         /// <summary>
@@ -720,43 +728,45 @@ namespace ACBr.Net.NFSe.Providers
                 Motivo = motivo
             };
 
-            PrepararCancelarNFSe(retornoWebservice);
-            if (retornoWebservice.Erros.Any()) return retornoWebservice;
-
-            if (Configuracoes.Geral.RetirarAcentos)
-                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
-
-            AssinarCancelarNFSe(retornoWebservice);
-            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CancelarNFSe-{numeroNFSe}-env.xml");
-
-            //Remover a declaração do Xml se tiver
-            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
-
-            // Verifica Schema
-            if (PrecisaValidarSchema(TipoUrl.CancelarNFSe))
-            {
-                ValidarSchema(retornoWebservice, GetSchema(TipoUrl.CancelarNFSe));
-                if (retornoWebservice.Erros.Any()) return retornoWebservice;
-            }
-
-            // Recebe mensagem de retorno
             try
             {
+                PrepararCancelarNFSe(retornoWebservice);
+                if (retornoWebservice.Erros.Any()) return retornoWebservice;
+
+                if (Configuracoes.Geral.RetirarAcentos)
+                    retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
+
+                AssinarCancelarNFSe(retornoWebservice);
+                GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CancelarNFSe-{numeroNFSe}-env.xml");
+
+                //Remover a declaração do Xml se tiver
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
+
+                // Verifica Schema
+                if (PrecisaValidarSchema(TipoUrl.CancelarNFSe))
+                {
+                    ValidarSchema(retornoWebservice, GetSchema(TipoUrl.CancelarNFSe));
+                    if (retornoWebservice.Erros.Any()) return retornoWebservice;
+                }
+
+                // Recebe mensagem de retorno
+
                 using (var cliente = GetClient(TipoUrl.CancelarNFSe))
                 {
                     retornoWebservice.XmlRetorno = cliente.CancelarNFSe(GerarCabecalho(), retornoWebservice.XmlEnvio);
                     retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
                     retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
+
+                GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"CancelarNFSe-{numeroNFSe}-ret.xml");
+                TratarRetornoCancelarNFSe(retornoWebservice, notas);
+                return retornoWebservice;
             }
             catch (Exception ex)
             {
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
                 return retornoWebservice;
             }
-            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"CancelarNFSe-{numeroNFSe}-ret.xml");
-            TratarRetornoCancelarNFSe(retornoWebservice, notas);
-            return retornoWebservice;
         }
 
         /// <summary>
@@ -772,43 +782,45 @@ namespace ACBr.Net.NFSe.Providers
                 Lote = lote
             };
 
-            PrepararCancelarNFSeLote(retornoWebservice, notas);
-            if (retornoWebservice.Erros.Any()) return retornoWebservice;
-
-            if (Configuracoes.Geral.RetirarAcentos)
-                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
-
-            AssinarCancelarNFSeLote(retornoWebservice);
-            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CancelarNFSeLote-{lote}-env.xml");
-
-            //Remover a declaração do Xml se tiver
-            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
-
-            // Verifica Schema
-            if (PrecisaValidarSchema(TipoUrl.CancelarNFSeLote))
-            {
-                ValidarSchema(retornoWebservice, GetSchema(TipoUrl.CancelarNFSeLote));
-                if (retornoWebservice.Erros.Any()) return retornoWebservice;
-            }
-
-            // Recebe mensagem de retorno
             try
             {
+                PrepararCancelarNFSeLote(retornoWebservice, notas);
+                if (retornoWebservice.Erros.Any()) return retornoWebservice;
+
+                if (Configuracoes.Geral.RetirarAcentos)
+                    retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
+
+                AssinarCancelarNFSeLote(retornoWebservice);
+                GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"CancelarNFSeLote-{lote}-env.xml");
+
+                //Remover a declaração do Xml se tiver
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
+
+                // Verifica Schema
+                if (PrecisaValidarSchema(TipoUrl.CancelarNFSeLote))
+                {
+                    ValidarSchema(retornoWebservice, GetSchema(TipoUrl.CancelarNFSeLote));
+                    if (retornoWebservice.Erros.Any()) return retornoWebservice;
+                }
+
+                // Recebe mensagem de retorno
+
                 using (var cliente = GetClient(TipoUrl.CancelarNFSeLote))
                 {
                     retornoWebservice.XmlRetorno = cliente.CancelarNFSeLote(GerarCabecalho(), retornoWebservice.XmlEnvio);
                     retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
                     retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
+
+                GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"CancelarNFSeLote-{lote}-ret.xml");
+                TratarRetornoCancelarNFSeLote(retornoWebservice, notas);
+                return retornoWebservice;
             }
             catch (Exception ex)
             {
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
                 return retornoWebservice;
             }
-            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"CancelarNFSeLote-{lote}-ret.xml");
-            TratarRetornoCancelarNFSeLote(retornoWebservice, notas);
-            return retornoWebservice;
         }
 
         /// <summary>
@@ -829,44 +841,45 @@ namespace ACBr.Net.NFSe.Providers
                 Motivo = motivo
             };
 
-            PrepararSubstituirNFSe(retornoWebservice, notas);
-            if (retornoWebservice.Erros.Any()) return retornoWebservice;
-
-            if (Configuracoes.Geral.RetirarAcentos)
-                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
-
-            AssinarSubstituirNFSe(retornoWebservice);
-            GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"SubstituirNFSe-{numeroNFSe}-env.xml");
-
-            //Remover a declaração do Xml se tiver
-            retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
-
-            // Verifica Schema
-            if (PrecisaValidarSchema(TipoUrl.SubstituirNFSe))
-            {
-                ValidarSchema(retornoWebservice, GetSchema(TipoUrl.SubstituirNFSe));
-                if (retornoWebservice.Erros.Any()) return retornoWebservice;
-            }
-
-            // Recebe mensagem de retorno
             try
             {
+                PrepararSubstituirNFSe(retornoWebservice, notas);
+                if (retornoWebservice.Erros.Any()) return retornoWebservice;
+
+                if (Configuracoes.Geral.RetirarAcentos)
+                    retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoveAccent();
+
+                AssinarSubstituirNFSe(retornoWebservice);
+                GravarArquivoEmDisco(retornoWebservice.XmlEnvio, $"SubstituirNFSe-{numeroNFSe}-env.xml");
+
+                //Remover a declaração do Xml se tiver
+                retornoWebservice.XmlEnvio = retornoWebservice.XmlEnvio.RemoverDeclaracaoXml();
+
+                // Verifica Schema
+                if (PrecisaValidarSchema(TipoUrl.SubstituirNFSe))
+                {
+                    ValidarSchema(retornoWebservice, GetSchema(TipoUrl.SubstituirNFSe));
+                    if (retornoWebservice.Erros.Any()) return retornoWebservice;
+                }
+
+                // Recebe mensagem de retorno
+
                 using (var cliente = GetClient(TipoUrl.CancelarNFSeLote))
                 {
                     retornoWebservice.XmlRetorno = cliente.SubstituirNFSe(GerarCabecalho(), retornoWebservice.XmlEnvio);
                     retornoWebservice.EnvelopeEnvio = cliente.EnvelopeEnvio;
                     retornoWebservice.EnvelopeRetorno = cliente.EnvelopeRetorno;
                 }
+
+                GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"SubstituirNFSe-{numeroNFSe}-ret.xml");
+                TratarRetornoSubstituirNFSe(retornoWebservice, notas);
+                return retornoWebservice;
             }
             catch (Exception ex)
             {
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = ex.Message });
                 return retornoWebservice;
             }
-
-            GravarArquivoEmDisco(retornoWebservice.XmlRetorno, $"SubstituirNFSe-{numeroNFSe}-ret.xml");
-            TratarRetornoSubstituirNFSe(retornoWebservice, notas);
-            return retornoWebservice;
         }
 
         #endregion Servicos

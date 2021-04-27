@@ -34,15 +34,10 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ACBr.Net.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FastReport, Version=2020.1.19.0, Culture=neutral, PublicKeyToken=db7e5ce63278458c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\FastReport.dll</HintPath>
-    </Reference>
-    <Reference Include="FastReport.Bars, Version=2020.1.19.0, Culture=neutral, PublicKeyToken=db7e5ce63278458c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\FastReport.Bars.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -95,6 +90,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="App.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -106,9 +102,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ACBr.Net.NFSe.DANFSe.FastReport\ACBr.Net.NFSe.DANFSe.FastReport.csproj">
-      <Project>{ba9dbab3-31f1-4d98-ad4d-cd73cf0b6921}</Project>
-      <Name>ACBr.Net.NFSe.DANFSe.FastReport</Name>
+    <ProjectReference Include="..\ACBr.Net.NFSe.DANFSe.FastReport.OpenSource\ACBr.Net.NFSe.DANFSe.FastReport.OpenSource.csproj">
+      <Project>{f16dbeed-46eb-46b1-8264-711edfadc099}</Project>
+      <Name>ACBr.Net.NFSe.DANFSe.FastReport.OpenSource</Name>
     </ProjectReference>
     <ProjectReference Include="..\ACBr.Net.NFSe\ACBr.Net.NFSe.csproj">
       <Project>{0ef298ca-a045-47e2-91ad-5c211e793c3b}</Project>
@@ -117,10 +113,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ACBr.Net.Core">
-      <Version>1.2.4.1</Version>
+      <Version>1.2.5</Version>
     </PackageReference>
     <PackageReference Include="ACBr.Net.DFe.Core">
-      <Version>1.2.8.2</Version>
+      <Version>1.2.8.3</Version>
     </PackageReference>
     <PackageReference Include="NLog">
       <Version>4.7.9</Version>
@@ -128,6 +124,9 @@
     <PackageReference Include="NLog.Windows.Forms">
       <Version>4.4.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ACBr.Net.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
