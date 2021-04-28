@@ -40,7 +40,7 @@ namespace ACBr.Net.NFSe.Providers
     /// Classe base para trabalhar com provedores que usam o padrão ABRASF 2.04
     /// </summary>
     /// <seealso cref="ProviderBase" />
-    public abstract class ProviderABRASF204 : ProviderABRASF202
+    public abstract class ProviderABRASF204 : ProviderABRASF203
     {
         #region Constructors
 
