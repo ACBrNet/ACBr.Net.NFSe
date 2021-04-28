@@ -34,13 +34,11 @@ using ACBr.Net.DFe.Core.Document;
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Text;
 using System.Xml.Linq;
 using ACBr.Net.Core;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core;
 using ACBr.Net.NFSe.Configuracao;
-using ACBr.Net.NFSe.Providers;
 
 namespace ACBr.Net.NFSe.Nota
 {
@@ -163,6 +161,8 @@ namespace ACBr.Net.NFSe.Nota
         public string Assinatura { get; set; }
 
         public DFeSignature Signature { get; set; }
+
+        public string XmlOriginal { get; set; }
 
         #endregion Propriedades
 

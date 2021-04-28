@@ -1276,6 +1276,7 @@ namespace ACBr.Net.NFSe.Providers
                 {
                     nota.IdentificacaoNFSe.Numero = numeroNFSe;
                     nota.IdentificacaoNFSe.Chave = chaveNFSe;
+                    nota.XmlOriginal = compNfse.AsString();
                 }
             }
         }
@@ -1330,6 +1331,7 @@ namespace ACBr.Net.NFSe.Providers
                     nota.IdentificacaoNFSe.Numero = numeroNFSe;
                     nota.IdentificacaoNFSe.Chave = chaveNFSe;
                     nota.IdentificacaoNFSe.DataEmissao = dataEmissao;
+                    nota.XmlOriginal = compNfse.AsString();
                 }
             }
         }
