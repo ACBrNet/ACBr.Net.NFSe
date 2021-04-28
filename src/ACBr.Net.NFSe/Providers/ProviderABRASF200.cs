@@ -1495,6 +1495,7 @@ namespace ACBr.Net.NFSe.Providers
                 }
             }
 
+            mensagens = xmlRet?.ElementAnyNs(xmlTag);
             mensagens = mensagens?.ElementAnyNs("ListaMensagemRetornoLote");
             if (mensagens == null) return;
             {
