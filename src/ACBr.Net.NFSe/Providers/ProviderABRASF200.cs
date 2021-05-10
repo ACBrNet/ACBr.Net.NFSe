@@ -534,19 +534,21 @@ namespace ACBr.Net.NFSe.Providers
 
         protected virtual XElement WriteTomadorRps(NotaServico nota)
         {
-            if (nota.Tomador.CpfCnpj.IsEmpty()) return null;
-
             var tomador = new XElement("Tomador");
 
-            var ideTomador = new XElement("IdentificacaoTomador");
-            tomador.Add(ideTomador);
+            if (!nota.Tomador.CpfCnpj.IsEmpty())
+            {
+                var ideTomador = new XElement("IdentificacaoTomador");
+                tomador.Add(ideTomador);
 
-            var cpfCnpjTomador = new XElement("CpfCnpj");
-            ideTomador.Add(cpfCnpjTomador);
+                var cpfCnpjTomador = new XElement("CpfCnpj");
+                ideTomador.Add(cpfCnpjTomador);
 
-            cpfCnpjTomador.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Tomador.CpfCnpj));
+                cpfCnpjTomador.AddChild(AdicionarTagCNPJCPF("", "Cpf", "Cnpj", nota.Tomador.CpfCnpj));
 
-            ideTomador.AddChild(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipal", 1, 15, Ocorrencia.NaoObrigatoria, nota.Tomador.InscricaoMunicipal));
+                ideTomador.AddChild(AdicionarTag(TipoCampo.Str, "", "InscricaoMunicipal", 1, 15,
+                    Ocorrencia.NaoObrigatoria, nota.Tomador.InscricaoMunicipal));
+            }
 
             tomador.AddChild(AdicionarTag(TipoCampo.Str, "", "RazaoSocial", 1, 115, Ocorrencia.NaoObrigatoria, nota.Tomador.RazaoSocial));
 

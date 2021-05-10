@@ -123,12 +123,12 @@ namespace ACBr.Net.NFSe.DANFSe.FastReport.OpenSource
                 var rPage = report.PreparedPages.GetPage(page);
                 args.PageSettings.Landscape = rPage.Landscape;
                 args.PageSettings.Margins = new Margins((int)(scaleFactor * rPage.LeftMargin * Units.HundrethsOfInch),
-                    (int)(scaleFactor * rPage.RightMargin * Units.HundrethsOfInch),
-                    (int)(scaleFactor * rPage.TopMargin * Units.HundrethsOfInch),
-                    (int)(scaleFactor * rPage.BottomMargin * Units.HundrethsOfInch));
+                                                        (int)(scaleFactor * rPage.RightMargin * Units.HundrethsOfInch),
+                                                        (int)(scaleFactor * rPage.TopMargin * Units.HundrethsOfInch),
+                                                        (int)(scaleFactor * rPage.BottomMargin * Units.HundrethsOfInch));
 
                 args.PageSettings.PaperSize = new PaperSize("Custom", (int)(ExportUtils.GetPageWidth(rPage) * scaleFactor * Units.HundrethsOfInch),
-                    (int)(ExportUtils.GetPageHeight(rPage) * scaleFactor * Units.HundrethsOfInch));
+                                                                      (int)(ExportUtils.GetPageHeight(rPage) * scaleFactor * Units.HundrethsOfInch));
             };
 
             doc.PrintPage += (sender, args) =>

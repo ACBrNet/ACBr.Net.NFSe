@@ -35,6 +35,7 @@ using ACBr.Net.NFSe.Configuracao;
 using System.IO;
 using System.Text;
 using System.Xml.Linq;
+using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Nota
@@ -86,6 +87,7 @@ namespace ACBr.Net.NFSe.Nota
             Guard.Against<ACBrException>(config?.Parent?.provider == null, "ERRO: Nenhuma cidade informada.");
 
             var nota = config?.Parent?.provider.LoadXml(xml, encoding);
+            nota.XmlOriginal = xml;
             Add(nota);
             return nota;
         }
@@ -100,6 +102,11 @@ namespace ACBr.Net.NFSe.Nota
             Guard.Against<ACBrException>(config?.Parent?.provider == null, "ERRO: Nenhuma cidade informada.");
 
             var nota = config?.Parent?.provider.LoadXml(stream);
+
+            stream.Position = 0;
+            using (var sr = new StreamReader(stream))
+                nota.XmlOriginal = sr.ReadToEnd();
+
             Add(nota);
             return nota;
         }
@@ -114,6 +121,7 @@ namespace ACBr.Net.NFSe.Nota
             Guard.Against<ACBrException>(config?.Parent?.provider == null, "ERRO: Nenhuma cidade informada.");
 
             var nota = config?.Parent?.provider.LoadXml(xml);
+            nota.XmlOriginal = xml.AsString();
             Add(nota);
             return nota;
         }
