@@ -88,7 +88,7 @@
 
   <ItemGroup>
     <PackageReference Include="ACBr.Net.Core" Version="1.2.5" />
-    <PackageReference Include="ACBr.Net.DFe.Core" Version="1.2.8.3" />
+    <PackageReference Include="ACBr.Net.DFe.Core" Version="1.2.8.4" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

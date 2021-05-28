@@ -58,8 +58,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FastReport.OpenSource" Version="2021.2.11" />
-    <PackageReference Include="FastReport.OpenSource.Export.PdfSimple" Version="2021.2.0" />
+    <PackageReference Include="FastReport.OpenSource" Version="2021.3.1" />
+    <PackageReference Include="FastReport.OpenSource.Export.PdfSimple" Version="2021.3.1" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
