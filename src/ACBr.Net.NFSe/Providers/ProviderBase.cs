@@ -1143,17 +1143,22 @@ namespace ACBr.Net.NFSe.Providers
         /// <returns>System.String.</returns>
         public string GetUrl(TipoUrl url)
         {
+            string ret;
             switch (Configuracoes.WebServices.Ambiente)
             {
                 case DFeTipoAmbiente.Producao:
-                    return Municipio.UrlProducao[url];
+                    ret = Municipio.UrlProducao[url];
+                    break;
 
                 case DFeTipoAmbiente.Homologacao:
-                    return Municipio.UrlHomologacao[url];
+                    ret = Municipio.UrlHomologacao[url];
+                    break;
 
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            return ret.Replace("?wsdl", "");
         }
 
         /// <summary>
