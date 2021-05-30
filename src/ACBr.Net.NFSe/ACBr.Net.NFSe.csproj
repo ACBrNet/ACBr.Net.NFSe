@@ -102,7 +102,6 @@
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <Reference Include="System.Drawing" />
-    <Reference Include="System.ServiceModel" />
   </ItemGroup>
 
   <!-- Itens do pacote nuget -->

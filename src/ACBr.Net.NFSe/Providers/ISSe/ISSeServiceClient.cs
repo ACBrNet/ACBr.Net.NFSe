@@ -38,7 +38,7 @@ using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class ISSeServiceClient : NFSeSOAP11ServiceClient, IServiceClient
+    internal sealed class ISSeServiceClient : NFSeHttpServiceClient, IServiceClient
     {
         #region Constructors
 
@@ -155,18 +155,18 @@ namespace ACBr.Net.NFSe.Providers
 
         private string Execute(string action, string message, params string[] responseTag)
         {
-            var baseUrl = Endpoint.Address.Uri.GetLeftPart(UriPartial.Authority);
+            var baseUrl = new Uri(Url).GetLeftPart(UriPartial.Authority);
             var soapNs = $"xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" " +
                          $"xmlns:v2=\"{baseUrl}/v2.01\"";
 
             return Execute($"https://nfse-ws.hom-ecity.maringa.pr.gov.br/v2.01#{action}", message, responseTag, soapNs);
         }
 
-        protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
+        protected override string TratarRetorno(XElement xmlDocument, string[] responseTag)
         {
-            var element = xmlDocument.ElementAnyNs(responseTag[0])?.ElementAnyNs("Fault");
+            var element = xmlDocument.ElementAnyNs("Fault");
             if (element == null)
-                return xmlDocument.ElementAnyNs(responseTag[0]).ElementAnyNs(responseTag[1]).ElementAnyNs("return").Value;
+                return xmlDocument.ElementAnyNs("return")?.Value;
 
             var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
             throw new ACBrDFeCommunicationException(exMessage);
