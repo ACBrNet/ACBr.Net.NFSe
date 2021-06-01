@@ -47,6 +47,12 @@ namespace ACBr.Net.NFSe.Providers
         #region Methods
 
         #region Protected Methods
+        
+        protected override void AssinarEnviarSincrono(RetornoEnviar retornoWebservice)
+        {
+            //retornoWebservice.XmlEnvio = XmlSigning.AssinarXmlTodos(retornoWebservice.XmlEnvio, "Rps", "", Certificado); -> nao tem assinatura no RPS para esse provider
+            retornoWebservice.XmlEnvio = DFe.Core.XmlSigning.AssinarXml(retornoWebservice.XmlEnvio, "EnviarLoteRpsSincronoEnvio", "LoteRps", Certificado);
+        }
 
         protected override IServiceClient GetClient(TipoUrl tipo)
         {
