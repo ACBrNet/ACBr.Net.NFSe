@@ -461,7 +461,7 @@ namespace ACBr.Net.NFSe.Demo
             nfSe.RegimeEspecialTributacao = RegimeEspecialTributacao.SimplesNacional;
             nfSe.IncentivadorCultural = NFSeSimNao.Nao;
 
-            nfSe.Servico.ItemListaServico = municipio.Provedor.IsIn(NFSeProvider.Betha) ? "0107" : "01.07";
+            nfSe.Servico.ItemListaServico = municipio.Provedor.IsIn(NFSeProvider.Betha, NFSeProvider.ISSe) ? "0107" : "01.07";
 
             nfSe.Servico.CodigoTributacaoMunicipio = "01.07.00 / 00010700";
             nfSe.Servico.CodigoCnae = "";
