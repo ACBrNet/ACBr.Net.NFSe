@@ -151,16 +151,6 @@ namespace ACBr.Net.NFSe.Providers
 
             sdt.Add(WriteREG20(nota));
 
-            if (
-                nota.Servico.Valores.ValorCofins > 0 ||
-                nota.Servico.Valores.ValorCsll > 0 ||
-                nota.Servico.Valores.ValorInss > 0 ||
-                nota.Servico.Valores.ValorIr > 0 ||
-                nota.Servico.Valores.IssRetido == SituacaoTributaria.Retencao ||
-                nota.Servico.Valores.ValorPis > 0
-            )
-                sdt.Add(WriteREG30(nota));
-
             sdt.Add(WriteREG90(nota));
 
             return xmlDoc.AsString(identado, showDeclaration);
@@ -235,6 +225,16 @@ namespace ACBr.Net.NFSe.Providers
                 reg20Item.AddChild(AdicionarTag(TipoCampo.Str, "", "CpfCnpjTom", 1, 14, Ocorrencia.Obrigatoria, "CONSUMIDOR"));
             }
 
+            if (
+                nota.Servico.Valores.ValorCofins > 0 ||
+                nota.Servico.Valores.ValorCsll > 0 ||
+                nota.Servico.Valores.ValorInss > 0 ||
+                nota.Servico.Valores.ValorIr > 0 ||
+                nota.Servico.Valores.IssRetido == SituacaoTributaria.Retencao ||
+                nota.Servico.Valores.ValorPis > 0
+            )
+                reg20Item.Add(WriteREG30(nota));
+
             return reg20;
         }
 
@@ -290,17 +290,18 @@ namespace ACBr.Net.NFSe.Providers
                 valoresTipo30.Add(nota.Servico.Valores.ValorIr);
             }
 
-            if (nota.Servico.Valores.IssRetido == SituacaoTributaria.Retencao)
-            {
-                var reg30Item = new XElement("Reg30Item");
-                reg30.AddChild(reg30Item);
+            //Não entendi ao certo, pois no manual fala isso, porém, olhando exemplos de clientes, esta tag não vai
+            //if (nota.Servico.Valores.IssRetido == SituacaoTributaria.Retencao)
+            //{
+            //    var reg30Item = new XElement("Reg30Item");
+            //    reg30.AddChild(reg30Item);
 
-                reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoSigla", 1, 10, Ocorrencia.Obrigatoria, "ISS"));
-                reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoAliquota", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.AliquotaInss.ToString("##0.00")));
-                reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoValor", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorIssRetido.ToString("##0.00")));
+            //    reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoSigla", 1, 10, Ocorrencia.Obrigatoria, "ISS"));
+            //    reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoAliquota", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.Aliquota.ToString("##0.00")));
+            //    reg30Item.AddChild(AdicionarTag(TipoCampo.Str, "", "TributoValor", 0, 0, Ocorrencia.Obrigatoria, nota.Servico.Valores.ValorIssRetido.ToString("##0.00")));
 
-                valoresTipo30.Add(nota.Servico.Valores.ValorIssRetido);
-            }
+            //    valoresTipo30.Add(nota.Servico.Valores.ValorIssRetido);
+            //}
 
             if (nota.Servico.Valores.ValorPis > 0)
             {
@@ -397,14 +398,9 @@ namespace ACBr.Net.NFSe.Providers
         {
             // Analisa mensagem de retorno// Analisa mensagem de retorno
             var xmlRet = XDocument.Parse(retornoWebservice.XmlRetorno);
+            var sucesso = true;
 
-            if (!(xmlRet.Root.ElementAnyNs("Sdt_consultaprotocoloout").ElementAnyNs("Retorno")?.GetValue<bool>() ?? false))
-            {
-                MensagemErro(retornoWebservice, xmlRet.Root, "Sdt_consultaprotocoloout");
-                retornoWebservice.Sucesso = false;
-
-                return;
-            }
+            
 
             var xmlElement = xmlRet.Root.ElementAnyNs("Sdt_consultaprotocoloout");
 
@@ -434,6 +430,15 @@ namespace ACBr.Net.NFSe.Providers
 
             retornoWebservice.Lote = 0;
             retornoWebservice.Situacao = situacao;
+
+            if (!(xmlElement.ElementAnyNs("Retorno")?.GetValue<bool>() ?? false))
+            {
+                MensagemErro(retornoWebservice, xmlRet.Root, "Sdt_consultaprotocoloout");
+                retornoWebservice.Sucesso = false;
+
+                return;
+            }
+
             retornoWebservice.Sucesso = true;
         }
 
