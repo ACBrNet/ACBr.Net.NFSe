@@ -268,6 +268,7 @@ namespace ACBr.Net.NFSe.Demo
 
         private void btnImprimirDANFSe_Click(object sender, EventArgs e)
         {
+            GerarRps();
             acbrNFSe.Imprimir();
         }
 
