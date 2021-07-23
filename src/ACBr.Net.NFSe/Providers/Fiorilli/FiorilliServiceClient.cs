@@ -186,7 +186,7 @@ namespace ACBr.Net.NFSe.Providers
         private string Execute(string soapAction, string message, string responseTag)
         {
             var result = ValidarUsernamePassword();
-            if (!result) return "Faltou informar username e/ou password";
+            if (!result) throw new ACBrDFeCommunicationException("Faltou informar username e/ou password");
 
             return Execute(soapAction, message, "", responseTag, "xmlns:ws=\"http://ws.issweb.fiorilli.com.br/\"");
         }
