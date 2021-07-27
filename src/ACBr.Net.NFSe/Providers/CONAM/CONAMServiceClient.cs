@@ -154,9 +154,17 @@ namespace ACBr.Net.NFSe.Providers
 
         private string Execute(string message, string responseTag)
         {
+            var result = ValidarUsernamePassword();
+            if (!result) throw new DFe.Core.ACBrDFeCommunicationException("Faltou informar username e/ou password");
+
             return Execute("", message, "", responseTag);
         }
 
+        private bool ValidarUsernamePassword()
+        {
+            return !string.IsNullOrEmpty(Provider.Configuracoes.WebServices.Usuario) && !string.IsNullOrEmpty(Provider.Configuracoes.WebServices.Senha);
+        }
+        
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
             return xmlDocument.ElementAnyNs(responseTag[0]).ToString();
