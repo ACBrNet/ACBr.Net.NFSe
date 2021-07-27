@@ -186,8 +186,16 @@ namespace ACBr.Net.NFSe.Providers
 
         private string Execute(string soapAction, string message, string responseTag)
         {
+            var result = ValidarUsernamePassword();
+            if (!result) throw new ACBrDFeCommunicationException("Faltou informar username e/ou password");
+
             return Execute(soapAction, message, "", responseTag, "xmlns:sis=\"http://www.sistema.com.br/Sistema.Ws.Nfse\"",
                                                                  "xmlns:sis1=\"http://www.sistema.com.br/Sistema.Ws.Nfse.Cn\"");
+        }
+        
+        private bool ValidarUsernamePassword()
+        {
+            return !string.IsNullOrEmpty(Provider.Configuracoes.WebServices.Usuario) && !string.IsNullOrEmpty(Provider.Configuracoes.WebServices.Senha);
         }
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
