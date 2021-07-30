@@ -6,7 +6,7 @@
 // Last Modified By : Felipe Silveira (Transis Software)
 // Last Modified On : 07-30-2021
 // ***********************************************************************
-// <copyright file="ProviderBetha2.cs" company="ACBr.Net">
+// <copyright file="ProviderSpeedGov.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -33,7 +33,7 @@ using ACBr.Net.NFSe.Configuracao;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class ProviderSpeedGov : ProviderABRASF202
+    internal sealed class ProviderSpeedGov : ProviderABRASF
     {
         #region Constructors
 
