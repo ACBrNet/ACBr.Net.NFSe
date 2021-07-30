@@ -32,7 +32,7 @@
       - Goiânia.
       - NFe Cidades (GovDigital).
       - ISSe.
-      - Porto Alegre (Em Teste).      
+      - Porto Alegre (Em Teste).
       - IIS Net (Em Teste).
       - Abaco (Em Teste).
       - Betha v1 (Em Teste).
@@ -41,7 +41,8 @@
       - Pronim v2 (Em Teste).
       - Vitoria (Em Testes).
       - DBSeller (Em Teste).
-</Description>
+      - SpeedGov (Em Teste).
+    </Description>
     <NeutralLanguage>pt-BR</NeutralLanguage>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <AssemblyVersion>1.5.1.0</AssemblyVersion>
@@ -194,6 +195,10 @@
       <Pack>True</Pack>
       <PackagePath>content\Schemas\SimplISS</PackagePath>
     </None>
+    <None Include="Schemas\SpeedGov\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\SpeedGov</PackagePath>
+    </None>
     <None Include="Schemas\SmarAPDABRASF\*.*">
       <Pack>True</Pack>
       <PackagePath>content\Schemas\SmarAPDABRASF</PackagePath>
@@ -296,6 +301,58 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\WebISS\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Providers\SpeedGov\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Schemas\SpeedGov\cabecalho_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\cancelar_nfse_envio_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\cancelar_nfse_resposta_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\consultar_lote_rps_envio_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\consultar_lote_rps_resposta_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\consultar_nfse_envio_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\consultar_nfse_resposta_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\consultar_nfse_rps_envio_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\consultar_nfse_rps_resposta_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\consultar_situacao_lote_rps_envio_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\consultar_situacao_lote_rps_resposta_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\enviar_lote_rps_envio_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\enviar_lote_rps_resposta_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\tipos_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\xmldsig-core-schema20020212_v1.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
