@@ -6,7 +6,7 @@
 // Last Modified By : Felipe Silveira (Transis Software)
 // Last Modified On : 07-30-2021
 // ***********************************************************************
-// <copyright file="IBetha2Service.cs" company="ACBr.Net">
+// <copyright file="SpeedGovServiceClient.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -54,14 +54,14 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<nfse:RecepcionarLoteRps>");
             message.Append("<header>");
-            message.AppendCData(cabec);
+            message.Append(cabec);
             message.Append("</header>");
             message.Append("<parameters>");
-            message.AppendCData(msg);
+            message.Append(msg);
             message.Append("</parameters>");
             message.Append("</nfse:RecepcionarLoteRps>");
 
-            return Execute("RecepcionarLoteRpsEnvio", "RecepcionarLoteRpsResponse", message.ToString());
+            return Execute("*", "RecepcionarLoteRpsResponse", message.ToString());
         }
 
         public string EnviarSincrono(string cabec, string msg)
@@ -86,7 +86,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</parameters>");
             message.Append("</nfse:ConsultarLoteRps>");
 
-            return Execute("ConsultarLoteRpsEnvio", "ConsultarLoteRpsResponse", message.ToString());
+            return Execute("*", "ConsultarLoteRpsResponse", message.ToString());
         }
 
         public string ConsultarSequencialRps(string cabec, string msg)
@@ -106,7 +106,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</parameters>");
             message.Append("</nfse:ConsultarNfsePorRps>");
 
-            return Execute("ConsultarNfseRpsEnvio", "ConsultarNfsePorRpsResponse", message.ToString());
+            return Execute("*", "ConsultarNfsePorRpsResponse", message.ToString());
         }
 
         public string ConsultarNFSe(string cabec, string msg)
@@ -121,7 +121,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</parameters>");
             message.Append("</nfse:ConsultarNfse>");
 
-            return Execute("ConsultarNfseServicoPrestadoEnvio", "ConsultarNfseServicoPrestadoResponse", message.ToString());
+            return Execute("*", "ConsultarNfseServicoPrestadoResponse", message.ToString());
         }
 
         public string CancelarNFSe(string cabec, string msg)
@@ -136,7 +136,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</parameters>");
             message.Append("</nfse:CancelarNfse>");
 
-            return Execute("CancelarNfseEnvio", "CancelarNfseResponse", message.ToString());
+            return Execute("*", "CancelarNfseResponse", message.ToString());
         }
 
         public string CancelarNFSeLote(string cabec, string msg)
