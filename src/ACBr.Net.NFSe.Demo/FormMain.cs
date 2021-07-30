@@ -658,6 +658,7 @@ namespace ACBr.Net.NFSe.Demo
             }
 
             wbbDados.LoadXml(retorno.XmlEnvio);
+            wbbEnvelopeEnvio.LoadXml(retorno.EnvelopeEnvio);
             wbbResposta.LoadXml(retorno.XmlRetorno);
             wbbRetorno.LoadXml(retorno.EnvelopeRetorno);
         }
