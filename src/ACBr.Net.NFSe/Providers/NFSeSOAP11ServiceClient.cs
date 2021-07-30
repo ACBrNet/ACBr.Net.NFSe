@@ -71,7 +71,9 @@ namespace ACBr.Net.NFSe.Providers
             envelope.Append("</soapenv:Body>");
             envelope.Append("</soapenv:Envelope>");
 
-            var request = Message.CreateMessage(XmlReader.Create(new StringReader(envelope.ToString())), int.MaxValue, Endpoint.Binding.MessageVersion);
+            //Separei em uma variável para conseguir visualizar o envelope em formato XML durante a depuração
+            string EnvelopeString = envelope.ToString();
+            var request = Message.CreateMessage(XmlReader.Create(new StringReader(EnvelopeString)), int.MaxValue, Endpoint.Binding.MessageVersion);
 
             //Define a action no Header por ser SOAP 1.1
             var requestMessage = new HttpRequestMessageProperty();
