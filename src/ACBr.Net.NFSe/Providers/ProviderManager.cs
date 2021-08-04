@@ -80,7 +80,8 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.Conam, typeof(ProviderCONAM)},
                 {NFSeProvider.Goiania, typeof(ProviderGoiania)},
                 {NFSeProvider.ISSe, typeof(ProviderISSe)},
-                {NFSeProvider.SimplISS, typeof(ProviderSimplISS)}
+                {NFSeProvider.SimplISS, typeof(ProviderSimplISS)},
+                {NFSeProvider.SpeedGov, typeof(ProviderSpeedGov)}
             };
 
             Load();

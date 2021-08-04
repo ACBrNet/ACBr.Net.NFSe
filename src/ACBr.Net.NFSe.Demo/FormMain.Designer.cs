@@ -143,6 +143,8 @@
             this.cmhProvedor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tabPageEnvelopeEnvio = new System.Windows.Forms.TabPage();
+            this.wbbEnvelopeEnvio = new System.Windows.Forms.WebBrowser();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -166,6 +168,7 @@
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.tabPageEnvelopeEnvio.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -434,6 +437,7 @@
             this.tabControl3.Controls.Add(this.tabPage11);
             this.tabControl3.Controls.Add(this.tabPage12);
             this.tabControl3.Controls.Add(this.tabPage13);
+            this.tabControl3.Controls.Add(this.tabPageEnvelopeEnvio);
             this.tabControl3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tabControl3.Location = new System.Drawing.Point(286, 173);
             this.tabControl3.Name = "tabControl3";
@@ -1328,6 +1332,25 @@
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // tabPageEnvelopeEnvio
+            // 
+            this.tabPageEnvelopeEnvio.Controls.Add(this.wbbEnvelopeEnvio);
+            this.tabPageEnvelopeEnvio.Location = new System.Drawing.Point(4, 22);
+            this.tabPageEnvelopeEnvio.Name = "tabPageEnvelopeEnvio";
+            this.tabPageEnvelopeEnvio.Size = new System.Drawing.Size(555, 261);
+            this.tabPageEnvelopeEnvio.TabIndex = 6;
+            this.tabPageEnvelopeEnvio.Text = "Envelope Envio";
+            this.tabPageEnvelopeEnvio.UseVisualStyleBackColor = true;
+            // 
+            // wbbEnvelopeEnvio
+            // 
+            this.wbbEnvelopeEnvio.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.wbbEnvelopeEnvio.Location = new System.Drawing.Point(0, 0);
+            this.wbbEnvelopeEnvio.MinimumSize = new System.Drawing.Size(20, 20);
+            this.wbbEnvelopeEnvio.Name = "wbbEnvelopeEnvio";
+            this.wbbEnvelopeEnvio.Size = new System.Drawing.Size(555, 261);
+            this.wbbEnvelopeEnvio.TabIndex = 3;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1370,6 +1393,7 @@
             this.tabPage3.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.tabPageEnvelopeEnvio.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1491,6 +1515,8 @@
         private System.Windows.Forms.Button btnDesignDANFSe;
         private System.Windows.Forms.Button btnImprimirDANFSe;
         private System.Windows.Forms.Button btnGerarHTML;
+        private System.Windows.Forms.TabPage tabPageEnvelopeEnvio;
+        private System.Windows.Forms.WebBrowser wbbEnvelopeEnvio;
     }
 }
 
