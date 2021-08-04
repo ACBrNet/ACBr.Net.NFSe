@@ -454,7 +454,7 @@ namespace ACBr.Net.NFSe.Demo
             acbrNFSe.NotasServico.Clear();
             var nfSe = acbrNFSe.NotasServico.AddNew();
             nfSe.IdentificacaoRps.Numero = "1";
-            nfSe.IdentificacaoRps.Serie = "1";
+            nfSe.IdentificacaoRps.Serie = municipio.Provedor.IsIn(NFSeProvider.Curitiba) ? "F" : "1";
             nfSe.IdentificacaoRps.Tipo = TipoRps.RPS;
             nfSe.IdentificacaoRps.DataEmissao = DateTime.Now;
             nfSe.Situacao = SituacaoNFSeRps.Normal;
@@ -462,11 +462,11 @@ namespace ACBr.Net.NFSe.Demo
             nfSe.RegimeEspecialTributacao = RegimeEspecialTributacao.SimplesNacional;
             nfSe.IncentivadorCultural = NFSeSimNao.Nao;
 
-            nfSe.Servico.ItemListaServico = municipio.Provedor.IsIn(NFSeProvider.Betha, NFSeProvider.ISSe) ? "0107" : "01.07";
+            nfSe.Servico.ItemListaServico = municipio.Provedor.IsIn(NFSeProvider.Betha, NFSeProvider.ISSe, NFSeProvider.Curitiba) ? "0107" : "01.07";
 
             nfSe.Servico.CodigoTributacaoMunicipio = "01.07.00 / 00010700";
             nfSe.Servico.CodigoCnae = "";
-            nfSe.Servico.CodigoMunicipio = municipio.Codigo;
+            nfSe.Servico.CodigoMunicipio = municipio.Codigo;            
             nfSe.Servico.Discriminacao = "MANUTENCAO TÉCNICA / VOCÊ PAGOU APROXIMADAMENTE R$ 41,15 DE TRIBUTOS FEDERAIS, R$ 8,26 DE TRIBUTOS MUNICIPAIS, R$ 256,57 PELOS PRODUTOS/SERVICOS, FONTE: IBPT.";
 
             nfSe.Servico.Valores.ValorServicos = 100;
@@ -820,5 +820,6 @@ namespace ACBr.Net.NFSe.Demo
         }
 
         #endregion Methods
+
     }
 }
