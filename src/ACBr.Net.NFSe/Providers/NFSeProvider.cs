@@ -46,7 +46,7 @@ namespace ACBr.Net.NFSe.Providers
 
         Coplan = 3,
 
-        Curitiba = 25,
+        Curitiba = 26,
 
         DBSeller = 19,
 
