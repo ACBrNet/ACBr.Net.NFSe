@@ -79,10 +79,10 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<nfse:ConsultarLoteRps>");
             message.Append("<header>");
-            message.AppendCData(cabec);
+            message.Append(cabec);
             message.Append("</header>");
             message.Append("<parameters>");
-            message.AppendCData(msg);
+            message.Append(msg);
             message.Append("</parameters>");
             message.Append("</nfse:ConsultarLoteRps>");
 
@@ -99,10 +99,10 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<nfse:ConsultarNfsePorRps>");
             message.Append("<header>");
-            message.AppendCData(cabec);
+            message.Append(cabec);
             message.Append("</header>");
             message.Append("<parameters>");
-            message.AppendCData(msg);
+            message.Append(msg);
             message.Append("</parameters>");
             message.Append("</nfse:ConsultarNfsePorRps>");
 
@@ -114,10 +114,10 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<nfse:ConsultarNfse>");
             message.Append("<header>");
-            message.AppendCData(cabec);
+            message.Append(cabec);
             message.Append("</header>");
             message.Append("<parameters>");
-            message.AppendCData(msg);
+            message.Append(msg);
             message.Append("</parameters>");
             message.Append("</nfse:ConsultarNfse>");
 
@@ -129,10 +129,10 @@ namespace ACBr.Net.NFSe.Providers
             var message = new StringBuilder();
             message.Append("<nfse:CancelarNfse>");
             message.Append("<header>");
-            message.AppendCData(cabec);
+            message.Append(cabec);
             message.Append("</header>");
             message.Append("<parameters>");
-            message.AppendCData(msg);
+            message.Append(msg);
             message.Append("</parameters>");
             message.Append("</nfse:CancelarNfse>");
 
@@ -151,7 +151,7 @@ namespace ACBr.Net.NFSe.Providers
 
         private string Execute(string soapAction, string responseTag, string message)
         {
-            return Execute(soapAction, message, "", responseTag, "xmlns:nfse=\"http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd");
+            return Execute(soapAction, message, "", responseTag, "xmlns:nfse=\"http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd\"");
         }
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
