@@ -36,3 +36,4 @@ Biblioteca para emissão e trasmissão de NFSe.
 - Vitoria (Em Testes).
 - DBSeller (Em Testes).
 - SpeedGov (Em Testes).
+- Curitiba (Em Testes).
