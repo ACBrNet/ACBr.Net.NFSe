@@ -54,18 +54,20 @@
             this.btnDesignDANFSe = new System.Windows.Forms.Button();
             this.btnImprimirDANFSe = new System.Windows.Forms.Button();
             this.tabControl3 = new System.Windows.Forms.TabControl();
-            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.tabPageRespostas = new System.Windows.Forms.TabPage();
             this.rtLogResposta = new System.Windows.Forms.RichTextBox();
-            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.tabPageXmlResposta = new System.Windows.Forms.TabPage();
             this.wbbResposta = new System.Windows.Forms.WebBrowser();
-            this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.tabPageLog = new System.Windows.Forms.TabPage();
             this.rtbLog = new System.Windows.Forms.RichTextBox();
-            this.tabPage11 = new System.Windows.Forms.TabPage();
+            this.tabPageNFSe = new System.Windows.Forms.TabPage();
             this.wbbNFSe = new System.Windows.Forms.WebBrowser();
-            this.tabPage12 = new System.Windows.Forms.TabPage();
+            this.tabPageEnvelopeRetorno = new System.Windows.Forms.TabPage();
             this.wbbRetorno = new System.Windows.Forms.WebBrowser();
-            this.tabPage13 = new System.Windows.Forms.TabPage();
+            this.tabPageXmlEnvio = new System.Windows.Forms.TabPage();
             this.wbbDados = new System.Windows.Forms.WebBrowser();
+            this.tabPageEnvelopeEnvio = new System.Windows.Forms.TabPage();
+            this.wbbEnvelopeEnvio = new System.Windows.Forms.WebBrowser();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnSalvarConfig = new System.Windows.Forms.Button();
             this.tbcConfiguracoes = new System.Windows.Forms.TabControl();
@@ -143,8 +145,6 @@
             this.cmhProvedor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.tabPageEnvelopeEnvio = new System.Windows.Forms.TabPage();
-            this.wbbEnvelopeEnvio = new System.Windows.Forms.WebBrowser();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -153,12 +153,13 @@
             this.tabPage16.SuspendLayout();
             this.tabPage17.SuspendLayout();
             this.tabControl3.SuspendLayout();
-            this.tabPage8.SuspendLayout();
-            this.tabPage9.SuspendLayout();
-            this.tabPage10.SuspendLayout();
-            this.tabPage11.SuspendLayout();
-            this.tabPage12.SuspendLayout();
-            this.tabPage13.SuspendLayout();
+            this.tabPageRespostas.SuspendLayout();
+            this.tabPageXmlResposta.SuspendLayout();
+            this.tabPageLog.SuspendLayout();
+            this.tabPageNFSe.SuspendLayout();
+            this.tabPageEnvelopeRetorno.SuspendLayout();
+            this.tabPageXmlEnvio.SuspendLayout();
+            this.tabPageEnvelopeEnvio.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tbcConfiguracoes.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -168,7 +169,6 @@
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            this.tabPageEnvelopeEnvio.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -431,13 +431,13 @@
             // 
             // tabControl3
             // 
-            this.tabControl3.Controls.Add(this.tabPage8);
-            this.tabControl3.Controls.Add(this.tabPage9);
-            this.tabControl3.Controls.Add(this.tabPage10);
-            this.tabControl3.Controls.Add(this.tabPage11);
-            this.tabControl3.Controls.Add(this.tabPage12);
-            this.tabControl3.Controls.Add(this.tabPage13);
+            this.tabControl3.Controls.Add(this.tabPageRespostas);
+            this.tabControl3.Controls.Add(this.tabPageNFSe);
+            this.tabControl3.Controls.Add(this.tabPageXmlEnvio);
+            this.tabControl3.Controls.Add(this.tabPageXmlResposta);
             this.tabControl3.Controls.Add(this.tabPageEnvelopeEnvio);
+            this.tabControl3.Controls.Add(this.tabPageEnvelopeRetorno);
+            this.tabControl3.Controls.Add(this.tabPageLog);
             this.tabControl3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tabControl3.Location = new System.Drawing.Point(286, 173);
             this.tabControl3.Name = "tabControl3";
@@ -445,16 +445,16 @@
             this.tabControl3.Size = new System.Drawing.Size(563, 287);
             this.tabControl3.TabIndex = 2;
             // 
-            // tabPage8
+            // tabPageRespostas
             // 
-            this.tabPage8.Controls.Add(this.rtLogResposta);
-            this.tabPage8.Location = new System.Drawing.Point(4, 22);
-            this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(555, 261);
-            this.tabPage8.TabIndex = 0;
-            this.tabPage8.Text = "Respostas";
-            this.tabPage8.UseVisualStyleBackColor = true;
+            this.tabPageRespostas.Controls.Add(this.rtLogResposta);
+            this.tabPageRespostas.Location = new System.Drawing.Point(4, 22);
+            this.tabPageRespostas.Name = "tabPageRespostas";
+            this.tabPageRespostas.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageRespostas.Size = new System.Drawing.Size(555, 261);
+            this.tabPageRespostas.TabIndex = 0;
+            this.tabPageRespostas.Text = "Respostas";
+            this.tabPageRespostas.UseVisualStyleBackColor = true;
             // 
             // rtLogResposta
             // 
@@ -467,16 +467,16 @@
             this.rtLogResposta.TabIndex = 1;
             this.rtLogResposta.Text = "";
             // 
-            // tabPage9
+            // tabPageXmlResposta
             // 
-            this.tabPage9.Controls.Add(this.wbbResposta);
-            this.tabPage9.Location = new System.Drawing.Point(4, 22);
-            this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage9.Size = new System.Drawing.Size(555, 261);
-            this.tabPage9.TabIndex = 1;
-            this.tabPage9.Text = "Xml Resposta";
-            this.tabPage9.UseVisualStyleBackColor = true;
+            this.tabPageXmlResposta.Controls.Add(this.wbbResposta);
+            this.tabPageXmlResposta.Location = new System.Drawing.Point(4, 22);
+            this.tabPageXmlResposta.Name = "tabPageXmlResposta";
+            this.tabPageXmlResposta.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageXmlResposta.Size = new System.Drawing.Size(555, 261);
+            this.tabPageXmlResposta.TabIndex = 1;
+            this.tabPageXmlResposta.Text = "Xml Resposta";
+            this.tabPageXmlResposta.UseVisualStyleBackColor = true;
             // 
             // wbbResposta
             // 
@@ -487,21 +487,23 @@
             this.wbbResposta.Size = new System.Drawing.Size(549, 255);
             this.wbbResposta.TabIndex = 1;
             // 
-            // tabPage10
+            // tabPageLog
             // 
-            this.tabPage10.Controls.Add(this.rtbLog);
-            this.tabPage10.Location = new System.Drawing.Point(4, 22);
-            this.tabPage10.Name = "tabPage10";
-            this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage10.Size = new System.Drawing.Size(555, 261);
-            this.tabPage10.TabIndex = 2;
-            this.tabPage10.Text = "Log";
-            this.tabPage10.UseVisualStyleBackColor = true;
+            this.tabPageLog.Controls.Add(this.rtbLog);
+            this.tabPageLog.Location = new System.Drawing.Point(4, 22);
+            this.tabPageLog.Name = "tabPageLog";
+            this.tabPageLog.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageLog.Size = new System.Drawing.Size(555, 261);
+            this.tabPageLog.TabIndex = 2;
+            this.tabPageLog.Text = "Log";
+            this.tabPageLog.UseVisualStyleBackColor = true;
             // 
             // rtbLog
             // 
+            this.rtbLog.BackColor = System.Drawing.Color.White;
             this.rtbLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtbLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbLog.ForeColor = System.Drawing.SystemColors.InfoText;
             this.rtbLog.Location = new System.Drawing.Point(3, 3);
             this.rtbLog.Name = "rtbLog";
             this.rtbLog.ReadOnly = true;
@@ -509,16 +511,16 @@
             this.rtbLog.TabIndex = 0;
             this.rtbLog.Text = "";
             // 
-            // tabPage11
+            // tabPageNFSe
             // 
-            this.tabPage11.Controls.Add(this.wbbNFSe);
-            this.tabPage11.Location = new System.Drawing.Point(4, 22);
-            this.tabPage11.Name = "tabPage11";
-            this.tabPage11.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage11.Size = new System.Drawing.Size(555, 261);
-            this.tabPage11.TabIndex = 3;
-            this.tabPage11.Text = "NFSe";
-            this.tabPage11.UseVisualStyleBackColor = true;
+            this.tabPageNFSe.Controls.Add(this.wbbNFSe);
+            this.tabPageNFSe.Location = new System.Drawing.Point(4, 22);
+            this.tabPageNFSe.Name = "tabPageNFSe";
+            this.tabPageNFSe.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageNFSe.Size = new System.Drawing.Size(555, 261);
+            this.tabPageNFSe.TabIndex = 3;
+            this.tabPageNFSe.Text = "NFSe";
+            this.tabPageNFSe.UseVisualStyleBackColor = true;
             // 
             // wbbNFSe
             // 
@@ -529,16 +531,16 @@
             this.wbbNFSe.Size = new System.Drawing.Size(549, 255);
             this.wbbNFSe.TabIndex = 2;
             // 
-            // tabPage12
+            // tabPageEnvelopeRetorno
             // 
-            this.tabPage12.Controls.Add(this.wbbRetorno);
-            this.tabPage12.Location = new System.Drawing.Point(4, 22);
-            this.tabPage12.Name = "tabPage12";
-            this.tabPage12.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage12.Size = new System.Drawing.Size(555, 261);
-            this.tabPage12.TabIndex = 4;
-            this.tabPage12.Text = "Retorno Completo WS";
-            this.tabPage12.UseVisualStyleBackColor = true;
+            this.tabPageEnvelopeRetorno.Controls.Add(this.wbbRetorno);
+            this.tabPageEnvelopeRetorno.Location = new System.Drawing.Point(4, 22);
+            this.tabPageEnvelopeRetorno.Name = "tabPageEnvelopeRetorno";
+            this.tabPageEnvelopeRetorno.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageEnvelopeRetorno.Size = new System.Drawing.Size(555, 261);
+            this.tabPageEnvelopeRetorno.TabIndex = 4;
+            this.tabPageEnvelopeRetorno.Text = "Envelope Retorno";
+            this.tabPageEnvelopeRetorno.UseVisualStyleBackColor = true;
             // 
             // wbbRetorno
             // 
@@ -549,16 +551,16 @@
             this.wbbRetorno.Size = new System.Drawing.Size(549, 255);
             this.wbbRetorno.TabIndex = 2;
             // 
-            // tabPage13
+            // tabPageXmlEnvio
             // 
-            this.tabPage13.Controls.Add(this.wbbDados);
-            this.tabPage13.Location = new System.Drawing.Point(4, 22);
-            this.tabPage13.Name = "tabPage13";
-            this.tabPage13.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage13.Size = new System.Drawing.Size(555, 261);
-            this.tabPage13.TabIndex = 5;
-            this.tabPage13.Text = "Dados";
-            this.tabPage13.UseVisualStyleBackColor = true;
+            this.tabPageXmlEnvio.Controls.Add(this.wbbDados);
+            this.tabPageXmlEnvio.Location = new System.Drawing.Point(4, 22);
+            this.tabPageXmlEnvio.Name = "tabPageXmlEnvio";
+            this.tabPageXmlEnvio.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageXmlEnvio.Size = new System.Drawing.Size(555, 261);
+            this.tabPageXmlEnvio.TabIndex = 5;
+            this.tabPageXmlEnvio.Text = "Xml Envio";
+            this.tabPageXmlEnvio.UseVisualStyleBackColor = true;
             // 
             // wbbDados
             // 
@@ -568,6 +570,25 @@
             this.wbbDados.Name = "wbbDados";
             this.wbbDados.Size = new System.Drawing.Size(549, 255);
             this.wbbDados.TabIndex = 2;
+            // 
+            // tabPageEnvelopeEnvio
+            // 
+            this.tabPageEnvelopeEnvio.Controls.Add(this.wbbEnvelopeEnvio);
+            this.tabPageEnvelopeEnvio.Location = new System.Drawing.Point(4, 22);
+            this.tabPageEnvelopeEnvio.Name = "tabPageEnvelopeEnvio";
+            this.tabPageEnvelopeEnvio.Size = new System.Drawing.Size(555, 261);
+            this.tabPageEnvelopeEnvio.TabIndex = 6;
+            this.tabPageEnvelopeEnvio.Text = "Envelope Envio";
+            this.tabPageEnvelopeEnvio.UseVisualStyleBackColor = true;
+            // 
+            // wbbEnvelopeEnvio
+            // 
+            this.wbbEnvelopeEnvio.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.wbbEnvelopeEnvio.Location = new System.Drawing.Point(0, 0);
+            this.wbbEnvelopeEnvio.MinimumSize = new System.Drawing.Size(20, 20);
+            this.wbbEnvelopeEnvio.Name = "wbbEnvelopeEnvio";
+            this.wbbEnvelopeEnvio.Size = new System.Drawing.Size(555, 261);
+            this.wbbEnvelopeEnvio.TabIndex = 3;
             // 
             // groupBox1
             // 
@@ -1332,25 +1353,6 @@
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // tabPageEnvelopeEnvio
-            // 
-            this.tabPageEnvelopeEnvio.Controls.Add(this.wbbEnvelopeEnvio);
-            this.tabPageEnvelopeEnvio.Location = new System.Drawing.Point(4, 22);
-            this.tabPageEnvelopeEnvio.Name = "tabPageEnvelopeEnvio";
-            this.tabPageEnvelopeEnvio.Size = new System.Drawing.Size(555, 261);
-            this.tabPageEnvelopeEnvio.TabIndex = 6;
-            this.tabPageEnvelopeEnvio.Text = "Envelope Envio";
-            this.tabPageEnvelopeEnvio.UseVisualStyleBackColor = true;
-            // 
-            // wbbEnvelopeEnvio
-            // 
-            this.wbbEnvelopeEnvio.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.wbbEnvelopeEnvio.Location = new System.Drawing.Point(0, 0);
-            this.wbbEnvelopeEnvio.MinimumSize = new System.Drawing.Size(20, 20);
-            this.wbbEnvelopeEnvio.Name = "wbbEnvelopeEnvio";
-            this.wbbEnvelopeEnvio.Size = new System.Drawing.Size(555, 261);
-            this.wbbEnvelopeEnvio.TabIndex = 3;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1372,12 +1374,13 @@
             this.tabPage16.ResumeLayout(false);
             this.tabPage17.ResumeLayout(false);
             this.tabControl3.ResumeLayout(false);
-            this.tabPage8.ResumeLayout(false);
-            this.tabPage9.ResumeLayout(false);
-            this.tabPage10.ResumeLayout(false);
-            this.tabPage11.ResumeLayout(false);
-            this.tabPage12.ResumeLayout(false);
-            this.tabPage13.ResumeLayout(false);
+            this.tabPageRespostas.ResumeLayout(false);
+            this.tabPageXmlResposta.ResumeLayout(false);
+            this.tabPageLog.ResumeLayout(false);
+            this.tabPageNFSe.ResumeLayout(false);
+            this.tabPageEnvelopeRetorno.ResumeLayout(false);
+            this.tabPageXmlEnvio.ResumeLayout(false);
+            this.tabPageEnvelopeEnvio.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.tbcConfiguracoes.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
@@ -1393,7 +1396,6 @@
             this.tabPage3.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.tabPageEnvelopeEnvio.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1405,12 +1407,12 @@
 		private System.Windows.Forms.TabPage tabPage1;
 		private System.Windows.Forms.TabPage tabPage3;
 		private System.Windows.Forms.TabControl tabControl3;
-		private System.Windows.Forms.TabPage tabPage8;
-		private System.Windows.Forms.TabPage tabPage9;
-		private System.Windows.Forms.TabPage tabPage10;
-		private System.Windows.Forms.TabPage tabPage11;
-		private System.Windows.Forms.TabPage tabPage12;
-		private System.Windows.Forms.TabPage tabPage13;
+		private System.Windows.Forms.TabPage tabPageRespostas;
+		private System.Windows.Forms.TabPage tabPageXmlResposta;
+		private System.Windows.Forms.TabPage tabPageLog;
+		private System.Windows.Forms.TabPage tabPageNFSe;
+		private System.Windows.Forms.TabPage tabPageEnvelopeRetorno;
+		private System.Windows.Forms.TabPage tabPageXmlEnvio;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.TabControl tbcConfiguracoes;
 		private System.Windows.Forms.TabPage tabPage2;
