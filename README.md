@@ -1,6 +1,6 @@
 [![Nuget count](http://img.shields.io/nuget/v/ACBr.Net.NFSe.svg)](https://www.nuget.org/packages/ACBr.Net.NFSe/)
 [![Nuget count](http://img.shields.io/nuget/v/ACBr.Net.NFSe.DANFSe.FastReport.OpenSource.svg)](https://www.nuget.org/packages/ACBr.Net.NFSe.DANFSe.FastReport.OpenSource/)
-[![Junte-se ao chat](https://img.shields.io/badge/Channel%20on-Discord-purple.svg)](https://t.me/fastreport_open_source) [![Junte-se ao chat](https://img.shields.io/badge/Chat%20on-Discord-purple.svg)](https://discord.com/invite/brdmJ7Yv6w)
+[![Junte-se ao chat](https://img.shields.io/badge/Chat%20on-Discord-purple.svg)](https://discord.com/invite/brdmJ7Yv6w)
 [![Ajude-nos pelo Padrim https://www.padrim.com.br/acbrnet](https://img.shields.io/badge/Donate-Padrim-red)](https://www.padrim.com.br/acbrnet)
 [![Ajude-nos pelo Apoia-se https://apoia.se/acbrnet](https://img.shields.io/badge/Donate-Apoia--se-red)](https://apoia.se/acbrnet)
 
