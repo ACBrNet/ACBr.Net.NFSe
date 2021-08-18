@@ -29,12 +29,26 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
+using System.Linq;
+using System.Text;
+using System.Xml.Linq;
+using ACBr.Net.Core.Extensions;
+using ACBr.Net.DFe.Core;
+using ACBr.Net.DFe.Core.Serializer;
 using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Nota;
 
 namespace ACBr.Net.NFSe.Providers
 {
     internal sealed class ProviderSpeedGov : ProviderABRASF
     {
+        #region Fields
+
+        private readonly XNamespace p1 = "http://ws.speedgov.com.br/tipos_v1.xsd";
+
+        #endregion Fields
+
         #region Constructors
 
         public ProviderSpeedGov(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
@@ -45,6 +59,56 @@ namespace ACBr.Net.NFSe.Providers
         #endregion Constructors
 
         #region Methods
+
+        #region Services
+
+        protected override void PrepararEnviar(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
+        {
+            if (retornoWebservice.Lote == 0) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Lote não informado." });
+            if (notas.Count == 0) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "RPS não informado." });
+            if (retornoWebservice.Erros.Count > 0) return;
+
+            var xmlLoteRps = new StringBuilder();
+
+            foreach (var nota in notas)
+            {
+                var xmlRps = WriteXmlRps(nota, false, false);
+                xmlLoteRps.Append(xmlRps);
+                GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
+            }
+
+            var xmlLote = new StringBuilder();
+            xmlLote.Append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+            xmlLote.Append("<p:EnviarLoteRpsEnvio xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:p=\"http://ws.speedgov.com.br/enviar_lote_rps_envio_v1.xsd\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://ws.speedgov.com.br/enviar_lote_rps_envio_v1.xsd enviar_lote_rps_envio_v1.xsd\">");
+            xmlLote.Append("<p:LoteRps Id=\"\">");
+            xmlLote.Append($"<NumeroLote>{retornoWebservice.Lote}</NumeroLote>");
+            xmlLote.Append($"<Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>");
+            xmlLote.Append($"<InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
+            xmlLote.Append($"<QuantidadeRps>{notas.Count}</QuantidadeRps>");
+            xmlLote.Append("<ListaRps>");
+            xmlLote.Append(xmlLoteRps);
+            xmlLote.Append("</ListaRps>");
+            xmlLote.Append("</p:LoteRps>");
+            xmlLote.Append("</p:EnviarLoteRpsEnvio>");
+
+            var document = XDocument.Parse(xmlLote.ToString());
+            document.ElementAnyNs("EnviarLoteRpsEnvio").AddAttribute(new XAttribute(XNamespace.Xmlns + "p1", p1));
+            NFSeUtil.ApplyNamespace(document.Root, p1, "LoteRps", "EnviarLoteRpsEnvio");
+
+            retornoWebservice.XmlEnvio = document.AsString();
+        }
+
+        protected override void AssinarEnviar(RetornoEnviar retornoWebservice)
+        {
+            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(retornoWebservice.XmlEnvio, "p:EnviarLoteRpsEnvio", "", Certificado);
+        }
+
+        protected override void PrepararEnviarSincrono(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
+        {
+            throw new NotImplementedException("Função não implementada/suportada neste Provedor !");
+        }
+
+        #endregion Services
 
         #region Protected Methods
 
@@ -57,7 +121,7 @@ namespace ACBr.Net.NFSe.Providers
         {
             var cabecalho = new System.Text.StringBuilder();
             //cabecalho.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            cabecalho.Append("<p:cabecalho versao=\"1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:p=\"http://ws.speedgov.com.br/cabecalho_v1.xsd\" xmlns:p1=\"http://ws.speedgov.com.br/tipos_v1.xsd\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://ws.speedgov.com.br/cabecalho_v1.xsd\">");
+            cabecalho.Append("<p:cabecalho versao=\"1\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:p=\"http://ws.speedgov.com.br/cabecalho_v1.xsd\" xmlns:p1=\"http://ws.speedgov.com.br/tipos_v1.xsd\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://ws.speedgov.com.br/cabecalho_v1.xsd cabecalho_v1.xsd\">");
             cabecalho.Append("<versaoDados>1</versaoDados>");
             cabecalho.Append("</p:cabecalho>");
             return cabecalho.ToString();

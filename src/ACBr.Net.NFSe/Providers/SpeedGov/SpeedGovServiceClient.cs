@@ -53,11 +53,16 @@ namespace ACBr.Net.NFSe.Providers
         {
             var message = new StringBuilder();
             message.Append("<nfse:RecepcionarLoteRps>");
+            message.Append("<!--Optional:-->");
             message.Append("<header>");
-            message.Append(cabec);
+            message.AppendCData("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + cabec);
+            //message.Append("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + cabec);
+            //message.Append(cabec);
             message.Append("</header>");
+            message.Append("<!--Optional:-->");
             message.Append("<parameters>");
-            message.Append(msg);
+            message.AppendCData("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + msg);
+            //message.Append(msg);
             message.Append("</parameters>");
             message.Append("</nfse:RecepcionarLoteRps>");
 
