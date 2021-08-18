@@ -81,7 +81,8 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.Goiania, typeof(ProviderGoiania)},
                 {NFSeProvider.ISSe, typeof(ProviderISSe)},
                 {NFSeProvider.SimplISS, typeof(ProviderSimplISS)},
-                {NFSeProvider.SpeedGov, typeof(ProviderSpeedGov)}
+                {NFSeProvider.SpeedGov, typeof(ProviderSpeedGov)},
+                {NFSeProvider.SystemPro, typeof(ProviderSystemPro)}
             };
 
             Load();
