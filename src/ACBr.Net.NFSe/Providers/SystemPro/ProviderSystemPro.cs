@@ -40,7 +40,7 @@ namespace ACBr.Net.NFSe.Providers
 
         public ProviderSystemPro(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
         {
-            Name = "ISSe";
+            Name = "SystemPro";
         }
 
         #endregion Constructors
