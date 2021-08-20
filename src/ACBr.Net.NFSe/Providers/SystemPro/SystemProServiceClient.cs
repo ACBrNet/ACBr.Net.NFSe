@@ -30,8 +30,11 @@
 // ***********************************************************************
 
 using System;
+using System.IO;
 using System.Security.Cryptography.X509Certificates;
+using System.ServiceModel.Channels;
 using System.Text;
+using System.Xml;
 using System.Xml.Linq;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core;
@@ -56,24 +59,20 @@ namespace ACBr.Net.NFSe.Providers
 
         public string Enviar(string cabec, string msg)
         {
-            var message = new StringBuilder();
-            message.Append("<v2:EnviarLoteRps soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
-            message.Append("<xml xsi:type=\"xsd:string\">");
-            message.AppendEnvio(msg);
-            message.Append("</xml>");
-            message.Append("</v2:EnviarLoteRps>");
-
-            return Execute("EnviarLoteRps", message.ToString(), "EnviarLoteRpsResponse");
+            throw new NotImplementedException();
         }
 
         public string EnviarSincrono(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<v2:EnviarLoteRpsSincrono soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
-            message.Append("<xml xsi:type=\"xsd:string\">");
-            message.AppendEnvio(msg);
-            message.Append("</xml>");
-            message.Append("</v2:EnviarLoteRpsSincrono>");
+            message.Append("<ns2:EnviarLoteRpsSincrono xmlns:ns2=\"http://NFSe.wsservices.systempro.com.br/\">");
+            message.Append("<nfseCabecMsg>");
+            message.AppendCData("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + cabec);
+            message.Append("</nfseCabecMsg>");
+            message.Append("<nfseDadosMsg>");
+            message.AppendCData(msg);
+            message.Append("</nfseDadosMsg>");
+            message.Append("</ns2:EnviarLoteRpsSincrono>");
 
             return Execute("EnviarLoteRpsSincrono", message.ToString(), "EnviarLoteRpsSincronoResponse");
         }
@@ -170,6 +169,34 @@ namespace ACBr.Net.NFSe.Providers
 
             var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
             throw new ACBrDFeCommunicationException(exMessage);
+        }
+
+        protected override Message WriteSoapEnvelope(string message, string soapAction, string soapHeader, string[] soapNamespaces)
+        {
+            var envelope = new StringBuilder();
+            envelope.Append("<Soap:Envelope xmlns:Soap=\"http://schemas.xmlsoap.org/soap/envelope/\">");
+            envelope.Append("<Soap:Body>");
+            envelope.Append(message);
+            envelope.Append("</Soap:Body>");
+            envelope.Append("</Soap:Envelope>");
+
+            //envelope.Append("<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">");
+            //envelope.Append(soapHeader.IsEmpty() ? "<SOAP-ENV:Header/>" : $"<SOAP-ENV:Header>{soapHeader}</SOAP-ENV:Header>");
+            //envelope.Append("<S:Body>");
+            //envelope.Append(message);
+            //envelope.Append("</S:Body>");
+            //envelope.Append("</S:Envelope>");
+
+            string EnvelopeString = envelope.ToString();
+            var request = Message.CreateMessage(XmlReader.Create(new StringReader(EnvelopeString)), int.MaxValue, Endpoint.Binding.MessageVersion);
+
+            //Define a action no content type por ser SOAP 1.2
+            var requestMessage = new HttpRequestMessageProperty();
+            requestMessage.Headers["Content-Type"] = $"application/soap+xml;charset=UTF-8;action=\"{soapAction}\"";
+
+            request.Properties[HttpRequestMessageProperty.Name] = requestMessage;
+
+            return request;
         }
 
         #endregion Methods

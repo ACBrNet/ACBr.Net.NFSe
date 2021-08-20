@@ -360,6 +360,12 @@
     <None Update="Schemas\SpeedGov\xmldsig-core-schema20020212_v1.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Schemas\SystemPro\nfse.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SystemPro\xmldsig-core-schema20020212.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
