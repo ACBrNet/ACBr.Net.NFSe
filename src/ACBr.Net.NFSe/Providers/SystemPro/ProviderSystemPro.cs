@@ -71,7 +71,7 @@ namespace ACBr.Net.NFSe.Providers
 
         protected override IServiceClient GetClient(TipoUrl tipo)
         {
-            return new SystemProServiceClient(this, tipo);
+            return new SystemProServiceClient(this, tipo, Certificado);
         }
 
         #endregion Protected Methods
