@@ -84,7 +84,7 @@
       <Version>1.2.5</Version>
     </PackageReference>
     <PackageReference Include="ACBr.Net.DFe.Core">
-      <Version>1.2.8.3</Version>
+      <Version>1.2.9</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.Platforms">
       <Version>5.0.2</Version>

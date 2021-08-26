@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
-// Author           : Rafael Dias
-// Created          : 05-16-2018
+// Author           : Felipe Silveira (Transis Software)
+// Created          : 18-08-2021
 //
-// Last Modified By : Rafael Dias
-// Last Modified On : 07-11-2018
+// Last Modified By : Felipe Silveira (Transis Software)
+// Last Modified On : 18-08-2021
 // ***********************************************************************
-// <copyright file="ISSeServiceClient.cs" company="ACBr.Net">
+// <copyright file="SystemProServiceClient.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -38,15 +38,15 @@ using ACBr.Net.DFe.Core;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class ISSeServiceClient : NFSeSOAP11ServiceClient, IServiceClient
+    internal sealed class SystemProServiceClient : NFSeSOAP11ServiceClient, IServiceClient
     {
         #region Constructors
 
-        public ISSeServiceClient(ProviderISSe provider, TipoUrl tipoUrl, X509Certificate2 certificado) : base(provider, tipoUrl, certificado)
+        public SystemProServiceClient(ProviderSystemPro provider, TipoUrl tipoUrl, X509Certificate2 certificado) : base(provider, tipoUrl, certificado)
         {
         }
 
-        public ISSeServiceClient(ProviderISSe provider, TipoUrl tipoUrl) : base(provider, tipoUrl)
+        public SystemProServiceClient(ProviderSystemPro provider, TipoUrl tipoUrl) : base(provider, tipoUrl)
         {
         }
 

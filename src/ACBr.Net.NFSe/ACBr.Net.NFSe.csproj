@@ -30,30 +30,35 @@
       - SmarAPD ABRASAF.
       - Fiorilli.
       - Goiânia.
+      - ISSe.
       - NFe Cidades (GovDigital).
+      - IISNet (Em Teste).
       - Porto Alegre (Em Teste).
-      - ISSe (Em Teste).
-      - IIS Net (Em Teste).
       - Abaco (Em Teste).
       - Betha v1 (Em Teste).
       - Betha v2 (Em Teste).
       - FissLex (Em Teste).
       - Pronim v2 (Em Teste).
       - Vitoria (Em Testes).
-      - DBSeller (Em Teste).
+      - DBSeller (Em Testes).
+      - SpeedGov (Em Testes).
+      - Curitiba (Em Testes).
+      - SystemPro (Em Testes).
     </Description>
     <NeutralLanguage>pt-BR</NeutralLanguage>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <AssemblyVersion>1.5.1.0</AssemblyVersion>
-    <FileVersion>1.5.1.0</FileVersion>
-    <Version>1.5.1.7</Version>
+    <AssemblyVersion>1.5.2.0</AssemblyVersion>
+    <FileVersion>1.5.2.0</FileVersion>
+    <Version>1.5.2.0</Version>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <DebugType>embedded</DebugType>
     <IncludeSymbols>true</IncludeSymbols>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageReleaseNotes>
-      [+] Adicionado o provedor de ISSe.
-
+      [+] Adicionado o provedor de Curitiba.
+      [+] Adicionado o provedor de SpeedGov.
     </PackageReleaseNotes>
     <PackageIcon>ACBr.Net.png</PackageIcon>
   </PropertyGroup>
@@ -88,12 +93,12 @@
 
   <ItemGroup>
     <PackageReference Include="ACBr.Net.Core" Version="1.2.5" />
-    <PackageReference Include="ACBr.Net.DFe.Core" Version="1.2.8.3" />
+    <PackageReference Include="ACBr.Net.DFe.Core" Version="1.2.9" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="PropertyChanged.Fody" Version="3.3.3">
+    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="System.ServiceModel.Http" Version="4.8.1" />
@@ -102,7 +107,6 @@
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <Reference Include="System.Drawing" />
-    <Reference Include="System.ServiceModel" />
   </ItemGroup>
 
   <!-- Itens do pacote nuget -->
@@ -194,6 +198,10 @@
     <None Include="Schemas\SimplISS\*.*">
       <Pack>True</Pack>
       <PackagePath>content\Schemas\SimplISS</PackagePath>
+    </None>
+    <None Include="Schemas\SpeedGov\*.*">
+      <Pack>True</Pack>
+      <PackagePath>content\Schemas\SpeedGov</PackagePath>
     </None>
     <None Include="Schemas\SmarAPDABRASF\*.*">
       <Pack>True</Pack>
@@ -297,6 +305,59 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Schemas\WebISS\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Providers\SystemPro\" />
+    <Folder Include="Providers\SpeedGov\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Schemas\SpeedGov\cabecalho_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\cancelar_nfse_envio_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\cancelar_nfse_resposta_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\consultar_lote_rps_envio_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\consultar_lote_rps_resposta_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\consultar_nfse_envio_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\consultar_nfse_resposta_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\consultar_nfse_rps_envio_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\consultar_nfse_rps_resposta_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\consultar_situacao_lote_rps_envio_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\consultar_situacao_lote_rps_resposta_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\enviar_lote_rps_envio_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\enviar_lote_rps_resposta_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\tipos_v1.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Schemas\SpeedGov\xmldsig-core-schema20020212_v1.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

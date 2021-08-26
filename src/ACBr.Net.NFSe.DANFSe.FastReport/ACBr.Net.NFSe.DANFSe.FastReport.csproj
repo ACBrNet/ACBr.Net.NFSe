@@ -69,10 +69,10 @@
       <Version>1.2.5</Version>
     </PackageReference>
     <PackageReference Include="ACBr.Net.DFe.Core">
-      <Version>1.2.8.3</Version>
+      <Version>1.2.9</Version>
     </PackageReference>
     <PackageReference Include="FastReport.Net.Demo">
-      <Version>2021.2.11</Version>
+      <Version>2021.3.22</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

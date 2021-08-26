@@ -46,6 +46,8 @@ namespace ACBr.Net.NFSe.Providers
 
         Coplan = 3,
 
+        Curitiba = 26,
+
         DBSeller = 19,
 
         DSF = 4,
@@ -77,22 +79,27 @@ namespace ACBr.Net.NFSe.Providers
         [Description("SmarAPD ABRASF")]
         SmarAPDABRASF = 14,
 
+        Sigiss = 20,
+
+        SimplISS = 24,
+
+        SpeedGov = 25,
+
+        SystemPro = 27,
+
+        [Description("CONAM")]
+        Conam = 21,
+
+        [Description("Goiania")]
+        Goiania = 22,
+
         [Description("Vitoria")]
         Vitoria = 13,
 
         WebIss = 10,
 
         [Description("WebIss v2")]
-        WebIss2 = 11,
+        WebIss2 = 11
 
-        Sigiss = 20,
-
-        SimplISS = 24,
-
-        [Description("CONAM")]
-        Conam = 21,
-
-        [Description("Goiania")]
-        Goiania = 22
     }
 }

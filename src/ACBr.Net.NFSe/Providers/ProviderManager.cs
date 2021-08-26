@@ -32,6 +32,7 @@
 using ACBr.Net.Core;
 using ACBr.Net.Core.Extensions;
 using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Providers.Curitiba;
 using ACBr.Net.NFSe.Providers.Sigiss;
 using System;
 using System.Collections.Generic;
@@ -59,6 +60,7 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.Betha, typeof(ProviderBetha)},
                 {NFSeProvider.Betha2, typeof(ProviderBetha2)},
                 {NFSeProvider.Coplan, typeof(ProviderCoplan)},
+                {NFSeProvider.Curitiba, typeof(ProviderCuritiba)},
                 {NFSeProvider.DBSeller, typeof(ProviderDBSeller)},
                 {NFSeProvider.DSF, typeof(ProviderDSF)},
                 {NFSeProvider.Equiplano, typeof(ProviderEquiplano)},
@@ -78,7 +80,9 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.Conam, typeof(ProviderCONAM)},
                 {NFSeProvider.Goiania, typeof(ProviderGoiania)},
                 {NFSeProvider.ISSe, typeof(ProviderISSe)},
-                {NFSeProvider.SimplISS, typeof(ProviderSimplISS)}
+                {NFSeProvider.SimplISS, typeof(ProviderSimplISS)},
+                {NFSeProvider.SpeedGov, typeof(ProviderSpeedGov)},
+                {NFSeProvider.SystemPro, typeof(ProviderSystemPro)}
             };
 
             Load();

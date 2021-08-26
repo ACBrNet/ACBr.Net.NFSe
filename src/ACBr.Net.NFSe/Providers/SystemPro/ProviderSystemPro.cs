@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
-// Author           : Rafael Dias
-// Created          : 05-16-2018
+// Author           : Felipe Silveira (Transis Software)
+// Created          : 18-08-2021
 //
-// Last Modified By : Rafael Dias
-// Last Modified On : 07-11-2018
+// Last Modified By : Felipe Silveira (Transis Software)
+// Last Modified On : 18-08-2021
 // ***********************************************************************
-// <copyright file="ProviderISSe.cs" company="ACBr.Net">
+// <copyright file="ProviderSystemPro.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -34,13 +34,13 @@ using ACBr.Net.NFSe.Configuracao;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class ProviderISSe : ProviderABRASF201
+    internal sealed class ProviderSystemPro : ProviderABRASF201
     {
         #region Constructors
 
-        public ProviderISSe(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
+        public ProviderSystemPro(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
         {
-            Name = "ISSe";
+            Name = "SystemPro";
         }
 
         #endregion Constructors
@@ -61,7 +61,7 @@ namespace ACBr.Net.NFSe.Providers
 
         protected override IServiceClient GetClient(TipoUrl tipo)
         {
-            return new ISSeServiceClient(this, tipo);
+            return new SystemProServiceClient(this, tipo);
         }
 
         #endregion Protected Methods
