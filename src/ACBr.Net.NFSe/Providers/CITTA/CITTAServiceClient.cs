@@ -56,26 +56,18 @@ namespace ACBr.Net.NFSe.Providers
 
         public string Enviar(string cabec, string msg)
         {
-            var message = new StringBuilder();
-            message.Append("<v2:EnviarLoteRps soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
-            message.Append("<xml xsi:type=\"xsd:string\">");
-            message.AppendEnvio(msg);
-            message.Append("</xml>");
-            message.Append("</v2:EnviarLoteRps>");
-
-            return Execute("EnviarLoteRps", message.ToString(), "EnviarLoteRpsResponse");
+            throw new NotImplementedException();
         }
 
         public string EnviarSincrono(string cabec, string msg)
         {
-            var message = new StringBuilder();
-            message.Append("<v2:EnviarLoteRpsSincrono soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
-            message.Append("<xml xsi:type=\"xsd:string\">");
-            message.AppendEnvio(msg);
-            message.Append("</xml>");
-            message.Append("</v2:EnviarLoteRpsSincrono>");
 
-            return Execute("EnviarLoteRpsSincrono", message.ToString(), "EnviarLoteRpsSincronoResponse");
+            var message = new StringBuilder();
+            message.Append("<nfse:RecepcionarLoteRpsSincronoEnvio>");
+            message.AppendCData(msg); //.Replace("EnviarLoteRpsSincronoEnvio", "nfse:RecepcionarLoteRpsSincronoEnvio")
+            message.Append("</nfse:RecepcionarLoteRpsSincronoEnvio>");
+
+            return Execute("RecepcionarLoteRpsSincronoEnvio", message.ToString(), "RecepcionarLoteRpsSincronoResposta");
         }
 
         public string ConsultarSituacao(string cabec, string msg)
@@ -155,11 +147,10 @@ namespace ACBr.Net.NFSe.Providers
 
         private string Execute(string action, string message, params string[] responseTag)
         {
-            var baseUrl = Endpoint.Address.Uri.GetLeftPart(UriPartial.Authority);
-            var soapNs = $"xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" " +
-                         $"xmlns:v2=\"{baseUrl}/v2.01\"";
+            var ns = "xmlns:nfse=\"http://nfse.abrasf.org.br\" xmlns:nfs=\"http://localhost:8080/nfse/services/nfseSOAP?wsdl\"";
+            if (action == "RecepcionarLoteRpsSincronoEnvio") ns += " xmlns:nfse1=\"http://nfse.citta.com.br\"";
 
-            return Execute($"https://nfse-ws.hom-ecity.maringa.pr.gov.br/v2.01#{action}", message, responseTag, soapNs);
+            return Execute(action, message, responseTag, ns);
         }
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)

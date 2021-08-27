@@ -29,8 +29,11 @@
 // <summary></summary>
 // ***********************************************************************
 
+using ACBr.Net.Core.Extensions;
 using ACBr.Net.DFe.Core;
 using ACBr.Net.NFSe.Configuracao;
+using ACBr.Net.NFSe.Nota;
+using System.Text;
 
 namespace ACBr.Net.NFSe.Providers
 {
@@ -49,6 +52,44 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Protected Methods
 
+        //protected override void PrepararEnviarSincrono(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
+        //{
+        //    if (notas.Count == 0) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Nenhuma RPS informada." });
+        //    if (notas.Count > 1) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Apenas uma RPS pode ser enviada em modo Sincrono." });
+        //    if (retornoWebservice.Erros.Count > 0) return;
+
+        //    var xmlLoteRps = new StringBuilder();
+
+        //    foreach (var nota in notas)
+        //    {
+        //        var xmlRps = WriteXmlRps(nota, false, false);
+        //        GravarRpsEmDisco(xmlRps, $"Rps-{nota.IdentificacaoRps.DataEmissao:yyyyMMdd}-{nota.IdentificacaoRps.Numero}.xml", nota.IdentificacaoRps.DataEmissao);
+        //        xmlLoteRps.Append(xmlRps);
+        //    }
+
+        //    var xmlLote = new StringBuilder();
+        //    xmlLote.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        //    xmlLote.Append("<nfse:RecepcionarLoteRpsSincronoEnvio>");
+        //    xmlLote.Append($"<LoteRps Id=\"L{retornoWebservice.Lote}\" {GetVersao()}>");
+        //    xmlLote.Append($"<NumeroLote>{retornoWebservice.Lote}</NumeroLote>");
+        //    if (UsaPrestadorEnvio) xmlLote.Append("<Prestador>");
+        //    xmlLote.Append("<CpfCnpj>");
+        //    xmlLote.Append(Configuracoes.PrestadorPadrao.CpfCnpj.IsCNPJ()
+        //        ? $"<Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
+        //        : $"<Cpf>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
+        //    xmlLote.Append("</CpfCnpj>");
+        //    if (!Configuracoes.PrestadorPadrao.InscricaoMunicipal.IsEmpty()) xmlLote.Append($"<InscricaoMunicipal>{Configuracoes.PrestadorPadrao.InscricaoMunicipal}</InscricaoMunicipal>");
+        //    if (UsaPrestadorEnvio) xmlLote.Append("</Prestador>");
+        //    xmlLote.Append($"<QuantidadeRps>{notas.Count}</QuantidadeRps>");
+        //    xmlLote.Append("<ListaRps>");
+        //    xmlLote.Append(xmlLoteRps);
+        //    xmlLote.Append("</ListaRps>");
+        //    xmlLote.Append("</LoteRps>");
+        //    xmlLote.Append("</nfse:RecepcionarLoteRpsSincronoEnvio>");
+        //    string xml = xmlLote.ToString();
+        //    retornoWebservice.XmlEnvio = xml;
+        //}
+
         protected override void AssinarEnviar(RetornoEnviar retornoWebservice)
         {
             retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(retornoWebservice.XmlEnvio, "EnviarLoteRpsEnvio", "LoteRps", Certificado);
@@ -62,6 +103,12 @@ namespace ACBr.Net.NFSe.Providers
         protected override IServiceClient GetClient(TipoUrl tipo)
         {
             return new CITTAServiceClient(this, tipo);
+        }
+
+        protected override bool PrecisaValidarSchema(TipoUrl tipo)
+        {
+            //NAO CONSEGUI OBTER OS SCHEMAS DESTE PROVEDOR ATE O DIA 24/08/21
+            return false;
         }
 
         #endregion Protected Methods
