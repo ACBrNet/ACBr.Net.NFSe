@@ -206,10 +206,6 @@ namespace ACBr.Net.NFSe.Providers
                     soapResponse = reader.ReadOuterXml();
                 }
             }
-            catch
-            {
-                throw;
-            }
             finally
             {
                 if (naoValidarCertificado)

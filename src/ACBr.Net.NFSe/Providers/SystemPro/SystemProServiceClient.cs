@@ -172,40 +172,40 @@ namespace ACBr.Net.NFSe.Providers
             throw new ACBrDFeCommunicationException(exMessage);
         }
 
-        protected override Message WriteSoapEnvelope(string message, string soapAction, string soapHeader, string[] soapNamespaces)
-        {
-            var envelope = new StringBuilder();
-            envelope.Append("<Soap:Envelope xmlns:Soap=\"http://schemas.xmlsoap.org/soap/envelope/\">");
-            envelope.Append("<Soap:Body>");
-            envelope.Append(message);
-            envelope.Append("</Soap:Body>");
-            envelope.Append("</Soap:Envelope>");
+        //protected override Message WriteSoapEnvelope(string message, string soapAction, string soapHeader, string[] soapNamespaces)
+        //{
+        //    var envelope = new StringBuilder();
+        //    envelope.Append("<Soap:Envelope xmlns:Soap=\"http://schemas.xmlsoap.org/soap/envelope/\">");
+        //    envelope.Append("<Soap:Body>");
+        //    envelope.Append(message);
+        //    envelope.Append("</Soap:Body>");
+        //    envelope.Append("</Soap:Envelope>");
 
-            //envelope.Append("<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">");
-            //envelope.Append(soapHeader.IsEmpty() ? "<SOAP-ENV:Header/>" : $"<SOAP-ENV:Header>{soapHeader}</SOAP-ENV:Header>");
-            //envelope.Append("<S:Body>");
-            //envelope.Append(message);
-            //envelope.Append("</S:Body>");
-            //envelope.Append("</S:Envelope>");
+        //    //envelope.Append("<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">");
+        //    //envelope.Append(soapHeader.IsEmpty() ? "<SOAP-ENV:Header/>" : $"<SOAP-ENV:Header>{soapHeader}</SOAP-ENV:Header>");
+        //    //envelope.Append("<S:Body>");
+        //    //envelope.Append(message);
+        //    //envelope.Append("</S:Body>");
+        //    //envelope.Append("</S:Envelope>");
 
-            //Separei em uma variável para conseguir visualizar o envelope em formato XML durante a depuração
-            string EnvelopeString = envelope.ToString();
-            StringReader SR = new StringReader(EnvelopeString);
-            XmlReader XmlR = XmlReader.Create(SR);
-            var request = Message.CreateMessage(XmlR, int.MaxValue, Endpoint.Binding.MessageVersion);
+        //    //Separei em uma variável para conseguir visualizar o envelope em formato XML durante a depuração
+        //    string EnvelopeString = envelope.ToString();
+        //    StringReader SR = new StringReader(EnvelopeString);
+        //    XmlReader XmlR = XmlReader.Create(SR);
+        //    var request = Message.CreateMessage(XmlR, int.MaxValue, Endpoint.Binding.MessageVersion);
 
-            //Define a action no Header por ser SOAP 1.1
-            var requestMessage = new HttpRequestMessageProperty();
-            requestMessage.Headers["SOAPAction"] = soapAction;
+        //    //Define a action no Header por ser SOAP 1.1
+        //    var requestMessage = new HttpRequestMessageProperty();
+        //    requestMessage.Headers["SOAPAction"] = soapAction;
 
-            //Define a action no content type por ser SOAP 1.2
-            //var requestMessage = new HttpRequestMessageProperty();
-            //requestMessage.Headers["Content-Type"] = $"application/soap+xml;charset=UTF-8;action=\"{soapAction}\"";
+        //    //Define a action no content type por ser SOAP 1.2
+        //    //var requestMessage = new HttpRequestMessageProperty();
+        //    //requestMessage.Headers["Content-Type"] = $"application/soap+xml;charset=UTF-8;action=\"{soapAction}\"";
 
-            request.Properties[HttpRequestMessageProperty.Name] = requestMessage;
+        //    request.Properties[HttpRequestMessageProperty.Name] = requestMessage;
 
-            return request;
-        }
+        //    return request;
+        //}
 
         #endregion Methods
     }

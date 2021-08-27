@@ -1,12 +1,12 @@
-// ***********************************************************************
+﻿// ***********************************************************************
 // Assembly         : ACBr.Net.NFSe
-// Author           : Rafael Dias
-// Created          : 07-30-2017
+// Author           : Felipe Silveira (Transis Software)
+// Created          : 26-08-2021
 //
-// Last Modified By : Rafael Dias
-// Last Modified On : 07-30-2017
+// Last Modified By : Felipe Silveira (Transis Software)
+// Last Modified On : 26-08-2021
 // ***********************************************************************
-// <copyright file="NFSeProvider.cs" company="ACBr.Net">
+// <copyright file="ProviderISSe.cs" company="ACBr.Net">
 //		        		   The MIT License (MIT)
 //	     		    Copyright (c) 2016 Grupo ACBr.Net
 //
@@ -29,79 +29,43 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.ComponentModel;
+using ACBr.Net.DFe.Core;
+using ACBr.Net.NFSe.Configuracao;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    public enum NFSeProvider : byte
+    internal sealed class ProviderCITTA : ProviderABRASF201
     {
-        Abaco = 0,
+        #region Constructors
 
-        Betha = 1,
+        public ProviderCITTA(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
+        {
+            Name = "CITTA";
+        }
 
-        [Description("Betha v2")]
-        Betha2 = 2,
+        #endregion Constructors
 
-        BHISS = 8,
+        #region Methods
 
-        CITTA = 28,
+        #region Protected Methods
 
-        Coplan = 3,
+        protected override void AssinarEnviar(RetornoEnviar retornoWebservice)
+        {
+            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(retornoWebservice.XmlEnvio, "EnviarLoteRpsEnvio", "LoteRps", Certificado);
+        }
 
-        Curitiba = 26,
+        protected override void AssinarEnviarSincrono(RetornoEnviar retornoWebservice)
+        {
+            retornoWebservice.XmlEnvio = XmlSigning.AssinarXml(retornoWebservice.XmlEnvio, "EnviarLoteRpsSincronoEnvio", "LoteRps", Certificado);
+        }
 
-        DBSeller = 19,
+        protected override IServiceClient GetClient(TipoUrl tipo)
+        {
+            return new CITTAServiceClient(this, tipo);
+        }
 
-        DSF = 4,
+        #endregion Protected Methods
 
-        Equiplano = 15,
-
-        Fiorilli = 16,
-
-        FissLex = 12,
-
-        Ginfes = 5,
-
-        ISSe = 23,
-
-        ISSNet = 18,
-
-        [Description("NFe Cidades")]
-        NFeCidades = 6,
-
-        [Description("Nota Carioca")]
-        NotaCarioca = 7,
-
-        [Description("Pronim v2")]
-        Pronim2 = 17,
-
-        [Description("São Paulo")]
-        SaoPaulo = 9,
-
-        [Description("SmarAPD ABRASF")]
-        SmarAPDABRASF = 14,
-
-        Sigiss = 20,
-
-        SimplISS = 24,
-
-        SpeedGov = 25,
-
-        SystemPro = 27,
-
-        [Description("CONAM")]
-        Conam = 21,
-
-        [Description("Goiania")]
-        Goiania = 22,
-
-        [Description("Vitoria")]
-        Vitoria = 13,
-
-        WebIss = 10,
-
-        [Description("WebIss v2")]
-        WebIss2 = 11
-
+        #endregion Methods
     }
 }

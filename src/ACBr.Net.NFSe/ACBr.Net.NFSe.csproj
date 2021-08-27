@@ -310,6 +310,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Providers\CITTA\" />
     <Folder Include="Providers\SystemPro\" />
     <Folder Include="Providers\SpeedGov\" />
   </ItemGroup>
