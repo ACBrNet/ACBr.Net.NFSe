@@ -82,7 +82,8 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.ISSe, typeof(ProviderISSe)},
                 {NFSeProvider.SimplISS, typeof(ProviderSimplISS)},
                 {NFSeProvider.SpeedGov, typeof(ProviderSpeedGov)},
-                {NFSeProvider.SystemPro, typeof(ProviderSystemPro)}
+                {NFSeProvider.SystemPro, typeof(ProviderSystemPro)},
+                {NFSeProvider.Americana, typeof(ProviderAmericana)}
             };
 
             Load();
