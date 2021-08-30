@@ -59,6 +59,7 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.BHISS, typeof(ProviderBHISS)},
                 {NFSeProvider.Betha, typeof(ProviderBetha)},
                 {NFSeProvider.Betha2, typeof(ProviderBetha2)},
+                {NFSeProvider.CITTA, typeof(ProviderCITTA)},
                 {NFSeProvider.Coplan, typeof(ProviderCoplan)},
                 {NFSeProvider.Curitiba, typeof(ProviderCuritiba)},
                 {NFSeProvider.DBSeller, typeof(ProviderDBSeller)},

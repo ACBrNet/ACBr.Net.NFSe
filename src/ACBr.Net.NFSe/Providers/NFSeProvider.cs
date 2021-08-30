@@ -44,6 +44,8 @@ namespace ACBr.Net.NFSe.Providers
 
         BHISS = 8,
 
+        CITTA = 28,
+
         Coplan = 3,
 
         Curitiba = 26,
