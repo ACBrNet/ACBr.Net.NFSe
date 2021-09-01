@@ -63,11 +63,11 @@ namespace ACBr.Net.NFSe.Providers
         {
 
             var message = new StringBuilder();
-            message.Append("<nfse:RecepcionarLoteRpsSincronoEnvio>");
-            message.AppendCData(msg); //.Replace("EnviarLoteRpsSincronoEnvio", "nfse:RecepcionarLoteRpsSincronoEnvio")
-            message.Append("</nfse:RecepcionarLoteRpsSincronoEnvio>");
+            //message.Append("<nfse:RecepcionarLoteRpsSincronoEnvio>");
+            message.Append(msg); //.Replace("EnviarLoteRpsSincronoEnvio", "nfse:RecepcionarLoteRpsSincronoEnvio")
+            //message.Append("</nfse:RecepcionarLoteRpsSincronoEnvio>");
 
-            return Execute("RecepcionarLoteRpsSincronoEnvio", message.ToString(), "RecepcionarLoteRpsSincronoResposta");
+            return Execute("http://nfse.abrasf.org.br/RecepcionarLoteRpsSincrono", message.ToString(), "RecepcionarLoteRpsSincrono");
         }
 
         public string ConsultarSituacao(string cabec, string msg)
@@ -84,7 +84,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</xml>");
             message.Append("</v2:ConsultarLoteRps>");
 
-            return Execute("ConsultarLoteRps", message.ToString(), "ConsultarLoteRpsResponse");
+            return Execute("http://nfse.abrasf.org.br/ConsultarLoteRps", message.ToString(), "ConsultarLoteRpsResponse");
         }
 
         public string ConsultarSequencialRps(string cabec, string msg)
@@ -101,7 +101,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</xml>");
             message.Append("</v2:ConsultarNfseRps>");
 
-            return Execute("ConsultarNfseRps", message.ToString(), "ConsultarNfseRpsResponse");
+            return Execute("http://nfse.abrasf.org.br/ConsultarNfsePorRps", message.ToString(), "ConsultarNfseRpsResponse");
         }
 
         public string ConsultarNFSe(string cabec, string msg)
@@ -113,7 +113,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</xml>");
             message.Append("</v2:ConsultarNfseFaixa>");
 
-            return Execute("ConsultarNfseFaixa", message.ToString(), "ConsultarNfseFaixaResponse");
+            return Execute("http://nfse.abrasf.org.br/ConsultarNfsePorFaixa", message.ToString(), "ConsultarNfseFaixaResponse");
         }
 
         public string CancelarNFSe(string cabec, string msg)
@@ -125,7 +125,7 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</xml>");
             message.Append("</v2:CancelarNfse>");
 
-            return Execute("CancelarNfse", message.ToString(), "CancelarNfseResponse");
+            return Execute("http://nfse.abrasf.org.br/CancelarNfse", message.ToString(), "CancelarNfseResponse");
         }
 
         public string CancelarNFSeLote(string cabec, string msg)
@@ -142,13 +142,13 @@ namespace ACBr.Net.NFSe.Providers
             message.Append("</xml>");
             message.Append("</v2:SubstituirNfse>");
 
-            return Execute("SubstituirNfse", message.ToString(), "SubstituirNfseResponse");
+            return Execute("http://nfse.abrasf.org.br/SubstituirNfse", message.ToString(), "SubstituirNfseResponse");
         }
 
         private string Execute(string action, string message, params string[] responseTag)
         {
             var ns = "xmlns:nfse=\"http://nfse.abrasf.org.br\" xmlns:nfs=\"http://localhost:8080/nfse/services/nfseSOAP?wsdl\"";
-            if (action == "RecepcionarLoteRpsSincronoEnvio") ns += " xmlns:nfse1=\"http://nfse.citta.com.br\"";
+            if (action == "http://nfse.abrasf.org.br/RecepcionarLoteRpsSincrono") ns += " xmlns:nfse1=\"http://nfse.citta.com.br\"";
 
             return Execute(action, message, responseTag, ns);
         }
