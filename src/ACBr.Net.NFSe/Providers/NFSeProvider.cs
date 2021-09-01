@@ -103,7 +103,9 @@ namespace ACBr.Net.NFSe.Providers
         [Description("WebIss v2")]
         WebIss2 = 11,
 
-        Americana = 28,
+        Americana = 29,
+
+        SigissWeb = 30
 
     }
 }

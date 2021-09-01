@@ -302,7 +302,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="notas"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public RetornoEnviar Enviar(int lote, NotaServicoCollection notas)
+        public virtual RetornoEnviar Enviar(int lote, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoEnviar()
             {
@@ -359,7 +359,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="notas"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public RetornoEnviar EnviarSincrono(int lote, NotaServicoCollection notas)
+        public virtual RetornoEnviar EnviarSincrono(int lote, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoEnviar()
             {
@@ -415,7 +415,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="protocolo"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public RetornoConsultarSituacao ConsultarSituacao(int lote, string protocolo)
+        public virtual RetornoConsultarSituacao ConsultarSituacao(int lote, string protocolo)
         {
             var retornoWebservice = new RetornoConsultarSituacao()
             {
@@ -472,7 +472,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="notas"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public RetornoConsultarLoteRps ConsultarLoteRps(int lote, string protocolo, NotaServicoCollection notas)
+        public virtual RetornoConsultarLoteRps ConsultarLoteRps(int lote, string protocolo, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoConsultarLoteRps()
             {
@@ -527,7 +527,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="serie"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public RetornoConsultarSequencialRps ConsultarSequencialRps(string serie)
+        public virtual RetornoConsultarSequencialRps ConsultarSequencialRps(string serie)
         {
             var retornoWebservice = new RetornoConsultarSequencialRps()
             {
@@ -584,7 +584,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="notas"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public RetornoConsultarNFSeRps ConsultaNFSeRps(int numero, string serie, TipoRps tipo, NotaServicoCollection notas, int anoCompetencia, int mesCompetencia)
+        public virtual RetornoConsultarNFSeRps ConsultaNFSeRps(int numero, string serie, TipoRps tipo, NotaServicoCollection notas, int anoCompetencia, int mesCompetencia)
         {
             var retornoWebservice = new RetornoConsultarNFSeRps()
             {
@@ -650,7 +650,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="cnpjInter"></param>
         /// <param name="imInter"></param>
         /// <returns></returns>
-        public RetornoConsultarNFSe ConsultaNFSe(NotaServicoCollection notas, DateTime? inicio = null,
+        public virtual RetornoConsultarNFSe ConsultaNFSe(NotaServicoCollection notas, DateTime? inicio = null,
             DateTime? fim = null, int numeroNfse = 0, string serieNfse = "", int pagina = 0, string cnpjTomador = "",
             string imTomador = "", string nomeInter = "", string cnpjInter = "", string imInter = "")
         {
@@ -717,7 +717,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="motivo"></param>
         /// <param name="notas"></param>
         /// <returns></returns>
-        public RetornoCancelar CancelarNFSe(string codigoCancelamento, string numeroNFSe, string serieNFSe, decimal valorNFSe, string motivo, NotaServicoCollection notas)
+        public virtual RetornoCancelar CancelarNFSe(string codigoCancelamento, string numeroNFSe, string serieNFSe, decimal valorNFSe, string motivo, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoCancelar()
             {
@@ -775,7 +775,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="lote"></param>
         /// <param name="notas"></param>
         /// <returns></returns>
-        public RetornoCancelarNFSeLote CancelarNFSeLote(int lote, NotaServicoCollection notas)
+        public virtual RetornoCancelarNFSeLote CancelarNFSeLote(int lote, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoCancelarNFSeLote()
             {
@@ -832,7 +832,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="motivo"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public RetornoSubstituirNFSe SubstituirNFSe(NotaServicoCollection notas, string codigoCancelamento, string numeroNFSe, string motivo)
+        public virtual RetornoSubstituirNFSe SubstituirNFSe(NotaServicoCollection notas, string codigoCancelamento, string numeroNFSe, string motivo)
         {
             var retornoWebservice = new RetornoSubstituirNFSe()
             {

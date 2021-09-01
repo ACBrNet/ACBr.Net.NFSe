@@ -140,13 +140,16 @@ namespace ACBr.Net.NFSe.Demo
                 var codigo = "0001";
                 if (InputBox.Show("Código de cancelamento", "Código de cancelamento.", ref codigo).Equals(DialogResult.Cancel)) return;
 
-                var serie = "0";
-                if (InputBox.Show("Numero NFSe", "Digite o numero da NFSe.", ref serie).Equals(DialogResult.Cancel)) return;
+                var numeroNFSe = "0";
+                if (InputBox.Show("Numero NFSe", "Digite o numero da NFSe.", ref numeroNFSe).Equals(DialogResult.Cancel)) return;
+
+                var serieNFSe = "0";
+                if (InputBox.Show("Série NFSe", "Digite a série da NFSe.", ref serieNFSe).Equals(DialogResult.Cancel)) return;
 
                 var motivo = "";
                 if (InputBox.Show("Motivo Cancelamento", "Digite o motivo do cancelamento.", ref motivo).Equals(DialogResult.Cancel)) return;
 
-                var ret = acbrNFSe.CancelarNFSe(codigo, serie, motivo);
+                var ret = acbrNFSe.CancelarNFSe(codigo, numeroNFSe, serieNFSe, 0, motivo);
                 ProcessarRetorno(ret);
             });
         }
@@ -425,6 +428,16 @@ namespace ACBr.Net.NFSe.Demo
             acbrNFSe.Configuracoes.WebServices.Ambiente = cmbAmbiente.GetSelectedValue<DFeTipoAmbiente>();
         }
 
+        private void txtWebserviceUsuario_TextChanged(object sender, EventArgs e)
+        {
+            acbrNFSe.Configuracoes.WebServices.Usuario = txtWebserviceUsuario.Text;
+        }
+
+        private void txtWebserviceSenha_TextChanged(object sender, EventArgs e)
+        {
+            acbrNFSe.Configuracoes.WebServices.Senha = txtWebserviceSenha.Text;
+        }
+
         #endregion ValueChanged
 
         #region Overrides
@@ -453,7 +466,9 @@ namespace ACBr.Net.NFSe.Demo
 
             acbrNFSe.NotasServico.Clear();
             var nfSe = acbrNFSe.NotasServico.AddNew();
-            nfSe.IdentificacaoRps.Numero = "1";
+            var numeroRps = "1";
+            if (InputBox.Show("Nº RPS", "Informe o número do RPS.", ref numeroRps).Equals(DialogResult.Cancel)) return;
+            nfSe.IdentificacaoRps.Numero = numeroRps;
             nfSe.IdentificacaoRps.Serie = municipio.Provedor.IsIn(NFSeProvider.Curitiba) ? "F" : "1";
             nfSe.IdentificacaoRps.Tipo = TipoRps.RPS;
             nfSe.IdentificacaoRps.DataEmissao = DateTime.Now;
@@ -462,11 +477,13 @@ namespace ACBr.Net.NFSe.Demo
             nfSe.RegimeEspecialTributacao = RegimeEspecialTributacao.SimplesNacional;
             nfSe.IncentivadorCultural = NFSeSimNao.Nao;
 
-            nfSe.Servico.ItemListaServico = municipio.Provedor.IsIn(NFSeProvider.Betha, NFSeProvider.ISSe, NFSeProvider.Curitiba) ? "0107" : "01.07";
+            var itemListaServico = municipio.Provedor.IsIn(NFSeProvider.Betha, NFSeProvider.ISSe, NFSeProvider.Curitiba) ? "0107" : "01.07";
+            if (InputBox.Show("Item na lista de serviço", "Informe o item na lista de serviço.", ref itemListaServico).Equals(DialogResult.Cancel)) return;
+            nfSe.Servico.ItemListaServico = itemListaServico;
 
             nfSe.Servico.CodigoTributacaoMunicipio = "01.07.00 / 00010700";
             nfSe.Servico.CodigoCnae = "";
-            nfSe.Servico.CodigoMunicipio = municipio.Codigo;            
+            nfSe.Servico.CodigoMunicipio = municipio.Codigo;
             nfSe.Servico.Discriminacao = "MANUTENCAO TÉCNICA / VOCÊ PAGOU APROXIMADAMENTE R$ 41,15 DE TRIBUTOS FEDERAIS, R$ 8,26 DE TRIBUTOS MUNICIPAIS, R$ 256,57 PELOS PRODUTOS/SERVICOS, FONTE: IBPT.";
 
             nfSe.Servico.Valores.ValorServicos = 100;
@@ -481,7 +498,7 @@ namespace ACBr.Net.NFSe.Demo
             nfSe.Servico.Valores.ValorOutrasRetencoes = 0;
             nfSe.Servico.Valores.BaseCalculo = 100;
             nfSe.Servico.Valores.Aliquota = 2;
-            nfSe.Servico.Valores.ValorLiquidoNfse = 0;
+            nfSe.Servico.Valores.ValorLiquidoNfse = 100;
             nfSe.Servico.Valores.ValorIssRetido = 0;
             nfSe.Servico.Valores.DescontoCondicionado = 0;
             nfSe.Servico.Valores.DescontoIncondicionado = 0;
@@ -765,6 +782,9 @@ namespace ACBr.Net.NFSe.Demo
             txtComplemento.Text = config.Get("PrestadorComplemento", string.Empty);
             txtBairro.Text = config.Get("PrestadorBairro", string.Empty);
 
+            txtWebserviceUsuario.Text = config.Get("LoginREST", string.Empty);
+            txtWebserviceSenha.Text = config.Get("SenhaREST", string.Empty);
+
             var codMunicipio = config.Get("Municipio", 0);
             if (codMunicipio > 0)
             {
@@ -803,6 +823,9 @@ namespace ACBr.Net.NFSe.Demo
             config.Set("Senha", txtSenha.Text);
             config.Set("NumeroSerie", txtNumeroSerie.Text);
 
+            config.Set("UsuarioWebservice", txtWebserviceUsuario.Text);
+            config.Set("SenhaWebservice", txtWebserviceSenha.Text);
+
             config.Save();
         }
 
@@ -820,7 +843,6 @@ namespace ACBr.Net.NFSe.Demo
             }
         }
 
-        #endregion Methods
-
+        #endregion Methods       
     }
 }
