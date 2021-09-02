@@ -61,13 +61,7 @@ namespace ACBr.Net.NFSe.Providers
 
         public string EnviarSincrono(string cabec, string msg)
         {
-
-            var message = new StringBuilder();
-            //message.Append("<nfse:RecepcionarLoteRpsSincronoEnvio>");
-            message.Append(msg); //.Replace("EnviarLoteRpsSincronoEnvio", "nfse:RecepcionarLoteRpsSincronoEnvio")
-            //message.Append("</nfse:RecepcionarLoteRpsSincronoEnvio>");
-
-            return Execute("http://nfse.abrasf.org.br/RecepcionarLoteRpsSincrono", message.ToString(), "RecepcionarLoteRpsSincrono");
+            return Execute("http://nfse.abrasf.org.br/RecepcionarLoteRpsSincrono", msg, "RecepcionarLoteRpsSincronoResposta");
         }
 
         public string ConsultarSituacao(string cabec, string msg)
@@ -77,14 +71,7 @@ namespace ACBr.Net.NFSe.Providers
 
         public string ConsultarLoteRps(string cabec, string msg)
         {
-            var message = new StringBuilder();
-            message.Append("<v2:ConsultarLoteRps soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
-            message.Append("<xml xsi:type=\"xsd:string\">");
-            message.AppendEnvio(msg);
-            message.Append("</xml>");
-            message.Append("</v2:ConsultarLoteRps>");
-
-            return Execute("http://nfse.abrasf.org.br/ConsultarLoteRps", message.ToString(), "ConsultarLoteRpsResponse");
+            return Execute("http://nfse.abrasf.org.br/ConsultarLoteRps", msg, "ConsultarLoteRpsResposta");
         }
 
         public string ConsultarSequencialRps(string cabec, string msg)
@@ -94,24 +81,15 @@ namespace ACBr.Net.NFSe.Providers
 
         public string ConsultarNFSeRps(string cabec, string msg)
         {
-            var message = new StringBuilder();
-            message.Append("<v2:ConsultarNfseRps soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
-            message.Append("<xml xsi:type=\"xsd:string\">");
-            message.AppendEnvio(msg);
-            message.Append("</xml>");
-            message.Append("</v2:ConsultarNfseRps>");
-
-            return Execute("http://nfse.abrasf.org.br/ConsultarNfsePorRps", message.ToString(), "ConsultarNfseRpsResponse");
+            return Execute("http://nfse.abrasf.org.br/ConsultarNfsePorRps", msg, "ConsultarNfsePorRpsResposta");
         }
 
         public string ConsultarNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<v2:ConsultarNfseFaixa soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
-            message.Append("<xml xsi:type=\"xsd:string\">");
-            message.AppendEnvio(msg);
-            message.Append("</xml>");
-            message.Append("</v2:ConsultarNfseFaixa>");
+            message.Append("<nfse:ConsultarNfsePorFaixaEnvio soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
+            message.Append(msg);
+            message.Append("</nfse:ConsultarNfsePorFaixaEnvio>");
 
             return Execute("http://nfse.abrasf.org.br/ConsultarNfsePorFaixa", message.ToString(), "ConsultarNfseFaixaResponse");
         }
@@ -119,11 +97,9 @@ namespace ACBr.Net.NFSe.Providers
         public string CancelarNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<v2:CancelarNfse soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
-            message.Append("<xml xsi:type=\"xsd:string\">");
-            message.AppendEnvio(msg);
-            message.Append("</xml>");
-            message.Append("</v2:CancelarNfse>");
+            message.Append("<nfse:CancelarNfseEnvio soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
+            message.Append(msg);
+            message.Append("</nfse:CancelarNfseEnvio>");
 
             return Execute("http://nfse.abrasf.org.br/CancelarNfse", message.ToString(), "CancelarNfseResponse");
         }
@@ -136,11 +112,9 @@ namespace ACBr.Net.NFSe.Providers
         public string SubstituirNFSe(string cabec, string msg)
         {
             var message = new StringBuilder();
-            message.Append("<v2:SubstituirNfse soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
-            message.Append("<xml xsi:type=\"xsd:string\">");
-            message.AppendEnvio(msg);
-            message.Append("</xml>");
-            message.Append("</v2:SubstituirNfse>");
+            message.Append("<nfse:SubstituirNfseEnvio soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
+            message.Append(msg);
+            message.Append("</nfse:SubstituirNfseEnvio>");
 
             return Execute("http://nfse.abrasf.org.br/SubstituirNfse", message.ToString(), "SubstituirNfseResponse");
         }
@@ -155,12 +129,13 @@ namespace ACBr.Net.NFSe.Providers
 
         protected override string TratarRetorno(XDocument xmlDocument, string[] responseTag)
         {
-            var element = xmlDocument.ElementAnyNs("Fault");
-            if (element == null)
-                return xmlDocument.Root.ElementAnyNs("return")?.Value;
+            return xmlDocument.ElementAnyNs(responseTag[0]).ToString();
 
-            var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
-            throw new ACBrDFeCommunicationException(exMessage);
+            //var element = xmlDocument.ElementAnyNs("Fault");
+            //if (element == null) return xmlDocument.Root.FirstNode.ToString();
+
+            //var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
+            //throw new ACBrDFeCommunicationException(exMessage);
         }
 
         #endregion Methods
