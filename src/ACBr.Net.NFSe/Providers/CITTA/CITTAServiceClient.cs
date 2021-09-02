@@ -134,9 +134,6 @@ namespace ACBr.Net.NFSe.Providers
             //var element = xmlDocument.ElementAnyNs("Fault");
             //if (element == null) return xmlDocument.Root.FirstNode.ToString();
 
-            ////if (element == null && element2 == null)
-            ////    return xmlDocument.Root.ElementAnyNs("return")?.Value;
-
             //var exMessage = $"{element.ElementAnyNs("faultcode").GetValue<string>()} - {element.ElementAnyNs("faultstring").GetValue<string>()}";
             //throw new ACBrDFeCommunicationException(exMessage);
         }
