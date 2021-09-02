@@ -54,6 +54,48 @@ namespace ACBr.Net.NFSe.Providers
 
         #region Protected Methods
 
+        protected override void PrepararConsultarLoteRps(RetornoConsultarLoteRps retornoWebservice)
+        {
+            var loteBuilder = new StringBuilder();
+            loteBuilder.Append($"<nfse:ConsultarLoteRpsEnvio xmlns:nfse=\"http://nfse.abrasf.org.br\">");
+            loteBuilder.Append("<Prestador>");
+            loteBuilder.Append("<CpfCnpj>");
+            loteBuilder.Append(Configuracoes.PrestadorPadrao.CpfCnpj.IsCNPJ()
+                ? $"<Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
+                : $"<Cpf>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
+            loteBuilder.Append("</CpfCnpj>");
+            loteBuilder.Append("</Prestador>");
+            loteBuilder.Append($"<Protocolo>{retornoWebservice.Protocolo}</Protocolo>");
+            loteBuilder.Append("</nfse:ConsultarLoteRpsEnvio>");
+            retornoWebservice.XmlEnvio = loteBuilder.ToString();
+        }
+
+        protected override void PrepararConsultarNFSeRps(RetornoConsultarNFSeRps retornoWebservice, NotaServicoCollection notas)
+        {
+            if (retornoWebservice.NumeroRps < 1)
+            {
+                retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Número da RPS não informado para a consulta." });
+                return;
+            }
+
+            var loteBuilder = new StringBuilder();
+            loteBuilder.Append($"<nfse:ConsultarNfseRpsEnvio xmlns:nfse=\"http://nfse.abrasf.org.br\">");
+            loteBuilder.Append("<IdentificacaoRps>");
+            loteBuilder.Append($"<Numero>{retornoWebservice.NumeroRps}</Numero>");
+            loteBuilder.Append($"<Serie>{retornoWebservice.Serie}</Serie>");
+            loteBuilder.Append($"<Tipo>{(int)retornoWebservice.Tipo + 1}</Tipo>");
+            loteBuilder.Append("</IdentificacaoRps>");
+            loteBuilder.Append("<Prestador>");
+            loteBuilder.Append("<CpfCnpj>");
+            loteBuilder.Append(Configuracoes.PrestadorPadrao.CpfCnpj.IsCNPJ()
+                ? $"<Cnpj>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(14)}</Cnpj>"
+                : $"<Cpf>{Configuracoes.PrestadorPadrao.CpfCnpj.ZeroFill(11)}</Cpf>");
+            loteBuilder.Append("</CpfCnpj>");
+            loteBuilder.Append("</Prestador>");
+            loteBuilder.Append("</nfse:ConsultarNfseRpsEnvio>");
+            retornoWebservice.XmlEnvio = loteBuilder.ToString();
+        }
+
         protected override void PrepararEnviarSincrono(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
         {
             if (notas.Count == 0) retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Nenhuma RPS informada." });
@@ -84,7 +126,7 @@ namespace ACBr.Net.NFSe.Providers
             if (UsaPrestadorEnvio) xmlLote.Append("</Prestador>");
             xmlLote.Append($"<QuantidadeRps>{notas.Count}</QuantidadeRps>");
             xmlLote.Append("<ListaRps>");
-            xmlLote.Append(xmlLoteRps.Replace("InfDeclaracaoPrestacaoServico", "nfse1:InfDeclaracaoPrestacaoServico"));
+            xmlLote.Append(xmlLoteRps);//.Replace("InfDeclaracaoPrestacaoServico", "nfse1:InfDeclaracaoPrestacaoServico")
             xmlLote.Append("</ListaRps>");
             xmlLote.Append("</LoteRps>");
             xmlLote.Append("</nfse:RecepcionarLoteRpsSincronoEnvio>");
@@ -119,6 +161,37 @@ namespace ACBr.Net.NFSe.Providers
 
         #region RPS
 
+        protected override XElement WriteServicosRps(NotaServico nota)
+        {
+            var servico = new XElement("Servico");
+
+            servico.Add(WriteValoresRps(nota));
+
+            servico.AddChild(AdicionarTag(TipoCampo.Int, "", "IssRetido", 1, 1, Ocorrencia.Obrigatoria, nota.Servico.Valores.IssRetido == SituacaoTributaria.Retencao ? 1 : 2));
+
+            if (nota.Servico.ResponsavelRetencao.HasValue)
+                servico.AddChild(AdicionarTag(TipoCampo.Int, "", "ResponsavelRetencao", 1, 1, Ocorrencia.NaoObrigatoria, (int)nota.Servico.ResponsavelRetencao + 1));
+
+            if (Configuracoes.WebServices.Ambiente == DFe.Core.Common.DFeTipoAmbiente.Homologacao)
+            {
+                servico.AddChild(AdicionarTag(TipoCampo.Str, "", "ItemListaServico", 1, 5, Ocorrencia.Obrigatoria, "01.00"));
+            }
+            else
+            {
+                servico.AddChild(AdicionarTag(TipoCampo.Str, "", "ItemListaServico", 1, 5, Ocorrencia.Obrigatoria, nota.Servico.ItemListaServico));
+            }
+            servico.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoCnae", 1, 7, Ocorrencia.NaoObrigatoria, nota.Servico.CodigoCnae));
+            //servico.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoTributacaoMunicipio", 1, 20, Ocorrencia.NaoObrigatoria, nota.Servico.CodigoTributacaoMunicipio));
+            servico.AddChild(AdicionarTag(TipoCampo.Str, "", "Discriminacao", 1, 2000, Ocorrencia.Obrigatoria, nota.Servico.Discriminacao));
+            servico.AddChild(AdicionarTag(TipoCampo.Str, "", "CodigoMunicipio", 1, 20, Ocorrencia.Obrigatoria, nota.Servico.CodigoMunicipio));
+            //servico.AddChild(AdicionarTag(TipoCampo.Int, "", "CodigoPais", 4, 4, Ocorrencia.MaiorQueZero, nota.Servico.CodigoPais));
+            servico.AddChild(AdicionarTag(TipoCampo.Int, "", "ExigibilidadeISS", 1, 1, Ocorrencia.Obrigatoria, (int)nota.Servico.ExigibilidadeIss + 1));
+            //servico.AddChild(AdicionarTag(TipoCampo.Int, "", "MunicipioIncidencia", 7, 7, Ocorrencia.MaiorQueZero, nota.Servico.MunicipioIncidencia));
+            //servico.AddChild(AdicionarTag(TipoCampo.Str, "", "NumeroProcesso", 1, 30, Ocorrencia.NaoObrigatoria, nota.Servico.NumeroProcesso));
+
+            return servico;
+        }
+
         protected override XElement WriteRps(NotaServico nota)
         {
             var rootRps = new XElement("rps");
@@ -128,7 +201,14 @@ namespace ACBr.Net.NFSe.Providers
 
             infServico.Add(WriteRpsRps(nota));
 
-            infServico.AddChild(AdicionarTag(TipoCampo.Dat, "", "Competencia", 10, 10, Ocorrencia.Obrigatoria, nota.Competencia));
+            if (nota.Competencia.ToString("yyyyMMdd") == "00010101")
+            {
+                infServico.AddChild(AdicionarTag(TipoCampo.Dat, "", "Competencia", 10, 10, Ocorrencia.Obrigatoria, nota.IdentificacaoRps.DataEmissao));
+            }
+            else
+            {
+                infServico.AddChild(AdicionarTag(TipoCampo.Dat, "", "Competencia", 10, 10, Ocorrencia.Obrigatoria, nota.Competencia));
+            }
 
             infServico.AddChild(WriteServicosRps(nota));
             infServico.AddChild(WritePrestadorRps(nota));
