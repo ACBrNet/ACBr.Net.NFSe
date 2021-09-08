@@ -61,7 +61,6 @@ namespace ACBr.Net.NFSe.Demo
 
         public static void MunicipiosDataSource(this ComboBox cmb)
         {
-            cmb.Items.Clear();
             cmb.DataSource = (from ACBrMunicipioNFSe value in ProviderManager.Municipios
                               select new ItemData<ACBrMunicipioNFSe>($"{value.Nome} - {value.UF}", value)).ToArray();
         }

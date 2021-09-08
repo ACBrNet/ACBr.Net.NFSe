@@ -56,18 +56,18 @@
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tabPageRespostas = new System.Windows.Forms.TabPage();
             this.rtLogResposta = new System.Windows.Forms.RichTextBox();
-            this.tabPageXmlResposta = new System.Windows.Forms.TabPage();
-            this.wbbResposta = new System.Windows.Forms.WebBrowser();
-            this.tabPageLog = new System.Windows.Forms.TabPage();
-            this.rtbLog = new System.Windows.Forms.RichTextBox();
             this.tabPageNFSe = new System.Windows.Forms.TabPage();
             this.wbbNFSe = new System.Windows.Forms.WebBrowser();
-            this.tabPageEnvelopeRetorno = new System.Windows.Forms.TabPage();
-            this.wbbRetorno = new System.Windows.Forms.WebBrowser();
             this.tabPageXmlEnvio = new System.Windows.Forms.TabPage();
             this.wbbDados = new System.Windows.Forms.WebBrowser();
+            this.tabPageXmlResposta = new System.Windows.Forms.TabPage();
+            this.wbbResposta = new System.Windows.Forms.WebBrowser();
             this.tabPageEnvelopeEnvio = new System.Windows.Forms.TabPage();
             this.wbbEnvelopeEnvio = new System.Windows.Forms.WebBrowser();
+            this.tabPageEnvelopeRetorno = new System.Windows.Forms.TabPage();
+            this.wbbRetorno = new System.Windows.Forms.WebBrowser();
+            this.tabPageLog = new System.Windows.Forms.TabPage();
+            this.rtbLog = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnSalvarConfig = new System.Windows.Forms.Button();
             this.tbcConfiguracoes = new System.Windows.Forms.TabControl();
@@ -119,6 +119,11 @@
             this.txtSchemas = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.txtWebserviceSenha = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtWebserviceUsuario = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
@@ -154,18 +159,19 @@
             this.tabPage17.SuspendLayout();
             this.tabControl3.SuspendLayout();
             this.tabPageRespostas.SuspendLayout();
-            this.tabPageXmlResposta.SuspendLayout();
-            this.tabPageLog.SuspendLayout();
             this.tabPageNFSe.SuspendLayout();
-            this.tabPageEnvelopeRetorno.SuspendLayout();
             this.tabPageXmlEnvio.SuspendLayout();
+            this.tabPageXmlResposta.SuspendLayout();
             this.tabPageEnvelopeEnvio.SuspendLayout();
+            this.tabPageEnvelopeRetorno.SuspendLayout();
+            this.tabPageLog.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tbcConfiguracoes.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.tabPage6.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -467,6 +473,46 @@
             this.rtLogResposta.TabIndex = 1;
             this.rtLogResposta.Text = "";
             // 
+            // tabPageNFSe
+            // 
+            this.tabPageNFSe.Controls.Add(this.wbbNFSe);
+            this.tabPageNFSe.Location = new System.Drawing.Point(4, 22);
+            this.tabPageNFSe.Name = "tabPageNFSe";
+            this.tabPageNFSe.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageNFSe.Size = new System.Drawing.Size(555, 261);
+            this.tabPageNFSe.TabIndex = 3;
+            this.tabPageNFSe.Text = "NFSe";
+            this.tabPageNFSe.UseVisualStyleBackColor = true;
+            // 
+            // wbbNFSe
+            // 
+            this.wbbNFSe.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.wbbNFSe.Location = new System.Drawing.Point(3, 3);
+            this.wbbNFSe.MinimumSize = new System.Drawing.Size(20, 20);
+            this.wbbNFSe.Name = "wbbNFSe";
+            this.wbbNFSe.Size = new System.Drawing.Size(549, 255);
+            this.wbbNFSe.TabIndex = 2;
+            // 
+            // tabPageXmlEnvio
+            // 
+            this.tabPageXmlEnvio.Controls.Add(this.wbbDados);
+            this.tabPageXmlEnvio.Location = new System.Drawing.Point(4, 22);
+            this.tabPageXmlEnvio.Name = "tabPageXmlEnvio";
+            this.tabPageXmlEnvio.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageXmlEnvio.Size = new System.Drawing.Size(555, 261);
+            this.tabPageXmlEnvio.TabIndex = 5;
+            this.tabPageXmlEnvio.Text = "Xml Envio";
+            this.tabPageXmlEnvio.UseVisualStyleBackColor = true;
+            // 
+            // wbbDados
+            // 
+            this.wbbDados.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.wbbDados.Location = new System.Drawing.Point(3, 3);
+            this.wbbDados.MinimumSize = new System.Drawing.Size(20, 20);
+            this.wbbDados.Name = "wbbDados";
+            this.wbbDados.Size = new System.Drawing.Size(549, 255);
+            this.wbbDados.TabIndex = 2;
+            // 
             // tabPageXmlResposta
             // 
             this.tabPageXmlResposta.Controls.Add(this.wbbResposta);
@@ -486,6 +532,45 @@
             this.wbbResposta.Name = "wbbResposta";
             this.wbbResposta.Size = new System.Drawing.Size(549, 255);
             this.wbbResposta.TabIndex = 1;
+            // 
+            // tabPageEnvelopeEnvio
+            // 
+            this.tabPageEnvelopeEnvio.Controls.Add(this.wbbEnvelopeEnvio);
+            this.tabPageEnvelopeEnvio.Location = new System.Drawing.Point(4, 22);
+            this.tabPageEnvelopeEnvio.Name = "tabPageEnvelopeEnvio";
+            this.tabPageEnvelopeEnvio.Size = new System.Drawing.Size(555, 261);
+            this.tabPageEnvelopeEnvio.TabIndex = 6;
+            this.tabPageEnvelopeEnvio.Text = "Envelope Envio";
+            this.tabPageEnvelopeEnvio.UseVisualStyleBackColor = true;
+            // 
+            // wbbEnvelopeEnvio
+            // 
+            this.wbbEnvelopeEnvio.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.wbbEnvelopeEnvio.Location = new System.Drawing.Point(0, 0);
+            this.wbbEnvelopeEnvio.MinimumSize = new System.Drawing.Size(20, 20);
+            this.wbbEnvelopeEnvio.Name = "wbbEnvelopeEnvio";
+            this.wbbEnvelopeEnvio.Size = new System.Drawing.Size(555, 261);
+            this.wbbEnvelopeEnvio.TabIndex = 3;
+            // 
+            // tabPageEnvelopeRetorno
+            // 
+            this.tabPageEnvelopeRetorno.Controls.Add(this.wbbRetorno);
+            this.tabPageEnvelopeRetorno.Location = new System.Drawing.Point(4, 22);
+            this.tabPageEnvelopeRetorno.Name = "tabPageEnvelopeRetorno";
+            this.tabPageEnvelopeRetorno.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageEnvelopeRetorno.Size = new System.Drawing.Size(555, 261);
+            this.tabPageEnvelopeRetorno.TabIndex = 4;
+            this.tabPageEnvelopeRetorno.Text = "Envelope Retorno";
+            this.tabPageEnvelopeRetorno.UseVisualStyleBackColor = true;
+            // 
+            // wbbRetorno
+            // 
+            this.wbbRetorno.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.wbbRetorno.Location = new System.Drawing.Point(3, 3);
+            this.wbbRetorno.MinimumSize = new System.Drawing.Size(20, 20);
+            this.wbbRetorno.Name = "wbbRetorno";
+            this.wbbRetorno.Size = new System.Drawing.Size(549, 255);
+            this.wbbRetorno.TabIndex = 2;
             // 
             // tabPageLog
             // 
@@ -510,85 +595,6 @@
             this.rtbLog.Size = new System.Drawing.Size(549, 255);
             this.rtbLog.TabIndex = 0;
             this.rtbLog.Text = "";
-            // 
-            // tabPageNFSe
-            // 
-            this.tabPageNFSe.Controls.Add(this.wbbNFSe);
-            this.tabPageNFSe.Location = new System.Drawing.Point(4, 22);
-            this.tabPageNFSe.Name = "tabPageNFSe";
-            this.tabPageNFSe.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageNFSe.Size = new System.Drawing.Size(555, 261);
-            this.tabPageNFSe.TabIndex = 3;
-            this.tabPageNFSe.Text = "NFSe";
-            this.tabPageNFSe.UseVisualStyleBackColor = true;
-            // 
-            // wbbNFSe
-            // 
-            this.wbbNFSe.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.wbbNFSe.Location = new System.Drawing.Point(3, 3);
-            this.wbbNFSe.MinimumSize = new System.Drawing.Size(20, 20);
-            this.wbbNFSe.Name = "wbbNFSe";
-            this.wbbNFSe.Size = new System.Drawing.Size(549, 255);
-            this.wbbNFSe.TabIndex = 2;
-            // 
-            // tabPageEnvelopeRetorno
-            // 
-            this.tabPageEnvelopeRetorno.Controls.Add(this.wbbRetorno);
-            this.tabPageEnvelopeRetorno.Location = new System.Drawing.Point(4, 22);
-            this.tabPageEnvelopeRetorno.Name = "tabPageEnvelopeRetorno";
-            this.tabPageEnvelopeRetorno.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEnvelopeRetorno.Size = new System.Drawing.Size(555, 261);
-            this.tabPageEnvelopeRetorno.TabIndex = 4;
-            this.tabPageEnvelopeRetorno.Text = "Envelope Retorno";
-            this.tabPageEnvelopeRetorno.UseVisualStyleBackColor = true;
-            // 
-            // wbbRetorno
-            // 
-            this.wbbRetorno.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.wbbRetorno.Location = new System.Drawing.Point(3, 3);
-            this.wbbRetorno.MinimumSize = new System.Drawing.Size(20, 20);
-            this.wbbRetorno.Name = "wbbRetorno";
-            this.wbbRetorno.Size = new System.Drawing.Size(549, 255);
-            this.wbbRetorno.TabIndex = 2;
-            // 
-            // tabPageXmlEnvio
-            // 
-            this.tabPageXmlEnvio.Controls.Add(this.wbbDados);
-            this.tabPageXmlEnvio.Location = new System.Drawing.Point(4, 22);
-            this.tabPageXmlEnvio.Name = "tabPageXmlEnvio";
-            this.tabPageXmlEnvio.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageXmlEnvio.Size = new System.Drawing.Size(555, 261);
-            this.tabPageXmlEnvio.TabIndex = 5;
-            this.tabPageXmlEnvio.Text = "Xml Envio";
-            this.tabPageXmlEnvio.UseVisualStyleBackColor = true;
-            // 
-            // wbbDados
-            // 
-            this.wbbDados.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.wbbDados.Location = new System.Drawing.Point(3, 3);
-            this.wbbDados.MinimumSize = new System.Drawing.Size(20, 20);
-            this.wbbDados.Name = "wbbDados";
-            this.wbbDados.Size = new System.Drawing.Size(549, 255);
-            this.wbbDados.TabIndex = 2;
-            // 
-            // tabPageEnvelopeEnvio
-            // 
-            this.tabPageEnvelopeEnvio.Controls.Add(this.wbbEnvelopeEnvio);
-            this.tabPageEnvelopeEnvio.Location = new System.Drawing.Point(4, 22);
-            this.tabPageEnvelopeEnvio.Name = "tabPageEnvelopeEnvio";
-            this.tabPageEnvelopeEnvio.Size = new System.Drawing.Size(555, 261);
-            this.tabPageEnvelopeEnvio.TabIndex = 6;
-            this.tabPageEnvelopeEnvio.Text = "Envelope Envio";
-            this.tabPageEnvelopeEnvio.UseVisualStyleBackColor = true;
-            // 
-            // wbbEnvelopeEnvio
-            // 
-            this.wbbEnvelopeEnvio.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.wbbEnvelopeEnvio.Location = new System.Drawing.Point(0, 0);
-            this.wbbEnvelopeEnvio.MinimumSize = new System.Drawing.Size(20, 20);
-            this.wbbEnvelopeEnvio.Name = "wbbEnvelopeEnvio";
-            this.wbbEnvelopeEnvio.Size = new System.Drawing.Size(555, 261);
-            this.wbbEnvelopeEnvio.TabIndex = 3;
             // 
             // groupBox1
             // 
@@ -1093,6 +1099,7 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.groupBox3);
             this.tabPage6.Controls.Add(this.groupBox2);
             this.tabPage6.Controls.Add(this.label14);
             this.tabPage6.Controls.Add(this.cmbAmbiente);
@@ -1103,6 +1110,54 @@
             this.tabPage6.TabIndex = 3;
             this.tabPage6.Text = "Webservice";
             this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.txtWebserviceSenha);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.txtWebserviceUsuario);
+            this.groupBox3.Controls.Add(this.label20);
+            this.groupBox3.Location = new System.Drawing.Point(6, 194);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(256, 134);
+            this.groupBox3.TabIndex = 40;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Autenticação do webservice";
+            // 
+            // txtWebserviceSenha
+            // 
+            this.txtWebserviceSenha.Location = new System.Drawing.Point(6, 79);
+            this.txtWebserviceSenha.Name = "txtWebserviceSenha";
+            this.txtWebserviceSenha.Size = new System.Drawing.Size(244, 20);
+            this.txtWebserviceSenha.TabIndex = 17;
+            this.txtWebserviceSenha.UseSystemPasswordChar = true;
+            this.txtWebserviceSenha.TextChanged += new System.EventHandler(this.txtWebserviceSenha_TextChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 63);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(38, 13);
+            this.label6.TabIndex = 16;
+            this.label6.Text = "Senha";
+            // 
+            // txtWebserviceUsuario
+            // 
+            this.txtWebserviceUsuario.Location = new System.Drawing.Point(6, 40);
+            this.txtWebserviceUsuario.Name = "txtWebserviceUsuario";
+            this.txtWebserviceUsuario.Size = new System.Drawing.Size(244, 20);
+            this.txtWebserviceUsuario.TabIndex = 15;
+            this.txtWebserviceUsuario.TextChanged += new System.EventHandler(this.txtWebserviceUsuario_TextChanged);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(6, 24);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(43, 13);
+            this.label20.TabIndex = 14;
+            this.label20.Text = "Usuário";
             // 
             // groupBox2
             // 
@@ -1375,12 +1430,12 @@
             this.tabPage17.ResumeLayout(false);
             this.tabControl3.ResumeLayout(false);
             this.tabPageRespostas.ResumeLayout(false);
-            this.tabPageXmlResposta.ResumeLayout(false);
-            this.tabPageLog.ResumeLayout(false);
             this.tabPageNFSe.ResumeLayout(false);
-            this.tabPageEnvelopeRetorno.ResumeLayout(false);
             this.tabPageXmlEnvio.ResumeLayout(false);
+            this.tabPageXmlResposta.ResumeLayout(false);
             this.tabPageEnvelopeEnvio.ResumeLayout(false);
+            this.tabPageEnvelopeRetorno.ResumeLayout(false);
+            this.tabPageLog.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.tbcConfiguracoes.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
@@ -1391,6 +1446,8 @@
             this.tabPage5.PerformLayout();
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
@@ -1519,6 +1576,11 @@
         private System.Windows.Forms.Button btnGerarHTML;
         private System.Windows.Forms.TabPage tabPageEnvelopeEnvio;
         private System.Windows.Forms.WebBrowser wbbEnvelopeEnvio;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TextBox txtWebserviceSenha;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtWebserviceUsuario;
+        private System.Windows.Forms.Label label20;
     }
 }
 

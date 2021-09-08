@@ -42,6 +42,7 @@ namespace ACBr.Net.NFSe.Providers
         ConsultarNFSe,
         CancelarNFSe,
         CancelarNFSeLote,
-        SubstituirNFSe
+        SubstituirNFSe,
+        Autenticacao,
     }
 }

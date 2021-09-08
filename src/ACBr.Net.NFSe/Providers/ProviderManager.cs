@@ -83,7 +83,9 @@ namespace ACBr.Net.NFSe.Providers
                 {NFSeProvider.ISSe, typeof(ProviderISSe)},
                 {NFSeProvider.SimplISS, typeof(ProviderSimplISS)},
                 {NFSeProvider.SpeedGov, typeof(ProviderSpeedGov)},
-                {NFSeProvider.SystemPro, typeof(ProviderSystemPro)}
+                {NFSeProvider.SystemPro, typeof(ProviderSystemPro)},
+                {NFSeProvider.Americana, typeof(ProviderAmericana)},
+                {NFSeProvider.SigissWeb, typeof(ProviderSigissWeb)}
             };
 
             Load();
@@ -133,8 +135,16 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="stream">O stream.</param>
         public static void Save(Stream stream)
         {
+            foreach (var m in Municipios)
+            {
+                if (!m.UrlHomologacao.ContainsKey(TipoUrl.Autenticacao))
+                    m.UrlHomologacao.Add(TipoUrl.Autenticacao, string.Empty);
+                if (!m.UrlProducao.ContainsKey(TipoUrl.Autenticacao))
+                    m.UrlProducao.Add(TipoUrl.Autenticacao, string.Empty);
+            }
             var formatter = new DataContractSerializer(typeof(MunicipiosNFSe));
-            formatter.WriteObject(stream, new MunicipiosNFSe { Municipios = Municipios.OrderBy(x => x.Nome).ToArray() });
+            using (var writer = System.Xml.XmlWriter.Create(stream, new System.Xml.XmlWriterSettings { Indent = true }))
+                formatter.WriteObject(writer, new MunicipiosNFSe { Municipios = Municipios.OrderBy(x => x.Nome).ToArray() });
         }
 
         /// <summary>
