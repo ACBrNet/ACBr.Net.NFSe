@@ -302,7 +302,7 @@ namespace ACBr.Net.NFSe.Providers
         /// <param name="notas"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public virtual RetornoEnviar Enviar(int lote, NotaServicoCollection notas)
+        public RetornoEnviar Enviar(int lote, NotaServicoCollection notas)
         {
             var retornoWebservice = new RetornoEnviar()
             {

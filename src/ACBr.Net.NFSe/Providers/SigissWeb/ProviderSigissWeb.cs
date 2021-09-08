@@ -40,7 +40,7 @@ using System.Xml.Linq;
 
 namespace ACBr.Net.NFSe.Providers
 {
-    internal sealed class ProviderSigissWeb : ProviderRestBase
+    internal sealed class ProviderSigissWeb : ProviderBase
     {
         public ProviderSigissWeb(ConfigNFSe config, ACBrMunicipioNFSe municipio) : base(config, municipio)
         {
@@ -291,5 +291,144 @@ namespace ACBr.Net.NFSe.Providers
 
             return nota;
         }
+
+        protected override string GerarCabecalho()
+        {
+            return string.Empty;
+        }
+
+        protected override void AssinarConsultarNFSeRps(RetornoConsultarNFSeRps retornoWebservice)
+        {
+            return;
+        }
+
+        protected override void AssinarCancelarNFSe(RetornoCancelar retornoWebservice)
+        {
+            return;
+        }
+
+        protected override void AssinarEnviarSincrono(RetornoEnviar retornoWebservice)
+        {
+            return;
+        }
+
+        #region Não implementados
+
+        public override string WriteXmlNFSe(NotaServico nota, bool identado = true, bool showDeclaration = true)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void PrepararEnviar(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void PrepararConsultarSituacao(RetornoConsultarSituacao retornoWebservice)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void PrepararConsultarLoteRps(RetornoConsultarLoteRps retornoWebservice)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void PrepararConsultarSequencialRps(RetornoConsultarSequencialRps retornoWebservice)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void PrepararConsultarNFSe(RetornoConsultarNFSe retornoWebservice)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void PrepararCancelarNFSeLote(RetornoCancelarNFSeLote retornoWebservice, NotaServicoCollection notas)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void PrepararSubstituirNFSe(RetornoSubstituirNFSe retornoWebservice, NotaServicoCollection notas)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void AssinarEnviar(RetornoEnviar retornoWebservice)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void AssinarConsultarSituacao(RetornoConsultarSituacao retornoWebservice)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void AssinarConsultarLoteRps(RetornoConsultarLoteRps retornoWebservice)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void AssinarConsultarSequencialRps(RetornoConsultarSequencialRps retornoWebservice)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void AssinarConsultarNFSe(RetornoConsultarNFSe retornoWebservice)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void AssinarCancelarNFSeLote(RetornoCancelarNFSeLote retornoWebservice)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void AssinarSubstituirNFSe(RetornoSubstituirNFSe retornoWebservice)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void TratarRetornoEnviar(RetornoEnviar retornoWebservice, NotaServicoCollection notas)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void TratarRetornoConsultarSituacao(RetornoConsultarSituacao retornoWebservice)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void TratarRetornoConsultarLoteRps(RetornoConsultarLoteRps retornoWebservice, NotaServicoCollection notas)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void TratarRetornoConsultarSequencialRps(RetornoConsultarSequencialRps retornoWebservice)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void TratarRetornoConsultarNFSe(RetornoConsultarNFSe retornoWebservice, NotaServicoCollection notas)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void TratarRetornoCancelarNFSeLote(RetornoCancelarNFSeLote retornoWebservice, NotaServicoCollection notas)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void TratarRetornoSubstituirNFSe(RetornoSubstituirNFSe retornoWebservice, NotaServicoCollection notas)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override string GetSchema(TipoUrl tipo)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion Não implementados
     }
 }
