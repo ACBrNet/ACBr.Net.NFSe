@@ -1356,16 +1356,26 @@ namespace ACBr.Net.NFSe.Providers
                 retornoWebservice.Erros.Add(new Evento { Codigo = "0", Descricao = "Nota Fiscal não encontrada! (CompNfse)" });
                 return;
             }
-            var nfse = compNfse.ElementAnyNs("Nfse").ElementAnyNs("InfNfse");
-            var numeroNFSe = nfse.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
-            var chaveNFSe = nfse.ElementAnyNs("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
-            var dataNFSe = nfse.ElementAnyNs("DataEmissao")?.GetValue<DateTime>() ?? DateTime.Now;
-            
+
+            var infNFSe     = compNfse.ElementAnyNs("Nfse").ElementAnyNs("InfNfse");
+            var numeroNFSe  = infNFSe.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
+            var chaveNFSe   = infNFSe.ElementAnyNs("CodigoVerificacao")?.GetValue<string>() ?? string.Empty;
+            var dataNFSe    = infNFSe.ElementAnyNs("DataEmissao")?.GetValue<DateTime>() ?? DateTime.Now;
+            var numeroRps   = infNFSe.ElementAnyNs("IdentificacaoRps")?.ElementAnyNs("Numero")?.GetValue<string>() ?? string.Empty;
+
             GravarNFSeEmDisco(compNfse.AsString(true), $"NFSe-{numeroNFSe}-{chaveNFSe}-.xml", dataNFSe);
 
-            // Carrega a nota fiscal na coleção de Notas Fiscais
-            var nota = LoadXml(compNfse.AsString());
-            notas.Add(nota);
+            var nota = notas.FirstOrDefault(x => x.IdentificacaoRps.Numero == numeroRps);
+            if (nota == null)
+            {
+                nota = notas.Load(compNfse.ToString());
+            }
+            else
+            {
+                nota.IdentificacaoNFSe.Numero = numeroNFSe;
+                nota.IdentificacaoNFSe.Chave = chaveNFSe;
+                nota.IdentificacaoNFSe.DataEmissao = dataNFSe;
+            }
 
             retornoWebservice.Nota = nota;
             retornoWebservice.Sucesso = true;
